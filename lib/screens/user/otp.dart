@@ -117,8 +117,7 @@ class OtpUser extends StatelessWidget {
                               //     false, // To prevent dismissing on outside tap
                               // title: '',
                               // content:
-                              CustomDialog(
-                                  verificationCode: '$verificationCode'),
+                              CustomDialog(isSuccess: true),
                             );
                           }, // end onSubmit
                         );

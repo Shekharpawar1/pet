@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet/screens/user/mypet.dart';
+import 'package:pet/screens/user/UserMyPet.dart';
 import 'package:pet/screens/user/profile.dart';
 import 'package:pet/screens/user/service.dart';
 

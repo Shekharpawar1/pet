@@ -370,7 +370,7 @@ class _LoginPartnerState extends State<LoginPartner> {
                                   child: Text(
                                 "Create  a New Account",
                                 style: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.yellow,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold),
                               ))),
@@ -378,7 +378,7 @@ class _LoginPartnerState extends State<LoginPartner> {
                       ),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        height: MediaQuery.of(context).size.height * 0.08,
                       ),
                     ]),
               )),

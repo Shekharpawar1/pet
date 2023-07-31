@@ -257,7 +257,7 @@ class _LoginSalesState extends State<LoginSales> {
                                 child: Text(
                               "Create  a New Account",
                               style: TextStyle(
-                                  color: MyColors.white,
+                                  color: MyColors.yellow,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
                             ))),

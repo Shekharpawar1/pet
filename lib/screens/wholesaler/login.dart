@@ -4,12 +4,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:pet/controllers/salesman_controller/createaccount_controller.dart';
+import 'package:pet/screens/wholesaler/createaccount.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/user/userHome.dart';
 
-import 'package:pet/screens/wholesaler/createaccount.dart';
 import 'package:pet/screens/wholesaler/otp.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:page_transition/page_transition.dart';

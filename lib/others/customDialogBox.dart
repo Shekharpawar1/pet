@@ -2,28 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomDialog extends StatelessWidget {
-  final String verificationCode;
+  final bool isSuccess;
 
-  CustomDialog({required this.verificationCode});
+  CustomDialog({required this.isSuccess});
 
   @override
   Widget build(BuildContext context) {
+    Color titleColor = isSuccess ? Colors.green : Colors.red;
+    String titleText =
+        isSuccess ? "Verification Success" : "Verification Failed";
+    String imagePath =
+        isSuccess ? "assets/image/success.png" : "assets/image/multiply.png";
+
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      title: Center(child: Text("Verification Code")),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('Code entered is:'),
-          SizedBox(height: 8),
-          Text(
-            verificationCode,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        ],
+      title: Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              imagePath,
+              height: 24,
+              width: 24,
+              color: titleColor,
+            ),
+            SizedBox(width: 8),
+            Text(
+              titleText,
+              style: TextStyle(color: titleColor, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
       actions: [
         Center(
@@ -38,7 +49,3 @@ class CustomDialog extends StatelessWidget {
     );
   }
 }
-
-// Usage:
-// To show the dialog, call the CustomDialog like this:
-// CustomDialog(verificationCode: '12345').show();
