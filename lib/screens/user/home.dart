@@ -37,7 +37,7 @@ class _HomeUserState extends State<HomeUser> {
   TextEditingController _searchcontroller = TextEditingController();
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,10 +70,10 @@ class _HomeUserState extends State<HomeUser> {
               child: SvgPicture.asset("assets/image/notification.svg")),
           // Image.asset("assets/image/cartimg.png"),
           SizedBox(width: 20),
-            InkWell(
-              onTap: () {
-                Get.to(AddToCardUser());
-              },
+          InkWell(
+            onTap: () {
+              Get.to(AddToCardUser());
+            },
             child: Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: SvgPicture.asset("assets/image/bag.svg"),
@@ -277,76 +277,75 @@ class _HomeUserState extends State<HomeUser> {
                 // GetBuilder<FilterController>(
                 //       // init: filtercontroller,
                 //       builder: (_) {
-                      //  return 
-                        GestureDetector(
-                    onTap: (){
+                //  return
+                GestureDetector(
+                  onTap: () {
                     Get.to(FilterScreen());
-                  //         showModalBottomSheet(
-                  //       isScrollControlled: true,
-                  //       context: context,
-                  //       backgroundColor: Colors.white,
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadiusDirectional.only(
-                  //           topEnd: Radius.circular(25),
-                  //           topStart: Radius.circular(25),
-                  //         ),
-                  //       ),
-                  //       builder: (context) => ExpansionPanelList(
-                  //   elevation: 1,
-                  //   expandedHeaderPadding: EdgeInsets.zero,
-                  //   expansionCallback: (int index, bool isExpanded) {
-                  //     // setState(() {
-                  //     //   filtercontroller.getAfilterList [index].isExpanded = !isExpanded;
-                  //     // });
-                  //   },
-                  //   children: filtercontroller.getAfilterList.map<ExpansionPanel>((ItemModel item) {
-                  //     return ExpansionPanel(
-                  //       headerBuilder: (BuildContext context, bool isExpanded) {
-                  //       return ListTile(
-                  //         title: Text(item.headerValue),
-                  //       );
-                  //       },
-                  //       body: Column(
-                  //       children: [
-                  //         ListView.builder(
-                  //           shrinkWrap: true,
-                  //           itemCount: item.expandedValue.length,
-                  //           itemBuilder: (BuildContext context, int index) {
-                  //       return CheckboxListTile(
-                  //         value: item.isChecked,
-                  //         onChanged: (bool? value) {
-                  //           setState(() {
-                  //             item.isChecked = value!;
-                  //           });
-                  //         },
-                  //         title: Text(item.expandedValue[index]),
-                  //       );
-                  //           },
-                  //         ),
-                  //       ],
-                  //       ),
-                  //       isExpanded: item.isExpanded,
-                  //     );
-                  //   }).toList(),
-                  // ),
-                  //     );
-                   
-                    },
-                    child: Container(
-                        width: 45,
-                        height: 45,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Color(0xffffcc00)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Image.asset(
-                            "assets/image/filter3.png",
-                          ),
-                        )),
-                  )
-                
-               // )
+                    //         showModalBottomSheet(
+                    //       isScrollControlled: true,
+                    //       context: context,
+                    //       backgroundColor: Colors.white,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadiusDirectional.only(
+                    //           topEnd: Radius.circular(25),
+                    //           topStart: Radius.circular(25),
+                    //         ),
+                    //       ),
+                    //       builder: (context) => ExpansionPanelList(
+                    //   elevation: 1,
+                    //   expandedHeaderPadding: EdgeInsets.zero,
+                    //   expansionCallback: (int index, bool isExpanded) {
+                    //     // setState(() {
+                    //     //   filtercontroller.getAfilterList [index].isExpanded = !isExpanded;
+                    //     // });
+                    //   },
+                    //   children: filtercontroller.getAfilterList.map<ExpansionPanel>((ItemModel item) {
+                    //     return ExpansionPanel(
+                    //       headerBuilder: (BuildContext context, bool isExpanded) {
+                    //       return ListTile(
+                    //         title: Text(item.headerValue),
+                    //       );
+                    //       },
+                    //       body: Column(
+                    //       children: [
+                    //         ListView.builder(
+                    //           shrinkWrap: true,
+                    //           itemCount: item.expandedValue.length,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //       return CheckboxListTile(
+                    //         value: item.isChecked,
+                    //         onChanged: (bool? value) {
+                    //           setState(() {
+                    //             item.isChecked = value!;
+                    //           });
+                    //         },
+                    //         title: Text(item.expandedValue[index]),
+                    //       );
+                    //           },
+                    //         ),
+                    //       ],
+                    //       ),
+                    //       isExpanded: item.isExpanded,
+                    //     );
+                    //   }).toList(),
+                    // ),
+                    //     );
+                  },
+                  child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color(0xffffcc00)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.asset(
+                          "assets/image/filter3.png",
+                        ),
+                      )),
+                )
+
+                // )
               ],
             ),
 
@@ -1371,22 +1370,22 @@ class _HomeUserState extends State<HomeUser> {
 //             ),
 
             //  SizedBox(height: MediaQuery.of(context).size.height*0.02),
- GetBuilder<HomeuserController>(
-                      init: homeusercontroller,
-                      builder: (_) {
-                        return   Center(
-                                    child: homeusercontroller.videoController.value.isInitialized
-                                        ? AspectRatio(
-                                            aspectRatio:  homeusercontroller.videoController
-                                                .value.aspectRatio,
-                                            child: VideoPlayer( homeusercontroller.videoController),
-                                          )
-                                        : CircularProgressIndicator(),
-                                  );
-   
-                      }),
+            GetBuilder<HomeuserController>(
+                init: homeusercontroller,
+                builder: (_) {
+                  return Center(
+                    child: homeusercontroller
+                            .videoController.value.isInitialized
+                        ? AspectRatio(
+                            aspectRatio: homeusercontroller
+                                .videoController.value.aspectRatio,
+                            child:
+                                VideoPlayer(homeusercontroller.videoController),
+                          )
+                        : CircularProgressIndicator(),
+                  );
+                }),
 
- 
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
             Row(
@@ -1989,7 +1988,7 @@ class _HomeUserState extends State<HomeUser> {
                                         ),
                                       ],
                                     ),
-
+// Adding new branch
                                     //  Stack(
                                     //   children: [
                                     //     Container(
@@ -2032,7 +2031,7 @@ class _HomeUserState extends State<HomeUser> {
 
                 InkWell(
                   onTap: () {
-                     Get.to(ServicePage());
+                    Get.to(ServicePage());
                   },
                   child: Text('See All',
                       style: TextStyle(
