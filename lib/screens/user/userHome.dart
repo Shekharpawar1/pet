@@ -125,7 +125,7 @@ class _HomeUserState extends State<HomeUser> {
                             homeusercontroller.userBannerModel!.data!.length,
                         options: CarouselOptions(
                           aspectRatio: 16 / 9,
-                          viewportFraction: 0.9,
+                          viewportFraction: 1,
                           initialPage: 0,
                           enableInfiniteScroll: true,
                           reverse: false,

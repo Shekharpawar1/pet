@@ -9,7 +9,7 @@ import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/user/otp.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
-import 'package:pet/screens/user/home.dart';
+import 'package:pet/screens/user/userHome.dart';
 
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:page_transition/page_transition.dart';
@@ -66,7 +66,8 @@ class _LoginUserState extends State<LoginUser> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.02,
                     ),
-                    Form( key:    userLoginController.formKey,
+                    Form(
+                      key: userLoginController.formKey,
                       child: Padding(
                         padding: EdgeInsets.only(left: 18, right: 18),
                         child: Container(
@@ -90,20 +91,20 @@ class _LoginUserState extends State<LoginUser> {
                                 builder: (_) {
                                   return IntlPhoneField(
                                     //  obscureText : false,
-                                   
-                                    controller:
-                                        userLoginController.phoneNumberController,
+
+                                    controller: userLoginController
+                                        .phoneNumberController,
                                     cursorColor: MyColors.white,
                                     showCountryFlag: false,
-                        validator: (value) {
-                                    if (value!.number.isEmpty) {
-                                      return "Please Enter a Phone Number";
-                                    } else if (!RegExp(
-                                            r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
-                                        .hasMatch(value.number)) {
-                                      return "Please Enter a Valid Phone Number";
-                                    }
-                                  },
+                                    validator: (value) {
+                                      if (value!.number.isEmpty) {
+                                        return "Please Enter a Phone Number";
+                                      } else if (!RegExp(
+                                              r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                                          .hasMatch(value.number)) {
+                                        return "Please Enter a Valid Phone Number";
+                                      }
+                                    },
                                     dropdownIconPosition: IconPosition.trailing,
                                     dropdownTextStyle:
                                         TextStyle(color: MyColors.white),
@@ -124,12 +125,12 @@ class _LoginUserState extends State<LoginUser> {
                                       ),
                                       suffixIcon:
                                           Image.asset("assets/image/call.png"),
-                    
+
                                       // fillcolor:MyColors.white,
                                       focusColor: MyColors.white,
                                       //   counterText: '',
                                       // contentPadding: EdgeInsets.all(10),
-                    
+
                                       // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Colors.red)),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide.none,
@@ -143,7 +144,7 @@ class _LoginUserState extends State<LoginUser> {
                                         borderSide: BorderSide.none,
                                         //  borderRadius: BorderRadius.circular(50),
                                       ),
-                    
+
                                       // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Colors.red)),
                                       // enabledBorder: OutlineInputBorder(
                                       //   borderSide: BorderSide.none,
@@ -153,7 +154,7 @@ class _LoginUserState extends State<LoginUser> {
                                       //   borderSide: BorderSide.none,
                                       //   //  borderRadius: BorderRadius.circular(50),
                                       // ),
-                    
+
                                       // border: OutlineInputBorder(
                                       //   borderSide: BorderSide.none,
                                       //   //  borderRadius: BorderRadius.circular(50),
@@ -161,9 +162,9 @@ class _LoginUserState extends State<LoginUser> {
                                       hintText: "Mobile Number",
                                       hintStyle: TextStyle(
                                           color: MyColors.white, fontSize: 14),
-                    
+
                                       // border: OutlineInputBorder(
-                    
+
                                       //   borderSide: BorderSide(),
                                       // ),
                                     ),
@@ -209,36 +210,34 @@ class _LoginUserState extends State<LoginUser> {
                             });
                           },
                           onFinish: () async {
- userLoginController
-                                  .validateForm(context)
-                                  .then((isValid) async {
+                            userLoginController.validateForm(context).then(
+                              (isValid) async {
                                 if (isValid) {
-                                   print("Valid form");
+                                  print("Valid form");
 
-                            try {
-                            await userLoginController.getOtp();
-                               Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: OtpUser()));
-                            } catch (e) {
-                              Get.snackbar(
-                                'Error',
-                                'Something Went Wrong: $e',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                              );
-                            }
-                                
-                               } else {
+                                  try {
+                                    await userLoginController.getOtp();
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type: PageTransitionType.fade,
+                                            child: OtpUser()));
+                                  } catch (e) {
+                                    Get.snackbar(
+                                      'Error',
+                                      'Something Went Wrong: $e',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                    );
+                                  }
+                                } else {
                                   print("InValid form");
                                   // Code to execute when the form is not valid
                                   // Add your logic here
                                 }
-                                
-                                },);
+                              },
+                            );
                             //TODO: For reverse ripple effect animation
                             setState(() {
                               isFinished = false;
@@ -247,16 +246,21 @@ class _LoginUserState extends State<LoginUser> {
                         ),
                       ),
                     ),
-                  
-                    SizedBox(height: MediaQuery.of(context).size.height*0.02,),  
-
-                  InkWell(onTap: (){
-                    Get.to(Common());
-
-                  },
-                    child: Center(child: Text("Other Accounts",style:  CustomTextStyle.yellowtext,)))
-                  ,   
-                    SizedBox(height: MediaQuery.of(context).size.height*0.02,),    
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Get.to(Common());
+                        },
+                        child: Center(
+                            child: Text(
+                          "Other Accounts",
+                          style: CustomTextStyle.yellowtext,
+                        ))),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
                   ])),
         ));
   }

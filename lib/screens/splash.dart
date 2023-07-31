@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/screens/bottomnavbar.dart';
 
 import 'package:pet/screens/intro2.dart';
-import 'package:pet/screens/user/home.dart';
+import 'package:pet/screens/user/userHome.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
