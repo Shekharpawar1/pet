@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:pet/screens/partner/paymentdone.dart';
 import 'package:pet/screens/user/home.dart';
 import 'package:pet/screens/splash.dart';
 import 'package:pet/screens/wholesaler/home.dart';

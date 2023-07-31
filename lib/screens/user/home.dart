@@ -548,17 +548,27 @@ class _HomeUserState extends State<HomeUser> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 150,
-                                   childAspectRatio: 3 / 2,
-                                      mainAxisExtent: 300,
-                                      crossAxisSpacing: 15,
-                                      mainAxisSpacing: 15),
-                              itemCount: homeusercontroller
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 15.0,
+          mainAxisSpacing: 15.0,
+          mainAxisExtent: 280
+        ),
+        itemCount: homeusercontroller
                                   .userPropertiesModel!.data!.length
-                                  .clamp(0, 4),
-                              itemBuilder: (BuildContext ctx, index) {
+                                  .clamp(0, 4), // Set the number of cards you want to display.
+        itemBuilder: (context, index) {
+                              // gridDelegate:
+                              //     SliverGridDelegateWithMaxCrossAxisExtent(
+                              //         maxCrossAxisExtent: 150,
+                              //      childAspectRatio: 3 / 2,
+                              //         mainAxisExtent: 300,
+                              //         crossAxisSpacing: 15,
+                              //         mainAxisSpacing: 15),
+                              // itemCount: homeusercontroller
+                              //     .userPropertiesModel!.data!.length
+                              //     .clamp(0, 4),
+                              // itemBuilder: (BuildContext ctx, index) {
                                 var item = homeusercontroller
                                     .userPropertiesModel!.data![index];
 
@@ -625,7 +635,7 @@ class _HomeUserState extends State<HomeUser> {
                                         // SizedBox(height: 15,),
 
                                         Container(
-                                          height: 155,
+                                          // height: 140,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10.0, right: 5, top: 5),
@@ -642,21 +652,32 @@ class _HomeUserState extends State<HomeUser> {
                                                     item.description.toString(),
                                                     style: CustomTextStyle
                                                         .popinssmall0),
-                                                // SizedBox(height: 3),
+                                             SizedBox(height: 3),
 
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Column(
+                                                    Column(crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Text(
-                                                    item.price.toString(),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                   "₹"+ item.price.toString(),
                                                     style: CustomTextStyle
-                                                        .popinssmall0),
+                                                            .discounttext),
+SizedBox(width:5),
+                                                                Text(
+                                                  // item.discount.toString(),
+                                                  "20%",
+                                                    style: CustomTextStyle
+                                                            .offertext),
+                                                          ],
+                                                        ),
+                                                     
                                                         Text(
-                                                          item.price!,
+                                                          "₹"+item.price!,
                                                           style: CustomTextStyle
                                                               .popinsmedium,
                                                         ),
@@ -1387,20 +1408,20 @@ class _HomeUserState extends State<HomeUser> {
 //             ),
 
             //  SizedBox(height: MediaQuery.of(context).size.height*0.02),
- GetBuilder<HomeuserController>(
-                      init: homeusercontroller,
-                      builder: (_) {
-                        return   Center(
-                                    child: homeusercontroller.videoController.value.isInitialized
-                                        ? AspectRatio(
-                                            aspectRatio:  homeusercontroller.videoController
-                                                .value.aspectRatio,
-                                            child: VideoPlayer( homeusercontroller.videoController),
-                                          )
-                                        : CircularProgressIndicator(),
-                                  );
+//  GetBuilder<HomeuserController>(
+//                       init: homeusercontroller,
+//                       builder: (_) {
+//                         return   Center(
+//                                     child: homeusercontroller.videoController.value.isInitialized
+//                                         ? AspectRatio(
+//                                             aspectRatio:  homeusercontroller.videoController
+//                                                 .value.aspectRatio,
+//                                             child: VideoPlayer( homeusercontroller.videoController),
+//                                           )
+//                                         : CircularProgressIndicator(),
+//                                   );
    
-                      }),
+//                       }),
 
  
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
