@@ -160,7 +160,7 @@ class _LoginWholeState extends State<LoginWhole> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      height: MediaQuery.of(context).size.height * 0.05,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -227,6 +227,9 @@ class _LoginWholeState extends State<LoginWhole> {
                               style: CustomTextStyle.yellowtext,
                             ))),
                       ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.08,
                     ),
                   ])),
         ));

@@ -32,7 +32,8 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
 
   // TextEditingController _pincodecontroller = TextEditingController();
 
-  final CreateAccountControllersales createAccountcontroller = Get.put(CreateAccountControllersales());
+  final CreateAccountControllersales createAccountcontroller =
+      Get.put(CreateAccountControllersales());
   String filepath = '';
   String filename = '';
   File? file;
@@ -51,7 +52,6 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
   // List<String> StateDropDownList = [
   //   "Madhya Pradesh",
   // ];
-
 
   Future getImageGallery() async {
     var image = await ImagePicker.platform
@@ -348,407 +348,407 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
 //            ),
 
 //   SizedBox(height: 15,),
-Form(
-                        key: createAccountcontroller.formKey,
-                        child: ListView(
-                          primary: false,
-                          shrinkWrap: true,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                //                    width: 335,
-                // height: 45,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      createAccountcontroller.fullNameController,
-                                  decoration: InputDecoration(
-                                    hintText: "First Name",
-                                      hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color:  MyColors.white,
-                                  ),
-                                ),
+              Form(
+                key: createAccountcontroller.formKey,
+                child: ListView(
+                  primary: false,
+                  shrinkWrap: true,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        //                    width: 335,
+                        // height: 45,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
                               ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            return null;
+                          },
+                          controller:
+                              createAccountcontroller.fullNameController,
+                          decoration: InputDecoration(
+                            hintText: "First Name",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: GestureDetector(
-                            //     onTap: () async {
-                            //       print("Tapped...");
-                            //       createAccountcontroller.selectDate(
-                            //           context); // Show date picker when container is tapped
-                            //       // final DateTime? picked = await showDatePicker(
-                            //       //   context: context,
-                            //       //   initialDate: DateTime.now(),
-                            //       //   firstDate: DateTime(1900),
-                            //       //   lastDate: DateTime.now(),
-                            //       // );
-                            //       // if (picked != null) {
-                            //       //   createAccountcontroller.selectedDate = picked;
-                            //       //   wholeSalerController.dobController.text =
-                            //       //       DateFormat('yyyy-MM-dd').format(
-                            //       //           wholeSalerController.selectedDate!);
-                            //       //   // update();
-                            //       // }
-                            //     },
-                            //     child: Container(
-                            //       height: 50,
-                            //       decoration: BoxDecoration(
-                            //         borderRadius: BorderRadius.circular(50),
-                            //         color: Colors.grey.shade200,
-                            //       ),
-                            //       child: TextFormField(
-                            //         readOnly: true,
-                            //         validator: (value) {
-                            //           if (value == null || value.isEmpty) {
-                            //             return 'Please enter DOB';
-                            //           }
-                            //           return null;
-                            //         },
-                            //         controller:
-                            //             createAccountcontroller.dobController,
-                            //         decoration: InputDecoration(
-                            //           hintText: "Date of Birth",
-                            //           contentPadding: EdgeInsets.symmetric(
-                            //               horizontal: 20, vertical: 10),
-                            //           border: InputBorder.none,
-                            //           enabledBorder: InputBorder.none,
-                            //           focusedBorder: InputBorder.none,
-                            //         ),
-                            //         style: TextStyle(
-                            //           fontSize: 16,
-                            //           color: Colors.black,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                //                    width: 335,
-                // height: 45,
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
                       ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your last name';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      createAccountcontroller.lastNameController,
-                                  decoration: InputDecoration(
-                                    hintText: "Last Name",
-                                    hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white,
-                                  ),
-                                ),
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: GestureDetector(
+                    //     onTap: () async {
+                    //       print("Tapped...");
+                    //       createAccountcontroller.selectDate(
+                    //           context); // Show date picker when container is tapped
+                    //       // final DateTime? picked = await showDatePicker(
+                    //       //   context: context,
+                    //       //   initialDate: DateTime.now(),
+                    //       //   firstDate: DateTime(1900),
+                    //       //   lastDate: DateTime.now(),
+                    //       // );
+                    //       // if (picked != null) {
+                    //       //   createAccountcontroller.selectedDate = picked;
+                    //       //   wholeSalerController.dobController.text =
+                    //       //       DateFormat('yyyy-MM-dd').format(
+                    //       //           wholeSalerController.selectedDate!);
+                    //       //   // update();
+                    //       // }
+                    //     },
+                    //     child: Container(
+                    //       height: 50,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(50),
+                    //         color: Colors.grey.shade200,
+                    //       ),
+                    //       child: TextFormField(
+                    //         readOnly: true,
+                    //         validator: (value) {
+                    //           if (value == null || value.isEmpty) {
+                    //             return 'Please enter DOB';
+                    //           }
+                    //           return null;
+                    //         },
+                    //         controller:
+                    //             createAccountcontroller.dobController,
+                    //         decoration: InputDecoration(
+                    //           hintText: "Date of Birth",
+                    //           contentPadding: EdgeInsets.symmetric(
+                    //               horizontal: 20, vertical: 10),
+                    //           border: InputBorder.none,
+                    //           enabledBorder: InputBorder.none,
+                    //           focusedBorder: InputBorder.none,
+                    //         ),
+                    //         style: TextStyle(
+                    //           fontSize: 16,
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        //                    width: 335,
+                        // height: 45,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
                               ),
-                            ),  
-                            
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter email';
-                                    }
-                                    return null;
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller:
-                                      createAccountcontroller.emailController,
-                                  decoration: InputDecoration(
-                                    hintText: "Email ID",
-                                    
-                                    hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white,
-                                  ),
-                                ),
-                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your last name';
+                            }
+                            return null;
+                          },
+                          controller:
+                              createAccountcontroller.lastNameController,
+                          decoration: InputDecoration(
+                            hintText: "Last Name",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: Container(
-                            //     height: 50,
-                            //     decoration: BoxDecoration(
-                            //       borderRadius: BorderRadius.circular(50),
-                            //       color: Colors.grey.shade200,
-                            //     ),
-                            //     child: TextFormField(
-                            //       validator: (value) {
-                            //         if (value == null || value.isEmpty) {
-                            //           return 'Please Designation';
-                            //         }
-                            //         return null;
-                            //       },
-                            //       controller: createAccountcontroller
-                            //           .designationController,
-                            //       decoration: InputDecoration(
-                            //         hintText: "Designation",
-                            //         contentPadding: EdgeInsets.symmetric(
-                            //             horizontal: 20, vertical: 10),
-                            //         border: InputBorder.none,
-                            //         enabledBorder: InputBorder.none,
-                            //         focusedBorder: InputBorder.none,
-                            //       ),
-                            //       style: TextStyle(
-                            //         fontSize: 16,
-                            //         color: Colors.black,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                          
-                          
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
                       ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                child: DropdownButtonFormField<String>(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select a tpye';
-                                    }
-                                    return null;
-                                  },
-                                  value: createAccountcontroller
-                                      .dropdowntype, // Set the selected country value
-                                  decoration: InputDecoration(
-                                    hintText: "SalesManType",
-                                      hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    iconColor: MyColors.white,
-                                  
-                                  ),
-                                   icon: Icon(
-                                          Icons.arrow_drop_down,color:MyColors.white,
-                                         ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white
-                                  ),
-                                  items: createAccountcontroller.typeDropDownList
-                                      .map((String country) {
-                                    return DropdownMenuItem<String>(
-                                      value: country,
-                                      child: Text(country),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    createAccountcontroller
-                                        .updatetype(value ?? "");
-                                    // Perform actions when country is changed
-                                  },
-                                ),
-                              ),
-                            ),
-                           
-                            
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                child: DropdownButtonFormField<String>(
-                                   validator: (value) {
-                                   if (value == null ||
-                                              value.isEmpty) {
-                                            return 'Please select a type';
-                                          }
-                                          return null;
-                                   
-                                  },
-                                  value: createAccountcontroller
-                                      .dropdownzone, // Set the selected country value
-                                  decoration: InputDecoration(
-                                    hintText: "Zone",
-                                      hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    // iconColor: MyColors.white,
-                                  
-                                  ),
-                                   icon: Icon(
-                                          Icons.arrow_drop_down,color:MyColors.white,
-                                         ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white
-                                  ),
-                                  items: createAccountcontroller.zoneDropDownList
-                                      .map((String country) {
-                                    return DropdownMenuItem<String>(
-                                      value: country,
-                                      child: Text(country),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    createAccountcontroller
-                                        .updatezone(value ?? "");
-                                    // Perform actions when country is changed
-                                  },
-                                ),
-                              ),
-                            ),
-                           
+                    ),
 
-                            
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                               
-                                child: DropdownButtonFormField<String>(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select a tpye';
-                                    }
-                                    return null;
-                                  },
-                                  value: createAccountcontroller
-                                      .dropdownIdentityType, // Set the selected country value
-                                  decoration: InputDecoration(
-                                    hintText: "Identity Type",
-                                      hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    // iconColor: MyColors.white,
-                                  
-                                  ),
-                                   icon: Icon(
-                                          Icons.arrow_drop_down,color:MyColors.white,
-                                         ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white
-                                  ),
-                                  items: createAccountcontroller.identityTypeDropDownList
-                                      .map((String type) {
-                                    return DropdownMenuItem<String>(
-                                      value: type,
-                                      child: Text(type),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    createAccountcontroller
-                                        .updateidentitytype(value ?? "");
-                                    // Perform actions when country is changed
-                                  },
-                                ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
                               ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter email';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          controller: createAccountcontroller.emailController,
+                          decoration: InputDecoration(
+                            hintText: "Email ID",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
                             ),
-                           
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter shop name';
+                            }
+                            return null;
+                          },
+                          controller: createAccountcontroller.storeController,
+                          decoration: InputDecoration(
+                            hintText: "Shop Name",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: DropdownButtonFormField<String>(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a tpye';
+                            }
+                            return null;
+                          },
+                          value: createAccountcontroller
+                              .dropdowntype, // Set the selected country value
+                          decoration: InputDecoration(
+                            hintText: "SalesManType",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            iconColor: MyColors.white,
+                          ),
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: MyColors.white,
+                          ),
+                          style: TextStyle(fontSize: 16, color: MyColors.white),
+                          items: createAccountcontroller.typeDropDownList
+                              .map((String country) {
+                            return DropdownMenuItem<String>(
+                              value: country,
+                              child: Text(country),
+                            );
+                          }).toList(),
+                          onChanged: (String? value) {
+                            createAccountcontroller.updatetype(value ?? "");
+                            // Perform actions when country is changed
+                          },
+                        ),
+                      ),
+                    ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //         color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             offset: const Offset(0.0, 0.0),
+                    //             color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //             blurRadius: 0.0,
+                    //             spreadRadius: 0.0,
+                    //           ),
+                    //         ],
+                    //         borderRadius: BorderRadius.circular(40)),
+                    //     child: DropdownButtonFormField<String>(
+                    //       validator: (value) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return 'Please select a type';
+                    //         }
+                    //         return null;
+                    //       },
+                    //       value: createAccountcontroller
+                    //           .dropdownzone, // Set the selected country value
+                    //       decoration: InputDecoration(
+                    //         hintText: "Zone",
+                    //         hintStyle: TextStyle(
+                    //           color: MyColors.white,
+                    //         ),
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: 20, vertical: 5),
+                    //         border: InputBorder.none,
+                    //         enabledBorder: InputBorder.none,
+                    //         focusedBorder: InputBorder.none,
+                    //         // iconColor: MyColors.white,
+                    //       ),
+                    //       icon: Icon(
+                    //         Icons.arrow_drop_down,
+                    //         color: MyColors.white,
+                    //       ),
+                    //       style: TextStyle(fontSize: 16, color: MyColors.white),
+                    //       items: createAccountcontroller.zoneDropDownList
+                    //           .map((String country) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: country,
+                    //           child: Text(country),
+                    //         );
+                    //       }).toList(),
+                    //       onChanged: (String? value) {
+                    //         createAccountcontroller.updatezone(value ?? "");
+                    //         // Perform actions when country is changed
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: DropdownButtonFormField<String>(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a tpye';
+                            }
+                            return null;
+                          },
+                          value: createAccountcontroller
+                              .dropdownIdentityType, // Set the selected country value
+                          decoration: InputDecoration(
+                            hintText: "Identity Type",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            // iconColor: MyColors.white,
+                          ),
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: MyColors.white,
+                          ),
+                          style: TextStyle(fontSize: 16, color: MyColors.white),
+                          items: createAccountcontroller
+                              .identityTypeDropDownList
+                              .map((String type) {
+                            return DropdownMenuItem<String>(
+                              value: type,
+                              child: Text(type),
+                            );
+                          }).toList(),
+                          onChanged: (String? value) {
+                            createAccountcontroller
+                                .updateidentitytype(value ?? "");
+                            // Perform actions when country is changed
+                          },
+                        ),
+                      ),
+                    ),
 
                     //          Padding(
                     //           padding: const EdgeInsets.all(8.0),
@@ -772,7 +772,7 @@ Form(
                     //                         return 'Please select a type';
                     //                       }
                     //                       return null;
-                                   
+
                     //               },
                     //               controller: createAccountcontroller
                     //                   .identitytypeController,
@@ -792,7 +792,7 @@ Form(
                     //             ),
                     //           ),
                     //         ),
-                          
+
                     //         createAccountcontroller.showLoading
                     //             ? Center(
                     //                 child: CircularProgressIndicator(),
@@ -816,7 +816,7 @@ Form(
                     //   ),
                     // ],
                     // borderRadius: BorderRadius.circular(40)),
-                               
+
                     //                   child: DropdownButtonFormField<
                     //                       statesFile.State>(
                     //                     validator: (value) {
@@ -922,184 +922,203 @@ Form(
                     //                   ),
                     //           ],
                     //         ),
-                       
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                              decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                child: TextFormField(
-                               
-                                  controller:
-                                      createAccountcontroller.passcodeController,
-                                       keyboardType: TextInputType.phone,
 
-                                         validator: (value){
-                          if(value!.isEmpty){
-                            return "Please Enter a Phone Number";
-                          }else if(!RegExp(r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$').hasMatch(value)){
-                            return "Please Enter a Valid Phone Number";
-                          }
-                        },
-                                  decoration: InputDecoration(
-                                    hintText: "Mobile No",
-  hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white,
-                                  ),
-                                ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
                               ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: TextFormField(
+                          controller:
+                              createAccountcontroller.passcodeController,
+                          keyboardType: TextInputType.phone,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter a Phone Number";
+                            } else if (!RegExp(
+                                    r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                                .hasMatch(value)) {
+                              return "Please Enter a Valid Phone Number";
+                            }
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Mobile No",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
                             ),
-                         
-                          Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                              decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter password';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      createAccountcontroller.passcodeController,
-                                  decoration: InputDecoration(
-                                    hintText: "Password",
-  hintStyle: TextStyle(color: MyColors.white,),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: MyColors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                                Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: Get.width * 0.40,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                              
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("Upload Image",style:CustomTextStyle.popinstextsmall124,),
-                                          Icon(Icons.upload, color:MyColors.white,size: 25,),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left:8.0,right:2, top:10,bottom:10),
-                                  child: Container(
-                                    height: 80,
-                                    width: Get.width * 0.40,
-                                    decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0.0, 0.0),
-                        color: Color.fromRGBO(255, 255, 255, 0.10),
-                        blurRadius: 0.0,
-                        spreadRadius: 0.0,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(40)),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("Upload Document",style: CustomTextStyle.popinstextsmall124,),
-                                          Icon(Icons.upload, color:MyColors.white,size: 25,),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                createAccountcontroller.validateForm(context);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 58,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: MyColors.yellow,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Submit",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
                         ),
-                      )
-                    
-           
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter password';
+                            }
+                            return null;
+                          },
+                          controller:
+                              createAccountcontroller.passcodeController,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: Get.width * 0.40,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0.0, 0.0),
+                                    color: Color.fromRGBO(255, 255, 255, 0.10),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(40)),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Upload Profile",
+                                    style: CustomTextStyle.popinstextsmall124,
+                                  ),
+                                  Icon(
+                                    Icons.upload,
+                                    color: MyColors.white,
+                                    size: 25,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 8.0, right: 2, top: 10, bottom: 10),
+                          child: Container(
+                            height: 80,
+                            width: Get.width * 0.40,
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0.0, 0.0),
+                                    color: Color.fromRGBO(255, 255, 255, 0.10),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(40)),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Upload Document",
+                                    style: CustomTextStyle.popinstextsmall124,
+                                  ),
+                                  Text(
+                                    "Ex. GST, Adhar card...",
+                                    style: CustomTextStyle.popinstextsmall124,
+                                  ),
+                                  Icon(
+                                    Icons.upload,
+                                    color: MyColors.white,
+                                    size: 25,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        createAccountcontroller.validateForm(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 58,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: MyColors.yellow,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+
               //  InkWell(onTap: ()   {
 
               //  },
@@ -1123,7 +1142,8 @@ Form(
               //         ),
               //  ),
 
-            ,  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              ,
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
               //  InkWell(onTap: (){
               //     Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));

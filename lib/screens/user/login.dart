@@ -259,7 +259,7 @@ class _LoginUserState extends State<LoginUser> {
                           style: CustomTextStyle.yellowtext,
                         ))),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.02,
+                      height: MediaQuery.of(context).size.height * 0.08,
                     ),
                   ])),
         ));

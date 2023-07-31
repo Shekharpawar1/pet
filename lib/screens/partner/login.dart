@@ -278,7 +278,7 @@ class _LoginPartnerState extends State<LoginPartner> {
                       //         ),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.05,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(15.0),

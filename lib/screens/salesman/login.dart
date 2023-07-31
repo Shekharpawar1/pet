@@ -174,7 +174,7 @@ class _LoginSalesState extends State<LoginSales> {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      height: MediaQuery.of(context).size.height * 0.05,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
@@ -262,6 +262,9 @@ class _LoginSalesState extends State<LoginSales> {
                                   fontWeight: FontWeight.bold),
                             ))),
                       ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.08,
                     ),
                   ])),
         ));

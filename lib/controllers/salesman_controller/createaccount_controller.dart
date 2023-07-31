@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -11,12 +10,12 @@ import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
 
 class CreateAccountControllersales extends GetxController {
-
-   TextEditingController fullNameController = TextEditingController();
-      TextEditingController lastNameController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   TextEditingController dobController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController identitytypeController = TextEditingController();
+  TextEditingController storeController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController cityController = TextEditingController();
@@ -24,16 +23,14 @@ class CreateAccountControllersales extends GetxController {
   TextEditingController currencyController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
- 
+  String? dropdowntype;
+  List<String> typeDropDownList = ["0", "0.1", "0.2", "0.3", "0.4"];
 
-   String? dropdowntype ;
-  List<String> typeDropDownList = ["0","0.1","0.2","0.3","0.4"];
+  String? dropdownzone;
+  List<String> zoneDropDownList = ["North Zone", "South Zone"];
 
- String? dropdownzone;
-  List<String> zoneDropDownList = [ "North Zone", "South Zone"];
-
-String? dropdownIdentityType ;
-List<String> identityTypeDropDownList = [ "Passport", "Aadhar card"];
+  String? dropdownIdentityType;
+  List<String> identityTypeDropDownList = ["Passport", "Aadhar card"];
 
   List<String> countries = [
     'India',
@@ -48,7 +45,8 @@ List<String> identityTypeDropDownList = [ "Passport", "Aadhar card"];
     selectedCountry = country;
     update();
   }
-void updatetype(String type) {
+
+  void updatetype(String type) {
     dropdowntype = type;
     update();
   }
@@ -62,6 +60,7 @@ void updatetype(String type) {
     dropdownzone = zone;
     update();
   }
+
   List<String> currency = [
     '\$ USD',
     '\₤ EURO',
@@ -120,7 +119,7 @@ void updatetype(String type) {
   String getUserStateUrl = Constants.GET_STATE_LIST;
   StateListModel? stateListModel;
   bool stateLoaded = false;
-bool showLoading = false;
+  bool showLoading = false;
   statesFile.State? selectedState;
   Future<void> updateState(statesFile.State state) async {
     selectedState = state;
@@ -131,7 +130,7 @@ bool showLoading = false;
     update();
   }
 
-  Future<void>  init() async {
+  Future<void> init() async {
     try {
       // sate list
       stateListModel =
