@@ -551,8 +551,8 @@ class _HomeUserState extends State<HomeUser> {
                               gridDelegate:
                                   SliverGridDelegateWithMaxCrossAxisExtent(
                                       maxCrossAxisExtent: 150,
-                                      childAspectRatio: 3 / 2,
-                                      mainAxisExtent: 270,
+                                   childAspectRatio: 3 / 2,
+                                      mainAxisExtent: 300,
                                       crossAxisSpacing: 15,
                                       mainAxisSpacing: 15),
                               itemCount: homeusercontroller
@@ -594,6 +594,12 @@ class _HomeUserState extends State<HomeUser> {
                                     ),
                                     child: Column(
                                       children: [
+
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(alignment:Alignment.centerRight,
+                                          child:Icon(Icons.favorite_border)),
+                                        ),
                                         Container(
                                           height: 125,
 
@@ -619,7 +625,7 @@ class _HomeUserState extends State<HomeUser> {
                                         // SizedBox(height: 15,),
 
                                         Container(
-                                          height: 145,
+                                          height: 155,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10.0, right: 5, top: 5),
@@ -643,10 +649,18 @@ class _HomeUserState extends State<HomeUser> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      item.price!,
-                                                      style: CustomTextStyle
-                                                          .popinsmedium,
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                    item.price.toString(),
+                                                    style: CustomTextStyle
+                                                        .popinssmall0),
+                                                        Text(
+                                                          item.price!,
+                                                          style: CustomTextStyle
+                                                              .popinsmedium,
+                                                        ),
+                                                      ],
                                                     ),
 
                                                     Padding(
@@ -683,6 +697,8 @@ class _HomeUserState extends State<HomeUser> {
                                             ),
                                           ),
                                         )
+                                    
+                                    
                                       ],
                                     ),
                                   ),
