@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib\\screens\\wholesaler\\ProductAlllistPage.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\screens\\wholesaler\\ProductAlllistPage.dart"
+        }
+    ]
+}
