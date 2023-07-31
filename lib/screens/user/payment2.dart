@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/screens/partner/paymentdone.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
@@ -268,7 +269,7 @@ child:TextFormField(
                         validateExpiryDate(_datecontroller.text);
 validateCVV(_cvvcontroller.text);
 
- Get.to(OrderDetailsUser());
+ Get.to(PaymentDoneScreen());
                       },
                         child: Center(
                           child: Container(
