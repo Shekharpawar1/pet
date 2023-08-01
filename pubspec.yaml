@@ -63,6 +63,7 @@ dependencies:
   geolocator: ^9.0.2
   flutter_rating_stars: ^1.0.3+4
   order_tracker: ^0.0.2
+  upi_india: ^3.0.1
   
 
   
