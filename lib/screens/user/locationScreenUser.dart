@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -384,22 +386,32 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                             ),
                             SizedBox(height: 20),
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 100),
-                              child: Container(
-                                // width: MediaQuery.of(context).size.width * 0.3,
-                                height: MediaQuery.of(context).size.width * 0.11,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: BorderRadius.all(
-                                    // topRight:
-                                    Radius.circular(30),
-                                    // topLeft: Radius.circular(30),
-                                    // bottomLeft: Radius.circular(30),
-                                    // bottomRight: Radius.circular(30),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 100),
+                              child: InkWell(
+                                onTap: () {
+                                  Get.dialog(OrderCancellationDialog());
+                                },
+                                child: Container(
+                                  // width: MediaQuery.of(context).size.width * 0.3,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.11,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.all(
+                                      // topRight:
+                                      Radius.circular(30),
+                                      // topLeft: Radius.circular(30),
+                                      // bottomLeft: Radius.circular(30),
+                                      // bottomRight: Radius.circular(30),
+                                    ),
                                   ),
-                                ),
-                                child: Center(
-                                  child: Text("Cancel Order", style: TextStyle(color: Colors.white,)),
+                                  child: Center(
+                                    child: Text("Cancel Order",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        )),
+                                  ),
                                 ),
                               ),
                             ),
@@ -564,5 +576,63 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
         _desiredAddress = 'Error fetching address';
       });
     }
+  }
+}
+
+class OrderCancellationDialog extends StatelessWidget {
+  // final OrderCancellationController controller = Get.put(OrderCancellationController());
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Cancel Order',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 16.0),
+              Text('Are you sure you want to cancel this order?'),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      // Close the dialog
+                      Get.back();
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  SizedBox(width: 16.0),
+                  ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.red),
+                    ),
+                    onPressed: () {
+                      // Call the order cancellation function from the controller
+                      // Replace `cancelOrder` with the actual function in your controller to cancel the order
+                      // controller.cancelOrder();
+
+                      // Close the dialog
+                      Get.back();
+                    },
+                    child: Text('Confirm'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
