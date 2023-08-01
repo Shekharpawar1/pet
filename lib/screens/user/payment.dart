@@ -9,6 +9,7 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/wholesaler/payment2.dart';
   enum Choose {
+    upi,
   creditcard,
 phonepay ,
 paytm
@@ -22,7 +23,7 @@ class PaymentUser extends StatefulWidget {
 
 class _PaymentUserState extends State<PaymentUser> {
   // String? selectedGender;
-
+String? selectupi ;
     String? selectcredit ;
     String? selectphoepay ;
     String? selectpaytm;
@@ -72,7 +73,33 @@ fontWeight: FontWeight.w700,),)
           children: [
       
           Image.asset("assets/image/creditcard.png"),
+        Container(
+      width: 335,
+      height: 54,
+      decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(28),
+      gradient: LinearGradient(
+      begin: Alignment.centerLeft, end: Alignment.centerRight,
+      colors: [Color(0xffeeeeff), Color(0x59eeeeff)], )),
       
+      child:   Row(mainAxisAlignment: MainAxisAlignment.start,
+                   children: [
+                   Radio(
+                               value: Choose.creditcard,
+          groupValue: selectone,
+          onChanged: (Choose? value) {
+            setState(() {
+               selectone = value!;
+            });}),
+                 
+      
+                 Image.asset("assets/image/upi.png",height:40),
+                 
+                 
+                 ],),
+      
+      )
+         , SizedBox(height: MediaQuery.of(context).size.height*0.03),
       
           Container(
       width: 335,

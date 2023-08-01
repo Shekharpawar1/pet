@@ -626,7 +626,53 @@ Form(
                                 ),
                               ),
                             ),
-                           
+                                    
+ Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 50,
+                              //                    width: 335,
+                              // height: 45,
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(255, 255, 255, 0.10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0.0, 0.0),
+                                      color:
+                                          Color.fromRGBO(255, 255, 255, 0.10),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(40)),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your name';
+                                  }
+                                  return null;
+                                },
+                                controller: createAccountcontroller
+                                    .shopNameController,
+                                decoration: InputDecoration(
+                                  hintText: "Shop Name",
+                                  hintStyle: TextStyle(
+                                    color: MyColors.white,
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                ),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: MyColors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+          
                             
                             Padding(
                               padding: const EdgeInsets.all(8.0),

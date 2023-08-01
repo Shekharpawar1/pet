@@ -11,7 +11,7 @@ import 'package:pet/screens/salesman/login.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/otp.dart';
 import 'package:pet/screens/splash.dart';
-import 'package:pet/screens/user/home.dart';
+import 'package:pet/screens/user/userHome.dart';
 import 'package:pet/screens/user/login.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/otp.dart';
@@ -39,8 +39,6 @@ class AppRouter {
     GetPage(name: '/home-user', page: () => HomeUser()),
     GetPage(name: '/home-wholesaler', page: () => HomeWhole()),
     GetPage(name: '/home-sales', page: () => HomeSales()),
-
-       
     GetPage(name: '/dashboard-wholesaler', page: () => DashboardWhole()),
     GetPage(name: '/dashboard-sales', page: () => DashboardSales()),
     GetPage(name: '/dashboard-partner', page: () => DashboardPartner()),
@@ -48,7 +46,6 @@ class AppRouter {
     GetPage(name: '/notification-wholesaler', page: () => NotificationWhole()),
     GetPage(name: '/notification-sales', page: () => NotificationSales()),
     GetPage(name: '/notification-partner', page: () => NotificationPartner()),
-
-     GetPage(name: '/notification-partner', page: () => NotificationPartner()),
+    GetPage(name: '/notification-partner', page: () => NotificationPartner()),
   ];
 }

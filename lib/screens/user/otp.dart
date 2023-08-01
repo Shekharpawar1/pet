@@ -6,22 +6,23 @@ import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/login_controller.dart';
+import 'package:pet/others/customDialogBox.dart';
 import 'package:pet/screens/bottomnavbar.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
-import 'package:pet/screens/user/home.dart';
+import 'package:pet/screens/user/userHome.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 
-class OtpUser extends StatefulWidget {
-  const OtpUser({super.key});
+// class OtpUser extends StatefulWidget {
+//   const OtpUser({super.key});
 
-  @override
-  State<OtpUser> createState() => _OtpUserState();
-}
+//   @override
+//   State<OtpUser> createState() => _OtpUserState();
+// }
 
-class _OtpUserState extends State<OtpUser> {
-  bool isFinished = false;
+class OtpUser extends StatelessWidget {
+  OtpUser({super.key});
   final UserLoginController userLoginController =
       Get.put(UserLoginController());
   final foo = Get.put(() => HomeuserController());
@@ -102,15 +103,22 @@ class _OtpUserState extends State<OtpUser> {
                           //runs when every textfield is filled
                           onSubmit: (String verificationCode) {
                             userLoginController.updateOtp(verificationCode);
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: Text("Verification Code"),
-                                    content: Text(
-                                        'Code entered is $verificationCode'),
-                                  );
-                                });
+                            // showDialog(
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return AlertDialog(
+                            //         title: Text("Verification Code"),
+                            //         content: Text(
+                            //             'Code entered is $verificationCode'),
+                            //       );
+                            //     });
+                            Get.dialog(
+                              // barrierDismissible:
+                              //     false, // To prevent dismissing on outside tap
+                              // title: '',
+                              // content:
+                              CustomDialog(isSuccess: true),
+                            );
                           }, // end onSubmit
                         );
                       }),
@@ -122,61 +130,69 @@ class _OtpUserState extends State<OtpUser> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    // width: MediaQuery.of(context).size.width*0.8,
-                    child: SwipeableButtonView(
-                      buttonText: 'Swipe to Continue',
-                      buttontextstyle: TextStyle(
-                          letterSpacing: 2,
-                          color: MyColors.voliet,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "ReemKufi-Regular"),
-                      // buttonColor: Colors.transparent,
-                      // buttoncolor:MyColors.yellow,
+                GetBuilder<UserLoginController>(
+                  init: userLoginController,
+                  // initState: (_) {},
+                  builder: (_) {
+                    return Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        // width: MediaQuery.of(context).size.width*0.8,
+                        child: SwipeableButtonView(
+                          buttonText: 'Swipe to Continue',
+                          buttontextstyle: TextStyle(
+                              letterSpacing: 2,
+                              color: MyColors.voliet,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "ReemKufi-Regular"),
+                          // buttonColor: Colors.transparent,
+                          // buttoncolor:MyColors.yellow,
 
-                      buttonWidget: CircleAvatar(
-                          backgroundColor: MyColors.bgcolor,
-                          radius: 30,
-                          child: Image.asset("assets/image/swipe.png")),
-                      activeColor: MyColors.yellow,
-                      isFinished: isFinished,
-                      onWaitingProcess: () {
-                        Future.delayed(Duration(seconds: 2), () {
-                          setState(() {
-                            isFinished = true;
-                          });
-                        });
-                      },
-                      onFinish: () async {
-                        Get.put(HomeuserController());
-                        final HomeuserController userHomeController =
-                            Get.find<HomeuserController>();
-                        userHomeController.onInit();
-                        try {
-                          await userLoginController.sendOtp();
-                          await Navigator.pushReplacement(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: BottomNavBar()));
-                        } catch (e) {}
-                        // try {
-                        //   await userLoginController.postUserData();
-                        // } catch (e) {}
-                        // await userLoginController.sendOtp();
-                        // await userLoginController.postUserData();
-                        // print("sending to new page...");
+                          buttonWidget: CircleAvatar(
+                              backgroundColor: MyColors.bgcolor,
+                              radius: 30,
+                              child: Image.asset("assets/image/swipe.png")),
+                          activeColor: MyColors.yellow,
+                          isFinished: userLoginController.isFinishedOtp,
+                          onWaitingProcess: () {
+                            Future.delayed(Duration(seconds: 2), () {
+                              // setState(() {
+                              //   isFinished = true;
+                              // });\
+                              userLoginController.updateIsFinishedOtp(true);
+                            });
+                          },
+                          onFinish: () async {
+                            Get.put(HomeuserController());
+                            final HomeuserController userHomeController =
+                                Get.find<HomeuserController>();
+                            userHomeController.onInit();
+                            try {
+                              await userLoginController.sendOtp();
+                              await Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: BottomNavBar()));
+                            } catch (e) {}
+                            // try {
+                            //   await userLoginController.postUserData();
+                            // } catch (e) {}
+                            // await userLoginController.sendOtp();
+                            // await userLoginController.postUserData();
+                            // print("sending to new page...");
 
-                        //TODO: For reverse ripple effect animation
-                        setState(() {
-                          isFinished = false;
-                        });
-                      },
-                    ),
-                  ),
+                            //TODO: For reverse ripple effect animation
+                            // setState(() {
+                            //   isFinished = false;
+                            // });
+                            userLoginController.updateIsFinishedOtp(false);
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

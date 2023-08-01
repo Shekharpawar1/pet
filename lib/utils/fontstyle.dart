@@ -92,6 +92,26 @@ class CustomTextStyle {
       fontSize: 14,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins");
+
+
+ static TextStyle discounttext = const TextStyle(
+      //color:Color(0xff011624),
+      color: Colors.grey,
+      // color: black,
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+         decoration: TextDecoration.lineThrough,
+      fontFamily: "Poppins");
+
+       static TextStyle offertext = const TextStyle(
+      //color:Color(0xff011624),
+      color: Colors.red,
+      // color: black,
+      fontSize: 12,
+      fontWeight: FontWeight.w600,
+      
+      fontFamily: "Poppins");
+      
   static TextStyle popinsboldlight = const TextStyle(
       color: Color(0xff0B154D),
       fontSize: 14,

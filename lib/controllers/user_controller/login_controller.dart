@@ -19,11 +19,18 @@ class UserLoginController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   String? otpText;
 
+  bool isFinishedOtp = false;
+  void updateIsFinishedOtp(bool val) {
+    isFinishedOtp = val;
+    update();
+  }
+
   updateOtp(String otp) {
     otpText = otp;
     update();
   }
- Future<bool> validateForm(BuildContext context) {
+
+  Future<bool> validateForm(BuildContext context) {
     final completer = Completer<bool>();
 
     if (formKey.currentState!.validate()) {

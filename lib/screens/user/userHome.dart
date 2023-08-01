@@ -37,7 +37,7 @@ class _HomeUserState extends State<HomeUser> {
   TextEditingController _searchcontroller = TextEditingController();
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,10 +70,10 @@ class _HomeUserState extends State<HomeUser> {
               child: SvgPicture.asset("assets/image/notification.svg")),
           // Image.asset("assets/image/cartimg.png"),
           SizedBox(width: 20),
-            InkWell(
-              onTap: () {
-                Get.to(AddToCardUser());
-              },
+          InkWell(
+            onTap: () {
+              Get.to(AddToCardUser());
+            },
             child: Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: SvgPicture.asset("assets/image/bag.svg"),
@@ -125,7 +125,7 @@ class _HomeUserState extends State<HomeUser> {
                             homeusercontroller.userBannerModel!.data!.length,
                         options: CarouselOptions(
                           aspectRatio: 16 / 9,
-                          viewportFraction: 0.9,
+                          viewportFraction: 1,
                           initialPage: 0,
                           enableInfiniteScroll: true,
                           reverse: false,
@@ -277,76 +277,75 @@ class _HomeUserState extends State<HomeUser> {
                 // GetBuilder<FilterController>(
                 //       // init: filtercontroller,
                 //       builder: (_) {
-                      //  return 
-                        GestureDetector(
-                    onTap: (){
+                //  return
+                GestureDetector(
+                  onTap: () {
                     Get.to(FilterScreen());
-                  //         showModalBottomSheet(
-                  //       isScrollControlled: true,
-                  //       context: context,
-                  //       backgroundColor: Colors.white,
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadiusDirectional.only(
-                  //           topEnd: Radius.circular(25),
-                  //           topStart: Radius.circular(25),
-                  //         ),
-                  //       ),
-                  //       builder: (context) => ExpansionPanelList(
-                  //   elevation: 1,
-                  //   expandedHeaderPadding: EdgeInsets.zero,
-                  //   expansionCallback: (int index, bool isExpanded) {
-                  //     // setState(() {
-                  //     //   filtercontroller.getAfilterList [index].isExpanded = !isExpanded;
-                  //     // });
-                  //   },
-                  //   children: filtercontroller.getAfilterList.map<ExpansionPanel>((ItemModel item) {
-                  //     return ExpansionPanel(
-                  //       headerBuilder: (BuildContext context, bool isExpanded) {
-                  //       return ListTile(
-                  //         title: Text(item.headerValue),
-                  //       );
-                  //       },
-                  //       body: Column(
-                  //       children: [
-                  //         ListView.builder(
-                  //           shrinkWrap: true,
-                  //           itemCount: item.expandedValue.length,
-                  //           itemBuilder: (BuildContext context, int index) {
-                  //       return CheckboxListTile(
-                  //         value: item.isChecked,
-                  //         onChanged: (bool? value) {
-                  //           setState(() {
-                  //             item.isChecked = value!;
-                  //           });
-                  //         },
-                  //         title: Text(item.expandedValue[index]),
-                  //       );
-                  //           },
-                  //         ),
-                  //       ],
-                  //       ),
-                  //       isExpanded: item.isExpanded,
-                  //     );
-                  //   }).toList(),
-                  // ),
-                  //     );
-                   
-                    },
-                    child: Container(
-                        width: 45,
-                        height: 45,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Color(0xffffcc00)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Image.asset(
-                            "assets/image/filter3.png",
-                          ),
-                        )),
-                  )
-                
-               // )
+                    //         showModalBottomSheet(
+                    //       isScrollControlled: true,
+                    //       context: context,
+                    //       backgroundColor: Colors.white,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadiusDirectional.only(
+                    //           topEnd: Radius.circular(25),
+                    //           topStart: Radius.circular(25),
+                    //         ),
+                    //       ),
+                    //       builder: (context) => ExpansionPanelList(
+                    //   elevation: 1,
+                    //   expandedHeaderPadding: EdgeInsets.zero,
+                    //   expansionCallback: (int index, bool isExpanded) {
+                    //     // setState(() {
+                    //     //   filtercontroller.getAfilterList [index].isExpanded = !isExpanded;
+                    //     // });
+                    //   },
+                    //   children: filtercontroller.getAfilterList.map<ExpansionPanel>((ItemModel item) {
+                    //     return ExpansionPanel(
+                    //       headerBuilder: (BuildContext context, bool isExpanded) {
+                    //       return ListTile(
+                    //         title: Text(item.headerValue),
+                    //       );
+                    //       },
+                    //       body: Column(
+                    //       children: [
+                    //         ListView.builder(
+                    //           shrinkWrap: true,
+                    //           itemCount: item.expandedValue.length,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //       return CheckboxListTile(
+                    //         value: item.isChecked,
+                    //         onChanged: (bool? value) {
+                    //           setState(() {
+                    //             item.isChecked = value!;
+                    //           });
+                    //         },
+                    //         title: Text(item.expandedValue[index]),
+                    //       );
+                    //           },
+                    //         ),
+                    //       ],
+                    //       ),
+                    //       isExpanded: item.isExpanded,
+                    //     );
+                    //   }).toList(),
+                    // ),
+                    //     );
+                  },
+                  child: Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color(0xffffcc00)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Image.asset(
+                          "assets/image/filter3.png",
+                        ),
+                      )),
+                )
+
+                // )
               ],
             ),
 
@@ -548,17 +547,27 @@ class _HomeUserState extends State<HomeUser> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 150,
-                                      childAspectRatio: 3 / 2,
-                                      mainAxisExtent: 270,
-                                      crossAxisSpacing: 15,
-                                      mainAxisSpacing: 15),
-                              itemCount: homeusercontroller
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 15.0,
+          mainAxisSpacing: 15.0,
+          mainAxisExtent: 280
+        ),
+        itemCount: homeusercontroller
                                   .userPropertiesModel!.data!.length
-                                  .clamp(0, 4),
-                              itemBuilder: (BuildContext ctx, index) {
+                                  .clamp(0, 4), // Set the number of cards you want to display.
+        itemBuilder: (context, index) {
+                              // gridDelegate:
+                              //     SliverGridDelegateWithMaxCrossAxisExtent(
+                              //         maxCrossAxisExtent: 150,
+                              //      childAspectRatio: 3 / 2,
+                              //         mainAxisExtent: 300,
+                              //         crossAxisSpacing: 15,
+                              //         mainAxisSpacing: 15),
+                              // itemCount: homeusercontroller
+                              //     .userPropertiesModel!.data!.length
+                              //     .clamp(0, 4),
+                              // itemBuilder: (BuildContext ctx, index) {
                                 var item = homeusercontroller
                                     .userPropertiesModel!.data![index];
 
@@ -594,6 +603,12 @@ class _HomeUserState extends State<HomeUser> {
                                     ),
                                     child: Column(
                                       children: [
+
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(alignment:Alignment.centerRight,
+                                          child:Icon(Icons.favorite_border)),
+                                        ),
                                         Container(
                                           height: 125,
 
@@ -619,7 +634,7 @@ class _HomeUserState extends State<HomeUser> {
                                         // SizedBox(height: 15,),
 
                                         Container(
-                                          height: 145,
+                                          // height: 140,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10.0, right: 5, top: 5),
@@ -636,17 +651,36 @@ class _HomeUserState extends State<HomeUser> {
                                                     item.description.toString(),
                                                     style: CustomTextStyle
                                                         .popinssmall0),
-                                                // SizedBox(height: 3),
+                                             SizedBox(height: 3),
 
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Text(
-                                                      item.price!,
-                                                      style: CustomTextStyle
-                                                          .popinsmedium,
+                                                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                   "₹"+ item.price.toString(),
+                                                    style: CustomTextStyle
+                                                            .discounttext),
+SizedBox(width:5),
+                                                                Text(
+                                                  // item.discount.toString(),
+                                                  "20%",
+                                                    style: CustomTextStyle
+                                                            .offertext),
+                                                          ],
+                                                        ),
+                                                     
+                                                        Text(
+                                                          "₹"+item.price!,
+                                                          style: CustomTextStyle
+                                                              .popinsmedium,
+                                                        ),
+                                                      ],
                                                     ),
 
                                                     Padding(
@@ -683,6 +717,8 @@ class _HomeUserState extends State<HomeUser> {
                                             ),
                                           ),
                                         )
+                                    
+                                    
                                       ],
                                     ),
                                   ),
@@ -1371,22 +1407,21 @@ class _HomeUserState extends State<HomeUser> {
 //             ),
 
             //  SizedBox(height: MediaQuery.of(context).size.height*0.02),
- GetBuilder<HomeuserController>(
-                      init: homeusercontroller,
-                      builder: (_) {
-                        return   Center(
-                                    child: homeusercontroller.videoController.value.isInitialized
-                                        ? AspectRatio(
-                                            aspectRatio:  homeusercontroller.videoController
-                                                .value.aspectRatio,
-                                            child: VideoPlayer( homeusercontroller.videoController),
-                                          )
-                                        : CircularProgressIndicator(),
-                                  );
+//  GetBuilder<HomeuserController>(
+//                       init: homeusercontroller,
+//                       builder: (_) {
+//                         return   Center(
+//                                     child: homeusercontroller.videoController.value.isInitialized
+//                                         ? AspectRatio(
+//                                             aspectRatio:  homeusercontroller.videoController
+//                                                 .value.aspectRatio,
+//                                             child: VideoPlayer( homeusercontroller.videoController),
+//                                           )
+//                                         : CircularProgressIndicator(),
+//                                   );
    
-                      }),
+//                       }),
 
- 
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
             Row(
@@ -1989,7 +2024,7 @@ class _HomeUserState extends State<HomeUser> {
                                         ),
                                       ],
                                     ),
-
+// Adding new branch
                                     //  Stack(
                                     //   children: [
                                     //     Container(
@@ -2032,7 +2067,7 @@ class _HomeUserState extends State<HomeUser> {
 
                 InkWell(
                   onTap: () {
-                     Get.to(ServicePage());
+                    Get.to(ServicePage());
                   },
                   child: Text('See All',
                       style: TextStyle(
