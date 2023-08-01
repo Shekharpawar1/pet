@@ -21,6 +21,7 @@ class CreateAccountControllersales extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController passcodeController = TextEditingController();
   TextEditingController currencyController = TextEditingController();
+   TextEditingController shopNameController =TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? dropdowntype;

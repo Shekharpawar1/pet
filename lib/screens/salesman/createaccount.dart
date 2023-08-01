@@ -538,47 +538,38 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Color.fromRGBO(255, 255, 255, 0.10),
-                            boxShadow: [
-                              BoxShadow(
-                                offset: const Offset(0.0, 0.0),
-                                color: Color.fromRGBO(255, 255, 255, 0.10),
-                                blurRadius: 0.0,
-                                spreadRadius: 0.0,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(40)),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter shop name';
-                            }
-                            return null;
-                          },
-                          controller: createAccountcontroller.storeController,
-                          decoration: InputDecoration(
-                            hintText: "Shop Name",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                          ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(50),
+                    //       color: Colors.grey.shade200,
+                    //     ),
+                    //     child: TextFormField(
+                    //       validator: (value) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return 'Please Designation';
+                    //         }
+                    //         return null;
+                    //       },
+                    //       controller: createAccountcontroller
+                    //           .designationController,
+                    //       decoration: InputDecoration(
+                    //         hintText: "Designation",
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: 20, vertical: 10),
+                    //         border: InputBorder.none,
+                    //         enabledBorder: InputBorder.none,
+                    //         focusedBorder: InputBorder.none,
+                    //       ),
+                    //       style: TextStyle(
+                    //         fontSize: 16,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -636,61 +627,61 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                       ),
                     ),
 
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Container(
-                    //     height: 50,
-                    //     decoration: BoxDecoration(
-                    //         color: Color.fromRGBO(255, 255, 255, 0.10),
-                    //         boxShadow: [
-                    //           BoxShadow(
-                    //             offset: const Offset(0.0, 0.0),
-                    //             color: Color.fromRGBO(255, 255, 255, 0.10),
-                    //             blurRadius: 0.0,
-                    //             spreadRadius: 0.0,
-                    //           ),
-                    //         ],
-                    //         borderRadius: BorderRadius.circular(40)),
-                    //     child: DropdownButtonFormField<String>(
-                    //       validator: (value) {
-                    //         if (value == null || value.isEmpty) {
-                    //           return 'Please select a type';
-                    //         }
-                    //         return null;
-                    //       },
-                    //       value: createAccountcontroller
-                    //           .dropdownzone, // Set the selected country value
-                    //       decoration: InputDecoration(
-                    //         hintText: "Zone",
-                    //         hintStyle: TextStyle(
-                    //           color: MyColors.white,
-                    //         ),
-                    //         contentPadding: EdgeInsets.symmetric(
-                    //             horizontal: 20, vertical: 5),
-                    //         border: InputBorder.none,
-                    //         enabledBorder: InputBorder.none,
-                    //         focusedBorder: InputBorder.none,
-                    //         // iconColor: MyColors.white,
-                    //       ),
-                    //       icon: Icon(
-                    //         Icons.arrow_drop_down,
-                    //         color: MyColors.white,
-                    //       ),
-                    //       style: TextStyle(fontSize: 16, color: MyColors.white),
-                    //       items: createAccountcontroller.zoneDropDownList
-                    //           .map((String country) {
-                    //         return DropdownMenuItem<String>(
-                    //           value: country,
-                    //           child: Text(country),
-                    //         );
-                    //       }).toList(),
-                    //       onChanged: (String? value) {
-                    //         createAccountcontroller.updatezone(value ?? "");
-                    //         // Perform actions when country is changed
-                    //       },
-                    //     ),
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 255, 255, 0.10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0.0, 0.0),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                blurRadius: 0.0,
+                                spreadRadius: 0.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(40)),
+                        child: DropdownButtonFormField<String>(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please select a type';
+                            }
+                            return null;
+                          },
+                          value: createAccountcontroller
+                              .dropdownzone, // Set the selected country value
+                          decoration: InputDecoration(
+                            hintText: "Zone",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            // iconColor: MyColors.white,
+                          ),
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: MyColors.white,
+                          ),
+                          style: TextStyle(fontSize: 16, color: MyColors.white),
+                          items: createAccountcontroller.zoneDropDownList
+                              .map((String country) {
+                            return DropdownMenuItem<String>(
+                              value: country,
+                              child: Text(country),
+                            );
+                          }).toList(),
+                          onChanged: (String? value) {
+                            createAccountcontroller.updatezone(value ?? "");
+                            // Perform actions when country is changed
+                          },
+                        ),
+                      ),
+                    ),
 
                     Padding(
                       padding: const EdgeInsets.all(8.0),
