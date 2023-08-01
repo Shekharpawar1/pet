@@ -78,14 +78,15 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
         title: Center(
 //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 //
-            child: Text(
-          "Order ID: 23424",
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.black,
-            fontWeight: FontWeight.w700,
+          child: Text(
+            "Order ID: 23424",
+            style: TextStyle(
+              fontSize: 16,
+              color: MyColors.black,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        )),
+        ),
         // actions: [
         //   //  SvgPicture.asset("assets/image/girl.svg"),
 
@@ -208,7 +209,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
+              // height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
                 color: Colors.blue,
                 borderRadius: BorderRadius.only(
@@ -232,91 +233,97 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                       // height: 50,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          left: 15,
-                          right: 15,
+                          left: 20,
+                          right: 20,
                           top: 20,
                           bottom: 20,
                         ),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset(
-                                "assets/image/order_id_logo.png",
-                                height: 30,
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Pkart Logistics",
-                                      style: TextStyle(
-                                          fontSize: 17.533462524414062,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white),
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Image.asset(
+                              "assets/image/order_id_logo.png",
+                              height: 45,
+                            ),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Pkart Logistics",
+                                    style: TextStyle(
+                                        fontSize: 17.533462524414062,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.white),
+                                  ),
+                                  RatingStars(
+                                    value: 3.5,
+                                    // onValueChanged: (v) {
+                                    //   //
+                                    //   setState(() {
+                                    //     value = v;
+                                    //   });
+                                    // },
+                                    starBuilder: (index, color) => Icon(
+                                      Icons.star,
+                                      color: color,
+                                      size: 15,
                                     ),
-                                    RatingStars(
-                                      value: 3.5,
-                                      // onValueChanged: (v) {
-                                      //   //
-                                      //   setState(() {
-                                      //     value = v;
-                                      //   });
-                                      // },
-                                      starBuilder: (index, color) => Icon(
-                                        Icons.star,
-                                        color: color,
-                                        size: 15,
-                                      ),
-                                      starCount: 5,
-                                      starSize: 20,
-                                      // valueLabelColor: const Color(0xff9b9b9b),
-                                      // valueLabelTextStyle: const TextStyle(
-                                      //     color: Colors.white,
-                                      //     fontWeight: FontWeight.w400,
-                                      //     fontStyle: FontStyle.normal,
-                                      //     fontSize: 12.0),
+                                    starCount: 5,
+                                    starSize: 20,
+                                    // valueLabelColor: const Color(0xff9b9b9b),
+                                    // valueLabelTextStyle: const TextStyle(
+                                    //     color: Colors.white,
+                                    //     fontWeight: FontWeight.w400,
+                                    //     fontStyle: FontStyle.normal,
+                                    //     fontSize: 12.0),
 
-                                      // valueLabelRadius: 10,
-                                      maxValue: 5,
-                                      starSpacing: 0.5,
-                                      maxValueVisibility: true,
-                                      valueLabelVisibility: false,
-                                      animationDuration:
-                                          Duration(milliseconds: 5000),
-                                      // valueLabelPadding:
-                                      //     const EdgeInsets.symmetric(
-                                      //         vertical: 1, horizontal: 8),
-                                      // valueLabelMargin:
-                                      //     const EdgeInsets.only(right: 8),
-                                      starOffColor: const Color(0xffe7e8ea),
-                                      starColor: MyColors.yellow,
-                                    ),
-                                  ],
-                                ),
+                                    // valueLabelRadius: 10,
+                                    maxValue: 5,
+                                    starSpacing: 0.5,
+                                    maxValueVisibility: true,
+                                    valueLabelVisibility: false,
+                                    animationDuration:
+                                        Duration(milliseconds: 5000),
+                                    // valueLabelPadding:
+                                    //     const EdgeInsets.symmetric(
+                                    //         vertical: 1, horizontal: 8),
+                                    // valueLabelMargin:
+                                    //     const EdgeInsets.only(right: 8),
+                                    starOffColor: const Color(0xffe7e8ea),
+                                    starColor: MyColors.yellow,
+                                  ),
+                                ],
                               ),
-                              // SizedBox(width: 10,),
+                            ),
+                            // SizedBox(width: 10,),
 
-                              Image.asset(
-                                "assets/image/Chat.png",
-                                height: 30,
-                              ),
-                              SizedBox(width: 10),
-                              Image.asset(
-                                "assets/image/Call_icon.png",
-                                height: 30,
-                              ),
-                            ]),
+                            Image.asset(
+                              "assets/image/Chat.png",
+                              height: 45,
+                            ),
+                            SizedBox(width: 10),
+                            Image.asset(
+                              "assets/image/Call_icon.png",
+                              height: 45,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.9,
+                      // height: MediaQuery.of(context).size.height * 0.7,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.blue, width: 0.3),
-                          borderRadius: BorderRadius.circular(25)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30),
+                          topLeft: Radius.circular(30),
+                          // bottomLeft: Radius.circular(30),
+                          // bottomRight: Radius.circular(30),
+                        ),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: ListView(
@@ -374,6 +381,27 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                                   ],
                                 )
                               ],
+                            ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 100),
+                              child: Container(
+                                // width: MediaQuery.of(context).size.width * 0.3,
+                                height: MediaQuery.of(context).size.width * 0.11,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.all(
+                                    // topRight:
+                                    Radius.circular(30),
+                                    // topLeft: Radius.circular(30),
+                                    // bottomLeft: Radius.circular(30),
+                                    // bottomRight: Radius.circular(30),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text("Cancel Order", style: TextStyle(color: Colors.white,)),
+                                ),
+                              ),
                             ),
                           ],
                         ),
