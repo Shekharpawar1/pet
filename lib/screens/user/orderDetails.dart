@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/wholesaler/locationScreenWholesaler.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
@@ -271,7 +272,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                 InkWell(
                   onTap: () {
                     // Get.to(MyPetDetails());
-                    Get.to(LocationPickerMapWholeSaler());
+                    Get.to(LocationPickerMapUser());
                   },
                   child: Center(
                     child: Container(
