@@ -12,7 +12,8 @@ class UserLocationController extends GetxController {
     'Late Delivery',
     'Changed My Mind',
     'Other',
-  ];final List<String> returnReasons = [
+  ];
+  final List<String> returnReasons = [
     'low Quality',
     'Wrong Product',
     'Damaged',
@@ -23,11 +24,13 @@ class UserLocationController extends GetxController {
     selectedValue = val;
     update();
   }
+
   String? otherReason;
   updateOtherReason(String? val) {
     otherReason = val;
     update();
   }
+
   String? selectedReason;
   updateSelectedReason(String? val) {
     selectedReason = val;
