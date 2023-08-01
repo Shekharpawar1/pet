@@ -17,7 +17,7 @@ class UserLocationController extends GetxController {
     'low Quality',
     'Wrong Product',
     'Damaged',
-    // 'Other',
+    'Other',
   ];
   String? selectedValue;
   updaeSelectedValue(String val) {

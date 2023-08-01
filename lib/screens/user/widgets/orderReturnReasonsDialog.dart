@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/userLocationController.dart';
 import 'package:pet/screens/user/widgets/orderCancellationOtherDialog.dart';
+import 'package:pet/screens/user/widgets/orderRturnOtherDialog.dart';
 
 class OrderReturnReasonsDialog extends StatelessWidget {
   // List of cancellation reasons
@@ -90,7 +91,7 @@ class OrderReturnReasonsDialog extends StatelessWidget {
                                 print("Inside");
                                 Get.back();
                                 // showTextInputDialog(context);
-                                Get.dialog(OrderCancellationOtherDialog());
+                                Get.dialog(OrderReturnOtherDialog());
                                 return;
                               }
                               // If "Other" is selected, use the custom reason
