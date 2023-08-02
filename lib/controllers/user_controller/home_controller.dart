@@ -14,16 +14,15 @@ import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
 class HomeuserController extends GetxController {
-
-  
-  late  VideoPlayerController videoController;
+  late VideoPlayerController videoController;
   //videoplayer
-   updatevideo() {
-     videoController = VideoPlayerController.networkUrl(Uri.parse(
+  updatevideo() {
+    videoController = VideoPlayerController.networkUrl(Uri.parse(
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
       ..initialize();
     update();
   }
+
   // categories
   String getUserCategoriesUrl =
       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
@@ -187,23 +186,23 @@ class HomeuserController extends GetxController {
     },
   ].obs;
 
-  // List _bannerList = [
-  //   {
-  //     "image": "assets/image/dogiimg1.png",
-  //     "title": "Dog cat food",
-  //     "subtitle": "Up to 25 % OFF all Products"
-  //   },
-  //   {
-  //     "image": "assets/image/dogiimg1.png",
-  //     "title": "Dog cat food",
-  //     "subtitle": "Up to 25 % OFF all Products"
-  //   },
-  //   {
-  //     "image": "assets/image/dogiimg1.png",
-  //     "title": "Dog cat food",
-  //     "subtitle": "Up to 25 % OFF all Products"
-  //   },
-  // ].obs;
+  List toylist = [
+    {
+      "image": "assets/image/food.png",
+      "title": "Dog cat food",
+      "subtitle": "Up to 25 % OFF all Products"
+    },
+    {
+      "image": "assets/image/food.png",
+      "title": "Dog cat food",
+      "subtitle": "Up to 25 % OFF all Products"
+    },
+    {
+      "image": "assets/image/food.png",
+      "title": "Dog cat food",
+      "subtitle": "Up to 25 % OFF all Products"
+    },
+  ].obs;
 
   // List _serviceList = [
   //   {
@@ -251,5 +250,5 @@ class HomeuserController extends GetxController {
   // ].obs;
   get getOurBrandList => _ourbandList;
   // get getServiceList => _serviceList;
-  // get getbannerList => _bannerList;
+  get gettoyList => toylist;
 }

@@ -9,7 +9,9 @@ import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/drawer.dart';
+import 'package:pet/screens/user/allcategory.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/oubranddetails.dart';
 import 'package:pet/screens/user/productdetails.dart';
 import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/service_categoryPage.dart';
@@ -448,30 +450,36 @@ class _HomeUserState extends State<HomeUser> {
 
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          child: CachedNetworkImage(
-                                            imageUrl: imagePath,
-                                            width: 61,
-                                            height: 75,
-                                            placeholder: (context, url) =>
-                                                Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ), // Replace with your own placeholder widget
-                                            errorWidget: (context, url,
-                                                    error) =>
-                                                Icon(Icons
-                                                    .error), // Replace with your own error widget
+                                    child: InkWell(
+                                      onTap: () {
+                                        Get.to(() => Allcategory());
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            child: CachedNetworkImage(
+                                              imageUrl: imagePath,
+                                              width: 61,
+                                              height: 75,
+                                              placeholder: (context, url) =>
+                                                  Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ), // Replace with your own placeholder widget
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Icon(Icons
+                                                      .error), // Replace with your own error widget
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(item.name!,
-                                            style: CustomTextStyle.popinssmall)
-                                      ],
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(item.name!,
+                                              style:
+                                                  CustomTextStyle.popinssmall)
+                                        ],
+                                      ),
                                     ),
 
                                     //  Stack(
@@ -547,27 +555,28 @@ class _HomeUserState extends State<HomeUser> {
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               physics: NeverScrollableScrollPhysics(),
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15.0,
-          mainAxisSpacing: 15.0,
-          mainAxisExtent: 280
-        ),
-        itemCount: homeusercontroller
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 15.0,
+                                      mainAxisSpacing: 15.0,
+                                      mainAxisExtent: 280),
+                              itemCount: homeusercontroller
                                   .userPropertiesModel!.data!.length
-                                  .clamp(0, 4), // Set the number of cards you want to display.
-        itemBuilder: (context, index) {
-                              // gridDelegate:
-                              //     SliverGridDelegateWithMaxCrossAxisExtent(
-                              //         maxCrossAxisExtent: 150,
-                              //      childAspectRatio: 3 / 2,
-                              //         mainAxisExtent: 300,
-                              //         crossAxisSpacing: 15,
-                              //         mainAxisSpacing: 15),
-                              // itemCount: homeusercontroller
-                              //     .userPropertiesModel!.data!.length
-                              //     .clamp(0, 4),
-                              // itemBuilder: (BuildContext ctx, index) {
+                                  .clamp(0,
+                                      4), // Set the number of cards you want to display.
+                              itemBuilder: (context, index) {
+                                // gridDelegate:
+                                //     SliverGridDelegateWithMaxCrossAxisExtent(
+                                //         maxCrossAxisExtent: 150,
+                                //      childAspectRatio: 3 / 2,
+                                //         mainAxisExtent: 300,
+                                //         crossAxisSpacing: 15,
+                                //         mainAxisSpacing: 15),
+                                // itemCount: homeusercontroller
+                                //     .userPropertiesModel!.data!.length
+                                //     .clamp(0, 4),
+                                // itemBuilder: (BuildContext ctx, index) {
                                 var item = homeusercontroller
                                     .userPropertiesModel!.data![index];
 
@@ -603,12 +612,14 @@ class _HomeUserState extends State<HomeUser> {
                                     ),
                                     child: Column(
                                       children: [
-
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Align(alignment:Alignment.centerRight,
-                                          child:Icon(Icons.favorite_border)),
+                                          child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child:
+                                                  Icon(Icons.favorite_border)),
                                         ),
+
                                         Container(
                                           height: 125,
 
@@ -651,32 +662,53 @@ class _HomeUserState extends State<HomeUser> {
                                                     item.description.toString(),
                                                     style: CustomTextStyle
                                                         .popinssmall0),
-                                             SizedBox(height: 3),
-
+                                                SizedBox(height: 5),
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Row(
                                                           children: [
                                                             Text(
-                                                   "₹"+ item.price.toString(),
-                                                    style: CustomTextStyle
-                                                            .discounttext),
-SizedBox(width:5),
-                                                                Text(
-                                                  // item.discount.toString(),
-                                                  "20%",
-                                                    style: CustomTextStyle
-                                                            .offertext),
+                                                                "₹" +
+                                                                    item.price
+                                                                        .toString(),
+                                                                style: CustomTextStyle
+                                                                    .discounttext),
+                                                            SizedBox(width: 10),
+                                                            Container(
+                                                              height: 20,
+                                                              width: 40,
+                                                              decoration: BoxDecoration(
+                                                                  color:
+                                                                      MyColors
+                                                                          .red,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  border: Border.all(
+                                                                      color: MyColors
+                                                                          .red)),
+                                                              child: Center(
+                                                                child: Text(
+                                                                    // item.discount.toString(),
+                                                                    "Save20%",
+                                                                    style: CustomTextStyle
+                                                                        .popinstextsmal2222),
+                                                              ),
+                                                            ),
                                                           ],
                                                         ),
-                                                     
+                                                        SizedBox(height: 5),
                                                         Text(
-                                                          "₹"+item.price!,
+                                                          "₹" + item.price!,
                                                           style: CustomTextStyle
                                                               .popinsmedium,
                                                         ),
@@ -717,8 +749,6 @@ SizedBox(width:5),
                                             ),
                                           ),
                                         )
-                                    
-                                    
                                       ],
                                     ),
                                   ),
@@ -886,7 +916,7 @@ SizedBox(width:5),
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.63,
+                                              0.55,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -1419,7 +1449,7 @@ SizedBox(width:5),
 //                                           )
 //                                         : CircularProgressIndicator(),
 //                                   );
-   
+
 //                       }),
 
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
@@ -1484,7 +1514,7 @@ SizedBox(width:5),
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.63,
+                                              0.55,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -1665,24 +1695,34 @@ SizedBox(width:5),
               scrollDirection: Axis.vertical,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 15,
-                  mainAxisExtent: 276),
+                  crossAxisSpacing: 15.0,
+                  mainAxisSpacing: 15.0,
+                  mainAxisExtent: 250),
               children: [
                 Container(
                   height: MediaQuery.of(context).size.width * 0.7,
-                  width: MediaQuery.of(context).size.width * 0.46,
+                  // width: MediaQuery.of(context).size.width * 0.46,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
                       color: MyColors.white),
                   child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: MyColors.white),
-                        child: Image.asset("assets/image/food.png",
-                            fit: BoxFit.cover, height: 135),
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: MyColors.white),
+                            child: Image.asset("assets/image/food.png",
+                                fit: BoxFit.fill, height: 135),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.favorite_border)),
+                          ),
+                        ],
                       ),
 
                       // SizedBox(height: 15,),
@@ -1697,18 +1737,61 @@ SizedBox(width:5),
                                 style: CustomTextStyle.popinsmedium),
                             Text('Lorem Ipsum is simply dummy',
                                 style: CustomTextStyle.popinssmall0),
-                            // SizedBox(height: 3),
-
+                            SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "₹ 260.00",
-                                  style: CustomTextStyle.popinsmedium,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text("₹269",
+                                            style:
+                                                CustomTextStyle.discounttext),
+                                        SizedBox(width: 10),
+                                        Container(
+                                          height: 18,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: MyColors.red)),
+                                          child: Center(
+                                            child: Text(
+                                                // item.discount.toString(),
+                                                "Save20%",
+                                                style: CustomTextStyle
+                                                    .popinstextsmal2222),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      "₹ 260.00",
+                                      style: CustomTextStyle.popinsmedium,
+                                    ),
+                                  ],
                                 ),
-                                Image.asset(
-                                  "assets/image/yellowbag.png",
-                                  height: 80,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Color(0xffffcc00)),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Image.asset(
+                                          "assets/image/bag2.png",
+                                          height: 25,
+                                        ),
+                                      )),
                                 )
                               ],
                             )
@@ -1726,12 +1809,22 @@ SizedBox(width:5),
                       color: MyColors.white),
                   child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: MyColors.white),
-                        child: Image.asset("assets/image/dog2.png",
-                            fit: BoxFit.cover, height: 135),
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: MyColors.white),
+                            child: Image.asset("assets/image/dog2.png",
+                                fit: BoxFit.cover, height: 135),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.favorite_border)),
+                          ),
+                        ],
                       ),
 
                       // SizedBox(height: 15,),
@@ -1746,18 +1839,61 @@ SizedBox(width:5),
                                 style: CustomTextStyle.popinsmedium),
                             Text('Lorem Ipsum is simply dummy',
                                 style: CustomTextStyle.popinssmall0),
-                            // SizedBox(height: 3),
-
+                            SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "₹ 260.00",
-                                  style: CustomTextStyle.popinsmedium,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text("₹269",
+                                            style:
+                                                CustomTextStyle.discounttext),
+                                        SizedBox(width: 10),
+                                        Container(
+                                          height: 20,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: MyColors.red)),
+                                          child: Center(
+                                            child: Text(
+                                                // item.discount.toString(),
+                                                "Save20%",
+                                                style: CustomTextStyle
+                                                    .popinstextsmal2222),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      "₹ 260.00",
+                                      style: CustomTextStyle.popinsmedium,
+                                    ),
+                                  ],
                                 ),
-                                Image.asset(
-                                  "assets/image/yellowbag.png",
-                                  height: 80,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Color(0xffffcc00)),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Image.asset(
+                                          "assets/image/bag2.png",
+                                          height: 25,
+                                        ),
+                                      )),
                                 )
                               ],
                             )
@@ -1775,12 +1911,22 @@ SizedBox(width:5),
                       color: MyColors.white),
                   child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: MyColors.white),
-                        child: Image.asset("assets/image/food3.png",
-                            fit: BoxFit.cover, height: 135),
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: MyColors.white),
+                            child: Image.asset("assets/image/food3.png",
+                                fit: BoxFit.cover, height: 135),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.favorite_border)),
+                          ),
+                        ],
                       ),
 
                       // SizedBox(height: 15,),
@@ -1796,17 +1942,61 @@ SizedBox(width:5),
                             Text('Lorem Ipsum is simply dummy',
                                 style: CustomTextStyle.popinssmall0),
                             // SizedBox(height: 3),
-
+                            SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "₹ 260.00",
-                                  style: CustomTextStyle.popinsmedium,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text("₹269",
+                                            style:
+                                                CustomTextStyle.discounttext),
+                                        SizedBox(width: 10),
+                                        Container(
+                                          height: 20,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: MyColors.red)),
+                                          child: Center(
+                                            child: Text(
+                                                // item.discount.toString(),
+                                                "Save20%",
+                                                style: CustomTextStyle
+                                                    .popinstextsmal2222),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      "₹ 260.00",
+                                      style: CustomTextStyle.popinsmedium,
+                                    ),
+                                  ],
                                 ),
-                                Image.asset(
-                                  "assets/image/yellowbag.png",
-                                  height: 80,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Color(0xffffcc00)),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Image.asset(
+                                          "assets/image/bag2.png",
+                                          height: 25,
+                                        ),
+                                      )),
                                 )
                               ],
                             )
@@ -1824,12 +2014,22 @@ SizedBox(width:5),
                       color: MyColors.white),
                   child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: MyColors.white),
-                        child: Image.asset("assets/image/food5.png",
-                            fit: BoxFit.cover, height: 135),
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: MyColors.white),
+                            child: Image.asset("assets/image/food5.png",
+                                fit: BoxFit.cover, height: 135),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Icon(Icons.favorite_border)),
+                          ),
+                        ],
                       ),
 
                       // SizedBox(height: 15,),
@@ -1844,18 +2044,61 @@ SizedBox(width:5),
                                 style: CustomTextStyle.popinsmedium),
                             Text('Lorem Ipsum is simply dummy',
                                 style: CustomTextStyle.popinssmall0),
-                            // SizedBox(height: 3),
-
+                            SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "₹ 260.00",
-                                  style: CustomTextStyle.popinsmedium,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text("₹269",
+                                            style:
+                                                CustomTextStyle.discounttext),
+                                        SizedBox(width: 10),
+                                        Container(
+                                          height: 20,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  color: MyColors.red)),
+                                          child: Center(
+                                            child: Text(
+                                                // item.discount.toString(),
+                                                "Save20%",
+                                                style: CustomTextStyle
+                                                    .popinstextsmal2222),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      "₹ 260.00",
+                                      style: CustomTextStyle.popinsmedium,
+                                    ),
+                                  ],
                                 ),
-                                Image.asset(
-                                  "assets/image/yellowbag.png",
-                                  height: 80,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 5.0),
+                                  child: Container(
+                                      width: 35,
+                                      height: 35,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Color(0xffffcc00)),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(5.0),
+                                        child: Image.asset(
+                                          "assets/image/bag2.png",
+                                          height: 25,
+                                        ),
+                                      )),
                                 )
                               ],
                             )
@@ -1931,7 +2174,7 @@ SizedBox(width:5),
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.63,
+                                              0.55,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *

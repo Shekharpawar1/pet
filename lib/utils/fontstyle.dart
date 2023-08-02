@@ -8,7 +8,7 @@ class CustomTextStyle {
       fontWeight: FontWeight.w600,
       fontFamily: "ReemKufi-Regular");
 
-      static TextStyle yellowtext = const TextStyle(
+  static TextStyle yellowtext = const TextStyle(
       color: MyColors.yellow,
       fontSize: 16,
       fontWeight: FontWeight.w600,
@@ -68,6 +68,12 @@ class CustomTextStyle {
       fontWeight: FontWeight.w500,
       fontFamily: "Poppins");
 
+  static TextStyle popinstextsmal2222 = const TextStyle(
+      color: Colors.white,
+      fontSize: 8,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Poppins");
+
   static TextStyle popinstextsmall124 = const TextStyle(
       color: Colors.white,
       fontSize: 12,
@@ -90,37 +96,35 @@ class CustomTextStyle {
       color: Color(0xff000000),
       // color: black,
       fontSize: 14,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.bold,
       fontFamily: "Poppins");
 
-
- static TextStyle discounttext = const TextStyle(
+  static TextStyle discounttext = const TextStyle(
       //color:Color(0xff011624),
       color: Colors.grey,
       // color: black,
       fontSize: 12,
       fontWeight: FontWeight.w600,
-         decoration: TextDecoration.lineThrough,
+      decoration: TextDecoration.lineThrough,
       fontFamily: "Poppins");
 
-       static TextStyle offertext = const TextStyle(
+  static TextStyle offertext = const TextStyle(
       //color:Color(0xff011624),
       color: Colors.red,
       // color: black,
       fontSize: 12,
       fontWeight: FontWeight.w600,
-      
       fontFamily: "Poppins");
-      
+
   static TextStyle popinsboldlight = const TextStyle(
       color: Color(0xff0B154D),
       fontSize: 14,
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins");
-static TextStyle popinsboldblue = const TextStyle(
+  static TextStyle popinsboldblue = const TextStyle(
       color: MyColors.linearblue,
       fontSize: 25,
-        fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.bold,
       fontFamily: "Poppins");
   static TextStyle popinsboldlightsmall = const TextStyle(
       color: Color(0xff0B154D),
@@ -149,12 +153,12 @@ static TextStyle popinsboldblue = const TextStyle(
       fontWeight: FontWeight.w600,
       fontFamily: "Poppins");
 
-  static TextStyle popinssmallnormalpink= const TextStyle(
+  static TextStyle popinssmallnormalpink = const TextStyle(
       color: Color(0xffEF0940),
       fontSize: 10,
       //  fontWeight: FontWeight.w600,
       fontFamily: "Poppins");
-       static TextStyle popinssmallnormal = const TextStyle(
+  static TextStyle popinssmallnormal = const TextStyle(
       color: Color(0xff0B154D),
       fontSize: 12,
       //  fontWeight: FontWeight.w600,

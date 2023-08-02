@@ -4,12 +4,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
+import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/userAllReview.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/ordersummary.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:pet/screens/user/notification.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -23,6 +27,10 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   final ProductDetailsController productdetailscontroller =
       Get.put(ProductDetailsController());
+  final HomeuserController homeusercontroller = Get.put(HomeuserController());
+  final UserReviewController userreviewcontroller =
+      Get.put(UserReviewController());
+
   List kg = [1, 2, 5];
 
   @override
@@ -66,6 +74,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
                 height: MediaQuery.of(context).size.height * 0.4,
@@ -87,27 +96,116 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Icon(Icons.error), // Replace with your own error widget
                   ),
                 )),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Row(
+                children: kg
+                    .sublist(0, 3)
+                    .map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // var tab = e
+                            //
+                            //  e  *  ( widget.itemdetails.price) ;
+                            //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                          },
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      color: productdetailscontroller.isAdding
+                                          ? MyColors.pink
+                                          : MyColors.grey,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: imagePath,
+                                      width: 61,
+                                      height: 75,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(),
+                                      ), // Replace with your own placeholder widget
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons
+                                              .error), // Replace with your own error widget
+                                    ),
+                                  ),
+                                ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Text("$e Kg",
+                                //     style: CustomTextStyle.popinssmall0)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+                // [
+                //   Container(
+                //     child: Column(
+                //       children: [
+                //         Container(
+                //           height: 60,
+                //           width: 60,
+                //           decoration: BoxDecoration(
+                //               color: MyColors.pink,
+                //               borderRadius: BorderRadius.circular(15)),
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(8.0),
+                //             child: CachedNetworkImage(
+                //               imageUrl: imagePath,
+                //               width: 61,
+                //               height: 75,
+                //               placeholder: (context, url) => Center(
+                //                 child: CircularProgressIndicator(),
+                //               ), // Replace with your own placeholder widget
+                //               errorWidget: (context, url, error) => Icon(Icons
+                //                   .error), // Replace with your own error widget
+                //             ),
+                //           ),
+                //         ),
+                //         SizedBox(
+                //           height: 5,
+                //         ),
+                //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+                //       ],
+                //     ),
+                //   ),
+                //  ],
+              ),
+            ),
+
             Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text("Size", style: CustomTextStyle.popinstext),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: kg
                             .sublist(0, 3)
-                                                  .map(
-                                                    (e) => Padding(
-                                                      padding: const EdgeInsets.all(8.0),
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                            // var tab = e 
-                                            //
-                      //  e  *  ( widget.itemdetails.price) ;     
-                    //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                            .map(
+                              (e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // var tab = e
+                                    //
+                                    //  e  *  ( widget.itemdetails.price) ;
+                                    //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
                                   },
                                   child: Container(
                                     child: Column(
@@ -188,101 +286,105 @@ class _ProductDetailsState extends State<ProductDetails> {
                       SizedBox(
                         width: 20,
                       ),
-                    
                       Row(
-              children: [
-                Column(
-                  children: [
-                    Text( "" +( widget.itemdetails.price),style: CustomTextStyle.popinstext,),
-  Row(
-              children: [
-                Container(
-                    width: 25,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color:MyColors.yellow,
-                 borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: Center(
-                    child:Text("-",style: TextStyle(color:MyColors. black,fontSize: 18),)
-                    //  Icon(
-                    //   Icons.minimize,
-                    //   size: 8,
-                    //   color: Colors.white,
-                    // ),
-                  ),
-                ),
-                SizedBox(
-                  width: 3,
-                ),
-                Container(
-                    width: 30,
-                    height: 40,
-                    decoration: BoxDecoration(
-
-                        borderRadius:
-                            BorderRadius.circular(50),
-                      
-
-                        ),
-                    child: Center(
-                        child: Text(
-                      "4",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500),
-                    ))),
-                SizedBox(
-                  width: 3,
-                ),
-                Container(
-                  width: 25,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    //shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(10),
-color:MyColors.yellow
-                  ),
-                  child: Icon(
-                    Icons.add,size: 15,
-                    color: Colors.black
-                  ),
-                ),
-              ],
-            )
-
-
-
-                  ],
-                ),
-              ],
-            )
-            
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                      "₹" + widget.itemdetails.price.toString(),
+                                      style: CustomTextStyle.discounttext),
+                                  SizedBox(width: 3),
+                                  Container(
+                                    height: 20,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        color: MyColors.red,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border:
+                                            Border.all(color: MyColors.red)),
+                                    child: Center(
+                                      child: Text(
+                                          // item.discount.toString(),
+                                          "Save20%",
+                                          style: CustomTextStyle
+                                              .popinstextsmal2222),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                "₹" + (widget.itemdetails.price),
+                                style: CustomTextStyle.popinstext,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        color: MyColors.yellow,
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Center(
+                                        child: Text(
+                                      "-",
+                                      style: TextStyle(
+                                          color: MyColors.black, fontSize: 18),
+                                    )
+                                        //  Icon(
+                                        //   Icons.minimize,
+                                        //   size: 8,
+                                        //   color: Colors.white,
+                                        // ),
+                                        ),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Container(
+                                      width: 30,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        "4",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      ))),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                        //shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: MyColors.yellow),
+                                    child: Icon(Icons.add,
+                                        size: 15, color: Colors.black),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      )
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
- 
-       
-
-                   Row(children: [
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(width: 5,),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(width: 5,),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(width: 5,),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(width: 5,),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(width: 5,),
-                                Text("4.5")
-                                ],),
-                       SizedBox(height: MediaQuery.of(context).size.height * 0.04),          
                   Text(
                     "Product details",
                     style: CustomTextStyle.popinstext,
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Text(
                     widget.itemdetails.description,
                     style: CustomTextStyle.popinssmall0,
@@ -293,7 +395,7 @@ color:MyColors.yellow
                     "About Us",
                     style: CustomTextStyle.popinstext,
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Row(
                     children: [
                       Text(
@@ -426,16 +528,130 @@ color:MyColors.yellow
                   ),
                   //           SizedBox(height: MediaQuery.of(context).size.height*0.02),
                   //  Divider(color: lightdivider,thickness: 1,height: 1,),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Product Review",
+                        style: CustomTextStyle.popinstext,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(UserAllReview());
+                        },
+                        child: Text(
+                          "See All",
+                          style: CustomTextStyle.popinstext,
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
-                   Text(
-                    "Product Review",
-                    style: CustomTextStyle.popinstext,
-                  ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
-                    style: CustomTextStyle.popinssmall0,
-                  ),
+                  GetBuilder<UserReviewController>(
+                      init: userreviewcontroller,
+                      builder: (_) {
+                        return ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          itemCount: userreviewcontroller.getreviewList.length,
+                          itemBuilder: (context, index) {
+                            var item =
+                                userreviewcontroller.getreviewList[index];
+
+                            return ListView(
+                              primary: false,
+                              shrinkWrap: true,
+                              children: [
+                                Text(
+                                  item["title"],
+                                  style: CustomTextStyle.popinssmall0,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.01),
+                                Row(
+                                  children: [
+                                    RatingStars(
+                                      value: userreviewcontroller.value!,
+                                      // onValueChanged: (v) {
+                                      //   //
+                                      //   setState(() {
+                                      //     value = v;
+                                      //   });
+                                      // },
+                                      starBuilder: (index, color) => Icon(
+                                        Icons.star,
+                                        color: color,
+                                        size: 15,
+                                      ),
+                                      starCount: 5,
+                                      starSize: 20,
+                                      // valueLabelColor: const Color(0xff9b9b9b),
+                                      // valueLabelTextStyle: const TextStyle(
+                                      //     color: Colors.white,
+                                      //     fontWeight: FontWeight.w400,
+                                      //     fontStyle: FontStyle.normal,
+                                      //     fontSize: 12.0),
+                                      // valueLabelRadius: 10,
+                                      maxValue: 5,
+                                      starSpacing: 0.5,
+                                      maxValueVisibility: true,
+                                      valueLabelVisibility: false,
+                                      animationDuration:
+                                          Duration(milliseconds: 5000),
+                                      // valueLabelPadding:
+                                      //     const EdgeInsets.symmetric(
+                                      //         vertical: 1, horizontal: 8),
+                                      // valueLabelMargin:
+                                      //     const EdgeInsets.only(right: 8),
+                                      starOffColor: const Color(0xffe7e8ea),
+                                      starColor: MyColors.yellow,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Image.asset(item["image"], height: 30),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          item["name"],
+                                          style: CustomTextStyle.popinstext,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.person_2_outlined,
+                                              size: 13,
+                                            ),
+                                            Text(
+                                              item["count"],
+                                              style:
+                                                  CustomTextStyle.popinssmall0,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                              ],
+                            );
+                          },
+                        );
+                      }),
                   // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
