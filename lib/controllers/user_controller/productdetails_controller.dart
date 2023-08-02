@@ -9,7 +9,19 @@ class ProductDetailsController extends GetxController {
    int? selecttab;
 bool isAdding = false;
 
+
 int kg = 1;
+
+
+  String? dropdownsize;
+  List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
+  
+updateSize(String? selectTab){
+  dropdownsize = selectTab;
+  update();
+}
+
+
 
 updateSelectTab(int? selectTab){
   selecttab = selectTab;

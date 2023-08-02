@@ -194,95 +194,157 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: kg
-                            .sublist(0, 3)
-                            .map(
-                              (e) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // var tab = e
-                                    //
-                                    //  e  *  ( widget.itemdetails.price) ;
-                                    //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-                                  },
-                                  child: Container(
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 60,
-                                          width: 60,
-                                          decoration: BoxDecoration(
-                                              color: productdetailscontroller
-                                                      .isAdding
-                                                  ? MyColors.pink
-                                                  : MyColors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(15)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: CachedNetworkImage(
-                                              imageUrl: imagePath,
-                                              width: 61,
-                                              height: 75,
-                                              placeholder: (context, url) =>
-                                                  Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              ), // Replace with your own placeholder widget
-                                              errorWidget: (context, url,
-                                                      error) =>
-                                                  Icon(Icons
-                                                      .error), // Replace with your own error widget
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text("$e Kg",
-                                            style: CustomTextStyle.popinssmall0)
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                      // Row(
+                      //   children: kg
+                      //       .sublist(0, 3)
+                      //       .map(
+                      //         (e) => Padding(
+                      //           padding: const EdgeInsets.all(8.0),
+                      //           child: GestureDetector(
+                      //             onTap: () {
+                      //               // var tab = e
+                      //               //
+                      //               //  e  *  ( widget.itemdetails.price) ;
+                      //               //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                      //             },
+                      //             child: Container(
+                      //               child: Column(
+                      //                 children: [
+                      //                   Container(
+                      //                     height: 60,
+                      //                     width: 60,
+                      //                     decoration: BoxDecoration(
+                      //                         color: productdetailscontroller
+                      //                                 .isAdding
+                      //                             ? MyColors.pink
+                      //                             : MyColors.grey,
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(15)),
+                      //                     child: Padding(
+                      //                       padding: const EdgeInsets.all(8.0),
+                      //                       child: CachedNetworkImage(
+                      //                         imageUrl: imagePath,
+                      //                         width: 61,
+                      //                         height: 75,
+                      //                         placeholder: (context, url) =>
+                      //                             Center(
+                      //                           child:
+                      //                               CircularProgressIndicator(),
+                      //                         ), // Replace with your own placeholder widget
+                      //                         errorWidget: (context, url,
+                      //                                 error) =>
+                      //                             Icon(Icons
+                      //                                 .error), // Replace with your own error widget
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                   SizedBox(
+                      //                     height: 5,
+                      //                   ),
+                      //                   Text("$e Kg",
+                      //                       style: CustomTextStyle.popinssmall0)
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       )
+                      //       .toList(),
+                      //   // [
+                      //   //   Container(
+                      //   //     child: Column(
+                      //   //       children: [
+                      //   //         Container(
+                      //   //           height: 60,
+                      //   //           width: 60,
+                      //   //           decoration: BoxDecoration(
+                      //   //               color: MyColors.pink,
+                      //   //               borderRadius: BorderRadius.circular(15)),
+                      //   //           child: Padding(
+                      //   //             padding: const EdgeInsets.all(8.0),
+                      //   //             child: CachedNetworkImage(
+                      //   //               imageUrl: imagePath,
+                      //   //               width: 61,
+                      //   //               height: 75,
+                      //   //               placeholder: (context, url) => Center(
+                      //   //                 child: CircularProgressIndicator(),
+                      //   //               ), // Replace with your own placeholder widget
+                      //   //               errorWidget: (context, url, error) => Icon(Icons
+                      //   //                   .error), // Replace with your own error widget
+                      //   //             ),
+                      //   //           ),
+                      //   //         ),
+                      //   //         SizedBox(
+                      //   //           height: 5,
+                      //   //         ),
+                      //   //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+                      //   //       ],
+                      //   //     ),
+                      //   //   ),
+                      //   //  ],
+                      // ),
+                     
+                         Expanded(
+                           child: Padding(
+                                               padding: const EdgeInsets.all(8.0),
+                                               child: Container(
+                                                 height: 50,
+                                                 decoration: BoxDecoration(
+                                                  border: Border.all(color:MyColors.grey),
+                              color: Color.fromRGBO(255, 255, 255, 0.10),
+                              // boxShadow: [
+                              //   BoxShadow(
+                              //     offset: const Offset(0.0, 0.0),
+                              //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                              //     blurRadius: 0.0,
+                              //     spreadRadius: 0.0,
+                              //   ),
+                              // ],
+                              borderRadius: BorderRadius.circular(40)),
+                                                 child: DropdownButtonFormField<String>(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please select a tpye';
+                              }
+                              return null;
+                            },
+                            value: productdetailscontroller
+                                .dropdownsize, // Set the selected country value
+                            decoration: InputDecoration(
+                              hintText: "Kg",
+                              hintStyle: TextStyle(
+                                color: MyColors.black,
                               ),
-                            )
-                            .toList(),
-                        // [
-                        //   Container(
-                        //     child: Column(
-                        //       children: [
-                        //         Container(
-                        //           height: 60,
-                        //           width: 60,
-                        //           decoration: BoxDecoration(
-                        //               color: MyColors.pink,
-                        //               borderRadius: BorderRadius.circular(15)),
-                        //           child: Padding(
-                        //             padding: const EdgeInsets.all(8.0),
-                        //             child: CachedNetworkImage(
-                        //               imageUrl: imagePath,
-                        //               width: 61,
-                        //               height: 75,
-                        //               placeholder: (context, url) => Center(
-                        //                 child: CircularProgressIndicator(),
-                        //               ), // Replace with your own placeholder widget
-                        //               errorWidget: (context, url, error) => Icon(Icons
-                        //                   .error), // Replace with your own error widget
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         SizedBox(
-                        //           height: 5,
-                        //         ),
-                        //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-                        //       ],
-                        //     ),
-                        //   ),
-                        //  ],
-                      ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 2),
+                              border: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
+                              // iconColor: MyColors.white,
+                            ),
+                            icon: Icon(
+                              Icons.arrow_drop_down,
+                              color: MyColors.black,
+                            ),
+                            style: TextStyle(fontSize: 16, color: MyColors.black),
+                            items: productdetailscontroller
+                                .sizeDropDownList
+                                .map((String type) {
+                              return DropdownMenuItem<String>(
+                                value: type,
+                                child: Text(type),
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              productdetailscontroller
+                                  .updateSize(value ?? "");
+                              // Perform actions when country is changed
+                            },
+                                                 ),
+                                               ),
+                                             ),
+                         ),
+                     
                       SizedBox(
                         width: 20,
                       ),

@@ -8,6 +8,8 @@ import 'package:pet/screens/partner/partneraddress.dart';
 
 import 'package:pet/screens/swepcard.dart';
 import 'package:pet/screens/user/payment.dart';
+import 'package:pet/screens/user/userAddress.dart';
+import 'package:pet/screens/user/usercouponPage.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
@@ -68,7 +70,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Icon(Icons.edit_outlined),
+                                // Icon(Icons.edit_outlined),
                                 SizedBox(
                                   width: 10,
                                 ),
@@ -420,7 +422,42 @@ class _AddToCardUserState extends State<AddToCardUser> {
                     ),
                   ],
                 )),
+   GestureDetector(
 
+      onTap: () {
+                          Get.to( UsercouponPage());
+                        },
+    
+     child: Container(
+                height: MediaQuery.of(context).size.height * 0.06,
+                width: MediaQuery.of(context).size.width,
+                decoration:BoxDecoration(
+                  color:  MyColors.blue123,
+                  borderRadius: BorderRadius.circular(20)
+                ) ,
+                
+                child:Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                Row(
+                  children: [
+                        Image.asset("assets/image/applycodeimg.png"),
+                    
+                    SizedBox(width: 10,),
+                    Text("Apply coupon", style: CustomTextStyle.popinslight ,),
+                  ],
+                ),
+                Icon(Icons.arrow_forward_ios_outlined,size: 18,),
+                
+                  ],),
+                )
+                ),
+   ),
+        
+         SizedBox(
+                      height: 20,
+                    ),
             Container(
               height: MediaQuery.of(context).size.height * 0.26,
               width: MediaQuery.of(context).size.width,
@@ -537,16 +574,149 @@ class _AddToCardUserState extends State<AddToCardUser> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.43,
+                              width: MediaQuery.of(context).size.width * 0.48,
                               child: Text(
-                                  "Lorem Ipsum is simply dummy text of the printing.",
+                                  "Delivery at Behind C2,Malviya Nagar,Mumbai",
                                   style: CustomTextStyle.popinstext)),
                         ],
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(PartnerAddress());
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
+                        
+                       
+
+                      showModalBottomSheet(
+  isScrollControlled: true,
+  context: context,
+  backgroundColor: Colors.transparent,
+  builder: (context) => Container(
+    padding: EdgeInsets.only(
+      bottom: MediaQuery.of(context).viewInsets.bottom,
+    ),
+    child: Container(
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: Icon(Icons.cancel),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+       
+       Container(
+        height: MediaQuery.of(context).size.height*0.2,
+        width:MediaQuery.of(context).size.width,
+        decoration:BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color:MyColors.grey)
+        ),
+        child:Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+        
+        
+             Text(
+                      "Dev Soni",
+                      style: CustomTextStyle.popinstext,
+                    ),
+                    
+             Text(
+                      "N7/19-R-3-A-A1,vivek niwas",
+                      style: CustomTextStyle.popinssmallnormal,
+                    ),
+          Text(
+                      "Ind Road",
+                      style: CustomTextStyle.popinssmallnormal,
+                    ),
+                     Text(
+                      "Mumbai,Maharashtra 40051",
+                      style: CustomTextStyle.popinssmallnormal,
+                    ),
+                  Text(
+                      "Phone number:798727373",
+                      style: CustomTextStyle.popinssmallnormal,
+                    ),
+
+
+SizedBox(height:10),
+                    Row(children:[
+                      Container(
+                      height:25,
+                       decoration:BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color:MyColors.grey)
+        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Center(child: Text("Edit",style: CustomTextStyle.popinssmallnormal,)),
+                        )),
+                      SizedBox(width:5),
+                      
+                      Container(
+                      height:25,
+                       decoration:BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color:MyColors.grey)
+        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Center(child: Text("Delete",style: CustomTextStyle.popinssmallnormal,)),
+                        )),
+                     SizedBox(width:5),
+                      
+                      Container(
+                      height:25,
+                       decoration:BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color:MyColors.grey)
+        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
+                          child: Center(child: Text("Set as Default",style: CustomTextStyle.popinssmallnormal,)),
+                        )),
+                    
+                    
+                    ])
+          ],),
+        )
+
+       ),
+       
+
+
+          Center(
+            child: ElevatedButton(
+              style:  ElevatedButton.styleFrom(
+              primary: MyColors.yellow,
+            ),
+              onPressed: () {
+               Get.to(PaymentUser());
+              },
+              child: Text('Save Address',style:CustomTextStyle.popinssmall,),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+);
+
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.35,
@@ -566,7 +736,37 @@ class _AddToCardUserState extends State<AddToCardUser> {
                 ),
               ),
             ),
+ SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
+            ),
 
+InkWell(
+  onTap:(){
+Get.to(UserAddress());
+  },
+
+  child:   Row(
+  
+  
+  
+    children: [
+  
+  
+  
+      Icon(Icons.add,size: 15,color:MyColors.yellow),
+  
+  
+  
+          Text("Add new address", style:CustomTextStyle.yellowtextnormal),
+  
+  
+  
+    ],
+  
+  
+  
+  ),
+),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Container(
               height: MediaQuery.of(context).size.height * 0.09,
