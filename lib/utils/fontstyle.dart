@@ -85,6 +85,12 @@ class CustomTextStyle {
       fontSize: 22,
       fontWeight: FontWeight.bold,
       fontFamily: "Poppins");
+
+      static TextStyle yellowtextnormal = const TextStyle(
+      color: MyColors.yellow,
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+      fontFamily: "Poppins");
   static TextStyle popinstext = const TextStyle(
       color: Colors.black,
       fontSize: 14,
