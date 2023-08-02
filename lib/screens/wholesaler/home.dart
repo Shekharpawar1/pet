@@ -64,8 +64,8 @@ class _HomeWholeState extends State<HomeWhole> {
           SizedBox(width: 20),
           InkWell(
             onTap: () {
-                Get.to(OrderSummarywhole());
-              },
+              Get.to(OrderSummarywhole());
+            },
             child: Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: SvgPicture.asset("assets/image/bag.svg"),
@@ -98,9 +98,7 @@ class _HomeWholeState extends State<HomeWhole> {
                         style: CustomTextStyle.popinstext,
                       )),
 
-                  GestureDetector(
-                    
-                    child: Image.asset("assets/image/girl.png"))
+                  GestureDetector(child: Image.asset("assets/image/girl.png"))
                   //  SvgPicture.asset("assets/image/girl.svg"),
                 ],
               ),
@@ -108,25 +106,26 @@ class _HomeWholeState extends State<HomeWhole> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
-            GetBuilder<WholeHomeController>(
+              GetBuilder<WholeHomeController>(
                 init: wholehomecontroller,
                 builder: (_) {
                   return wholehomecontroller.wholeBannerModel == null
                       ? SizedBox()
-                      : CarouselSlider.builder( 
-                          itemCount:
-                              wholehomecontroller.wholeBannerModel!.data!.length,
+                      : CarouselSlider.builder(
+                          itemCount: wholehomecontroller
+                              .wholeBannerModel!.data!.length,
                           options: CarouselOptions(
                             aspectRatio: 16 / 9,
-                viewportFraction: 0.9,
-                initialPage: 0,
-                enableInfiniteScroll: true,
-                reverse: false,
-                autoPlay: true,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
+                            viewportFraction: 0.9,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            reverse: false,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 800),
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
                           ),
                           itemBuilder: (context, index, realIdx) {
                             var item = wholehomecontroller
@@ -138,13 +137,13 @@ class _HomeWholeState extends State<HomeWhole> {
                               children: [
                                 // Image.asset(item["image"]),
                                 Container(
-                                    // width: 335,
-                                    height: 140,
-                                    //  decoration: BoxDecoration(
-                                    //   borderRadius: BorderRadius.circular(25)
-                                    //  ),
+                                  // width: 335,
+                                  height: 140,
+                                  //  decoration: BoxDecoration(
+                                  //   borderRadius: BorderRadius.circular(25)
+                                  //  ),
                                   child: CachedNetworkImage(
-                                    imageUrl: imagePath,fit: BoxFit.cover,
+                                    imageUrl: imagePath, fit: BoxFit.cover,
                                     // width: 61,
                                     // height: 75,
                                     placeholder: (context, url) => Center(
@@ -176,8 +175,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                 //             style: CustomTextStyle
                                 //                 .popinstextsmall12,
                                 //           )),
-              
-              
+
                                 //       SizedBox(
                                 //         height:
                                 //             MediaQuery.of(context).size.height *
@@ -200,15 +198,12 @@ class _HomeWholeState extends State<HomeWhole> {
                                 //                   CustomTextStyle.popinssmall1,
                                 //             ))),
                                 //       )
-                                 
-                                 
+
                                 //     ],
                                 //   ),
                                 // ),
                               ],
                             );
-
-
 
                             // Container(
                             //   child: Center(
@@ -216,11 +211,9 @@ class _HomeWholeState extends State<HomeWhole> {
                             //           fit: BoxFit.cover, )),
                             // );
                           });
-                    },
-                  ),
+                },
+              ),
 
-          
-                    
               // SizedBox(
               //   height: MediaQuery.of(context).size.height * 0.02,
               // ),
@@ -250,10 +243,10 @@ class _HomeWholeState extends State<HomeWhole> {
                           contentPadding: EdgeInsets.only(left: 15),
                           fillColor: MyColors.white,
                           focusColor: MyColors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            // borderRadius: BorderRadius.circular(50),
-                          ),
+                          enabledBorder:
+                              OutlineInputBorder(borderSide: BorderSide.none
+                                  // borderRadius: BorderRadius.circular(50),
+                                  ),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             //  borderRadius: BorderRadius.circular(50),
@@ -279,7 +272,7 @@ class _HomeWholeState extends State<HomeWhole> {
 
                   //  SizedBox(width: 10,),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Get.to(FilterScreen());
                     },
                     child: Container(
@@ -414,156 +407,164 @@ class _HomeWholeState extends State<HomeWhole> {
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
+              GetBuilder<WholeHomeController>(
+                  init: wholehomecontroller,
+                  builder: (_) {
+                    return wholehomecontroller.propertyLoaded == null
+                        ? SizedBox()
+                        : Container(
+                            // height: 600,
+                            child: GridView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 150,
+                                        childAspectRatio: 3 / 2,
+                                        mainAxisExtent: 270,
+                                        crossAxisSpacing: 15,
+                                        mainAxisSpacing: 15),
+                                itemCount: wholehomecontroller
+                                    .userPropertiesModel!.data!.length
+                                    .clamp(0, 4),
+                                itemBuilder: (BuildContext ctx, index) {
+                                  var item = wholehomecontroller
+                                      .userPropertiesModel!.data![index];
 
-    GetBuilder<WholeHomeController>(
-                init: wholehomecontroller,
-                builder: (_) {
-                  return wholehomecontroller.propertyLoaded == null
-                      ? SizedBox()
-                      :
-                    Container(
-                        // height: 600,
-                        child: GridView.builder(
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 150,
-                                childAspectRatio: 3 / 2,
-                                mainAxisExtent: 270,
-                                crossAxisSpacing: 15,
-                                mainAxisSpacing: 15),
-                            itemCount: wholehomecontroller
-                                .userPropertiesModel!.data!.length
-                                .clamp(0, 4)
-                                ,
-                            itemBuilder: (BuildContext ctx, index) {
-                              var item = wholehomecontroller
-                                  .userPropertiesModel!.data![index];
-
-                              var imagePath =
-                                  "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
-                              print(imagePath);
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetailswhole(
-                                            itemdetails: item,
-                                          )));
-                                },
-                                child: Container(
-                                  width: 140,
-                                  // height: 700,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: MyColors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.3),
-                                        spreadRadius: 3,
-                                        blurRadius: 7,
-                                        offset:
-                                            Offset(0, 3), // Offset of the shadow
-                                      ),
-                                    ],
-                                    // color: MyColors.white
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        height: 125,
-
-                                        // decoration: BoxDecoration(
-                                        //     borderRadius: BorderRadius.circular(30),
-                                        //     color: MyColors.white),
-                                        child: CachedNetworkImage(
-                                          imageUrl: imagePath,
-                                          width: 61,
-                                          height: 75,
-                                          placeholder: (context, url) => Center(
-                                            child: CircularProgressIndicator(),
-                                          ), // Replace with your own placeholder widget
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons
-                                                  .error), // Replace with your own error widget
-                                        ),
-                                      ),
-
-                                      // SizedBox(height: 15,),
-
-                                      Container(
-                                        height: 145,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10.0, right: 5, top: 5),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(item.name!,
-                                                  style:
-                                                      CustomTextStyle.popinsmedium),
-                                              Text(item.description.toString(),
-                                                  style:
-                                                      CustomTextStyle.popinssmall0),
-                                              // SizedBox(height: 3),
-
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    item.price!,
-                                                    style: CustomTextStyle
-                                                        .popinsmedium,
-                                                  ),
-
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        right: 5.0),
-                                                    child: Container(
-                                                        width: 35,
-                                                        height: 35,
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(10),
-                                                            color:
-                                                                Color(0xffffcc00)),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.all(5.0),
-                                                          child: Image.asset(
-                                                            "assets/image/bag2.png",
-                                                            height: 25,
-                                                          ),
-                                                        )),
-                                                  )
-                                                  // Image.asset(
-                                                  //   "assets/image/yellowbag.png",
-                                                  //   height: 80,
-                                                  // )
-                                                ],
-                                              )
-                                            ],
+                                  var imagePath =
+                                      "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                  print(imagePath);
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ProductDetailswhole(
+                                                    itemdetails: item,
+                                                  )));
+                                    },
+                                    child: Container(
+                                      width: 140,
+                                      // height: 700,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: MyColors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.3),
+                                            spreadRadius: 3,
+                                            blurRadius: 7,
+                                            offset: Offset(
+                                                0, 3), // Offset of the shadow
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                      );
-                  }
-                ),
+                                        ],
+                                        // color: MyColors.white
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 125,
 
-                
+                                            // decoration: BoxDecoration(
+                                            //     borderRadius: BorderRadius.circular(30),
+                                            //     color: MyColors.white),
+                                            child: CachedNetworkImage(
+                                              imageUrl: imagePath,
+                                              width: 61,
+                                              height: 75,
+                                              placeholder: (context, url) =>
+                                                  Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              ), // Replace with your own placeholder widget
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Icon(Icons
+                                                      .error), // Replace with your own error widget
+                                            ),
+                                          ),
+
+                                          // SizedBox(height: 15,),
+
+                                          Container(
+                                            height: 145,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10.0, right: 5, top: 5),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(item.name!,
+                                                      style: CustomTextStyle
+                                                          .popinsmedium),
+                                                  Text(
+                                                      item.description
+                                                          .toString(),
+                                                      style: CustomTextStyle
+                                                          .popinssmall0),
+                                                  // SizedBox(height: 3),
+
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        item.price!,
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                right: 5.0),
+                                                        child: Container(
+                                                            width: 35,
+                                                            height: 35,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                color: Color(
+                                                                    0xffffcc00)),
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(5.0),
+                                                              child:
+                                                                  Image.asset(
+                                                                "assets/image/bag2.png",
+                                                                height: 25,
+                                                              ),
+                                                            )),
+                                                      )
+                                                      // Image.asset(
+                                                      //   "assets/image/yellowbag.png",
+                                                      //   height: 80,
+                                                      // )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                          );
+                  }),
+
               // !wholehomecontroller.propertyLoaded
               //     ? SizedBox()
               //     : GetBuilder<WholeHomeController>(
