@@ -12,7 +12,7 @@ bool isAdding = false;
 
 int kg = 1;
 
-
+ var sizecount = 0;
   String? dropdownsize;
   List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
   
@@ -21,7 +21,18 @@ updateSize(String? selectTab){
   update();
 }
 
+void  incrementSize(){
+sizecount++;
+    update(); 
+  }
 
+decrementSize(){
+  if (sizecount > 0) {
+      sizecount--;
+      update(); 
+    }
+
+}
 
 updateSelectTab(int? selectTab){
   selecttab = selectTab;

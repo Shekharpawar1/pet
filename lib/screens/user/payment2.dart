@@ -57,16 +57,16 @@ class _Payment2UserState extends State<Payment2User> {
             fontWeight: FontWeight.w700,
           ),
         )),
-        actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
+        // actions: [
+        //   //  SvgPicture.asset("assets/image/girl.svg"),
 
-          // SizedBox(width: 20),
-          InkWell(
-              onTap: () {
-                Get.to(NotificationWhole());
-              },
-              child: SvgPicture.asset("assets/image/notification.svg")),
-        ],
+        //   // SizedBox(width: 20),
+        //   InkWell(
+        //       onTap: () {
+        //         Get.to(NotificationWhole());
+        //       },
+        //       child: SvgPicture.asset("assets/image/notification.svg")),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Padding(

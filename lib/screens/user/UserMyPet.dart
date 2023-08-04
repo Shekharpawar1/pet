@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/myPetController.dart';
+import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/Mypetdetails.dart';
@@ -30,23 +31,111 @@ class Mypet extends StatelessWidget {
         // ),
 
         actions: [
-          InkWell(
-              onTap: () {
-                Get.to(NotificationUser());
-              },
-              child: SvgPicture.asset(
-                "assets/image/notification.svg",
-                color: MyColors.white,
-              )),
-          // Image.asset("assets/image/cartimg.png"),
-          SizedBox(width: 20),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: SvgPicture.asset(
-              "assets/image/bag.svg",
-              color: MyColors.white,
-            ),
+           
+
+                  
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                    Get.to(NotificationUser());
+                  },
+                  child: Center(child:Icon(Icons.notifications,color:MyColors.white,),)),
+ 
+
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: MyColors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
           ),
+    
+               SizedBox(width: 20),
+
+
+          
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                       Get.to(AddToCardUser());
+                 
+                  },
+                  child: Center(child: SvgPicture.asset("assets/image/bag.svg", color: Colors.white,))),
+ 
+// (getCardModel!.data!.isEmpty)?
+// SizedBox():
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
+          ),
+    
+    SizedBox(width: 20,)
+    
+        // ],
+        //   InkWell(
+        //       onTap: () {
+        //         Get.to(NotificationUser());
+        //       },
+        //       child: SvgPicture.asset(
+        //         "assets/image/notification.svg",
+        //         color: MyColors.white,
+        //       )),
+        //   // Image.asset("assets/image/cartimg.png"),
+        //   SizedBox(width: 20),
+        //   Padding(
+        //     padding: EdgeInsets.only(right: 20.0),
+        //     child: SvgPicture.asset(
+        //       "assets/image/bag.svg",
+        //       color: MyColors.white,
+        //     ),
+        //   ),
         ],
 
         title: Text(

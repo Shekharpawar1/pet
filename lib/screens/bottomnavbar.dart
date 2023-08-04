@@ -32,7 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomeUser(),
     ServicePage(),
     Mypet(),
-    Profile(),
+    UserProfile(),
   ];
 
   @override

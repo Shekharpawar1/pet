@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:pet/others/Filter.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/screens/oubranddetails.dart';
 
@@ -109,15 +111,19 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
           ),
      
     //  SizedBox(width: 10,),
-     Container(width: 45,
-height: 45,
-decoration: BoxDecoration(
-borderRadius: BorderRadius.circular(15),
-color: Color(0xffffcc00)),
-child: Padding(
-  padding: const EdgeInsets.all(10.0),
-  child:   Image.asset("assets/image/filter3.png",),
-))
+     GestureDetector(
+        onTap: () {
+                    Get.to(FilterScreen());},
+       child: Container(width: 45,
+     height: 45,
+     decoration: BoxDecoration(
+     borderRadius: BorderRadius.circular(15),
+     color: Color(0xffffcc00)),
+     child: Padding(
+       padding: const EdgeInsets.all(10.0),
+       child:   Image.asset("assets/image/filter3.png",),
+     )),
+     )
 
          ],),
      

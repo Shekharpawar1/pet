@@ -4,9 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addresscontroller.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/screens/partner/partneraddress.dart';
 
 import 'package:pet/screens/swepcard.dart';
+import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/payment.dart';
 import 'package:pet/screens/user/userAddress.dart';
 import 'package:pet/screens/user/usercouponPage.dart';
@@ -21,6 +24,9 @@ class AddToCardUser extends StatefulWidget {
 }
 
 class _AddToCardUserState extends State<AddToCardUser> {
+  AddressController addressController = Get.put( AddressController());
+  AddToCartController addtocartController = Get.put(AddToCartController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,11 +39,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
-              Icons.arrow_back_ios,
-              color: MyColors.black,
-              size: 20,
-            ),
+             child: Icon(Icons.arrow_left, color: MyColors.black)
           ),
         ),
         title: Center(
@@ -45,6 +47,93 @@ class _AddToCardUserState extends State<AddToCardUser> {
           "Add to Cart",
           style: CustomTextStyle.appbartext,
         )),
+     actions: [
+        
+
+                  
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                     Get.to(NotificationUser());
+                  },
+                  child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
+ 
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
+          ),
+    
+                SizedBox(width: 20),
+ Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                      Get.to(AddToCardUser());
+                   
+                  },
+                  child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+ 
+// (getCardModel!.data!.isEmpty)?
+// SizedBox():
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
+          ),
+    
+    SizedBox(width: 20,)
+    
+        ], 
+      
+      
       ),
       body: Padding(
         padding: EdgeInsets.all(15),
@@ -57,249 +146,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                 height: MediaQuery.of(context).size.height * 0.66,
                 child: Column(
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: MyColors.boxbgcolor),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // Icon(Icons.edit_outlined),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      //  items.removeAt(index);
-                                    },
-                                    child: Icon(Icons.delete_outline)),
-                              ],
-                            ),
-                          ),
-                          Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Image.asset(
-                                "assets/image/fooddog.png",
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Mars Petcare Inc",
-                                  style: CustomTextStyle.popinsmedium,
-                                ),
-                                Text("with paneer or cottage cheese",
-                                    style: CustomTextStyle.popinssmall0),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "₹ 620.00",
-                                      style: CustomTextStyle.popinsmedium,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              color: MyColors.yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Center(
-                                              child: Text(
-                                            "-",
-                                            style: TextStyle(
-                                                color: MyColors.black,
-                                                fontSize: 18),
-                                          )
-                                              //  Icon(
-                                              //   Icons.minimize,
-                                              //   size: 8,
-                                              //   color: Colors.white,
-                                              // ),
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                            width: 35,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              "4",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            ))),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              //shape: BoxShape.rectangle,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: MyColors.yellow),
-                                          child: Icon(Icons.add,
-                                              size: 15, color: Colors.black),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
-                          ]),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: MyColors.boxbgcolor),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Icon(Icons.edit_outlined),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      //  items.removeAt(index);
-                                    },
-                                    child: Icon(Icons.delete_outline)),
-                              ],
-                            ),
-                          ),
-                          Row(children: [
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Image.asset(
-                                "assets/image/fooddog.png",
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Mars Petcare Inc",
-                                  style: CustomTextStyle.popinsmedium,
-                                ),
-                                Text("with paneer or cottage cheese",
-                                    style: CustomTextStyle.popinssmall0),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "₹ 620.00",
-                                      style: CustomTextStyle.popinsmedium,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              color: MyColors.yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Center(
-                                              child: Text(
-                                            "-",
-                                            style: TextStyle(
-                                                color: MyColors.black,
-                                                fontSize: 18),
-                                          )
-                                              //  Icon(
-                                              //   Icons.minimize,
-                                              //   size: 8,
-                                              //   color: Colors.white,
-                                              // ),
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                            width: 35,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              "4",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            ))),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              //shape: BoxShape.rectangle,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: MyColors.yellow),
-                                          child: Icon(Icons.add,
-                                              size: 15, color: Colors.black),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
-                          ]),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
+                     Container(
                       height: MediaQuery.of(context).size.height * 0.18,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -355,59 +202,331 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     ),
                                     Row(
                                       children: [
-                                        Container(
-                                          width: 30,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.rectangle,
-                                              color: MyColors.yellow,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Center(
-                                              child: Text(
-                                            "-",
-                                            style: TextStyle(
-                                                color: MyColors.black,
-                                                fontSize: 18),
-                                          )
-                                              //  Icon(
-                                              //   Icons.minimize,
-                                              //   size: 8,
-                                              //   color: Colors.white,
-                                              // ),
-                                              ),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                            width: 35,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                            ),
-                                            child: Center(
-                                                child: Text(
-                                              "4",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            ))),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          height: 25,
-                                          decoration: BoxDecoration(
-                                              //shape: BoxShape.rectangle,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: MyColors.yellow),
-                                          child: Icon(Icons.add,
-                                              size: 15, color: Colors.black),
-                                        ),
-                                      ],
+                                          GestureDetector(
+                                    onTap: (){
+                                      addtocartController.decrementSize();
+                                    },
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          color: MyColors.yellow,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child:  Icon(Icons.remove,
+                                          size: 15, color: Colors.black),
+                                          //  Icon(
+                                          //   Icons.minimize,
+                                          //   size: 8,
+                                          //   color: Colors.white,
+                                          // ),
+                                          
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+
+  GetBuilder<AddToCartController>(
+                  init: addtocartController,
+                  builder: (_) {
+                    return
+                                  Container(
+                                      width: 30,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        addtocartController.sizecount.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      )));
+                  }),   
+                                  
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  GestureDetector(
+                                     onTap: (){
+                                      addtocartController.incrementSize();
+                                    },
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                          //shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: MyColors.yellow),
+                                      child: Icon(Icons.add,
+                                          size: 15, color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                                    )
+                                  ],
+                                )
+                              ],
+                            )
+                          ]),
+                        ],
+                      ),
+                    ),
+                     SizedBox(
+                      height: 20,
+                    ),
+                     Container(
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: MyColors.boxbgcolor),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Icon(Icons.edit_outlined),
+                                // SizedBox(
+                                //   width: 10,
+                                // ),
+                                InkWell(
+                                    onTap: () {
+                                    
+                                    },
+                                    child: Icon(Icons.delete_outline)),
+                              ],
+                            ),
+                          ),
+                          Row(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Image.asset(
+                                "assets/image/fooddog.png",
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Mars Petcare Inc",
+                                  style: CustomTextStyle.popinsmedium,
+                                ),
+                                Text("with paneer or cottage cheese",
+                                    style: CustomTextStyle.popinssmall0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "₹ 620.00",
+                                      style: CustomTextStyle.popinsmedium,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Row(
+                                      children: [
+                                          GestureDetector(
+                                    onTap: (){
+                                      addtocartController.decrementSize();
+                                    },
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          color: MyColors.yellow,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child:  Icon(Icons.remove,
+                                          size: 15, color: Colors.black),
+                                          //  Icon(
+                                          //   Icons.minimize,
+                                          //   size: 8,
+                                          //   color: Colors.white,
+                                          // ),
+                                          
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+
+  GetBuilder<AddToCartController>(
+                  init: addtocartController,
+                  builder: (_) {
+                    return
+                                  Container(
+                                      width: 30,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        addtocartController.sizecount.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      )));
+                  }),   
+                                  
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  GestureDetector(
+                                     onTap: (){
+                                      addtocartController.incrementSize();
+                                    },
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                          //shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: MyColors.yellow),
+                                      child: Icon(Icons.add,
+                                          size: 15, color: Colors.black),
+                                    ),
+                                  ),
+                                ],
+                                    )
+                                  ],
+                                )
+                              ],
+                            )
+                          ]),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: MyColors.boxbgcolor),
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Icon(Icons.edit_outlined),
+                                // SizedBox(
+                                //   width: 10,
+                                // ),
+                                InkWell(
+                                    onTap: () {
+                                        // items.removeAt(index);
+                                    },
+                                    child: Icon(Icons.delete_outline)),
+                              ],
+                            ),
+                          ),
+                          Row(children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Image.asset(
+                                "assets/image/fooddog.png",
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Mars Petcare Inc",
+                                  style: CustomTextStyle.popinsmedium,
+                                ),
+                                Text("with paneer or cottage cheese",
+                                    style: CustomTextStyle.popinssmall0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "₹ 620.00",
+                                      style: CustomTextStyle.popinsmedium,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Row(
+                                      children: [
+                                          GestureDetector(
+                                    onTap: (){
+                                      addtocartController.decrementSize();
+                                    },
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.rectangle,
+                                          color: MyColors.yellow,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child:  Icon(Icons.remove,
+                                          size: 15, color: Colors.black),
+                                          //  Icon(
+                                          //   Icons.minimize,
+                                          //   size: 8,
+                                          //   color: Colors.white,
+                                          // ),
+                                          
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+
+  GetBuilder<AddToCartController>(
+                  init: addtocartController,
+                  builder: (_) {
+                    return
+                                  Container(
+                                      width: 30,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        addtocartController.sizecount.toString(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500),
+                                      )));
+                  }),   
+                                  
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  GestureDetector(
+                                     onTap: (){
+                                      addtocartController.incrementSize();
+                                    },
+                                    child: Container(
+                                      width: 25,
+                                      height: 25,
+                                      decoration: BoxDecoration(
+                                          //shape: BoxShape.rectangle,
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: MyColors.yellow),
+                                      child: Icon(Icons.add,
+                                          size: 15, color: Colors.black),
+                                    ),
+                                  ),
+                                ],
                                     )
                                   ],
                                 )
@@ -576,7 +695,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                           SizedBox(
                               width: MediaQuery.of(context).size.width * 0.48,
                               child: Text(
-                                  "Delivery at Behind C2,Malviya Nagar,Mumbai",
+                                 addressController.isselected.toString(),
                                   style: CustomTextStyle.popinstext)),
                         ],
                       ),
@@ -618,87 +737,128 @@ class _AddToCardUserState extends State<AddToCardUser> {
             ],
           ),
        
-       Container(
-        height: MediaQuery.of(context).size.height*0.2,
-        width:MediaQuery.of(context).size.width,
-        decoration:BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color:MyColors.grey)
-        ),
-        child:Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-        
-        
-             Text(
-                      "Dev Soni",
-                      style: CustomTextStyle.popinstext,
-                    ),
-                    
-             Text(
-                      "N7/19-R-3-A-A1,vivek niwas",
-                      style: CustomTextStyle.popinssmallnormal,
-                    ),
-          Text(
-                      "Ind Road",
-                      style: CustomTextStyle.popinssmallnormal,
-                    ),
-                     Text(
-                      "Mumbai,Maharashtra 40051",
-                      style: CustomTextStyle.popinssmallnormal,
-                    ),
-                  Text(
-                      "Phone number:798727373",
-                      style: CustomTextStyle.popinssmallnormal,
-                    ),
+        GetBuilder<AddressController>(
+                  init: addressController,
+                  builder: (_) {
+                    return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: addressController.addaddressall.length,
+                      itemBuilder: (context, index) {
+                        var item = addressController.addaddressall[index];
+
+                        return 
+      
+           Padding(
+             padding:  EdgeInsets.all(10),
+             child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              height: MediaQuery.of(context).size.height*0.2,
+              width:MediaQuery.of(context).size.width,
+              decoration:BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color:MyColors.grey)
+              ),
+              child:Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+              
+              
+                   Text(
+                            item!.firstname.toString(),
+                            style: CustomTextStyle.popinstext,
+                          ),
+                          
+                   Text(
+                            item!.lastname.toString(),
+                            style: CustomTextStyle.popinssmallnormal,
+                          ),
+                Text(
+                           item.address1.toString(),
+                            style: CustomTextStyle.popinssmallnormal,
+                          ),
+                           Text(
+                          item.address2.toString(),
+                            style: CustomTextStyle.popinssmallnormal,
+                          ),
+                        Text(
+                            "Phone number:${item.number.toString()}",
+                            style: CustomTextStyle.popinssmallnormal,
+                          ),
+           
+           
+           SizedBox(height:10),
+                          Row(children:[
+                            InkWell(
+                              onTap:(){
+                                Get.to(UserAddress());
+                              },
+                              child: Container(
+                              height:25,
+                                  width: 60,
+                               decoration:BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color:MyColors.grey)
+                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Center(child: Text("Edit",style: CustomTextStyle.popinssmallnormal,)),
+                                )),
+                            ),
+                            SizedBox(width:5),
+                            
+                            InkWell(
+                              onTap: (){
+                                 addressController.removeaddress(index);
+                              },
+                              child: Container(
+                              height:25,
+                              width: 60,
+                               decoration:BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color:MyColors.grey)
+                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Center(child: Text("Delete",style: CustomTextStyle.popinssmallnormal,)),
+                                )),
+                            ),
+                           SizedBox(width:5),
+                            
+                            GestureDetector(
+                              onTap: (){
+               // addressController.areaaddressController.toString();
+            addressController.chooseaddress(index);
+            Get.back();
+                              },
+                              child: Container(
+                              height:25,
+                                  width: 60,
+                               decoration:BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color:MyColors.grey)
+                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Center(child: Text("Choose",style: CustomTextStyle.popinssmallnormal,)),
+                                )),
+                            ),
+                          
+                          
+                          ])
+                ],),
+              )
+           
+             ),
+           );
+      
+           },
+                    );
+                  }),
 
 
-SizedBox(height:10),
-                    Row(children:[
-                      Container(
-                      height:25,
-                       decoration:BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color:MyColors.grey)
-        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Center(child: Text("Edit",style: CustomTextStyle.popinssmallnormal,)),
-                        )),
-                      SizedBox(width:5),
-                      
-                      Container(
-                      height:25,
-                       decoration:BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color:MyColors.grey)
-        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Center(child: Text("Delete",style: CustomTextStyle.popinssmallnormal,)),
-                        )),
-                     SizedBox(width:5),
-                      
-                      Container(
-                      height:25,
-                       decoration:BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color:MyColors.grey)
-        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Center(child: Text("Set as Default",style: CustomTextStyle.popinssmallnormal,)),
-                        )),
-                    
-                    
-                    ])
-          ],),
-        )
-
-       ),
-       
-
+SizedBox(height: 10,),
 
           Center(
             child: ElevatedButton(
@@ -769,7 +929,7 @@ Get.to(UserAddress());
 ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Container(
-              height: MediaQuery.of(context).size.height * 0.09,
+              // height: MediaQuery.of(context).size.height * 0.09,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
@@ -783,8 +943,61 @@ Get.to(UserAddress());
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        //  Row(
+                        //         children: [
+                        //           Text(
+                        //               "₹ 620",
+                        //               style: CustomTextStyle.discounttext),
+                        //           SizedBox(width: 3),
+                        //           Container(
+                        //             height: 20,
+                        //             width: 40,
+                        //             decoration: BoxDecoration(
+                        //                 color: MyColors.red,
+                        //                 borderRadius: BorderRadius.circular(10),
+                        //                 border:
+                        //                     Border.all(color: MyColors.red)),
+                        //             child: Center(
+                        //               child: Text(
+                        //                   // item.discount.toString(),
+                        //                   "Save20%",
+                        //                   style: CustomTextStyle
+                        //                       .popinstextsmal2222),
+                        //             ),
+                        //           ),
+                        //             SizedBox(width: 10),     
+                        //   Text( "₹ 520", style: CustomTextStyle.appbartext),
+                          
+                        //         ],
+                        //       ),
                         Text("Total", style: CustomTextStyle.popinstext),
-                        Text("₹620.00", style: CustomTextStyle.popinstext),
+                        Text("₹520.00", style: CustomTextStyle.appbartext),
+                          Row(
+                                children: [
+                                  Text(
+                                      "₹ 620",
+                                      style: CustomTextStyle.discounttext),
+                                  SizedBox(width: 3),
+                                  Container(
+                                    height: 20,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        color: MyColors.red,
+                                        borderRadius: BorderRadius.circular(10),
+                                        border:
+                                            Border.all(color: MyColors.red)),
+                                    child: Center(
+                                      child: Text(
+                                          // item.discount.toString(),
+                                          "Save20%",
+                                          style: CustomTextStyle
+                                              .popinstextsmal2222),
+                                    ),
+                                  ),
+                       
+                          
+                                ],
+                              ),
                       ],
                     ),
                     InkWell(
@@ -800,7 +1013,7 @@ Get.to(UserAddress());
                             borderRadius: BorderRadius.circular(25)),
                         child: Center(
                             child: Text(
-                          "Pay",
+                          "Proceed To Buy",
                           style: CustomTextStyle.mediumtextreem,
                         )),
                       ),

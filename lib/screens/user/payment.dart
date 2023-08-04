@@ -53,16 +53,19 @@ class _PaymentUserState extends State<PaymentUser> {
             fontWeight: FontWeight.w700,
           ),
         )),
-        actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
+        // actions: [
+        //   //  SvgPicture.asset("assets/image/girl.svg"),
 
-          // SizedBox(width: 20),
-          InkWell(
-              onTap: () {
-                Get.to(NotificationWhole());
-              },
-              child: SvgPicture.asset("assets/image/notification.svg")),
-        ],
+        //   // SizedBox(width: 20),
+        //   InkWell(
+        //       onTap: () {
+        //         Get.to(NotificationWhole());
+        //       },
+        //       child: Padding(
+        //         padding: const EdgeInsets.only(right:20.0),
+        //         child: SvgPicture.asset("assets/image/notification.svg"),
+        //       )),
+        // ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),

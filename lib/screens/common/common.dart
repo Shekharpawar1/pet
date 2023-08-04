@@ -26,9 +26,9 @@ class _CommonState extends State<Common> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.01,
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.01,
+              // ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
