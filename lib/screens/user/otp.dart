@@ -167,14 +167,18 @@ class OtpUser extends StatelessWidget {
                             Get.put(HomeuserController());
                             final HomeuserController userHomeController =
                                 Get.find<HomeuserController>();
-                            userHomeController.onInit();
+
                             try {
                               await userLoginController.sendOtp();
-                              await Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: BottomNavBar()));
+                              await Navigator.pushAndRemoveUntil(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: BottomNavBar(),
+                                ),
+                                (route) => false,
+                              );
+                              userHomeController.onInit();
                             } catch (e) {}
                             // try {
                             //   await userLoginController.postUserData();
