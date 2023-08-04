@@ -8,14 +8,14 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/user/notification.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class UserProfile extends StatefulWidget {
+  const UserProfile({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<UserProfile> createState() => _UserProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

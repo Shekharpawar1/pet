@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:pet/screens/user/notification.dart';
+import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
@@ -35,15 +38,92 @@ class _AllcategoryState extends State<Allcategory> {
                 ),
               ),
             ),
-            actions: [
-              SvgPicture.asset("assets/image/notification.svg"),
-              // Image.asset("assets/image/cartimg.png"),
-              SizedBox(width: 20),
-              Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: SvgPicture.asset("assets/image/bag.svg"),
-              ),
+               actions: [
+        
+
+                  
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                     Get.to(NotificationUser());
+                  },
+                  child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
+ 
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
             ],
+          ),
+    
+                SizedBox(width: 20),
+ Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                      Get.to(AddToCardUser());
+                   
+                  },
+                  child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+ 
+// (getCardModel!.data!.isEmpty)?
+// SizedBox():
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
+          ),
+    
+    SizedBox(width: 20,)
+    
+        ], 
+        
             title: Center(
                 child: Text(
               "All Category",

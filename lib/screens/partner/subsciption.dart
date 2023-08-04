@@ -26,7 +26,7 @@ class _SubscriptionState extends State<Subscription> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
               Text(
                 "Subscribe for Premium Features",
                 style: CustomTextStyle.popinsmedium,
@@ -166,7 +166,7 @@ class _SubscriptionState extends State<Subscription> {
               //                   }
               //  ),
 
-              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.08),
 
               InkWell(
                 onTap: () {
