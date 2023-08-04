@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
@@ -26,6 +27,10 @@ class _ServicePageState extends State<ServicePage> {
 
   // ServiceController servicecontroller = Get.put(ServiceController());
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
+
+  final UserServicesAddAppointmentController
+      userServicesAddUserServicesAddAppointmentController =
+      Get.put(UserServicesAddAppointmentController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,18 +101,21 @@ class _ServicePageState extends State<ServicePage> {
 
                               return GestureDetector(
                                 onTap: () async {
-                                  String url =
-                                      Constants.GET_SERVICES_CATEGORIES +
-                                          "/" +
-                                          item.id.toString();
-                                  homeusercontroller.getServicesCategories(url);
+                                  // String url =
+                                  //     Constants.GET_SERVICES_CATEGORIES +
+                                  //         "/" +
+                                  //         item.id.toString();
+                                  // homeusercontroller.getServicesCategories(url);
 
-                                  UserServicesAddAppointmentController
-                                      userServicesAddUserServicesAddAppointmentController =
-                                      Get.put(
-                                          UserServicesAddAppointmentController());
                                   userServicesAddUserServicesAddAppointmentController
                                       .clearFields();
+                                  userServicesAddUserServicesAddAppointmentController
+                                      .updateServiceId(item.id!);
+                                  userServicesAddUserServicesAddAppointmentController
+                                      .init();
+                                  await userServicesAddUserServicesAddAppointmentController
+                                      .fetchAppointmentSlots(item.id!);
+                                  print(item);
                                   Get.to(
                                       () => UserServicesAddAppointmentState());
                                 },
@@ -128,8 +136,14 @@ class _ServicePageState extends State<ServicePage> {
                                         // width: 61,
                                         // height: 75,
                                         placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(),
-                                        ), // Replace with your own placeholder widget
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ),
+                                        // Replace with your own placeholder widget
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons
                                                 .error), // Replace with your own error widget

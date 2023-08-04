@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/userServicesAddAppointmentController.dart';
 import 'package:pet/controllers/user_controller/service_controller.dart';
 import 'package:pet/models/TimeslotModel.dart';
+import 'package:pet/models/usersModel/GetPetModel.dart' as petFile;
 import 'package:pet/others/calender.dart';
 import 'package:pet/screens/Mypetdetails.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
+import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
 
 // class UserServicesAddAppointment extends StatefulWidget {
@@ -68,7 +72,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
-            shrinkWrap: true,
+            shrinkWrap: false,
             primary: true,
             scrollDirection: Axis.vertical,
 
@@ -282,80 +286,146 @@ class UserServicesAddAppointmentState extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              userServicesAddAppointmentController.demoPetsList.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 50,
-                        width: 335,
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 0.5, color: MyColors.grey),
-                            borderRadius: BorderRadius.circular(16),
-                            color: Colors.white),
-                        child: DropdownButtonFormField<String>(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please select a pet';
-                            }
-                            return null;
-                          },
-                          value: userServicesAddAppointmentController
-                              .selectedPet, // S
-                          decoration: InputDecoration(
-                            hintText: "Select Pet",
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
+              GetBuilder<UserServicesAddAppointmentController>(
+                init: userServicesAddAppointmentController,
+                // initState: (_) {},
+                builder: (_) {
+                  return userServicesAddAppointmentController
+                          .demoPetsList.isNotEmpty
+                      // userServicesAddAppointmentController.petListModel !=
+                      //             null &&
+                      //         userServicesAddAppointmentController
+                      //                 .petListModel!.state !=
+                      //             null
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: Colors.black26, width: 0.5),
+                                color: MyColors.white),
+                            child: DropdownButtonHideUnderline(
+                              child: ButtonTheme(
+                                alignedDropdown: true,
+                                child: DropdownButton(
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: Colors.black26,
+                                  ),
+                                  value: userServicesAddAppointmentController
+                                      .selectedPet,
+                                  // .dropdownvalue, // Use directly from the controller
+                                  items: userServicesAddAppointmentController
+                                      // .petListModel!.state!
+                                      .demoPetsList
+                                      // .map((petFile.State item) {
+                                      .map((String item) {
+                                    return DropdownMenuItem(
+                                      // value: item.petName,
+                                      value: item,
+                                      child: Text(
+                                        // item.petName!,
+                                        item,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: "SF-Pro-Display",
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (newValue) {
+                                    userServicesAddAppointmentController.updatePet(
+                                        newValue); // Update the value in the controller
+                                  },
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: MyColors.black,
-                          ),
-                          items: userServicesAddAppointmentController
-                              .demoPetsList
-                              .map((String pet) {
-                            return DropdownMenuItem<String>(
-                              value: pet,
-                              child: Text(pet),
-                            );
-                          }).toList(),
-                          onChanged: (String? value) {
-                            userServicesAddAppointmentController
-                                .updatePet(value ?? "");
-                            // Perform actions when country is changed
+                        )
+
+                      //   child: Container(
+                      //     height: 50,
+                      //     width: 335,
+                      //     decoration: BoxDecoration(
+                      //         border: Border.all(
+                      //             width: 0.5, color: MyColors.grey),
+                      //         borderRadius: BorderRadius.circular(16),
+                      //         color: Colors.white),
+                      //     child: DropdownButtonFormField<String>(
+                      //       validator: (value) {
+                      //         if (value == null || value.isEmpty) {
+                      //           return 'Please select a pet';
+                      //         }
+                      //         return null;
+                      //       },
+                      //       value: userServicesAddAppointmentController
+                      //           .selectedPet, // S
+                      //       decoration: InputDecoration(
+                      //         hintText: "Select Pet",
+                      //         contentPadding: EdgeInsets.symmetric(
+                      //             horizontal: 20, vertical: 5),
+                      //         border: InputBorder.none,
+                      //         enabledBorder: InputBorder.none,
+                      //         focusedBorder: InputBorder.none,
+                      //       ),
+                      //       style: TextStyle(
+                      //         fontSize: 16,
+                      //         color: MyColors.black,
+                      //       ),
+                      //       items: userServicesAddAppointmentController
+                      //           .demoPetsList
+                      //           .map((String pet) {
+                      //         return DropdownMenuItem<String>(
+                      //           value: pet,
+                      //           child: Text(pet),
+                      //         );
+                      //       }).toList(),
+                      //       onChanged: (String? value) {
+                      //         userServicesAddAppointmentController
+                      //             .updatePet(value ?? "");
+                      //         // Perform actions when country is changed
+                      //       },
+                      //     ),
+                      //   ),
+                      // )
+                      : InkWell(
+                          onTap: () {
+                            // Get.to(MyPetDetails());
+                            print(userServicesAddAppointmentController
+                                .petListModel!.state!);
                           },
-                        ),
-                      ),
-                    )
-                  : InkWell(
-                      onTap: () {
-                        Get.to(MyPetDetails());
-                      },
-                      child: Center(
-                        child: Container(
-                          // width: MediaQuery.of(context).size.width*0.8,
-
-                          height: MediaQuery.of(context).size.height * 0.08,
-
-                          decoration: BoxDecoration(
-                              color: MyColors.yellow,
-                              borderRadius: BorderRadius.circular(25)),
-
                           child: Center(
-                              child: Text(
-                            "Add Pet",
-                            style: CustomTextStyle.mediumtextreem,
-                          )),
-                        ),
-                      ),
-                    ),
+                            child: Container(
+                              // width: MediaQuery.of(context).size.width*0.8,
 
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
+                              height: MediaQuery.of(context).size.height * 0.08,
+
+                              decoration: BoxDecoration(
+                                  color: MyColors.yellow,
+                                  borderRadius: BorderRadius.circular(25)),
+
+                              child: Center(
+                                  child: Text(
+                                "Add Pet",
+                                style: CustomTextStyle.mediumtextreem,
+                              )),
+                            ),
+                          ),
+                        );
+                },
               ),
+
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.02,
+              // ),
               //                 // :
               //                 Expanded(
               //                     child: Padding(
@@ -418,52 +488,208 @@ class UserServicesAddAppointmentState extends StatelessWidget {
 
               // !createAccountcontroller.cityLoaded
               //                           ? SizedBox()
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 50,
-                    width: 335,
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 0.5, color: MyColors.grey),
-                        borderRadius: BorderRadius.circular(16),
-                        color: Colors.white),
-                    child: DropdownButtonFormField<String>(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select a city';
-                        }
-                        return null;
-                      },
-                      value: userServicesAddAppointmentController
-                          .selectedcity, // S
-                      decoration: InputDecoration(
-                        hintText: "City",
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: MyColors.black,
-                      ),
-                      items: userServicesAddAppointmentController.city
-                          .map((String city) {
-                        return DropdownMenuItem<String>(
-                          value: city,
-                          child: Text(city),
+              // Expanded(
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Container(
+              //       height: 50,
+              //       width: 335,
+              //       decoration: BoxDecoration(
+              //           border: Border.all(width: 0.5, color: MyColors.grey),
+              //           borderRadius: BorderRadius.circular(16),
+              //           color: Colors.white),
+              //       child: DropdownButtonFormField<String>(
+              //         validator: (value) {
+              //           if (value == null || value.isEmpty) {
+              //             return 'Please select a city';
+              //           }
+              //           return null;
+              //         },
+              //         value: userServicesAddAppointmentController
+              //             .selectedcity, // S
+              //         decoration: InputDecoration(
+              //           hintText: "City",
+              //           contentPadding:
+              //               EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              //           border: InputBorder.none,
+              //           enabledBorder: InputBorder.none,
+              //           focusedBorder: InputBorder.none,
+              //         ),
+              //         style: TextStyle(
+              //           fontSize: 16,
+              //           color: MyColors.black,
+              //         ),
+              //         items: userServicesAddAppointmentController.city
+              //             .map((String city) {
+              //           return DropdownMenuItem<String>(
+              //             value: city,
+              //             child: Text(city),
+              //           );
+              //         }).toList(),
+              //         onChanged: (String? value) {
+              //           userServicesAddAppointmentController
+              //               .updateCity(value ?? "");
+              //           // Perform actions when country is changed
+              //         },
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              GetBuilder<UserServicesAddAppointmentController>(
+                init: userServicesAddAppointmentController,
+                // initState: (_) {},
+                builder: (_) {
+                  return userServicesAddAppointmentController.stateListModel ==
+                          null
+                      // ? Center(
+                      //     child: SpinKitCircle(
+                      //       color:
+                      //           Colors.white, // Color of the progress bar
+                      //       size: 50.0, // Size of the progress bar
+                      //     ),
+                      //   )
+                      ? SizedBox()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 0.5, color: MyColors.grey),
+                                color: Color.fromRGBO(255, 255, 255, 0.10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    offset: const Offset(0.0, 0.0),
+                                    color: Color.fromRGBO(255, 255, 255, 0.10),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButtonFormField<statesFile.State>(
+                              validator: (value) {
+                                if (value == null || value.stateName!.isEmpty) {
+                                  return 'Please select a state';
+                                }
+                                return null;
+                              },
+                              value: userServicesAddAppointmentController
+                                  .selectedState,
+                              decoration: InputDecoration(
+                                hintText: "State",
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 5),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: MyColors.black,
+                              ),
+                              items: userServicesAddAppointmentController
+                                  .stateListModel!.state!
+                                  .map((state) {
+                                return DropdownMenuItem<statesFile.State>(
+                                  value: state,
+                                  child: Text(state.stateName!),
+                                );
+                              }).toList(),
+                              onChanged: (statesFile.State? value) async {
+                                await userServicesAddAppointmentController
+                                    .updateState(value!);
+                              },
+                            ),
+                          ),
                         );
-                      }).toList(),
-                      onChanged: (String? value) {
-                        userServicesAddAppointmentController
-                            .updateCity(value ?? "");
-                        // Perform actions when country is changed
-                      },
-                    ),
-                  ),
-                ),
+                },
+              ),
+
+              GetBuilder<UserServicesAddAppointmentController>(
+                init: userServicesAddAppointmentController,
+                // initState: (_) {},
+                builder: (_) {
+                  return userServicesAddAppointmentController.showLoading
+                      ? Center(
+                          child: SpinKitCircle(
+                            color: Colors.black, // Color of the progress bar
+                            size: 30.0, // Size of the progress bar
+                          ),
+                        )
+                      : userServicesAddAppointmentController.cityListModel ==
+                              null
+                          ? SizedBox()
+                          : Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 0.5, color: MyColors.grey),
+                                      // color: Color.fromRGBO(255, 255, 255, 0.10),
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //     offset: const Offset(0.0, 0.0),
+                                      //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                                      //     blurRadius: 0.0,
+                                      //     spreadRadius: 0.0,
+                                      //   ),
+                                      // ],
+                                      // borderRadius: BorderRadius.circular(16),
+
+                                      color:
+                                          Color.fromRGBO(255, 255, 255, 0.10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: const Offset(0.0, 0.0),
+                                          color: Color.fromRGBO(
+                                              255, 255, 255, 0.10),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child:
+                                      DropdownButtonFormField<cityFile.State>(
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.cityName!.isEmpty) {
+                                        return 'Please select a city';
+                                      }
+                                      return null;
+                                    },
+                                    value: userServicesAddAppointmentController
+                                        .selectedCity,
+                                    decoration: InputDecoration(
+                                      hintText: "City",
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 5),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                    ),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: MyColors.black,
+                                    ),
+                                    items: userServicesAddAppointmentController
+                                        .cityListModel!.state!
+                                        .map((state) {
+                                      return DropdownMenuItem<cityFile.State>(
+                                        value: state,
+                                        child: Text(state.cityName!),
+                                      );
+                                    }).toList(),
+                                    onChanged: (cityFile.State? value) {
+                                      userServicesAddAppointmentController
+                                          .updateCity(value!);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            );
+                },
               ),
 
               Padding(
@@ -483,6 +709,8 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                       ],
                       borderRadius: BorderRadius.circular(16)),
                   child: TextFormField(
+                    maxLength: 10,
+                    // maxLengthEnforcement: MaxLengthEnforcement.none,
                     controller:
                         userServicesAddAppointmentController.numberController,
                     keyboardType: TextInputType.phone,
@@ -496,6 +724,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                       }
                     },
                     decoration: InputDecoration(
+                      counterText: '',
                       hintText: "Mobile No",
                       // hintStyle: TextStyle(color: MyColors.white,),
                       contentPadding:
@@ -515,28 +744,67 @@ class UserServicesAddAppointmentState extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              InkWell(
-                onTap: () {
-                  //      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
-                },
-                child: Center(
-                  child: Container(
-                    // width: MediaQuery.of(context).size.width*0.8,
+              // userServicesAddAppointmentController.showLoading
+              //     ?
+              GetBuilder<UserServicesAddAppointmentController>(
+                  init: userServicesAddAppointmentController,
+                  builder: (_) {
+                    return InkWell(
+                      onTap: () {
+                        userServicesAddAppointmentController.addService();
+                        //      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
+                      },
+                      child: Center(
+                        child: Container(
+                          // width: MediaQuery.of(context).size.width*0.8,
 
-                    height: MediaQuery.of(context).size.height * 0.08,
+                          height: MediaQuery.of(context).size.height * 0.08,
 
-                    decoration: BoxDecoration(
-                        color: MyColors.yellow,
-                        borderRadius: BorderRadius.circular(25)),
+                          decoration: BoxDecoration(
+                              color: MyColors.yellow,
+                              borderRadius: BorderRadius.circular(25)),
 
-                    child: Center(
-                        child: Text(
-                      "Submit",
-                      style: CustomTextStyle.mediumtextreem,
-                    )),
-                  ),
-                ),
-              ),
+                          child:
+                              userServicesAddAppointmentController.showLoading
+                                  ? Center(
+                                      child: SpinKitCircle(
+                                        color: Colors
+                                            .black, // Color of the progress bar
+                                        size: 30.0, // Size of the progress bar
+                                      ),
+                                    )
+                                  : Center(
+                                      child: Text(
+                                      "Submit",
+                                      style: CustomTextStyle.mediumtextreem,
+                                    )),
+                        ),
+                      ),
+                    );
+                  })
+              // : InkWell(
+              //     onTap: () {
+              //       userServicesAddAppointmentController.addService();
+              //       //      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
+              //     },
+              //     child: Center(
+              //       child: Container(
+              //         // width: MediaQuery.of(context).size.width*0.8,
+
+              //         height: MediaQuery.of(context).size.height * 0.08,
+
+              //         decoration: BoxDecoration(
+              //             color: MyColors.yellow,
+              //             borderRadius: BorderRadius.circular(25)),
+
+              //         child: Center(
+              //             child: Text(
+              //           "Submit",
+              //           style: CustomTextStyle.mediumtextreem,
+              //         )),
+              //       ),
+              //     ),
+              //   ),
             ]),
       ),
     );
