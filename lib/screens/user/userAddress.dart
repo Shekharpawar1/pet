@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -162,16 +163,23 @@ AddressController addressController = Get.put( AddressController());
                             color: Colors.grey.shade200,
                           ),
                           child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your number';
-                              }
-                              return null;
-                            },
+                           keyboardType: TextInputType.phone,
+  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  maxLength: 10,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter a Phone Number";
+                            } else if (!RegExp(
+                                    r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                                .hasMatch(value)) {
+                              return "Please Enter a Valid Phone Number";
+                            }
+                          },
                             controller:
-                                addressController.lastNameController,
+                                addressController.numberController,
                             decoration: InputDecoration(
                               hintText: "9089789878",
+                              counterText: '',
                               hintStyle: TextStyle(
                                 color: MyColors.black,
                               ),
@@ -212,7 +220,7 @@ AddressController addressController = Get.put( AddressController());
                               return null;
                             },
                             controller:
-                                addressController.fullNameController,
+                                addressController.flataddressController,
                             decoration: InputDecoration(
                               hintText: "N7/19-R-2-A-A-98,Vivek niwas",
                               hintStyle: TextStyle(
@@ -257,9 +265,9 @@ AddressController addressController = Get.put( AddressController());
                               return null;
                             },
                             controller:
-                                addressController.fullNameController,
+                                addressController.areaaddressController,
                             decoration: InputDecoration(
-                              hintText: "Ind Road",
+                              hintText: "IND Road",
                               hintStyle: TextStyle(
                                 color: MyColors.black,
                               ),
@@ -300,7 +308,7 @@ AddressController addressController = Get.put( AddressController());
                               return null;
                             },
                             controller:
-                                addressController.fullNameController,
+                                addressController.landmarkController,
                             decoration: InputDecoration(
                               hintText: "Behind hydel sub power station",
                               hintStyle: TextStyle(
@@ -643,7 +651,13 @@ AddressController addressController = Get.put( AddressController());
       SizedBox(height:10),
        GestureDetector(
                         onTap: () {
-                          // createAccountcontroller.validateForm(context);
+                        addressController.validateForm(context);
+
+                        addressController.addaddress();
+// Get.showSnackbar(SnackBar(content: content));
+
+
+                        // print("===="+addressController.addaddress());
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
