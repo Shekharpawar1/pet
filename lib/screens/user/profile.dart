@@ -3,7 +3,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pet/screens/user/UserMyPet.dart';
+import 'package:pet/screens/user/UserAddMyPet.dart';
+import 'package:pet/screens/user/userMyPet.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/user/notification.dart';
@@ -102,7 +103,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   ListTile(
                     onTap: () {
-                      Get.to(Mypet());
+                      Get.to(UserMyPets());
                     },
                     title: Text(
                       "My Orders",
@@ -157,7 +158,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   ListTile(
                     onTap: () {
-                      Get.to(Mypet());
+                      Get.to(UserMyPets());
                     },
                     title: Text(
                       "My Pet",

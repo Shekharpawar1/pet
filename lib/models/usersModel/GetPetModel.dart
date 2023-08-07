@@ -37,7 +37,7 @@ class State {
   int? id;
   int? userId;
   String? petsType;
-  Gender? gender;
+  String? gender;
   String? breeds;
   String? dob;
   String? age;
@@ -64,7 +64,7 @@ class State {
         id: json["id"],
         userId: json["user_id"],
         petsType: json["pets_type"],
-        gender: genderValues.map[json["gender"]],
+        gender: json["gender"],
         breeds: json["breeds"],
         dob: json["dob"],
         age: json["age"],
@@ -78,7 +78,7 @@ class State {
         "id": id,
         "user_id": userId,
         "pets_type": petsType,
-        "gender": genderValues.reverse[gender],
+        "gender": gender,
         "breeds": breeds,
         "dob": dob,
         "age": age,
@@ -89,19 +89,19 @@ class State {
       };
 }
 
-enum Gender { GENDER_MALE, MALE }
+// enum Gender { GENDER_MALE, MALE }
 
-final genderValues =
-    EnumValues({"Male": Gender.GENDER_MALE, "male": Gender.MALE});
+// final genderValues =
+//     EnumValues({"Male": Gender.GENDER_MALE, "male": Gender.MALE});
 
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
+// class EnumValues<T> {
+//   Map<String, T> map;
+//   late Map<T, String> reverseMap;
 
-  EnumValues(this.map);
+//   EnumValues(this.map);
 
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
-}
+//   Map<T, String> get reverse {
+//     reverseMap = map.map((k, v) => MapEntry(v, k));
+//     return reverseMap;
+//   }
+// }

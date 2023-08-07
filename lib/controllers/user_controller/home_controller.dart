@@ -42,6 +42,7 @@ class HomeuserController extends GetxController {
   // our brand
   String getBrandUrl = '${Constants.GET_OUR_BRAND}';
   UserOurBrandModel? userBrandModel;
+  UserOurBrandModel? userOurBrandModel = UserOurBrandModel();
   bool brandLoaded = false;
 
   // our services
@@ -111,7 +112,15 @@ class HomeuserController extends GetxController {
       // our brands
       userBrandModel =
           UserOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
-      print(userBrandModel);
+      // userOurBrandModel = userBrandModel;
+      // userOurBrandModel!.data = [];
+      // userBrandModel!.data!.forEach((e) {
+      //   if (e.canine == 1) {
+      //     userOurBrandModel!.data!.add(e);
+      //   }
+      // });
+      print(
+          "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
       update();
     } catch (e) {

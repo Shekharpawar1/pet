@@ -3,7 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
-import 'package:pet/screens/user/UserMyPet.dart';
+import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -15,14 +15,16 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class drawer extends StatefulWidget {
-  const drawer({super.key,});
+  const drawer({
+    super.key,
+  });
 
   @override
   State<drawer> createState() => _drawerState();
 }
 
 class _drawerState extends State<drawer> {
- static final List<String> _listViewData = [
+  static final List<String> _listViewData = [
     "Profile",
     "My Order",
     "Notifications",
@@ -39,9 +41,8 @@ class _drawerState extends State<drawer> {
     Icons.favorite,
     Icons.pets,
     Icons.cleaning_services,
-     Icons.payment_outlined,
+    Icons.payment_outlined,
   ];
-
 
   int _currentSelected = 0;
 
@@ -51,7 +52,6 @@ class _drawerState extends State<drawer> {
       backgroundColor: MyColors.bgcolor,
       child: ListView(
         children: [
-        
           ListView.builder(
             shrinkWrap: true,
             itemCount: _listViewData.length,
@@ -79,11 +79,11 @@ class _drawerState extends State<drawer> {
                         color: MyColors.blue,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                    child:  Icon(
-                      _listViewIcons[index],
-                      color: MyColors.yellow,
-                      size: 24,
-                    ),
+                      child: Icon(
+                        _listViewIcons[index],
+                        color: MyColors.yellow,
+                        size: 24,
+                      ),
                     ),
                   ),
                 ),
@@ -94,32 +94,30 @@ class _drawerState extends State<drawer> {
       ),
     );
   }
- void _navigateToScreen(BuildContext context, int index) {
+
+  void _navigateToScreen(BuildContext context, int index) {
     switch (index) {
       case 0:
-      Get.to(UserProfile());
+        Get.to(UserProfile());
         break;
       case 1:
-      Get.to( OrderDetailsUser());
+        Get.to(OrderDetailsUser());
         break;
-        case 2:
-      Get.to(NotificationUser());
+      case 2:
+        Get.to(NotificationUser());
         break;
       case 3:
-      Get.to(Userfavourite());
+        Get.to(Userfavourite());
         break;
       case 4:
-      Get.to(MyPetDetails());
+        Get.to(MyPetDetails());
         break;
       case 5:
-      Get.to(ServicePage());
+        Get.to(ServicePage());
         break;
-     case 6:
-      Get.to(Usertranscation());
+      case 6:
+        Get.to(Usertranscation());
         break;
-
-
-   }
+    }
   }
-
 }
