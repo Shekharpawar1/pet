@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/models/salesmanModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/bannerModel.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/servicesCategoriesModel.dart';
+import 'package:pet/models/usersModel/userWishListModel.dart';
 
 import 'package:video_player/video_player.dart';
 import 'package:pet/models/usersModel/servicesModel.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
 class HomeuserController extends GetxController {
+  var userId = GetStorage().read("id");
   late VideoPlayerController videoController;
+  bool showLoading = false;
   //videoplayer
   updatevideo() {
     videoController = VideoPlayerController.networkUrl(Uri.parse(
@@ -50,13 +54,27 @@ class HomeuserController extends GetxController {
   ServicesModel? userServicesModel;
   bool servicesLoaded = false;
 
+  // wishlist list
+  WishListModel? wishList;
+  String getWishListUrl = Constants.USER_GET_WISHLIST;
+  List wishListItemsId = GetStorage().read('wishListItems') ?? [];
+
+  // List wishListItemsId = GetStorage().read('wishListItems') ?? [];
+
   @override
   void onInit() {
     super.onInit();
     init();
   }
 
+  void getWishList() {
+    wishListItemsId = GetStorage().read('wishListItems') ?? [];
+    update();
+  }
+
   void init() async {
+    showLoading = true;
+    update();
     try {
       // categories
       userCategoriesModel = UserCategoriesModel.fromJson(
@@ -150,6 +168,30 @@ class HomeuserController extends GetxController {
         colorText: Colors.white,
       );
     }
+    try {
+      // categories
+      wishList =
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/1"));
+      // print(wishList);
+      // wishList!.data!.map((e) => e.itemId).toList();
+      GetStorage().write('wishListItems',
+          wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
+      // categoryLoaded = true;
+      update();
+      print("${GetStorage().read('wishListItems')}");
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
   }
 
   // our services
@@ -158,6 +200,8 @@ class HomeuserController extends GetxController {
   bool servicesCategoryLoaded = false;
 
   Future<void> getServicesCategories(String url) async {
+    showLoading = true;
+    update();
     try {
       // our services
       servicesCategoryModel =
@@ -175,6 +219,9 @@ class HomeuserController extends GetxController {
         colorText: Colors.white,
       );
     }
+
+    showLoading = false;
+    update();
   }
 
   List _ourbandList = [
@@ -260,4 +307,136 @@ class HomeuserController extends GetxController {
   get getOurBrandList => _ourbandList;
   // get getServiceList => _serviceList;
   get gettoyList => toylist;
+
+  Future<void> addItemToWishList(int productId) async {
+    showLoading = true;
+    update();
+    // await Future.delayed(Duration(seconds: 4));
+    Map<String, String> body = {
+      // "dates": DateFormat('dd-MM-yyyy').format(selectedDate).toString(),
+      // "slot": timeSlots.map((e) => e.time).toList(),
+      // "slot": selectedSlot!.time.toString(),
+      // "name": nameController.text.trim().toString(),
+      // "email": emailController.text.trim().toString(),
+      // "pet": selectedPet.toString(),
+      // "pet": petId.toString(),
+      // "state": selectedState!.stateName.toString(),
+      // "city": selectedCity!.cityName.toString(),
+      // "address": addressController.text.trim().toString(),
+      // "pet_problem": petProblemController.text.trim().toString(),
+      // "phone": numberController.text.trim(),
+      // "service_id": serviceId.toString(),
+      "user_id": userId.toString(),
+      "item_id": productId.toString(),
+      // "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
+    };
+    String addToWishList = Constants.USER_ADD_TO_FAV;
+    print(body);
+    try {
+      // List documentList = [
+      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45 (1).png', 'key': "logo"},
+      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45.png', 'key': "profile"},
+      // ];
+      // var body = {'id': 'value', 'name': 'dhruv'};
+      var request = http.MultipartRequest('POST', Uri.parse(addToWishList));
+      request.fields.addAll(body);
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
+      // documentList.forEach((element) async {
+      //   request.files.add(await http.MultipartFile.fromPath(
+      //       element["key"], element["value"]));
+      // });
+      await ApiHelper.postFormData(request: request);
+      wishListItemsId.add(productId);
+      update();
+      GetStorage().write('wishListItems', wishListItemsId);
+
+      // clearFields();
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Item Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      if (e.toString() == "Error: Already in List") {
+        wishListItemsId.add(productId);
+        update();
+        GetStorage().write('wishListItems', wishListItemsId);
+        removeItemFromWishList(productId);
+        // Get.snackbar(
+        //   'Exists',
+        //   'Remove it from WishList Page',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.orange,
+        //   colorText: Colors.white,
+        // );
+      } else {
+        Get.snackbar(
+          'Error',
+          'An error occurred: $e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    }
+    print(wishListItemsId);
+    showLoading = false;
+    update();
+  }
+
+  Future<void> removeItemFromWishList(int productId) async {
+    // var data = await GetStorage().read("userData");
+    showLoading = true;
+    update();
+    print("Removing item");
+    try {
+      // remove from wishlist
+      // servicesCategoryModel =
+      //     ServicesCategoryModel.fromJson(await ApiHelper.getApi(url));
+      // print(servicesCategoryModel);
+      // servicesCategoryLoaded = true;
+      String url = Constants.USER_REMOVE_FROM_FAV;
+      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$userId");
+      wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
+      GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
+      update();
+      Get.snackbar(
+        'Success',
+        'Item Removed',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      if (e.toString() == "Error: Not Found") {
+        wishListItemsId
+            .removeWhere((e) => e.toString() == productId.toString());
+        GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
+        Get.snackbar(
+          'Item Not Found',
+          'Item does not exist',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          'An error occurred: $e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    }
+
+    showLoading = false;
+    update();
+  }
 }

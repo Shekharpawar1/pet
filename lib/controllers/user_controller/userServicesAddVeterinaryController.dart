@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:pet/models/TimeslotModel.dart';
 import 'package:pet/models/cityModel.dart';
 import 'package:pet/models/stateModel.dart';
+import 'package:pet/models/usersModel/GetPetModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
+import 'package:http/http.dart' as http;
 
 class UserServicesAddVeterinaryController extends GetxController {
   TextEditingController cityController = TextEditingController();
@@ -16,6 +19,9 @@ class UserServicesAddVeterinaryController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController petProblemController = TextEditingController();
+
+  GetPetModel? petListModel;
+  String getPetUrl = Constants.GET_PET_USER;
 
   var demoResponse = {
     "data": [
@@ -68,9 +74,14 @@ class UserServicesAddVeterinaryController extends GetxController {
     ],
   };
 
-  List<String> demoPetsList = ["dog", "cat", "rabbit"];
-  String selectedPet = "dog";
-  updatePet(String pet) {
+  List<String> demoPetsList = [];
+  // petFile.State? selectedPet = null.obs();
+  // updatePet(petFile.State? pet) {
+  //   selectedPet = pet;
+  //   update();
+  // }
+  String? selectedPet = null.obs();
+  updatePet(String? pet) {
     selectedPet = pet;
     update();
   }
@@ -177,6 +188,14 @@ class UserServicesAddVeterinaryController extends GetxController {
     stateListModel = null;
     selectedCity = null;
     selectedState = null;
+    pickedDate = null;
+    cityController.clear();
+    numberController.clear();
+    nameController.clear();
+    emailController.clear();
+    addressController.clear();
+    petProblemController.clear();
+
     print("Data cleared...");
     update();
   }
@@ -215,6 +234,37 @@ class UserServicesAddVeterinaryController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+    }
+    try {
+      // pet list
+      petListModel =
+          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl + "/1"));
+      print(petListModel);
+      // notificationLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Unable to Load Pets: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    if (petListModel != null && petListModel!.state != null) {
+      demoPetsList =
+          petListModel!.state!.map((e) => e.petName.toString()).toList();
+      demoPetsList = demoPetsList.toSet().toList();
+      print(demoPetsList);
+      if (demoPetsList.isNotEmpty) {
+        updatePet(demoPetsList[0]);
+      }
+    } else {
+      demoPetsList = [];
+      print('petCategoryBreedModel or its state is null');
+      return;
     }
 
     showLoading = false;
@@ -288,6 +338,97 @@ class UserServicesAddVeterinaryController extends GetxController {
       Get.snackbar(
         'Error',
         'Unable to City: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+  DateTime? pickedDate;
+  TextEditingController dobController = TextEditingController();
+
+  // Function to show the date picker
+  void selectDate(BuildContext context) async {
+    pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2024),
+    );
+
+    if (pickedDate != null && pickedDate != DateTime.now()) {
+      dobController.text = pickedDate
+          .toString()
+          .split(' ')[0]; // Set the selected date to the TextFormField
+      // calculateAge(pickedDate!);
+    }
+    update();
+  }
+
+  Future<void> addVeterinary() async {
+    showLoading = true;
+    update();
+    int? petId;
+    petListModel!.state!.forEach((element) {
+      if (element.petName == selectedPet.toString()) {
+        petId = element.id;
+      }
+    });
+    // await Future.delayed(Duration(seconds: 4));
+    Map<String, String> body = {
+      // "dates": DateFormat('dd-MM-yyyy').format(selectedDate).toString(),
+      // "slot": timeSlots.map((e) => e.time).toList(),
+      // "slot": selectedSlot!.time.toString(),
+      "name": nameController.text.trim().toString(),
+      "email": emailController.text.trim().toString(),
+      // "pet": selectedPet.toString(),
+      "pet": petId.toString(),
+      "state": selectedState!.stateName.toString(),
+      "city": selectedCity!.cityName.toString(),
+      "address": addressController.text.trim().toString(),
+      "pet_problem": petProblemController.text.trim().toString(),
+      "phone": numberController.text.trim(),
+      // "service_id": serviceId.toString(),
+      "user_id": 1.toString(),
+      "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
+    };
+    String veterinaryBooking = Constants.VETERINARY_BOOKING;
+    print(body);
+    try {
+      // List documentList = [
+      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45 (1).png', 'key': "logo"},
+      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45.png', 'key': "profile"},
+      // ];
+      // var body = {'id': 'value', 'name': 'dhruv'};
+      var request = http.MultipartRequest('POST', Uri.parse(veterinaryBooking));
+      request.fields.addAll(body);
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
+      // documentList.forEach((element) async {
+      //   request.files.add(await http.MultipartFile.fromPath(
+      //       element["key"], element["value"]));
+      // });
+      await ApiHelper.postFormData(request: request);
+
+      clearFields();
+      update();
+      Get.back();
+      Get.snackbar(
+        'Success',
+        'Request Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,

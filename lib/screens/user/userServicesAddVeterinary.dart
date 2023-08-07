@@ -93,7 +93,7 @@ class UserServicesAddVeterinary extends StatelessWidget {
                         // ),
 
                         Container(
-                            height: MediaQuery.of(context).size.height * 0.125,
+                            height: 110,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                                 border: Border.all(
@@ -461,58 +461,192 @@ class UserServicesAddVeterinary extends StatelessWidget {
                             ),
                           ),
                         ),
+
+                        // Text(
+                        //   "DOB",
+                        //   style: CustomTextStyle.popinstext,
+                        // ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * 0.01,
+                        // ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: Colors.black26, width: 0.5),
+                                color: MyColors.white),
+                            child: TextFormField(
+                              readOnly: true,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter a Date';
+                                }
+                                // Add more validation rules if needed
+                                return null; // Return null for no validation errors
+                              },
+                              onTap: () {
+                                userServicesAddVeterinaryController.selectDate(
+                                    context); // Function to show date picker
+                              },
+                              controller: userServicesAddVeterinaryController
+                                  .dobController,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontFamily: "SF-Pro-Display"),
+                              decoration: InputDecoration(
+
+                                  // contentPadding: EdgeInsets.only(left: 15),
+                                  fillColor: MyColors.white,
+                                  focusColor: MyColors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+
+                                    // borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  // contentPadding: EdgeInsets.all(10),
+
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    //  borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    //  borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  hintText: "DD/MM/YYYY",
+                                  suffixIcon: Icon(
+                                    Icons.calendar_month_outlined,
+                                    color: Colors.black,
+                                  ),
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "SF-Pro-Display",
+                                      fontSize: 14)),
+                            ),
+                          ),
+                        ),
+
                         userServicesAddVeterinaryController
                                 .demoPetsList.isNotEmpty
+                            // userServicesAddVeterinaryController.petListModel !=
+                            //             null &&
+                            //         userServicesAddVeterinaryController
+                            //                 .petListModel!.state !=
+                            //             null
                             ? Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  height: 50,
-                                  width: 335,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                  width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
                                       border: Border.all(
-                                          width: 0.5, color: MyColors.grey),
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Colors.white),
-                                  child: DropdownButtonFormField<String>(
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please select a pet';
-                                      }
-                                      return null;
-                                    },
-                                    value: userServicesAddVeterinaryController
-                                        .selectedPet, // S
-                                    decoration: InputDecoration(
-                                      hintText: "Select Pet",
-                                      contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 5),
-                                      border: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
+                                          color: Colors.black26, width: 0.5),
+                                      color: MyColors.white),
+                                  child: DropdownButtonHideUnderline(
+                                    child: ButtonTheme(
+                                      alignedDropdown: true,
+                                      child: DropdownButton(
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down,
+                                          color: Colors.black26,
+                                        ),
+                                        value:
+                                            userServicesAddVeterinaryController
+                                                .selectedPet,
+                                        // .dropdownvalue, // Use directly from the controller
+                                        items:
+                                            userServicesAddVeterinaryController
+                                                // .petListModel!.state!
+                                                .demoPetsList
+                                                // .map((petFile.State item) {
+                                                .map((String item) {
+                                          return DropdownMenuItem(
+                                            // value: item.petName,
+                                            value: item,
+                                            child: Text(
+                                              // item.petName!,
+                                              item,
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontFamily: "SF-Pro-Display",
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValue) {
+                                          userServicesAddVeterinaryController
+                                              .updatePet(
+                                                  newValue); // Update the value in the controller
+                                        },
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: MyColors.black,
-                                    ),
-                                    items: userServicesAddVeterinaryController
-                                        .demoPetsList
-                                        .map((String pet) {
-                                      return DropdownMenuItem<String>(
-                                        value: pet,
-                                        child: Text(pet),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? value) {
-                                      userServicesAddVeterinaryController
-                                          .updatePet(value ?? "");
-                                      // Perform actions when country is changed
-                                    },
                                   ),
                                 ),
                               )
+
+                            //   child: Container(
+                            //     height: 50,
+                            //     width: 335,
+                            //     decoration: BoxDecoration(
+                            //         border: Border.all(
+                            //             width: 0.5, color: MyColors.grey),
+                            //         borderRadius: BorderRadius.circular(16),
+                            //         color: Colors.white),
+                            //     child: DropdownButtonFormField<String>(
+                            //       validator: (value) {
+                            //         if (value == null || value.isEmpty) {
+                            //           return 'Please select a pet';
+                            //         }
+                            //         return null;
+                            //       },
+                            //       value: userServicesAddAppointmentController
+                            //           .selectedPet, // S
+                            //       decoration: InputDecoration(
+                            //         hintText: "Select Pet",
+                            //         contentPadding: EdgeInsets.symmetric(
+                            //             horizontal: 20, vertical: 5),
+                            //         border: InputBorder.none,
+                            //         enabledBorder: InputBorder.none,
+                            //         focusedBorder: InputBorder.none,
+                            //       ),
+                            //       style: TextStyle(
+                            //         fontSize: 16,
+                            //         color: MyColors.black,
+                            //       ),
+                            //       items: userServicesAddAppointmentController
+                            //           .demoPetsList
+                            //           .map((String pet) {
+                            //         return DropdownMenuItem<String>(
+                            //           value: pet,
+                            //           child: Text(pet),
+                            //         );
+                            //       }).toList(),
+                            //       onChanged: (String? value) {
+                            //         userServicesAddAppointmentController
+                            //             .updatePet(value ?? "");
+                            //         // Perform actions when country is changed
+                            //       },
+                            //     ),
+                            //   ),
+                            // )
                             : InkWell(
                                 onTap: () {
-                                  Get.to(MyPetDetails());
+                                  // Get.to(MyPetDetails());
+                                  print(userServicesAddVeterinaryController
+                                      .petListModel!.state!);
                                 },
                                 child: Center(
                                   child: Container(
@@ -926,6 +1060,8 @@ class UserServicesAddVeterinary extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
+                            userServicesAddVeterinaryController.addVeterinary();
+
                             //      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
                           },
                           child: Center(

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
+import 'package:pet/screens/user/login.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -31,7 +34,8 @@ class _drawerState extends State<drawer> {
     "Favourite",
     "My Pet",
     "My Services",
-    "My Transaction"
+    "My Transaction",
+    "Logout"
   ];
 
   static final List<IconData> _listViewIcons = [
@@ -42,6 +46,7 @@ class _drawerState extends State<drawer> {
     Icons.pets,
     Icons.cleaning_services,
     Icons.payment_outlined,
+    Icons.logout,
   ];
 
   int _currentSelected = 0;
@@ -95,7 +100,7 @@ class _drawerState extends State<drawer> {
     );
   }
 
-  void _navigateToScreen(BuildContext context, int index) {
+  Future<void> _navigateToScreen(BuildContext context, int index) async {
     switch (index) {
       case 0:
         Get.to(UserProfile());
@@ -117,6 +122,10 @@ class _drawerState extends State<drawer> {
         break;
       case 6:
         Get.to(Usertranscation());
+        break;
+      case 7:
+        await GetStorage().erase();
+        Get.offAll(LoginUser());
         break;
     }
   }

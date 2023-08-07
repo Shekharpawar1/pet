@@ -35,5 +35,16 @@ class Constants {
   static const GET_PET_SERVICES = "$BASE_URL${API_V1_PATH}/auth/get_pet";
   static const SERVICE_BOOKING =
       "$BASE_URL${API_V1_PATH}/banners/service_booking";
+  static const VETERINARY_BOOKING =
+      "$BASE_URL${API_V1_PATH}/banners/veterinary_booking";
   static const ALL_CITY = "$BASE_URL${API_V1_PATH}/auth/all_city";
+  static const USER_ADD_TO_FAV =
+      "$BASE_URL${API_V1_PATH}/customer/wish-list/add";
+  static const USER_REMOVE_FROM_FAV =
+      "$BASE_URL${API_V1_PATH}/customer/wish-list/remove";
+  static const USER_GET_WISHLIST =
+      "$BASE_URL${API_V1_PATH}/customer/wish-list";
+  static const PRODUCT_HOME_IMAGE_PATH =
+      "$BASE_URL/storage/app/public/product";
 }
+// https://canine.hirectjob.in/storage/app/public/product/

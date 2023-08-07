@@ -29,7 +29,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
   UserServicesAddAppointmentState({super.key});
   UserServicesAddAppointmentController userServicesAddAppointmentController =
       Get.put(UserServicesAddAppointmentController());
-  var selectedDate;
+  // var selectedDate;
 
   @override
   void onClose() {

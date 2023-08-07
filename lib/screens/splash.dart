@@ -20,13 +20,21 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
+    callTimer();
+  }
+
+  Future<void> callTimer() async {
     Timer(
       Duration(seconds: 3),
-      () {
-        final storage = GetStorage();
-        var id = storage.read("login");
-        print(id);
-        id != true
+      () async {
+        // final storage = GetStorage();
+        await GetStorage.init();
+        var id = await GetStorage().read("id");
+        var data = await GetStorage().read("userData");
+
+        print("user Id : ===>>> ${id.toString()}");
+        print("user Data : ===>>> ${data.toString()}");
+        id == null
             ? Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(

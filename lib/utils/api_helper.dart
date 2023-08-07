@@ -59,6 +59,10 @@ class ApiHelper {
       print('Error: Too Many Requests');
       throw "Error: Too Many Requests";
       // Handle 429 status code
+    } else if (response.statusCode == 409) {
+      print('Error: Already in List');
+      throw "Error: Already in List";
+      // Handle 429 status code
     } else {
       print('Error: ${response.statusCode}');
       throw "Error: ${response.statusCode}";
@@ -93,6 +97,52 @@ class ApiHelper {
     } else if (response.statusCode == 429) {
       print('Error: Too Many Requests');
       throw "Error: Too Many Requests";
+      // Handle 429 status code
+    } else {
+      print('Error: ${response.statusCode}');
+      throw "Error: ${response.statusCode}";
+      // Handle other status codes
+    }
+  }
+
+  static Future<dynamic?> deleteByUrl({required url}) async {
+    // print("====>>> body fields ${request.fields}");
+    // print("====>>> body files ${request.files}");
+
+    // print(request.fields);
+    // print(request.files);
+    var request = http.Request('DELETE', Uri.parse('$url'));
+
+// http.StreamedResponse response = await request.send();
+
+// if (response.statusCode == 200) {
+//   print(await response.stream.bytesToString());
+// }
+// else {
+//   print(response.reasonPhrase);
+// }
+
+    http.StreamedResponse response = await request.send();
+    var res = await response.stream.bytesToString();
+
+    print("===>>> response $res");
+    if (response.statusCode == 200) {
+      return json.decode(res);
+    } else if (response.statusCode == 404) {
+      print('Error: Not Found');
+      throw "Error: Not Found";
+      // Handle 404 status code
+    } else if (response.statusCode == 500) {
+      print('Error: Internal Server Error');
+      throw "Error: Internal Server Error";
+      // Handle 500 status code
+    } else if (response.statusCode == 429) {
+      print('Error: Too Many Requests');
+      throw "Error: Too Many Requests";
+      // Handle 429 status code
+    } else if (response.statusCode == 409) {
+      print('Error: Already in List');
+      throw "Error: Already in List";
       // Handle 429 status code
     } else {
       print('Error: ${response.statusCode}');
