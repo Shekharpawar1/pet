@@ -22,13 +22,13 @@ class CityListModel {
 
   factory CityListModel.fromJson(Map<String, dynamic> json) => CityListModel(
         status: json["status"],
-        state: List<State>.from(json["state"].map((x) => State.fromJson(x))),
+        state: List<State>.from(json["data"].map((x) => State.fromJson(x))),
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "state": List<dynamic>.from(state!.map((x) => x.toJson())),
+        "data": List<dynamic>.from(state!.map((x) => x.toJson())),
         "message": message,
       };
 }

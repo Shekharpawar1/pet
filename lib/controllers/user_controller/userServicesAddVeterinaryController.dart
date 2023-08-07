@@ -229,7 +229,7 @@ class UserServicesAddVeterinaryController extends GetxController {
       print('Error: $e');
       Get.snackbar(
         'Error',
-        'Unable to get State: $e',
+        'Unable to load State',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -246,7 +246,7 @@ class UserServicesAddVeterinaryController extends GetxController {
       print('Error: $e');
       Get.snackbar(
         'Error',
-        'Unable to Load Pets: $e',
+        'Unable to Load Pets',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
@@ -254,6 +254,7 @@ class UserServicesAddVeterinaryController extends GetxController {
     }
 
     if (petListModel != null && petListModel!.state != null) {
+      print("=====>>>> inside");
       demoPetsList =
           petListModel!.state!.map((e) => e.petName.toString()).toList();
       demoPetsList = demoPetsList.toSet().toList();
