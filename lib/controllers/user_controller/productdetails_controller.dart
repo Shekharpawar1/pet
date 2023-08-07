@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/models/usersModel/ProductDetailsModel.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/utils/api_helper.dart';
@@ -15,6 +16,11 @@ int kg = 1;
  var sizecount = 0;
   String? dropdownsize;
   List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
+
+  
+  // void setSelectedVariant(String variant) {
+  //   dropdownsize = variant;
+  // }
   
 updateSize(String? selectTab){
   dropdownsize = selectTab;
@@ -33,6 +39,8 @@ decrementSize(){
     }
 
 }
+
+
 
 updateSelectTab(int? selectTab){
   selecttab = selectTab;
@@ -107,20 +115,24 @@ updateSelectTab(int? selectTab){
   // }
 
   List _productList = [
-    {
-   
-      "title": "1 kg",
-      },
-    {
     
-      "title": "2 kg",
+    ProductDetailsModel(id: 1, brandname: 'Product 1',flavour:"Chicken", price: "500",
+   agerange: "Adult",diettype: "Non Vegetarian",itemfram: "Pellet",discountprice: "200",targetspace: "Dog",  variants: ['1kg', '2kg', '5kg']),
+  //   {
+  //  "id":1,
+  //  "price":"500",
+  //     "title": "",
+  //     },
+  //   {
+    
+  //     "title": "2 kg",
      
-    },
-    {
+  //   },
+  //   {
      
-      "title": "5 kg",
+  //     "title": "5 kg",
      
-    },
+  //   },
     
   ].obs;
 
@@ -154,5 +166,7 @@ updateSelectTab(int? selectTab){
   // ].obs;
   //  get getOurBrandList => _ourbandList;
    get getproductList => _productList;
+
+   
 
 }

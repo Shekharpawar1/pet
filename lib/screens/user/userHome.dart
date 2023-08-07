@@ -680,6 +680,8 @@ class _HomeUserState extends State<HomeUser> {
                                     ),
                                     child: Column(
                                       children: [
+
+                                        
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Align(
@@ -1504,20 +1506,18 @@ class _HomeUserState extends State<HomeUser> {
 //               ]),
 //             ),
 
-            //  SizedBox(height: MediaQuery.of(context).size.height*0.02),
-//  GetBuilder<HomeuserController>(
-//                       init: homeusercontroller,
-//                       builder: (_) {
-//                         return   Center(
-//                                     child: homeusercontroller.videoController.value.isInitialized
-//                                         ? AspectRatio(
-//                                             aspectRatio:  homeusercontroller.videoController
-//                                                 .value.aspectRatio,
-//                                             child: VideoPlayer( homeusercontroller.videoController),
-//                                           )
-//                                         : CircularProgressIndicator(),
-//                                   );
-
+             SizedBox(height: MediaQuery.of(context).size.height*0.01),
+ GetBuilder<HomeuserController>(
+  init: HomeuserController(),
+  builder: (_) {
+    return Center(
+      child: _.videoController.value.isInitialized
+          ? AspectRatio(
+              aspectRatio: _.videoController.value.aspectRatio,
+              child: VideoPlayer(_.videoController),
+            )
+          : CircularProgressIndicator(),
+    );}),
 //                       }),
 
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
@@ -1806,9 +1806,45 @@ class _HomeUserState extends State<HomeUser> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Icon(Icons.favorite_border)),
+                            child: GestureDetector(
+                              onTap: (){
+                                  // showDialog(
+                                  //                               context:
+                                  //                                   context,
+                                  //                               builder:
+                                  //                                   (BuildContext
+                                  //                                       context) {
+                                  //                                 return AlertDialog(
+                                  //                                   title: Text(
+                                  //                                       'Success'),
+                                  //                                   content:
+                                  //                                       Text(
+                                  //                                           res),
+                                  //                                   actions: <
+                                  //                                       Widget>[
+                                  //                                     TextButton(
+                                  //                                       child:
+                                  //                                           Text(
+                                  //                                         'OK',
+                                  //                                         style:
+                                  //                                             TextStyle(color: gradient1),
+                                  //                                       ),
+                                  //                                       onPressed:
+                                  //                                           () {
+                                  //                                         Navigator.of(context)
+                                  //                                             .pop(); // Close the dialog
+                                  //                                       },
+                                  //                                     ),
+                                  //                                   ],
+                                  //                                 );
+                                  //                               },
+                                  //                             );
+                             
+                              },
+                              child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(Icons.favorite_border)),
+                            ),
                           ),
                         ],
                       ),
