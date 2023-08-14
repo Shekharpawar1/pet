@@ -661,7 +661,7 @@ class _HomeUserState extends State<HomeUser> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         ProductDetails(
-                                                          itemdetails: item,
+                                                          // itemdetails: item,
                                                         )));
                                           },
                                           child: Container(
