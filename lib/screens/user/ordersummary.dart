@@ -753,7 +753,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
              padding:  EdgeInsets.all(10),
              child: Container(
               margin: EdgeInsets.symmetric(vertical: 10),
-              height: MediaQuery.of(context).size.height*0.2,
+              // height: MediaQuery.of(context).size.height*0.2,
               width:MediaQuery.of(context).size.width,
               decoration:BoxDecoration(
                 borderRadius: BorderRadius.circular(15),

@@ -7,6 +7,9 @@ import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/login.dart';
+import 'package:pet/screens/user/UserMyPet.dart';
+import 'package:pet/screens/user/allveterniary.dart';
+import 'package:pet/screens/user/myservices.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -36,6 +39,8 @@ class _drawerState extends State<drawer> {
     "My Services",
     "My Transaction",
     "Logout"
+    "Veterniary",
+    "My Transaction"
   ];
 
   static final List<IconData> _listViewIcons = [
@@ -57,6 +62,86 @@ class _drawerState extends State<drawer> {
       backgroundColor: MyColors.bgcolor,
       child: ListView(
         children: [
+           Container(height:MediaQuery.of(context).size.height*0.2,
+
+                child: DrawerHeader(
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(onTap:(){
+                        // Get.to(Profile());
+                      },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Row(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                            Center(
+              child: Stack(
+            alignment: Alignment.topCenter,
+                children:[
+                    Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+               child:CircleAvatar(
+                radius:35,
+                backgroundColor: Colors.transparent,
+                  child: Image.asset("assets/image/boyprofile3.png"),
+                ),),
+               
+                Positioned(
+                 
+                  bottom: 10,
+                  child: Image.asset("assets/image/drawer2.png",height: 25,),
+              
+                ) 
+              ]),
+            ),
+            SizedBox(width: MediaQuery.of(context).size.width*0.05),
+                                          Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                              children: <Widget>[
+                                                Text(
+                                                  "User",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,
+                                          color:MyColors.white),
+                                                ),
+                                                SizedBox(
+                                                  height: 5,
+                                                ),
+                                                Text(
+                                                  "user123@gmail.com",
+                                                  style: TextStyle(
+                                            color:MyColors.white,fontSize: 16),
+                                                ),
+                                              ]),
+                                        ],
+                                      ),
+
+                                    ]),
+
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+              ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: _listViewData.length,
@@ -118,10 +203,13 @@ class _drawerState extends State<drawer> {
         Get.to(MyPetDetails());
         break;
       case 5:
-        Get.to(ServicePage());
+      Get.to(Myservices());
         break;
-      case 6:
-        Get.to(Usertranscation());
+           case 6:
+      Get.to(AllVeterniary());
+        break;
+     case 7:
+      Get.to(Usertranscation());
         break;
       case 7:
         await GetStorage().erase();

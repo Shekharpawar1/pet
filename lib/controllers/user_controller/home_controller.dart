@@ -64,6 +64,13 @@ class HomeuserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    videoController = VideoPlayerController.asset('assets/image/video1.eaf55f566741325a7b40.mp4')
+      ..initialize().then((_) {
+        // Video is initialized
+         videoController.play(); 
+        update();
+      });
     init();
   }
 

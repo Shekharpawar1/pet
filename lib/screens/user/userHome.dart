@@ -298,7 +298,51 @@ class _HomeUserState extends State<HomeUser> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(17),
 
+<<<<<<< HEAD
                         // border: Border.all(color:brandcolor ),
+=======
+                                var imagePath =
+                                    "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                print(imagePath);
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetails(
+                                                  itemdetails: item,
+                                                )));
+                                  },
+                                  child: Container(
+                                    width: 140,
+                                    // height: 700,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: MyColors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          spreadRadius: 3,
+                                          blurRadius: 7,
+                                          offset: Offset(
+                                              0, 3), // Offset of the shadow
+                                        ),
+                                      ],
+                                      // color: MyColors.white
+                                    ),
+                                    child: Column(
+                                      children: [
+
+                                        
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(
+                                              alignment: Alignment.centerRight,
+                                              child:
+                                                  Icon(Icons.favorite_border)),
+                                        ),
+>>>>>>> origin/ruchika
 
                         color: MyColors.white,
                       ),
@@ -1727,6 +1771,7 @@ class _HomeUserState extends State<HomeUser> {
 //               ]),
 //             ),
 
+<<<<<<< HEAD
                 //  SizedBox(height: MediaQuery.of(context).size.height*0.02),
 //  GetBuilder<HomeuserController>(
 //                       init: homeusercontroller,
@@ -1741,6 +1786,20 @@ class _HomeUserState extends State<HomeUser> {
 //                                         : CircularProgressIndicator(),
 //                                   );
 
+=======
+             SizedBox(height: MediaQuery.of(context).size.height*0.01),
+ GetBuilder<HomeuserController>(
+  init: HomeuserController(),
+  builder: (_) {
+    return Center(
+      child: _.videoController.value.isInitialized
+          ? AspectRatio(
+              aspectRatio: _.videoController.value.aspectRatio,
+              child: VideoPlayer(_.videoController),
+            )
+          : CircularProgressIndicator(),
+    );}),
+>>>>>>> origin/ruchika
 //                       }),
 
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
@@ -2012,6 +2071,7 @@ class _HomeUserState extends State<HomeUser> {
                             height: MediaQuery.of(context).size.width * 0.7,
                             // width: MediaQuery.of(context).size.width * 0.46,
                             decoration: BoxDecoration(
+<<<<<<< HEAD
                               borderRadius: BorderRadius.circular(25),
                               color: MyColors.white,
                               boxShadow: [
@@ -2024,6 +2084,73 @@ class _HomeUserState extends State<HomeUser> {
                               ],
                             ),
                             child: Column(
+=======
+                                borderRadius: BorderRadius.circular(30),
+                                color: MyColors.white),
+                            child: Image.asset("assets/image/food.png",
+                                fit: BoxFit.fill, height: 135),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: GestureDetector(
+                              onTap: (){
+                                  // showDialog(
+                                  //                               context:
+                                  //                                   context,
+                                  //                               builder:
+                                  //                                   (BuildContext
+                                  //                                       context) {
+                                  //                                 return AlertDialog(
+                                  //                                   title: Text(
+                                  //                                       'Success'),
+                                  //                                   content:
+                                  //                                       Text(
+                                  //                                           res),
+                                  //                                   actions: <
+                                  //                                       Widget>[
+                                  //                                     TextButton(
+                                  //                                       child:
+                                  //                                           Text(
+                                  //                                         'OK',
+                                  //                                         style:
+                                  //                                             TextStyle(color: gradient1),
+                                  //                                       ),
+                                  //                                       onPressed:
+                                  //                                           () {
+                                  //                                         Navigator.of(context)
+                                  //                                             .pop(); // Close the dialog
+                                  //                                       },
+                                  //                                     ),
+                                  //                                   ],
+                                  //                                 );
+                                  //                               },
+                                  //                             );
+                             
+                              },
+                              child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Icon(Icons.favorite_border)),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // SizedBox(height: 15,),
+
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Mars Petcare Inc',
+                                style: CustomTextStyle.popinsmedium),
+                            Text('Lorem Ipsum is simply dummy',
+                                style: CustomTextStyle.popinssmall0),
+                            SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+>>>>>>> origin/ruchika
                               children: [
                                 Stack(
                                   children: [

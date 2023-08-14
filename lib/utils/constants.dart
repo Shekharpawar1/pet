@@ -3,8 +3,13 @@ class Constants {
   static const API_V1_PATH = "/api/v1";
   static const GET_USER_SERVICES =
       "$BASE_URL${API_V1_PATH}/banners/service_category";
+ static const GET_USER_MYSERVICES = "$BASE_URL${API_V1_PATH}/banners/get_allservicebooking";
+  
+   static const GET_USER_VETERNIARY = "$BASE_URL${API_V1_PATH}/banners/get_veterinary";
+
   static const GET_USER_CATEGORIES = "/categories";
   static const GET_USER_PROPERTIES = "/items/latest";
+ 
   static const SERVICES_IMAGE_PATH = "/storage/app/public/service/";
   static const CATEGORIES_IMAGE_PATH = "/storage/app/public/category/";
   static const NOTIFICATION_IMAGE_PATH = "/storage/app/public/notification/";
