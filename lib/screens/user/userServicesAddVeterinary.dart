@@ -646,7 +646,7 @@ class UserServicesAddVeterinary extends StatelessWidget {
                                 onTap: () {
                                   // Get.to(MyPetDetails());
                                   print(userServicesAddVeterinaryController
-                                      .petListModel!.state!);
+                                      .petListModel!.data!);
                                 },
                                 child: Center(
                                   child: Container(
