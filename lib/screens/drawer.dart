@@ -10,10 +10,14 @@ import 'package:pet/screens/user/login.dart';
 import 'package:pet/screens/user/UserMyPet.dart';
 import 'package:pet/screens/user/allveterniary.dart';
 import 'package:pet/screens/user/myservices.dart';
+import 'package:pet/screens/user/UserMyPet.dart';
+import 'package:pet/screens/user/allveterniary.dart';
+import 'package:pet/screens/user/myservices.dart';
+import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/screens/user/ordersummary.dart';
-import 'package:pet/screens/user/profile.dart';
+import 'package:pet/screens/user/userprofile.dart';
 import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/userfavourite.dart';
 import 'package:pet/screens/user/usertranscation.dart';
@@ -52,6 +56,8 @@ class _drawerState extends State<drawer> {
     Icons.cleaning_services,
     Icons.payment_outlined,
     Icons.logout,
+ 
+   
   ];
 
   int _currentSelected = 0;
@@ -191,7 +197,7 @@ class _drawerState extends State<drawer> {
         Get.to(UserProfile());
         break;
       case 1:
-        Get.to(OrderDetailsUser());
+      Get.to(OrderDetailsUser());
         break;
       case 2:
         Get.to(NotificationUser());

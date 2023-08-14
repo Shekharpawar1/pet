@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
@@ -10,12 +11,19 @@ import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
+import 'package:pet/models/cityModel.dart' as cityFile;
+import 'package:pet/models/stateModel.dart' as statesFile;
 
 class UserAddress extends StatelessWidget {
-   UserAddress({super.key});
+   UserAddress({super.key, required this.isSelected});
+   bool isSelected;
 
 AddressController addressController = Get.put( AddressController());
-
+ @override
+  // void onClose() {
+  //   addressController.clearFields();
+  //   // super.onClose();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,31 +42,36 @@ AddressController addressController = Get.put( AddressController());
           title: Center(
               child:Text("Address",style:  CustomTextStyle.appbartext,)
           ),
-          actions: [
-            InkWell(
-              onTap: (){
- Get.to (NotificationUser());
-},
-              child: SvgPicture.asset("assets/image/notification.svg")),
+//           actions: [
+//             InkWell(
+//               onTap: (){
+//  Get.to (NotificationUser());
+// },
+//               child: SvgPicture.asset("assets/image/notification.svg")),
     
-            SizedBox(width: 20),
-            Padding(
-              padding:  EdgeInsets.only(right:20.0),
-              child: SvgPicture.asset("assets/image/bag.svg"),
-            ),
+//             SizedBox(width: 20),
+//             Padding(
+//               padding:  EdgeInsets.only(right:20.0),
+//               child: SvgPicture.asset("assets/image/bag.svg"),
+//             ),
            
-          ],
+//           ],
         ),
 
-      body:Padding(
+      body:
+        GetBuilder<AddressController>(
+              init: addressController,
+              builder: (_) {
+                return 
+      Padding(
         padding: const EdgeInsets.all(8.0),
-        child: ListView(shrinkWrap: true,primary: true,
-        children: [
+        child:
+        //  ListView(shrinkWrap: true,primary: true,
+        // children: [
          Form(
                   key: addressController.formKey,
                   child: ListView(
-                    primary: false,
-                    shrinkWrap: true,
+                  shrinkWrap: true,primary: true,
                     children: [
       Padding(
         padding: const EdgeInsets.only(left:15.0,),
@@ -146,6 +159,8 @@ AddressController addressController = Get.put( AddressController());
                           ),
                         ),
                       ),
+      
+      
        Padding(
         padding: const EdgeInsets.only(left:15.0,),
         child:   Text("Mobile Number",style:  CustomTextStyle.popinstext,),
@@ -373,106 +388,369 @@ AddressController addressController = Get.put( AddressController());
         padding: const EdgeInsets.only(left:15.0,),
         child:   Text("State",style:  CustomTextStyle.popinstext,),
       ),
+
+
+    GetBuilder<AddressController>(
+                init: addressController,
+                // initState: (_) {},
+                builder: (_) {
+                  return 
+                  addressController.stateListModel ==
+                          null
+                      // ? Center(
+                      //     child: SpinKitCircle(
+                      //       color:
+                      //           Colors.white, // Color of the progress bar
+                      //       size: 50.0, // Size of the progress bar
+                      //     ),
+                      //   )
+                      ? SizedBox()
+                      : 
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 50,
-                         decoration: BoxDecoration(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             color: Colors.grey.shade200,
-                          ),child: DropdownButtonFormField<String>(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please select a state';
-                              }
-                              return null;
-                            },
-                            value: addressController
-                                .dropdownstate, // Set the selected country value
-                            decoration: InputDecoration(
-                              hintText: "State",
-                              hintStyle: TextStyle(
+                          ),
+                            child: DropdownButtonFormField<statesFile.State>(
+                              validator: (value) {
+                                if (value == null || value.stateName!.isEmpty) {
+                                  return 'Please select a state';
+                                }
+                                return null;
+                              },
+                              // value: addressController
+                              //     .selectedState,
+                              decoration: InputDecoration(
+                                hintText: "State",
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 5),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(
+                                fontSize: 16,
                                 color: MyColors.black,
                               ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              // iconColor: MyColors.black,
+                              items: addressController
+                                  .stateListModel!.state!
+                                  .map((statesFile.State state) {
+                                return DropdownMenuItem<statesFile.State>(
+                                  value: state,
+                                  child: Text(state.stateName!),
+                                );
+                              }).toList(),
+                              onChanged: (statesFile.State? value) async {
+                                await addressController
+                                    .updateState(value!);
+                              },
                             ),
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: MyColors.black,
-                            ),
-                            style: TextStyle(fontSize: 16, color: MyColors.black),
-                            items: addressController.stateDropDownList
-                                .map((String country) {
-                              return DropdownMenuItem<String>(
-                                value: country,
-                                child: Text(country),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              addressController.updateSate(value ?? "");
-                              // Perform actions when country is changed
-                            },
                           ),
-                        ),
-                      ),
-       Padding(
-        padding: const EdgeInsets.only(left:15.0,),
-        child:   Text("City",style:  CustomTextStyle.popinstext,),
-      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 50,
-                        decoration: BoxDecoration(
+                        );
+                },
+              ),
+
+              GetBuilder<AddressController>(
+                init: addressController,
+                // initState: (_) {},
+                builder: (_) {
+                  return addressController.showLoading
+                      ? Center(
+                          child: SpinKitCircle(
+                            color: Colors.black, // Color of the progress bar
+                            size: 30.0, // Size of the progress bar
+                          ),
+                        )
+                      : addressController.cityListModel ==
+                              null
+                          ? SizedBox()
+                          : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 50,
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             color: Colors.grey.shade200,
-                          ), child: DropdownButtonFormField<String>(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please select a city';
-                              }
-                              return null;
-                            },
-                            value: addressController
-                                .dropdowncity, // Set the selected country value
-                            decoration: InputDecoration(
-                              hintText: "City",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 5),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              // iconColor: MyColors.black,
-                            ),
-                            icon: Icon(
-                              Icons.arrow_drop_down,
-                              color: MyColors.black,
-                            ),
-                            style: TextStyle(fontSize: 16, color: MyColors.black),
-                            items: addressController
-                                .cityDropDownList
-                                .map((String type) {
-                              return DropdownMenuItem<String>(
-                                value: type,
-                                child: Text(type),
-                              );
-                            }).toList(),
-                            onChanged: (String? value) {
-                              addressController
-                                  .updatecity(value ?? "");
-                              // Perform actions when country is changed
-                            },
                           ),
-                        ),
-                      ),
+                              child:
+                                  DropdownButtonFormField<cityFile.State>(
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.cityName!.isEmpty) {
+                                    return 'Please select a city';
+                                  }
+                                  return null;
+                                },
+                                value: addressController
+                                    .selectedCity,
+                                decoration: InputDecoration(
+                                  hintText: "City",
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                ),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: MyColors.black,
+                                ),
+                                items: addressController
+                                    .cityListModel!.state!
+                                    .map((state) {
+                                  return DropdownMenuItem<cityFile.State>(
+                                    value: state,
+                                    child: Text(state.cityName!),
+                                  );
+                                }).toList(),
+                                onChanged: (cityFile.State? value) {
+                                  addressController
+                                      .updateCity(value!);
+                                },
+                              ),
+                            ),
+                          );
+                },
+              ),
+
+
+      //  addressController.stateListModel ==
+      //                           null
+      //                       // ? Center(
+      //                       //     child: SpinKitCircle(
+      //                       //       color:
+      //                       //           Colors.white, // Color of the progress bar
+      //                       //       size: 50.0, // Size of the progress bar
+      //                       //     ),
+      //                       //   )
+      //                       ? SizedBox()
+      //                       :
+      //                        Padding(
+                          //       padding: const EdgeInsets.all(8.0),
+                          //       child: Container(
+                          //         height: 50,
+                          // decoration: BoxDecoration(
+                          //   borderRadius: BorderRadius.circular(50),
+                          //   color: Colors.grey.shade200,
+                          // ),
+                          //         child:
+                          //             DropdownButtonFormField<statesFile.State>(
+                          //           validator: (value) {
+                          //             if (value == null ||
+                          //                 value.stateName!.isEmpty) {
+                          //               return 'Please select a state';
+                          //             }
+                          //             return null;
+                          //           },
+                          //           value: addressController
+                          //               .selectedState,
+                          //           decoration: InputDecoration(
+                          //             hintText: "State",
+                          //             contentPadding: EdgeInsets.symmetric(
+                          //                 horizontal: 20, vertical: 5),
+                          //             border: InputBorder.none,
+                          //             enabledBorder: InputBorder.none,
+                          //             focusedBorder: InputBorder.none,
+                          //           ),
+                          //           style: TextStyle(
+                          //             fontSize: 16,
+                          //             color: MyColors.black,
+                          //           ),
+                          //           items: addressController
+                          //               .stateListModel!.state!
+                          //               .map((state) {
+                          //             return DropdownMenuItem<statesFile.State>(
+                          //               value: state,
+                          //               child: Text(state.stateName!),
+                          //             );
+                          //           }).toList(),
+                          //           onChanged: (statesFile.State? value) async {
+                          //             await addressController
+                          //                 .updateState(value!);
+                          //           },
+                          //         ),
+                          //       ),
+                          //     ),
+                    
+      //                 Padding(
+      //                   padding: const EdgeInsets.all(8.0),
+      //                   child: Container(
+      //                     height: 50,
+      //                    decoration: BoxDecoration(
+      //                       borderRadius: BorderRadius.circular(50),
+      //                       color: Colors.grey.shade200,
+      //                     ),child: DropdownButtonFormField<String>(
+      //                       validator: (value) {
+      //                         if (value == null || value.isEmpty) {
+      //                           return 'Please select a state';
+      //                         }
+      //                         return null;
+      //                       },
+      //                       value: addressController
+      //                           .dropdownstate, // Set the selected country value
+      //                       decoration: InputDecoration(
+      //                         hintText: "State",
+      //                         hintStyle: TextStyle(
+      //                           color: MyColors.black,
+      //                         ),
+      //                         contentPadding: EdgeInsets.symmetric(
+      //                             horizontal: 20, vertical: 5),
+      //                         border: InputBorder.none,
+      //                         enabledBorder: InputBorder.none,
+      //                         focusedBorder: InputBorder.none,
+      //                         // iconColor: MyColors.black,
+      //                       ),
+      //                       icon: Icon(
+      //                         Icons.arrow_drop_down,
+      //                         color: MyColors.black,
+      //                       ),
+      //                       style: TextStyle(fontSize: 16, color: MyColors.black),
+      //                       items: addressController.stateDropDownList
+      //                           .map((String country) {
+      //                         return DropdownMenuItem<String>(
+      //                           value: country,
+      //                           child: Text(country),
+      //                         );
+      //                       }).toList(),
+      //                       onChanged: (String? value) {
+      //                         addressController.updateSate(value ?? "");
+      //                         // Perform actions when country is changed
+      //                       },
+      //                     ),
+      //                   ),
+      //                 ),
+      //  Padding(
+      //   padding: const EdgeInsets.only(left:15.0,),
+      //   child:   Text("City",style:  CustomTextStyle.popinstext,),
+      // ),
+               
+      //              addressController.cityListModel ==
+      //                           null
+      //                       ? SizedBox()
+      //                       : Padding(
+      //                         padding: const EdgeInsets.all(8.0),
+      //                         child: Container(
+      //                           height: 50,
+      //                           decoration: BoxDecoration(
+      //                               border: Border.all(
+      //                                   width: 0.5, color: MyColors.grey),
+      //                               // color: Color.fromRGBO(255, 255, 255, 0.10),
+      //                               // boxShadow: [
+      //                               //   BoxShadow(
+      //                               //     offset: const Offset(0.0, 0.0),
+      //                               //     color: Color.fromRGBO(255, 255, 255, 0.10),
+      //                               //     blurRadius: 0.0,
+      //                               //     spreadRadius: 0.0,
+      //                               //   ),
+      //                               // ],
+      //                               // borderRadius: BorderRadius.circular(16),
+
+      //                               color:
+      //                                   Color.fromRGBO(255, 255, 255, 0.10),
+      //                               boxShadow: [
+      //                                 BoxShadow(
+      //                                   offset: const Offset(0.0, 0.0),
+      //                                   color: Color.fromRGBO(
+      //                                       255, 255, 255, 0.10),
+      //                                   blurRadius: 0.0,
+      //                                   spreadRadius: 0.0,
+      //                                 ),
+      //                               ],
+      //                               borderRadius:
+      //                                   BorderRadius.circular(40)),
+      //                           child:
+      //                               DropdownButtonFormField<cityFile.State>(
+      //                             validator: (value) {
+      //                               if (value == null ||
+      //                                   value.cityName!.isEmpty) {
+      //                                 return 'Please select a city';
+      //                               }
+      //                               return null;
+      //                             },
+      //                             value: addressController
+      //                                 .selectedCity,
+      //                             decoration: InputDecoration(
+      //                               hintText: "City",
+      //                               contentPadding: EdgeInsets.symmetric(
+      //                                   horizontal: 20, vertical: 5),
+      //                               border: InputBorder.none,
+      //                               enabledBorder: InputBorder.none,
+      //                               focusedBorder: InputBorder.none,
+      //                             ),
+      //                             style: TextStyle(
+      //                               fontSize: 16,
+      //                               color: MyColors.black,
+      //                             ),
+      //                             items: addressController
+      //                                 .cityListModel!.state!
+      //                                 .map((state) {
+      //                               return DropdownMenuItem<cityFile.State>(
+      //                                 value: state,
+      //                                 child: Text(state.cityName!),
+      //                               );
+      //                             }).toList(),
+      //                             onChanged: (cityFile.State? value) {
+      //                               addressController
+      //                                   .updateCity(value!);
+      //                             },
+      //                           ),
+      //                         ),
+      //                       ),
+                        
+               
+               
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Container(
+                      //     height: 50,
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(50),
+                      //       color: Colors.grey.shade200,
+                      //     ), child: DropdownButtonFormField<String>(
+                      //       validator: (value) {
+                      //         if (value == null || value.isEmpty) {
+                      //           return 'Please select a city';
+                      //         }
+                      //         return null;
+                      //       },
+                      //       value: addressController
+                      //           .selectedCity, // Set the selected country value
+                      //       decoration: InputDecoration(
+                      //         hintText: "City",
+                      //         hintStyle: TextStyle(
+                      //           color: MyColors.black,
+                      //         ),
+                      //         contentPadding: EdgeInsets.symmetric(
+                      //             horizontal: 20, vertical: 5),
+                      //         border: InputBorder.none,
+                      //         enabledBorder: InputBorder.none,
+                      //         focusedBorder: InputBorder.none,
+                      //         // iconColor: MyColors.black,
+                      //       ),
+                      //       icon: Icon(
+                      //         Icons.arrow_drop_down,
+                      //         color: MyColors.black,
+                      //       ),
+                      //       style: TextStyle(fontSize: 16, color: MyColors.black),
+                      //       items: addressController
+                      //           .cityDropDownList
+                      //           .map((String type) {
+                      //         return DropdownMenuItem<String>(
+                      //           value: type,
+                      //           child: Text(type),
+                      //         );
+                      //       }).toList(),
+                      //       onChanged: (String? value) {
+                      //         addressController
+                      //             .updatecity(value ?? "");
+                      //         // Perform actions when country is changed
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
       
                       //          Padding(
                       //           padding: const EdgeInsets.all(8.0),
@@ -650,10 +928,15 @@ AddressController addressController = Get.put( AddressController());
 
       SizedBox(height:10),
        GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          if(isSelected){
+  await addressController.addaddress();
+                          }else{
+addressController.updateaddaddress() ;
+                          }
                         addressController.validateForm(context);
-
-                        addressController.addaddress();
+// addressController .clearFields();
+                   
 // Get.showSnackbar(SnackBar(content: content));
 
 
@@ -687,8 +970,11 @@ AddressController addressController = Get.put( AddressController());
                 )
       
       
-        ],),
-      )
+        // ],),
+      );
+   
+              })
+   
     );
   }
 }

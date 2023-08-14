@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -23,6 +24,7 @@ class ProductAlllistPage extends StatefulWidget {
 class _ProductAlllistPageState extends State<ProductAlllistPage> {
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
     TextEditingController _searchcontroller = TextEditingController();
+    ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,6 +141,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
           padding: const EdgeInsets.all(15.0),
           child: ListView(
             primary: true,
+            shrinkWrap: true,
             children: [
               // SizedBox(height: MediaQuery.of(context).size.height*0.02),
  Row(
@@ -217,7 +220,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
               !homeusercontroller.propertyLoaded
                   ? SizedBox()
                   : Container(
-                          // height: 600,
+                          //  height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
                               primary: false,
                               shrinkWrap: true,
@@ -231,8 +234,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       mainAxisExtent: 280),
                               itemCount: homeusercontroller
                                   .userPropertiesModel!.data!.length
-                                  .clamp(0,
-                                      4), // Set the number of cards you want to display.
+                                 , // Set the number of cards you want to display.
                               itemBuilder: (context, index) {
                                 // gridDelegate:
                                 //     SliverGridDelegateWithMaxCrossAxisExtent(
@@ -248,18 +250,16 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 var item = homeusercontroller
                                     .userPropertiesModel!.data![index];
 
+                                 
                                 var imagePath =
-                                    "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                       "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
                                 print(imagePath);
                                 return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProductDetails(
-                                                  itemdetails: item,
-                                                )));
+                                  onTap: () async{
+                                       productdeatilscontroller.viewproduct( item.id??0,);
+                                           print("productid${item.id??0}");
+                                          await productdeatilscontroller.init();
+                                       Get.to( ProductDetails());
                                   },
                                   child: Container(
                                     width: 140,
@@ -296,8 +296,8 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           //     color: MyColors.white),
                                           child: CachedNetworkImage(
                                             imageUrl: imagePath,
-                                            width: 61,
-                                            height: 75,
+                                            // width: 61,
+                                            // height: 75,
                                             placeholder: (context, url) =>
                                                 Center(
                                               child:

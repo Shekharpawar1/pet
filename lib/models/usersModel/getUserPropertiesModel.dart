@@ -41,6 +41,7 @@ class Datum {
   String? description;
   String? image;
   int? categoryId;
+ String? subCategory;
   CategoryIds? categoryIds;
   AddOns? variations;
   AddOns? addOns;
@@ -74,6 +75,7 @@ class Datum {
     this.description,
     this.image,
     this.categoryId,
+       this.subCategory,
     this.categoryIds,
     this.variations,
     this.addOns,
@@ -108,6 +110,7 @@ class Datum {
         description: json["description"],
         image: json["image"],
         categoryId: json["category_id"],
+         subCategory : json['sub_category'],
         categoryIds: categoryIdsValues.map[json["category_ids"]],
         variations: addOnsValues.map[json["variations"]],
         addOns: addOnsValues.map[json["add_ons"]],
@@ -142,6 +145,7 @@ class Datum {
         "description": description,
         "image": image,
         "category_id": categoryId,
+         "sub_category":subCategory,
         "category_ids": categoryIdsValues.reverse[categoryIds],
         "variations": addOnsValues.reverse[variations],
         "add_ons": addOnsValues.reverse[addOns],

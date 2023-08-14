@@ -94,7 +94,7 @@ class CustomTextStyle {
   static TextStyle popinstext = const TextStyle(
       color: Colors.black,
       fontSize: 14,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.bold,
       fontFamily: "Poppins");
 
   static TextStyle popinsmedium = const TextStyle(

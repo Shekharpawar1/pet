@@ -86,7 +86,7 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             ProductDetails(
-                                              itemdetails: item,
+                                              // itemdetails: item,
                                             )));
                               },
                               child: Container(

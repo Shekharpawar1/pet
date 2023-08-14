@@ -16,7 +16,7 @@ class UsercouponPage extends StatefulWidget {
 }
 
 class _UsercouponPageState extends State<UsercouponPage> {
-   CouponsController couponsscreenController = Get.put(CouponsController());
+   CouponsController couponsController = Get.put(CouponsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +51,12 @@ class _UsercouponPageState extends State<UsercouponPage> {
           ],
         ),
 
-body:ListView(
-shrinkWrap: true,
+body:
+
+ListView(shrinkWrap: true,
 primary: true,
   children: [
-
-    Padding(
+ Padding(
                       padding: const EdgeInsets.all(20.0),
                       child:Container(
   height: 50,
@@ -82,7 +82,7 @@ primary: true,
             }
             return null;
           },
-          controller: couponsscreenController.couponsController,
+          controller: couponsController.couponsController,
           decoration: InputDecoration(
             hintText: "Type coupon code here",
             hintStyle: TextStyle(
@@ -116,13 +116,41 @@ primary: true,
   ),
 ),
                     ),
+   GetBuilder<CouponsController>(
+             
+                          init: couponsController,
+             
+                          builder: (_) {
+             
+             
+                            return 
 
-     Padding(
-       padding: const EdgeInsets.only(left:20.0,right:20),
-       child: Column(
-         children: [
+    ListView.builder(
+  
+                                  primary: false,
+  
+                                  scrollDirection: Axis.vertical,
+  
+                                  shrinkWrap: true,
+  
+                                  itemCount: couponsController
+  
+                                      .couponmodel!.data!.length,
+  
+                                  itemBuilder: (context, index) {
+                                    
+  //  final isSelected = subcategorycontroller.selectedIndex == index;
+
+                                    var item = couponsController
+  
+                                      .couponmodel!.data![index];
+return
+
+   (    couponsController.couponmodel!.data == null)?
+   SizedBox():
            Container(
        width: double.infinity,
+       margin: EdgeInsets.all(10),
        padding: EdgeInsets.all(16),
        decoration: BoxDecoration(
          color: MyColors.blue123,
@@ -140,9 +168,10 @@ primary: true,
           Row(
             children: [
 
-              Text("10% OFF up to ₹150",style: CustomTextStyle.popinsmedium,),
+              Text(  item.title.toString(),style: CustomTextStyle.popinsmedium,),
             ],
           ),
+
            Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
@@ -158,7 +187,7 @@ primary: true,
                       ),
                     ),
                     Text(
-                      'SUMMER25',
+                     item.code.toString(),
                       style: TextStyle(
                         color: MyColors.black,
                         fontSize: 16,
@@ -188,87 +217,26 @@ primary: true,
                 ),
              ],
            ),
+        Text(  "StartDate :${item.startDate.toString()}",style: CustomTextStyle.popinsmedium,),
+            Text( "Expire Date :${item.expireDate.toString()}",style: CustomTextStyle.popinsmedium,),
          ],
        ),
-     ),
-SizedBox(height: 15,),
+     );
 
-        Container(
-       width: double.infinity,
-       padding: EdgeInsets.all(16),
-       decoration: BoxDecoration(
-         color:MyColors.blue123,
-         borderRadius: BorderRadius.circular(10),
-         boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 2),
-              blurRadius: 4,
-              color: Colors.black.withOpacity(0.2),
-            ),
-         ],
-       ),
-       child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-          Row(
-            children: [
-              
-              Text("10% OFF up to ₹150",style: CustomTextStyle.popinsmedium,),
-            ],
-          ),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Coupon Code:',
-                      style: TextStyle(
-                        color: MyColors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'SUMMER25',
-                      style: TextStyle(
-                        color: MyColors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Apply coupon logic
-                  },
-                  child: Text(
-                    'TAP TO APPLY',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    onPrimary: MyColors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                ),
-             ],
-           ),
-         ],
-       ),
-     ),
-         ],
-       ),
-     )
 
-],)
+
+
+                          });
+
         
-    );
+  })        
+],)
+
+
+  
+   );
+  
+  
   }
 }
+

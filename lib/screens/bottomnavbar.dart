@@ -6,9 +6,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/myPetController.dart';
+import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/screens/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
-import 'package:pet/screens/user/profile.dart';
+import 'package:pet/screens/user/userprofile.dart';
 import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/userMyPet.dart';
 
@@ -67,6 +68,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   Get.put(UserMyPetController());
               userMyPetController.clearFields();
               userMyPetController.init();
+            }
+            
+            if (value == 3) {
+              ProfileController profileController =
+                  Get.put(ProfileController());
+              profileController.clearFields();
+              profileController.myprofile();
             }
             setState(() => _currentIndex = value);
           },
