@@ -17,6 +17,7 @@ class Constants {
   static const GET_STATE_LIST = "$BASE_URL${API_V1_PATH}/auth/state";
   static const GET_ZONE_LIST = "$BASE_URL${API_V1_PATH}/zone/list";
   static const GET_MODULE_LIST = "$BASE_URL${API_V1_PATH}/module";
+  static const GET_PET_CATEGORY_LIST = "$BASE_URL${API_V1_PATH}/categories";
   static const GET_CITY_LIST = "$BASE_URL${API_V1_PATH}/auth/city?state=";
   static const USER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/customer";
   static const PARTNER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/login";
@@ -30,4 +31,14 @@ class Constants {
       "$BASE_URL${API_V1_PATH}/customer/notifications?tergat=store";
   static const GET_SERVICES_CATEGORIES =
       "$BASE_URL${API_V1_PATH}/banners/service";
+  static const PETS_CATEGORY_IMAGE_PATH =
+      "$BASE_URL/storage/app/public/category/";
+  static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/breed";
+
+  static const ADD_PET_USER = "$BASE_URL${API_V1_PATH}/auth/pets_add";
+  static const GET_PET_USER = "$BASE_URL${API_V1_PATH}/auth/get_pet";
+  static const GET_PET_SERVICES = "$BASE_URL${API_V1_PATH}/auth/get_pet";
+  static const SERVICE_BOOKING =
+      "$BASE_URL${API_V1_PATH}/banners/service_booking";
+  static const ALL_CITY = "$BASE_URL${API_V1_PATH}/auth/all_city";
 }

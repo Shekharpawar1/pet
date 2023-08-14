@@ -12,7 +12,7 @@ import 'package:pet/screens/wholesaler/totalorder.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/salesman/home.dart';
-import 'screens/user/services2.dart';
+import 'screens/user/userServicesAddAppointment.dart';
 import 'screens/wholesaler/balance.dart';
 import 'screens/wholesaler/payment2.dart';
 

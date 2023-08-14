@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pet/screens/user/UserMyPet.dart';
+import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/myPetController.dart';
+import 'package:pet/screens/Mypetdetails.dart';
+import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/profile.dart';
 import 'package:pet/screens/user/service.dart';
+import 'package:pet/screens/user/userMyPet.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -31,7 +35,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final pages = [
     HomeUser(),
     ServicePage(),
-    Mypet(),
+    UserMyPets(),
     UserProfile(),
   ];
 
@@ -57,6 +61,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
           unselectedFontSize: 10,
           unselectedItemColor: MyColors.white,
           onTap: (value) {
+            print(value);
+            if (value == 2) {
+              UserMyPetController userMyPetController =
+                  Get.put(UserMyPetController());
+              userMyPetController.clearFields();
+              userMyPetController.init();
+            }
             setState(() => _currentIndex = value);
           },
           selectedLabelStyle: CustomTextStyle.popinssmall0,

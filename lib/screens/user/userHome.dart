@@ -7,6 +7,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
+import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/drawer.dart';
 import 'package:pet/screens/user/allcategory.dart';
@@ -37,6 +40,10 @@ class HomeUser extends StatefulWidget {
 
 class _HomeUserState extends State<HomeUser> {
   TextEditingController _searchcontroller = TextEditingController();
+ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
+  SubCategoryController subcategorycontroller = Get.put(SubCategoryController());
+  
+     OurBrandDetailsController ourbranddeatilscontrroller = Get.put(OurBrandDetailsController());
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 
@@ -64,92 +71,79 @@ class _HomeUserState extends State<HomeUser> {
 // //
 //             child:Text("")
 //           ),
-        
-           actions: [
-        
 
-                  
+        actions: [
           Stack(
             children: [
               InkWell(
                   onTap: () {
-                     Get.to(NotificationUser());
+                    Get.to(NotificationUser());
                   },
-                  child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
- 
- Positioned(
- top: 10.0,right: 0,
-                    child:  Stack(
-                      children: <Widget>[
-                         Icon(
-                            Icons.brightness_1,
-                            size: 15.0, color: MyColors.red),
-                         Positioned(
-                            top: 3.0,
-                            right: 4.0,
-                            child:  Center(
-                              child:  Text(('5').toString(),
-                                // list.length.toString(),
-                                style:  TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            )),
-
-                  
-                      ],
-                    )),
-
-
+                  child: Center(
+                    child: Icon(Icons.notifications, color: MyColors.black),
+                  )),
+              Positioned(
+                  top: 10.0,
+                  right: 0,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Positioned(
+                          top: 3.0,
+                          right: 4.0,
+                          child: Center(
+                            child: Text(
+                              ('5').toString(),
+                              // list.length.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 8.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          )),
+                    ],
+                  )),
             ],
           ),
-    
-                SizedBox(width: 20),
- Stack(
+          SizedBox(width: 20),
+          Stack(
             children: [
               InkWell(
                   onTap: () {
-                      Get.to(AddToCardUser());
-                   
+                    Get.to(AddToCardUser());
                   },
-                  child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
- 
+                  child:
+                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+
 // (getCardModel!.data!.isEmpty)?
 // SizedBox():
- Positioned(
- top: 10.0,right: 0,
-                    child:  Stack(
-                      children: <Widget>[
-                         Icon(
-                            Icons.brightness_1,
-                            size: 15.0, color: MyColors.red),
-                         Positioned(
-                            top: 3.0,
-                            right: 4.0,
-                            child:  Center(
-                              child:  Text(('5').toString(),
-                                // list.length.toString(),
-                                style:  TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            )),
-
-                  
-                      ],
-                    )),
-
-
+              Positioned(
+                  top: 10.0,
+                  right: 0,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Positioned(
+                          top: 3.0,
+                          right: 4.0,
+                          child: Center(
+                            child: Text(
+                              ('5').toString(),
+                              // list.length.toString(),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 8.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          )),
+                    ],
+                  )),
             ],
           ),
-    
-    SizedBox(width: 20,)
-    
-        ], 
+          SizedBox(
+            width: 20,
+          )
+        ],
         // shape: RoundedRectangleBorder(
         //   borderRadius: BorderRadius.vertical(
         //     bottom: Radius.circular(20),
@@ -177,8 +171,9 @@ class _HomeUserState extends State<HomeUser> {
                       style: CustomTextStyle.popinstext,
                     )),
 
-                Image.asset("assets/image/girl.png")
+                Image.asset("assets/image/girl.png"),
                 //  SvgPicture.asset("assets/image/girl.svg"),
+                SizedBox(width:20)
               ],
             ),
 
@@ -216,7 +211,7 @@ class _HomeUserState extends State<HomeUser> {
                             children: [
                               // Image.asset(item["image"]),
                               Container(
-                                height: 140,
+                                height: 130,
                                 child: CachedNetworkImage(
                                   imageUrl: imagePath, fit: BoxFit.cover,
                                   // width: 61,
@@ -490,7 +485,7 @@ class _HomeUserState extends State<HomeUser> {
             //      ],),
 
             Container(
-              height: 130,
+               height: 150,
               width: MediaQuery.of(context).size.width,
               child: ListView(
                 primary: false,
@@ -520,7 +515,12 @@ class _HomeUserState extends State<HomeUser> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: InkWell(
                                       onTap: () {
-                                        Get.to(() => Allcategory());
+
+                                      subcategorycontroller.addproduct(item.id??0);
+                                        Get.to(() => Allcategory(
+                                          // id:item.id
+                                        ));
+                                        
                                       },
                                       child: Column(
                                         children: [
@@ -528,7 +528,7 @@ class _HomeUserState extends State<HomeUser> {
                                             child: CachedNetworkImage(
                                               imageUrl: imagePath,
                                               width: 61,
-                                              height: 75,
+                                              height: 90,
                                               placeholder: (context, url) =>
                                                   Center(
                                                 child:
@@ -591,6 +591,7 @@ class _HomeUserState extends State<HomeUser> {
 
                 InkWell(
                   onTap: () {
+                 
                     Get.to(() => ProductAlllistPage());
                   },
                   child: Text('See All',
@@ -614,52 +615,63 @@ class _HomeUserState extends State<HomeUser> {
             GetBuilder<HomeuserController>(
                 init: homeusercontroller,
                 builder: (_) {
-                  return homeusercontroller.propertyLoaded == null
+                  return homeusercontroller.userPropertiesModel == null
                       ? SizedBox()
-                      : Container(
-                          // height: 600,
-                          child: GridView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 15.0,
-                                      mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 280),
-                              itemCount: homeusercontroller
-                                  .userPropertiesModel!.data!.length
-                                  .clamp(0,
-                                      4), // Set the number of cards you want to display.
-                              itemBuilder: (context, index) {
-                                // gridDelegate:
-                                //     SliverGridDelegateWithMaxCrossAxisExtent(
-                                //         maxCrossAxisExtent: 150,
-                                //      childAspectRatio: 3 / 2,
-                                //         mainAxisExtent: 300,
-                                //         crossAxisSpacing: 15,
-                                //         mainAxisSpacing: 15),
-                                // itemCount: homeusercontroller
-                                //     .userPropertiesModel!.data!.length
-                                //     .clamp(0, 4),
-                                // itemBuilder: (BuildContext ctx, index) {
-                                var item = homeusercontroller
-                                    .userPropertiesModel!.data![index];
+                      : homeusercontroller.propertyLoaded == null
+                          ? SizedBox()
+                          : Container(
+                              // height: 600,
+                              child: GridView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 15.0,
+                                          mainAxisSpacing: 15.0,
+                                          mainAxisExtent: 280),
+                                  itemCount: homeusercontroller
+                                      .userPropertiesModel!.data!.length
+                                      .clamp(0,
+                                          4), // Set the number of cards you want to display.
+                                  itemBuilder: (context, index) {
+                                    // gridDelegate:
+                                    //     SliverGridDelegateWithMaxCrossAxisExtent(
+                                    //         maxCrossAxisExtent: 150,
+                                    //      childAspectRatio: 3 / 2,
+                                    //         mainAxisExtent: 300,
+                                    //         crossAxisSpacing: 15,
+                                    //         mainAxisSpacing: 15),
+                                    // itemCount: homeusercontroller
+                                    //     .userPropertiesModel!.data!.length
+                                    //     .clamp(0, 4),
+                                    // itemBuilder: (BuildContext ctx, index) {
+                                    var item = homeusercontroller
+                                        .userPropertiesModel!.data![index];
 
                                 var imagePath =
-                                    "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                    "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
                                 print(imagePath);
                                 return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProductDetails(
-                                                  itemdetails: item,
-                                                )));
+                                  onTap: () async {
+
+                                       productdeatilscontroller.viewproduct( item.id??0,);
+                                           print("productid${item.id??0}");
+                                          await productdeatilscontroller.init();
+                                       Get.to( ProductDetails());
+
+                                   print("productid${item.id??0}");
+
+                                   
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             ProductDetails(
+                                    //               itemdetails: item,
+                                    //             )));
                                   },
                                   child: Container(
                                     width: 140,
@@ -689,142 +701,150 @@ class _HomeUserState extends State<HomeUser> {
                                               child:
                                                   Icon(Icons.favorite_border)),
                                         ),
+                                       
+                                            Container(
+                                              height: 125,
 
-                                        Container(
-                                          height: 125,
+                                              // decoration: BoxDecoration(
+                                              //     borderRadius: BorderRadius.circular(30),
+                                              //     color: MyColors.white),
+                                              child: CachedNetworkImage(
+                                                imageUrl: imagePath,
+                                                // width: 61,
+                                                // height: 100,
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ), // Replace with your own placeholder widget
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Icon(Icons
+                                                        .error), // Replace with your own error widget
+                                              ),
+                                            ),
 
-                                          // decoration: BoxDecoration(
-                                          //     borderRadius: BorderRadius.circular(30),
-                                          //     color: MyColors.white),
-                                          child: CachedNetworkImage(
-                                            imageUrl: imagePath,
-                                            width: 61,
-                                            height: 75,
-                                            placeholder: (context, url) =>
-                                                Center(
-                                              child:
-                                                  CircularProgressIndicator(),
-                                            ), // Replace with your own placeholder widget
-                                            errorWidget: (context, url,
-                                                    error) =>
-                                                Icon(Icons
-                                                    .error), // Replace with your own error widget
-                                          ),
-                                        ),
+                                            // SizedBox(height: 15,),
 
-                                        // SizedBox(height: 15,),
-
-                                        Container(
-                                          // height: 140,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10.0, right: 5, top: 5),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(item.name!,
-                                                    style: CustomTextStyle
-                                                        .popinsmedium),
-                                                Text(
-                                                    item.description.toString(),
-                                                    style: CustomTextStyle
-                                                        .popinssmall0),
-                                                SizedBox(height: 5),
-                                                Row(
+                                            Container(
+                                              // height: 140,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10.0,
+                                                    right: 5,
+                                                    top: 5),
+                                                child: Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                    Text(item.name!,
+                                                        style: CustomTextStyle
+                                                            .popinsmedium),
+                                                    Text(
+                                                        item.description
+                                                            .toString(),
+                                                        style: CustomTextStyle
+                                                            .popinssmall0),
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
                                                       children: [
-                                                        Row(
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
-                                                            Text(
-                                                                "₹" +
-                                                                    item.price
-                                                                        .toString(),
-                                                                style: CustomTextStyle
-                                                                    .discounttext),
-                                                            SizedBox(width: 10),
-                                                            Container(
-                                                              height: 20,
-                                                              width: 40,
-                                                              decoration: BoxDecoration(
-                                                                  color:
-                                                                      MyColors
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                    "₹" +
+                                                                        item.price
+                                                                            .toString(),
+                                                                    style: CustomTextStyle
+                                                                        .discounttext),
+                                                                SizedBox(
+                                                                    width: 4),
+                                                                Container(
+                                                                  height: 20,
+                                                                  
+                                                                  width: 50,
+                                                                  decoration: BoxDecoration(
+                                                                      color: MyColors
                                                                           .red,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              MyColors.red)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                        // item.discount.toString(),
+                                                                         "Save${item.discount}%",
+                                                                        style: CustomTextStyle
+                                                                            .popinstextsmal2222),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            Text(
+                                                              // (     (item.price)! * (item.discount!)/100).toString(),
+                                                              "₹" + item.price!,
+                                                              style: CustomTextStyle
+                                                                  .popinsmedium,
+                                                            ),
+                                                          ],
+                                                        ),
+
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 5.0),
+                                                          child: Container(
+                                                              width: 35,
+                                                              height: 35,
+                                                              decoration: BoxDecoration(
                                                                   borderRadius:
                                                                       BorderRadius
                                                                           .circular(
                                                                               10),
-                                                                  border: Border.all(
-                                                                      color: MyColors
-                                                                          .red)),
-                                                              child: Center(
-                                                                child: Text(
-                                                                    // item.discount.toString(),
-                                                                    "Save20%",
-                                                                    style: CustomTextStyle
-                                                                        .popinstextsmal2222),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          "₹" + item.price!,
-                                                          style: CustomTextStyle
-                                                              .popinsmedium,
-                                                        ),
+                                                                  color: Color(
+                                                                      0xffffcc00)),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            5.0),
+                                                                child:
+                                                                    Image.asset(
+                                                                  "assets/image/bag2.png",
+                                                                  height: 25,
+                                                                ),
+                                                              )),
+                                                        )
+                                                        // Image.asset(
+                                                        //   "assets/image/yellowbag.png",
+                                                        //   height: 80,
+                                                        // )
                                                       ],
-                                                    ),
-
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 5.0),
-                                                      child: Container(
-                                                          width: 35,
-                                                          height: 35,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              color: Color(
-                                                                  0xffffcc00)),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    5.0),
-                                                            child: Image.asset(
-                                                              "assets/image/bag2.png",
-                                                              height: 25,
-                                                            ),
-                                                          )),
                                                     )
-                                                    // Image.asset(
-                                                    //   "assets/image/yellowbag.png",
-                                                    //   height: 80,
-                                                    // )
                                                   ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }),
-                        );
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+               
+                                    )
+                          );}),
+                          
+                            );
                 }),
 
 //               Container(
@@ -959,149 +979,336 @@ class _HomeUserState extends State<HomeUser> {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 children: [
+                  // GetBuilder<HomeuserController>(
+                  //     init: homeusercontroller,
+                  //     builder: (_) {
+                  //       return !homeusercontroller.categoryLoaded
+                  //           ? SizedBox()
+                  //           : ListView.builder(
+                  //               primary: false,
+                  //               scrollDirection: Axis.horizontal,
+                  //               shrinkWrap: true,
+                  //               itemCount:
+                  //                   homeusercontroller.getOurBrandList.length,
+                  //               itemBuilder: (context, index) {
+                  //                 var item =
+                  //                     homeusercontroller.getOurBrandList[index];
+                  //                 // print(item.name!);
+                  //                 // var imagePath =
+                  //                 //     "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+                  //                 // print(imagePath);
+
+                  //                 return Padding(
+                  //                   padding: const EdgeInsets.all(8.0),
+                  //                   child: Column(
+                  //                     children: [
+                  //                       Container(
+                  //                         height: MediaQuery.of(context)
+                  //                                 .size
+                  //                                 .width *
+                  //                             0.55,
+                  //                         width: MediaQuery.of(context)
+                  //                                 .size
+                  //                                 .width *
+                  //                             0.46,
+                  //                         decoration: BoxDecoration(
+                  //                           borderRadius:
+                  //                               BorderRadius.circular(30),
+                  //                           // color: MyColors.white
+                  //                         ),
+                  //                         child: Stack(
+                  //                           alignment: Alignment.topCenter,
+                  //                           children: [
+                  //                             // SizedBox(height: 140,),
+                  //                             Container(
+                  //                               height: MediaQuery.of(context)
+                  //                                       .size
+                  //                                       .width *
+                  //                                   0.6,
+                  //                               width: MediaQuery.of(context)
+                  //                                       .size
+                  //                                       .width *
+                  //                                   0.46,
+                  //                               decoration: BoxDecoration(
+                  //                                   borderRadius:
+                  //                                       BorderRadius.circular(
+                  //                                           30),
+                  //                                   color: Colors.transparent),
+                  //                               child: Column(
+                  //                                 children: [
+                  //                                   Padding(
+                  //                                     padding:
+                  //                                         const EdgeInsets.only(
+                  //                                             top: 25.0),
+                  //                                     child: Container(
+                  //                                       decoration:
+                  //                                           BoxDecoration(
+                  //                                         borderRadius:
+                  //                                             BorderRadius
+                  //                                                 .circular(30),
+                  //                                         gradient:
+                  //                                             LinearGradient(
+                  //                                           begin: Alignment
+                  //                                               .topCenter,
+                  //                                           end: Alignment
+                  //                                               .bottomCenter,
+                  //                                           colors: [
+                  //                                             Color(0xFFFFF0BA),
+                  //                                             Color.fromRGBO(
+                  //                                                 252,
+                  //                                                 233,
+                  //                                                 166,
+                  //                                                 0.00),
+                  //                                           ],
+                  //                                         ),
+                  //                                       ),
+                  //                                       child: Image.asset(
+                  //                                           item["image"],
+                  //                                           fit: BoxFit.cover,
+                  //                                           height: 135),
+                  //                                     ),
+                  //                                   ),
+                  //                                   SizedBox(
+                  //                                     height: 15,
+                  //                                   ),
+                  //                                   Text(item["title"],
+                  //                                       style: CustomTextStyle
+                  //                                           .popinssmall0)
+                  //                                 ],
+                  //                               ),
+                  //                             ),
+
+                  //                             Positioned(
+                  //                               top: 3,
+                  //                               child: Container(
+                  //                                   height: 50,
+                  //                                   width: 60,
+                  //                                   decoration: BoxDecoration(
+                  //                                       color: Colors.white
+                  //                                           .withOpacity(0.3),
+                  //                                       borderRadius:
+                  //                                           BorderRadius
+                  //                                               .circular(20)),
+                  //                                   child: Image.asset(
+                  //                                     item["logo"],
+                  //                                     height: 50,
+                  //                                   )),
+                  //                             )
+                  //                           ],
+                  //                         ),
+                  //                       ),
+                  //                     ],
+                  //                   ),
+
+                  //                   //  Stack(
+                  //                   //   children: [
+                  //                   //     Container(
+                  //                   //       width: 69,
+                  //                   //       height: 75,
+                  //                   //       decoration: BoxDecoration(
+                  //                   //         borderRadius: BorderRadius.circular(23),
+                  //                   //         color: item,
+                  //                   //         boxShadow: [
+                  //                   //           BoxShadow(
+                  //                   //             color: Colors.grey.withOpacity(0.3),
+                  //                   //             spreadRadius: 2,
+                  //                   //             blurRadius: 5,
+                  //                   //             offset: Offset(
+                  //                   //                 0, 3), // Offset of the shadow
+                  //                   //           ),
+                  //                   //         ],
+                  //                   //       ),
+                  //                   //     ),
+                  //                   //   ],
+                  //                   // )
+                  //                 );
+                  //               },
+                  //             );
+                  //     }),
                   GetBuilder<HomeuserController>(
                       init: homeusercontroller,
                       builder: (_) {
-                        return !homeusercontroller.categoryLoaded
+                        return homeusercontroller.userBrandModel == null
                             ? SizedBox()
                             : ListView.builder(
                                 primary: false,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
-                                itemCount:
-                                    homeusercontroller.getOurBrandList.length,
+                                itemCount: homeusercontroller
+                                    .userBrandModel!.data!
+                                    .where((element) => element.canine == 1)
+                                    .toList()
+                                    .length,
                                 itemBuilder: (context, index) {
-                                  var item =
-                                      homeusercontroller.getOurBrandList[index];
+                                  var item = homeusercontroller
+                                      .userBrandModel!.data!
+                                      .where((element) => element.canine == 1)
+                                      .toList()[index];
                                   // print(item.name!);
-                                  // var imagePath =
-                                  //     "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+                                  var imagePath =
+                                      "${Constants.BASE_URL}${Constants.BRAND_IMAGE_PATH}${item.image ?? ""}";
+                                  var imageLogoPath =
+                                      "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                   // print(imagePath);
-
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.55,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.46,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            // color: MyColors.white
-                                          ),
-                                          child: Stack(
-                                            alignment: Alignment.topCenter,
-                                            children: [
-                                              // SizedBox(height: 140,),
-                                              Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.6,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.46,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    color: Colors.transparent),
-                                                child: Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 25.0),
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          gradient:
-                                                              LinearGradient(
-                                                            begin: Alignment
-                                                                .topCenter,
-                                                            end: Alignment
-                                                                .bottomCenter,
-                                                            colors: [
-                                                              Color(0xFFFFF0BA),
-                                                              Color.fromRGBO(
-                                                                  252,
-                                                                  233,
-                                                                  166,
-                                                                  0.00),
-                                                            ],
+                                  return
+                                   InkWell(
+                                    onTap:(){
+ourbranddeatilscontrroller.addproduct(item.id??0, item.logo??'');
+print("Brandid${item.id}");
+Get.to(OurBrandDetails());
+                                    },
+                                     child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.55,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.46,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              // color: MyColors.white
+                                            ),
+                                            child: Stack(
+                                              alignment: Alignment.topCenter,
+                                              children: [
+                                                // SizedBox(height: 140,),
+                                                Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.46,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                      color: Colors.transparent),
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                top: 25.0),
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(30),
+                                                            gradient:
+                                                                LinearGradient(
+                                                              begin: Alignment
+                                                                  .topCenter,
+                                                              end: Alignment
+                                                                  .bottomCenter,
+                                                              colors: [
+                                                                Color(0xFFFFF0BA),
+                                                                Color.fromRGBO(
+                                                                    252,
+                                                                    233,
+                                                                    166,
+                                                                    0.00),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: imagePath,
+                                                            // width: 50,
+                                                            height: 135,
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                    Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ), // Replace with your own placeholder widget
+                                                            errorWidget: (context,
+                                                                    url, error) =>
+                                                                Icon(Icons
+                                                                    .error), // Replace with your own error widget
                                                           ),
                                                         ),
-                                                        child: Image.asset(
-                                                            item["image"],
-                                                            fit: BoxFit.cover,
-                                                            height: 135),
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    Text(item["title"],
-                                                        style: CustomTextStyle
-                                                            .popinssmall0)
-                                                  ],
+                                                      SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Text(item.title!,
+                                                          style: CustomTextStyle
+                                                              .popinssmall0)
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-
-                                              Positioned(
-                                                top: 3,
-                                                child: Container(
+                                                Positioned(
+                                                  top: 3,
+                                                  child: Container(
                                                     height: 50,
                                                     width: 60,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white
                                                             .withOpacity(0.3),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                    child: Image.asset(
-                                                      item["logo"],
+                                                            BorderRadius.circular(
+                                                                20)),
+                                                    child:
+                                                        // Image.asset(
+                                                        //   item["logo"],
+                                                        //   height: 50,
+                                                        // ),
+                                                        CachedNetworkImage(
+                                                      imageUrl: imageLogoPath,
+                                                      // width: 50,
                                                       height: 50,
-                                                    )),
-                                              )
-                                            ],
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      ), // Replace with your own placeholder widget
+                                                      errorWidget: (context, url,
+                                                              error) =>
+                                                          Icon(Icons
+                                                              .error), // Replace with your own error widget
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    //  Stack(
-                                    //   children: [
-                                    //     Container(
-                                    //       width: 69,
-                                    //       height: 75,
-                                    //       decoration: BoxDecoration(
-                                    //         borderRadius: BorderRadius.circular(23),
-                                    //         color: item,
-                                    //         boxShadow: [
-                                    //           BoxShadow(
-                                    //             color: Colors.grey.withOpacity(0.3),
-                                    //             spreadRadius: 2,
-                                    //             blurRadius: 5,
-                                    //             offset: Offset(
-                                    //                 0, 3), // Offset of the shadow
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // )
-                                  );
+                                        ],
+                                      ),
+                                      //  Stack(
+                                      //   children: [
+                                      //     Container(
+                                      //       width: 69,
+                                      //       height: 75,
+                                      //       decoration: BoxDecoration(
+                                      //         borderRadius: BorderRadius.circular(23),
+                                      //         color: item,
+                                      //         boxShadow: [
+                                      //           BoxShadow(
+                                      //             color: Colors.grey.withOpacity(0.3),
+                                      //             spreadRadius: 2,
+                                      //             blurRadius: 5,
+                                      //             offset: Offset(
+                                      //                 0, 3), // Offset of the shadow
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // )
+                                                                     ),
+                                   );
                                 },
                               );
                       }),
@@ -1570,160 +1777,167 @@ class _HomeUserState extends State<HomeUser> {
                                       .userBrandModel!.data![index];
                                   // print(item.name!);
                                   var imagePath =
-                                      "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+                                      "${Constants.BASE_URL}${Constants.BRAND_IMAGE_PATH}${item.image ?? ""}";
                                   var imageLogoPath =
-                                      "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.logo ?? ""}";
+                                      "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                   // print(imagePath);
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.55,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.46,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            // color: MyColors.white
-                                          ),
-                                          child: Stack(
-                                            alignment: Alignment.topCenter,
-                                            children: [
-                                              // SizedBox(height: 140,),
-                                              Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.6,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.46,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    color: Colors.transparent),
-                                                child: Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 25.0),
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          gradient:
-                                                              LinearGradient(
-                                                            begin: Alignment
-                                                                .topCenter,
-                                                            end: Alignment
-                                                                .bottomCenter,
-                                                            colors: [
-                                                              Color(0xFFFFF0BA),
-                                                              Color.fromRGBO(
-                                                                  252,
-                                                                  233,
-                                                                  166,
-                                                                  0.00),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          imageUrl: imagePath,
-                                                          // width: 50,
-                                                          height: 135,
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ), // Replace with your own placeholder widget
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons
-                                                                  .error), // Replace with your own error widget
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    Text(item.title!,
-                                                        style: CustomTextStyle
-                                                            .popinssmall0)
-                                                  ],
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 3,
-                                                child: Container(
-                                                  height: 50,
-                                                  width: 60,
+                                  return InkWell(
+                                    onTap: (){
+                                      ourbranddeatilscontrroller.addproduct(item.id??0, item.logo??'');
+print("Brandid${item.id}");
+Get.to(OurBrandDetails());
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.55,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.46,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              // color: MyColors.white
+                                            ),
+                                            child: Stack(
+                                              alignment: Alignment.topCenter,
+                                              children: [
+                                                // SizedBox(height: 140,),
+                                                Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.46,
                                                   decoration: BoxDecoration(
-                                                      color: Colors.white
-                                                          .withOpacity(0.3),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              20)),
-                                                  child:
-                                                      // Image.asset(
-                                                      //   item["logo"],
-                                                      //   height: 50,
-                                                      // ),
-                                                      CachedNetworkImage(
-                                                    imageUrl: imageLogoPath,
-                                                    // width: 50,
-                                                    height: 50,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    ), // Replace with your own placeholder widget
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        Icon(Icons
-                                                            .error), // Replace with your own error widget
+                                                              30),
+                                                      color: Colors.transparent),
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                top: 25.0),
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(30),
+                                                            gradient:
+                                                                LinearGradient(
+                                                              begin: Alignment
+                                                                  .topCenter,
+                                                              end: Alignment
+                                                                  .bottomCenter,
+                                                              colors: [
+                                                                Color(0xFFFFF0BA),
+                                                                Color.fromRGBO(
+                                                                    252,
+                                                                    233,
+                                                                    166,
+                                                                    0.00),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: imagePath,
+                                                            // width: 50,
+                                                            height: 135,
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                    Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ), // Replace with your own placeholder widget
+                                                            errorWidget: (context,
+                                                                    url, error) =>
+                                                                Icon(Icons
+                                                                    .error), // Replace with your own error widget
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Text(item.title!,
+                                                          style: CustomTextStyle
+                                                              .popinssmall0)
+                                                    ],
                                                   ),
                                                 ),
-                                              )
-                                            ],
+                                                Positioned(
+                                                  top: 3,
+                                                  child: Container(
+                                                    height: 50,
+                                                    width: 60,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white
+                                                            .withOpacity(0.3),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                20)),
+                                                    child:
+                                                        // Image.asset(
+                                                        //   item["logo"],
+                                                        //   height: 50,
+                                                        // ),
+                                                        CachedNetworkImage(
+                                                      imageUrl: imageLogoPath,
+                                                      // width: 50,
+                                                      height: 50,
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      ), // Replace with your own placeholder widget
+                                                      errorWidget: (context, url,
+                                                              error) =>
+                                                          Icon(Icons
+                                                              .error), // Replace with your own error widget
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
+                                      //  Stack(
+                                      //   children: [
+                                      //     Container(
+                                      //       width: 69,
+                                      //       height: 75,
+                                      //       decoration: BoxDecoration(
+                                      //         borderRadius: BorderRadius.circular(23),
+                                      //         color: item,
+                                      //         boxShadow: [
+                                      //           BoxShadow(
+                                      //             color: Colors.grey.withOpacity(0.3),
+                                      //             spreadRadius: 2,
+                                      //             blurRadius: 5,
+                                      //             offset: Offset(
+                                      //                 0, 3), // Offset of the shadow
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // )
                                     ),
-                                    //  Stack(
-                                    //   children: [
-                                    //     Container(
-                                    //       width: 69,
-                                    //       height: 75,
-                                    //       decoration: BoxDecoration(
-                                    //         borderRadius: BorderRadius.circular(23),
-                                    //         color: item,
-                                    //         boxShadow: [
-                                    //           BoxShadow(
-                                    //             color: Colors.grey.withOpacity(0.3),
-                                    //             spreadRadius: 2,
-                                    //             blurRadius: 5,
-                                    //             offset: Offset(
-                                    //                 0, 3), // Offset of the shadow
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // )
                                   );
                                 },
                               );
@@ -1758,30 +1972,75 @@ class _HomeUserState extends State<HomeUser> {
 
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
-            GridView.builder(
-                               primary: false,
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 15.0,
-                                      mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 270),
-                              itemCount: homeusercontroller
-                                  .userPropertiesModel!.data!.length
-                                  .clamp(0,
-                                      4),
-                              itemBuilder: (BuildContext ctx, index) {
+          //   GridView.builder(
+             
+          //      primary: false,
+          //                         shrinkWrap: true,
+          //                         scrollDirection: Axis.vertical,
+          //                         physics: NeverScrollableScrollPhysics(),
+          //                         gridDelegate:
+          //                             SliverGridDelegateWithFixedCrossAxisCount(
+          //                                 crossAxisCount: 2,
+          //                                 crossAxisSpacing: 15.0,
+          //                                 mainAxisSpacing: 15.0,
+          //                                 mainAxisExtent: 280),
+                                  
+          //       itemCount: homeusercontroller.userPropertiesModel!.data!.length
+          //           .clamp(0, 4),
+          //       itemBuilder: (BuildContext ctx, index) {
+          //  return       
+                   Container(
+                              // height: 600,
+                              child: GridView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 15.0,
+                                          mainAxisSpacing: 15.0,
+                                          mainAxisExtent: 280),
+                                  itemCount: homeusercontroller
+                                      .userPropertiesModel!.data!.length
+                                      .clamp(0,
+                                          4), // Set the number of cards you want to display.
+                                  itemBuilder: (context, index) {
+                                    // gridDelegate:
+                                    //     SliverGridDelegateWithMaxCrossAxisExtent(
+                                    //         maxCrossAxisExtent: 150,
+                                    //      childAspectRatio: 3 / 2,
+                                    //         mainAxisExtent: 300,
+                                    //         crossAxisSpacing: 15,
+                                    //         mainAxisSpacing: 15),
+                                    // itemCount: homeusercontroller
+                                    //     .userPropertiesModel!.data!.length
+                                    //     .clamp(0, 4),
+                                    // itemBuilder: (BuildContext ctx, index) {
+                                    var item = homeusercontroller
+                                        .userPropertiesModel!.data![index];
 
-                                return   Container(
-                  height: MediaQuery.of(context).size.width * 0.7,
-                  // width: MediaQuery.of(context).size.width * 0.46,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: MyColors.white,
-                         boxShadow: [
+                                var imagePath =
+                                    "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
+                                print(imagePath);
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ProductDetails(
+                                                  // itemdetails: item,
+                                                )));
+                                  },
+                                  child: Container(
+                                    width: 140,
+                                    // height: 700,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: MyColors.white,
+                                      boxShadow: [
                                         BoxShadow(
                                           color: Colors.grey.withOpacity(0.3),
                                           spreadRadius: 3,
@@ -1790,143 +2049,344 @@ class _HomeUserState extends State<HomeUser> {
                                               0, 3), // Offset of the shadow
                                         ),
                                       ],
-                      
-                      ),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                                   width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: MyColors.white),
-                            child: Image.asset("assets/image/food.png",
-                                fit: BoxFit.fill, height: 135),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: (){
-                                  // showDialog(
-                                  //                               context:
-                                  //                                   context,
-                                  //                               builder:
-                                  //                                   (BuildContext
-                                  //                                       context) {
-                                  //                                 return AlertDialog(
-                                  //                                   title: Text(
-                                  //                                       'Success'),
-                                  //                                   content:
-                                  //                                       Text(
-                                  //                                           res),
-                                  //                                   actions: <
-                                  //                                       Widget>[
-                                  //                                     TextButton(
-                                  //                                       child:
-                                  //                                           Text(
-                                  //                                         'OK',
-                                  //                                         style:
-                                  //                                             TextStyle(color: gradient1),
-                                  //                                       ),
-                                  //                                       onPressed:
-                                  //                                           () {
-                                  //                                         Navigator.of(context)
-                                  //                                             .pop(); // Close the dialog
-                                  //                                       },
-                                  //                                     ),
-                                  //                                   ],
-                                  //                                 );
-                                  //                               },
-                                  //                             );
-                             
-                              },
-                              child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Icon(Icons.favorite_border)),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // SizedBox(height: 15,),
-
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Mars Petcare Inc',
-                                style: CustomTextStyle.popinsmedium),
-                            Text('Lorem Ipsum is simply dummy',
-                                style: CustomTextStyle.popinssmall0),
-                            SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text("₹269",
-                                            style:
-                                                CustomTextStyle.discounttext),
-                                        SizedBox(width: 10),
-                                        Container(
-                                          height: 18,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              color: MyColors.red,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              border: Border.all(
-                                                  color: MyColors.red)),
-                                          child: Center(
-                                            child: Text(
-                                                // item.discount.toString(),
-                                                "Save20%",
-                                                style: CustomTextStyle
-                                                    .popinstextsmal2222),
-                                          ),
-                                        ),
-                                      ],
+                                      // color: MyColors.white
                                     ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      "₹ 260.00",
-                                      style: CustomTextStyle.popinsmedium,
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 5.0),
-                                  child: Container(
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Color(0xffffcc00)),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Image.asset(
-                                          "assets/image/bag2.png",
-                                          height: 25,
+                                    child:  Column(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: Icon(
+                                                      Icons.favorite_border)),
+                                            ),
+
+                                            Container(
+                                              height: 125,
+
+                                              // decoration: BoxDecoration(
+                                              //     borderRadius: BorderRadius.circular(30),
+                                              //     color: MyColors.white),
+                                              child: CachedNetworkImage(
+                                                imageUrl: imagePath,
+                                                // width: 61,
+                                                // height: 75,
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ), // Replace with your own placeholder widget
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Icon(Icons
+                                                        .error), // Replace with your own error widget
+                                              ),
+                                            ),
+
+                                            // SizedBox(height: 15,),
+
+                                            Container(
+                                              // height: 140,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10.0,
+                                                    right: 5,
+                                                    top: 5),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(item.name!,
+                                                        style: CustomTextStyle
+                                                            .popinsmedium),
+                                                    Text(
+                                                        item.description
+                                                            .toString(),
+                                                        style: CustomTextStyle
+                                                            .popinssmall0),
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                    "₹" +
+                                                                        item.price
+                                                                            .toString(),
+                                                                    style: CustomTextStyle
+                                                                        .discounttext),
+                                                                SizedBox(
+                                                                    width: 3),
+                                                                Container(
+                                                                  height: 20,
+                                                                  width: 50,
+                                                                  decoration: BoxDecoration(
+                                                                      color: MyColors
+                                                                          .red,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              MyColors.red)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                        // item.discount.toString(),
+                                                                       "Save${item.discount}%",
+                                                                        style: CustomTextStyle
+                                                                            .popinstextsmal2222),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            Text(
+                                                              "₹" + item.price!,
+                                                              style: CustomTextStyle
+                                                                  .popinsmedium,
+                                                            ),
+                                                          ],
+                                                        ),
+
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 5.0),
+                                                          child: Container(
+                                                              width: 35,
+                                                              height: 35,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  color: Color(
+                                                                      0xffffcc00)),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            5.0),
+                                                                child:
+                                                                    Image.asset(
+                                                                  "assets/image/bag2.png",
+                                                                  height: 25,
+                                                                ),
+                                                              )),
+                                                        )
+                                                        // Image.asset(
+                                                        //   "assets/image/yellowbag.png",
+                                                        //   height: 80,
+                                                        // )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )),
-                                )
-                              ],
+                                      ),
+                                    );
+                          }),
+                          
                             )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
-                
-                              }),
+          
+                  
+                  //  Container(
+                  //   height: MediaQuery.of(context).size.width * 0.7,
+                  //   // width: MediaQuery.of(context).size.width * 0.46,
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(25),
+                  //     color: MyColors.white,
+                  //        boxShadow: [
+                  //                       BoxShadow(
+                  //                         color: Colors.grey.withOpacity(0.3),
+                  //                         spreadRadius: 3,
+                  //                         blurRadius: 7,
+                  //                         offset: Offset(
+                  //                             0, 3), // Offset of the shadow
+                  //                       ),
+                  //                     ],
+                      
+                  //     ),
+                  // child: Column(
+                  //   children: [
+                  //     Stack(
+                  //       children: [
+                  //         Container(
+                  //                  width: MediaQuery.of(context).size.width,
+                  //           decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.circular(30),
+                  //               color: MyColors.white),
+                  //           child: Image.asset("assets/image/food.png",
+                  //               fit: BoxFit.fill, height: 135),
+                  //         ),
+                  //         Padding(
+                  //           padding: const EdgeInsets.all(8.0),
+                  //           child: GestureDetector(
+                  //             onTap: (){
+                  //                 // showDialog(
+                  //                 //                               context:
+                  //                 //                                   context,
+                  //                 //                               builder:
+                  //                 //                                   (BuildContext
+                  //                 //                                       context) {
+                  //                 //                                 return AlertDialog(
+                  //                 //                                   title: Text(
+                  //                 //                                       'Success'),
+                  //                 //                                   content:
+                  //                 //                                       Text(
+                  //                 //                                           res),
+                  //                 //                                   actions: <
+                  //                 //                                       Widget>[
+                  //                 //                                     TextButton(
+                  //                 //                                       child:
+                  //                 //                                           Text(
+                  //                 //                                         'OK',
+                  //                 //                                         style:
+                  //                 //                                             TextStyle(color: gradient1),
+                  //                 //                                       ),
+                  //                 //                                       onPressed:
+                  //                 //                                           () {
+                  //                 //                                         Navigator.of(context)
+                  //                 //                                             .pop(); // Close the dialog
+                  //                 //                                       },
+                  //                 //                                     ),
+                  //                 //                                   ],
+                  //                 //                                 );
+                  //                 //                               },
+                  //                 //                             );
+                             
+                  //             },
+                  //             child: Align(
+                  //                 alignment: Alignment.centerRight,
+                  //                 child: Icon(Icons.favorite_border)),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+
+                  //     // SizedBox(height: 15,),
+
+                  //     Padding(
+                  //       padding: const EdgeInsets.all(5.0),
+                  //       child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           Container(
+                  //             width: MediaQuery.of(context).size.width,
+                  //             decoration: BoxDecoration(
+                  //                 borderRadius: BorderRadius.circular(30),
+                  //                 color: MyColors.white),
+                  //             child: Image.asset("assets/image/food.png",
+                  //                 fit: BoxFit.fill, height: 135),
+                  //           ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: Align(
+                  //                 alignment: Alignment.centerRight,
+                  //                 child: Icon(Icons.favorite_border)),
+                  //           ),
+                  //         ],
+                  //       ),
+
+                  //       // SizedBox(height: 15,),
+
+                  //       Padding(
+                  //         padding: const EdgeInsets.all(5.0),
+                  //         child: Column(
+                  //           mainAxisAlignment: MainAxisAlignment.start,
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Text('Mars Petcare Inc',
+                  //                 style: CustomTextStyle.popinsmedium),
+                  //             Text('Lorem Ipsum is simply dummy',
+                  //                 style: CustomTextStyle.popinssmall0),
+                  //             SizedBox(height: 5),
+                  //             Row(
+                  //               mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 Column(
+                  //                   crossAxisAlignment:
+                  //                       CrossAxisAlignment.start,
+                  //                   children: [
+                  //                     Row(
+                  //                       children: [
+                  //                         Text("₹269",
+                  //                             style:
+                  //                                 CustomTextStyle.discounttext),
+                  //                         SizedBox(width: 10),
+                  //                         Container(
+                  //                           height: 18,
+                  //                           width: 40,
+                  //                           decoration: BoxDecoration(
+                  //                               color: MyColors.red,
+                  //                               borderRadius:
+                  //                                   BorderRadius.circular(10),
+                  //                               border: Border.all(
+                  //                                   color: MyColors.red)),
+                  //                           child: Center(
+                  //                             child: Text(
+                  //                                 // item.discount.toString(),
+                  //                                 "Save20%",
+                  //                                 style: CustomTextStyle
+                  //                                     .popinstextsmal2222),
+                  //                           ),
+                  //                         ),
+                  //                       ],
+                  //                     ),
+                  //                     SizedBox(height: 5),
+                  //                     Text(
+                  //                       "₹ 260.00",
+                  //                       style: CustomTextStyle.popinsmedium,
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.only(right: 5.0),
+                  //                   child: Container(
+                  //                       width: 35,
+                  //                       height: 35,
+                  //                       decoration: BoxDecoration(
+                  //                           borderRadius:
+                  //                               BorderRadius.circular(10),
+                  //                           color: Color(0xffffcc00)),
+                  //                       child: Padding(
+                  //                         padding: EdgeInsets.all(5.0),
+                  //                         child: Image.asset(
+                  //                           "assets/image/bag2.png",
+                  //                           height: 25,
+                  //                         ),
+                  //                       )),
+                  //                 )
+                  //               ],
+                  //             )
+                  //           ],
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // );
+              
+              
+              
+                // }),
 
             // GridView(
             //   physics: NeverScrollableScrollPhysics(),
@@ -2252,7 +2712,7 @@ class _HomeUserState extends State<HomeUser> {
             //   shrinkWrap: true,
             // ),
 
-            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            ,SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2286,152 +2746,343 @@ class _HomeUserState extends State<HomeUser> {
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 children: [
-                  GetBuilder<HomeuserController>(
+                   GetBuilder<HomeuserController>(
                       init: homeusercontroller,
                       builder: (_) {
-                        return !homeusercontroller.categoryLoaded
+                        return homeusercontroller.userBrandModel == null
                             ? SizedBox()
                             : ListView.builder(
                                 primary: false,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
-                                itemCount:
-                                    homeusercontroller.getOurBrandList.length,
+                                itemCount: homeusercontroller
+                                    .userBrandModel!.data!
+                                    .where((element) => element.canine == 0)
+                                    .toList()
+                                    .length,
                                 itemBuilder: (context, index) {
-                                  var item =
-                                      homeusercontroller.getOurBrandList[index];
+                                  var item = homeusercontroller
+                                      .userBrandModel!.data!
+                                      .where((element) => element.canine == 0)
+                                      .toList()[index];
                                   // print(item.name!);
-                                  // var imagePath =
-                                  //     "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+                                  var imagePath =
+                                      "${Constants.BASE_URL}${Constants.BRAND_IMAGE_PATH}${item.image ?? ""}";
+                                  var imageLogoPath =
+                                      "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                   // print(imagePath);
-
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.55,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.40,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            // color: MyColors.white
-                                          ),
-                                          child: Stack(
-                                            alignment: Alignment.topCenter,
-                                            children: [
-                                              // SizedBox(height: 140,),
-                                              Container(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.6,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.46,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            30),
-                                                    color: Colors.transparent),
-                                                child: Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 25.0),
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(30),
-                                                          gradient:
-                                                              LinearGradient(
-                                                            begin: Alignment
-                                                                .topCenter,
-                                                            end: Alignment
-                                                                .bottomCenter,
-                                                            colors: [
-                                                              Color(0xFFFFF0BA),
-                                                              Color.fromRGBO(
-                                                                  252,
-                                                                  233,
-                                                                  166,
-                                                                  0.00),
-                                                            ],
+                                  return
+                                   InkWell(
+                                    onTap:(){
+// ourbranddeatilscontrroller.addproduct(item.id??0, item.logo??'');
+// print("Brandid${item.id}");
+// Get.to(OurBrandDetails());
+                                    },
+                                     child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.55,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.46,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              // color: MyColors.white
+                                            ),
+                                            child: Stack(
+                                              alignment: Alignment.topCenter,
+                                              children: [
+                                                // SizedBox(height: 140,),
+                                                Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.6,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.46,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                      color: Colors.transparent),
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                top: 25.0),
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(30),
+                                                            gradient:
+                                                                LinearGradient(
+                                                              begin: Alignment
+                                                                  .topCenter,
+                                                              end: Alignment
+                                                                  .bottomCenter,
+                                                              colors: [
+                                                                Color(0xFFFFF0BA),
+                                                                Color.fromRGBO(
+                                                                    252,
+                                                                    233,
+                                                                    166,
+                                                                    0.00),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: imagePath,
+                                                            // width: 50,
+                                                            height: 135,
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                    Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ), // Replace with your own placeholder widget
+                                                            errorWidget: (context,
+                                                                    url, error) =>
+                                                                Icon(Icons
+                                                                    .error), // Replace with your own error widget
                                                           ),
                                                         ),
-                                                        child: Image.asset(
-                                                            item["image"],
-                                                            fit: BoxFit.cover,
-                                                            height: 135),
                                                       ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    Text(item["title"],
-                                                        style: CustomTextStyle
-                                                            .popinssmall0)
-                                                  ],
+                                                      SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Text(item.title!,
+                                                          style: CustomTextStyle
+                                                              .popinssmall0)
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-
-                                              Positioned(
-                                                top: 3,
-                                                child: Container(
+                                                Positioned(
+                                                  top: 3,
+                                                  child: Container(
                                                     height: 50,
                                                     width: 60,
                                                     decoration: BoxDecoration(
                                                         color: Colors.white
                                                             .withOpacity(0.3),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                    child: Image.asset(
-                                                      item["logo"],
+                                                            BorderRadius.circular(
+                                                                20)),
+                                                    child:
+                                                        // Image.asset(
+                                                        //   item["logo"],
+                                                        //   height: 50,
+                                                        // ),
+                                                        CachedNetworkImage(
+                                                      imageUrl: imageLogoPath,
+                                                      // width: 50,
                                                       height: 50,
-                                                    )),
-                                              )
-                                            ],
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Center(
+                                                        child:
+                                                            CircularProgressIndicator(),
+                                                      ), // Replace with your own placeholder widget
+                                                      errorWidget: (context, url,
+                                                              error) =>
+                                                          Icon(Icons
+                                                              .error), // Replace with your own error widget
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-// Adding new branch
-                                    //  Stack(
-                                    //   children: [
-                                    //     Container(
-                                    //       width: 69,
-                                    //       height: 75,
-                                    //       decoration: BoxDecoration(
-                                    //         borderRadius: BorderRadius.circular(23),
-                                    //         color: item,
-                                    //         boxShadow: [
-                                    //           BoxShadow(
-                                    //             color: Colors.grey.withOpacity(0.3),
-                                    //             spreadRadius: 2,
-                                    //             blurRadius: 5,
-                                    //             offset: Offset(
-                                    //                 0, 3), // Offset of the shadow
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // )
-                                  );
+                                        ],
+                                      ),
+                                      //  Stack(
+                                      //   children: [
+                                      //     Container(
+                                      //       width: 69,
+                                      //       height: 75,
+                                      //       decoration: BoxDecoration(
+                                      //         borderRadius: BorderRadius.circular(23),
+                                      //         color: item,
+                                      //         boxShadow: [
+                                      //           BoxShadow(
+                                      //             color: Colors.grey.withOpacity(0.3),
+                                      //             spreadRadius: 2,
+                                      //             blurRadius: 5,
+                                      //             offset: Offset(
+                                      //                 0, 3), // Offset of the shadow
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // )
+                                                                     ),
+                                   );
                                 },
                               );
                       }),
+                
+                 
+//                   GetBuilder<HomeuserController>(
+//                       init: homeusercontroller,
+//                       builder: (_) {
+//                         return !homeusercontroller.categoryLoaded
+//                             ? SizedBox()
+//                             : ListView.builder(
+//                                 primary: false,
+//                                 scrollDirection: Axis.horizontal,
+//                                 shrinkWrap: true,
+//                                 itemCount:
+//                                     homeusercontroller.getOurBrandList.length,
+//                                 itemBuilder: (context, index) {
+//                                   var item =
+//                                       homeusercontroller.getOurBrandList[index];
+//                                   // print(item.name!);
+//                                   // var imagePath =
+//                                   //     "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+//                                   // print(imagePath);
+
+//                                   return Padding(
+//                                     padding: const EdgeInsets.all(8.0),
+//                                     child: Column(
+//                                       children: [
+//                                         Container(
+//                                           height: MediaQuery.of(context)
+//                                                   .size
+//                                                   .width *
+//                                               0.55,
+//                                           width: MediaQuery.of(context)
+//                                                   .size
+//                                                   .width *
+//                                               0.40,
+//                                           decoration: BoxDecoration(
+//                                             borderRadius:
+//                                                 BorderRadius.circular(30),
+//                                             // color: MyColors.white
+//                                           ),
+//                                           child: Stack(
+//                                             alignment: Alignment.topCenter,
+//                                             children: [
+//                                               // SizedBox(height: 140,),
+//                                               Container(
+//                                                 height: MediaQuery.of(context)
+//                                                         .size
+//                                                         .width *
+//                                                     0.6,
+//                                                 width: MediaQuery.of(context)
+//                                                         .size
+//                                                         .width *
+//                                                     0.46,
+//                                                 decoration: BoxDecoration(
+//                                                     borderRadius:
+//                                                         BorderRadius.circular(
+//                                                             30),
+//                                                     color: Colors.transparent),
+//                                                 child: Column(
+//                                                   children: [
+//                                                     Padding(
+//                                                       padding:
+//                                                           const EdgeInsets.only(
+//                                                               top: 25.0),
+//                                                       child: Container(
+//                                                         decoration:
+//                                                             BoxDecoration(
+//                                                           borderRadius:
+//                                                               BorderRadius
+//                                                                   .circular(30),
+//                                                           gradient:
+//                                                               LinearGradient(
+//                                                             begin: Alignment
+//                                                                 .topCenter,
+//                                                             end: Alignment
+//                                                                 .bottomCenter,
+//                                                             colors: [
+//                                                               Color(0xFFFFF0BA),
+//                                                               Color.fromRGBO(
+//                                                                   252,
+//                                                                   233,
+//                                                                   166,
+//                                                                   0.00),
+//                                                             ],
+//                                                           ),
+//                                                         ),
+//                                                         child: Image.asset(
+//                                                             item["image"],
+//                                                             fit: BoxFit.cover,
+//                                                             height: 135),
+//                                                       ),
+//                                                     ),
+//                                                     SizedBox(
+//                                                       height: 15,
+//                                                     ),
+//                                                     Text(item["title"],
+//                                                         style: CustomTextStyle
+//                                                             .popinssmall0)
+//                                                   ],
+//                                                 ),
+//                                               ),
+
+//                                               Positioned(
+//                                                 top: 3,
+//                                                 child: Container(
+//                                                     height: 50,
+//                                                     width: 60,
+//                                                     decoration: BoxDecoration(
+//                                                         color: Colors.white
+//                                                             .withOpacity(0.3),
+//                                                         borderRadius:
+//                                                             BorderRadius
+//                                                                 .circular(20)),
+//                                                     child: Image.asset(
+//                                                       item["logo"],
+//                                                       height: 50,
+//                                                     )),
+//                                               )
+//                                             ],
+//                                           ),
+//                                         ),
+//                                       ],
+//                                     ),
+// // Adding new branch
+//                                     //  Stack(
+//                                     //   children: [
+//                                     //     Container(
+//                                     //       width: 69,
+//                                     //       height: 75,
+//                                     //       decoration: BoxDecoration(
+//                                     //         borderRadius: BorderRadius.circular(23),
+//                                     //         color: item,
+//                                     //         boxShadow: [
+//                                     //           BoxShadow(
+//                                     //             color: Colors.grey.withOpacity(0.3),
+//                                     //             spreadRadius: 2,
+//                                     //             blurRadius: 5,
+//                                     //             offset: Offset(
+//                                     //                 0, 3), // Offset of the shadow
+//                                     //           ),
+//                                     //         ],
+//                                     //       ),
+//                                     //     ),
+//                                     //   ],
+//                                     // )
+//                                   );
+//                                 },
+//                               );
+//                       }),
+               
+               
                 ],
               ),
             ),

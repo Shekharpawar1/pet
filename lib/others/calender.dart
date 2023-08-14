@@ -1,8 +1,10 @@
 library horizontal_week_calendar;
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:pet/controllers/user_controller/userServicesAddAppointmentController.dart';
 import 'package:pet/utils/colors.dart';
 
 enum WeekStartFrom {
@@ -88,16 +90,13 @@ class HorizontalWeekCalendar extends StatefulWidget {
 class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
   CarouselController carouselController = CarouselController();
 
-  DateTime today = DateTime.now();
-  DateTime selectedDate = DateTime.now();
-  List<DateTime> currentWeek = [];
-  int currentWeekIndex = 0;
-
-  List<List<DateTime>> listOfWeeks = [];
-
+  UserServicesAddAppointmentController userServicesAddAppointmentController =
+      Get.put(UserServicesAddAppointmentController());
   @override
   void initState() {
     initCalender();
+    // userServicesAddAppointmentController
+    //     .setSelectedDate(userServicesAddAppointmentController.selectedDate);
     super.initState();
   }
 
@@ -123,38 +122,53 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
         ? getDate(date.subtract(Duration(days: date.weekday - 1)))
         : getDate(date.subtract(Duration(days: date.weekday % 7)));
 
-    currentWeek.add(startOfCurrentWeek);
+    // currentWeek.add(startOfCurrentWeek);
+    userServicesAddAppointmentController.addToCurrentWeek(startOfCurrentWeek);
     for (int index = 0; index < 6; index++) {
       DateTime addDate = startOfCurrentWeek.add(Duration(days: (index + 1)));
-      currentWeek.add(addDate);
+      // currentWeek.add(addDate);
+      userServicesAddAppointmentController.addToCurrentWeek(addDate);
     }
 
-    listOfWeeks.add(currentWeek);
+    // listOfWeeks.add(currentWeek);
+    userServicesAddAppointmentController
+        .addToListOfWeek(userServicesAddAppointmentController.currentWeek);
 
     getMorePreviousWeeks();
   }
 
   getMorePreviousWeeks() {
     List<DateTime> minus7Days = [];
-    DateTime startFrom = listOfWeeks.isEmpty
-        ? DateTime.now()
-        : listOfWeeks[currentWeekIndex].isEmpty
+    DateTime startFrom =
+        userServicesAddAppointmentController.listOfWeeks.isEmpty
             ? DateTime.now()
-            : listOfWeeks[currentWeekIndex][0];
+            : userServicesAddAppointmentController
+                    .listOfWeeks[
+                        userServicesAddAppointmentController.currentWeekIndex]
+                    .isEmpty
+                ? DateTime.now()
+                : userServicesAddAppointmentController.listOfWeeks[
+                    userServicesAddAppointmentController.currentWeekIndex][0];
 
     for (int index = 0; index < 7; index++) {
       DateTime minusDate = startFrom.add(Duration(days: -(index + 1)));
       minus7Days.add(minusDate);
     }
-    listOfWeeks.add(minus7Days.reversed.toList());
-    setState(() {});
+    // listOfWeeks.add(minus7Days.reversed.toList());
+    userServicesAddAppointmentController
+        .addToListOfWeek(minus7Days.reversed.toList());
+    // setState(() {});
   }
 
   onDateSelect(DateTime date) {
-    setState(() {
-      selectedDate = date;
-    });
-    widget.onDateChange?.call(selectedDate);
+    // setState(() {
+    //   selectedDate = date;
+    // });
+    userServicesAddAppointmentController.setSelectedDate(date);
+    // print(
+    //     "Selected Date: ${userServicesAddAppointmentController.selectedDate}");
+    widget.onDateChange
+        ?.call(userServicesAddAppointmentController.selectedDate);
   }
 
   onBackClick() {
@@ -166,26 +180,35 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
   }
 
   onWeekChange(index) {
-    currentWeekIndex = index;
-    currentWeek = listOfWeeks[currentWeekIndex];
+    // currentWeekIndex = index;
+    userServicesAddAppointmentController.setCurrentWeekIndex(index);
+    // currentWeek = userServicesAddAppointmentController
+    //     .listOfWeeks[userServicesAddAppointmentController.currentWeekIndex];
+    userServicesAddAppointmentController.changeCurrentWeek(
+        userServicesAddAppointmentController.listOfWeeks[
+            userServicesAddAppointmentController.currentWeekIndex]);
 
-    if (currentWeekIndex + 1 == listOfWeeks.length) {
+    if (userServicesAddAppointmentController.currentWeekIndex + 1 ==
+        userServicesAddAppointmentController.listOfWeeks.length) {
       getMorePreviousWeeks();
     }
 
-    widget.onWeekChange?.call(currentWeek);
+    widget.onWeekChange?.call(userServicesAddAppointmentController.currentWeek);
     setState(() {});
   }
 
   // =================
 
   isNextDisabled() {
-    return listOfWeeks[currentWeekIndex].last.isBefore(DateTime.now());
+    return userServicesAddAppointmentController
+        .listOfWeeks[userServicesAddAppointmentController.currentWeekIndex].last
+        .isBefore(DateTime.now());
   }
 
   isCurrentYear() {
-    return DateFormat('yyyy').format(currentWeek[0]) ==
-        DateFormat('yyyy').format(today);
+    return DateFormat('yyyy')
+            .format(userServicesAddAppointmentController.currentWeek[0]) ==
+        DateFormat('yyyy').format(userServicesAddAppointmentController.today);
   }
 
   @override
@@ -195,221 +218,251 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
 
     double boxHeight = withOfScreen / 7;
 
-    return currentWeek.isEmpty
+    return userServicesAddAppointmentController.currentWeek.isEmpty
         ? const SizedBox()
-        : Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        : GetBuilder<UserServicesAddAppointmentController>(
+            init: userServicesAddAppointmentController,
+            builder: (_) {
+              return Column(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      onBackClick();
-                    },
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 15,
-                          color:
-                              widget.activeNavigatorColor ?? theme.primaryColor,
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        // Text(
-                        //   "Back",
-                        //   style: theme.textTheme.bodyLarge!.copyWith(
-                        //     color: widget.activeNavigatorColor ??
-                        //         theme.primaryColor,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                  Text(
-                    isCurrentYear()
-                        ? DateFormat('MMMM').format(
-                            currentWeek[0],
-                          )
-                        : DateFormat('MMMM yyyy').format(
-                            currentWeek[0],
-                          ),
-                    style: theme.textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: MyColors.black ?? theme.primaryColor,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: isNextDisabled()
-                        ? () {
-                            onNextClick();
-                          }
-                        : null,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Text(
-                        //   "Next",
-                        //   style: theme.textTheme.bodyLarge!.copyWith(
-                        //     color: isNextDisabled()
-                        //         ? theme.primaryColor
-                        //         : widget.inactiveNavigatorColor ?? Colors.grey,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                          color: isNextDisabled()
-                              ? theme.primaryColor
-                              : widget.inactiveNavigatorColor ?? Colors.grey,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              CarouselSlider(
-                carouselController: carouselController,
-                items: [
-                  if (listOfWeeks.isNotEmpty)
-                    for (int ind = 0; ind < listOfWeeks.length; ind++)
-                      Container(
-                        height: boxHeight,
-                        width: withOfScreen,
-                        color: Colors.transparent,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          onBackClick();
+                        },
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            for (int weekIndex = 0;
-                                weekIndex < listOfWeeks[ind].length;
-                                weekIndex++)
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: listOfWeeks[ind][weekIndex]
-                                          .isBefore(DateTime.now())
-                                      ? () {
-                                          onDateSelect(
-                                            listOfWeeks[ind][weekIndex],
-                                          );
-                                        }
-                                      : null,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      color: DateFormat('dd-MM-yyyy').format(
-                                                  listOfWeeks[ind]
-                                                      [weekIndex]) ==
-                                              DateFormat('dd-MM-yyyy')
-                                                  .format(selectedDate)
-                                          ? MyColors.yellow ??
-                                              theme.primaryColor
-                                          : listOfWeeks[ind][weekIndex]
-                                                  .isBefore(DateTime.now())
-                                              ? MyColors.white ??
-                                                  theme.primaryColor
-                                                     
-                                              : MyColors.red1  ??
-                                                  Colors.grey,
-                                      border: Border.all(
-                                        color: theme.scaffoldBackgroundColor,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                         Text(
-                                          DateFormat(
-                                            'EEE',
-                                          ).format(
-                                            listOfWeeks[ind][weekIndex],
-                                          ),
-                                          textAlign: TextAlign.center,
-                                          style: theme.textTheme.bodyLarge!
-                                              .copyWith(
-
-                                            color: DateFormat('dd-MM-yyyy')
-                                                        .format(listOfWeeks[ind]
-                                                            [weekIndex]) ==
-                                                    DateFormat('dd-MM-yyyy')
-                                                        .format(selectedDate)
-                                                ? widget.activeTextColor ??
-                                                   MyColors.black
-                                                : listOfWeeks[ind][weekIndex]
-                                                        .isBefore(
-                                                            DateTime.now())
-                                                    ? widget.inactiveTextColor ??
-                                                        MyColors.black
-                                                            // .withOpacity(.2)
-                                                    : widget.disabledTextColor ??
-                                                        Colors.white,
-                                          ),
-                                        ),
-                                  const SizedBox(
-                                          height: 4,
-                                        ),
-                                         
-                                        FittedBox(
-                                          child: Text(
-                                            // "$weekIndex: ${listOfWeeks[ind][weekIndex] == DateTime.now()}",
-                                            "${listOfWeeks[ind][weekIndex].day}",
-                                            textAlign: TextAlign.center,
-                                            style: theme.textTheme.titleLarge!
-                                                .copyWith(
-                                              color: DateFormat('dd-MM-yyyy')
-                                                          .format(listOfWeeks[
-                                                                  ind]
-                                                              [weekIndex]) ==
-                                                      DateFormat('dd-MM-yyyy')
-                                                          .format(selectedDate)
-                                                  ? widget.activeTextColor ??
-                                                      Colors.white
-                                                  : listOfWeeks[ind][weekIndex]
-                                                          .isBefore(
-                                                              DateTime.now())
-                                                      ? widget.inactiveTextColor ??
-                                                          MyColors.black
-                                                              // .withOpacity(.2)
-                                                      : widget.disabledTextColor ??
-                                                          Colors.white,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                        ),
-                                          ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                            Icon(
+                              Icons.arrow_back_ios_new,
+                              size: 15,
+                              color: widget.activeNavigatorColor ??
+                                  theme.primaryColor,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            // Text(
+                            //   "Back",
+                            //   style: theme.textTheme.bodyLarge!.copyWith(
+                            //     color: widget.activeNavigatorColor ??
+                            //         theme.primaryColor,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
+                      Text(
+                        isCurrentYear()
+                            ? DateFormat('MMMM').format(
+                                userServicesAddAppointmentController
+                                    .currentWeek[0],
+                              )
+                            : DateFormat('MMMM yyyy').format(
+                                userServicesAddAppointmentController
+                                    .currentWeek[0],
+                              ),
+                        style: theme.textTheme.titleMedium!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: MyColors.black ?? theme.primaryColor,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: isNextDisabled()
+                            ? () {
+                                onNextClick();
+                              }
+                            : null,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // Text(
+                            //   "Next",
+                            //   style: theme.textTheme.bodyLarge!.copyWith(
+                            //     color: isNextDisabled()
+                            //         ? theme.primaryColor
+                            //         : widget.inactiveNavigatorColor ?? Colors.grey,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 15,
+                              color: isNextDisabled()
+                                  ? theme.primaryColor
+                                  : widget.inactiveNavigatorColor ??
+                                      Colors.grey,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  CarouselSlider(
+                    carouselController: carouselController,
+                    items: [
+                      if (userServicesAddAppointmentController
+                          .listOfWeeks.isNotEmpty)
+                        for (int ind = 0;
+                            ind <
+                                userServicesAddAppointmentController
+                                    .listOfWeeks.length;
+                            ind++)
+                          Container(
+                            height: boxHeight,
+                            width: withOfScreen,
+                            color: Colors.transparent,
+                            child: Row(
+                              children: [
+                                for (int weekIndex = 0;
+                                    weekIndex <
+                                        userServicesAddAppointmentController
+                                            .listOfWeeks[ind].length;
+                                    weekIndex++)
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap:
+                                          userServicesAddAppointmentController
+                                                  .listOfWeeks[ind][weekIndex]
+                                                  .isBefore(DateTime.now())
+                                              ? () {
+                                                  onDateSelect(
+                                                    userServicesAddAppointmentController
+                                                            .listOfWeeks[ind]
+                                                        [weekIndex],
+                                                  );
+                                                }
+                                              : null,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          color: DateFormat('dd-MM-yyyy').format(
+                                                      userServicesAddAppointmentController
+                                                              .listOfWeeks[ind]
+                                                          [weekIndex]) ==
+                                                  DateFormat('dd-MM-yyyy').format(
+                                                      userServicesAddAppointmentController
+                                                          .selectedDate)
+                                              ? MyColors.yellow ??
+                                                  theme.primaryColor
+                                              : userServicesAddAppointmentController
+                                                      .listOfWeeks[ind]
+                                                          [weekIndex]
+                                                      .isBefore(DateTime.now())
+                                                  ? MyColors.white ??
+                                                      theme.primaryColor
+                                                  : MyColors.red1 ??
+                                                      Colors.grey,
+                                          border: Border.all(
+                                            color:
+                                                theme.scaffoldBackgroundColor,
+                                          ),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              DateFormat(
+                                                'EEE',
+                                              ).format(
+                                                userServicesAddAppointmentController
+                                                        .listOfWeeks[ind]
+                                                    [weekIndex],
+                                              ),
+                                              textAlign: TextAlign.center,
+                                              style: theme.textTheme.bodyLarge!
+                                                  .copyWith(
+                                                color: DateFormat('dd-MM-yyyy').format(
+                                                            userServicesAddAppointmentController
+                                                                    .listOfWeeks[ind]
+                                                                [weekIndex]) ==
+                                                        DateFormat('dd-MM-yyyy')
+                                                            .format(
+                                                                userServicesAddAppointmentController
+                                                                    .selectedDate)
+                                                    ? widget.activeTextColor ??
+                                                        MyColors.black
+                                                    : userServicesAddAppointmentController
+                                                            .listOfWeeks[ind]
+                                                                [weekIndex]
+                                                            .isBefore(
+                                                                DateTime.now())
+                                                        ? widget.inactiveTextColor ??
+                                                            MyColors.black
+                                                        // .withOpacity(.2)
+                                                        : widget.disabledTextColor ??
+                                                            Colors.white,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            FittedBox(
+                                              child: Text(
+                                                // "$weekIndex: ${listOfWeeks[ind][weekIndex] == DateTime.now()}",
+                                                "${userServicesAddAppointmentController.listOfWeeks[ind][weekIndex].day}",
+                                                textAlign: TextAlign.center,
+                                                style: theme
+                                                    .textTheme.titleLarge!
+                                                    .copyWith(
+                                                  color: DateFormat('dd-MM-yyyy').format(userServicesAddAppointmentController.listOfWeeks[ind]
+                                                              [weekIndex]) ==
+                                                          DateFormat('dd-MM-yyyy').format(
+                                                              userServicesAddAppointmentController
+                                                                  .selectedDate)
+                                                      ? widget.activeTextColor ??
+                                                          Colors.white
+                                                      : userServicesAddAppointmentController
+                                                              .listOfWeeks[ind]
+                                                                  [weekIndex]
+                                                              .isBefore(DateTime
+                                                                  .now())
+                                                          ? widget.inactiveTextColor ??
+                                                              MyColors.black
+                                                          // .withOpacity(.2)
+                                                          : widget.disabledTextColor ??
+                                                              Colors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                    ],
+                    options: CarouselOptions(
+                      scrollPhysics: const ClampingScrollPhysics(),
+                      height: boxHeight,
+                      viewportFraction: 1,
+                      enableInfiniteScroll: false,
+                      reverse: true,
+                      onPageChanged: (index, reason) {
+                        onWeekChange(index);
+                      },
+                    ),
+                  ),
                 ],
-                options: CarouselOptions(
-                  scrollPhysics: const ClampingScrollPhysics(),
-                  height: boxHeight,
-                  viewportFraction: 1,
-                  enableInfiniteScroll: false,
-                  reverse: true,
-                  onPageChanged: (index, reason) {
-                    onWeekChange(index);
-                  },
-                ),
-              ),
-            ],
-          );
+              );
+            });
   }
 }
