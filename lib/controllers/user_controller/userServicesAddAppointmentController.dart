@@ -316,9 +316,9 @@ class UserServicesAddAppointmentController extends GetxController {
       );
     }
 
-    if (petListModel != null && petListModel!.state != null) {
+    if (petListModel != null && petListModel!.data != null) {
       demoPetsList =
-          petListModel!.state!.map((e) => e.petName.toString()).toList();
+          petListModel!.data!.map((e) => e.petName.toString()).toList();
       demoPetsList = demoPetsList.toSet().toList();
       print(demoPetsList);
       if (demoPetsList.isNotEmpty) {

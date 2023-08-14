@@ -1,66 +1,48 @@
-// To parse this JSON data, do
-//
-//     final userLoginModel = userLoginModelFromJson(jsonString);
-
-import 'dart:convert';
-
-UserLoginModel userLoginModelFromJson(String str) =>
-    UserLoginModel.fromJson(json.decode(str));
-
-String userLoginModelToJson(UserLoginModel data) => json.encode(data.toJson());
-
 class UserLoginModel {
   String? status;
-  List<State>? state;
+  Data? data;
   String? message;
 
-  UserLoginModel({
-    this.status,
-    this.state,
-    this.message,
-  });
+  UserLoginModel({this.status, this.data, this.message});
 
-  factory UserLoginModel.fromJson(Map<String, dynamic> json) => UserLoginModel(
-        status: json["status"],
-        state: List<State>.from(json["state"].map((x) => State.fromJson(x))),
-        message: json["message"],
-      );
+  UserLoginModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    message = json['message'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "state": List<dynamic>.from(state!.map((x) => x.toJson())),
-        "message": message,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['message'] = this.message;
+    return data;
+  }
 }
 
-class State {
+class Data {
+  String? phone;
+  String? updatedAt;
+  String? createdAt;
   int? id;
-  String? mobile;
-  String? otp;
-  int? expired;
-  DateTime? createdAt;
 
-  State({
-    this.id,
-    this.mobile,
-    this.otp,
-    this.expired,
-    this.createdAt,
-  });
+  Data({this.phone, this.updatedAt, this.createdAt, this.id});
 
-  factory State.fromJson(Map<String, dynamic> json) => State(
-        id: json["id"],
-        mobile: json["mobile"],
-        otp: json["otp"],
-        expired: json["expired"],
-        createdAt: DateTime.parse(json["created_at"]),
-      );
+  Data.fromJson(Map<String, dynamic> json) {
+    phone = json['phone'];
+    updatedAt = json['updated_at'];
+    createdAt = json['created_at'];
+    id = json['id'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "mobile": mobile,
-        "otp": otp,
-        "expired": expired,
-        "created_at": createdAt!.toIso8601String(),
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['phone'] = this.phone;
+    data['updated_at'] = this.updatedAt;
+    data['created_at'] = this.createdAt;
+    data['id'] = this.id;
+    return data;
+  }
 }

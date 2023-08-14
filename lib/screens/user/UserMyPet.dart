@@ -24,7 +24,7 @@ class _UserMyPetsState extends State<UserMyPets> {
       Get.put(UserMyPetListController());
   @override
   void initState() {
-    // TODO: implement initState
+userMyPetListController.init();
     super.initState();
   }
 
@@ -72,21 +72,131 @@ class _UserMyPetsState extends State<UserMyPets> {
         // ],
         // ),
       ),
+    
+    
       body: GetBuilder<UserMyPetListController>(
           init: userMyPetListController,
           builder: (context) {
-            return Stack(
-              children: [
-                userMyPetListController.petListModel != null &&
-                        userMyPetListController.petListModel!.state != null
-                    ? ListView.builder(
-                        physics: BouncingScrollPhysics(),
+            return 
+                userMyPetListController.petListModel != null
+                 &&
+                        userMyPetListController.petListModel!.data != null
+                    ? 
+                    ListView.builder(
+                        // physics: BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        primary: false,
+                        scrollDirection: Axis.vertical,
                         itemCount:
-                            userMyPetListController.petListModel!.state!.length,
+                            userMyPetListController.petListModel!.data!.length,
                         itemBuilder: (context, index) {
                           var pet = userMyPetListController
-                              .petListModel!.state![index];
-                          return Padding(
+                              .petListModel!.data![index];
+                          return 
+
+                     ( userMyPetListController.petListModel!.data! == null)?SizedBox():   
+                  //  Container(
+                  //    child: Stack(
+                  //    alignment: Alignment.topLeft,
+                  //    children: <Widget>[
+                  //      Padding(
+                  //        padding: EdgeInsets.only(top: 10),
+                  //        child: Container(
+                  //          width:400,
+                  //          height: 150,
+                  //          margin: EdgeInsets.all(16.0),
+                  //          child: Card(
+                  //            shape: RoundedRectangleBorder(
+                  //            borderRadius: BorderRadius.circular(20),
+                  //            ),
+                  //            color: Colors.white,
+                  //            child: ListView(
+                  //               shrinkWrap: true,
+                  //         // primary: false,
+                  //            children: [
+                  //              Row(mainAxisAlignment: MainAxisAlignment.end,
+                  //               children: [
+                       
+                   
+                  //      Align(alignment: Alignment.topRight,
+                  //        child: Container(
+                  //              //alignment: Alignment.topRight,
+                  //              height: MediaQuery.of(context).size.height*0.03,
+                  //              width: MediaQuery.of(context).size.width*0.4,
+                  //              decoration: BoxDecoration(color:MyColors.yellow,borderRadius: BorderRadius.only(topRight: Radius.circular(20),bottomLeft: Radius.circular(20))),
+                  //           child: Center(child: Text("${pet.dob.toString()}",style: CustomTextStyle.popinssmall0,)), ),
+                  //      ),
+                       
+                   
+                   
+                    
+                  //              ],),
+                             
+                  //            SizedBox(height: 10,),
+                  //  Text("09/04/2021",style:CustomTextStyle.popinssmall1,),
+                  //  SizedBox(height: 3,),
+                  //  Text("${pet.petsType.toString()}",style:CustomTextStyle.popinssmall1,),
+                  //  SizedBox(height: 3,),
+                             
+                  //            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //            crossAxisAlignment: CrossAxisAlignment.start,
+                  //            children: [
+                  //   Padding(
+                  //     padding: const EdgeInsets.all(8.0),
+                  //     child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //         Text("${pet.petName.toString()}",style: CustomTextStyle.popinstext,),
+                  //   Text("${pet.gender.toString()}",style: CustomTextStyle.popinssmall0,),
+                  //    Text("${pet.age.toString()}",style: CustomTextStyle.popinssmall0,),
+                    
+                  //       ],
+                  //     ),
+                  //   ),
+                   
+                  //              Row(
+                  //    mainAxisAlignment: MainAxisAlignment.end,
+                  //    crossAxisAlignment: CrossAxisAlignment.start,
+                     
+                  //    children: [
+                  //  Image.asset("assets/image/edit0.png"),
+                   
+                  //  Image.asset("assets/image/delete0.png")
+                  //  ],),
+                  //            ],
+                  //            )
+                   
+                  //            ],
+                  //            ),
+                  //          ),
+                  //        ),
+                  //      ),
+                   
+                       
+                  //   Container(
+                  //        height: 100,
+                  //        width: 100,
+                  //        decoration: BoxDecoration(
+                  //          // shape: BoxShape.circle,
+                  //          // border: Border.all(
+                  //          //   color: Colors.black12,
+                  //          // ),
+                  //          color: Colors.transparent,
+                  //          image: DecorationImage(
+                  //            fit: BoxFit.cover,
+                             
+                  //           image:AssetImage("assets/image/cutedogi2.png")
+                             
+                             
+                  //          ),
+                  //        ),
+                  //      ),
+                    
+                  //    ],
+                  //  ),
+                  //  );
+
+                          
+                          Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8.0, vertical: 4.0),
                             child: Container(
@@ -138,29 +248,31 @@ class _UserMyPetsState extends State<UserMyPets> {
                               ),
                             ),
                           );
+                        
+                        
                         },
                       )
-                    : SizedBox(),
+                     : SizedBox();
                 // Show Loading
-                userMyPetListController.showLoading
-                    ? BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                        child: Container(
-                          color: Colors.black
-                              .withOpacity(0.5), // Adjust the opacity as needed
-                        ),
-                      )
-                    : SizedBox(),
-                userMyPetListController.showLoading
-                    ? Center(
-                        child: SpinKitCircle(
-                          color: Colors.white, // Color of the progress bar
-                          size: 50.0, // Size of the progress bar
-                        ),
-                      )
-                    : SizedBox(),
-              ],
-            );
+                // userMyPetListController.showLoading
+                //     ? BackdropFilter(
+                //         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                //         child: Container(
+                //           color: Colors.black
+                //               .withOpacity(0.5), // Adjust the opacity as needed
+                //         ),
+                //       )
+                //     : SizedBox(),
+                // userMyPetListController.showLoading
+                //     ? Center(
+                //         child: SpinKitCircle(
+                //           color: Colors.white, // Color of the progress bar
+                //           size: 50.0, // Size of the progress bar
+                //         ),
+                //       )
+                //     : SizedBox(),
+            //   ],
+            // );
           }),
     );
   }

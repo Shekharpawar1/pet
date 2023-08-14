@@ -1,11 +1,11 @@
-class AllAddressListModel {
+class MyCartListModel {
   String? status;
   List<Data>? data;
   String? message;
 
-  AllAddressListModel({this.status, this.data, this.message});
+  MyCartListModel({this.status, this.data, this.message});
 
-  AllAddressListModel.fromJson(Map<String, dynamic> json) {
+  MyCartListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -29,46 +29,37 @@ class AllAddressListModel {
 
 class Data {
   int? id;
-  String? firstName;
-  String? lastName;
-  String? mobile;
-  String? houseNo;
-  String? area;
   int? userId;
-  String? landmark;
-  String? pincode;
-  String? state;
-  String? city;
+  int? itemId;
+  String? itemName;
+  String? variant;
+  String? image;
+  String? quantity;
+  String? price;
   String? createdAt;
   String? updatedAt;
 
   Data(
       {this.id,
-      this.firstName,
-      this.lastName,
-      this.mobile,
-      this.houseNo,
-      this.area,
       this.userId,
-      this.landmark,
-      this.pincode,
-      this.state,
-      this.city,
+      this.itemId,
+      this.itemName,
+      this.variant,
+      this.image,
+      this.quantity,
+      this.price,
       this.createdAt,
       this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    mobile = json['mobile'];
-    houseNo = json['house_no'];
-    area = json['area'];
     userId = json['user_id'];
-    landmark = json['landmark'];
-    pincode = json['pincode'];
-    state = json['state'];
-    city = json['city'];
+    itemId = json['item_id'];
+    itemName = json['item_name'];
+    variant = json['variant'];
+    image = json['image'];
+    quantity = json['quantity'];
+    price = json['price'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -76,16 +67,13 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['mobile'] = this.mobile;
-    data['house_no'] = this.houseNo;
-    data['area'] = this.area;
     data['user_id'] = this.userId;
-    data['landmark'] = this.landmark;
-    data['pincode'] = this.pincode;
-    data['state'] = this.state;
-    data['city'] = this.city;
+    data['item_id'] = this.itemId;
+    data['item_name'] = this.itemName;
+    data['variant'] = this.variant;
+    data['image'] = this.image;
+    data['quantity'] = this.quantity;
+    data['price'] = this.price;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

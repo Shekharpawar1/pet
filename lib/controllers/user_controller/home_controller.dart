@@ -6,6 +6,7 @@ import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/servicesCategoriesModel.dart';
+import 'package:pet/screens/user/allcategory.dart';
 
 import 'package:video_player/video_player.dart';
 import 'package:pet/models/usersModel/servicesModel.dart';
@@ -167,7 +168,7 @@ class HomeuserController extends GetxController {
   // String getServicesUrl = '${Constants.GET_USER_SERVICES}';
   ServicesCategoryModel? servicesCategoryModel;
   bool servicesCategoryLoaded = false;
-
+ 
   Future<void> getServicesCategories(String url) async {
     try {
       // our services
