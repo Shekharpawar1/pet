@@ -3,9 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pet/screens/drawer.dart';
+
 import 'package:pet/screens/salesman/balance.dart';
 import 'package:pet/screens/salesman/complete.dart';
+import 'package:pet/screens/salesman/drawersalesman.dart';
 import 'package:pet/screens/salesman/home.dart';
 import 'package:pet/screens/salesman/pending.dart';
 import 'package:pet/screens/salesman/totalorder.dart';
@@ -30,7 +31,7 @@ class _DashboardSalesState extends State<DashboardSales> {
   Widget build(BuildContext context) {
     return Scaffold(
        key: _drawerkey,
-       drawer: drawer(),
+       drawer: drawerSalesMan(),
           appBar: AppBar(
             elevation: 0,
           backgroundColor:Colors.transparent,

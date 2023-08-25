@@ -12,7 +12,7 @@ class WholeHomeController extends GetxController {
       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
   UserCategoriesModel? userCategoriesModel;
   bool categoryLoaded = false;
-
+bool showLoading = false;
   // properties
   String getUserPropertiesUrl =
       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
@@ -32,6 +32,8 @@ class WholeHomeController extends GetxController {
 
 
   void init() async {
+      showLoading = true;
+    update();
     try {
       // categories
       userCategoriesModel = UserCategoriesModel.fromJson(
@@ -84,6 +86,8 @@ class WholeHomeController extends GetxController {
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
 // List   _bannerList = [

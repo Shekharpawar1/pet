@@ -8,6 +8,7 @@ import 'package:pet/screens/bottomnavbar.dart';
 
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/userHome.dart';
+import 'package:pet/screens/wholesaler/home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -32,6 +33,9 @@ class _SplashState extends State<Splash> {
         var id = await GetStorage().read("id");
         var data = await GetStorage().read("userData");
 
+          var wholesalerid = await GetStorage().read("wholesalerid");
+        var wholesalerdata = await GetStorage().read("wholesalerData");
+
         print("user Id : ===>>> ${id.toString()}");
         print("user Data : ===>>> ${data.toString()}");
         id == null
@@ -47,6 +51,24 @@ class _SplashState extends State<Splash> {
                   builder: (context) => BottomNavBar(),
                 ),
               );
+     
+      print("wholesaler Id : ===>>> ${wholesalerid.toString()}");
+        print("wholesaler Data : ===>>> ${wholesalerdata.toString()}");
+        wholesalerid == null
+        ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyIntroductionScreen(),
+                ),
+              )
+            :Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeWhole(),
+                ),
+              );
+     
+     
       },
     );
   }

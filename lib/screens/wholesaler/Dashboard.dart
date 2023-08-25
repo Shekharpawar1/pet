@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
-import 'package:pet/screens/drawer.dart';
+import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/complete.dart';
 import 'package:pet/screens/wholesaler/pending.dart';
 
@@ -27,7 +27,7 @@ class _DashboardWholeState extends State<DashboardWhole> {
   Widget build(BuildContext context) {
     return Scaffold(
        key: _drawerkey,
-       drawer: drawer(),
+       drawer: drawerWholeSaler(),
           appBar: AppBar(
             elevation: 0,
           backgroundColor:Colors.transparent,

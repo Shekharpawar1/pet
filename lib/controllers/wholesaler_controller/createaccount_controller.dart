@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -5,22 +8,27 @@ import 'package:pet/models/cityModel.dart';
 import 'package:pet/models/stateModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
-
+import 'package:http/http.dart' as http;
 class CreateAccountwholeControllers extends GetxController {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
+   TextEditingController numberController = TextEditingController();
   TextEditingController dobController = TextEditingController();
+    // TextEditingController dateController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController identitytypeController = TextEditingController();
   TextEditingController countryController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController passcodeController = TextEditingController();
+    TextEditingController pincodeController = TextEditingController();
+
   TextEditingController gstController = TextEditingController();
-  TextEditingController storeNameController = TextEditingController();
+  TextEditingController aadharController = TextEditingController();
+  TextEditingController businessNameController = TextEditingController();
   TextEditingController currencyController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -41,7 +49,7 @@ class CreateAccountwholeControllers extends GetxController {
   ];
 
   String? selectedCountry;
-
+  bool isLoading = false;
   void updateCountry(String country) {
     selectedCountry = country;
     update();
@@ -87,16 +95,22 @@ class CreateAccountwholeControllers extends GetxController {
     update();
   }
 
-  void validateForm(BuildContext context) {
+   Future<bool> validateForm(BuildContext context) {
+    final completer = Completer<bool>();
+
     if (formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Form is valid')),
       );
+      completer.complete(true);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is Invalid')),
+        SnackBar(content: Text('Form is invalid')),
       );
+      completer.complete(false);
     }
+
+    return completer.future;
   }
 
   DateTime? selectedDate;
@@ -192,6 +206,108 @@ class CreateAccountwholeControllers extends GetxController {
         colorText: Colors.white,
       );
     }
+  }
+
+
+
+  Future<void> postWholeData(
+    
+      List<Map<String, String>> documentList, var body, String url) async {
+    try {
+  
+    
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.fields.addAll(body);
+      print(body);
+      print(documentList);
+      documentList.forEach((element) async {
+        request.files.add(await http.MultipartFile.fromPath(
+          element["key"]!,
+          element["value"]!,
+        ));
+      });
+      // print(request.fields);
+      // print(request.files);
+      await ApiHelper.postFormData(request: request);
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  String profileFilePath = '';
+  String profileFileName = '';
+  File? profileFile;
+
+  String logoFilePath = '';
+  String logoFileName = '';
+  File? logoFile;
+
+Future getImageGalleryProfile() async {
+    var image = await ImagePicker.platform
+        .getImage(source: ImageSource.gallery, imageQuality: 25);
+
+    // setState(() {
+    profileFileName = image!.name;
+    profileFilePath = image.path;
+    profileFile = File(image.path);
+
+    update();
+    print('Profile Image $profileFile');
+    print('Profile Image Path $profileFilePath');
+    print('Profile Image Name $profileFileName');
+    // print('Logo Image $logoFile');
+    // print('Logo Image Path $logoFilePath');
+    // print('Logo Image Name $logoFileName');
+    // });
+  }
+
+  Future getImageGalleryLogo() async {
+    var image = await ImagePicker.platform
+        .getImage(source: ImageSource.gallery, imageQuality: 25);
+
+    // setState(() {
+    logoFileName = image!.name;
+    logoFilePath = image.path;
+    logoFile = File(image.path);
+
+    update();
+    // print('Profile Image $profileFile');
+    // print('Profile Image Path $profileFilePath');
+    // print('Profile Image Name $profileFileName');
+    print('Logo Image $logoFile');
+    print('Logo Image Path $logoFilePath');
+    print('Logo Image Name $logoFileName');
+    // });
+  }
+
+  Future getImageCameraProfile() async {
+    var image = await ImagePicker.platform
+        .getImage(source: ImageSource.camera, imageQuality: 25);
+
+    profileFileName = image!.name;
+    profileFilePath = image.path;
+    profileFile = File(image.path);
+    // print('Image Path $file');
+    update();
+  }
+
+  Future getImageCameraLogo() async {
+    var image = await ImagePicker.platform
+        .getImage(source: ImageSource.camera, imageQuality: 25);
+
+    logoFileName = image!.name;
+    logoFilePath = image.path;
+    logoFile = File(image.path);
+    // print('Image Path $file');
+    update();
   }
 
   @override
