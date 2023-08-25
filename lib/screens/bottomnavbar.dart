@@ -9,6 +9,7 @@ import 'package:pet/controllers/user_controller/myPetController.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/screens/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
+import 'package:pet/screens/user/addPet.dart';
 import 'package:pet/screens/user/userprofile.dart';
 import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/userMyPet.dart';
@@ -36,7 +37,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final pages = [
     HomeUser(),
     ServicePage(),
-    UserMyPets(),
+    AddPet(),
+    // UserMyPets(),
     UserProfile(),
   ];
 

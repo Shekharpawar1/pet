@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/filter_controller.dart';
+import 'package:pet/models/usersModel/ourBrandModel.dart';
+import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -8,149 +11,498 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  
+  FilterController filtercontroller = Get.put(FilterController());
+  bool isBrandExpanded = false;
+  bool isCatExpanded = false;
+  bool isBreedExpanded = false;
+  bool isLifeStageExpanded = false;
+  bool isHealthExpanded = false;
+  bool isVegExpanded = false;
+  // String expanded = "brand";
 
- List<ItemModel> _items = [
-    ItemModel(
-      headerValue: 'Sort by',
-      expandedValue: ['Relevance', 'Title:A-Z', 'Title:Z-A','Date: New to Old','Date: Old to New','Price: Low to High','Price: Hight to Low','Discount: High to Low','Rating: Low to High','Rating: High to Low','Total reviews: Low to High','Total reviews: High to Low'],
-      isExpanded: false,
-      isChecked: false,
-    ),
-    ItemModel(
-      headerValue: 'Brand',
-      expandedValue: ['Acana', 'Aeolus', 'Andis','Bayer','Drools','Glandex'],
-      isExpanded: false,
-      isChecked: false,
-    ),
+  @override
+  void onInit() {
+    //  filtercontroller.init();
+    //  super.onInit();
+  }
 
-     ItemModel(
-      headerValue: 'Product type',
-      expandedValue: ['Cat Toys', 'Cat Grooming', 'Dog Clothing','Dog Toys','Health Care'],
-      isExpanded: false,
-      isChecked: false,
-    ),
-    ItemModel(
-      headerValue: 'Price,₹',
-      expandedValue: ['75', '100'],
-      isExpanded: false,
-      isChecked: false,
-    ),
-     ItemModel(
-      headerValue: 'Lifestage',
-      expandedValue: ['Adult', 'All','Puppy','Senior'],
-      isExpanded: false,
-      isChecked: false,
-    ),
-    ItemModel(
-      headerValue: 'Breed Type',
-      expandedValue: ['Boxer', 'Beagle','All','Large','Medium','Small'],
-      isExpanded: false,
-      isChecked: false,
-    ),
-
-     ItemModel(
-      headerValue: 'Health Condition',
-      expandedValue: ['Anemia', 'Eye Care','Live Care','Weaning',],
-      isExpanded: false,
-      isChecked: false,
-    ),
-
-      ItemModel(
-      headerValue: 'Special Diet',
-      expandedValue: ['Low Grain', 'Vegan',],
-      isExpanded: false,
-      isChecked: false,
-    ),
-
-      ItemModel(
-      headerValue: 'Veg/Non-Veg',
-      expandedValue: ['Non-Veg', 'Veg',],
-      isExpanded: false,
-      isChecked: false,
-    ),
-    // Add more categories as needed
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Filter Screen'),
-      // ),
-      body:ListView(
-        children: [
-  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                
-                Text("Filter", style: CustomTextStyle.popinstext,),
-                InkWell(onTap: (){
-                  Get.back();
-                },
-                  child: Icon(Icons.cancel_presentation_outlined)),
-              ],
-            ),
-          ),
-           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-          ExpansionPanelList(
-            elevation: 1,
-            expandedHeaderPadding: EdgeInsets.zero,
-            expansionCallback: (int index, bool isExpanded) {
-              setState(() {
-                _items[index].isExpanded = !isExpanded;
-              });
-            },
-            children: _items.map<ExpansionPanel>((ItemModel item) {
-              return ExpansionPanel(
-                headerBuilder: (BuildContext context, bool isExpanded) {
-                  return ListTile(
-                    title: Text(item.headerValue),
-                  );
-                },
-                body: Column(
-                  children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: item.expandedValue.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return CheckboxListTile(
-                          value: item.isChecked,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              item.isChecked = value!;
-                            });
-                          },
-                          title: Text(item.expandedValue[index]),
-                        );
-                      },
+        // appBar: AppBar(
+        //   title: Text('Filter Screen'),
+        // ),
+        body: GetBuilder<FilterController>(
+            init: filtercontroller,
+            builder: (_) {
+              return ListView(
+                children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Filter",
+                          style: CustomTextStyle.popinstext,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(Icons.cancel_presentation_outlined)),
+                      ],
                     ),
-                  ],
-                ),
-                isExpanded: item.isExpanded,
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  ExpansionPanelList(
+                      elevation: 1,
+                      expandedHeaderPadding: EdgeInsets.zero,
+                      expansionCallback: (int index, bool isExpanded) {
+                        print("====>>>> ${index}");
+                        setState(() {
+                          switch (index) {
+                            case 0:
+                              isBrandExpanded = !isExpanded;
+                              break;
+                            case 1:
+                              isCatExpanded = !isExpanded;
+                              break;
+                            case 2:
+                              isBreedExpanded = !isExpanded;
+                              break;
+                            case 3:
+                              isLifeStageExpanded = !isExpanded;
+                              break;
+                            case 4:
+                              isHealthExpanded = !isExpanded;
+                              break;
+                                 case 5:
+                                   isVegExpanded = !isExpanded;
+                              break;
+
+                         
+                            default:
+                               isVegExpanded = !isExpanded;
+                          }
+                        });
+                      },
+                      children: [
+                        // filtercontroller.branditems
+                        //     .map<ExpansionPanel>((String item) {
+                        //   return
+                        ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Brand"),
+                            );
+                          },
+                          body: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filtercontroller.branditems.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.branditems[index];
+                              return CheckboxListTile(
+                                value: filtercontroller.selectBrandFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller.selectBrandFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionBrandList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller.selectBrandFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionBrandList(
+                                              filteroption);
+                                    }
+                                  }
+                                  filtercontroller.filter();
+
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isBrandExpanded,
+                        ),
+
+                        ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Category"),
+                            );
+                          },
+                          body: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filtercontroller.categoryitems.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.categoryitems[index];
+                              return CheckboxListTile(
+                                value: filtercontroller.selectCategoryFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller
+                                        .selectCategoryFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionCategoryList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller
+                                        .selectCategoryFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionCategoryList(
+                                              filteroption);
+                                    }
+                                  }
+
+
+                                  filtercontroller.filter();
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isCatExpanded,
+                        ),
+
+                        ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Breed"),
+                            );
+                          },
+                          body: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filtercontroller.breeditem.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.breeditem[index];
+                              return CheckboxListTile(
+                                value: filtercontroller.selectBreedFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller.selectBreedFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionBreedList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller.selectBreedFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionBreedList(
+                                              filteroption);
+                                    }
+                                  }
+                                  filtercontroller.filter();
+
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isBreedExpanded,
+                        ),
+
+                        ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("LifeStage"),
+                            );
+                          },
+                          body: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filtercontroller.lifestageitem.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.lifestageitem[index];
+                              return CheckboxListTile(
+                                value: filtercontroller
+                                    .selectLifeStageFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller
+                                        .selectLifeStageFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionLifeStageList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller
+                                        .selectLifeStageFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionLifeStageList(
+                                              filteroption);
+                                    }
+                                  }
+
+                                  filtercontroller.filter();
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isLifeStageExpanded,
+                        ),
+
+                        ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Health Condition"),
+                            );
+                          },
+                          body: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                filtercontroller.healthconditionitem.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.healthconditionitem[index];
+                              return CheckboxListTile(
+                                value: filtercontroller
+                                    .selectHealthConditionFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller
+                                        .selectHealthConditionFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionHealthList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller
+                                        .selectHealthConditionFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionHealthList(
+                                              filteroption);
+                                    }
+                                  }
+
+                                  filtercontroller.filter();
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isHealthExpanded,
+                        ),
+                     
+                     
+                        ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Veg/NonVeg"),
+                            );
+                          },
+                          body: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: filtercontroller.vegitem.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.vegitem[index];
+                              return CheckboxListTile(
+                                value: filtercontroller.selectVegFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller.selectVegFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionVegList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller.selectVegFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionVegList(
+                                              filteroption);
+                                    }
+                                  }
+                                  filtercontroller.filter();
+
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isVegExpanded,
+                        ),
+
+                     
+                      ] // }).toList(),
+                      ),
+
+//                  ExpansionPanelList(
+//                     elevation: 1,
+//                     expandedHeaderPadding: EdgeInsets.zero,
+//                     expansionCallback: (int index, bool isExpanded) {
+//                       setState(() {
+//                         filtercontroller.items[index].isExpanded = !isExpanded;
+//                       });
+//                     },
+//                     children: filtercontroller.items
+//                         .map<ExpansionPanel>((ItemModel item) {
+//                       return ExpansionPanel(
+//                         headerBuilder: (BuildContext context, bool isExpanded) {
+//                           return ListTile(
+//                             title: Text(item.headerValue),
+//                           );
+//                         },
+//                         body: Column(
+//                           children: [
+//                             ListView.builder(
+//                               shrinkWrap: true,
+//                               itemCount:  filtercontroller.items.length,
+//                               itemBuilder: (BuildContext context, int index) {
+//                                 final  filteroption =
+//                                     filtercontroller.items[index];
+//                                 return CheckboxListTile(
+//                                   value: filtercontroller.selectfilterList
+//                                       .contains(filteroption),
+//                                   onChanged: (isChecked) {
+// // filtercontroller.updateChecked()
+//                                     if (isChecked!) {
+//                                       print("adding brand");
+//                                       if (!filtercontroller.selectfilterList
+//                                           .contains(filteroption)) {
+//                                         print("Added");
+
+//                                         filtercontroller
+//                                             .addSelectedOptionBrandList(
+//                                                 filteroption);
+//                                       }
+//                                     } else {
+//                                       print("removing brand");
+//                                       if (filtercontroller.selectfilterList
+//                                           .contains(filteroption)) {
+//                                         print("removed");
+//                                         filtercontroller
+//                                             .removeSelectedOptionBrandList(
+//                                                 filteroption);
+//                                       }
+//                                     }
+
+//                                     // filtercontroller.updateChecked();
+//                                     // setState(() {
+//                                     //   item.isChecked = value!;
+//                                     // });
+//                                   },
+//                                   title: Text(item.expandedValue[index]),
+//                                 );
+//                               },
+//                             ),
+//                           ],
+//                         ),
+//                         isExpanded: item.isExpanded,
+//                       );
+//                     }).toList(),
+//                   ),
+                ],
               );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
+            }));
   }
 }
 
-class ItemModel {
-  String headerValue;
-  List<String> expandedValue;
-  bool isExpanded;
-  bool isChecked;
+// class ItemModel {
+//   String headerValue;
+//   List<String> expandedValue;
+//   bool isExpanded;
+//   List<bool> isChecked;
 
-  ItemModel({
-    required this.headerValue,
-    required this.expandedValue,
-    this.isExpanded = false,
-    this.isChecked = false,
-  });
-}
+//   ItemModel({
+//     required this.headerValue,
+//     required this.expandedValue,
+//     this.isExpanded = false,
+//     required this.isChecked,
+//   });
+// }
 
 // void main() {
 //   runApp(MaterialApp(

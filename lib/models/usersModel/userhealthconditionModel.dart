@@ -1,11 +1,11 @@
-class PetCategoryBreedModel {
+class HealthConditionModel {
   String? status;
   List<Data>? data;
   String? message;
 
-  PetCategoryBreedModel({this.status, this.data, this.message});
+  HealthConditionModel({this.status, this.data, this.message});
 
-  PetCategoryBreedModel.fromJson(Map<String, dynamic> json) {
+  HealthConditionModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -29,24 +29,16 @@ class PetCategoryBreedModel {
 
 class Data {
   int? id;
-  int? categoryId;
-  String? name;
+  String? title;
   int? status;
   String? createdAt;
   String? updatedAt;
 
-  Data(
-      {this.id,
-      this.categoryId,
-      this.name,
-      this.status,
-      this.createdAt,
-      this.updatedAt});
+  Data({this.id, this.title, this.status, this.createdAt, this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    categoryId = json['category_id'];
-    name = json['name'];
+    title = json['title'];
     status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
@@ -55,8 +47,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['category_id'] = this.categoryId;
-    data['name'] = this.name;
+    data['title'] = this.title;
     data['status'] = this.status;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;

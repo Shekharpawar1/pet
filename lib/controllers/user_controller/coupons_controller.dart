@@ -8,13 +8,30 @@ import 'package:pet/utils/constants.dart';
 
 class CouponsController extends GetxController {
 
- TextEditingController couponsController =TextEditingController();
+ TextEditingController couponTextController =TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-
+String? couponcode;
+String? coupontitle;
+String? maxAmount;
+String? minAmout;
+String? totalcoupon;
  void onInit() {
     super.onInit();
     init();
+  }
+
+
+  void updatecode(String code,String title,String miniamount,String maxamount){
+ couponcode = code;
+coupontitle= title;
+minAmout=miniamount;
+maxAmount = maxamount;
+// totalcoupon = 
+couponTextController.text == couponcode;
+
+update();
+print("Coupon${couponcode}${maxAmount}");
   }
     String getUserCouponUrl =
       '${Constants.GET_USER_COUPON}';

@@ -34,8 +34,8 @@ class Data {
   String? itemName;
   String? variant;
   String? image;
-  String? quantity;
-  String? price;
+  int? quantity;
+  int? price;
   String? createdAt;
   String? updatedAt;
 
@@ -65,7 +65,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
     data['item_id'] = this.itemId;

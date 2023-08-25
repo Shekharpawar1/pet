@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/controllers/user_controller/myPetController.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -1150,6 +1151,8 @@ class AddMypet extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () async {
+                                          final storage = GetStorage();
+                                           
                                           if (userMyPetController
                                               .formKey.currentState!
                                               .validate()) {
@@ -1176,7 +1179,7 @@ class AddMypet extends StatelessWidget {
                                             var body = {
                                               "user_id":
                                                   // userMyPetController.userId,
-                                                  1.toString(),
+                                                  storage.read('id').toString(),
                                               "pets_type": userMyPetController
                                                   .petType
                                                   .toString(),

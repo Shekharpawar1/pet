@@ -2,41 +2,39 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pet/models/usersModel/myprofileModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-class ProfileController extends GetxController{
-
+class ProfileController extends GetxController {
   TextEditingController fullNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
-
-GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final storage = GetStorage();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String? profileImage;
   bool showLoading = false;
-File? selectedImage;
+  File? selectedImage;
   String? selectedImagePath;
+  var userId;
 
   Future<void> pickImage() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
-      
-        selectedImagePath = pickedImage.path;
-        selectedImage = File(pickedImage.path);
-     
+      selectedImagePath = pickedImage.path;
+      selectedImage = File(pickedImage.path);
     }
-     update();
+    update();
   }
 
- 
   void validateForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -49,53 +47,44 @@ File? selectedImage;
     }
   }
 
-
-void updateaddress(String? firstname,String? lastname,String? pincode,String? number,String? email,String? address ){
-
+  void updateaddress(String? firstname, String? lastname, String? pincode,
+      String? number, String? email, String? address) {
     fullNameController.text = firstname ?? "";
-     lastNameController.text = lastname??"";
-  numberController.text = number??'';
-    emailController.text = email??'';
-     addressController.text = address??'';
+    lastNameController.text = lastname ?? "";
+    numberController.text = number ?? '';
+    emailController.text = email ?? '';
+    addressController.text = address ?? '';
 
-    pincodeController.text = pincode??'';
-    
- update();
+    pincodeController.text = pincode ?? '';
 
-clearFields();
+    update();
 
-    //  print(addaddressall.length);
-
-}
-
-
-void updatepofile1(
-  String? fName,
-    String? lName,
-    String? email,
-    String? phone,
-    String? image,
-){
-
-    fullNameController.text = fName ?? "";
-     lastNameController.text = lName??"";
-  numberController.text = phone??'';
-    emailController.text = email??'';
-    selectedImagePath= image??'';
-     
-    
- update();
-
-clearFields();
+    clearFields();
 
     //  print(addaddressall.length);
+  }
 
-}
-  
-  void fetchdetails(int id){
+  // void updatepofile1(
+  //   String? fName,
+  //   String? lName,
+  //   String? email,
+  //   String? phone,
+  //   String? image,
+  // ) {
+  //   fullNameController.text = fName ?? "";
+  //   lastNameController.text = lName ?? "";
+  //   numberController.text = phone ?? '';
+  //   emailController.text = email ?? '';
+  //   selectedImagePath = image ?? '';
 
+  //   update();
 
+  //   clearFields();
 
+  //   //  print(addaddressall.length);
+  // }
+
+  void fetchdetails(int id) {
 // myprofilemodel(){
 
 //      fullNameController.text;
@@ -106,7 +95,7 @@ clearFields();
 //     pincodeController.text;
 // }
   }
-void clearFields() {
+  void clearFields() {
     fullNameController.clear();
     lastNameController.clear();
     numberController.clear();
@@ -118,44 +107,42 @@ void clearFields() {
     // selectedCity= null;
     // stateListModel= null;
     // cityListModel =null;
-
   }
 
 //  @override
 //   void onInit() {
 //     super.onInit();
 //     init();
-   
+
 //   }
 
-
-void onInit() {
+  void onInit() {
     super.onInit();
     // init();
+    userId = storage.read('id');
   }
-    String getUserProfile =
-      '${Constants.GET_USER_PROFILE}';
- MyProfileModel? myprofilemodel;
-  bool  myprofileLoaded = false;
-  int userid = 244;
 
+  String getUserProfile = '${Constants.GET_USER_PROFILE}';
+  MyProfileModel? myprofilemodel;
+  bool myprofileLoaded = false;
+  // int userid = 244;
 
- Future<void> myprofile() async {
+  Future<void> myprofile() async {
     try {
       // coupon
       myprofilemodel = MyProfileModel.fromJson(
-          await ApiHelper.getApi(getUserProfile+"$userid"));
-          // myprofilemodel!.data!.forEach((element) {
+          await ApiHelper.getApi(getUserProfile + "${storage.read('id')}"));
+      // myprofilemodel!.data!.forEach((element) {
 
-          //  });
-      print(getUserProfile+"$userid");
-           fullNameController.text = myprofilemodel!.data![0].fName.toString();
-    lastNameController.text =  myprofilemodel!.data![0].lName.toString();
-    numberController.text=  myprofilemodel!.data![0].phone.toString();
-    emailController.text =  myprofilemodel!.data![0].email.toString();
-    addressController.text  = "Mumbai";
-    pincodeController.text = "420001";
-      
+      //  });
+      print(getUserProfile + "$userId");
+      fullNameController.text = myprofilemodel!.data![0].fName.toString();
+      lastNameController.text = myprofilemodel!.data![0].lName.toString();
+      numberController.text = myprofilemodel!.data![0].phone.toString();
+      emailController.text = myprofilemodel!.data![0].email.toString();
+      addressController.text = "Mumbai";
+      pincodeController.text = "420001";
+
       myprofileLoaded = true;
       update();
     } catch (e) {
@@ -167,37 +154,38 @@ void onInit() {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
-    }}
-  
-  
-
+    }
+  }
 
   Future<void> updateProfile() async {
     showLoading = true;
     update();
-   
-    var body = {
-        "f_name":fullNameController.text,
+
+    Map<String, String> body = {
+      "f_name": fullNameController.text,
       "l_name": lastNameController.text,
       "email": emailController.text,
-      "phone":numberController.text,
-      "image":selectedImagePath.toString(),
-      
-      
-     
+      "phone": numberController.text,
+      // "image": selectedImagePath.toString(),
     };
     String UpdateProfile = Constants.USER_UPDATE_PROFILE;
     print(body);
     try {
-       var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
+      List documentList = [
+        {'value': selectedImagePath, 'key': "image"},
+      ];
+      var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
       request.fields.addAll(body);
-      request.files.add(await http.MultipartFile.fromPath(
-"image",selectedImagePath.toString()
-      ));
-          // 'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
+//       request.files.add(await http.MultipartFile.fromPath(
+// "image",selectedImagePath.toString()
+      // ));
+      // 'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
       // var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
       // request.fields.addAll(body);
-      
+      documentList.forEach((element) async {
+        request.files.add(await http.MultipartFile.fromPath(
+            element["key"], element["value"]));
+      });
       await ApiHelper.postFormData(request: request);
       update();
       Get.back();
@@ -222,5 +210,4 @@ void onInit() {
     showLoading = false;
     update();
   }
-
 }

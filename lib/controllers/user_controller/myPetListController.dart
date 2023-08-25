@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/models/usersModel/GetPetModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
 class UserMyPetListController extends GetxController {
 
-
+final storage = GetStorage();
+var userID;
   @override
   void onInit() {
     init();
+     userID = storage.read('id');
     super.onInit();
   }
 

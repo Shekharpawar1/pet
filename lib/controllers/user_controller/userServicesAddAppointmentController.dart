@@ -17,9 +17,11 @@ import 'package:pet/models/cityModel.dart' as cityFile;
 
 class UserServicesAddAppointmentController extends GetxController {
   bool showLoading = false;
+     final storage = GetStorage();
   TextEditingController cityController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   int? serviceId;
+   var userID;
   void updateServiceId(int id) {
     serviceId = id;
     update();
@@ -209,6 +211,7 @@ class UserServicesAddAppointmentController extends GetxController {
   void onInit() {
     super.onInit();
     init();
+      userID = storage.read('id');
     // final List<String>? selectedSlots = box.read('selectedSlots');
     // if (selectedSlots != null) {
     //   timeSlots.forEach((slot) {
@@ -301,7 +304,7 @@ class UserServicesAddAppointmentController extends GetxController {
     try {
       // pet list
       petListModel =
-          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl + "/1"));
+          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl +  storage.read('id')));
       print(petListModel);
       // notificationLoaded = true;
       update();
@@ -427,7 +430,7 @@ class UserServicesAddAppointmentController extends GetxController {
       "city": selectedCity!.cityName.toString(),
       "mobile": numberController.text.trim(),
       "service_id": serviceId.toString(),
-      "user_id": 1.toString()
+      "user_id": storage.read('id').toString()
     };
     String serviceBooking = Constants.SERVICE_BOOKING;
     print(body);

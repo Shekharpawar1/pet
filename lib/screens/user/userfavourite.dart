@@ -176,7 +176,10 @@ class _UserfavouriteState extends State<Userfavourite> {
                                       String imagePath =
                                           Constants.PRODUCT_HOME_IMAGE_PATH +
                                               "/${item.storeId![0].image!}";
-                                      return Container(
+                                      return 
+                                      userfavouriteController
+                                          .wishList!.data![index] == null? SizedBox():
+                                      Container(
                                         height:
                                             MediaQuery.of(context).size.width *
                                                 0.7,

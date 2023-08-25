@@ -3,12 +3,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/login.dart';
 import 'package:pet/screens/user/UserMyPet.dart';
 import 'package:pet/screens/user/allveterniary.dart';
+import 'package:pet/screens/user/myOrderPage.dart';
 import 'package:pet/screens/user/myservices.dart';
 import 'package:pet/screens/user/UserMyPet.dart';
 import 'package:pet/screens/user/allveterniary.dart';
@@ -34,6 +36,8 @@ class drawer extends StatefulWidget {
 }
 
 class _drawerState extends State<drawer> {
+  MyOrderController myordercontroller = Get.put(MyOrderController());
+
   static final List<String> _listViewData = [
     "Profile",
     "My Order",
@@ -41,10 +45,9 @@ class _drawerState extends State<drawer> {
     "Favourite",
     "My Pet",
     "My Services",
-    "My Transaction",
-    "Logout"
     "Veterniary",
-    "My Transaction"
+    "My Transaction",
+   "Logout"
   ];
 
   static final List<IconData> _listViewIcons = [
@@ -54,6 +57,7 @@ class _drawerState extends State<drawer> {
     Icons.favorite,
     Icons.pets,
     Icons.cleaning_services,
+    Icons.medication_liquid_outlined,
     Icons.payment_outlined,
     Icons.logout,
  
@@ -197,7 +201,8 @@ class _drawerState extends State<drawer> {
         Get.to(UserProfile());
         break;
       case 1:
-      Get.to(OrderDetailsUser());
+     await myordercontroller.init();
+      Get.to(MyOrderUser());
         break;
       case 2:
         Get.to(NotificationUser());
@@ -217,7 +222,7 @@ class _drawerState extends State<drawer> {
      case 7:
       Get.to(Usertranscation());
         break;
-      case 7:
+      case 8:
         await GetStorage().erase();
         Get.offAll(LoginUser());
         break;

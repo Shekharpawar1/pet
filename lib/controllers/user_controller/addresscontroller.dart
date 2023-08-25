@@ -12,7 +12,7 @@ import 'package:pet/models/cityModel.dart' as cityFile;
 
 
 class AddressController extends GetxController{
-
+final storage = GetStorage();
   TextEditingController fullNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
@@ -23,6 +23,8 @@ class AddressController extends GetxController{
   // TextEditingController stateController = TextEditingController();
   // TextEditingController cityController = TextEditingController();
   AllAddressListModel?  addaddressmodel ;
+  var userID;
+  int? addressid;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
  int? itemcount;
  int? isselected;
@@ -86,8 +88,10 @@ void clearFields() {
   void onInit() {
     super.onInit();
     init();
-   
+    userID = storage.read('id');
   }
+   
+
 
   Future<void> init() async {
     showLoading = true;
@@ -127,7 +131,11 @@ void clearFields() {
     showLoading = false;
     update();
   }
-
+void addadressID(int id) {
+    addressid = id;
+    update();
+     print("statecity==${addressid}");
+  }
   // city list
   String getCityUrl = Constants.GET_CITY_LIST;
   CityListModel? cityListModel;
@@ -169,16 +177,17 @@ void clearFields() {
  
 
 
-void updateaddress(String? firstname,String? lastname,String? pincode,String? number,String? landmark,String? houseno, String? area , ){
+void updateaddress(int? id,String? firstname,String? lastname,String? number,String? pincode,String? landmark,String? houseno, String? area , ){
 
     fullNameController.text = firstname ?? "";
      lastNameController.text = lastname??"";
   numberController.text = number??'';
+  pincodeController.text = pincode??'';
     flataddressController.text = houseno??'';
      areaaddressController.text = area??'';
      landmarkController.text = landmark??'';
-    pincodeController.text = pincode??'';
-    //  selectedState = statename;
+    
+    // selectedState = statename;
     // selectedCity = city;
      
 //  addaddressall!.add(addaddressmodel!);
@@ -205,7 +214,7 @@ void updateaddress(String? firstname,String? lastname,String? pincode,String? nu
     showLoading = true;
     update();
    
-    var body = {
+     Map<String, String> body = {
         "first_name":fullNameController.text,
       "last_name": lastNameController.text,
       "mobile":numberController.text,
@@ -215,7 +224,7 @@ void updateaddress(String? firstname,String? lastname,String? pincode,String? nu
       "pincode":pincodeController.text ,
      "state":selectedState!.stateName.toString(),
      "city":selectedCity!.cityName.toString(),
-     "user_id":244.toString()
+     "user_id":storage.read('id').toString(),
      
     };
     String AddAddress = Constants.ADD_ADDRESS;
@@ -223,19 +232,7 @@ void updateaddress(String? firstname,String? lastname,String? pincode,String? nu
     try {
      
       var request = http.MultipartRequest('POST', Uri.parse(AddAddress));
-      request.fields.addAll({
-        
-          "first_name":fullNameController.text,
-      "last_name": lastNameController.text,
-      "mobile":numberController.text,
-      "house_no":flataddressController.text,
-      "area":areaaddressController.text,
-      "landmark": landmarkController.text,
-      "pincode":pincodeController.text ,
-     "state":selectedState!.stateName.toString(),
-     "city":selectedCity!.cityName.toString(),
-     "user_id":244.toString()
-          });
+      request.fields.addAll(body);
       
       await ApiHelper.postFormData(request: request);
       update();
@@ -268,7 +265,8 @@ void updateaddress(String? firstname,String? lastname,String? pincode,String? nu
     update();
    
     var body = {
-        "first_name":fullNameController.text,
+      "user_id":storage.read('id').toString(),
+      "first_name":fullNameController.text,
       "last_name": lastNameController.text,
       "mobile":numberController.text,
       "house_no":flataddressController.text,
@@ -277,7 +275,7 @@ void updateaddress(String? firstname,String? lastname,String? pincode,String? nu
       "pincode":pincodeController.text ,
      "state":selectedState!.stateName.toString(),
      "city":selectedCity!.cityName.toString(),
-     "user_id":244.toString()
+    "id":addressid.toString()
      
     };
     String UpdateAdress = Constants.ADD_UPDATE_ADDRESS;
@@ -285,21 +283,7 @@ void updateaddress(String? firstname,String? lastname,String? pincode,String? nu
     try {
      
       var request = http.MultipartRequest('POST', Uri.parse(UpdateAdress));
-      request.fields.addAll({
-        
-          "first_name":fullNameController.text,
-      "last_name": lastNameController.text,
-      "mobile":numberController.text,
-      "house_no":flataddressController.text,
-      "area":areaaddressController.text,
-      "landmark": landmarkController.text,
-      "pincode":pincodeController.text ,
-    "state":selectedState!.stateName.toString(),
-     "city":selectedCity!.cityName.toString(),
-     "user_id":244.toString()
-     
-        
-          });
+      request.fields.addAll(body);
       
       await ApiHelper.postFormData(request: request);
       update();

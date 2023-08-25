@@ -12,6 +12,7 @@ static const GET_USER_MYCARTLISTDELETE = "$BASE_URL${API_V1_PATH}/customer/wish-
 static const GET_USER_ALLADDRESSLIST = "$BASE_URL${API_V1_PATH}/customer/address/list/";
 static const GET_USER_ADDRESS_DELETE = "$BASE_URL${API_V1_PATH}/customer/address/delete/";
 static const GET_USER_COUPON = "$BASE_URL${API_V1_PATH}/coupon/list";
+static const GET_USER_TOY = "$BASE_URL${API_V1_PATH}/items/subcty_product?";
 static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
 
   static const GET_USER_CATEGORIES = "/categories";
@@ -36,6 +37,11 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const USER_LOGIN_OTP = "$BASE_URL${API_V1_PATH}/auth/otp_verify";
   static const GET_USER_BANNER = "$BASE_URL${API_V1_PATH}/banners";
   static const GET_OUR_BRAND = "$BASE_URL${API_V1_PATH}/auth/brand";
+  static const GET_MY_ORDER = "$BASE_URL${API_V1_PATH}/customer/order/list?id=";
+  static const GET_ORDER_DETAILS = "$BASE_URL${API_V1_PATH}/customer/order/detail/";
+  static const GET_LIFESTAGE = "$BASE_URL${API_V1_PATH}/auth/life_stage/";
+    static const GET_HEALTH_CONDITION = "$BASE_URL${API_V1_PATH}/auth/health_condition";
+
   static const GET_USER_NOTIFICATION =
       "$BASE_URL${API_V1_PATH}/customer/notifications?tergat=customer";
   static const GET_STORE_NOTIFICATION =
@@ -58,6 +64,8 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
       "$BASE_URL${API_V1_PATH}/customer/wish-list/add_product";
         static const ADD_ADDRESS =
       "$BASE_URL${API_V1_PATH}/customer/address/add";
+         static const PLACE_ORDER =
+      "$BASE_URL${API_V1_PATH}/customer/order/place";
         static const ADD_UPDATE_ADDRESS =
       "$BASE_URL${API_V1_PATH}/customer/address/update";
   static const ALL_CITY = "$BASE_URL${API_V1_PATH}/auth/all_city";

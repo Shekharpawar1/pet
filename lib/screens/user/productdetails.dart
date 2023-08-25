@@ -155,8 +155,8 @@ class ProductDetails extends StatelessWidget {
                     padding: EdgeInsets.only(top: 15.0),
                     child: CachedNetworkImage(
                       imageUrl: imagePath,
-                      width: 61,
-                      height: 75,
+                      // width: 61,
+                      // height: 75,
                       placeholder: (context, url) => Center(
                         child: CircularProgressIndicator(),
                       ), // Replace with your own placeholder widget
@@ -376,8 +376,9 @@ class ProductDetails extends StatelessWidget {
                           // ),
    productdetailscontroller.productdetailmodel!.data!.variations ==
                                 null
-                                //  && productdetailscontroller.productdetailmodel!.data!.variations ==
-                                // "" && productdetailscontroller.productdetailmodel!.data!.variations!.isEmpty
+                                 && productdetailscontroller.productdetailmodel!.data!.variations ==
+                                ""
+                                // && productdetailscontroller.productdetailmodel!.data!.variations!.isEmpty
                             // ? Center(
                             //     child: SpinKitCircle(
                             //       color:
@@ -406,7 +407,7 @@ class ProductDetails extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(40)),
                                 child: DropdownButtonFormField<variantFile.Variations>(
                                   validator: (value) {
-                                     if (value == null ) {
+                                     if (value == null || value.type!.isEmpty) {
                                       return 'Please select a tpye';
                                     }
                                     return null;
@@ -487,7 +488,7 @@ class ProductDetails extends StatelessWidget {
                                     children: [
                                       Text(
                                        
-                                         "₹"+ ( (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)).toString(),
+                                          "₹"+ ( (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)).toString(),
                             
                             //  (     (productdetailscontroller.productList.price)! * (productdetailscontroller.productList.discount!)/100).toString()
 
@@ -942,7 +943,14 @@ class ProductDetails extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  PaymentUser()));
+                                                  PaymentUser(
+
+                                                    price:
+                                                        (
+                                      (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)-
+                                    (( (productdetailscontroller.selectedvariants?.price??0)*productdetailscontroller.sizecount??0)*(productdetailscontroller.productdetailmodel!.data!.discount!)/100)
+                                    ).toString(),
+                                                  )));
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
@@ -989,7 +997,9 @@ class ProductDetails extends StatelessWidget {
   
 //   );
                                    await productdetailscontroller.addProduct();
+                                       mycartController.init();
                                       Get.to(AddToCardUser());
+                               
                                   //     productdetailscontroller.addToCart(
                                                 
                                   // productdetailscontroller.productdetailmodel!.data!.name.toString(),

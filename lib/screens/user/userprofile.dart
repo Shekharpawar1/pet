@@ -401,13 +401,14 @@ class _UserProfileState extends State<UserProfile> {
  SizedBox(height:10),
        GestureDetector(
                         onTap: () async {
-                      profilecontroller. updatepofile1(profilecontroller.fullNameController.text,
-                    profilecontroller.lastNameController.text,
-                    profilecontroller.emailController.text,
-                     profilecontroller.numberController.text,
-                    profilecontroller.selectedImagePath.toString()
-);
+//                       profilecontroller. updatepofile1(profilecontroller.fullNameController.text,
+//                     profilecontroller.lastNameController.text,
+//                     profilecontroller.emailController.text,
+//                      profilecontroller.numberController.text,
+//                     profilecontroller.selectedImagePath.toString()
+// );
                    await profilecontroller.updateProfile();
+                   
 
 // profilecontroller.validateForm(context);
 // profilecontroller.clearFields();

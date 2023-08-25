@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/screens/user/orderDetails.dart';
+import 'package:pet/screens/user/paymentdone.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:upi_india/upi_india.dart';
 
 class UserUpiScreen extends StatefulWidget {
+    UserUpiScreen({super.key,this.amount});
+    double? amount;
   @override
   _UserUpiScreenState createState() => _UserUpiScreenState();
 }
 
 class _UserUpiScreenState extends State<UserUpiScreen> {
+    MyCartController mycartController = Get.put(MyCartController());
+
   Future<UpiResponse>? _transaction;
   UpiIndia _upiIndia = UpiIndia();
   List<UpiApp>? apps;
@@ -42,11 +48,11 @@ class _UserUpiScreenState extends State<UserUpiScreen> {
   Future<UpiResponse> initiateTransaction(UpiApp app) async {
     return _upiIndia.startTransaction(
       app: app,
-      receiverUpiId: "9078600498@ybl",
-      receiverName: 'Md Azharuddin',
+      receiverUpiId: "ruchika.nawghare@ybl",
+      receiverName: 'Ruchika',
       transactionRefId: 'TestingUpiIndiaPlugin',
       transactionNote: 'Not actual. Just an example.',
-      amount: 1.00,
+      amount: (widget.amount!),
     );
   }
 
@@ -113,6 +119,8 @@ class _UserUpiScreenState extends State<UserUpiScreen> {
   void _checkTxnStatus(String status) {
     switch (status) {
       case UpiPaymentStatus.SUCCESS:
+Get.to(PaymentDoneScreenuser());
+   mycartController. placeorder();
         print('Transaction Successful');
         break;
       case UpiPaymentStatus.SUBMITTED:
@@ -232,7 +240,10 @@ class _UserUpiScreenState extends State<UserUpiScreen> {
           ),
            InkWell(
               onTap: () {
-                   Get.to(OrderDetailsUser());
+                   Get.to(OrderDetailsUser(
+
+
+                   ));
                 // Get.to(Payment2User());
               },
               child: Center(

@@ -1,11 +1,11 @@
-class PetCategoryBreedModel {
+class LifeStageModel {
   String? status;
   List<Data>? data;
   String? message;
 
-  PetCategoryBreedModel({this.status, this.data, this.message});
+  LifeStageModel({this.status, this.data, this.message});
 
-  PetCategoryBreedModel.fromJson(Map<String, dynamic> json) {
+  LifeStageModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];

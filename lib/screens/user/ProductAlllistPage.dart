@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/others/Filter.dart';
@@ -201,7 +202,10 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
     //  SizedBox(width: 10,),
      GestureDetector(
        onTap: () {
-                    Get.to(FilterScreen());},
+                   FilterController filtercontroller = Get.put(FilterController());
+filtercontroller.init();
+                        Get.to(FilterScreen());
+                    },
        child: Container(width: 45,
      height: 45,
      decoration: BoxDecoration(
@@ -259,6 +263,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                        productdeatilscontroller.viewproduct( item.id??0,);
                                            print("productid${item.id??0}");
                                           await productdeatilscontroller.init();
+                                            productdeatilscontroller.clearFields();  
                                        Get.to( ProductDetails());
                                   },
                                   child: Container(
@@ -327,7 +332,14 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     style: CustomTextStyle
                                                         .popinsmedium),
                                                 Text(
-                                                    item.description.toString(),
+                                                   item.description
+                                                                        .toString()
+                                                                        .length <
+                                                                    30
+                                                                ?  item.description!
+                                                                : item.description!.substring(0, 19),
+                                                            
+                                                    // item.description.toString(),
                                                     style: CustomTextStyle
                                                         .popinssmall0),
                                                 SizedBox(height: 5),
@@ -367,7 +379,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               child: Center(
                                                                 child: Text(
                                                                     // item.discount.toString(),
-                                                                    "Save20%",
+                                                                     "Save${item.discount??''}",
                                                                     style: CustomTextStyle
                                                                         .popinstextsmal2222),
                                                               ),
@@ -375,8 +387,8 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           ],
                                                         ),
                                                         SizedBox(height: 5),
-                                                        Text(
-                                                          "₹" + item.price!,
+                                                        Text("₹ ${((double.parse(item.price ?? '')) - ( (double.parse(item.price ?? ""))*(double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+
                                                           style: CustomTextStyle
                                                               .popinsmedium,
                                                         ),

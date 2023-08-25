@@ -161,6 +161,8 @@ class CustomTextStyle {
   static TextStyle popinssmall0 = const TextStyle(
       color: Color(0xff011624),
       fontSize: 10,
+       
+       
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins");
   static TextStyle popinssmall01 = const TextStyle(
