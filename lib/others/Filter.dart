@@ -139,6 +139,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           },
                           body: ListView.builder(
                             shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             itemCount: filtercontroller.branditems.length,
                             itemBuilder: (BuildContext context, int index) {
                               final filteroption =
@@ -190,6 +191,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             );
                           },
                           body: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: filtercontroller.categoryitems.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -245,6 +247,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           },
                           body: ListView.builder(
                             shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             itemCount: filtercontroller.breeditem.length,
                             itemBuilder: (BuildContext context, int index) {
                               final filteroption =
@@ -298,6 +301,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           body: ListView.builder(
                             shrinkWrap: true,
                             itemCount: filtercontroller.lifestageitem.length,
+                            physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (BuildContext context, int index) {
                               final filteroption =
                                   filtercontroller.lifestageitem[index];
@@ -352,6 +356,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           },
                           body: ListView.builder(
                             shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
                             itemCount:
                                 filtercontroller.healthconditionitem.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -407,6 +412,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             );
                           },
                           body: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: filtercontroller.vegitem.length,
                             itemBuilder: (BuildContext context, int index) {
