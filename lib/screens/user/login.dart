@@ -218,10 +218,12 @@ class _LoginUserState extends State<LoginUser> {
                                   try {
                                     await userLoginController.getOtp();
                                     Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: OtpUser()));
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.fade,
+                                        child: OtpUser(),
+                                      ),
+                                    );
                                   } catch (e) {
                                     Get.snackbar(
                                       'Error',

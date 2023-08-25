@@ -41,7 +41,7 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const GET_OUR_BRAND = "$BASE_URL${API_V1_PATH}/auth/brand";
   static const GET_MY_ORDER = "$BASE_URL${API_V1_PATH}/customer/order/list?id=";
   static const GET_ORDER_DETAILS = "$BASE_URL${API_V1_PATH}/customer/order/detail/";
-  static const GET_LIFESTAGE = "$BASE_URL${API_V1_PATH}/auth/life_stage/";
+  static const GET_LIFESTAGE = "$BASE_URL${API_V1_PATH}/auth/all_life_stage/";
     static const GET_HEALTH_CONDITION = "$BASE_URL${API_V1_PATH}/auth/health_condition";
 
   static const GET_USER_NOTIFICATION =
@@ -52,7 +52,7 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
       "$BASE_URL${API_V1_PATH}/banners/service";
   static const PETS_CATEGORY_IMAGE_PATH =
       "$BASE_URL/storage/app/public/category/";
-  static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/breed";
+  static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/all_pets_breed";
  static const USER_UPDATE_PROFILE =
       "$BASE_URL${API_V1_PATH}/auth/update-profile";
   static const ADD_PET_USER = "$BASE_URL${API_V1_PATH}/auth/pets_add";
