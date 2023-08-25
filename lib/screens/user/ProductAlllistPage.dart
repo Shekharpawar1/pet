@@ -4,7 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -23,6 +25,7 @@ class ProductAlllistPage extends StatefulWidget {
 class _ProductAlllistPageState extends State<ProductAlllistPage> {
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
     TextEditingController _searchcontroller = TextEditingController();
+    ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -139,6 +142,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
           padding: const EdgeInsets.all(15.0),
           child: ListView(
             primary: true,
+            shrinkWrap: true,
             children: [
               // SizedBox(height: MediaQuery.of(context).size.height*0.02),
  Row(
@@ -198,7 +202,10 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
     //  SizedBox(width: 10,),
      GestureDetector(
        onTap: () {
-                    Get.to(FilterScreen());},
+                   FilterController filtercontroller = Get.put(FilterController());
+filtercontroller.init();
+                        Get.to(FilterScreen());
+                    },
        child: Container(width: 45,
      height: 45,
      decoration: BoxDecoration(
@@ -217,7 +224,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
               !homeusercontroller.propertyLoaded
                   ? SizedBox()
                   : Container(
-                          // height: 600,
+                          //  height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
                               primary: false,
                               shrinkWrap: true,
@@ -231,8 +238,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       mainAxisExtent: 280),
                               itemCount: homeusercontroller
                                   .userPropertiesModel!.data!.length
-                                  .clamp(0,
-                                      4), // Set the number of cards you want to display.
+                                 , // Set the number of cards you want to display.
                               itemBuilder: (context, index) {
                                 // gridDelegate:
                                 //     SliverGridDelegateWithMaxCrossAxisExtent(
@@ -248,18 +254,17 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 var item = homeusercontroller
                                     .userPropertiesModel!.data![index];
 
+                                 
                                 var imagePath =
-                                    "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                       "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
                                 print(imagePath);
                                 return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProductDetails(
-                                                  itemdetails: item,
-                                                )));
+                                  onTap: () async{
+                                       productdeatilscontroller.viewproduct( item.id??0,);
+                                           print("productid${item.id??0}");
+                                          await productdeatilscontroller.init();
+                                            productdeatilscontroller.clearFields();  
+                                       Get.to( ProductDetails());
                                   },
                                   child: Container(
                                     width: 140,
@@ -296,8 +301,8 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           //     color: MyColors.white),
                                           child: CachedNetworkImage(
                                             imageUrl: imagePath,
-                                            width: 61,
-                                            height: 75,
+                                            // width: 61,
+                                            // height: 75,
                                             placeholder: (context, url) =>
                                                 Center(
                                               child:
@@ -327,7 +332,14 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     style: CustomTextStyle
                                                         .popinsmedium),
                                                 Text(
-                                                    item.description.toString(),
+                                                   item.description
+                                                                        .toString()
+                                                                        .length <
+                                                                    30
+                                                                ?  item.description!
+                                                                : item.description!.substring(0, 19),
+                                                            
+                                                    // item.description.toString(),
                                                     style: CustomTextStyle
                                                         .popinssmall0),
                                                 SizedBox(height: 5),
@@ -367,7 +379,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               child: Center(
                                                                 child: Text(
                                                                     // item.discount.toString(),
-                                                                    "Save20%",
+                                                                     "Save${item.discount??''}",
                                                                     style: CustomTextStyle
                                                                         .popinstextsmal2222),
                                                               ),
@@ -375,8 +387,8 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           ],
                                                         ),
                                                         SizedBox(height: 5),
-                                                        Text(
-                                                          "₹" + item.price!,
+                                                        Text("₹ ${((double.parse(item.price ?? '')) - ( (double.parse(item.price ?? ""))*(double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+
                                                           style: CustomTextStyle
                                                               .popinsmedium,
                                                         ),

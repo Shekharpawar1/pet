@@ -99,7 +99,8 @@ class UserLoginController extends GetxController {
     }
   }
 
-  Future<void> sendOtp() async {
+
+Future<void> sendOtp() async {
     try {
       // sate list
       var body = {
@@ -119,6 +120,7 @@ class UserLoginController extends GetxController {
       try {
         id = response["data"]["id"];
         userData = response["data"];
+
         Get.snackbar(
         'Success',
         'Your Registration is Done',
@@ -135,8 +137,8 @@ class UserLoginController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
-      );
-      }
+      );}
+
       // // var id = userLoginModel.data![0].id;
       print("=====>>>> Id ${id} Data: ${userData}");
       storage.write('userData', userData);
@@ -160,6 +162,39 @@ class UserLoginController extends GetxController {
       );
     }
   }
+  // Future<void> sendOtp() async {
+  //   try {
+  //     // sate list
+  //     var body = {
+  //       "phone": phoneNumberController.text.trim().toString(),
+  //       "otp": otpText
+  //     };
+  //     var response =
+  //         await ApiHelper.postApi(url: Constants.USER_LOGIN_OTP, body: body);
+  //     storage.write('login', true);
+  //     print("============= Success ${storage.read("login")}=============");
+  //     var jsonResponse = json.decode(response);
+  //     UserLoginModel userLoginModel = UserLoginModel.fromJson(jsonResponse);
+  //     print(jsonResponse);
+  //     var id = userLoginModel.data!.id;
+  //     storage.write('id', id);
+  //     print(storage.read('id'));
+  //     // print(stateListModel);
+  //     // stateLoaded = true;
+  //     update();
+  //   } catch (e) {
+  //     print('Error: $e');
+  //     Get.snackbar(
+  //       'Error',
+  //       'An error occurred: $e',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  // }
+
+
 
   @override
   void onInit() {

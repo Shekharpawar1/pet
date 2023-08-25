@@ -198,7 +198,7 @@ decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color:MyColors
     
       InkWell(onTap: (){
   // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
-     Get.to(PaymentUser());
+     Get.to(Paymentsales());
       },
         child: Container(
           

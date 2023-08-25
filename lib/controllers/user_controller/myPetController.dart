@@ -102,9 +102,9 @@ class UserMyPetController extends GetxController {
     await fetchPetBreed(petId);
     print("breed fetched");
 
-    if (petCategoryBreedModel != null && petCategoryBreedModel!.state != null) {
+    if (petCategoryBreedModel != null && petCategoryBreedModel!.data != null) {
       items =
-          petCategoryBreedModel!.state!.map((e) => e.name.toString()).toList();
+          petCategoryBreedModel!.data!.map((e) => e.name.toString()).toList();
       print(items);
 
       // Check if the petType is present in the items list

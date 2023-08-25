@@ -14,6 +14,7 @@ static const Color white = Colors.white;
 static const Color blue =Color(0xff013C9A);
 static const Color black = Colors.black;
 static const Color green =Color(0xffA7D441);
+static const Color transparent =Colors.transparent;
 static const Color green1 =Color(0xff07B12C);
 static const Color orange =Color(0xffFF9E0C);
 static const Color lightpurple =Color.fromRGBO(105, 92, 212, 0.10);

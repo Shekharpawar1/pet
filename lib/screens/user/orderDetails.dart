@@ -1,19 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/orderdetails_controller.dart';
+import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
 import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/wholesaler/locationScreenWholesaler.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class OrderDetailsUser extends StatefulWidget {
-  const OrderDetailsUser({super.key});
+   OrderDetailsUser({super.key, this.orderId, this.couponcode, this.paymentmethod});
+  int? orderId;
+  String? couponcode;
+  String? paymentmethod;
 
   @override
   State<OrderDetailsUser> createState() => _OrderDetailsUserState();
@@ -21,7 +28,9 @@ class OrderDetailsUser extends StatefulWidget {
 
 class _OrderDetailsUserState extends State<OrderDetailsUser> {
 
-  OrderDetailsController  orderdetailscontroller  = Get.put(OrderDetailsController());
+  MyOrderController myordercontroller = Get.put(MyOrderController());
+    OrderDetailsController orderdetailscontroller = Get.put(OrderDetailsController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,12 +146,12 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
         ),
         body: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
-          child: GetBuilder<OrderDetailsController>(
-                      init: orderdetailscontroller,
+          child: GetBuilder<MyOrderController>(
+                      init: myordercontroller,
                       
                       builder: (_) {
                     
-                        return
+                        return   myordercontroller.orderdetailsModel!.data == null?SizedBox():
           ListView( 
                            shrinkWrap: false,
                      primary: true,
@@ -153,10 +162,18 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 primary: false,
                              
                                 shrinkWrap: true,
-                                itemCount:
-                                    3,
-                                itemBuilder: (context, index) {
-return   Container(
+                                   itemCount: myordercontroller.orderdetailsModel!.data!.length,
+                    itemBuilder: (context, index) {
+                      var item = myordercontroller.orderdetailsModel!.data![index];
+                        String imagePath =
+                        
+                                            Constants.PRODUCT_HOME_IMAGE_PATH +
+                                                "/${item.itemDetails![0].image??''}";
+
+                                                print("====>>>>imagepath ${ imagePath}");
+return 
+
+Container(
   margin: EdgeInsets.symmetric(vertical: 10),
                     height: MediaQuery.of(context).size.height * 0.18,
                     width: MediaQuery.of(context).size.width,
@@ -167,25 +184,33 @@ return   Container(
                     child: Row(children: [
                       Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child: Image.asset(
-                          "assets/image/fooddog.png",
-                        ),
+                        child:  CachedNetworkImage(
+                                      imageUrl: imagePath, fit: BoxFit.cover,
+                                      // width: 61,
+                                      // height: 75,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(),
+                                      ), // Replace with your own placeholder widget
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons
+                                              .error), // Replace with your own error widget
+                                    ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Mars Petcare Inc",
+                            item.variant??'',
                             style: CustomTextStyle.popinsmedium,
                           ),
-                          Text("with paneer or cottage cheese",
+                          Text(item.discountType??'',
                               style: CustomTextStyle.popinssmall0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "₹ 620.00",
+                               item.totalAddOnPrice??'',
                                 style: CustomTextStyle.popinsmedium,
                               ),
                             ],
@@ -294,13 +319,13 @@ return   Container(
                                      style: CustomTextStyle.popinssmall014,
                                    ),
                                    Text(
-                                     "Promo Code: " +   orderdetailscontroller.getorderdetailsList["promocode"],
+                                     "Promo Code: " +   widget.couponcode.toString(),
                                      style: CustomTextStyle.popinssmallnormal,
                                    ),
                                  ],
                                ),
                                Text(
-                                   orderdetailscontroller.getorderdetailsList["discount"],
+                                   myordercontroller.orderdetailsModel!.data![0].discountOnItem??'',
                                  style: CustomTextStyle.popinssmall014,
                                ),
                              ],
@@ -342,7 +367,7 @@ return   Container(
                                      style: CustomTextStyle.popinsboldlight,
                                    ),
                                    Text(
-                                     orderdetailscontroller.getorderdetailsList["ordernumber"],
+                                   (myordercontroller.orderdetailsModel!.data![0].orderId??0).toString(),
                                      style: CustomTextStyle.popinsboldlightsmall,
                                    ),
                                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
@@ -351,7 +376,7 @@ return   Container(
                                      style: CustomTextStyle.popinsboldlight,
                                    ),
                                    Text(
-                                     "Paid:"+   orderdetailscontroller.getorderdetailsList["payment"],
+                                     "Paid:"+  widget.paymentmethod.toString(),
                                      style: CustomTextStyle.popinsboldlightsmall,
                                    ),
                                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),

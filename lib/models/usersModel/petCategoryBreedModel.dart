@@ -1,72 +1,65 @@
-// To parse this JSON data, do
-//
-//     final petCategoryBreedModel = petCategoryBreedModelFromJson(jsonString);
-
-import 'dart:convert';
-
-PetCategoryBreedModel petCategoryBreedModelFromJson(String str) =>
-    PetCategoryBreedModel.fromJson(json.decode(str));
-
-String petCategoryBreedModelToJson(PetCategoryBreedModel data) =>
-    json.encode(data.toJson());
-
 class PetCategoryBreedModel {
   String? status;
-  List<State>? state;
+  List<Data>? data;
   String? message;
 
-  PetCategoryBreedModel({
-    this.status,
-    this.state,
-    this.message,
-  });
+  PetCategoryBreedModel({this.status, this.data, this.message});
 
-  factory PetCategoryBreedModel.fromJson(Map<String, dynamic> json) =>
-      PetCategoryBreedModel(
-        status: json["status"],
-        state: List<State>.from(json["state"].map((x) => State.fromJson(x))),
-        message: json["message"],
-      );
+  PetCategoryBreedModel.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+    message = json['message'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "state": List<dynamic>.from(state!.map((x) => x.toJson())),
-        "message": message,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    data['message'] = this.message;
+    return data;
+  }
 }
 
-class State {
+class Data {
   int? id;
   int? categoryId;
   String? name;
   int? status;
-  dynamic? createdAt;
-  dynamic? updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
-  State({
-    this.id,
-    this.categoryId,
-    this.name,
-    this.status,
-    this.createdAt,
-    this.updatedAt,
-  });
+  Data(
+      {this.id,
+      this.categoryId,
+      this.name,
+      this.status,
+      this.createdAt,
+      this.updatedAt});
 
-  factory State.fromJson(Map<String, dynamic> json) => State(
-        id: json["id"],
-        categoryId: json["category_id"],
-        name: json["name"],
-        status: json["status"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-      );
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    categoryId = json['category_id'];
+    name = json['name'];
+    status = json['status'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "category_id": categoryId,
-        "name": name,
-        "status": status,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['category_id'] = this.categoryId;
+    data['name'] = this.name;
+    data['status'] = this.status;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
 }

@@ -94,12 +94,28 @@ class CustomTextStyle {
   static TextStyle popinstext = const TextStyle(
       color: Colors.black,
       fontSize: 14,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.bold,
       fontFamily: "Poppins");
 
   static TextStyle popinsmedium = const TextStyle(
       //color:Color(0xff011624),
       color: Color(0xff000000),
+      // color: black,
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+      fontFamily: "Poppins");
+
+      static TextStyle popinsmediumorange = const TextStyle(
+      //color:Color(0xff011624),
+      color: MyColors.orange,
+      // color: black,
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+      fontFamily: "Poppins");
+
+      static TextStyle popinsmediumgreen = const TextStyle(
+      //color:Color(0xff011624),
+      color: MyColors.green,
       // color: black,
       fontSize: 14,
       fontWeight: FontWeight.bold,
@@ -145,6 +161,8 @@ class CustomTextStyle {
   static TextStyle popinssmall0 = const TextStyle(
       color: Color(0xff011624),
       fontSize: 10,
+       
+       
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins");
   static TextStyle popinssmall01 = const TextStyle(
@@ -167,7 +185,7 @@ class CustomTextStyle {
   static TextStyle popinssmallnormal = const TextStyle(
       color: Color(0xff0B154D),
       fontSize: 12,
-      //  fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w500,
       fontFamily: "Poppins");
 
   static TextStyle popinssmall1 = const TextStyle(

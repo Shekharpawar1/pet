@@ -20,6 +20,8 @@ class UserServicesAddVeterinaryController extends GetxController {
   TextEditingController addressController = TextEditingController();
   TextEditingController petProblemController = TextEditingController();
 
+   final storage = GetStorage();
+var userId;
   GetPetModel? petListModel;
   String getPetUrl = Constants.GET_PET_USER;
 
@@ -166,7 +168,11 @@ class UserServicesAddVeterinaryController extends GetxController {
   }
 
   final box = GetStorage();
-
+// void onInit() {
+//     super.onInit();
+//     // init();
+     
+//   }
   @override
   void onClose() {
     print("closing...");
@@ -204,6 +210,7 @@ class UserServicesAddVeterinaryController extends GetxController {
   void onInit() {
     super.onInit();
     init();
+    userId = storage.read('id');
     // final List<String>? selectedSlots = box.read('selectedSlots');
     // if (selectedSlots != null) {
     //   timeSlots.forEach((slot) {
@@ -253,10 +260,10 @@ class UserServicesAddVeterinaryController extends GetxController {
       );
     }
 
-    if (petListModel != null && petListModel!.state != null) {
+    if (petListModel != null && petListModel!.data != null) {
       print("=====>>>> inside");
       demoPetsList =
-          petListModel!.state!.map((e) => e.petName.toString()).toList();
+          petListModel!.data!.map((e) => e.petName.toString()).toList();
       demoPetsList = demoPetsList.toSet().toList();
       print(demoPetsList);
       if (demoPetsList.isNotEmpty) {
@@ -374,7 +381,7 @@ class UserServicesAddVeterinaryController extends GetxController {
     showLoading = true;
     update();
     int? petId;
-    petListModel!.state!.forEach((element) {
+    petListModel!.data!.forEach((element) {
       if (element.petName == selectedPet.toString()) {
         petId = element.id;
       }
@@ -394,7 +401,7 @@ class UserServicesAddVeterinaryController extends GetxController {
       "pet_problem": petProblemController.text.trim().toString(),
       "phone": numberController.text.trim(),
       // "service_id": serviceId.toString(),
-      "user_id": 1.toString(),
+      "user_id": userId.toString(),
       "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
     };
     String veterinaryBooking = Constants.VETERINARY_BOOKING;

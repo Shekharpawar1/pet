@@ -6,10 +6,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/service_controller.dart';
+import 'package:pet/screens/drawer.dart';
+import 'package:pet/screens/user/ordersummary.dart';
+
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pet/controllers/user_controller/userServicesAddAppointmentController.dart';
 import 'package:pet/controllers/user_controller/userServicesAddVeterinaryController.dart';
 import 'package:pet/screens/user/userServicesAddAppointment.dart';
 import 'package:pet/screens/user/userServicesAddVeterinary.dart';
+import 'package:pet/screens/drawer.dart';
+import 'package:pet/screens/user/ordersummary.dart';
+// import 'package:pet/screens/user/services2.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -23,8 +30,8 @@ class ServicePage extends StatefulWidget {
 }
 
 class _ServicePageState extends State<ServicePage> {
-  //
-
+  //  
+  final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   // ServiceController servicecontroller = Get.put(ServiceController());
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
 
@@ -33,38 +40,117 @@ class _ServicePageState extends State<ServicePage> {
       Get.put(UserServicesAddAppointmentController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-          child: Image.asset(
-            "assets/image/menu2.png",
+    return  Scaffold(
+      key: _drawerkey,
+      drawer: drawer(),
+             appBar: AppBar(
+            elevation: 0,
+          backgroundColor:Colors.transparent,
+          leading: Padding(
+            padding: const EdgeInsets.only(left:20.0,top: 15,bottom: 15),
+            child: GestureDetector(
+               onTap: () {
+              _drawerkey.currentState!.openDrawer();
+            },
+              child: Image.asset(
+                "assets/image/menu2.png",
+              ),
+            ),
           ),
-        ),
-        title: Center(
-            child: Text(
-          "Services",
-          style: CustomTextStyle.appbartext,
-        )),
+          title: Center(
+              child:Text("Services",style:  CustomTextStyle.appbartext,)
+          ),
         actions: [
-          InkWell(
-              onTap: () {
-                Get.to(NotificationUser());
-              },
-              child: SvgPicture.asset("assets/image/notification.svg")),
-          SizedBox(width: 20),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: SvgPicture.asset("assets/image/bag.svg"),
+        
+
+                  
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                     Get.to(NotificationUser());
+                  },
+                  child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
+ 
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-          child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    
+                SizedBox(width: 20),
+ Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                      Get.to(AddToCardUser());
+                   
+                  },
+                  child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+ 
+// (getCardModel!.data!.isEmpty)?
+// SizedBox():
+ Positioned(
+ top: 10.0,right: 0,
+                    child:  Stack(
+                      children: <Widget>[
+                         Icon(
+                            Icons.brightness_1,
+                            size: 15.0, color: MyColors.red),
+                         Positioned(
+                            top: 3.0,
+                            right: 4.0,
+                            child:  Center(
+                              child:  Text(('5').toString(),
+                                // list.length.toString(),
+                                style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8.0,
+                                    fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            )),
+
+                  
+                      ],
+                    )),
+
+
+            ],
+          ),
+    
+    SizedBox(width: 20,)
+    
+        ],  ),
+
+        body: SingleChildScrollView(child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
           //  SizedBox(height: MediaQuery.of(context).size.height*0.03,),
 
           Image.asset("assets/image/bgimg1.png"),

@@ -400,7 +400,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                           onTap: () {
                             // Get.to(MyPetDetails());
                             print(userServicesAddAppointmentController
-                                .petListModel!.state!);
+                                .petListModel!.data!);
                           },
                           child: Center(
                             child: Container(
