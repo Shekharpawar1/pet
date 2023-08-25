@@ -111,14 +111,41 @@ class UserLoginController extends GetxController {
       storage.write('login', true);
       print("============= Success ${storage.read("login")}=============");
       // var jsonResponse = json.decode(response);
-      UserLoginModel userLoginModel = UserLoginModel.fromJson(response);
+      // UserLoginModel userLoginModel = UserLoginModel.fromJson(response);
       // print(userLoginModel);
-      var id = userLoginModel.data![0].id;
-      // print("=====>>>> ${userLoginModel.data}");
-      storage.write('userData', userLoginModel);
+      var id;
+      var userData;
+      print(response["data"]);
+      try {
+        id = response["data"]["id"];
+        userData = response["data"];
+        Get.snackbar(
+        'Success',
+        'Your Registration is Done',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+      } catch (e) {
+        id = response["data"]![0]["id"];
+        userData = response["data"][0];
+        Get.snackbar(
+        'Success',
+        'Logging you in',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+      }
+      // // var id = userLoginModel.data![0].id;
+      print("=====>>>> Id ${id} Data: ${userData}");
+      storage.write('userData', userData);
       storage.write('id', id);
       print(storage.read('id').toString());
       print(storage.read('userData').toString());
+      phoneNumberController.clear();
+      otpText = null;
+      
       // print(stateListModel);
       // stateLoaded = true;
       update();
