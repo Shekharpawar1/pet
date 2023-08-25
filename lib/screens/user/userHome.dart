@@ -18,6 +18,7 @@ import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/drawer.dart';
 import 'package:pet/screens/user/allcategory.dart';
+import 'package:pet/screens/user/filterScreen.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/user/oubranddetails.dart';
 import 'package:pet/screens/user/productdetails.dart';
@@ -46,11 +47,13 @@ class HomeUser extends StatefulWidget {
 class _HomeUserState extends State<HomeUser> {
   TextEditingController _searchcontroller = TextEditingController();
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
-    ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
-      SubCategoryController subcategorycontroller = Get.put(SubCategoryController());
-            OurBrandDetailsController Ourbranddetailscontroller = Get.put(OurBrandDetailsController());
+  ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
+  SubCategoryController subcategorycontroller =
+      Get.put(SubCategoryController());
+  OurBrandDetailsController Ourbranddetailscontroller =
+      Get.put(OurBrandDetailsController());
   MyCartController mycartController = Get.put(MyCartController());
-
 
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 
@@ -120,8 +123,8 @@ class _HomeUserState extends State<HomeUser> {
             children: [
               InkWell(
                   onTap: () {
-                      mycartController.init();
-                                      Get.to(AddToCardUser());
+                    mycartController.init();
+                    Get.to(AddToCardUser());
                     // Get.to(AddToCardUser());
                   },
                   child:
@@ -359,10 +362,13 @@ class _HomeUserState extends State<HomeUser> {
                     //  return
                     GestureDetector(
                       onTap: () {
-                        
-FilterController filtercontroller = Get.put(FilterController());
-filtercontroller.init();
-                        Get.to(FilterScreen());
+                        FilterController filtercontroller =
+                            Get.put(FilterController());
+                        // filtercontroller.init();
+                        filtercontroller.loadDefaultData();
+                        filtercontroller.clearFields();
+                        // Get.to(FilterScreen());
+                        Get.to(FilterScreenUI());
                         //         showModalBottomSheet(
                         //       isScrollControlled: true,
                         //       context: context,
@@ -532,7 +538,8 @@ filtercontroller.init();
                                         padding: const EdgeInsets.all(8.0),
                                         child: InkWell(
                                           onTap: () {
-                                            subcategorycontroller.addproduct(item.id??0) ;
+                                            subcategorycontroller
+                                                .addproduct(item.id ?? 0);
                                             Get.to(() => Allcategory());
                                           },
                                           child: Column(
@@ -671,12 +678,15 @@ filtercontroller.init();
                                         //     "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
                                         print(imagePath);
                                         return InkWell(
-                                          onTap: ()async {
-
-               productdeatilscontroller.viewproduct( item.id??0,);
-                                           print("productid${item.id??0}");
-                                          await productdeatilscontroller.init();
-                                       Get.to( ProductDetails());
+                                          onTap: () async {
+                                            productdeatilscontroller
+                                                .viewproduct(
+                                              item.id ?? 0,
+                                            );
+                                            print("productid${item.id ?? 0}");
+                                            await productdeatilscontroller
+                                                .init();
+                                            Get.to(ProductDetails());
                                             // Get.to( ProductDetails());
                                             // Navigator.push(
                                             //     context,
@@ -773,15 +783,16 @@ filtercontroller.init();
                                                             style: CustomTextStyle
                                                                 .popinsmedium),
                                                         Text(
-
-                                                           item.description
+                                                            item.description
                                                                         .toString()
                                                                         .length <
                                                                     30
-                                                                ?  item.description!
-                                                                : item.description!.substring(0, 19),
-                                                            
-                                                                
+                                                                ? item
+                                                                    .description!
+                                                                : item
+                                                                    .description!
+                                                                    .substring(
+                                                                        0, 19),
                                                             style: CustomTextStyle
                                                                 .popinssmall0),
                                                         SizedBox(height: 5),
@@ -821,7 +832,7 @@ filtercontroller.init();
                                                                           Center(
                                                                         child: Text(
                                                                             // item.discount.toString(),
-                                                                             "Save${item.discount.toString()}%",
+                                                                            "Save${item.discount.toString()}%",
                                                                             style: CustomTextStyle.popinstextsmal2222),
                                                                       ),
                                                                     ),
@@ -829,9 +840,8 @@ filtercontroller.init();
                                                                 ),
                                                                 SizedBox(
                                                                     height: 5),
-                                                            
-
-                                           Text("₹ ${((double.parse(item.price ?? '')) - ( (double.parse(item.price ?? ""))*(double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                                                Text(
+                                                                  "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
                                                                   // "₹" +
                                                                   //     item.price!,
@@ -1192,13 +1202,12 @@ filtercontroller.init();
                                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                       // print(imagePath);
                                       return InkWell(
-                                        onTap: (){
+                                        onTap: () {
+                                          Ourbranddetailscontroller.addproduct(
+                                              item.id ?? 0, item.logo ?? '');
+                                          //  subcategorycontroller.addproduct(item.id??0) ;
 
-                                          Ourbranddetailscontroller.addproduct(item.id??0,item.logo??'');
-                                        //  subcategorycontroller.addproduct(item.id??0) ;
-
-
-                                        Get.to(OurBrandDetails());
+                                          Get.to(OurBrandDetails());
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -1219,7 +1228,8 @@ filtercontroller.init();
                                                   // color: MyColors.white
                                                 ),
                                                 child: Stack(
-                                                  alignment: Alignment.topCenter,
+                                                  alignment:
+                                                      Alignment.topCenter,
                                                   children: [
                                                     // SizedBox(height: 140,),
                                                     Container(
@@ -1237,8 +1247,8 @@ filtercontroller.init();
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(30),
-                                                          color:
-                                                              Colors.transparent),
+                                                          color: Colors
+                                                              .transparent),
                                                       child: Column(
                                                         children: [
                                                           Padding(
@@ -1262,12 +1272,11 @@ filtercontroller.init();
                                                                   colors: [
                                                                     Color(
                                                                         0xFFFFF0BA),
-                                                                    Color
-                                                                        .fromRGBO(
-                                                                            252,
-                                                                            233,
-                                                                            166,
-                                                                            0.00),
+                                                                    Color.fromRGBO(
+                                                                        252,
+                                                                        233,
+                                                                        166,
+                                                                        0.00),
                                                                   ],
                                                                 ),
                                                               ),
@@ -1308,7 +1317,8 @@ filtercontroller.init();
                                                         width: 60,
                                                         decoration: BoxDecoration(
                                                             color: Colors.white
-                                                                .withOpacity(0.3),
+                                                                .withOpacity(
+                                                                    0.3),
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -1319,7 +1329,8 @@ filtercontroller.init();
                                                             //   height: 50,
                                                             // ),
                                                             CachedNetworkImage(
-                                                          imageUrl: imageLogoPath,
+                                                          imageUrl:
+                                                              imageLogoPath,
                                                           // width: 50,
                                                           height: 50,
                                                           placeholder:
@@ -1838,10 +1849,10 @@ filtercontroller.init();
                                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                       // print(imagePath);
                                       return InkWell(
-                                        onTap: (){
-                                                     Ourbranddetailscontroller.addproduct(item.id??0,item.logo??'');
+                                        onTap: () {
+                                          Ourbranddetailscontroller.addproduct(
+                                              item.id ?? 0, item.logo ?? '');
                                           Get.to(OurBrandDetails());
-                                        
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -1862,7 +1873,8 @@ filtercontroller.init();
                                                   // color: MyColors.white
                                                 ),
                                                 child: Stack(
-                                                  alignment: Alignment.topCenter,
+                                                  alignment:
+                                                      Alignment.topCenter,
                                                   children: [
                                                     // SizedBox(height: 140,),
                                                     Container(
@@ -1880,8 +1892,8 @@ filtercontroller.init();
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(30),
-                                                          color:
-                                                              Colors.transparent),
+                                                          color: Colors
+                                                              .transparent),
                                                       child: Column(
                                                         children: [
                                                           Padding(
@@ -1905,12 +1917,11 @@ filtercontroller.init();
                                                                   colors: [
                                                                     Color(
                                                                         0xFFFFF0BA),
-                                                                    Color
-                                                                        .fromRGBO(
-                                                                            252,
-                                                                            233,
-                                                                            166,
-                                                                            0.00),
+                                                                    Color.fromRGBO(
+                                                                        252,
+                                                                        233,
+                                                                        166,
+                                                                        0.00),
                                                                   ],
                                                                 ),
                                                               ),
@@ -1951,7 +1962,8 @@ filtercontroller.init();
                                                         width: 60,
                                                         decoration: BoxDecoration(
                                                             color: Colors.white
-                                                                .withOpacity(0.3),
+                                                                .withOpacity(
+                                                                    0.3),
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
@@ -1962,7 +1974,8 @@ filtercontroller.init();
                                                             //   height: 50,
                                                             // ),
                                                             CachedNetworkImage(
-                                                          imageUrl: imageLogoPath,
+                                                          imageUrl:
+                                                              imageLogoPath,
                                                           // width: 50,
                                                           height: 50,
                                                           placeholder:
@@ -2024,7 +2037,8 @@ filtercontroller.init();
                     // Text("See All", style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
 
                     InkWell(
-                      onTap: () {   subcategorycontroller.producttoys();
+                      onTap: () {
+                        subcategorycontroller.producttoys();
                         Get.to(AlltoyPage());
                       },
                       child: Text('See All',
@@ -2041,197 +2055,210 @@ filtercontroller.init();
                 // subcategorycontroller.userPropertiesModel == null ||
                 //         subcategorycontroller.userPropertiesModel!.data == null
                 //     ? SizedBox()
-                //     : 
+                //     :
 
-                 GetBuilder<SubCategoryController>(
+                GetBuilder<SubCategoryController>(
                     init: subcategorycontroller,
                     builder: (_) {
+                      return GridView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15.0,
+                                  mainAxisSpacing: 15.0,
+                                  mainAxisExtent: 260),
+                          itemCount: subcategorycontroller
+                              .usertoyModel!.data!.length
+                              .clamp(0, 4),
+                          itemBuilder: (BuildContext ctx, index) {
+                            var item = subcategorycontroller
+                                .usertoyModel!.data![index];
 
-                      return
-                    GridView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 15.0,
-                            mainAxisSpacing: 15.0,
-                            mainAxisExtent: 260),
-                        itemCount: subcategorycontroller
-                            .usertoyModel!.data!.length
-                            .clamp(0, 4),
-                        itemBuilder: (BuildContext ctx, index) {
-                         var item = subcategorycontroller
-                            .usertoyModel!.data![index];
+                            var imagePath =
+                                "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
+                            return subcategorycontroller.usertoyModel == null ||
+                                    subcategorycontroller.usertoyModel!.data ==
+                                        null
+                                ? SizedBox()
+                                : Container(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    // width: MediaQuery.of(context).size.width * 0.46,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: MyColors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          spreadRadius: 3,
+                                          blurRadius: 7,
+                                          offset: Offset(
+                                              0, 3), // Offset of the shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Container(
+                                              height: 125,
 
-                               var imagePath =
-                                       "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
-                          return
-                           subcategorycontroller.usertoyModel == null ||
-                        subcategorycontroller.usertoyModel!.data == null
-                    ? SizedBox()
-                    : 
-                           Container(
-                            height: MediaQuery.of(context).size.width * 0.7,
-                            // width: MediaQuery.of(context).size.width * 0.46,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: MyColors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // Offset of the shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                 
-                                        Container(
-                                          height: 125,
-
-                                          // decoration: BoxDecoration(
-                                          //     borderRadius: BorderRadius.circular(30),
-                                          //     color: MyColors.white),
-                                          child: Center(
-                                            child: CachedNetworkImage(
-                                              imageUrl: imagePath,
-                                              // width: 61,
-                                              // height: 75,
-                                              placeholder: (context, url) =>
-                                                  Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              ), // Replace with your own placeholder widget
-                                              errorWidget: (context, url,
-                                                      error) =>
-                                                  Icon(Icons
-                                                      .error), // Replace with your own error widget
+                                              // decoration: BoxDecoration(
+                                              //     borderRadius: BorderRadius.circular(30),
+                                              //     color: MyColors.white),
+                                              child: Center(
+                                                child: CachedNetworkImage(
+                                                  imageUrl: imagePath,
+                                                  // width: 61,
+                                                  // height: 75,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ), // Replace with your own placeholder widget
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Icon(Icons
+                                                          .error), // Replace with your own error widget
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            InkWell(
+                                              onTap: () {
+                                                homeusercontroller
+                                                    .addItemToWishList(
+                                                        homeusercontroller
+                                                            .userPropertiesModel!
+                                                            .data![index]
+                                                            .id!);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    child: Icon(homeusercontroller
+                                                            .wishListItemsId
+                                                            .contains(
+                                                                homeusercontroller
+                                                                    .userPropertiesModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .id!)
+                                                        ? Icons.favorite
+                                                        : Icons
+                                                            .favorite_border)),
+                                              ),
+                                            ),
+                                          ],
                                         ),
 
-                                    InkWell(
-                                      onTap: () {
-                                        homeusercontroller.addItemToWishList(
-                                            homeusercontroller
-                                                .userPropertiesModel!
-                                                .data![index]
-                                                .id!);
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Align(
-                                            alignment: Alignment.topRight,
-                                            child: Icon(
-                                              homeusercontroller
-                                                    .wishListItemsId
-                                                    .contains(homeusercontroller
-                                                        .userPropertiesModel!
-                                                        .data![index]
-                                                        .id!)
-                                                ? Icons.favorite
-                                                : Icons.favorite_border)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                        // SizedBox(height: 15,),
 
-                                // SizedBox(height: 15,),
-
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(item.name??'',
-                                          style: CustomTextStyle.popinsmedium),
-                                      Text(item.description.toString(),
-                                          style: CustomTextStyle.popinssmall0),
-                                      SizedBox(height: 5),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
+                                        Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Row(
-                                                children: [
-                                                  Text(item.price??'',
-                                                      style: CustomTextStyle
-                                                          .discounttext),
-                                                  SizedBox(width: 10),
-                                                  Container(
-                                                    height: 18,
-                                                    width: 40,
-                                                    decoration: BoxDecoration(
-                                                        color: MyColors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                        border: Border.all(
-                                                            color:
-                                                                MyColors.red)),
-                                                    child: Center(
-                                                      child: Text(
-                                                          // item.discount.toString(),
-                                                          "Save${item.discount??0}",
-                                                          style: CustomTextStyle
-                                                              .popinstextsmal2222),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                              Text(item.name ?? '',
+                                                  style: CustomTextStyle
+                                                      .popinsmedium),
+                                              Text(item.description.toString(),
+                                                  style: CustomTextStyle
+                                                      .popinssmall0),
                                               SizedBox(height: 5),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Text(item.price ?? '',
+                                                              style: CustomTextStyle
+                                                                  .discounttext),
+                                                          SizedBox(width: 10),
+                                                          Container(
+                                                            height: 18,
+                                                            width: 40,
+                                                            decoration: BoxDecoration(
+                                                                color: MyColors
+                                                                    .red,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                border: Border.all(
+                                                                    color: MyColors
+                                                                        .red)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                  // item.discount.toString(),
+                                                                  "Save${item.discount ?? 0}",
+                                                                  style: CustomTextStyle
+                                                                      .popinstextsmal2222),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      Text(
+                                                        "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
-
-                                              Text(
-                                                        "₹ ${((double.parse(item.price ?? '')) - ( (double.parse(item.price ?? ""))*(double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-
-                                                // "₹ ${((int.parse(item.price ?? '0')) - ( (int.parse(item.price ?? "0"))*(int.parse(item.discount ?? "0")) / 100)).toString()}",
-                                                // "₹ ${((item.price!) -((item.price!)*(item.discount!))/100).toString()}",
-                                                style: CustomTextStyle
-                                                    .popinsmedium,
-                                              ),
+                                                        // "₹ ${((int.parse(item.price ?? '0')) - ( (int.parse(item.price ?? "0"))*(int.parse(item.discount ?? "0")) / 100)).toString()}",
+                                                        // "₹ ${((item.price!) -((item.price!)*(item.discount!))/100).toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 5.0),
+                                                    child: Container(
+                                                        width: 35,
+                                                        height: 35,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            color: Color(
+                                                                0xffffcc00)),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  5.0),
+                                                          child: Image.asset(
+                                                            "assets/image/bag2.png",
+                                                            height: 25,
+                                                          ),
+                                                        )),
+                                                  )
+                                                ],
+                                              )
                                             ],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 5.0),
-                                            child: Container(
-                                                width: 35,
-                                                height: 35,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    color: Color(0xffffcc00)),
-                                                child: Padding(
-                                                  padding: EdgeInsets.all(5.0),
-                                                  child: Image.asset(
-                                                    "assets/image/bag2.png",
-                                                    height: 25,
-                                                  ),
-                                                )),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        });
+                                        )
+                                      ],
+                                    ),
+                                  );
+                          });
                     })
                 // GridView(
                 //   physics: NeverScrollableScrollPhysics(),
@@ -2556,9 +2583,8 @@ filtercontroller.init();
                 //   padding: EdgeInsets.all(5),
                 //   shrinkWrap: true,
                 // ),
-,
+                ,
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2944,7 +2970,7 @@ filtercontroller.init();
                           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                           child: Container(
                             color: Colors.black.withOpacity(
-                                0.5), // Adjust the opacity as needed
+                                0.1), // Adjust the opacity as needed
                           ),
                         )
                       : SizedBox();

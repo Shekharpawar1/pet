@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/models/usersModel/ourBrandModel.dart';
+import 'package:pet/screens/user/filterScreen.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
@@ -47,6 +48,13 @@ class _FilterScreenState extends State<FilterScreen> {
                           "Filter",
                           style: CustomTextStyle.popinstext,
                         ),
+                        Spacer(),
+                        // InkWell(
+                        //     onTap: () {
+                        //       Get.to(FilterScreenUI());
+                        //     },
+                        //     child: Icon(Icons.check)),
+                        SizedBox(width: 20),
                         InkWell(
                             onTap: () {
                               Get.back();
@@ -56,6 +64,37 @@ class _FilterScreenState extends State<FilterScreen> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.currency_rupee),
+                        hintText: "Minimum Price",
+                        counterText: ""
+                      ),
+                      keyboardType: TextInputType.number,
+                      maxLength: 5,
+                      controller: filtercontroller.minPriceController,
+                      onChanged: (value) {
+                        filtercontroller.filter();
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.currency_rupee),
+                        hintText: "Max Price",
+                        counterText: ""
+                      ),
+                      keyboardType: TextInputType.number,
+                      maxLength: 5,
+                      controller: filtercontroller.maxPriceController,
+                      onChanged: (value) {
+                        filtercontroller.filter();
+                      },
+                    ),
+                  ),
                   ExpansionPanelList(
                       elevation: 1,
                       expandedHeaderPadding: EdgeInsets.zero,
@@ -78,13 +117,12 @@ class _FilterScreenState extends State<FilterScreen> {
                             case 4:
                               isHealthExpanded = !isExpanded;
                               break;
-                                 case 5:
-                                   isVegExpanded = !isExpanded;
+                            case 5:
+                              isVegExpanded = !isExpanded;
                               break;
 
-                         
                             default:
-                               isVegExpanded = !isExpanded;
+                              isVegExpanded = !isExpanded;
                           }
                         });
                       },
@@ -184,7 +222,6 @@ class _FilterScreenState extends State<FilterScreen> {
                                               filteroption);
                                     }
                                   }
-
 
                                   filtercontroller.filter();
                                   // filtercontroller.updateChecked();
@@ -361,8 +398,7 @@ class _FilterScreenState extends State<FilterScreen> {
                           ),
                           isExpanded: isHealthExpanded,
                         ),
-                     
-                     
+
                         ExpansionPanel(
                           headerBuilder:
                               (BuildContext context, bool isExpanded) {
@@ -387,9 +423,8 @@ class _FilterScreenState extends State<FilterScreen> {
                                         .contains(filteroption)) {
                                       print("Added");
 
-                                      filtercontroller
-                                          .addSelectedOptionVegList(
-                                              filteroption);
+                                      filtercontroller.addSelectedOptionVegList(
+                                          filteroption);
                                     }
                                   } else {
                                     print("removing brand");
@@ -414,8 +449,6 @@ class _FilterScreenState extends State<FilterScreen> {
                           ),
                           isExpanded: isVegExpanded,
                         ),
-
-                     
                       ] // }).toList(),
                       ),
 
