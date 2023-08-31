@@ -165,13 +165,20 @@ class ProductDetails extends StatelessWidget {
                     ),
                   )),
            
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.favorite_outline,
-                    )),
+              InkWell(
+                  onTap: () {
+                                                    homeusercontroller
+                                                        .addItemToWishList(
+                                                            productdetailscontroller!.productdetailmodel!.data!.id!);
+                                                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.favorite_outline,
+                      )),
+                ),
               ),
             ],
           ),
@@ -486,7 +493,14 @@ class ProductDetails extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
+                                       productdetailscontroller.selectedvariants?.price == null?
+                                  Text(
+                                       
+                                          "₹"+ ( (productdetailscontroller.productdetailmodel!.data!.price!)*(productdetailscontroller.sizecount??0)).toString(),
+                            
+                            //  (     (productdetailscontroller.productList.price)! * (productdetailscontroller.productList.discount!)/100).toString()
+
+                                           style: CustomTextStyle.discounttext):    Text(
                                        
                                           "₹"+ ( (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)).toString(),
                             
@@ -514,7 +528,13 @@ class ProductDetails extends StatelessWidget {
                                     ],
                                   ),
                                   SizedBox(height: 5),
-                                  Text(
+                                    productdetailscontroller.selectedvariants?.price == null?
+                                 Text(
+                                    "₹"+((productdetailscontroller.productdetailmodel!.data!.price!)*(productdetailscontroller.sizecount??0)-(  ( (productdetailscontroller.productdetailmodel!.data!.price!)*productdetailscontroller.sizecount??0)*(productdetailscontroller.productdetailmodel!.data!.discount!)/100)).toString(),
+                                  //  "₹"+(  (     (productdetailscontroller.productdetailmodel!.data!.price)! * (productdetailscontroller.productdetailmodel!.data!.discount!)/100)* productdetailscontroller.sizecount).toString(),
+                                    //  "₹${productdetailscontroller.productdetailmodel!.data!.price.toString()}",
+                                    style: CustomTextStyle.popinstext,
+                                  ): Text(
                                     "₹"+((productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)-(  ( (productdetailscontroller.selectedvariants?.price??0)*productdetailscontroller.sizecount??0)*(productdetailscontroller.productdetailmodel!.data!.discount!)/100)).toString(),
                                   //  "₹"+(  (     (productdetailscontroller.productdetailmodel!.data!.price)! * (productdetailscontroller.productdetailmodel!.data!.discount!)/100)* productdetailscontroller.sizecount).toString(),
                                     //  "₹${productdetailscontroller.productdetailmodel!.data!.price.toString()}",
@@ -900,7 +920,11 @@ class ProductDetails extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text(
+                                    productdetailscontroller.selectedvariants?.price == null?
+                                 Text(
+    "₹"+ ( (productdetailscontroller.productdetailmodel!.data!.price!)*(productdetailscontroller.sizecount??0)).toString(),
+                                      // "₹" + widget.itemdetails.price.toString(),
+                                      style: CustomTextStyle.discounttext): Text(
     "₹"+ ( (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)).toString(),
                                       // "₹" + widget.itemdetails.price.toString(),
                                       style: CustomTextStyle.discounttext),
@@ -922,7 +946,15 @@ class ProductDetails extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(width: 10),
+                                   productdetailscontroller.selectedvariants?.price == null?
                                   Text(
+                                    "₹"+
+                                    (
+                                      (productdetailscontroller.productdetailmodel!.data!.price!)*(productdetailscontroller.sizecount??0)-
+                                    (( (productdetailscontroller.productdetailmodel!.data!.price!)*productdetailscontroller.sizecount??0)*(productdetailscontroller.productdetailmodel!.data!.discount!)/100)
+                                    ).toString(),
+                                  // (widget.itemdetails.price),
+                                      style: CustomTextStyle.appbartext): Text(
                                     "₹"+
                                     (
                                       (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)-
@@ -946,7 +978,12 @@ class ProductDetails extends StatelessWidget {
                                                   PaymentUser(
 
                                                     price:
-                                                        (
+productdetailscontroller.selectedvariants?.price == null?
+   (
+                                      (productdetailscontroller.productdetailmodel!.data!.price!)*(productdetailscontroller.sizecount??0)-
+                                    (( (productdetailscontroller.productdetailmodel!.data!.price!)*productdetailscontroller.sizecount??0)*(productdetailscontroller.productdetailmodel!.data!.discount!)/100)
+                                    ).toString()
+                                                        :(
                                       (productdetailscontroller.selectedvariants?.price??0)*(productdetailscontroller.sizecount??0)-
                                     (( (productdetailscontroller.selectedvariants?.price??0)*productdetailscontroller.sizecount??0)*(productdetailscontroller.productdetailmodel!.data!.discount!)/100)
                                     ).toString(),

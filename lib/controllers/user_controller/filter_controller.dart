@@ -7,6 +7,7 @@ import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/lifestageModel.dart';
 import 'package:pet/models/usersModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/petCategoryBreedModel.dart';
+import 'package:pet/models/usersModel/subModel.dart';
 import 'package:pet/models/usersModel/userhealthconditionModel.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/utils/api_helper.dart';
@@ -17,12 +18,14 @@ class FilterController extends GetxController {
   List<filterMod.Datum> filteredProducts = [];
   List<String> branditems = [];
   List<String> categoryitems = [];
+    List<String> producttypeitems = [];
   List<String> breeditem = [];
   List<String> lifestageitem = [];
   List<String> vegitem = [];
   List<String> productitem = [];
   List<String> healthconditionitem = [];
   List<String> selectCategoryFilterList = [];
+  List<String> selectProductTypeFilterList = [];
   List<String> selectBrandFilterList = [];
   List<String> selectBreedFilterList = [];
   List<String> selectLifeStageFilterList = [];
@@ -123,6 +126,17 @@ class FilterController extends GetxController {
     update();
   }
 
+//filterProductType
+
+  void addSelectedOptionProducttypeList(String item) {
+    selectProductTypeFilterList.add(item);
+    update();
+  }
+
+  void removeSelectedOptionProducttypeList(String item) {
+    selectProductTypeFilterList.remove(item);
+    update();
+  }
   //filterbreed
   void addSelectedOptionBreedList(String item) {
     selectBreedFilterList.add(item);
@@ -192,6 +206,12 @@ class FilterController extends GetxController {
   HealthConditionModel? userhealthconditionModel;
   // LifeStageModel? userlifestageModel = UserOurBrandModel();
   bool healthLoaded = false;
+
+  String getUserSubCategoryUrl =
+      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_SUBCATEGORY}';
+  SubModel? usersubmodel;
+    // UserPropertiesModel? userPropertiesModelorignal;
+  bool propertysubloaded = false;
 
   String getCategoryBreedUrl = Constants.GET_CATEGORY_BREED;
   PetCategoryBreedModel? petCategoryBreedModel;
@@ -368,6 +388,32 @@ class FilterController extends GetxController {
         colorText: Colors.white,
       );
     }
+    try {
+
+         usersubmodel = SubModel.fromJson(
+          await ApiHelper.getApi(getUserSubCategoryUrl));
+            List<String> producttypelist =
+          usersubmodel!.data!.map((e) => e.name.toString()).toList();
+
+          producttypeitems = producttypelist;
+      print(usersubmodel);
+      propertysubloaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+
+      }
+      //product
+
+     
+
 
     try {
       //
@@ -463,6 +509,7 @@ class FilterController extends GetxController {
      filteredProducts = applyFilters(
       selectedBrands: selectBrandFilterList.isEmpty ? null : selectBrandFilterList,
       selectedVegOptions: selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList().isEmpty ? null : selectVegFilterList.map((e) => e== "veg" ? 1 : 0).toList(),
+     productType: selectProductTypeFilterList.isEmpty? null: selectProductTypeFilterList,
       lifeStage: selectLifeStageFilterList.isEmpty ? null : selectLifeStageFilterList,
       products: products,
       maxPrice: max,
@@ -478,7 +525,8 @@ class FilterController extends GetxController {
     print("Filtered Products:");
     print("Data: $filteredProducts");
     print("seleced selectBrandFilterList: $selectBrandFilterList");
-    print("seleced selectVegFilterList: ${selectVegFilterList.map((e) => e== "veg" ? 1 : 0).toList()}");
+    print("seleced selectProducttypeFilterList: $selectProductTypeFilterList");
+    print("seleced selectVegFilterList: ${selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList()}");
     print("seleced selectLifeStageFilterList: $selectLifeStageFilterList");
     print("seleced selectBreedFilterList: $selectBreedFilterList");
     print("seleced selectHealthConditionFilterList: $selectHealthConditionFilterList");
@@ -499,7 +547,8 @@ class FilterController extends GetxController {
     print("   Veg: ${product.veg}");
     print("   Price: ${product.price}");
     print("   Life Stage: ${product.lifeStageId}");
-    // print("   Product Type: ${product['product-type']}");
+        print("  Category: ${product.categoryIds}");
+    print("   Product Type: ${product.subCategory}");
     print("   Breed: ${product.petsbreedsId}");
     print("   Health Condition: ${product.helthConditionId}");
     // print("   Special Diet: ${product['special-diet']}");
@@ -532,12 +581,15 @@ class FilterController extends GetxController {
           healthCondition.contains(product.helthConditionId);
           
       bool selectedCategoriesFilter = selectedCategories == null  ||
-          selectedCategories.contains(product.subCategory);
-      // bool specialDietFilter =
+          selectedCategories.contains(product.categoryIds);
+
+          bool selectedProductTypeFilter = productType == null || productType.contains(product.subCategory);
+      // bool specialDietFilter = 
       //     specialDiet == null || specialDiet.contains(product["special-diet"]);
       // print( "$brandFilter $vegFilter $maxPriceFilter $minPriceFilter $lifeStageFilter $breedFilter $selectedCategoriesFilter ");
       return brandFilter &&
           vegFilter &&
+          selectedProductTypeFilter &&
           maxPriceFilter &&
           minPriceFilter &&
           lifeStageFilter &&

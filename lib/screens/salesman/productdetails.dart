@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/ordersummary.dart';
 import 'package:pet/screens/salesman/ordersummary1.dart';
-import 'package:pet/screens/wholesaler/ordersummary.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/ordersummary.dart';

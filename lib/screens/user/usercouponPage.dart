@@ -250,7 +250,8 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                       ),
                                                     ),
                                                   ) :
-                                              (widget.price> double.parse(item.minPurchase!)) ?  ElevatedButton(
+                                              (widget.price> double.parse(item.minPurchase!)) ?
+                                                ElevatedButton(
                                                     onPressed: () {
                                                       couponsController
                                                           .updatecode(

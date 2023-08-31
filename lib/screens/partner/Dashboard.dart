@@ -3,9 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pet/screens/drawer.dart';
+
 import 'package:pet/screens/partner/balance.dart';
 import 'package:pet/screens/partner/complete.dart';
+import 'package:pet/screens/partner/drawerpartner.dart';
 import 'package:pet/screens/partner/pending.dart';
 import 'package:pet/screens/partner/totalorder.dart';
 import 'package:pet/screens/partner/wholesaler_view.dart';
@@ -35,7 +36,7 @@ class _DashboardPartnerState extends State<DashboardPartner> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerkey,
-      drawer: drawer(),
+      drawer: drawerpartner(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

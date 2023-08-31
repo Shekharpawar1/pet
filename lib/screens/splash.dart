@@ -8,6 +8,8 @@ import 'package:pet/screens/bottomnavbar.dart';
 
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/userHome.dart';
+import 'package:pet/screens/wholesaler/Dashboard.dart';
+import 'package:pet/screens/wholesaler/home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -32,21 +34,59 @@ class _SplashState extends State<Splash> {
         var id = await GetStorage().read("id");
         var data = await GetStorage().read("userData");
 
+          var wholesalerid = await GetStorage().read("wholesalerid");
+                    var wholesalerroleid = await GetStorage().read("wholesalerroleid");
+
+        var wholesalerData = await GetStorage().read("wholesalerData");
+        
+print("WholesalerroleID: ==> ${wholesalerroleid.toString()}" );
         print("user Id : ===>>> ${id.toString()}");
         print("user Data : ===>>> ${data.toString()}");
-        id == null
+          print("wholesaler Id : ===>>> ${wholesalerid.toString()}");
+        print("wholesaler Data : ===>>> ${wholesalerData.toString()}");
+        id == null &&  wholesalerid == null
             ? Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MyIntroductionScreen(),
                 ),
               )
-            : Navigator.pushReplacement(
+            :(wholesalerroleid == 1)?
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardWhole(),
+                ),
+              )
+              
+     :
+             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => BottomNavBar(),
                 ),
               );
+    //  if(wholesalerdata["role"] == 1);
+    //     wholesalerid == null
+// print("WholesalerID${wholesalerdata["role"]}" );
+    
+       
+//        if(wholesalerdata["role"] == 1);
+       
+//         ? Navigator.pushReplacement(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => MyIntroductionScreen(),
+//                 ),
+//               )
+//             :Navigator.pushReplacement(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => HomeWhole(),
+//                 ),
+//               );
+     
+     
       },
     );
   }

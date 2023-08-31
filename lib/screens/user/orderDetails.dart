@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/orderdetails_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.dart';
 import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -29,11 +30,11 @@ import 'package:pdf/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsUser extends StatefulWidget {
-  OrderDetailsUser(
-      {super.key, this.orderId, this.couponcode, this.paymentmethod});
+   OrderDetailsUser({super.key, this.orderId, this.couponcode, this.paymentmethod,this.orderstatus});
   int? orderId;
   String? couponcode;
   String? paymentmethod;
+  String? orderstatus;
 
   @override
   State<OrderDetailsUser> createState() => _OrderDetailsUserState();
@@ -497,43 +498,48 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                   orderdetailscontroller
                                       .getorderdetailsList["shippingaddress"],
                                   style: CustomTextStyle.popinsboldlightsmall,
-                                ),
-                              )),
+                       ),
+                     )
+                     ),
+                   
+                        
+                           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                           InkWell(
+                             onTap: () {
+                               // Get.to(MyPetDetails());
+                          
 
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.05),
-                          InkWell(
-                            onTap: () {
-                              // Get.to(MyPetDetails());
-                              Get.to(LocationPickerMapUser());
-                            },
-                            child: Center(
-                              child: Container(
-                                // width: MediaQuery.of(context).size.width*0.8,
-
-                                height:
-                                    MediaQuery.of(context).size.height * 0.08,
-
-                                decoration: BoxDecoration(
-                                    color: MyColors.yellow,
-                                    borderRadius: BorderRadius.circular(25)),
-
-                                child: Center(
-                                    child: Text(
-                                  "Track order",
-                                  style: CustomTextStyle.mediumtextreem,
-                                )),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
-                        ],
-                      );
-              })),
-    );
+                               Get.to(LocationPickerMapUser());
+                             },
+                             child: Center(
+                               child: Container(
+                                 // width: MediaQuery.of(context).size.width*0.8,
+                     
+                                 height: MediaQuery.of(context).size.height * 0.08,
+                     
+                                 decoration: BoxDecoration(
+                                     color: MyColors.yellow,
+                                     borderRadius: BorderRadius.circular(25)),
+                     
+                                 child: Center(
+                                     child: Text(
+                                   "Track order",
+                                   style: CustomTextStyle.mediumtextreem,
+                                 )),
+                               ),
+                             ),
+                           ),
+                           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                         ],
+                       );
+ 
+                            
+ 
+  })
+            
+            
+          ),
+        );
   }
   
   // void generateAndSharePDF(BuildContext context) async {

@@ -8,10 +8,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/others/Filter.dart';
-import 'package:pet/screens/drawer.dart';
+
 import 'package:pet/screens/salesman/AllbrandPage.dart';
 import 'package:pet/screens/salesman/Allservicepage.dart';
 import 'package:pet/screens/salesman/ProductAlllistPage.dart';
+import 'package:pet/screens/salesman/drawersalesman.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/productdetails.dart';
 import 'package:pet/utils/colors.dart';
@@ -39,7 +40,7 @@ class HomeSales extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
        key: _drawerkey,
-      drawer: drawer(),
+      drawer: drawerSalesMan(),
           appBar: AppBar(
             elevation: 0,
           backgroundColor:Colors.transparent,

@@ -59,8 +59,8 @@ class UserfavouriteController extends GetxController {
     try {
       // categories
       wishList =
-          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + storage.read('id')));
-      print(wishList);
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "${storage.read('id')}"));
+      print("UserWishlistUrl "+getWishListUrl + "${storage.read('id')}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
@@ -92,7 +92,7 @@ class UserfavouriteController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" +  storage.read('id'));
+      await ApiHelper.deleteByUrl(url: url + "/$productId" + "${storage.read('id')}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       wishList!.data!.removeWhere(
           (element) => element.itemId.toString() == productId.toString());
