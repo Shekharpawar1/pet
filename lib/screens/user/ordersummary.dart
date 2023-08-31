@@ -1204,7 +1204,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
               init: addtocartController,
               // initState: (_) {},
               builder: (_) {
-                     return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05)-(num.parse(couponsController.maxAmount!)))).toString()}",
+                     return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()}",
                            style: CustomTextStyle.appbartext);
               })
                         // Row(

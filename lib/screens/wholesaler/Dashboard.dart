@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/totalorderwhole_controller.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/complete.dart';
 import 'package:pet/screens/wholesaler/pending.dart';
@@ -22,7 +24,11 @@ class DashboardWhole extends StatefulWidget {
 }
 
 class _DashboardWholeState extends State<DashboardWhole> {
+   WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
+WholeTotalOrderController wholetotalordercontroller = Get.put(WholeTotalOrderController());
+
  final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,184 +80,204 @@ body: SingleChildScrollView(child: Padding(
   
   
   
-    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    Row(mainAxisAlignment: MainAxisAlignment.start,
   
   
   
       children: [
   
-        InkWell(
-          onTap: (){
-          Get.to(TotalOrder());
+
+        GetBuilder<WholeTotalOrderController>(
+            init: wholetotalordercontroller,
+            builder: (_) {
+           
+            return InkWell(
+              onTap: (){
+                wholetotalordercontroller.init();
+            int len = wholetotalordercontroller.wholetotalorderModel!.data!.length;
+   print("=========>>>>>>> totalorder $len");
+              Get.to(TotalOrder());
+            },
+              child: Container(
+              
+              width: 160,
+              
+              height: 92,
+              
+              decoration: BoxDecoration(color:Color(0xff008FFF), borderRadius: BorderRadius.circular(20)),
+              
+              child:Column(crossAxisAlignment: CrossAxisAlignment.center,
+              
+              mainAxisAlignment: MainAxisAlignment.center,
+              
+                children: [
+              
+                Text( ( wholetotalordercontroller.wholetotalorderModel!.data!.length).toString(),
+
+               style: CustomTextStyle.boldStyle1
+              
+                  ),
+              
+              
+              
+              Center(
+              
+                child: Text(
+               "Total Order",textAlign: TextAlign.center,
+              style: CustomTextStyle.popinstextsmall12
+                ),
+              
+              ),
+              
+                ],
+              
+              ),
+              
+                ),
+            );
+          }
+        ),
+  
+  
+  SizedBox(width: MediaQuery.of(context).size.width*0.05,),
+  
+   GetBuilder<WholeTotalOrderController>(
+            init: wholetotalordercontroller,
+            builder: (_) {
+        return InkWell(onTap: (){
+           wholetotalordercontroller.init();
+            int len = wholetotalordercontroller.wholetotalorderModel!.data!.where((element) => element.orderStatus == "pending" && element.paymentMethod == "offline" ).toList().length;
+   print("=========>>>>>>> Balancelen $len");
+          Get.to(Balance());
         },
           child: Container(
           
-          width: 103,
+          width: 160,
           
           height: 92,
           
-          decoration: BoxDecoration(color:Color(0xff008FFF), borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(color: Color(0xffFFCC00), borderRadius: BorderRadius.circular(20),
+         
+          ),
           
-          child:Column(crossAxisAlignment: CrossAxisAlignment.center,
+          child:
+          
+          Column(crossAxisAlignment: CrossAxisAlignment.center,
           
           mainAxisAlignment: MainAxisAlignment.center,
           
-            children: [
+          children: [
           
-            Text( "250",
-           style: CustomTextStyle.boldStyle1
+                Text("150",
+            style: CustomTextStyle.boldStyle1
+          
+            
+          
+            ),
+          
+          
+          
+              Center(
+          
+                child: Text(
+          
+                  
+          
+                  "Balance",textAlign: TextAlign.center,
+          
+                  
+          
+                  style: CustomTextStyle.popinstextsmall12
+          
+                  
+          
+                  ),
           
               ),
           
-          
-          
-          Center(
-          
-            child: Text(
-           "Total Order",textAlign: TextAlign.center,
-          style: CustomTextStyle.popinstextsmall12
-            ),
+          ],
           
           ),
           
-            ],
+           
           
           ),
-          
-            ),
-        ),
-  
-  
-  
-    InkWell(onTap: (){
-      Get.to(Balance());
-    },
-      child: Container(
-      
-      width: 103,
-      
-      height: 92,
-      
-      decoration: BoxDecoration(color: Color(0xffFFCC00), borderRadius: BorderRadius.circular(20),
-     
-      ),
-      
-      child:
-      
-      Column(crossAxisAlignment: CrossAxisAlignment.center,
-      
-      mainAxisAlignment: MainAxisAlignment.center,
-      
-      children: [
-      
-            Text("150",
-        style: CustomTextStyle.boldStyle1
-      
-        
-      
-        ),
-      
-      
-      
-          Center(
-      
-            child: Text(
-      
-              
-      
-              "Balance",textAlign: TextAlign.center,
-      
-              
-      
-              style: CustomTextStyle.popinstextsmall12
-      
-              
-      
-              ),
-      
-          ),
-      
-      ],
-      
-      ),
-      
-       
-      
-      ),
+        );
+      }
     )
   
     
   
     ,
   
-    InkWell(
-       onTap: (){
-          // Get.to(Homewhole());
-        },
-      child: Container(
+    // InkWell(
+    //    onTap: (){
+    //       // Get.to(Homewhole());
+    //     },
+    //   child: Container(
       
-      width: 103,
+    //   width: 103,
       
-      height: 92,
+    //   height: 92,
       
-      decoration: BoxDecoration(color: Color(0xffA7D441), borderRadius: BorderRadius.circular(20),
-      
-      
+    //   decoration: BoxDecoration(color: Color(0xffA7D441), borderRadius: BorderRadius.circular(20),
       
       
       
-      ),
       
-      child:
       
-      Column(crossAxisAlignment: CrossAxisAlignment.center,
+    //   ),
       
-      mainAxisAlignment: MainAxisAlignment.center,
+    //   child:
       
-      children: [
+    //   Column(crossAxisAlignment: CrossAxisAlignment.center,
       
-            Text(
+    //   mainAxisAlignment: MainAxisAlignment.center,
       
-        
+    //   children: [
       
-        "105",
+    //         Text(
       
         
       
-        style: CustomTextStyle.boldStyle1
+    //     "105",
       
         
       
-        ),
+    //     style: CustomTextStyle.boldStyle1
+      
+        
+      
+    //     ),
       
       
       
-          Center(
+    //       Center(
       
-            child: Text(
-      
-              
-      
-              "Total Product",textAlign: TextAlign.center,
-      
-              
-      
-              style: CustomTextStyle.popinstextsmall12
+    //         child: Text(
       
               
       
-              ),
+    //           "Total Product",textAlign: TextAlign.center,
       
-          ),
+              
       
-      ],
+    //           style: CustomTextStyle.popinstextsmall12
       
-      ),
+              
+      
+    //           ),
+      
+    //       ),
+      
+    //   ],
+      
+    //   ),
       
        
       
-      ),
-    )
+    //   ),
+    // )
   
     
   
@@ -277,47 +303,17 @@ body: SingleChildScrollView(child: Padding(
       CustomTextStyle.popinstext,),
    SizedBox(height: MediaQuery.of(context).size.height*0.03,),
  
-  Container(
-
-height: 60,
-decoration: BoxDecoration(color:MyColors.white,  borderRadius: BorderRadius.circular(37)),
-
-child:Padding(
-  padding: const EdgeInsets.only(left:15,right: 0),
-  child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  
-    children: [
-  
-          Text("Current Order",style:TextStyle(fontSize: 14,
-  
-  fontWeight: FontWeight.w400,)),
-  
-
-  Padding(
-    padding: const EdgeInsets.only(left:8.0,top:8,bottom:8),
-    child: Container(height: 100,width: 100,
-    decoration: BoxDecoration(
-      
-         shape: BoxShape.circle,
-      border: Border.all(
-                   color:MyColors.yellowcir,
-                   width:1.0,
-                 ),
-    ),
-    child:Center(child: Text("05"))
-    ),
-  )
-    ],
-  
-  ),
-)
-),
-  SizedBox(height: 10,),
-
   InkWell(
-     onTap:(){
-    Get.to( Pending());
+    onTap: (){
+       wholemyordercontroller.init();
+   int len = wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "confirmed").toList().length;
+   print("=========>>>>>>> com $len");
+    Get.to( PendingCompleteSreen(
  
+
+      data:
+wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "confirmed").toList()
+    ));
     },
     child: Container(
   
@@ -330,7 +326,7 @@ child:Padding(
     
       children: [
     
-            Text("Pending",style:TextStyle(fontSize: 14,
+            Text("Current Order",style:TextStyle(fontSize: 14,
     
     fontWeight: FontWeight.w400,)),
     
@@ -346,7 +342,9 @@ child:Padding(
                      width:1.0,
                    ),
       ),
-      child:Center(child: Text("05"))
+      child:Center(child: Text(
+        ( wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "confirmed").toList().length).toString())
+      )
       ),
     )
       ],
@@ -358,11 +356,17 @@ child:Padding(
   SizedBox(height: 10,),
 
   InkWell(
-    onTap:(){
-    Get.to( Completed());
+     onTap:(){
+
+       wholemyordercontroller.init();
+   int len = wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "pending").toList().length;
+   print("=========>>>>>>> $len");
+    Get.to( PendingCompleteSreen(
+      data:
+wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "pending").toList()
+    ));
  
     },
-  
     child: Container(
   
   height: 60,
@@ -374,7 +378,7 @@ child:Padding(
     
       children: [
     
-            Text("Completed",style:TextStyle(fontSize: 14,
+            Text("Pending Order",style:TextStyle(fontSize: 14,
     
     fontWeight: FontWeight.w400,)),
     
@@ -390,7 +394,62 @@ child:Padding(
                      width:1.0,
                    ),
       ),
-      child:Center(child: Text("05"))
+      child:Center(child: Text(
+     ( wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "pending").toList().length).toString())
+      ),
+    ))
+      ],
+    
+    ),
+  )
+  ),
+  ),
+  SizedBox(height: 10,),
+
+  InkWell(
+    onTap:(){
+     wholemyordercontroller.init();
+   int len = wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "delivered").toList().length;
+   print("=========>>>>>>> com $len");
+    Get.to( PendingCompleteSreen(
+ 
+
+      data:
+wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "delivered").toList()
+    ));
+    },
+  
+    child: Container(
+  
+  height: 60,
+  decoration: BoxDecoration(color:MyColors.white,  borderRadius: BorderRadius.circular(37)),
+  
+  child:Padding(
+    padding: const EdgeInsets.only(left:15,right: 0),
+    child:   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    
+      children: [
+    
+            Text("Completed Order",style:TextStyle(fontSize: 14,
+    
+    fontWeight: FontWeight.w400,)),
+    
+  
+    Padding(
+      padding: const EdgeInsets.only(left:8.0,top:8,bottom:8),
+      child: Container(height: 100,width: 100,
+      decoration: BoxDecoration(
+        
+           shape: BoxShape.circle,
+        border: Border.all(
+                     color:MyColors.yellowcir,
+                     width:1.0,
+                   ),
+      ),
+      child:Center(child: Text(
+          ( wholemyordercontroller.wholemyorderModel!.data!.where((element) => element.orderStatus == "delivered").toList().length).toString())
+      
+      )
       ),
     )
       ],

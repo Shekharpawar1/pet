@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/orderdetails_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.dart';
 import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -17,10 +18,11 @@ import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class OrderDetailsUser extends StatefulWidget {
-   OrderDetailsUser({super.key, this.orderId, this.couponcode, this.paymentmethod});
+   OrderDetailsUser({super.key, this.orderId, this.couponcode, this.paymentmethod,this.orderstatus});
   int? orderId;
   String? couponcode;
   String? paymentmethod;
+  String? orderstatus;
 
   @override
   State<OrderDetailsUser> createState() => _OrderDetailsUserState();
@@ -464,6 +466,8 @@ Text(
                            InkWell(
                              onTap: () {
                                // Get.to(MyPetDetails());
+                          
+
                                Get.to(LocationPickerMapUser());
                              },
                              child: Center(

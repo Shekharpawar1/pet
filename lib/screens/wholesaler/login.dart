@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pet/controllers/wholesaler_controller/login_controller.dart';
+import 'package:pet/screens/wholesaler/Dashboard.dart';
 import 'package:pet/screens/wholesaler/createaccount.dart';
 import 'package:pet/screens/wholesaler/home.dart';
 import 'package:pet/utils/colors.dart';
@@ -228,7 +229,7 @@ class _LoginWholeState extends State<LoginWhole> {
                                         context,
                                         PageTransition(
                                             type: PageTransitionType.fade,
-                                            child: HomeWhole()));
+                                            child: DashboardWhole()));
                                   } catch (e) {
                                     Get.snackbar(
                                       'Error',

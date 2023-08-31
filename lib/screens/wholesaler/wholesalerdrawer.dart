@@ -3,31 +3,18 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pet/controllers/user_controller/myOrder_controller.dart';
+
+import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
 import 'package:pet/screens/intro2.dart';
-import 'package:pet/screens/user/Mypetdetails.dart';
-import 'package:pet/screens/user/UserAddMyPet.dart';
-import 'package:pet/screens/user/login.dart';
-import 'package:pet/screens/user/UserMyPet.dart';
-import 'package:pet/screens/user/allveterniary.dart';
-import 'package:pet/screens/user/myOrderPage.dart';
-import 'package:pet/screens/user/myservices.dart';
-import 'package:pet/screens/user/UserMyPet.dart';
-import 'package:pet/screens/user/allveterniary.dart';
-import 'package:pet/screens/user/myservices.dart';
-import 'package:pet/screens/user/UserAddMyPet.dart';
-import 'package:pet/screens/user/notification.dart';
-import 'package:pet/screens/user/orderDetails.dart';
-import 'package:pet/screens/user/ordersummary.dart';
-import 'package:pet/screens/user/userprofile.dart';
-import 'package:pet/screens/user/service.dart';
-import 'package:pet/screens/user/userfavourite.dart';
-import 'package:pet/screens/user/usertranscation.dart';
+
+
+
 import 'package:pet/screens/wholesaler/Dashboard.dart';
 import 'package:pet/screens/wholesaler/login.dart';
 import 'package:pet/screens/wholesaler/myOrderPage.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
-import 'package:pet/screens/wholesaler/profile.dart';
+import 'package:pet/screens/wholesaler/wholeprofile.dart';
+
 import 'package:pet/screens/wholesaler/wholefavourite.dart';
 import 'package:pet/screens/wholesaler/wholetranscation.dart';
 import 'package:pet/utils/colors.dart';
@@ -43,7 +30,7 @@ class drawerWholeSaler extends StatefulWidget {
 }
 
 class _drawerWholeSalerState extends State<drawerWholeSaler> {
-  MyOrderController myordercontroller = Get.put(MyOrderController());
+  WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
 
   static final List<String> _listViewData = [
     "Dashboard",
@@ -51,7 +38,7 @@ class _drawerWholeSalerState extends State<drawerWholeSaler> {
     "My Order",
     "Notifications",
     "Favourite",
-    "Transaction History",
+    // "Transaction History",
     "Logout"
   ];
 
@@ -61,7 +48,7 @@ class _drawerWholeSalerState extends State<drawerWholeSaler> {
     Icons.shopping_bag_outlined,
     Icons.notifications,
     Icons.favorite,
-    Icons.payment_outlined,
+    // Icons.payment_outlined,
     Icons.logout,
  
    
@@ -205,10 +192,10 @@ class _drawerWholeSalerState extends State<drawerWholeSaler> {
         Get.to(DashboardWhole());
         break;
       case 1:
-        Get.to(Profilewhole());
+        Get.to(WholeSalerProfile());
         break;
       case 2:
-    //  await myordercontroller.init();
+      await wholemyordercontroller.init();
       Get.to(MyOrderWhole());
         break;
       case 3:
@@ -217,10 +204,10 @@ class _drawerWholeSalerState extends State<drawerWholeSaler> {
       case 4:
         Get.to(wholefavourite());
         break;
-     case 5:
-      Get.to(wholeTranscation());
-        break;
-      case 6:
+    //  case 5:
+    //   Get.to(wholeTranscation());
+    //     break;
+      case 5:
         await GetStorage().erase();
         Get.offAll(LoginWhole());
         break;

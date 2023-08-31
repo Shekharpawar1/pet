@@ -41,10 +41,10 @@ double? totalAmount;
 // clearFields();
   }
 
-  var cartItems = <CartItemModel>[];
+  // var cartItems = <CartItemModel>[];
   int kg = 1;
 
-  var sizecount = 0;
+  var sizecount = 1;
   String? dropdownsize;
   // List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
 

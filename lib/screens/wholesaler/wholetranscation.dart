@@ -13,7 +13,7 @@ import 'package:pet/screens/wholesaler/payment.dart';
 
 class wholeTranscation extends StatelessWidget {
    wholeTranscation({super.key});
-   
+
 
   TransactionHistoryController transactionhistoryController = Get.put(TransactionHistoryController());
 
@@ -51,6 +51,7 @@ fontWeight: FontWeight.w700,),)
  Positioned(
  top: 10.0,right: 0,
                     child:  Stack(
+                      
                       children: <Widget>[
                          Icon(
                             Icons.brightness_1,

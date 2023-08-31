@@ -8,9 +8,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/userfavourite_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/wholefavourite_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
+import 'package:pet/screens/wholesaler/productdetails.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -24,13 +27,15 @@ class wholefavourite extends StatefulWidget {
 
 class _wholefavouriteState extends State<wholefavourite> {
   TextEditingController _searchcontroller = TextEditingController();
-  UserfavouriteController userfavouriteController =
-      Get.put(UserfavouriteController());
+ WholefavouriteController wholefavouriteController =
+      Get.put(WholefavouriteController());
+        WholeProductDetailsController wholeproductdetailsController = Get.put(WholeProductDetailsController());
+
 
   @override
   void initState() {
     super.initState();
-    userfavouriteController.init();
+    wholefavouriteController.init();
   }
 
   @override
@@ -148,11 +153,12 @@ class _wholefavouriteState extends State<wholefavourite> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
                       ),
-                      GetBuilder<UserfavouriteController>(
-                          init: userfavouriteController,
+                      GetBuilder<WholefavouriteController>(
+                          init: wholefavouriteController,
                           builder: (_) {
-                            return userfavouriteController.wishList == null ||
-                                    userfavouriteController.wishList!.data ==
+                            return wholefavouriteController.wishList  == null 
+                            ||
+                                    wholefavouriteController.wishList!.data ==
                                         null
                                 ? SizedBox()
                                 : GridView.builder(
@@ -165,198 +171,229 @@ class _wholefavouriteState extends State<wholefavourite> {
                                             crossAxisCount: 2,
                                             crossAxisSpacing: 15.0,
                                             mainAxisSpacing: 15.0,
-                                            mainAxisExtent: 280),
-                                    itemCount: userfavouriteController
+                                              mainAxisExtent: 265),
+                                    itemCount: wholefavouriteController
                                         .wishList!
                                         .data!
                                         .length, // Set the number of cards you want to display.
                                     itemBuilder: (context, index) {
-                                      var item = userfavouriteController
+                                      var item = wholefavouriteController
                                           .wishList!.data![index];
                                       String imagePath =
                                           Constants.PRODUCT_HOME_IMAGE_PATH +
                                               "/${item.storeId![0].image!}";
                                       return 
-                                      userfavouriteController
+                                      wholefavouriteController
                                           .wishList!.data![index] == null? SizedBox():
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.7,
-                                        // width: MediaQuery.of(context).size.width * 0.46,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            color: MyColors.white),
-                                        child: Column(
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              30),
-                                                      color: MyColors.white),
-                                                  child: CachedNetworkImage(
-                                                    // https://canine.hirectjob.in/storage/app/public/product/2023-07-24-64be42a3db7e9.png
-                                                    imageUrl:
-                                                        imagePath, // Replace with your image URL
-                                                    fit: BoxFit.fill,
-                                                    height: 135,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            Center(
-                                                      child: SpinKitCircle(
-                                                        color: Colors
-                                                            .white, // Color of the progress bar
-                                                        size:
-                                                            50.0, // Size of the progress bar
-                                                      ),
-                                                    ), // Placeholder widget while loading
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        Icon(Icons
-                                                            .error), // Widget to show on error
+                                      InkWell(
+                                         onTap: () async {
+                                            wholeproductdetailsController
+                                                .viewproduct(
+                                              item.id ?? 0,
+                                            );
+                                            print("productid${item.id ?? 0}");
+                                            await wholeproductdetailsController
+                                                .init();
+                                            Get.to(ProductDetailswhole(
+                                              
+                                            ));
+                                         
+                                            
+                                          },
+                                        child: Container(
+                                         width: 140,
+                                              // height: 700,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                                color: MyColors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.3),
+                                                    spreadRadius: 3,
+                                                    blurRadius: 7,
+                                                    offset: Offset(0,
+                                                        3), // Offset of the shadow
                                                   ),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    userfavouriteController
-                                                        .removeItemFromWishList(
-                                                            item.itemId!);
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Align(
-                                                        alignment: Alignment
-                                                            .centerRight,
-                                                        child: Icon(
-                                                          Icons.favorite,
-                                                          color:
-                                                              MyColors.bgcolor,
-                                                        )),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-
-                                            // SizedBox(height: 15,),
-
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                ],
+                                                // color: MyColors.white
+                                              ),
+                                             child: Column(
+                                            children: [
+                                              Stack(
                                                 children: [
-                                                  Text(item.storeId![0].name!,
-                                                      style: CustomTextStyle
-                                                          .popinsmedium),
-                                                  Text(
-                                                      item.storeId![0]
-                                                          .description!,
-                                                      style: CustomTextStyle
-                                                          .popinssmall0),
-                                                  SizedBox(height: 5),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Text(
-                                                                  item
-                                                                      .storeId![
-                                                                          0]
-                                                                      .price
-                                                                      .toString(),
-                                                                  style: CustomTextStyle
-                                                                      .discounttext),
-                                                              SizedBox(
-                                                                  width: 10),
-                                                              Container(
-                                                                height: 18,
-                                                                width: 40,
-                                                                decoration: BoxDecoration(
-                                                                    color:
-                                                                        MyColors
-                                                                            .red,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                    border: Border.all(
-                                                                        color: MyColors
-                                                                            .red)),
-                                                                child: Center(
-                                                                  child: Text(
-                                                                      // item.discount.toString(),
-                                                                      item
-                                                                          .storeId![
-                                                                              0]
-                                                                          .discount
-                                                                          .toString(),
-                                                                      style: CustomTextStyle
-                                                                          .popinstextsmal2222),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          SizedBox(height: 5),
-                                                          Text(
-                                                            item.storeId![0]
-                                                                .price
-                                                                .toString(),
-                                                            style: CustomTextStyle
-                                                                .popinsmedium,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                right: 5.0),
-                                                        child: Container(
-                                                            width: 35,
-                                                            height: 35,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            10),
-                                                                color: Color(
-                                                                    0xffffcc00)),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(5.0),
-                                                              child:
-                                                                  Image.asset(
-                                                                "assets/image/bag2.png",
-                                                                height: 25,
-                                                              ),
-                                                            )),
-                                                      )
-                                                    ],
-                                                  )
+                                                  Container(
+                                                    width: MediaQuery.of(context)
+                                                        .size
+                                                        .width,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                30),
+                                                        color: MyColors.white),
+                                                    child: CachedNetworkImage(
+                                                      // https://canine.hirectjob.in/storage/app/public/product/2023-07-24-64be42a3db7e9.png
+                                                      imageUrl:
+                                                          imagePath, // Replace with your image URL
+                                                      // fit: BoxFit.fill,
+                                                    height: 125,
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Center(
+                                                        child: SpinKitCircle(
+                                                          color: Colors
+                                                              .white, // Color of the progress bar
+                                                          size:
+                                                              50.0, // Size of the progress bar
+                                                        ),
+                                                      ), // Placeholder widget while loading
+                                                      errorWidget: (context, url,
+                                                              error) =>
+                                                          Icon(Icons
+                                                              .error), // Widget to show on error
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      wholefavouriteController
+                                                          .removeItemFromWishList(
+                                                              item.itemId!);
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: Align(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          child: Icon(
+                                                             Icons.favorite,
+                                                            // color:
+                                                            //     MyColors.bgcolor,
+                                                          )),
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
-                                            )
-                                          ],
+                                      
+                                              // SizedBox(height: 15,),
+                                      
+                                              Padding(
+                                               padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10.0,
+                                                              right: 5,
+                                                              top: 5),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(item.storeId![0].name!,
+                                                        style: CustomTextStyle
+                                                            .popinsmedium),
+                                                    Text(
+                                                        item.storeId![0]
+                                                            .description!,
+                                                        style: CustomTextStyle
+                                                            .popinssmall0),
+                                                    SizedBox(height: 5),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                   "₹" + item
+                                                                        .storeId![
+                                                                            0]
+                                                                        .price
+                                                                        .toString(),
+                                                                    style: CustomTextStyle
+                                                                        .discounttext),
+                                                                SizedBox(
+                                                                    width: 10),
+                                                                Container(
+                                                                  height: 18,
+                                                                  width: 40,
+                                                                  decoration: BoxDecoration(
+                                                                      color:
+                                                                          MyColors
+                                                                              .red,
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10),
+                                                                      border: Border.all(
+                                                                          color: MyColors
+                                                                              .red)),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                        // item.discount.toString(),
+                                                                       "Save"+ item
+                                                                            .storeId![
+                                                                                0]
+                                                                            .discount
+                                                                            .toString()+"%",
+                                                                        style: CustomTextStyle
+                                                                            .popinstextsmal2222),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(height: 5),
+                                                            Text(
+                                                          "₹ ${(((item.storeId![0].price!)) - (((item.storeId![0].price!)) * ((item.storeId![0].discount!)) / 100)).toDouble()}",
+                                      
+                                                            // "₹" +  item.storeId![0]
+                                                            //       .price
+                                                            //       .toString() ,
+                                                              style: CustomTextStyle
+                                                                  .popinsmedium,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  right: 5.0),
+                                                          child: Container(
+                                                              width: 35,
+                                                              height: 35,
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                  color: Color(
+                                                                      0xffffcc00)),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(5.0),
+                                                                child:
+                                                                    Image.asset(
+                                                                  "assets/image/bag2.png",
+                                                                  height: 25,
+                                                                ),
+                                                              )),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       );
                                     });
@@ -367,10 +404,10 @@ class _wholefavouriteState extends State<wholefavourite> {
               ],
             ),
 
-            GetBuilder<UserfavouriteController>(
-                init: userfavouriteController,
+            GetBuilder<WholefavouriteController>(
+                init: wholefavouriteController,
                 builder: (_) {
-                  return userfavouriteController.showLoading
+                  return wholefavouriteController.showLoading
                       ? BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                           child: Container(
@@ -381,10 +418,10 @@ class _wholefavouriteState extends State<wholefavourite> {
                       : SizedBox();
                 }),
             // Progress bar
-            GetBuilder<UserfavouriteController>(
-                init: userfavouriteController,
+            GetBuilder<WholefavouriteController>(
+                init: wholefavouriteController,
                 builder: (_) {
-                  return userfavouriteController.showLoading
+                  return wholefavouriteController.showLoading
                       ? Center(
                           child: SpinKitCircle(
                             color: Colors.white, // Color of the progress bar

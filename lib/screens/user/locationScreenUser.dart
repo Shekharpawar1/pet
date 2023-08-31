@@ -17,6 +17,8 @@ import 'package:pet/utils/colors.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 import 'package:order_tracker/order_tracker.dart';
+
+import '../../controllers/user_controller/userorder_tracker_controller.dart';
 //  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 // <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 // <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -27,6 +29,8 @@ class LocationPickerMapUser extends StatefulWidget {
 }
 
 class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
+   OrderTrackerUserController ordertrackusercontroller = Get.put(OrderTrackerUserController());
+
   List<TextDto> orderList = [
     TextDto("Your order has been placed", "Fri, 25th Mar '22 - 10:47pm"),
     TextDto("Seller ha processed your order", "Sun, 27th Mar '22 - 10:19am"),
@@ -55,14 +59,14 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
   LatLng _selectedLocation = LatLng(22.759982, 75.872925); // receiver
   List<LatLng> _routePoints = []; // List of route points for the Polyline
 
-  @override
-  void initState() {
-    super.initState();
-    // _fetchAddressFromLatLng(_selectedLocation);
-    // _fetchRoutePoints();
-    // getCurrentLocation();
-    // _fetchUserAddressFromLatLng(_senderLocation);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _fetchAddressFromLatLng(_selectedLocation);
+  //   // _fetchRoutePoints();
+  //   // getCurrentLocation();
+  //   // _fetchUserAddressFromLatLng(_senderLocation);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +90,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
 //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 //
           child: Text(
-            "Order ID: 23424",
+              "Order ID: ${ordertrackusercontroller.orderId}",
             style: TextStyle(
               fontSize: 16,
               color: MyColors.black,
@@ -339,7 +343,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                           physics: NeverScrollableScrollPhysics(),
                           children: [
                             OrderTracker(
-                              status: Status.delivered,
+                              status:ordertrackusercontroller.orderStatus,
                               activeColor: MyColors.yellow,
                               inActiveColor: Colors.grey[300],
                               orderTitleAndDateList: orderList,

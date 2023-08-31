@@ -107,7 +107,7 @@ class _HomeUserState extends State<HomeUser> {
                           right: 4.0,
                           child: Center(
                             child: Text(
-                              ('5').toString(),
+                              ("5").toString(),
                               // list.length.toString(),
                               style: TextStyle(
                                   color: Colors.white,
@@ -133,25 +133,30 @@ class _HomeUserState extends State<HomeUser> {
 
 // (getCardModel!.data!.isEmpty)?
 // SizedBox():
+
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
+                    
+                      GetBuilder<MyCartController>(
+                  init: mycartController,
+                  builder: (_) {
+                  return    Positioned(
                           top: 3.0,
                           right: 4.0,
                           child: Center(
                             child: Text(
-                              ('5').toString(),
+                              (mycartController.mycartmodel!.data!.length).toString(),
                               // list.length.toString(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 8.0,
                                   fontWeight: FontWeight.w500),
                             ),
-                          )),
+                          ));}),
                     ],
                   )),
             ],
@@ -535,7 +540,8 @@ class _HomeUserState extends State<HomeUser> {
                                           "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
                                       print(imagePath);
 
-                                      return Padding(
+                                      return
+                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: InkWell(
                                           onTap: () {
@@ -687,7 +693,9 @@ class _HomeUserState extends State<HomeUser> {
                                             print("productid${item.id ?? 0}");
                                             await productdeatilscontroller
                                                 .init();
-                                            Get.to(ProductDetails());
+                                            Get.to(ProductDetails(
+                                              
+                                            ));
                                             // Get.to( ProductDetails());
                                             // Navigator.push(
                                             //     context,

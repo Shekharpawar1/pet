@@ -52,21 +52,28 @@ void updatepass() {
       // UserLoginModel userLoginModel = UserLoginModel.fromJson(response);
       // print(userLoginModel);
       var wholesalerid;
+        var wholesalerroleid;
       var wholesalerData;
+
       print(response["data"]);
       try {
-        wholesalerid = response["data"]["wholesalerid"];
+        wholesalerid = response["data"][0]["id"];
+        wholesalerroleid = response["data"][0]["role"];
         wholesalerData = response["data"];
       } catch (e) {
-        wholesalerid = response["data"]![0]["wholesalerid"];
+        wholesalerid = response["data"]![0]["id"];
+                wholesalerroleid = response["data"]![0]["role"];
         wholesalerData = response["data"][0];
       }
       // // var id = userLoginModel.data![0].id;
-      print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData}");
+      print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData} Role: ${wholesalerroleid}");
       storage.write('wholesalerData', wholesalerData);
       storage.write('wholesalerid', wholesalerid);
+       storage.write('wholesalerroleid', wholesalerroleid);
+     
       print(storage.read('wholesalerid').toString());
       print(storage.read('wholesalerData').toString());
+      print(storage.read('wholesalerroleid').toString());
       // print(stateListModel);
       // stateLoaded = true;
       update();

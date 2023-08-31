@@ -121,57 +121,36 @@ class MyOrderUser extends StatelessWidget {
             init: myordercontroller,
             builder: (_) {
               return 
-              myordercontroller.myorderModel == null ? SizedBox() :
+            
+              myordercontroller.myorderModel
+             == null ? SizedBox() :
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: ListView.builder(
                     primary: true,
                     shrinkWrap: true,
-                    itemCount: myordercontroller.myorderModel!.data!.length,
+                    itemCount:  myordercontroller.myorderModel!.data!.length,
                     itemBuilder: (context, index) {
-                      var item = myordercontroller.myorderModel!.data![index];
+                      var item =   myordercontroller.myorderModel!.data![index];
 
                       print("=======>>>>>>>>>>>>  len  ${item.paymentMethod}");
+                       print("=======>>>>>>>>>>>>  coupon  ${item.couponCode}");
                       // String imagePath =
                       //       Constants.PRODUCT_HOME_IMAGE_PATH +
                       //           "/${item.!}";
-                      return myordercontroller.myorderModel!.data == null
+                      return   myordercontroller.myorderModel!.data == null
                           ? SizedBox()
                           : 
                           
-                          
-                           Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                  // Text(item.paymentMethod!, style: TextStyle(color: Colors.black),),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(15.0),
-                                  //   child: CachedNetworkImage(
-                                  //               imageUrl: imagePath, fit: BoxFit.cover,
-                                  //               // width: 61,
-                                  //               // height: 75,
-                                  //               placeholder: (context, url) => Center(
-                                  //                 child: CircularProgressIndicator(),
-                                  //               ), // Replace with your own placeholder widget
-                                  //               errorWidget: (context, url, error) =>
-                                  //                   Icon(Icons
-                                  //                       .error), // Replace with your own error widget
-                                  //             ),
-                                  // ),
-                                  //  for(int j =0; j<myordercontroller
-                                  //                     .myorderModel!.data![index].callback!.length; j++)
-                                  ...item.callback!.map((e) {
-                                    print("=====>>>>> zebra ff ${e.itemDetails![0].image.toString()}");
-                                     String imagePath = Constants.PRODUCT_HOME_IMAGE_PATH +"/${e.itemDetails![0].image.toString()}";
-                                    //  var imagePath  = Constants.PRODUCT_HOME_IMAGE_PATH +
-                                    //               "/${e.itemDetails![0].image!}";
-                                    return 
-  
-InkWell(
+
+                          InkWell(
                             onTap: (){
                               myordercontroller.addorder(item.id??0);
                               print("Orderid ${item.id}");
                              myordercontroller.orderdetailsinit();
-                              Get.to(OrderDetailsUser(orderId:item.id??0,couponcode: item.couponCode??'',paymentmethod:item.paymentMethod??''));
+                              Get.to(OrderDetailsUser(orderId:item.id??0,
+                              couponcode: item.couponCode??'',paymentmethod:item.paymentMethod??'',
+                              orderstatus:item.orderStatus??''));
                             },
                             child: 
                             
@@ -193,20 +172,27 @@ InkWell(
 
                                            Padding(
                         padding: const EdgeInsets.all(15.0),
-                        child:  Container(
-                          width: 90,
-                          child: CachedNetworkImage(
-                                        imageUrl:imagePath,
-                                                  //  fit: BoxFit.cover,
-                                        // width: 61,
-                                        // height: 75,
-                                        placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(),
-                                        ), // Replace with your own placeholder widget
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons
-                                                .error), // Replace with your own error widget
-                                      ),
+                        child: 
+                         Container(
+                          width: Get.width * 0.24,
+                          child:
+                            Image.asset(
+                    "assets/image/logocanine.png",
+                    // height: 80,
+                  ),
+                          //  CachedNetworkImage(
+                          //               imageUrl:imagePath,
+                          //                         //  fit: BoxFit.cover,
+                          //               // width: 61,
+                          //               // height: 75,
+                          //               placeholder: (context, url) => Center(
+                          //                 child: CircularProgressIndicator(),
+                          //               ), // Replace with your own placeholder widget
+                          //               errorWidget: (context, url, error) =>
+                          //                   Icon(Icons
+                          //                       .error), // Replace with your own error widget
+                          //             ),
+                       
                         ),
                       ),
                      
@@ -215,7 +201,7 @@ InkWell(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "OrderId: ${(e.orderId ?? 0).toString()}",
+                                              "OrderId: ${(item.id ?? 0).toString()}",
                                               style: CustomTextStyle.popinsmedium,
                                             ),
                                             Text(
@@ -226,10 +212,10 @@ InkWell(
                                             "Payment Status: ${item.paymentMethod ?? ''}",
                                               style: CustomTextStyle.popinsmedium,
                                             ),
-                                            Text("Variation: ${e.variation ?? ''}",
+                                            Text("Order Status: ${item.orderStatus ?? ''}",
                                                 style: CustomTextStyle.popinsmedium),
                                             Text(
-                                                "Quantity: ${(e.quantity ?? 0)}"
+                                                "Order Type: ${(item.orderType ?? 0)}"
                                                     .toString(),
                                                 style: CustomTextStyle.popinsmedium),
                                             Row(
@@ -237,7 +223,7 @@ InkWell(
                                                   MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                "Total Amount: ${ e.totalAddOnPrice ??
+                                                "Total Amount: ${ item.orderAmount ??
                                                       ''}",
                                                   style: CustomTextStyle.popinsmedium,
                                                 ),
@@ -250,11 +236,42 @@ InkWell(
                                     )
                                  
                                   ));
+                          
+                          //  Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //         children: [
+                                  // Text(item.paymentMethod!, style: TextStyle(color: Colors.black),),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.all(15.0),
+                                  //   child: CachedNetworkImage(
+                                  //               imageUrl: imagePath, fit: BoxFit.cover,
+                                  //               // width: 61,
+                                  //               // height: 75,
+                                  //               placeholder: (context, url) => Center(
+                                  //                 child: CircularProgressIndicator(),
+                                  //               ), // Replace with your own placeholder widget
+                                  //               errorWidget: (context, url, error) =>
+                                  //                   Icon(Icons
+                                  //                       .error), // Replace with your own error widget
+                                  //             ),
+                                  // ),
+                                  //  for(int j =0; j<myordercontroller
+                                  //                     .myorderModel!.data![index].callback!.length; j++)
+                                  // ...item.callback!.map((e) {
+                                  //   print("=====>>>>> zebra ff ${e.itemDetails![0].image.toString()}");
+                                  //    String imagePath = Constants.PRODUCT_HOME_IMAGE_PATH +"/${e.itemDetails![0].image.toString()}";
+                                  //   //  var imagePath  = Constants.PRODUCT_HOME_IMAGE_PATH +
+                                  //   //               "/${e.itemDetails![0].image!}";
+                                   
+                                   
+                                   
+                                  //   return 
+  
+       
                                  
                                  
                                  
-                                  } ).toList(), 
-                                ]);
+                                  // } ).toList(), 
+                                // ]);
               }  ),
                           );
                     }),

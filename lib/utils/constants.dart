@@ -1,6 +1,7 @@
 class Constants {
   static const BASE_URL = "https://canine.hirectjob.in";
   static const API_V1_PATH = "/api/v1";
+ 
   static const GET_USER_SERVICES =
       "$BASE_URL${API_V1_PATH}/banners/service_category";
  static const GET_USER_MYSERVICES = "$BASE_URL${API_V1_PATH}/banners/get_allservicebooking";
@@ -18,6 +19,7 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const GET_USER_CATEGORIES = "/categories";
   static const GET_USER_PROPERTIES = "/items/latest";
    static const GET_USER_SUBPRODUCT = "$BASE_URL${API_V1_PATH}/items/product/";
+   static const GET_ORDER_TRACKER = "$BASE_URL${API_V1_PATH}/customer/order/tracking/";
    static const GET_USER_OURBRANDPRODUCT = "$BASE_URL${API_V1_PATH}/banners/brand_product_filter/";
    static const GET_USER_SUBCATEGORY = "/categories/subcategories";
   static const SERVICES_IMAGE_PATH = "/storage/app/public/service/";
@@ -38,6 +40,7 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const USER_LOGIN_OTP = "$BASE_URL${API_V1_PATH}/auth/otp_verify";
   static const WHOLESALER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/wholesaler_login";
   static const GET_USER_BANNER = "$BASE_URL${API_V1_PATH}/banners";
+   static const GET_WHOLE_TOTALORDER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_orders/";
   static const GET_OUR_BRAND = "$BASE_URL${API_V1_PATH}/auth/brand";
   static const GET_MY_ORDER = "$BASE_URL${API_V1_PATH}/customer/order/list?id=";
   static const GET_ORDER_DETAILS = "$BASE_URL${API_V1_PATH}/customer/order/detail/";
@@ -74,9 +77,9 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const USER_ADD_TO_FAV =
       "$BASE_URL${API_V1_PATH}/customer/wish-list/add";
   static const USER_REMOVE_FROM_FAV =
-      "$BASE_URL${API_V1_PATH}/customer/wish-list/remove";
+      "$BASE_URL${API_V1_PATH}/customer/wish-list/remove/";
   static const USER_GET_WISHLIST =
-      "$BASE_URL${API_V1_PATH}/customer/wish-list";
+      "$BASE_URL${API_V1_PATH}/customer/wish-list/";
   static const PRODUCT_HOME_IMAGE_PATH =
       "$BASE_URL/storage/app/public/product";
 }

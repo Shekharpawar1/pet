@@ -1,25 +1,30 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
+import 'package:pet/screens/wholesaler/myOrderPage.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
+import 'package:pet/screens/wholesaler/wholeUpiScreen.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/wholesaler/payment2.dart';
-  enum Choose {
-  creditcard,
-phonepay ,
-paytm
-}
+enum Choose { upi, cash, phonepay, paytm }
 class Paymentwhole extends StatefulWidget {
-  const Paymentwhole({super.key});
-
+   Paymentwhole({super.key,  this.price,});
+  String? price;
+Choose? selectone;
   @override
   State<Paymentwhole> createState() => _PaymentwholeState();
 }
 
 class _PaymentwholeState extends State<Paymentwhole> {
+    MyCartWholeController mycartwholeController = Get.put(MyCartWholeController());
+
   // String? selectedGender;
 
     String? selectcredit ;
@@ -31,169 +36,269 @@ Choose? selectone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
- appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left:5.0,top: 15,bottom: 15),
-            child: GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },child:Icon(Icons.arrow_left,color:MyColors.black)
-            ),
-          ),
-          title: Center(
+ 
+  appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_left, color: MyColors.black)),
+        ),
+        title: Center(
 //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 //
-            child:Text("Payment",style: TextStyle(fontSize: 16,color:MyColors. black,
-fontWeight: FontWeight.w700,),)
+            child: Text(
+          "Payment",
+          style: TextStyle(
+            fontSize: 16,
+            color: MyColors.black,
+            fontWeight: FontWeight.w700,
           ),
-          actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
-           
-            // SizedBox(width: 20),
-             InkWell(
-              onTap: () {
-                Get.to(NotificationWhole());
-              },
-              child: SvgPicture.asset("assets/image/notification.svg")),
-          
-           
-          ],
-         
-        ),
-      
-     
-      body: SingleChildScrollView(child:Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(children: [
-      
-          Image.asset("assets/image/creditcard.png"),
-      
-      
-          Container(
-      width: 335,
-      height: 54,
-      decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(28),
-      gradient: LinearGradient(
-      begin: Alignment.centerLeft, end: Alignment.centerRight,
-      colors: [Color(0xffeeeeff), Color(0x59eeeeff)], )),
-      
-      child:   Row(mainAxisAlignment: MainAxisAlignment.start,
-                   children: [
-                   Radio(
-                               value: Choose.creditcard,
-          groupValue: selectone,
-          onChanged: (Choose? value) {
-            setState(() {
-               selectone = value!;
-            });}),
-                 
-      
-                 Image.asset("assets/image/house.png",height:40),
-                  SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                 Text("Credit / Debit Card",  style:  CustomTextStyle.popinssmall0, )
-                 
-                 ],),
-      
-      )
-         , SizedBox(height: MediaQuery.of(context).size.height*0.03),
-         Container(
-      width: 335,
-      height: 53,
-      decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(55),
-      gradient: LinearGradient(
-      begin: Alignment.centerLeft, end: Alignment.centerRight,
-      colors: [Color(0xfffdcbcc), Color(0x42fdcbcc)], )),
-      
-      child:   
-                 Row(mainAxisAlignment: MainAxisAlignment.start,
-                   children: [
-                   Radio(
-                       
-                               
-                                 value:Choose.phonepay,
-          groupValue: selectone,
-          onChanged: (Choose? value) {
-            setState(() {
-              selectone = value!;
-            });}    ),
-                 
-      
-                 Image.asset("assets/image/phonepay1.png",height:25),
-                
-                 
-                 ],),
+        )),
+        // actions: [
+        //   //  SvgPicture.asset("assets/image/girl.svg"),
+
+        //   // SizedBox(width: 20),
+        //   InkWell(
+        //       onTap: () {
+        //         Get.to(NotificationWhole());
+        //       },
+        //       child: Padding(
+        //         padding: const EdgeInsets.only(right:20.0),
+        //         child: SvgPicture.asset("assets/image/notification.svg"),
+        //       )),
+        // ],
       ),
-      
-       SizedBox(height: MediaQuery.of(context).size.height*0.03),
-      Container(
-      width: 335,
-      height: 53,
-      decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(28),
-      gradient: LinearGradient(
-      begin: Alignment.centerLeft, end: Alignment.centerRight,
-      colors: [Color(0xffffead2), Color(0x56ffead2)], )),
-      child:   
-                 Row(mainAxisAlignment: MainAxisAlignment.start,
-                   children: [
-                   Radio(   
-                       value: Choose.paytm,
-          groupValue: selectone,
-          onChanged: (Choose? value) {
-            setState(() {
-              selectone = value!;
-            });} 
-                                ),
-                 
-      
-                 Image.asset("assets/image/paytm.png",height:25),
-                
-                 
-                 ],),
-      
-      ),
-      
-        SizedBox(height: MediaQuery.of(context).size.height*0.05,),   
-                      InkWell(onTap: (){
-                       Get.to(
-                        Paymentwhole2()
-                       );
+      body:
+       Stack(
+         children: [
+           Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ListView(
+              shrinkWrap: true,
+              primary: true,
+              children: [
+                // Image.asset("assets/image/creditcard.png"),
+                Container(
+                  width: 335,
+                  height: 54,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Color(0xffeeeeff), Color(0x59eeeeff)],
+                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                          value: Choose.upi,
+                          groupValue: selectone,
+                          onChanged: (Choose? value) {
+                            setState(() {
+                              selectone = value!;
+                            });
+                          }),
+                      Image.asset("assets/image/upi.png", height: 40),
+                    ],
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                Container(
+                  width: 335,
+                  height: 54,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Color(0xffeeeeff), Color(0x59eeeeff)],
+                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                          value: Choose.cash,
+                          groupValue: selectone,
+                          onChanged: (Choose? value) {
+                            setState(() {
+                              selectone = value!;
+                            });
+                          }),
+                      Image.asset("assets/image/house.png", height: 40),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+                      Text(
+                        "Pay later",
+                        style: CustomTextStyle.popinssmall0,
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                // Container(
+                //   width: 335,
+                //   height: 53,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(55),
+                //       gradient: LinearGradient(
+                //         begin: Alignment.centerLeft,
+                //         end: Alignment.centerRight,
+                //         colors: [Color(0xfffdcbcc), Color(0x42fdcbcc)],
+                //       )),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       Radio(
+                //           value: Choose.phonepay,
+                //           groupValue: selectone,
+                //           onChanged: (Choose? value) {
+                //             setState(() {
+                //               selectone = value!;
+                //             });
+                //           }),
+                //       Image.asset("assets/image/phonepay1.png", height: 25),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                // Container(
+                //   width: 335,
+                //   height: 53,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(28),
+                //       gradient: LinearGradient(
+                //         begin: Alignment.centerLeft,
+                //         end: Alignment.centerRight,
+                //         colors: [Color(0xffffead2), Color(0x56ffead2)],
+                //       )),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       Radio(
+                //           value: Choose.paytm,
+                //           groupValue: selectone,
+                //           onChanged: (Choose? value) {
+                //             setState(() {
+                //               selectone = value!;
+                //             });
+                //           }),
+                //       Image.asset("assets/image/paytm.png", height: 25),
+                //     ],
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height * 0.05,
+                // ),
+                InkWell(
+                  onTap: () async{
+
+                    // print(selectone == Choose.upi);
+                    if(selectone == Choose.upi){
+                      print("UPI payment");
+ 
+  mycartwholeController.addpaymenttype(selectone == Choose.upi?'online':"offline");
+
+                      Get.to(WholeUpiScreen(
+amount: double.tryParse(widget.price.toString())));
+                    } else if(selectone == Choose.cash){
+                      print("Cash payment");
+mycartwholeController.addpaymenttype(selectone == Choose.cash?'offline':"online");
+                  await mycartwholeController.placeorder();
+
+               await showDialog(
+  context: context,
+  builder: (BuildContext context) {
+    return AlertDialog(
+      scrollable: true,
+      // title:  Text("Login"),
+
+      content: Column(mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              
+                  Align(alignment: Alignment.topRight,
+                    child: IconButton(
+                      icon: Icon(Icons.close), // You can use any close icon you prefer
+                      onPressed: () {
+                       Get.back(); // Close the dialog
                       },
-                        child: Center(
+                    ),
+                  ),
+
+                   Padding(
+               padding:  EdgeInsets.all(10.0),
+               child: Image.asset("assets/image/success.png"),
+             ),
+             
+              
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Order Placed Successfully"),
+              ),
+            ],
+      ),
+    );
+  },
+);
+                       
+                         Get.to(MyOrderWhole( ));
+                      // Get.to(Payment2User());
+                    }
+                    // Get.to(Payment2User());
+                  },
+                  child: Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      decoration: BoxDecoration(
+                          color: MyColors.yellow,
+                          borderRadius: BorderRadius.circular(25)),
+                      child: Center(
+                          child: Text(
+                        "Next",
+                        style: CustomTextStyle.mediumtextreem,
+                      )),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30,),
+              ],
+            ),
+      ),
+           GetBuilder<MyCartWholeController>(
+                init: mycartwholeController,
+                builder: (_) {
+                  return mycartwholeController.showLoading
+                      ? BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                           child: Container(
-                                  
-                            width: MediaQuery.of(context).size.width*0.9,
-                                  
-                                  height: MediaQuery.of(context).size.height*0.08,
-                                  
-                                  decoration: BoxDecoration(
-                                  
-                                    color:MyColors.yellow,
-                                  
-                                    borderRadius: BorderRadius.circular(25)
-                                  
-                                  ),
-                                  
-                                  
-                                  
-                                  child: 
-                                  
-                                    Center(child: Text("Next",style: CustomTextStyle.mediumtextreem,))
-                                  
-                              ,
-                                  
-                                ),
-                        ),
-                      ),
-         
-         
-         
-        ],),
-      )),
+                            color: Colors.black.withOpacity(
+                                0.5), // Adjust the opacity as needed
+                          ),
+                        )
+                      : SizedBox();
+                }),
+            // Progress bar
+            GetBuilder<MyCartWholeController>(
+                init: mycartwholeController,
+                builder: (_) {
+                  return mycartwholeController.showLoading
+                      ? Center(
+                          child: SpinKitCircle(
+                            color: Colors.white, // Color of the progress bar
+                            size: 50.0, // Size of the progress bar
+                          ),
+                        )
+                      : SizedBox();
+                }),
+          
+        
+         ],
+       ),
     );
   }
 }

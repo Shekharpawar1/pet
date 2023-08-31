@@ -15,6 +15,7 @@ class _FilterScreenState extends State<FilterScreen> {
   FilterController filtercontroller = Get.put(FilterController());
   bool isBrandExpanded = false;
   bool isCatExpanded = false;
+   bool isProducttypeExpanded = false;
   bool isBreedExpanded = false;
   bool isLifeStageExpanded = false;
   bool isHealthExpanded = false;
@@ -108,13 +109,16 @@ class _FilterScreenState extends State<FilterScreen> {
                             case 1:
                               isCatExpanded = !isExpanded;
                               break;
-                            case 2:
-                              isBreedExpanded = !isExpanded;
+                               case 2:
+                              isProducttypeExpanded = !isExpanded;
                               break;
                             case 3:
-                              isLifeStageExpanded = !isExpanded;
+                              isBreedExpanded = !isExpanded;
                               break;
                             case 4:
+                              isLifeStageExpanded = !isExpanded;
+                              break;
+                            case 5:
                               isHealthExpanded = !isExpanded;
                               break;
                             case 5:
@@ -238,6 +242,61 @@ class _FilterScreenState extends State<FilterScreen> {
                           isExpanded: isCatExpanded,
                         ),
 
+                          ExpansionPanel(
+                          headerBuilder:
+                              (BuildContext context, bool isExpanded) {
+                            return ListTile(
+                              title: Text("Product Type"),
+                            );
+                          },
+                          body: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: filtercontroller.producttypeitems.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final filteroption =
+                                  filtercontroller.producttypeitems[index];
+                              return CheckboxListTile(
+                                value: filtercontroller.selectProductTypeFilterList
+                                    .contains(filteroption),
+                                onChanged: (isChecked) {
+// filtercontroller.updateChecked()
+                                  if (isChecked!) {
+                                    print("adding brand");
+                                    if (!filtercontroller
+                                        .selectProductTypeFilterList
+                                        .contains(filteroption)) {
+                                      print("Added");
+
+                                      filtercontroller
+                                          .addSelectedOptionProducttypeList(
+                                              filteroption);
+                                    }
+                                  } else {
+                                    print("removing brand");
+                                    if (filtercontroller
+                                        .selectProductTypeFilterList
+                                        .contains(filteroption)) {
+                                      print("removed");
+                                      filtercontroller
+                                          .removeSelectedOptionProducttypeList(
+                                              filteroption);
+                                    }
+                                  }
+
+                                  filtercontroller.filter();
+                                  // filtercontroller.updateChecked();
+                                  // setState(() {
+                                  //   item.isChecked = value!;
+                                  // });
+                                },
+                                title: Text(filteroption),
+                              );
+                            },
+                          ),
+                          isExpanded: isProducttypeExpanded,
+                        ),
+
                         ExpansionPanel(
                           headerBuilder:
                               (BuildContext context, bool isExpanded) {
@@ -290,6 +349,10 @@ class _FilterScreenState extends State<FilterScreen> {
                           ),
                           isExpanded: isBreedExpanded,
                         ),
+
+
+
+                        
 
                         ExpansionPanel(
                           headerBuilder:
