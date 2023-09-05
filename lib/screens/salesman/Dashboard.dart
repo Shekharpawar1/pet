@@ -73,7 +73,12 @@ class _DashboardSalesState extends State<DashboardSales> {
           GetBuilder<SalesProfileController>(
               init: salesprofilecontroller,
               builder: (_) {
-                return Padding(
+                return 
+                salesprofilecontroller
+                              .salesprofilemodel == null || salesprofilecontroller
+                              .salesprofilemodel!.data == null || salesprofilecontroller
+                              .salesprofilemodel!.data!.isEmpty ? SizedBox() :
+                Padding(
                   padding: EdgeInsets.only(right: 20.0),
                   child: CircleAvatar(
                     radius: 35,

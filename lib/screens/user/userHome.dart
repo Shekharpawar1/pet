@@ -144,7 +144,14 @@ class _HomeUserState extends State<HomeUser> {
                       GetBuilder<MyCartController>(
                   init: mycartController,
                   builder: (_) {
-                  return    Positioned(
+                  return  
+                  
+                                                        mycartController
+                              .mycartmodel == null || mycartController
+                              .mycartmodel!.data == null || mycartController
+                              .mycartmodel!.data!.isEmpty ? const SizedBox() :
+
+                    Positioned(
                           top: 3.0,
                           right: 4.0,
                           child: Center(
