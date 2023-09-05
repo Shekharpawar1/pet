@@ -1524,306 +1524,210 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
  SizedBox(height: MediaQuery.of(context).size.height*0.02),
 
-     GridView(
-                                                              physics:
-                                                              NeverScrollableScrollPhysics(),
-                                                              scrollDirection:
-                                                              Axis.vertical,
-                                                              gridDelegate:
-                                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                                  crossAxisCount:
-                                                                  2,
-                                                                  crossAxisSpacing:
-                                                                  15,
-                                                                  mainAxisSpacing:
-                                                                  15,
-                                                                  mainAxisExtent:
-                                                                  276),
-                                                              children: [
-                                                               
-                        Container(
-                  
-                    height:MediaQuery.of(context).size.width*0.7,
-                  
-                    width: MediaQuery.of(context).size.width*0.46,
-                  
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(25),
-                    color: MyColors.white
-                    ),
-                  
-                  child: Column(children: [
-                  
-                                Container(
-                 
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(30),
-                      color:MyColors. white
-                  
-                  
-                  
-                    ),
-                                  child:
-                                  Image.asset("assets/image/food.png",fit: BoxFit.cover,height: 135),
-                                ),
-                                
-                  
-                  
-                  // SizedBox(height: 15,),
-                  
-                  
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column( mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                       Text(
-                              'Mars Petcare Inc',
-                              style:  CustomTextStyle.  popinsmedium
-                            
-                            ),
-                                Text(
-                              'Lorem Ipsum is simply dummy',
-                              style:  CustomTextStyle.  popinssmall0
-                            
-                            ),
-                        // SizedBox(height: 3),
+                GetBuilder<SalesSubCategoryController>(
+                    init: salessubcategorycontroller,
+                    builder: (_) {
+                      return GridView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15.0,
+                                  mainAxisSpacing: 15.0,
+                                  mainAxisExtent: 260),
+                          itemCount: salessubcategorycontroller
+                              .salestoyModel!.data!.length
+                              .clamp(0, 4),
+                          itemBuilder: (BuildContext ctx, index) {
+                            var item = salessubcategorycontroller
+                                .salestoyModel!.data![index];
 
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          
-                          children: [
+                            var imagePath =
+                                "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
+                            return salessubcategorycontroller.salestoyModel == null ||
+                                    salessubcategorycontroller.salestoyModel!.data ==
+                                        null
+                                ? SizedBox()
+                                : Container(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    // width: MediaQuery.of(context).size.width * 0.46,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: MyColors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.3),
+                                          spreadRadius: 3,
+                                          blurRadius: 7,
+                                          offset: Offset(
+                                              0, 3), // Offset of the shadow
+                                        ),
+                                      ],
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Container(
+                                              height: 125,
 
-                          Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
+                                              // decoration: BoxDecoration(
+                                              //     borderRadius: BorderRadius.circular(30),
+                                              //     color: MyColors.white),
+                                              child: Center(
+                                                child: CachedNetworkImage(
+                                                  imageUrl: imagePath,
+                                                  // width: 61,
+                                                  // height: 75,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ), // Replace with your own placeholder widget
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Icon(Icons
+                                                          .error), // Replace with your own error widget
+                                                ),
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                homesalecontroller
+                                                    .addItemToWishList(
+                                                        homesalecontroller
+                                                            .salesPropertiesModel!
+                                                            .data![index]
+                                                            .id!);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    child: Icon(homesalecontroller
+                                                            .wishListItemsId
+                                                            .contains(
+                                                                homesalecontroller
+                                                                    .salesPropertiesModel!
+                                                                    .data![
+                                                                        index]
+                                                                    .id!)
+                                                        ? Icons.favorite
+                                                        : Icons
+                                                            .favorite_border)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
 
-                          Image.asset("assets/image/yellowbag.png",height: 80,)
+                                        // SizedBox(height: 15,),
 
-                        
-                        ],)
-                        ],
-                      ),
-                    )
-                  
-                  ],),
-                  
-                  ),
-                Container(
-                  
-                    height:MediaQuery.of(context).size.width*0.7,
-                  
-                    width: MediaQuery.of(context).size.width*0.46,
-                  
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(30),
-                    color: MyColors.white
-                    ),
-                  
-                  child: Column(children: [
-                  
-                                Container(
-                 
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(30),
-                      color: MyColors.white
-                  
-                  
-                  
-                    ),
-                                  child:
-                                  Image.asset("assets/image/dog2.png",fit: BoxFit.cover,height: 135),
-                                ),
-                                
-                  
-                  
-                  // SizedBox(height: 15,),
-                  
-                  
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column( mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                       Text(
-                              'Mars Petcare Inc',
-                              style:  CustomTextStyle.  popinsmedium
-                            
-                            ),
-                                Text(
-                              'Lorem Ipsum is simply dummy',
-                              style:  CustomTextStyle.  popinssmall0
-                            
-                            ),
-                        // SizedBox(height: 3),
-
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          
-                          children: [
-
-                          Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-
-                          Image.asset("assets/image/yellowbag.png",height: 80,)
-
-                        
-                        ],)
-                        ],
-                      ),
-                    )
-                  
-                  ],),
-                  
-                  ),
-      
-                            
-                                                                      
-                        Container(
-                  
-                    height:MediaQuery.of(context).size.width*0.7,
-                  
-                    width: MediaQuery.of(context).size.width*0.46,
-                  
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(25),
-                    color: MyColors.white
-                    ),
-                  
-                  child: Column(children: [
-                  
-                                Container(
-                 
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(30),
-                      color:MyColors.white
-                  
-                  
-                  
-                    ),
-                                  child:
-                                  Image.asset("assets/image/food3.png",fit: BoxFit.cover,height: 135),
-                                ),
-                                
-                  
-                  
-                  // SizedBox(height: 15,),
-                  
-                  
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column( mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                       Text(
-                              'Mars Petcare Inc',
-                              style:  CustomTextStyle.  popinsmedium
-                            
-                            ),
-                                Text(
-                              'Lorem Ipsum is simply dummy',
-                              style:  CustomTextStyle.  popinssmall0
-                            
-                            ),
-                        // SizedBox(height: 3),
-
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          
-                          children: [
-
-                          Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-
-                          Image.asset("assets/image/yellowbag.png",height: 80,)
-
-                        
-                        ],)
-                        ],
-                      ),
-                    )
-                  
-                  ],),
-                  
-                  ),
-                Container(
-                  
-                    height:MediaQuery.of(context).size.width*0.7,
-                  
-                    width: MediaQuery.of(context).size.width*0.46,
-                  
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(30),
-                    color:MyColors.white
-                    ),
-                  
-                  child: Column(children: [
-                  
-                                Container(
-                 
-                    decoration: BoxDecoration(
-                  
-                      borderRadius: BorderRadius.circular(30),
-                      color: MyColors.white
-                  
-                  
-                  
-                    ),
-                                  child:
-                                  Image.asset("assets/image/food5.png",fit: BoxFit.cover,height: 135),
-                                ),
-                                
-                  
-                  
-                  // SizedBox(height: 15,),
-                  
-                  
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column( mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                       Text(
-                              'Mars Petcare Inc',
-                              style:  CustomTextStyle.  popinsmedium
-                            
-                            ),
-                                Text(
-                              'Lorem Ipsum is simply dummy',
-                              style:  CustomTextStyle.  popinssmall0
-                            
-                            ),
-                        // SizedBox(height: 3),
-
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          
-                          children: [
-
-                          Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-
-                          Image.asset("assets/image/yellowbag.png",height: 80,)
-
-                        
-                        ],)
-                        ],
-                      ),
-                    )
-                  
-                  ],),
-                  
-                  ),
-      
-                            
-                            
-                     
-                     
-                                                              ],
-                                                              padding:
-                                                              EdgeInsets.all(
-                                                                  5),
-                                                              shrinkWrap: true,
+                                        Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(item.name ?? '',
+                                                  style: CustomTextStyle
+                                                      .popinsmedium),
+                                              Text(item.description.toString(),
+                                                  style: CustomTextStyle
+                                                      .popinssmall0),
+                                              SizedBox(height: 5),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          Text(item.price ?? '',
+                                                              style: CustomTextStyle
+                                                                  .discounttext),
+                                                          SizedBox(width: 10),
+                                                          Container(
+                                                            height: 18,
+                                                            width: 40,
+                                                            decoration: BoxDecoration(
+                                                                color: MyColors
+                                                                    .red,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                                border: Border.all(
+                                                                    color: MyColors
+                                                                        .red)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                  // item.discount.toString(),
+                                                                  "Save${item.discount ?? 0}",
+                                                                  style: CustomTextStyle
+                                                                      .popinstextsmal2222),
                                                             ),
-                   
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(height: 5),
+                                                      Text(
+                                                        "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+
+                                                        // "₹ ${((int.parse(item.price ?? '0')) - ( (int.parse(item.price ?? "0"))*(int.parse(item.discount ?? "0")) / 100)).toString()}",
+                                                        // "₹ ${((item.price!) -((item.price!)*(item.discount!))/100).toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 5.0),
+                                                    child: Container(
+                                                        width: 35,
+                                                        height: 35,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                            color: Color(
+                                                                0xffffcc00)),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  5.0),
+                                                          child: Image.asset(
+                                                            "assets/image/bag2.png",
+                                                            height: 25,
+                                                          ),
+                                                        )),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                          });
+                    })
+       ,      
        SizedBox(height: MediaQuery.of(context).size.height*0.03),
 
 

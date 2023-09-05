@@ -3,9 +3,9 @@ class ToyModel {
   List<Data>? data;
   String? message;
 
-  ToyModel({this.status, this.data, this.message});
+ToyModel({this.status, this.data, this.message});
 
-  ToyModel.fromJson(Map<String, dynamic> json) {
+ToyModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];
@@ -62,9 +62,9 @@ class Data {
   int? unitId;
   String? images;
   String? foodVariations;
-  int? brandId;
+  String? brandId;
   String? lifeStageId;
-  int? helthConditionId;
+  String? helthConditionId;
   String? petsbreedsId;
 
   Data(

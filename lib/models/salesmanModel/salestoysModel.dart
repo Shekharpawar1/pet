@@ -62,9 +62,9 @@ class Data {
   int? unitId;
   String? images;
   String? foodVariations;
-  int? brandId;
+  String? brandId;
   String? lifeStageId;
-  int? helthConditionId;
+  String? helthConditionId;
   String? petsbreedsId;
 
   Data(
