@@ -232,6 +232,8 @@ class _PaymentUserState extends State<PaymentUser> {
                       mycartController.addpaymenttype(
                           selectone == Choose.cash ? 'offline' : "online",
                           selectone == Choose.cash ? "unpaid" : "paid");
+                          try {
+
                       await mycartController.placeorder();
 
                       await showDialog(
@@ -260,6 +262,43 @@ class _PaymentUserState extends State<PaymentUser> {
                       );
 
                       Get.off(MyOrderUser());
+                          } catch (e) {
+
+ await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            scrollable: true,
+                            // title:  Text("Login"),
+
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // Align(
+                                //   alignment: Alignment.topRight,
+                                //   child: IconButton(
+                                //     icon: Icon(Icons
+                                //         .close), // You can use any close icon you prefer
+                                //     onPressed: () {
+                                //       Get.back(); // Close the dialog
+                                //     },
+                                //   ),
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child:
+                                      Image.asset("assets/image/multiply.png", height: 50, width: 50,),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Failed"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                          }
                       // Get.to(Payment2User());
                     }
                     // Get.to(Payment2User());

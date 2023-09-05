@@ -157,7 +157,7 @@ class MyOrderUser extends StatelessWidget {
                                           EdgeInsets.symmetric(vertical: 10),
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.2,
+                                              0.22,
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
                                           border: Border.all(

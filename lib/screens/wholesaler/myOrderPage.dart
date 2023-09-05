@@ -15,33 +15,34 @@ import 'package:pet/utils/fontstyle.dart';
 class MyOrderWhole extends StatelessWidget {
   MyOrderWhole({super.key});
 
-  WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
+  WholeMyOrderController wholemyordercontroller =
+      Get.put(WholeMyOrderController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 15),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_left, color: MyColors.black)),
-          ),
-          title: Center(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 15),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_left, color: MyColors.black)),
+        ),
+        title: Center(
 //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 //
-              child: Text(
-            "My Orders",
-            style: TextStyle(
-              fontSize: 16,
-              color: MyColors.black,
-              fontWeight: FontWeight.w700,
-            ),
-          )),
-          actions: [
+            child: Text(
+          "My Orders",
+          style: TextStyle(
+            fontSize: 16,
+            color: MyColors.black,
+            fontWeight: FontWeight.w700,
+          ),
+        )),
+        actions: [
 //           Stack(
 //             children: [
 //               InkWell(
@@ -117,74 +118,145 @@ class MyOrderWhole extends StatelessWidget {
 //           ),
 
 //     SizedBox(width: 20,)
-          ],
-        ),
-        body: GetBuilder<WholeMyOrderController>(
-            init: wholemyordercontroller,
-            builder: (_) {
-              return 
-              wholemyordercontroller.
-              wholemyorderModel == null ? SizedBox() :
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: ListView.builder(
-                    primary: true,
-                    shrinkWrap: true,
-                    itemCount:wholemyordercontroller.
-              wholemyorderModel!.data!.length,
-                    itemBuilder: (context, index) {
-                      var item = wholemyordercontroller.
-              wholemyorderModel!.data![index];
+        ],
+      ),
+      body: GetBuilder<WholeMyOrderController>(
+          init: wholemyordercontroller,
+          builder: (_) {
+            return wholemyordercontroller.wholemyorderModel == null
+                ? SizedBox()
+                : Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: ListView.builder(
+                        primary: true,
+                        shrinkWrap: true,
+                        itemCount: wholemyordercontroller
+                            .wholemyorderModel!.data!.length,
+                        itemBuilder: (context, index) {
+                          var item = wholemyordercontroller
+                              .wholemyorderModel!.data![wholemyordercontroller
+                                  .wholemyorderModel!.data!.length -
+                              1 -
+                              index];
 
-                      print("=======>>>>>>>>>>>>  len  ${item.paymentMethod}");
-                       print("=======>>>>>>>>>>>>  coupon  ${item.couponCode}");
-                      // String imagePath =
-                      //       Constants.PRODUCT_HOME_IMAGE_PATH +
-                      //           "/${item.!}";
-                      return wholemyordercontroller.
-              wholemyorderModel!.data == null
-                          ? SizedBox()
-                          : 
-                          
+                          print(
+                              "=======>>>>>>>>>>>>  len  ${item.paymentMethod}");
+                          print(
+                              "=======>>>>>>>>>>>>  coupon  ${item.couponCode}");
+                          // String imagePath =
+                          //       Constants.PRODUCT_HOME_IMAGE_PATH +
+                          //           "/${item.!}";
+                          return wholemyordercontroller
+                                      .wholemyorderModel!.data ==
+                                  null
+                              ? SizedBox()
+                              : InkWell(
+                                  onTap: () {
+                                    wholemyordercontroller
+                                        .addorder(item.id ?? 0);
+                                    print("Orderid ${item.id}");
+                                    wholemyordercontroller.orderdetailsinit();
+                                    Get.to(OrderDetailswhole(
+                                        orderId: item.id ?? 0,
+                                        couponcode: item.couponCode ?? '',
+                                        paymentmethod: item.paymentMethod ?? '',
+                                        orderstatus: item.orderStatus ?? ''));
+                                  },
+                                  child: Container(
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: MyColors.grey, width: 0.5),
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          color: MyColors.white),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(15.0),
+                                              child: Container(
+                                                width: Get.width * 0.24,
+                                                child: Image.asset(
+                                                  "assets/image/logocanine.png",
+                                                  // height: 80,
+                                                ),
+                                                //  CachedNetworkImage(
+                                                //               imageUrl:imagePath,
+                                                //                         //  fit: BoxFit.cover,
+                                                //               // width: 61,
+                                                //               // height: 75,
+                                                //               placeholder: (context, url) => Center(
+                                                //                 child: CircularProgressIndicator(),
+                                                //               ), // Replace with your own placeholder widget
+                                                //               errorWidget: (context, url, error) =>
+                                                //                   Icon(Icons
+                                                //                       .error), // Replace with your own error widget
+                                                //             ),
+                                              ),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "OrderId: ${(item.id ?? 0).toString()}",
+                                                  style: CustomTextStyle
+                                                      .popinsmedium,
+                                                ),
+                                                Text(
+                                                  "CouponCode : ${item.couponCode ?? ''}",
+                                                  style: CustomTextStyle
+                                                      .popinsmedium,
+                                                ),
+                                                Text(
+                                                  "Payment Status: ${item.paymentMethod ?? ''}",
+                                                  style: CustomTextStyle
+                                                      .popinsmedium,
+                                                ),
+                                                Text(
+                                                    "Order Status: ${item.orderStatus ?? ''}",
+                                                    style: CustomTextStyle
+                                                        .popinsmedium),
+                                                Text(
+                                                    "Order Type: ${(item.orderType ?? 0)}"
+                                                        .toString(),
+                                                    style: CustomTextStyle
+                                                        .popinsmedium),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      "Total Amount: ${item.orderAmount ?? ''}",
+                                                      style: CustomTextStyle
+                                                          .popinsmedium,
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )));
 
-                          InkWell(
-                            onTap: (){
-                              wholemyordercontroller.addorder(item.id??0);
-                              print("Orderid ${item.id}");
-                             wholemyordercontroller.orderdetailsinit();
-                              Get.to(OrderDetailswhole(orderId:item.id??0,couponcode: item.couponCode??'',paymentmethod:item.paymentMethod??'',orderstatus:item.orderStatus??''));
-                            },
-                            child: 
-                            
-                            Container(
-                                margin: EdgeInsets.symmetric(vertical: 10),
-                                height: MediaQuery.of(context).size.height * 0.18,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: MyColors.grey, width: 0.5),
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: MyColors.white),
-                                child:
-
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-
-                                           Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: 
-                         Container(
-                          width: Get.width * 0.24,
-                          child:
-                            Image.asset(
-                    "assets/image/logocanine.png",
-                    // height: 80,
-                  ),
-                          //  CachedNetworkImage(
-                          //               imageUrl:imagePath,
-                          //                         //  fit: BoxFit.cover,
+                          //  Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //         children: [
+                          // Text(item.paymentMethod!, style: TextStyle(color: Colors.black),),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(15.0),
+                          //   child: CachedNetworkImage(
+                          //               imageUrl: imagePath, fit: BoxFit.cover,
                           //               // width: 61,
                           //               // height: 75,
                           //               placeholder: (context, url) => Center(
@@ -194,90 +266,22 @@ class MyOrderWhole extends StatelessWidget {
                           //                   Icon(Icons
                           //                       .error), // Replace with your own error widget
                           //             ),
-                       
-                        ),
-                      ),
-                     
-                                          Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "OrderId: ${(item.id ?? 0).toString()}",
-                                              style: CustomTextStyle.popinsmedium,
-                                            ),
-                                            Text(
-                                            "CouponCode : ${  item.couponCode ?? ''}",
-                                              style: CustomTextStyle.popinsmedium,
-                                            ),
-                                            Text(
-                                            "Payment Status: ${item.paymentMethod ?? ''}",
-                                              style: CustomTextStyle.popinsmedium,
-                                            ),
-                                            Text("Order Status: ${item.orderStatus ?? ''}",
-                                                style: CustomTextStyle.popinsmedium),
-                                            Text(
-                                                "Order Type: ${(item.orderType ?? 0)}"
-                                                    .toString(),
-                                                style: CustomTextStyle.popinsmedium),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Text(
-                                                "Total Amount: ${ item.orderAmount ??
-                                                      ''}",
-                                                  style: CustomTextStyle.popinsmedium,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                                                          ),
-                                        ],
-                                      ),
-                                    )
-                                 
-                                  ));
-                          
-                          //  Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //         children: [
-                                  // Text(item.paymentMethod!, style: TextStyle(color: Colors.black),),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(15.0),
-                                  //   child: CachedNetworkImage(
-                                  //               imageUrl: imagePath, fit: BoxFit.cover,
-                                  //               // width: 61,
-                                  //               // height: 75,
-                                  //               placeholder: (context, url) => Center(
-                                  //                 child: CircularProgressIndicator(),
-                                  //               ), // Replace with your own placeholder widget
-                                  //               errorWidget: (context, url, error) =>
-                                  //                   Icon(Icons
-                                  //                       .error), // Replace with your own error widget
-                                  //             ),
-                                  // ),
-                                  //  for(int j =0; j<myordercontroller
-                                  //                     .myorderModel!.data![index].callback!.length; j++)
-                                  // ...item.callback!.map((e) {
-                                  //   print("=====>>>>> zebra ff ${e.itemDetails![0].image.toString()}");
-                                  //    String imagePath = Constants.PRODUCT_HOME_IMAGE_PATH +"/${e.itemDetails![0].image.toString()}";
-                                  //   //  var imagePath  = Constants.PRODUCT_HOME_IMAGE_PATH +
-                                  //   //               "/${e.itemDetails![0].image!}";
-                                   
-                                   
-                                   
-                                  //   return 
-  
-       
-                                 
-                                 
-                                 
-                                  // } ).toList(), 
-                                // ]);
-              }  ),
-                          );
-                    }),
-              );
-            
+                          // ),
+                          //  for(int j =0; j<myordercontroller
+                          //                     .myorderModel!.data![index].callback!.length; j++)
+                          // ...item.callback!.map((e) {
+                          //   print("=====>>>>> zebra ff ${e.itemDetails![0].image.toString()}");
+                          //    String imagePath = Constants.PRODUCT_HOME_IMAGE_PATH +"/${e.itemDetails![0].image.toString()}";
+                          //   //  var imagePath  = Constants.PRODUCT_HOME_IMAGE_PATH +
+                          //   //               "/${e.itemDetails![0].image!}";
+
+                          //   return
+
+                          // } ).toList(),
+                          // ]);
+                        }),
+                  );
+          }),
+    );
   }
 }

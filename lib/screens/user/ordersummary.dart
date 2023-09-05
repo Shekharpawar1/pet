@@ -35,6 +35,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
   CouponsController couponsController = Get.put(CouponsController());
   @override
   Widget build(BuildContext context) {
+    addtocartController.updateTotal();
     return Stack(
       children: [
         Scaffold(
@@ -42,7 +43,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
             elevation: 0,
             backgroundColor: Colors.transparent,
             leading: Padding(
-              padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
+              padding:
+                  EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
               child: InkWell(
                   onTap: () {
                     Get.back();
@@ -69,7 +71,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                       right: 0,
                       child: Stack(
                         children: <Widget>[
-                          Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                          Icon(Icons.brightness_1,
+                              size: 15.0, color: MyColors.red),
                           Positioned(
                               top: 3.0,
                               right: 4.0,
@@ -94,8 +97,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                       onTap: () {
                         Get.to(AddToCardUser());
                       },
-                      child:
-                          Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+                      child: Center(
+                          child: SvgPicture.asset("assets/image/bag.svg"))),
 
 // (getCardModel!.data!.isEmpty)?
 // SizedBox():
@@ -104,7 +107,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                       right: 0,
                       child: Stack(
                         children: <Widget>[
-                          Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                          Icon(Icons.brightness_1,
+                              size: 15.0, color: MyColors.red),
                           Positioned(
                               top: 3.0,
                               right: 4.0,
@@ -184,16 +188,19 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                     .width,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(25),
+                                                        BorderRadius.circular(
+                                                            25),
                                                     color: MyColors.boxbgcolor),
                                                 child: Stack(
                                                   children: [
                                                     Padding(
                                                       padding:
-                                                          const EdgeInsets.all(8.0),
+                                                          const EdgeInsets.all(
+                                                              8.0),
                                                       child: Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.end,
+                                                            MainAxisAlignment
+                                                                .end,
                                                         children: [
                                                           // Icon(Icons.edit_outlined),
                                                           // SizedBox(
@@ -221,8 +228,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                     Row(children: [
                                                       Padding(
                                                         padding:
-                                                            const EdgeInsets.all(
-                                                                15.0),
+                                                            const EdgeInsets
+                                                                .all(15.0),
                                                         child:
                                                             //   Image.asset(
                                                             //   "assets/image/fooddog.png",
@@ -252,13 +259,15 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                 .center,
                                                         children: [
                                                           Text(
-                                                            (item.itemName ?? '')
+                                                            (item.itemName ??
+                                                                    '')
                                                                 .toString(),
                                                             style: CustomTextStyle
                                                                 .popinsmedium,
                                                           ),
                                                           Text(
-                                                              (item.variant ?? '')
+                                                              (item.variant ??
+                                                                      '')
                                                                   .toString(),
                                                               style: CustomTextStyle
                                                                   .popinssmall0),
@@ -292,21 +301,22 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                     child:
                                                                         Container(
                                                                       width: 25,
-                                                                      height: 25,
+                                                                      height:
+                                                                          25,
                                                                       decoration: BoxDecoration(
                                                                           shape: BoxShape
                                                                               .rectangle,
                                                                           color: MyColors
                                                                               .yellow,
                                                                           borderRadius:
-                                                                              BorderRadius.circular(
-                                                                                  10)),
+                                                                              BorderRadius.circular(10)),
                                                                       child: Icon(
                                                                           Icons
                                                                               .remove,
-                                                                          size: 15,
-                                                                          color: Colors
-                                                                              .black),
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              Colors.black),
                                                                       //  Icon(
                                                                       //   Icons.minimize,
                                                                       //   size: 8,
@@ -321,7 +331,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                           MyCartController>(
                                                                       init:
                                                                           addtocartController,
-                                                                      builder: (_) {
+                                                                      builder:
+                                                                          (_) {
                                                                         return Container(
                                                                             width:
                                                                                 30,
@@ -329,16 +340,12 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                                 40,
                                                                             decoration:
                                                                                 BoxDecoration(
-                                                                              borderRadius:
-                                                                                  BorderRadius.circular(50),
+                                                                              borderRadius: BorderRadius.circular(50),
                                                                             ),
                                                                             child: Center(
                                                                                 child: Text(
-                                                                              addtocartController
-                                                                                  .sizes[index]
-                                                                                  .toString(),
-                                                                              style:
-                                                                                  TextStyle(fontWeight: FontWeight.w500),
+                                                                              addtocartController.sizes[index].toString(),
+                                                                              style: TextStyle(fontWeight: FontWeight.w500),
                                                                             )));
                                                                       }),
                                                                   SizedBox(
@@ -353,19 +360,19 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                     child:
                                                                         Container(
                                                                       width: 25,
-                                                                      height: 25,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                              //shape: BoxShape.rectangle,
-                                                                              borderRadius: BorderRadius.circular(
-                                                                                  10),
-                                                                              color:
-                                                                                  MyColors.yellow),
+                                                                      height:
+                                                                          25,
+                                                                      decoration: BoxDecoration(
+                                                                          //shape: BoxShape.rectangle,
+                                                                          borderRadius: BorderRadius.circular(10),
+                                                                          color: MyColors.yellow),
                                                                       child: Icon(
-                                                                          Icons.add,
-                                                                          size: 15,
-                                                                          color: Colors
-                                                                              .black),
+                                                                          Icons
+                                                                              .add,
+                                                                          size:
+                                                                              15,
+                                                                          color:
+                                                                              Colors.black),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -649,7 +656,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                   onTap: () async {
                     await couponsController.init();
                     Get.to(UsercouponPage(
-                      price:(addtocartController.total) + (addtocartController.total * 0.05),
+                      price: (addtocartController.total) +
+                          (addtocartController.total * 0.05),
                     ));
                   },
                   child: Container(
@@ -673,12 +681,11 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                   "Apply coupon",
                                   style: CustomTextStyle.popinslight,
                                 ),
-
-                                  SizedBox(
+                                SizedBox(
                                   width: 10,
                                 ),
-                                 Text(
-                                  couponsController.couponcode??"",
+                                Text(
+                                  couponsController.couponcode ?? "",
                                   style: CustomTextStyle.popinslight,
                                 ),
                               ],
@@ -723,7 +730,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     style: CustomTextStyle.popinslight,
                                   ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
                                   ),
                                   Text(
                                     addtocartController.total.toString(),
@@ -732,16 +740,16 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                 ],
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
                                 height: 1,
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Row(
                                 children: [
                                   Text(
@@ -749,53 +757,53 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     style: CustomTextStyle.popinslight,
                                   ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
                                   ),
                                   Text(
-                                    (addtocartController.total * 0.05).toString(),
+                                    (addtocartController.total * 0.05)
+                                        .toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
                                 ],
                               ),
-                                Divider(
-                                color: MyColors.lightdivider,
-                                thickness: 1,
-                                height: 1,
-                              ),
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
-
-                                  Row(
-                                children: [
-                                  Text(
-                                    "Max discount",
-                                    style: CustomTextStyle.popinslight,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.1,
-                                  ),
-                GetBuilder<CouponsController>(
-                  init: couponsController,
-                  // initState: (_) {},
-                  builder: (_) {
-                                      return Text(
-                                      "${(couponsController.maxAmount ?? 0.0).toString()}",
-                                        style: CustomTextStyle.popinstext,
-                                      );
-                                    }
-                                  ),
-                                ],
-                              ),
-                            
                               Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
                                 height: 1,
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Max discount",
+                                    style: CustomTextStyle.popinslight,
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                  ),
+                                  GetBuilder<CouponsController>(
+                                      init: couponsController,
+                                      // initState: (_) {},
+                                      builder: (_) {
+                                        return Text(
+                                          "${(couponsController.maxAmount ?? 0.0).toString()}",
+                                          style: CustomTextStyle.popinstext,
+                                        );
+                                      }),
+                                ],
+                              ),
+                              Divider(
+                                color: MyColors.lightdivider,
+                                thickness: 1,
+                                height: 1,
+                              ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               Row(
                                 children: [
                                   Text(
@@ -803,17 +811,17 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     style: CustomTextStyle.popinslight,
                                   ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.1,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
                                   ),
                                   Text(
-                                    "₹${(((addtocartController.total) + (addtocartController.total * 0.05))-(double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                    "₹${(((addtocartController.total) + (addtocartController.total * 0.05)) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
                                     // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
                                 ],
                               ),
-
-]),
+                            ]),
                           ),
                         ),
                       ),
@@ -851,7 +859,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.48,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.48,
                                   child: GetBuilder<MyCartController>(
                                       init: addtocartController,
                                       builder: (_) {
@@ -876,7 +885,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                             .area ??
                                                         "")
                                                     .toString(),
-                                                style: CustomTextStyle.popinstext);
+                                                style:
+                                                    CustomTextStyle.popinstext);
                                       })),
                             ],
                           ),
@@ -890,8 +900,9 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                 backgroundColor: Colors.transparent,
                                 builder: (context) => Container(
                                   padding: EdgeInsets.only(
-                                    bottom:
-                                        MediaQuery.of(context).viewInsets.bottom,
+                                    bottom: MediaQuery.of(context)
+                                        .viewInsets
+                                        .bottom,
                                   ),
                                   child: Container(
                                     padding: EdgeInsets.all(16),
@@ -903,11 +914,13 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                       ),
                                     ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: [
                                             IconButton(
                                               icon: Icon(Icons.cancel),
@@ -941,27 +954,27 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                           onTap: () {
                                                             addtocartController
                                                                 .selectaddadress(
-                                                                    item.id ?? 0);
+                                                                    item.id ??
+                                                                        0);
                                                           },
                                                           child: Padding(
                                                             padding:
-                                                                EdgeInsets.all(10),
+                                                                EdgeInsets.all(
+                                                                    10),
                                                             child: Container(
                                                                 margin: EdgeInsets
                                                                     .symmetric(
                                                                         vertical:
                                                                             10),
                                                                 // height: MediaQuery.of(context).size.height*0.2,
-                                                                width:
-                                                                    MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width,
+                                                                width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
                                                                 decoration: BoxDecoration(
                                                                     borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                15),
+                                                                        BorderRadius.circular(
+                                                                            15),
                                                                     border: Border.all(
                                                                         color: MyColors
                                                                             .grey)),
@@ -1010,19 +1023,9 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                       Row(
                                                                           children: [
                                                                             InkWell(
-                                                                              onTap:
-                                                                                  () async {
-                                                                                addressController.addadressID(item.id ??
-                                                                                    0);
-                                                                                addressController.updateaddress(
-                                                                                    item.id,
-                                                                                    item.firstName,
-                                                                                    item.lastName,
-                                                                                    item.mobile,
-                                                                                    item.pincode,
-                                                                                    item.area,
-                                                                                    item.houseNo,
-                                                                                    item.landmark);
+                                                                              onTap: () async {
+                                                                                addressController.addadressID(item.id ?? 0);
+                                                                                addressController.updateaddress(item.id, item.firstName, item.lastName, item.mobile, item.pincode, item.area, item.houseNo, item.landmark);
                                                                                 print("${item.lastName}");
                                                                                 Get.to(UserAddress(
                                                                                   isSelected: false,
@@ -1043,12 +1046,9 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                                     )),
                                                                                   )),
                                                                             ),
-                                                                            SizedBox(
-                                                                                width:
-                                                                                    5),
+                                                                            SizedBox(width: 5),
                                                                             InkWell(
-                                                                              onTap:
-                                                                                  () async {
+                                                                              onTap: () async {
                                                                                 await addtocartController.addressdeleteinit();
                                                                                 //  addressController.removeaddress(index);
                                                                                 addtocartController.alladdressinit();
@@ -1066,12 +1066,9 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                                     )),
                                                                                   )),
                                                                             ),
-                                                                            SizedBox(
-                                                                                width:
-                                                                                    5),
+                                                                            SizedBox(width: 5),
                                                                             GestureDetector(
-                                                                              onTap:
-                                                                                  () {
+                                                                              onTap: () {
                                                                                 // addressController.areaaddressController.toString();
                                                                                 addtocartController.chooseaddress(index);
                                                                                 Get.back();
@@ -1204,13 +1201,14 @@ class _AddToCardUserState extends State<AddToCardUser> {
                             //       ),
                             Text("Total", style: CustomTextStyle.popinstext),
 
-                              GetBuilder<MyCartController>(
-                  init: addtocartController,
-                  // initState: (_) {},
-                  builder: (_) {
-                         return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()}",
-                               style: CustomTextStyle.appbartext);
-                  })
+                            GetBuilder<MyCartController>(
+                                init: addtocartController,
+                                // initState: (_) {},
+                                builder: (_) {
+                                  return Text(
+                                      "₹${(((addtocartController.total) + (addtocartController.total * 0.05) - (double.parse(couponsController.maxAmount ?? "0.0")))).toString()}",
+                                      style: CustomTextStyle.appbartext);
+                                })
                             // Row(
                             //   children: [
                             //     Text("₹ 620", style: CustomTextStyle.discounttext),
@@ -1237,34 +1235,37 @@ class _AddToCardUserState extends State<AddToCardUser> {
                           onTap: () {
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                             Get.to(PaymentUser(
-                               price:(((addtocartController.total) + (addtocartController.total * 0.05)-(num.parse(couponsController.maxAmount ?? "0")))).toString()
-                            ));
-                              // deliveredAddress: (addtocartController
-                              //             .allAddresslistModel!
-                              //             .data![
-                              //                 addtocartController.isselected ?? 0]
-                              //             .area ??
-                              //         "")
-                              //     .toString(),
-                              // deliveredstatus: "",
-                              // deliveredId: (addtocartController
-                              //         .allAddresslistModel!
-                              //         .data![addtocartController.isselected ?? 0]
-                              //         .id ??
-                              //     0),
-                              // cart: [addtocartController.mycartmodel!.data!.length]
-                              //     .toList(),
-                              // couponcode: couponsController.couponcode ?? '',
-                              // ordertype: "delivery",
-                              // orderstatus: "pending",
-                              // storeId: 1 ?? 0,
-                              // totaltexamount: ((addtocartController.total) +
-                              //         (addtocartController.total * 0.05))
-                              //     .toString(),
-                              // coupondiscounttitle:
-                              //     couponsController.coupontitle ?? '',
-                              // coupondiscountamount: "200",
-                             
+                                price: (((addtocartController.total) +
+                                        (addtocartController.total * 0.05) -
+                                        (num.parse(
+                                            couponsController.maxAmount ??
+                                                "0"))))
+                                    .toString()));
+                            // deliveredAddress: (addtocartController
+                            //             .allAddresslistModel!
+                            //             .data![
+                            //                 addtocartController.isselected ?? 0]
+                            //             .area ??
+                            //         "")
+                            //     .toString(),
+                            // deliveredstatus: "",
+                            // deliveredId: (addtocartController
+                            //         .allAddresslistModel!
+                            //         .data![addtocartController.isselected ?? 0]
+                            //         .id ??
+                            //     0),
+                            // cart: [addtocartController.mycartmodel!.data!.length]
+                            //     .toList(),
+                            // couponcode: couponsController.couponcode ?? '',
+                            // ordertype: "delivery",
+                            // orderstatus: "pending",
+                            // storeId: 1 ?? 0,
+                            // totaltexamount: ((addtocartController.total) +
+                            //         (addtocartController.total * 0.05))
+                            //     .toString(),
+                            // coupondiscounttitle:
+                            //     couponsController.coupontitle ?? '',
+                            // coupondiscountamount: "200",
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.4,
@@ -1312,9 +1313,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
             ),
           ),
         ),
-     
-     
-     
+
         GetBuilder<MyCartController>(
             init: addtocartController,
             builder: (_) {
@@ -1340,7 +1339,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                       ),
                     )
                   : SizedBox();
-            }), ],
+            }),
+      ],
     );
   }
 }

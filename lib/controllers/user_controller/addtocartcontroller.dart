@@ -348,6 +348,7 @@ paymentStatus = paymentstatus;
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+      throw "error";
     }
 
     showLoading = false;
