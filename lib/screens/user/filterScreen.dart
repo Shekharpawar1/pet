@@ -118,7 +118,7 @@ void onInit() {
                               productdeatilscontroller.viewproduct(
                                 item.id ?? 0,
                               );
-                              print("productid${item.id ?? 0}");
+                              // print("productid${item.id ?? 0}");
                               await productdeatilscontroller.init();
                               Get.to(ProductDetails());
                               // Get.to( ProductDetails());

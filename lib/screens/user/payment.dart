@@ -19,13 +19,13 @@ import 'package:pet/screens/wholesaler/payment2.dart';
 enum Choose { upi, cash, phonepay, paytm }
 
 class PaymentUser extends StatefulWidget {
-   PaymentUser({super.key,required this.price,
-   this.orderstatus,this.paymentstatus
-  //  this.deliveredstatus,
-  //  this.deliveredId,this.deliveredAddress,this.cart,this.couponcode,
-  //  this.ordertype,this.totaltexamount,this.coupondiscountamount,
-  //  this.coupondiscounttitle,this.orderstatus, this.storeId
-   });
+  PaymentUser(
+      {super.key, required this.price, this.orderstatus, this.paymentstatus
+      //  this.deliveredstatus,
+      //  this.deliveredId,this.deliveredAddress,this.cart,this.couponcode,
+      //  this.ordertype,this.totaltexamount,this.coupondiscountamount,
+      //  this.coupondiscounttitle,this.orderstatus, this.storeId
+      });
   String price;
 
   // String? deliveredstatus;
@@ -41,13 +41,12 @@ class PaymentUser extends StatefulWidget {
   String? paymentstatus;
   // int? storeId;
 
-
   @override
   State<PaymentUser> createState() => _PaymentUserState();
 }
 
 class _PaymentUserState extends State<PaymentUser> {
- MyCartController mycartController = Get.put(MyCartController());
+  MyCartController mycartController = Get.put(MyCartController());
 
   // String? selectedGender;
   String? selectupi;
@@ -96,10 +95,9 @@ class _PaymentUserState extends State<PaymentUser> {
         //       )),
         // ],
       ),
-      body:
-       Stack(
-         children: [
-           Padding(
+      body: Stack(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(15.0),
             child: ListView(
               shrinkWrap: true,
@@ -218,57 +216,50 @@ class _PaymentUserState extends State<PaymentUser> {
                 //   height: MediaQuery.of(context).size.height * 0.05,
                 // ),
                 InkWell(
-                  onTap: () async{
-
+                  onTap: () async {
                     // print(selectone == Choose.upi);
-                    if(selectone == Choose.upi){
+                    if (selectone == Choose.upi) {
                       print("UPI payment");
- 
-  mycartController.addpaymenttype(selectone == Choose.upi?'online':"offline",selectone == Choose.cash? "paid": "unpaid");
 
-                      Get.to(UserUpiScreen(
-amount: double.tryParse(widget.price)));
-                    } else if(selectone == Choose.cash){
+                      mycartController.addpaymenttype(
+                          selectone == Choose.upi ? 'online' : "offline",
+                          selectone == Choose.cash ? "paid" : "unpaid");
+
+                      Get.to(
+                          UserUpiScreen(amount: double.tryParse(widget.price)));
+                    } else if (selectone == Choose.cash) {
                       print("Cash payment");
-mycartController.addpaymenttype(selectone == Choose.cash?'offline':"online",selectone == Choose.cash? "unpaid": "paid");
-                  await mycartController.placeorder();
+                      mycartController.addpaymenttype(
+                          selectone == Choose.cash ? 'offline' : "online",
+                          selectone == Choose.cash ? "unpaid" : "paid");
+                      await mycartController.placeorder();
 
-               await showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      scrollable: true,
-      // title:  Text("Login"),
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            scrollable: true,
+                            // title:  Text("Login"),
 
-      content: Column(mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              
-                  Align(alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: Icon(Icons.close), // You can use any close icon you prefer
-                      onPressed: () {
-                       Get.back(); // Close the dialog
-                      },
-                    ),
-                  ),
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child:
+                                      Image.asset("assets/image/success.png", height: 50, width: 50,),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text("Order Placed Successfully"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
 
-                   Padding(
-               padding:  EdgeInsets.all(10.0),
-               child: Image.asset("assets/image/success.png"),
-             ),
-             
-              
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Order Placed Successfully"),
-              ),
-            ],
-      ),
-    );
-  },
-);
-                       
-                         Get.to(MyOrderUser( ));
+                      Get.off(MyOrderUser());
                       // Get.to(Payment2User());
                     }
                     // Get.to(Payment2User());
@@ -288,40 +279,40 @@ mycartController.addpaymenttype(selectone == Choose.cash?'offline':"online",sele
                     ),
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
               ],
             ),
+          ),
+          GetBuilder<MyCartController>(
+              init: mycartController,
+              builder: (_) {
+                return mycartController.showLoading
+                    ? BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                        child: Container(
+                          color: Colors.black
+                              .withOpacity(0.5), // Adjust the opacity as needed
+                        ),
+                      )
+                    : SizedBox();
+              }),
+          // Progress bar
+          GetBuilder<MyCartController>(
+              init: mycartController,
+              builder: (_) {
+                return mycartController.showLoading
+                    ? Center(
+                        child: SpinKitCircle(
+                          color: Colors.white, // Color of the progress bar
+                          size: 50.0, // Size of the progress bar
+                        ),
+                      )
+                    : SizedBox();
+              }),
+        ],
       ),
-           GetBuilder<MyCartController>(
-                init: mycartController,
-                builder: (_) {
-                  return mycartController.showLoading
-                      ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                          child: Container(
-                            color: Colors.black.withOpacity(
-                                0.5), // Adjust the opacity as needed
-                          ),
-                        )
-                      : SizedBox();
-                }),
-            // Progress bar
-            GetBuilder<MyCartController>(
-                init: mycartController,
-                builder: (_) {
-                  return mycartController.showLoading
-                      ? Center(
-                          child: SpinKitCircle(
-                            color: Colors.white, // Color of the progress bar
-                            size: 50.0, // Size of the progress bar
-                          ),
-                        )
-                      : SizedBox();
-                }),
-          
-        
-         ],
-       ),
     );
   }
 }

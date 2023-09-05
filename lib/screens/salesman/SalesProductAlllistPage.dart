@@ -261,11 +261,11 @@ filtercontroller.init();
                                 print(imagePath);
                                 return InkWell(
                                   onTap: () async{
-                                       productdeatilscontroller.viewproduct( item.id??0,);
-                                           print("productid${item.id??0}");
-                                          await productdeatilscontroller.init();
-                                            productdeatilscontroller.clearFields();  
-                                       Get.to( ProductDetails());
+                                      //  productdeatilscontroller.viewproduct( item.id??0,);
+                                      //      print("productid${item.id??0}");
+                                      //     await productdeatilscontroller.init();
+                                      //       productdeatilscontroller.clearFields();  
+                                      //  Get.to( ProductDetails());
                                   },
                                   child: Container(
                                     width: 140,

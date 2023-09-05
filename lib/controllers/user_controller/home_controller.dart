@@ -315,6 +315,7 @@ class HomeuserController extends GetxController {
   get getOurBrandList => _ourbandList;
   // get getServiceList => _serviceList;
   get gettoyList => toylist;
+  final storage = GetStorage();
 
   Future<void> addItemToWishList(int productId) async {
     showLoading = true;
@@ -334,7 +335,7 @@ class HomeuserController extends GetxController {
       // "pet_problem": petProblemController.text.trim().toString(),
       // "phone": numberController.text.trim(),
       // "service_id": serviceId.toString(),
-      "user_id": userId.toString(),
+      "user_id": storage.read('id').toString(),
       "item_id": productId.toString(),
       // "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
     };
@@ -410,7 +411,7 @@ class HomeuserController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$userId");
+      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/${storage.read('id').toString()}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
       update();
