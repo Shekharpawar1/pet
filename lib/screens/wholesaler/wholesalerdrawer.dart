@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/intro2.dart';
+import 'package:pet/screens/user/login.dart';
 
 
 
@@ -209,7 +211,7 @@ class _drawerWholeSalerState extends State<drawerWholeSaler> {
     //     break;
       case 5:
         await GetStorage().erase();
-        Get.offAll(LoginWhole());
+        Get.offAll(LoginUser());
         break;
     }
   }

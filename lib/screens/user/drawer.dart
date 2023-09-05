@@ -71,14 +71,16 @@ class _drawerState extends State<drawer> {
     return Drawer(
       backgroundColor: MyColors.bgcolor,
       child: ListView(
+        shrinkWrap: true,
+        primary: true,
         children: [
            Container(height:MediaQuery.of(context).size.height*0.2,
 
                 child: DrawerHeader(
 
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
+                   shrinkWrap: true,
+        primary: false,
                     children: [
                       InkWell(onTap:(){
                         // Get.to(Profile());

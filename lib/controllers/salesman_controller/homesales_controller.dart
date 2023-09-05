@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/models/salesmanModel/bannerModel.dart';
 import 'package:pet/models/salesmanModel/getUserCategoriesModel.dart';
 import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
 import 'package:pet/models/salesmanModel/ourBrandModel.dart';
+import 'package:pet/models/salesmanModel/salesWishListModel.dart';
 import 'package:pet/models/usersModel/bannerModel.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
 class HomeSalesController extends GetxController {
+   bool showLoading = false;
+   var sellerId = GetStorage().read("sellerid");
+
   List _cartList = [
     Colors.blue,
     Colors.green,
@@ -58,10 +63,16 @@ class HomeSalesController extends GetxController {
   SalesBannerModel? salesBannerModel;
   bool bannerLoaded = false;
 
-  // our brand
+   // our brand
   String getBrandUrl = '${Constants.GET_OUR_BRAND}';
   SalesOurBrandModel? salesBrandModel;
+  SalesOurBrandModel? salesOurBrandModel = SalesOurBrandModel();
   bool brandLoaded = false;
+
+  // wishlist list
+  SalesWishListModel? saleswishList;
+  String getWishListUrl = Constants.USER_GET_WISHLIST;
+  List wishListItemsId = GetStorage().read('wishListItems') ?? [];
 
   @override
   void onInit() {
@@ -70,6 +81,8 @@ class HomeSalesController extends GetxController {
   }
 
   void init() async {
+    showLoading = true;
+    update();
     try {
       // categories
       salesCategoriesModel = SalesCategoriesModel.fromJson(
@@ -108,7 +121,7 @@ class HomeSalesController extends GetxController {
       // banners
       salesBannerModel =
           SalesBannerModel.fromJson(await ApiHelper.getApi(getBannerUrl));
-      print(salesBrandModel);
+      print(salesBannerModel);
       bannerLoaded = true;
       update();
     } catch (e) {
@@ -121,11 +134,19 @@ class HomeSalesController extends GetxController {
         colorText: Colors.white,
       );
     }
-    try {
+      try {
       // our brands
-      salesBrandModel =
+     salesBrandModel =
           SalesOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
-      print(salesBrandModel);
+      // userOurBrandModel = userBrandModel;
+      // userOurBrandModel!.data = [];
+      // userBrandModel!.data!.forEach((e) {
+      //   if (e.canine == 1) {
+      //     userOurBrandModel!.data!.add(e);
+      //   }
+      // });
+      print(
+          "CAnine products ===>>>> ${salesBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
       update();
     } catch (e) {
@@ -138,6 +159,142 @@ class HomeSalesController extends GetxController {
         colorText: Colors.white,
       );
     }
+
+    showLoading = false;
+    update();
+  }
+
+
+  Future<void> addItemToWishList(int productId) async {
+    showLoading = true;
+    update();
+    // await Future.delayed(Duration(seconds: 4));
+    Map<String, String> body = {
+      // "dates": DateFormat('dd-MM-yyyy').format(selectedDate).toString(),
+      // "slot": timeSlots.map((e) => e.time).toList(),
+      // "slot": selectedSlot!.time.toString(),
+      // "name": nameController.text.trim().toString(),
+      // "email": emailController.text.trim().toString(),
+      // "pet": selectedPet.toString(),
+      // "pet": petId.toString(),
+      // "state": selectedState!.stateName.toString(),
+      // "city": selectedCity!.cityName.toString(),
+      // "address": addressController.text.trim().toString(),
+      // "pet_problem": petProblemController.text.trim().toString(),
+      // "phone": numberController.text.trim(),
+      // "service_id": serviceId.toString(),
+      "user_id": sellerId.toString(),
+      "item_id": productId.toString(),
+      // "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
+    };
+    String addToWishList = Constants.USER_ADD_TO_FAV;
+    print(body);
+    try {
+      // List documentList = [
+      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45 (1).png', 'key': "logo"},
+      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45.png', 'key': "profile"},
+      // ];
+      // var body = {'id': 'value', 'name': 'dhruv'};
+      var request = http.MultipartRequest('POST', Uri.parse(addToWishList));
+      request.fields.addAll(body);
+      // request.files.add(await http.MultipartFile.fromPath(
+      //     'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
+      // documentList.forEach((element) async {
+      //   request.files.add(await http.MultipartFile.fromPath(
+      //       element["key"], element["value"]));
+      // });
+      await ApiHelper.postFormData(request: request);
+      wishListItemsId.add(productId);
+      update();
+      GetStorage().write('wishListItems', wishListItemsId);
+
+      // clearFields();
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Item Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      if (e.toString() == "Error: Already in List") {
+        wishListItemsId.add(productId);
+        update();
+        GetStorage().write('wishListItems', wishListItemsId);
+        removeItemFromWishList(productId);
+        // Get.snackbar(
+        //   'Exists',
+        //   'Remove it from WishList Page',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.orange,
+        //   colorText: Colors.white,
+        // );
+      } else {
+        Get.snackbar(
+          'Error',
+          'An error occurred: $e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    }
+    print(wishListItemsId);
+    showLoading = false;
+    update();
+  }
+
+  Future<void> removeItemFromWishList(int productId) async {
+    // var data = await GetStorage().read("userData");
+    showLoading = true;
+    update();
+    print("Removing item");
+    try {
+      // remove from wishlist
+      // servicesCategoryModel =
+      //     ServicesCategoryModel.fromJson(await ApiHelper.getApi(url));
+      // print(servicesCategoryModel);
+      // servicesCategoryLoaded = true;
+      String url = Constants.USER_REMOVE_FROM_FAV;
+      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$sellerId");
+      wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
+      GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
+      update();
+      Get.snackbar(
+        'Success',
+        'Item Removed',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      if (e.toString() == "Error: Not Found") {
+        wishListItemsId
+            .removeWhere((e) => e.toString() == productId.toString());
+        GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
+        Get.snackbar(
+          'Item Not Found',
+          'Item does not exist',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          'An error occurred: $e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    }
+
+    showLoading = false;
+    update();
   }
 
   void deleteCartItem(dynamic item) {

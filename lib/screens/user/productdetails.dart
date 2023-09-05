@@ -1275,4 +1275,7 @@ class ProductDetails extends StatelessWidget {
       ),
     );
   }
+
+
+
 }

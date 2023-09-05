@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -26,7 +27,8 @@ class _AllcategoryState extends State<Allcategory> {
   TextEditingController _searchcontroller = TextEditingController();
 // final HomeuserController homeusercontroller = Get.put(HomeuserController());
 final SubCategoryController subcategorycontroller = Get.put(SubCategoryController());
-
+  ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
   @override
   Widget build(BuildContext context) {
     // subcategorycontroller.categoryids = widget.id;
@@ -580,14 +582,14 @@ Container(
            subcategorycontroller.userProductModel!.data == null
                               ? SizedBox(child:Center(child: Text("No Data Found"))):
                                    InkWell(
-                                    onTap: () {
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             ProductDetails(
-                                      //               itemdetails: item,
-                                      //             )));
+                                    onTap: () async{
+                                         productdeatilscontroller
+                                                .viewproduct(
+                                              item.id ?? 0,
+                                            );
+                                            print("productid${item.id ?? 0}");
+                                            await productdeatilscontroller
+                                                .init();
                                     Get.to(ProductDetails());
                                     },
                                     child: Container(

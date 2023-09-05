@@ -152,10 +152,10 @@ fontWeight: FontWeight.w700,),)
                       var item =widget.data![index];
                   
                      return
-                     (item.orderStatus == "pending")?
-                    widget.data == null
-                          ? SizedBox()
-                          : 
+                    //  (item.orderStatus == "pending")?
+                    // widget.data == null
+                    //       ? SizedBox()
+                    //       : 
                 
                 
                   Column(
@@ -326,7 +326,8 @@ fontWeight: FontWeight.w700,),)
                       );
                     })
                     ],
-                  ):Text("");
+                  );
+                  // :Text("");
                
             //    SizedBox(height: 15,),
                

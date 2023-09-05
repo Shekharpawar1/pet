@@ -1493,7 +1493,7 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                                     "password":   createAccountcontroller.passcodeController.text
                                         .trim()
                                         .toString(),
-
+"seller_id": "null",
                                         "role":1.toString(),
                                         // "upload_1": createAccountcontroller
                                         //                     .profileFile!,

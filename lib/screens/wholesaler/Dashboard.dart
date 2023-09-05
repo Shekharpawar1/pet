@@ -8,7 +8,7 @@ import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/totalorderwhole_controller.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/complete.dart';
-import 'package:pet/screens/wholesaler/pending.dart';
+import 'package:pet/screens/wholesaler/pendingcomplete.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -26,7 +26,7 @@ class DashboardWhole extends StatefulWidget {
 class _DashboardWholeState extends State<DashboardWhole> {
    WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
 WholeTotalOrderController wholetotalordercontroller = Get.put(WholeTotalOrderController());
-
+int len = 0;
  final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 
   @override
@@ -146,7 +146,19 @@ body: SingleChildScrollView(child: Padding(
             builder: (_) {
         return InkWell(onTap: (){
            wholetotalordercontroller.init();
-            int len = wholetotalordercontroller.wholetotalorderModel!.data!.where((element) => element.orderStatus == "pending" && element.paymentMethod == "offline" ).toList().length;
+//             int len = wholetotalordercontroller.wholetotalorderModel!.data!.reduce((prev, now) {
+// if(now.orderStatus == "pending"  ){
+//   return int.parse(now.orderAmount ?? "0") + int.parse(now.orderAmount ?? "0");
+// }
+// return 0;
+//             });
+  int len = 0;
+  wholetotalordercontroller.wholetotalorderModel!.data!.forEach((e) {
+if(e.orderStatus == "pending" && e.paymentMethod == "paid" ){
+  len += int.parse(e.orderAmount ?? "0") + int.parse(e.orderAmount ?? "0");
+}
+  });
+
    print("=========>>>>>>> Balancelen $len");
           Get.to(Balance());
         },
@@ -168,7 +180,7 @@ body: SingleChildScrollView(child: Padding(
           
           children: [
           
-                Text("150",
+                Text(len.toString(),
             style: CustomTextStyle.boldStyle1
           
             

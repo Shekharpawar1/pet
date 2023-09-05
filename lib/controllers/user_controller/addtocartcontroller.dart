@@ -27,6 +27,8 @@ class MyCartController extends GetxController {
   var userID;
   int total = 1;
   String? paymenttype;
+  String? paymentStatus;
+  String? orderStatus;
   var tex;
   List<Map<String, dynamic>> cartList = [];
 // void  incrementSize(){
@@ -52,11 +54,12 @@ class MyCartController extends GetxController {
 //     update();
 //     print("sizes${sizes}");
 //   }
-  void addpaymenttype(String type) {
+  void addpaymenttype(String type, String paymentstatus ) {
     paymenttype = type;
-
+paymentStatus = paymentstatus;
+// orderStatus = orderstatus;
     update();
-    print("paymenttype: ${paymenttype}");
+    print("paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
 
   void adddiscount(int disprice, int price) {
@@ -152,8 +155,16 @@ class MyCartController extends GetxController {
       print("====?//${mycartmodel}");
       sizes = mycartmodel!.data!.map((e) => 1).toList();
       List<Map<String, dynamic>> cartJsonList =
-          mycartmodel!.data!.map((item) => item.toJson()).toList();
+          mycartmodel!.data!.map((item) => {
+            "product_id": item.itemId,
+            "quantity":item.quantity,
+            "variation":item.variant,
+            "tax_amount":13,
+            "discount_on_item":20,
+            "price":item.price
+          }).toList();
       cartList = cartJsonList;
+      
 
 // mycartmodel!.data!.forEach((element) async {
       //   total += (int.parse(element.price!) *
@@ -265,7 +276,7 @@ class MyCartController extends GetxController {
       "seller_id": null,
       "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
       "coupon_discount_title": couponsController.coupontitle ?? '',
-      "payment_status": "confirm",
+      "payment_status": paymentStatus.toString(),
       "order_status": "pending",
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),

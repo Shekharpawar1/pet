@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pet/controllers/salesman_controller/addwholeseller_controller.dart';
+import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
 
 import 'package:pet/controllers/salesman_controller/wholesaler_controller.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
@@ -11,13 +15,207 @@ import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
 import 'package:pet/screens/salesman/orderHistory.dart';
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
-class WholeSalerScreen extends StatelessWidget {
-  WholeSalerScreen({super.key});
+class SalesWholeSalerScreen extends StatelessWidget {
+  SalesWholeSalerScreen({super.key});
   TextEditingController _searchcontroller = TextEditingController();
-  final WholeSaleController wholeSalerController =
-      Get.put(WholeSaleController());
+  final SalesAddwholeControllers addwholesellerController =
+      Get.put(SalesAddwholeControllers());
+ DashBoardController dashBoardController = Get.put(DashBoardController());
+
+  Future openCameraPopupProfile(
+    BuildContext context,
+  ) async {
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) {
+        return Dialog(
+          alignment: Alignment.bottomCenter,
+          insetPadding: EdgeInsets.all(0),
+          elevation: 0,
+          backgroundColor: Color(0xffffffff),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Container(
+              height: 150,
+              child: Stack(
+                children: [
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            // color: border,
+                          ),
+                          onPressed: () {},
+                        ),
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 50),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  FloatingActionButton(
+                                    backgroundColor: Colors.black,
+                                    onPressed: () async {
+                                      await addwholesellerController
+                                          .getImageGalleryProfile();
+                                      Navigator.pop(context);
+                                    },
+                                    tooltip: "Pick Image form gallery",
+                                    child: Icon(Icons.photo),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text('Gallery',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500))
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  FloatingActionButton(
+                                    backgroundColor: Colors.black,
+                                    onPressed: () async {
+                                      await addwholesellerController
+                                          .getImageCameraProfile();
+                                      Navigator.pop(context);
+
+                                      await Future.delayed(
+                                          Duration(seconds: 2));
+                                    },
+                                    tooltip: "Pick Image from camera",
+                                    child: Icon(Icons.camera_alt),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    'Camera',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ))
+                ],
+              )),
+        );
+      },
+    );
+  }
+
+  Future openCameraPopupLogo(
+    BuildContext context,
+  ) async {
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) {
+        return Dialog(
+          alignment: Alignment.bottomCenter,
+          insetPadding: EdgeInsets.all(0),
+          elevation: 0,
+          backgroundColor: Color(0xffffffff),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Container(
+              height: 150,
+              child: Stack(
+                children: [
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: EdgeInsets.all(5),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            // color: border,
+                          ),
+                          onPressed: () {},
+                        ),
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: 50),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Column(
+                                children: [
+                                  FloatingActionButton(
+                                    backgroundColor: Colors.black,
+                                    onPressed: () async {
+                                      await addwholesellerController
+                                          .getImageGalleryLogo();
+                                      Navigator.pop(context);
+                                    },
+                                    tooltip: "Pick Image form gallery",
+                                    child: Icon(Icons.photo),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text('Gallery',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500))
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  FloatingActionButton(
+                                    backgroundColor: Colors.black,
+                                    onPressed: () async {
+                                      await addwholesellerController
+                                          .getImageCameraLogo();
+                                      Navigator.pop(context);
+
+                                      await Future.delayed(
+                                          Duration(seconds: 2));
+                                    },
+                                    tooltip: "Pick Image from camera",
+                                    child: Icon(Icons.camera_alt),
+                                  ),
+                                  SizedBox(height: 5),
+                                  Text(
+                                    'Camera',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ))
+                ],
+              )),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +258,8 @@ class WholeSalerScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: GetBuilder<WholeSaleController>(
-          init: wholeSalerController,
+      body: GetBuilder<SalesAddwholeControllers>(
+          init: addwholesellerController,
           builder: (_) {
             return ListView(
               primary: true,
@@ -72,14 +270,14 @@ class WholeSalerScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
-                          wholeSalerController.wholeSalerView();
+                          addwholesellerController.wholeSalerView();
                         },
                         child: Container(
                           width: Get.width * 0.3,
                           height: 55,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(23),
-                            color: wholeSalerController.isAdding
+                            color: addwholesellerController.isAdding
                                 ? Colors.white
                                 : Colors.blue,
                             boxShadow: [
@@ -95,7 +293,7 @@ class WholeSalerScreen extends StatelessWidget {
                             child: Text(
                               "Wholesaler",
                               style: TextStyle(
-                                color: wholeSalerController.isAdding
+                                color: addwholesellerController.isAdding
                                     ? Colors.black
                                     : Colors.white,
                               ),
@@ -108,14 +306,14 @@ class WholeSalerScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () {
-                          wholeSalerController.addWholeSaler();
+                          addwholesellerController.addWholeSaler();
                         },
                         child: Container(
                           width: Get.width * 0.6,
                           height: 55,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(23),
-                            color: wholeSalerController.isAdding
+                            color: addwholesellerController.isAdding
                                 ? Colors.blue
                                 : Colors.white,
                             boxShadow: [
@@ -131,7 +329,7 @@ class WholeSalerScreen extends StatelessWidget {
                             child: Text(
                               "Add New Wholesaler",
                               style: TextStyle(
-                                color: wholeSalerController.isAdding
+                                color: addwholesellerController.isAdding
                                     ? Colors.white
                                     : Colors.black,
                               ),
@@ -142,921 +340,1479 @@ class WholeSalerScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                wholeSalerController.isAdding
-                    ? Form(
-                        key: wholeSalerController.formKey,
-                        child: ListView(
-                          primary: false,
-                          shrinkWrap: true,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
+                addwholesellerController.isAdding
+                    ?  Form(
+                key: addwholesellerController.formKey,
+                child: ListView(
+                  primary: false,
+                  shrinkWrap: true,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        // height: 50,
+                        //                    width: 335,
+                        // height: 45,
+                          height: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   color: Colors.grey.shade200,
                                 ),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      wholeSalerController.fullNameController,
-                                  decoration: InputDecoration(
-                                    hintText: "Full Name",
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  print("Tapped...");
-                                  wholeSalerController.selectDate(
-                                      context); // Show date picker when container is tapped
-                                  // final DateTime? picked = await showDatePicker(
-                                  //   context: context,
-                                  //   initialDate: DateTime.now(),
-                                  //   firstDate: DateTime(1900),
-                                  //   lastDate: DateTime.now(),
-                                  // );
-                                  // if (picked != null) {
-                                  //   wholeSalerController.selectedDate = picked;
-                                  //   wholeSalerController.dobController.text =
-                                  //       DateFormat('yyyy-MM-dd').format(
-                                  //           wholeSalerController.selectedDate!);
-                                  //   // update();
-                                  // }
-                                },
-                                child: Container(
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.grey.shade200,
-                                  ),
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter DOB';
-                                      }
-                                      return null;
-                                    },
-                                    controller:
-                                        wholeSalerController.dobController,
-                                    decoration: InputDecoration(
-                                      hintText: "Date of Birth",
-                                      contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 10),
-                                      border: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                    ),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter emil';
-                                    }
-                                    return null;
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  controller:
-                                      wholeSalerController.emailController,
-                                  decoration: InputDecoration(
-                                    hintText: "Email ID",
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please Designation';
-                                    }
-                                    return null;
-                                  },
-                                  controller: wholeSalerController
-                                      .designationController,
-                                  decoration: InputDecoration(
-                                    hintText: "Designation",
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: DropdownButtonFormField<String>(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select a country';
-                                    }
-                                    return null;
-                                  },
-                                  value: wholeSalerController
-                                      .selectedCountry, // Set the selected country value
-                                  decoration: InputDecoration(
-                                    hintText: "Country",
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                  items: wholeSalerController.countries
-                                      .map((String country) {
-                                    return DropdownMenuItem<String>(
-                                      value: country,
-                                      child: Text(country),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    wholeSalerController
-                                        .updateCountry(value ?? "");
-                                    // Perform actions when country is changed
-                                  },
-                                ),
-                              ),
-                            ),
-                            wholeSalerController.showLoading
-                                ? Center(
-                                    child: CircularProgressIndicator(),
-                                  )
-                                :
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
-                                        color: Colors.grey.shade200,
-                                      ),
-                                      child: DropdownButtonFormField<
-                                          statesFile.State>(
-                                        validator: (value) {
-                                          if (value == null ||
-                                              value.stateName!.isEmpty) {
-                                            return 'Please select a state';
-                                          }
-                                          return null;
-                                        },
-                                        value:
-                                            wholeSalerController.selectedState,
-                                        decoration: InputDecoration(
-                                          hintText: "State",
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 20, vertical: 5),
-                                          border: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                        ),
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                        ),
-                                        items: wholeSalerController
-                                            .stateListModel!.state!
-                                            .map((state) {
-                                          return DropdownMenuItem<
-                                              statesFile.State>(
-                                            value: state,
-                                            child: Text(state.stateName!),
-                                          );
-                                        }).toList(),
-                                        onChanged:
-                                            (statesFile.State? value) async {
-                                          await wholeSalerController
-                                              .updateState(value!);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 8.0),
-                                !wholeSalerController.cityLoaded
-                                    ? SizedBox()
-                                    : Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              color: Colors.grey.shade200,
-                                            ),
-                                            child: DropdownButtonFormField<
-                                                cityFile.State>(
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.cityName!.isEmpty) {
-                                                  return 'Please select a city';
-                                                }
-                                                return null;
-                                              },
-                                              value: wholeSalerController
-                                                  .selectedCity,
-                                              decoration: InputDecoration(
-                                                hintText: "City",
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 20,
-                                                        vertical: 5),
-                                                border: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                              ),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                              items: wholeSalerController
-                                                  .cityListModel!.state!
-                                                  .map((state) {
-                                                return DropdownMenuItem<
-                                                    cityFile.State>(
-                                                  value: state,
-                                                  child: Text(state.cityName!),
-                                                );
-                                              }).toList(),
-                                              onChanged:
-                                                  (cityFile.State? value) {
-                                                wholeSalerController
-                                                    .updateCity(value!);
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                           
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: TextFormField(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter pincode';
-                                    }
-                                    return null;
-                                  },
-                                  controller:
-                                      wholeSalerController.pincodeController,
-                                  decoration: InputDecoration(
-                                    hintText: "Pincode",
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 10),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: DropdownButtonFormField<String>(
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please select a currency';
-                                    }
-                                    return null;
-                                  },
-                                  value: wholeSalerController
-                                      .selectedCurrency, // Set the selected country value
-                                  decoration: InputDecoration(
-                                    hintText: "Currency",
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                  items: wholeSalerController.currency
-                                      .map((String currency) {
-                                    return DropdownMenuItem<String>(
-                                      value: currency,
-                                      child: Text(currency),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    wholeSalerController
-                                        .updateCurrency(value ?? "");
-                                    // Perform actions when country is changed
-                                  },
-                                ),
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    width: Get.width * 0.45,
-                                    height: 80,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.grey.shade200,
-                                    ),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("Upload"),
-                                          Icon(Icons.upload),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 80,
-                                    width: Get.width * 0.45,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: Colors.grey.shade200,
-                                    ),
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text("Upload"),
-                                          Icon(Icons.upload),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-
-
-
-                            GestureDetector(
-                              onTap: () {
-                                wholeSalerController.validateForm(context);
                                
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            return null;
+                          },
+                          controller:
+                              addwholesellerController.fullNameController,
+                          decoration: InputDecoration(
+                            hintText: "First Name",
+                            hintStyle: TextStyle(
+                              color: MyColors.black,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        //                    width: 335,
+                        // height: 45,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your last name';
+                            }
+                            return null;
+                          },
+                          controller:
+                              addwholesellerController.lastNameController,
+                          decoration: InputDecoration(
+                            hintText: "Last Name",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter email';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          controller: addwholesellerController.emailController,
+                          decoration: InputDecoration(
+                            hintText: "Email ID",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          readOnly: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a value';
+                            }
+                            // Add more validation rules if needed
+                            return null; // Return null for no validation errors
+                          },
+                          onTap: () {
+                            addwholesellerController.selectDate(
+                                context); // Function to show date picker
+                          },
+                          controller: addwholesellerController.dobController,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: MyColors.black,
+                              fontFamily: "SF-Pro-Display"),
+                          decoration: InputDecoration(
+
+                              // contentPadding: EdgeInsets.only(left: 15),
+                              fillColor: MyColors.white,
+                              focusColor: MyColors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+
+                                // borderRadius: BorderRadius.circular(50),
+                              ),
+                              // contentPadding: EdgeInsets.all(10),
+
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                //  borderRadius: BorderRadius.circular(50),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                //  borderRadius: BorderRadius.circular(50),
+                              ),
+                              hintText: "DD/MM/YYYY",
+                              suffixIcon: Icon(
+                                Icons.calendar_month_outlined,
+                                color: MyColors.white,
+                              ),
+                              hintStyle: TextStyle(
+                                  color: MyColors.white,
+                                  fontFamily: "SF-Pro-Display",
+                                  fontSize: 14)),
+                        ),
+                      ),
+                    ), // Padding(
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          controller:
+                              addwholesellerController.numberController,
+                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  maxLength: 10,
+                          keyboardType: TextInputType.phone,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Please Enter a Phone Number";
+                            } else if (!RegExp(
+                                    r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                                .hasMatch(value)) {
+                              return "Please Enter a Valid Phone Number";
+                            }
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Mobile No",
+                            counterText: '',
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(50),
+                    //       color: Colors.grey.shade200,
+                    //     ),
+                    //     child: TextFormField(
+                    //       validator: (value) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return 'Please Designation';
+                    //         }
+                    //         return null;
+                    //       },
+                    //       controller: addwholesellerController
+                    //           .designationController,
+                    //       decoration: InputDecoration(
+                    //         hintText: "Designation",
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: 20, vertical: 10),
+                    //         border: InputBorder.none,
+                    //         enabledBorder: InputBorder.none,
+                    //         focusedBorder: InputBorder.none,
+                    //       ),
+                    //       style: TextStyle(
+                    //         fontSize: 16,
+                    //         color: Colors.black,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //         color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             offset: const Offset(0.0, 0.0),
+                    //             color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //             blurRadius: 0.0,
+                    //             spreadRadius: 0.0,
+                    //           ),
+                    //         ],
+                    //         borderRadius: BorderRadius.circular(40)),
+                    //     child: DropdownButtonFormField<String>(
+                    //       validator: (value) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return 'Please select a tpye';
+                    //         }
+                    //         return null;
+                    //       },
+                    //       value: addwholesellerController
+                    //           .dropdowntype, // Set the selected country value
+                    //       decoration: InputDecoration(
+                    //         hintText: "WholeSeller Type",
+                    //         hintStyle: TextStyle(
+                    //           color: MyColors.white,
+                    //         ),
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: 20, vertical: 5),
+                    //         border: InputBorder.none,
+                    //         enabledBorder: InputBorder.none,
+                    //         focusedBorder: InputBorder.none,
+                    //         iconColor: MyColors.white,
+                    //       ),
+                    //       icon: Icon(
+                    //         Icons.arrow_drop_down,
+                    //         color: MyColors.white,
+                    //       ),
+                    //       style: TextStyle(fontSize: 16, color: MyColors.white),
+                    //       items: addwholesellerController.typeDropDownList
+                    //           .map((String country) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: country,
+                    //           child: Text(country),
+                    //         );
+                    //       }).toList(),
+                    //       onChanged: (String? value) {
+                    //         addwholesellerController.updatetype(value ?? "");
+                    //         // Perform actions when country is changed
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //         color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             offset: const Offset(0.0, 0.0),
+                    //             color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //             blurRadius: 0.0,
+                    //             spreadRadius: 0.0,
+                    //           ),
+                    //         ],
+                    //         borderRadius: BorderRadius.circular(40)),
+                    //     child: DropdownButtonFormField<String>(
+                    //       validator: (value) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return 'Please select a type';
+                    //         }
+                    //         return null;
+                    //       },
+                    //       value: addwholesellerController
+                    //           .dropdownzone, // Set the selected country value
+                    //       decoration: InputDecoration(
+                    //         hintText: "Zone",
+                    //         hintStyle: TextStyle(
+                    //           color: MyColors.white,
+                    //         ),
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: 20, vertical: 5),
+                    //         border: InputBorder.none,
+                    //         enabledBorder: InputBorder.none,
+                    //         focusedBorder: InputBorder.none,
+                    //         // iconColor: MyColors.white,
+                    //       ),
+                    //       icon: Icon(
+                    //         Icons.arrow_drop_down,
+                    //         color: MyColors.white,
+                    //       ),
+                    //       style: TextStyle(fontSize: 16, color: MyColors.white),
+                    //       items: addwholesellerController.zoneDropDownList
+                    //           .map((String country) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: country,
+                    //           child: Text(country),
+                    //         );
+                    //       }).toList(),
+                    //       onChanged: (String? value) {
+                    //         addwholesellerController.updatezone(value ?? "");
+                    //         // Perform actions when country is changed
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Container(
+                    //     height: 50,
+                    //     decoration: BoxDecoration(
+                    //         color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             offset: const Offset(0.0, 0.0),
+                    //             color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //             blurRadius: 0.0,
+                    //             spreadRadius: 0.0,
+                    //           ),
+                    //         ],
+                    //         borderRadius: BorderRadius.circular(40)),
+                    //     child: DropdownButtonFormField<String>(
+                    //       validator: (value) {
+                    //         if (value == null || value.isEmpty) {
+                    //           return 'Please select a tpye';
+                    //         }
+                    //         return null;
+                    //       },
+                    //       value: addwholesellerController
+                    //           .dropdownIdentityType, // Set the selected country value
+                    //       decoration: InputDecoration(
+                    //         hintText: "Identity Type",
+                    //         hintStyle: TextStyle(
+                    //           color: MyColors.white,
+                    //         ),
+                    //         contentPadding: EdgeInsets.symmetric(
+                    //             horizontal: 20, vertical: 5),
+                    //         border: InputBorder.none,
+                    //         enabledBorder: InputBorder.none,
+                    //         focusedBorder: InputBorder.none,
+                    //         // iconColor: MyColors.white,
+                    //       ),
+                    //       icon: Icon(
+                    //         Icons.arrow_drop_down,
+                    //         color: MyColors.white,
+                    //       ),
+                    //       style: TextStyle(fontSize: 16, color: MyColors.white),
+                    //       items: addwholesellerController
+                    //           .identityTypeDropDownList
+                    //           .map((String type) {
+                    //         return DropdownMenuItem<String>(
+                    //           value: type,
+                    //           child: Text(type,
+                    //               style: TextStyle(
+                    //                 color: Colors.black,
+                    //               )),
+                    //         );
+                    //       }).toList(),
+                    //       onChanged: (String? value) {
+                    //         addwholesellerController
+                    //             .updateidentitytype(value ?? "");
+                    //         // Perform actions when country is changed
+                    //       },
+                    //     ),
+                    //   ),
+                    // ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Aadhar number';
+                            }
+                            return null;
+                          },
+                          controller: addwholesellerController.aadharController,
+                          decoration: InputDecoration(
+                            hintText: "Aadhar Number",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter GST number';
+                            }
+                            return null;
+                          },
+                          controller: addwholesellerController.gstController,
+                          decoration: InputDecoration(
+                            hintText: "GST Number",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Business Name';
+                            }
+                            return null;
+                          },
+                          controller:
+                              addwholesellerController.businessNameController,
+                          decoration: InputDecoration(
+                            hintText: "Business Name",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter pincode';
+                            }
+                            return null;
+                          },
+                          controller: addwholesellerController.pincodeController,
+                          decoration: InputDecoration(
+                            hintText: "Pincode",
+                             hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+
+   Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter password';
+                            }
+                            return null;
+                          },
+                          controller:
+                              addwholesellerController.passcodeController,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: MyColors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                 
+
+
+    GetBuilder<SalesAddwholeControllers>(
+                init: addwholesellerController,
+                // initState: (_) {},
+                builder: (_) {
+                  return 
+                  addwholesellerController.stateListModel ==
+                          null
+                      // ? Center(
+                      //     child: SpinKitCircle(
+                      //       color:
+                      //           Colors.white, // Color of the progress bar
+                      //       size: 50.0, // Size of the progress bar
+                      //     ),
+                      //   )
+                      ? SizedBox()
+                      : 
+                      Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        
+                            child: DropdownButtonFormField<statesFile.State>(
+                              validator: (value) {
+                                if (value == null || value.stateName!.isEmpty) {
+                                  return 'Please select a state';
+                                }
+                                return null;
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 62,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: MyColors.yellow,
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Add Product",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                              // value: addressController
+                              //     .selectedState,
+                              decoration: InputDecoration(
+                                hintText: "State",
+                                 hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 5),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(
+                                fontSize: 16,
+                                 color: MyColors.black,
+                              ),
+                              items: addwholesellerController
+                                  .stateListModel!.state!
+                                  .map((statesFile.State state) {
+                                return DropdownMenuItem<statesFile.State>(
+                                  value: state,
+                                  child: Text(state.stateName!),
+                                );
+                              }).toList(),
+                              onChanged: (statesFile.State? value) async {
+                                await addwholesellerController
+                                    .updateState(value!);
+                              },
+                            ),
+                          ),
+                        );
+                },
+              ),
+
+              GetBuilder<SalesAddwholeControllers>(
+                init: addwholesellerController,
+                // initState: (_) {},
+                builder: (_) {
+                  return addwholesellerController.showLoading
+                      ? Center(
+                          child: SpinKitCircle(
+                            color: Colors.black, // Color of the progress bar
+                            size: 30.0, // Size of the progress bar
+                          ),
+                        )
+                      : addwholesellerController.cityListModel ==
+                              null
+                          ? SizedBox()
+                          : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 50,
+                        decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),                        
+                              child:
+                                  DropdownButtonFormField<cityFile.State>(
+                                validator: (value) {
+                                  if (value == null ||
+                                      value.cityName!.isEmpty) {
+                                    return 'Please select a city';
+                                  }
+                                  return null;
+                                },
+                                value: addwholesellerController
+                                    .selectedCity,
+                                decoration: InputDecoration(
+                                  hintText: "City",
+                                   hintStyle: TextStyle(
+                              color: MyColors.white,
+                            ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 5),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                ),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: MyColors.black,
+                                ),
+                                items: addwholesellerController
+                                    .cityListModel!.state!
+                                    .map((state) {
+                                  return DropdownMenuItem<cityFile.State>(
+                                    value: state,
+                                    child: Text(state.cityName!),
+                                  );
+                                }).toList(),
+                                onChanged: (cityFile.State? value) {
+                                  addwholesellerController
+                                      .updateCity(value!);
+                                },
+                              ),
+                            ),
+                          );
+                },
+              ),
+
+
+                    //          Padding(
+                    //           padding: const EdgeInsets.all(8.0),
+                    //           child: Container(
+                    //             height: 50,
+                    //            decoration: BoxDecoration(
+                    // color: Color.fromRGBO(255, 255, 255, 0.10),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     offset: const Offset(0.0, 0.0),
+                    //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //     blurRadius: 0.0,
+                    //     spreadRadius: 0.0,
+                    //   ),
+                    // ],
+                    // borderRadius: BorderRadius.circular(40)),
+                    //             child: TextFormField(
+                    //               validator: (value) {
+                    //                if (value == null ||
+                    //                           value.isEmpty) {
+                    //                         return 'Please select a type';
+                    //                       }
+                    //                       return null;
+
+                    //               },
+                    //               controller: addwholesellerController
+                    //                   .identitytypeController,
+                    //               decoration: InputDecoration(
+                    //                 hintText: "Identity Type",
+                    //                   hintStyle: TextStyle(color: MyColors.white,),
+                    //                 contentPadding: EdgeInsets.symmetric(
+                    //                     horizontal: 20, vertical: 10),
+                    //                 border: InputBorder.none,
+                    //                 enabledBorder: InputBorder.none,
+                    //                 focusedBorder: InputBorder.none,
+                    //               ),
+                    //               style: TextStyle(
+                    //                 fontSize: 16,
+                    //                 color:MyColors.white
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+
+                    //         addwholesellerController.showLoading
+                    //             ? Center(
+                    //                 child: CircularProgressIndicator(),
+                    //               )
+                    //             :
+                    //         Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: Padding(
+                    //                 padding: const EdgeInsets.all(8.0),
+                    //                 child: Container(
+                    //                   height: 50,
+                    //                    decoration: BoxDecoration(
+                    // color: Color.fromRGBO(255, 255, 255, 0.10),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     offset: const Offset(0.0, 0.0),
+                    //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //     blurRadius: 0.0,
+                    //     spreadRadius: 0.0,
+                    //   ),
+                    // ],
+                    // borderRadius: BorderRadius.circular(40)),
+
+                    //                   child: DropdownButtonFormField<
+                    //                       statesFile.State>(
+                    //                     validator: (value) {
+                    //                       if (value == null ||
+                    //                           value.stateName!.isEmpty) {
+                    //                         return 'Please select a state';
+                    //                       }
+                    //                       return null;
+                    //                     },
+                    //                     value:
+                    //                         addwholesellerController.selectedState,
+                    //                     decoration: InputDecoration(
+                    //                       hintText: "State",
+                    //                       contentPadding: EdgeInsets.symmetric(
+                    //                           horizontal: 20, vertical: 5),
+                    //                       border: InputBorder.none,
+                    //                       enabledBorder: InputBorder.none,
+                    //                       focusedBorder: InputBorder.none,
+                    //                     ),
+                    //                     style: TextStyle(
+                    //                       fontSize: 16,
+                    //                       color: MyColors.white,
+                    //                     ),
+                    //                     items: addwholesellerController
+                    //                         .stateListModel!.state!
+                    //                         .map((state) {
+                    //                       return DropdownMenuItem<
+                    //                           statesFile.State>(
+                    //                         value: state,
+                    //                         child: Text(state.stateName!),
+                    //                       );
+                    //                     }).toList(),
+                    //                     onChanged:
+                    //                         (statesFile.State? value) async {
+                    //                       await addwholesellerController
+                    //                           .updateState(value!);
+                    //                     },
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             SizedBox(width: 8.0),
+                    //             !addwholesellerController.cityLoaded
+                    //                 ? SizedBox()
+                    //                 : Expanded(
+                    //                     child: Padding(
+                    //                       padding: const EdgeInsets.all(8.0),
+                    //                       child: Container(
+                    //                         height: 50,
+                    //                           decoration: BoxDecoration(
+                    // color: Color.fromRGBO(255, 255, 255, 0.10),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     offset: const Offset(0.0, 0.0),
+                    //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //     blurRadius: 0.0,
+                    //     spreadRadius: 0.0,
+                    //   ),
+                    // ],
+                    // borderRadius: BorderRadius.circular(40)),
+                    //                         child: DropdownButtonFormField<
+                    //                             cityFile.State>(
+                    //                           validator: (value) {
+                    //                             if (value == null ||
+                    //                                 value.cityName!.isEmpty) {
+                    //                               return 'Please select a city';
+                    //                             }
+                    //                             return null;
+                    //                           },
+                    //                           value: addwholesellerController
+                    //                               .selectedCity,
+                    //                           decoration: InputDecoration(
+                    //                             hintText: "City",
+                    //                             contentPadding:
+                    //                                 EdgeInsets.symmetric(
+                    //                                     horizontal: 20,
+                    //                                     vertical: 5),
+                    //                             border: InputBorder.none,
+                    //                             enabledBorder: InputBorder.none,
+                    //                             focusedBorder: InputBorder.none,
+                    //                           ),
+                    //                           style: TextStyle(
+                    //                             fontSize: 16,
+                    //                             color: MyColors.black,
+                    //                           ),
+                    //                           items: addwholesellerController
+                    //                               .cityListModel!.state!
+                    //                               .map((state) {
+                    //                             return DropdownMenuItem<
+                    //                                 cityFile.State>(
+                    //                               value: state,
+                    //                               child: Text(state.cityName!),
+                    //                             );
+                    //                           }).toList(),
+                    //                           onChanged:
+                    //                               (cityFile.State? value) {
+                    //                             addwholesellerController
+                    //                                 .updateCity(value!);
+                    //                           },
+                    //                         ),
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //           ],
+                    //         ),
+
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () =>
+                                    // createAccountpartnercontroller
+                                    //     .getImageGallery(
+                                    openCameraPopupProfile(
+                                  context,
+                                  
+                                ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: Get.width * 0.40,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(255, 255, 255, 0.10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0.0, 0.0),
+                                      color: Color.fromRGBO(255, 255, 255, 0.10),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
                                     ),
-                                  ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(40)),
+                              child: Center(
+                                child:  Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Upload Profile",
+                                              style: CustomTextStyle
+                                                  .popinstextsmall124,
+                                            ),
+                                            addwholesellerController
+                                                        .profileFilePath ==
+                                                    ""
+                                                ? Icon(
+                                                    Icons.upload,
+                                                    color: MyColors.white,
+                                                    size: 25,
+                                                  )
+                                                : SizedBox(
+                                                    height: 40,
+                                                    width: 40,
+                                                    child: Image.file(
+                                                        fit: BoxFit.fill,
+                                                        addwholesellerController
+                                                            .profileFile!),
+                                                  ),
+                                          ],
+                                        ),
+                                           ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                             onTap: () =>
+                                    // createAccountpartnercontroller
+                                    //     .getImageGallery(
+                                    openCameraPopupLogo(
+                                  context,
+                                  // file: createAccountpartnercontroller.logoFile,
+                                  // fileName: createAccountpartnercontroller
+                                  //     .logoFileName,
+                                  // filePath: createAccountpartnercontroller
+                                  //     .logoFilePath,
+                                ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 2, top: 10, bottom: 10),
+                            child: Container(
+                              height: 80,
+                              width: Get.width * 0.40,
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(255, 255, 255, 0.10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      offset: const Offset(0.0, 0.0),
+                                      color: Color.fromRGBO(255, 255, 255, 0.10),
+                                      blurRadius: 0.0,
+                                      spreadRadius: 0.0,
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(40)),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Upload Document",
+                                      style: CustomTextStyle.popinstextsmall124,
+                                    ),
+                                    Text(
+                                      "Ex. GST, Adhar card...",
+                                      style: CustomTextStyle.popinstextsmall124,
+                                    ),
+                                  addwholesellerController
+                                                      .logoFilePath ==
+                                                  ""
+                                              ? Icon(
+                                                  Icons.upload,
+                                                  color: MyColors.white,
+                                                  size: 25,
+                                                )
+                                              : SizedBox(
+                                                  height: 40,
+                                                  width: 40,
+                                                  child: Image.file(
+                                                      fit: BoxFit.fill,
+                                                      addwholesellerController
+                                                          .logoFile!),
+                                                ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      )
-                    : ListView(
-                        primary: false,
-                        shrinkWrap: true,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(
-                              children: [
-                              
-              Row(
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                          addwholesellerController
+                                  .validateForm(context)
+                                  .then((isValid) {
+                                if (isValid) {
+                                  print("Valid form");
+                                  List<Map<String, String>> documentList = [];
+                                  documentList.add({
+                                    'value': addwholesellerController
+                                        .profileFilePath,
+                                    'key': 'upload_1'
+                                  });
+                                  documentList.add({
+                                    'value': addwholesellerController
+                                        .logoFilePath,
+                                    'key': 'upload_2'
+                                  });
+
+                                  Map<String, String> body = {
+                                  
+                                 
+                                    "f_name": addwholesellerController
+                                        .fullNameController.text
+                                        .trim()
+                                        .toString(),
+                                    "l_name": addwholesellerController
+                                        .lastNameController.text
+                                        .trim()
+                                        .toString(),
+                                    "phone": addwholesellerController
+                                        .numberController.text
+                                        .trim()
+                                        .toString(),
+                                        "dateofbirth": addwholesellerController
+                                        .dobController.text
+                                        .trim()
+                                        .toString(),
+                                    'email':  addwholesellerController
+                                        .emailController.text
+                                        .trim()
+                                        .toString(),
+                                    "state": addwholesellerController
+                                        .selectedState!.stateName.toString(),
+                                         "city": addwholesellerController
+                                        .selectedState!.stateName.toString(),
+                                    "business_name":
+                                        addwholesellerController
+                                            .businessNameController.text
+                                            .trim()
+                                            .toString(),
+                                     "aadhar_number":
+                                        addwholesellerController
+                                            .aadharController.text
+                                            .trim()
+                                            .toString(),
+                                     "gst_number":
+                                        addwholesellerController
+                                            .gstController.text
+                                            .trim()
+                                            .toString(),
+                                     "pincode":
+                                        addwholesellerController
+                                            .pincodeController.text
+                                            .trim()
+                                            .toString(),
+                                    // "dob": createAccountpartnercontroller
+                                    //     .dobController.text
+                                    //     .trim()
+                                    //     .toString(),
+                                    "password":   addwholesellerController.passcodeController.text
+                                        .trim()
+                                        .toString(),
+"seller_id": addwholesellerController.sellerId.toString(),
+                                        "role":1.toString(),
+                                        // "upload_1": addwholesellerController
+                                        //                     .profileFile!,
+                                        // "upload_2":addwholesellerController
+                                        //                   .logoFile!
+                                    
+                                  };
+                                  // documentList.forEach((element) async {
+                                  //   print(element["key"]! +
+                                  //       "  >   " +
+                                  //       element["value"]!);
+                                  // });
+                                  try {
+                                    addwholesellerController.postWholeData(
+                                        documentList,
+                                        body,
+                                        Constants.WHOLESALER_REGISTER);
+                                    Get.back();
+                                    Get.snackbar(
+                                      'Success',
+                                      'Registered Succesfully',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.green,
+                                      colorText: Colors.white,
+                                    );
+                                  } catch (e) {
+                                    Get.snackbar(
+                                      'Error',
+                                      'An error occurred: $e',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                    );
+                                  }
+
+                                  // Code to execute when the form is valid
+                                  // Add your logic here
+                                } else {
+                                  print("InValid form");
+                                  // Code to execute when the form is not valid
+                                  // Add your logic here
+                                }
+                              });
+                            },
+                            child: addwholesellerController.isLoading
+                                ? Center(child: CircularProgressIndicator())
+                                : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 58,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: MyColors.yellow,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Submit",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+                    : 
+                    Column(children: [
+                        Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    height: 45,
-                    width: 265,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(17),
+                        height: 45,
+                        width: 265,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(17),
 
-                      // border: Border.all(color:brandcolor ),
+                          // border: Border.all(color:brandcolor ),
 
-                      color: MyColors.white,
-                    ),
-                    child: TextFormField(
-                      controller: _searchcontroller,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: MyColors.voliet,
-                        fontFamily: "SF-Pro-Display",
-                      ),
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 15),
-                          fillColor: MyColors.white,
-                          focusColor: MyColors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            // borderRadius: BorderRadius.circular(50),
+                          color: MyColors.white,
+                        ),
+                        child: TextFormField(
+                          controller: _searchcontroller,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: MyColors.voliet,
+                            fontFamily: "SF-Pro-Display",
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            //  borderRadius: BorderRadius.circular(50),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            //  borderRadius: BorderRadius.circular(50),
-                          ),
-                          hintText: "Search",
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Image.asset(
-                              "assets/image/searchnormal.png",
-                              width: 10,
-                            ),
-                          ),
-                          hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400)),
-                    ),
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 15),
+                              fillColor: MyColors.white,
+                              focusColor: MyColors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                // borderRadius: BorderRadius.circular(50),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                //  borderRadius: BorderRadius.circular(50),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                //  borderRadius: BorderRadius.circular(50),
+                              ),
+                              hintText: "Search",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Image.asset(
+                                  "assets/image/searchnormal.png",
+                                  width: 10,
+                                ),
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400)),
+                        ),
                   ),
 
                   //  SizedBox(width: 10,),
                   Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0xffffcc00)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          "assets/image/filter3.png",
-                        ),
-                      ))
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Color(0xffffcc00)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Image.asset(
+                              "assets/image/filter3.png",
+                            ),
+                          ))
                 ],
               ),
 SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(OrderDetailssales());
-                                  },
-                                  child: Container(
-                                      width: 335,
                                       height:
-                                          MediaQuery.of(context).size.height *
-                                              0.3,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(28),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Color(0xFFEEEEFF),
-                                            Color.fromRGBO(238, 238, 255, 0.00),
-                                          ],
-                                          stops: [0.0, 1.0],
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.topRight,
-                                                child: Container(
-                                                  //alignment: Alignment.topRight,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.05,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.3,
-                                                  decoration: BoxDecoration(
-                                                      color: MyColors.green1,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomLeft: Radius
-                                                                  .circular(
-                                                                      20))),
-                                                  child: Center(
-                                                      child: Text(
-                                                    "Completed",
-                                                    style: CustomTextStyle
-                                                        .popinstextsmall12,
-                                                  )),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                "assets/image/logocanine.png",
-                                                height: 80,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Nity Make",
-                                                    style: CustomTextStyle
-                                                        .popinsmedium,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text("4.5")
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                    "1901 Thornridge Cir. Shiloh, Hawaii 81063",
-                                                    style: CustomTextStyle
-                                                        .popinssmall0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15, right: 15),
-                                            child: Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: (){
-                                                     Get.to(HomeSales());
-                                                  },
-                                                  child: Container(
-                                                      width: 130,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  26.405324935913086),
-                                                          color:MyColors.yellow
-                                                            ),
-                                                      child: Center(
-                                                          child: Text(
-                                                        "Add Product",
-                                                        style: CustomTextStyle
-                                                            .popinssmall1,
-                                                      ))),
-                                                ),
-                                                SizedBox(width: 20),
-                                                GestureDetector(
-                                                  onTap: (){
-                                                     Get.to(OrderHistorysales());
-                                                  },
-                                                  child: Container(
-                                                      width: 130,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  26.405324935913086),
-                                                          color: MyColors
-                                                              .yellowlight),
-                                                      child: Center(
-                                                          child: Text(
-                                                        "Order History",
-                                                        style: CustomTextStyle
-                                                            .popinssmall1,
-                                                      ))),
-                                                )
-                                               ],
-                                            ),
-                                          )
-                                        ],
-                                      )),
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(OrderDetailssales());
-                                  },
-                                  child: Container(
-                                      width: 335,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.3,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(28),
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Color(0xFFEEEEFF),
-                                            Color.fromRGBO(238, 238, 255, 0.00),
-                                          ],
-                                          stops: [0.0, 1.0],
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.topRight,
-                                                child: Container(
-                                                  //alignment: Alignment.topRight,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.05,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.3,
-                                                  decoration: BoxDecoration(
-                                                      color: MyColors.green1,
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              topRight: Radius
-                                                                  .circular(25),
-                                                              bottomLeft: Radius
-                                                                  .circular(
-                                                                      20))),
-                                                  child: Center(
-                                                      child: Text(
-                                                    "Completed",
-                                                    style: CustomTextStyle
-                                                        .popinstextsmall12,
-                                                  )),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                "assets/image/logocanine.png",
-                                                height: 80,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Nity Make",
-                                                    style: CustomTextStyle
-                                                        .popinsmedium,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      SvgPicture.asset(
-                                                          "assets/image/yellowstar.svg"),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text("4.5")
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                  Text(
-                                                    "1901 Thornridge Cir. Shiloh, Hawaii 81063",
-                                                    style: CustomTextStyle
-                                                        .popinssmall0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15, right: 15),
-                                            child: Row(
-                                              children: [
-                                                GestureDetector(
-                                                  onTap: (){
-                                                     Get.to(HomeSales());
-                                                  },
-                                                  child: Container(
-                                                      width: 130,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  26.405324935913086),
-                                                          color:MyColors.yellow
-                                                            ),
-                                                      child: Center(
-                                                          child: Text(
-                                                        "Add Product",
-                                                        style: CustomTextStyle
-                                                            .popinssmall1,
-                                                      ))),
-                                                ),
-                                                SizedBox(width: 20),
-                                                GestureDetector(
-                                                  onTap: (){
-                                                     Get.to(OrderHistorysales());
-                                                  },
-                                                  child: Container(
-                                                      width: 130,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  26.405324935913086),
-                                                          color: MyColors
-                                                              .yellowlight),
-                                                      child: Center(
-                                                          child: Text(
-                                                        "Order History",
-                                                        style: CustomTextStyle
-                                                            .popinssmall1,
-                                                      ))),
-                                                )
+                                          MediaQuery.of(context).size.height * 0.02,
+                                    ),
+                    ],),
+                    
+                    GetBuilder<DashBoardController>(
+          init: dashBoardController,
+          builder: (_) {
+                        return  ListView.builder(
+                    primary: true,
+                    shrinkWrap: true,
+                    itemCount:dashBoardController.total1wholesellerModel
+              !.data!.length,
+                    itemBuilder: (context, index) {
+                      var item = dashBoardController.
+              total1wholesellerModel!.data![index];
+                  
+                     return  dashBoardController.
+              total1wholesellerModel!.data == null
+                          ? SizedBox()
+                          : 
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Column(
+                                  children: [
+                                  
+            
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(OrderDetailssales());
+                                      },
+                                      child: Container(
+                                          width: 335,
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(28),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Color(0xFFEEEEFF),
+                                                Color.fromRGBO(238, 238, 255, 0.00),
                                               ],
+                                              stops: [0.0, 1.0],
                                             ),
-                                          )
-                                        ],
-                                      )),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Container(
+                                                      //alignment: Alignment.topRight,
+                                                      height: MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.05,
+                                                      width: MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.3,
+                                                      decoration: BoxDecoration(
+                                                          color: MyColors.green1,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topRight: Radius
+                                                                      .circular(25),
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          20))),
+                                                      child: Center(
+                                                          child: Text(
+                                                        "Completed",
+                                                        style: CustomTextStyle
+                                                            .popinstextsmall12,
+                                                      )),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Image.asset(
+                                                    "assets/image/logocanine.png",
+                                                    height: 80,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        "${item.fName.toString()} ${item.lName.toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+                                                      Text(
+                                                        "${item.phone.toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+ Text(
+                                                        "${item.email.toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+  Text(
+                                                        "${item.businessName.toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+                                                       Text(
+                                                        "${item.city.toString()} ${item.state.toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinsmedium,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                              "assets/image/yellowstar.svg"),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          SvgPicture.asset(
+                                                              "assets/image/yellowstar.svg"),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          SvgPicture.asset(
+                                                              "assets/image/yellowstar.svg"),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          SvgPicture.asset(
+                                                              "assets/image/yellowstar.svg"),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          SvgPicture.asset(
+                                                              "assets/image/yellowstar.svg"),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                          Text("4.5")
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        "1901 Thornridge Cir. Shiloh, Hawaii 81063",
+                                                        style: CustomTextStyle
+                                                            .popinssmall0,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 15, right: 15),
+                                                child: Row(
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: (){
+                                                         Get.to(HomeSales());
+                                                      },
+                                                      child: Container(
+                                                          width: 130,
+                                                          height: 40,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      26.405324935913086),
+                                                              color:MyColors.yellow
+                                                                ),
+                                                          child: Center(
+                                                              child: Text(
+                                                            "Add Product",
+                                                            style: CustomTextStyle
+                                                                .popinssmall1,
+                                                          ))),
+                                                    ),
+                                                    SizedBox(width: 20),
+                                                    GestureDetector(
+                                                      onTap: (){
+                                                         Get.to(OrderHistorysales());
+                                                      },
+                                                      child: Container(
+                                                          width: 130,
+                                                          height: 40,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      26.405324935913086),
+                                                              color: MyColors
+                                                                  .yellowlight),
+                                                          child: Center(
+                                                              child: Text(
+                                                            "Order History",
+                                                            style: CustomTextStyle
+                                                                .popinssmall1,
+                                                          ))),
+                                                    )
+                                                   ],
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                    ),
+                                   ],
                                 ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )
+                              )
+                  ;  },
+                          );
+                      }
+                    )
               ],
             );
           }),
