@@ -1234,6 +1234,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                         Get.to(PaymentUser(
                            price:(((addtocartController.total) + (addtocartController.total * 0.05)-(num.parse(couponsController.maxAmount!)))).toString()
+                        // paymentstatus: ,
                         ));
                           // deliveredAddress: (addtocartController
                           //             .allAddresslistModel!

@@ -5,7 +5,8 @@ class Constants {
   static const GET_USER_SERVICES =
       "$BASE_URL${API_V1_PATH}/banners/service_category";
  static const GET_USER_MYSERVICES = "$BASE_URL${API_V1_PATH}/banners/get_allservicebooking";
-  
+    static const SALESMAN_IMAGEPATH_URL = "$BASE_URL/storage/app/public/delivery-man/";
+
    static const GET_USER_VETERNIARY = "$BASE_URL${API_V1_PATH}/banners/get_veterinary";
 static const GET_USER_PRODUCTDETAILS = "$BASE_URL${API_V1_PATH}/items/details/";
 static const GET_USER_MYCARTLIST = "$BASE_URL${API_V1_PATH}/customer/wish-list/add_to_card/";
@@ -15,7 +16,7 @@ static const GET_USER_ADDRESS_DELETE = "$BASE_URL${API_V1_PATH}/customer/address
 static const GET_USER_COUPON = "$BASE_URL${API_V1_PATH}/coupon/list";
 static const GET_USER_TOY = "$BASE_URL${API_V1_PATH}/items/subcty_product?";
 static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
-
+static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deliveryman_profile/";
   static const GET_USER_CATEGORIES = "/categories";
   static const GET_USER_PROPERTIES = "/items/latest";
    static const GET_USER_SUBPRODUCT = "$BASE_URL${API_V1_PATH}/items/product/";
@@ -35,12 +36,19 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const GET_CITY_LIST = "$BASE_URL${API_V1_PATH}/auth/city?state=";
   static const USER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/customer";
   static const PARTNER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/login";
+    static const SALESMAN_LOGIN = "$BASE_URL${API_V1_PATH}/auth/delivery-man/login";
+   static const SALESMAN_REGISTER = "$BASE_URL${API_V1_PATH}/auth/delivery-man/store";
+
   static const PARTNER_REGISTER = "$BASE_URL${API_V1_PATH}/auth/register";
    static const WHOLESALER_REGISTER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_register";
   static const USER_LOGIN_OTP = "$BASE_URL${API_V1_PATH}/auth/otp_verify";
   static const WHOLESALER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/wholesaler_login";
   static const GET_USER_BANNER = "$BASE_URL${API_V1_PATH}/banners";
    static const GET_WHOLE_TOTALORDER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_orders/";
+   static const GET_WHOLESELLER_TOTAL = "$BASE_URL${API_V1_PATH}/auth/wholesaler_list/";
+
+     static const GET_TOTALSELLER_ORDER = "$BASE_URL${API_V1_PATH}/auth/seller_orders/";
+
   static const GET_OUR_BRAND = "$BASE_URL${API_V1_PATH}/auth/brand";
   static const GET_MY_ORDER = "$BASE_URL${API_V1_PATH}/customer/order/list?id=";
   static const GET_ORDER_DETAILS = "$BASE_URL${API_V1_PATH}/customer/order/detail/";
@@ -58,6 +66,8 @@ static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
   static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/all_pets_breed";
  static const USER_UPDATE_PROFILE =
       "$BASE_URL${API_V1_PATH}/auth/update-profile";
+       static const SALES_UPDATE_PROFILE =
+      "$BASE_URL${API_V1_PATH}/auth/delivery-man/deliveryman_update";
   static const ADD_PET_USER = "$BASE_URL${API_V1_PATH}/auth/pets_add";
   static const GET_PET_USER = "$BASE_URL${API_V1_PATH}/auth/get_pet/";
   static const GET_PET_SERVICES = "$BASE_URL${API_V1_PATH}/auth/get_pet";

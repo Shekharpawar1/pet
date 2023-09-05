@@ -264,9 +264,10 @@ class MyCartWholeController extends GetxController {
 
     Map<String, dynamic> body = {
       "user_id": storage.read('wholesalerid').toString(),
+      "seller_id":null,
       "coupon_discount_amount": (couponsController.maxAmount!).toString(),
       "coupon_discount_title": couponsController.coupontitle ?? '',
-      "payment_status": "confirm",
+      "payment_status": "paid",
       "order_status": "pending",
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),

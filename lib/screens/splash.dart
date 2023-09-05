@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/screens/bottomnavbar.dart';
 
 import 'package:pet/screens/intro2.dart';
+import 'package:pet/screens/salesman/Dashboard.dart';
 import 'package:pet/screens/user/userHome.dart';
 import 'package:pet/screens/wholesaler/Dashboard.dart';
 import 'package:pet/screens/wholesaler/home.dart';
@@ -38,13 +39,20 @@ class _SplashState extends State<Splash> {
                     var wholesalerroleid = await GetStorage().read("wholesalerroleid");
 
         var wholesalerData = await GetStorage().read("wholesalerData");
+
+         var sellerid = await GetStorage().read("sellerid");
+        var sellerdata = await GetStorage().read("sellerData");
+
         
 print("WholesalerroleID: ==> ${wholesalerroleid.toString()}" );
         print("user Id : ===>>> ${id.toString()}");
         print("user Data : ===>>> ${data.toString()}");
           print("wholesaler Id : ===>>> ${wholesalerid.toString()}");
         print("wholesaler Data : ===>>> ${wholesalerData.toString()}");
-        id == null &&  wholesalerid == null
+
+           print("sellerid  : ===>>> ${sellerid.toString()}");
+        print("sellerdata  : ===>>> ${sellerdata.toString()}");
+        id == null &&  wholesalerid == null && sellerid == null 
             ? Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -59,13 +67,24 @@ print("WholesalerroleID: ==> ${wholesalerroleid.toString()}" );
                 ),
               )
               
-     :
+     :(sellerid == GetStorage().read("sellerid"))?
+     Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashboardSales(),
+                ),
+              )
+   
+   :
              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => BottomNavBar(),
                 ),
               );
+   
+   
+   
     //  if(wholesalerdata["role"] == 1);
     //     wholesalerid == null
 // print("WholesalerID${wholesalerdata["role"]}" );

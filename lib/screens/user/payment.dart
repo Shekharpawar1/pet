@@ -20,12 +20,14 @@ enum Choose { upi, cash, phonepay, paytm }
 
 class PaymentUser extends StatefulWidget {
    PaymentUser({super.key,required this.price,
+   this.orderstatus,this.paymentstatus
   //  this.deliveredstatus,
   //  this.deliveredId,this.deliveredAddress,this.cart,this.couponcode,
   //  this.ordertype,this.totaltexamount,this.coupondiscountamount,
   //  this.coupondiscounttitle,this.orderstatus, this.storeId
    });
   String price;
+
   // String? deliveredstatus;
   // int? deliveredId;
   // String? deliveredAddress;
@@ -35,7 +37,8 @@ class PaymentUser extends StatefulWidget {
   // String? totaltexamount;
   // String? coupondiscountamount;
   // String? coupondiscounttitle;
-  // String? orderstatus;
+  String? orderstatus;
+  String? paymentstatus;
   // int? storeId;
 
 
@@ -221,13 +224,13 @@ class _PaymentUserState extends State<PaymentUser> {
                     if(selectone == Choose.upi){
                       print("UPI payment");
  
-  mycartController.addpaymenttype(selectone == Choose.upi?'online':"offline");
+  mycartController.addpaymenttype(selectone == Choose.upi?'online':"offline",selectone == Choose.cash? "paid": "unpaid");
 
                       Get.to(UserUpiScreen(
 amount: double.tryParse(widget.price)));
                     } else if(selectone == Choose.cash){
                       print("Cash payment");
-mycartController.addpaymenttype(selectone == Choose.cash?'offline':"online");
+mycartController.addpaymenttype(selectone == Choose.cash?'offline':"online",selectone == Choose.cash? "unpaid": "paid");
                   await mycartController.placeorder();
 
                await showDialog(

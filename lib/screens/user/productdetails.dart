@@ -1095,4 +1095,7 @@ productdetailscontroller.selectedvariants?.price == null?
       ),
     );
   }
+
+
+
 }
