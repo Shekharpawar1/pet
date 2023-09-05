@@ -273,8 +273,8 @@ paymentStatus = paymentstatus;
 
     Map<String, dynamic> body = {
       "user_id": storage.read('id').toString(),
-      "seller_id":null,
-      "coupon_discount_amount": (couponsController.maxAmount!).toString(),
+      "seller_id": null,
+      "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": paymentStatus.toString(),
       "order_status": "pending",
@@ -299,7 +299,7 @@ paymentStatus = paymentstatus;
       //                           '').toString(),
       "item_campaign_id": "",
       "order_amount": (((total) + (total * 0.05)) -
-              (double.parse(couponsController.maxAmount!)))
+              (double.parse(couponsController.maxAmount ?? "0")))
           .toString(),
       "cart": cartList,
     };

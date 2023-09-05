@@ -2978,7 +2978,7 @@ class _HomeUserState extends State<HomeUser> {
                 builder: (_) {
                   return homeusercontroller.showLoading
                       ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                           child: Container(
                             color: Colors.black.withOpacity(
                                 0.1), // Adjust the opacity as needed
