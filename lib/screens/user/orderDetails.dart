@@ -13,6 +13,7 @@ import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.d
 import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/widgets/pdfView.dart';
 import 'package:pet/screens/wholesaler/locationScreenWholesaler.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
@@ -30,7 +31,12 @@ import 'package:pdf/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsUser extends StatefulWidget {
-   OrderDetailsUser({super.key, this.orderId, this.couponcode, this.paymentmethod,this.orderstatus});
+  OrderDetailsUser(
+      {super.key,
+      this.orderId,
+      this.couponcode,
+      this.paymentmethod,
+      this.orderstatus});
   int? orderId;
   String? couponcode;
   String? paymentmethod;
@@ -443,7 +449,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                       children: [
                                         Text(
                                           "download invoice",
-                                          style: CustomTextStyle.popinsboldlight,
+                                          style:
+                                              CustomTextStyle.popinsboldlight,
                                         ),
                                         Icon(Icons.arrow_forward_ios_outlined,
                                             size: 15)
@@ -498,50 +505,46 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                   orderdetailscontroller
                                       .getorderdetailsList["shippingaddress"],
                                   style: CustomTextStyle.popinsboldlightsmall,
-                       ),
-                     )
-                     ),
-                   
-                        
-                           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                           InkWell(
-                             onTap: () {
-                               // Get.to(MyPetDetails());
-                          
+                                ),
+                              )),
 
-                               Get.to(LocationPickerMapUser());
-                             },
-                             child: Center(
-                               child: Container(
-                                 // width: MediaQuery.of(context).size.width*0.8,
-                     
-                                 height: MediaQuery.of(context).size.height * 0.08,
-                     
-                                 decoration: BoxDecoration(
-                                     color: MyColors.yellow,
-                                     borderRadius: BorderRadius.circular(25)),
-                     
-                                 child: Center(
-                                     child: Text(
-                                   "Track order",
-                                   style: CustomTextStyle.mediumtextreem,
-                                 )),
-                               ),
-                             ),
-                           ),
-                           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                         ],
-                       );
- 
-                            
- 
-  })
-            
-            
-          ),
-        );
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.05),
+                          InkWell(
+                            onTap: () {
+                              // Get.to(MyPetDetails());
+
+                              Get.to(LocationPickerMapUser());
+                            },
+                            child: Center(
+                              child: Container(
+                                // width: MediaQuery.of(context).size.width*0.8,
+
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
+
+                                decoration: BoxDecoration(
+                                    color: MyColors.yellow,
+                                    borderRadius: BorderRadius.circular(25)),
+
+                                child: Center(
+                                    child: Text(
+                                  "Track order",
+                                  style: CustomTextStyle.mediumtextreem,
+                                )),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                        ],
+                      );
+              })),
+    );
   }
-  
+
   // void generateAndSharePDF(BuildContext context) async {
   //   final pdf = pw.Document();
   //   // final image = await imageFromAssetBundle('assets/image.png');
@@ -817,14 +820,14 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
   void generateAndOpenPDF(BuildContext context) async {
     final pdf = pw.Document();
     // final image = await imageFromAssetBundle('assets/image.png');
-    final dividerImageData = (await rootBundle.load("assets/image/divider.png"))
-        .buffer
-        .asUint8List();
-    final dividerImage = pw.MemoryImage(
-      dividerImageData,
-    );
+    // final dividerImageData = (await rootBundle.load("assets/image/divider.png"))
+    //     .buffer
+    //     .asUint8List();
+    // final dividerImage = pw.MemoryImage(
+    //   dividerImageData,
+    // );
     final logoImageData =
-        (await rootBundle.load("assets/image/logo.png")).buffer.asUint8List();
+        (await rootBundle.load("assets/logo/logo.png")).buffer.asUint8List();
     final logoImage = pw.MemoryImage(
       logoImageData,
     );
@@ -904,7 +907,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                       ),
                     ),
                     pw.Text(
-                 "DateFormat(dd MMM yyyy).format( DateTime.parse((widget.date.toString())))",
+                      "DateFormat(dd MMM yyyy).format( DateTime.parse((widget.date.toString())))",
                       style: pw.TextStyle(
                         // color: white,
                         // fontWeight: FontWeight.w400,
@@ -914,13 +917,13 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                     ),
                   ],
                 ),
-              
-             
-                 
-              
                 pw.Padding(
                   padding: pw.EdgeInsets.symmetric(vertical: 15.0),
-                  child: pw.Image(dividerImage),
+                  // child: pw.Image(dividerImage),
+                  child: pw.Divider(
+                    indent: 1,
+                    thickness: 1,
+                  ),
                 ),
                 pw.Row(
                   mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -1026,7 +1029,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
 
     // Save the PDF file locally
     // final file = await savePDFToDevice(fileName, pdfBytes);   // inside app package
-    final file = await savePDFToDeviceLocal(fileName, pdfBytes);   // inside internal storage downloads folder
+    final file = await savePDFToDeviceLocal(
+        fileName, pdfBytes); // inside internal storage downloads folder
 
     // Open the PDF file using the default PDF viewer
     // openPDF(file.path);
@@ -1050,19 +1054,18 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
     await file.writeAsBytes(pdfBytes);
     return file;
   }
-  
-  // void openPDF(String filePath) async {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => PDFScreen(title: "Invoice", path: filePath),
-  //     ),
-  //   );
-  //   // final result = await OpenFile.open(filePath);
-  //   // if (result.type != ResultType.done) {
-  //   //   // Handle error opening file
-  //   //   print('Failed to open PDF: ${result.message}');
-  //   // }
-  // }
 
+  void openPDF(String filePath) async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PDFScreen(title: "Invoice", path: filePath),
+      ),
+    );
+    // final result = await OpenFile.open(filePath);
+    // if (result.type != ResultType.done) {
+    //   // Handle error opening file
+    //   print('Failed to open PDF: ${result.message}');
+    // }
+  }
 }
