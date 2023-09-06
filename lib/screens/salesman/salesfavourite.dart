@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/salesman_controller/salesfavourite_controller.dart';
 import 'package:pet/controllers/user_controller/userfavourite_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -24,13 +25,13 @@ class Salesfavourite extends StatefulWidget {
 
 class _SalesfavouriteState extends State<Salesfavourite> {
   TextEditingController _searchcontroller = TextEditingController();
-  UserfavouriteController userfavouriteController =
-      Get.put(UserfavouriteController());
+  SalesfavouriteController salesrfavouriteController =
+      Get.put(SalesfavouriteController());
 
   @override
   void initState() {
     super.initState();
-    userfavouriteController.init();
+    salesrfavouriteController.init();
   }
 
   @override
@@ -148,11 +149,11 @@ class _SalesfavouriteState extends State<Salesfavourite> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
                       ),
-                      GetBuilder<UserfavouriteController>(
-                          init: userfavouriteController,
+                      GetBuilder<SalesfavouriteController>(
+                          init: salesrfavouriteController,
                           builder: (_) {
-                            return userfavouriteController.wishList == null ||
-                                    userfavouriteController.wishList!.data ==
+                            return salesrfavouriteController.wishList == null ||
+                                    salesrfavouriteController.wishList!.data ==
                                         null
                                 ? SizedBox()
                                 : GridView.builder(
@@ -166,18 +167,18 @@ class _SalesfavouriteState extends State<Salesfavourite> {
                                             crossAxisSpacing: 15.0,
                                             mainAxisSpacing: 15.0,
                                             mainAxisExtent: 280),
-                                    itemCount: userfavouriteController
+                                    itemCount: salesrfavouriteController
                                         .wishList!
                                         .data!
                                         .length, // Set the number of cards you want to display.
                                     itemBuilder: (context, index) {
-                                      var item = userfavouriteController
+                                      var item = salesrfavouriteController
                                           .wishList!.data![index];
                                       String imagePath =
                                           Constants.PRODUCT_HOME_IMAGE_PATH +
                                               "/${item.storeId![0].image!}";
                                       return 
-                                      userfavouriteController
+                                      salesrfavouriteController
                                           .wishList!.data![index] == null? SizedBox():
                                       Container(
                                          width: 140,
@@ -235,7 +236,7 @@ class _SalesfavouriteState extends State<Salesfavourite> {
                                                   ),
                                                   InkWell(
                                                     onTap: () {
-                                                      userfavouriteController
+                                                      salesrfavouriteController
                                                           .removeItemFromWishList(
                                                               item.itemId!);
                                                     },
@@ -382,10 +383,10 @@ class _SalesfavouriteState extends State<Salesfavourite> {
               ],
             ),
 
-            GetBuilder<UserfavouriteController>(
-                init: userfavouriteController,
+            GetBuilder<SalesfavouriteController>(
+                init: salesrfavouriteController,
                 builder: (_) {
-                  return userfavouriteController.showLoading
+                  return salesrfavouriteController.showLoading
                       ? BackdropFilter(
                           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                           child: Container(
@@ -396,10 +397,10 @@ class _SalesfavouriteState extends State<Salesfavourite> {
                       : SizedBox();
                 }),
             // Progress bar
-            GetBuilder<UserfavouriteController>(
-                init: userfavouriteController,
+            GetBuilder<SalesfavouriteController>(
+                init: salesrfavouriteController,
                 builder: (_) {
-                  return userfavouriteController.showLoading
+                  return salesrfavouriteController.showLoading
                       ? Center(
                           child: SpinKitCircle(
                             color: Colors.white, // Color of the progress bar

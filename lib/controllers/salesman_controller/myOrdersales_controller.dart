@@ -22,9 +22,15 @@ int? orderID;
     super.onInit();
     init();
      orderdetailsinit();
-    wholesalerId = storage.read('wholesalerid');
+    // wholesalerId = storage.read('wholesalerid');
+    // print("wholesalerIdMYORDER  ${wholesalerId}");
   }
-
+fethUserId() {
+  
+     wholesalerId = storage.read('wholesalerId');
+     print("WholeSellerID ==>${wholesalerId}");
+       print("SellerID ==>${wholesalerId}");
+}
 
   void addorder(int id) {
     orderID = id;
@@ -52,7 +58,7 @@ String getMyOrderUrl =
       salesmyorderModel = SalesMyOrderModel.fromJson(
           await ApiHelper.getApi(getMyOrderUrl+"${storage.read('wholesalerid')}"));
       print(salesmyorderModel);
-       print(getMyOrderUrl+"${storage.read('wholesalerid')}");
+       print("MYORDERUrl"+getMyOrderUrl+"${storage.read('wholesalerid')}");
        orderLoaded = true;
       update();
     } catch (e) {

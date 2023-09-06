@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/controllers/salesman_controller/addwholeseller_controller.dart';
 import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
@@ -23,6 +24,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
   TextEditingController _searchcontroller = TextEditingController();
   final SalesAddwholeControllers addwholesellerController =
       Get.put(SalesAddwholeControllers());
+      final storage = GetStorage();
  DashBoardController dashBoardController = Get.put(DashBoardController());
 
   Future openCameraPopupProfile(
@@ -1611,7 +1613,22 @@ SizedBox(
             
                                     InkWell(
                                       onTap: () {
-                                        Get.to(OrderDetailssales());
+                                        
+                                         print("iTem  ${item.id}");
+//                                          try {
+//   storage.write('wholesalerid', item.id);
+//   print("IDDDD");
+//   print(storage.read('wholesalerid').toString());
+// } catch (e) {
+//   print("Error: $e");
+// }
+                                          storage.write('wholesalerId', item.id);
+  print("IDDDD");
+ print(storage.read('wholesalerId').toString());
+                                        // Get.to(OrderDetailssales());
+                                        
+//  wholesalerid = total1wholesellerModel!.data!.map((e) => e.id);
+
                                       },
                                       child: Container(
                                           width: 335,
@@ -1761,7 +1778,17 @@ SizedBox(
                                                   children: [
                                                     GestureDetector(
                                                       onTap: (){
-                                                         Get.to(HomeSales());
+
+                                                       
+                                                    
+       
+      // // var id = userLoginModel.data![0].id;
+      // print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData} Role: ${wholesalerroleid}");
+      
+                                                         Get.to(HomeSales(
+                                                        wholeseller: item.id??0
+                                                         ));
+
                                                       },
                                                       child: Container(
                                                           width: 130,

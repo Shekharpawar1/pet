@@ -1037,8 +1037,10 @@ salesproductdetailscontroller.selectedvariants?.price == null?
   
   
 //   );
+  salesproductdetailscontroller.fethUserId();
                                    await salesproductdetailscontroller.addProduct();
                                         mycartController.init();
+                                      
                                     Get.to(AddToCardSales());
                                
                                   //     productdetailscontroller.addToCart(

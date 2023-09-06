@@ -13,13 +13,15 @@ import 'package:pet/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class SalesProductDetailsController extends GetxController {
-
+final storage = GetStorage();
 
 var sellerId = GetStorage().read("sellerid");
+
+// var wholesellerID = GetStorage().read("wholesalerid");
   int? selecttab;
   bool isAdding = false;
   int? productID;
-  var userId;
+  var wholesellerID;
 double? totalAmount;
   bool showLoading = false;
 // ProductDetailsModel? productdetailsmodel;
@@ -28,9 +30,17 @@ double? totalAmount;
   void onInit() {
     super.onInit();
     // init();
-    // userId = storage.read('id');
+     wholesellerID = storage.read('wholesalerId');
+     print("WholeSellerID ==>${wholesellerID}");
+       print("SellerID ==>${sellerId}");
   }
 
+fethUserId() {
+  
+     wholesellerID = storage.read('wholesalerId');
+     print("WholeSellerID ==>${wholesellerID}");
+       print("SellerID ==>${sellerId}");
+}
 
 
   variantFile.Variations? selectedvariants;
@@ -221,6 +231,9 @@ double? totalAmount;
           await ApiHelper.getApi(getUserProductDetailsUrl + "$productID"));
       print("urlapi");
       variantslist = salesproductdetailmodel!.data!.variations;
+       
+      if(variantslist!.isNotEmpty)
+      updateVariants(variantslist![0]);
       // var totalprice = 0;
 // var pricecount = productdetailmodel!.data!.price;
 // for(var i = 0; i< pricecount; i++){
@@ -252,7 +265,7 @@ double? totalAmount;
     update();
     // await Future.delayed(Duration(seconds: 4));
     var body = {
-      "user_id": sellerId.toString(),
+      "user_id": wholesellerID.toString(),
       "item_id": productID.toString(),
       "item_name": salesproductdetailmodel!.data!.name.toString(),
       "variant": selectedvariants!.type??'',
@@ -263,6 +276,7 @@ double? totalAmount;
                   (salesproductdetailmodel!.data!.discount!) /
                   100))
           .toString(),
+          "seller_id":sellerId.toString(),
       // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
     };
     String AddProduct = Constants.ADD_PRODUCT;
@@ -270,7 +284,7 @@ double? totalAmount;
     try {
       var request = http.MultipartRequest('POST', Uri.parse(AddProduct));
       request.fields.addAll({
-        "user_id": sellerId.toString(),
+       "user_id": wholesellerID.toString(),
         "item_id": productID.toString(),
         "item_name": salesproductdetailmodel!.data!.name.toString(),
         "variant": selectedvariants!.type.toString(),
@@ -281,6 +295,7 @@ double? totalAmount;
                     (salesproductdetailmodel!.data!.discount!) /
                     100))
             .toString(),
+             "seller_id":sellerId.toString(),
       });
 
       await ApiHelper.postFormData(request: request);

@@ -435,7 +435,9 @@ class _TotalOrdersalesState extends State<TotalOrdersales> {
                                             children: [
                                               InkWell(
                                                 onTap: () {
-                                                  Get.to(HomeSales());
+                                                  Get.to(HomeSales(
+                                                    // wholesellerId: item.id??0,
+                                                  ));
                                                 },
                                                 child: Container(
                                                     width: 130,

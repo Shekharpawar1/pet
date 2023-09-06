@@ -4,12 +4,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/salesman_controller/myOrdersales_controller.dart';
+import 'package:pet/controllers/salesman_controller/salesfavourite_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesprofile_controller.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/screens/intro2.dart';
+import 'package:pet/screens/salesman/Dashboard.dart';
 import 'package:pet/screens/salesman/home.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/salesfavourite.dart';
+import 'package:pet/screens/salesman/salesmyOrderPage.dart';
 import 'package:pet/screens/salesman/salesprofile.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
@@ -43,13 +47,13 @@ class drawerSalesMan extends StatefulWidget {
 }
 
 class _drawerSalesManState extends State<drawerSalesMan> {
-  MyOrderController myordercontroller = Get.put(MyOrderController());
+  SalesMyOrderController myordercontroller = Get.put(SalesMyOrderController());
   SalesProfileController salesprofilecontroller =
       Get.put(SalesProfileController());
-
+SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteController());
   static final List<String> _listViewData = [
     "Profile",
-    "Home",
+    "DashBoard",
     "My Order",
     "Notifications",
     "Favourite",
@@ -57,8 +61,8 @@ class _drawerSalesManState extends State<drawerSalesMan> {
   ];
 
   static final List<IconData> _listViewIcons = [
-    Icons.person,
-    Icons.home,
+    Icons.person, 
+    Icons.dashboard,
     Icons.shopping_bag_outlined,
     Icons.notifications,
     Icons.favorite,
@@ -256,17 +260,20 @@ class _drawerSalesManState extends State<drawerSalesMan> {
       case 0:
         Get.to(salesProfile());
         break;
-      case 1:
-        Get.to(HomeSales());
+          case 1:
+        Get.to(DashboardSales());
         break;
+     
       case 2:
+      myordercontroller.fethUserId();
         await myordercontroller.init();
-        Get.to(MyOrderUser());
+        Get.to(MyOrderSales());
         break;
       case 3:
         Get.to(NotificationSales());
         break;
       case 4:
+       salesfavouriteController.fethUserId();
         Get.to(Salesfavourite());
         break;
 

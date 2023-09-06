@@ -8,11 +8,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/salesman_controller/addresscontroller.dart';
 import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salescoupons_controller.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
 import 'package:pet/screens/partner/partneraddress.dart';
+import 'package:pet/screens/salesman/salesaddnewAddress.dart';
 
 import 'package:pet/screens/swepcard.dart';
 import 'package:pet/screens/user/notification.dart';
@@ -34,6 +36,8 @@ class _AddToCardSalesState extends State<AddToCardSales> {
   SalesAddressController addressController = Get.put(SalesAddressController());
   SalesMyCartController addtocartController = Get.put(SalesMyCartController());
   SalesCouponsController couponsController = Get.put(SalesCouponsController());
+   final SalesProductDetailsController salesproductdetailscontroller =
+      Get.put(SalesProductDetailsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -1023,7 +1027,8 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                                                                 item.houseNo,
                                                                                 item.landmark);
                                                                             print("${item.lastName}");
-                                                                            Get.to(UserAddress(
+                                                                             addressController.fethUserId();
+                                                                            Get.to(SalesAddress(
                                                                               isSelected: false,
                                                                             ));
                                                                             await addressController.updateaddaddress();
@@ -1146,7 +1151,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
               onTap: () async {
                 addressController.clearFields();
                 await addressController.init();
-                Get.to(UserAddress(
+                Get.to(SalesAddress(
                   isSelected: true,
                 ));
               },
@@ -1207,7 +1212,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
               init: addtocartController,
               // initState: (_) {},
               builder: (_) {
-                     return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()}",
+                     return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0")))).toString()}",
                            style: CustomTextStyle.appbartext);
               })
                         // Row(

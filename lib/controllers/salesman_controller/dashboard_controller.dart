@@ -12,6 +12,7 @@ class DashBoardController extends GetxController{
 var sellerId = GetStorage().read("sellerid");
   bool showLoading = false;
 int? orderID;
+var wholesalerid;
 
 //Totalwholeseller
   String getWholeSellerUrl = '${Constants.GET_WHOLESELLER_TOTAL}';
@@ -53,6 +54,8 @@ try {
       total1wholesellerModel = TotalWholeSellerModel.fromJson(
           await ApiHelper.getApi(getWholeSellerUrl + "${1}"));
       print("WholeSellerUrl ==> ${getWholeSellerUrl + "${1}"}");
+
+     
       wholetotalorderLoaded = true;
       update();
 

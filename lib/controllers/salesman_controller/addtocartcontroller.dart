@@ -17,7 +17,7 @@ class SalesMyCartController extends GetxController {
   final storage = GetStorage();
   SalesCouponsController couponsController = Get.put(SalesCouponsController());
   SalesAddressController addressController = Get.put(SalesAddressController());
-
+var wholesellerID;
 var sellerId = GetStorage().read("sellerid");
 // int? itemID;
   int? additemid;
@@ -27,7 +27,7 @@ var sellerId = GetStorage().read("sellerid");
 // var sizecount = 0;
   List sizes = [];
   bool showLoading = false;
- var wholesellerID;
+//  var wholesellerID;
   int total = 1;
   String? paymenttype;
   String? paymentStatus;
@@ -78,7 +78,10 @@ paymentStatus = paymentstatus;
     super.onInit();
 
     init();
-   wholesellerID = storage.read('wholesalerid');
+     wholesellerID = storage.read('wholesalerid');
+     print("WholeSellerIDCart ==>${wholesellerID}");
+       print("SellerIDCart ==>${sellerId}");
+  //  wholesellerID = storage.read('wholesalerid');
   }
 
   incrementSize(int index) {
@@ -154,9 +157,9 @@ paymentStatus = paymentstatus;
     try {
       // productdeatils
       mycartmodel = SalesMyCartListModel.fromJson(
-          await ApiHelper.getApi(getUserMyCartUrl + "${sellerId}"));
+          await ApiHelper.getApi(getUserMyCartUrl + "${wholesellerID}"));
       print("====?//${mycartmodel}");
-      sizes = mycartmodel!.data!.map((e) => 1).toList();
+      sizes = mycartmodel!.data!.map((e) => e.quantity).toList();
       List<Map<String, dynamic>> cartJsonList =
           mycartmodel!.data!.map((item) => {
             "product_id": item.itemId,
@@ -176,7 +179,7 @@ paymentStatus = paymentstatus;
       //   print("total${total}");
       // });
 
-      print("URL====${getUserMyCartUrl + "${sellerId}"}");
+      print("URL====${getUserMyCartUrl + "${wholesellerID}"}");
       print(mycartmodel);
       cartlistLoaded = true;
       update();
@@ -226,10 +229,10 @@ SalesAllAddressListModel? allAddresslistModel;
     try {
       // productdeatils
       allAddresslistModel = SalesAllAddressListModel.fromJson(
-          await ApiHelper.getApi(getUserAllAddressUrl + "$sellerId"));
+          await ApiHelper.getApi(getUserAllAddressUrl + "$wholesellerID"));
       print(allAddresslistModel);
 
-      print(getUserAllAddressUrl + "$sellerId");
+      print(getUserAllAddressUrl + "$wholesellerID");
       addresslistLoaded = true;
       update();
     } catch (e) {

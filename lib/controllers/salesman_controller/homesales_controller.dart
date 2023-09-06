@@ -13,8 +13,9 @@ import 'package:pet/utils/constants.dart';
 
 class HomeSalesController extends GetxController {
    bool showLoading = false;
-   var sellerId = GetStorage().read("sellerid");
-
+   final storage = GetStorage();
+  //  var sellerId = GetStorage().read("sellerid");
+var wholesellerID ;
   List _cartList = [
     Colors.blue,
     Colors.green,
@@ -80,6 +81,13 @@ class HomeSalesController extends GetxController {
     init();
   }
 
+
+fethUserId() {
+  
+     wholesellerID = storage.read('wholesalerId');
+     print("WholeSellerID ==>${wholesellerID}");
+      //  print("SellerID ==>${sellerId}");
+}
   void init() async {
     showLoading = true;
     update();
@@ -183,7 +191,7 @@ class HomeSalesController extends GetxController {
       // "pet_problem": petProblemController.text.trim().toString(),
       // "phone": numberController.text.trim(),
       // "service_id": serviceId.toString(),
-      "user_id": sellerId.toString(),
+      "user_id": wholesellerID.toString(),
       "item_id": productId.toString(),
       // "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
     };
@@ -259,7 +267,7 @@ class HomeSalesController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$sellerId");
+      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$wholesellerID");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
       update();

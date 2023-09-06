@@ -14,7 +14,10 @@ import 'package:pet/models/cityModel.dart' as cityFile;
 
 class SalesAddressController extends GetxController{
 final storage = GetStorage();
+
 var sellerId = GetStorage().read("sellerid");
+
+// var wholesellerID = GetStorage().read("wholesalerid");
   TextEditingController fullNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
@@ -90,9 +93,17 @@ void clearFields() {
   void onInit() {
     super.onInit();
     init();
-      wholesellerID = storage.read('wholesalerid');
+      //     print("WholeSellerIDAddress ==>${wholesellerID}");
+      //  print("SellerIDAddress ==>${sellerId}");
   }
    
+
+fethUserId() {
+  
+     wholesellerID = storage.read('wholesalerId');
+     print("WholeSellerID ==>${wholesellerID}");
+       print("SellerID ==>${sellerId}");
+}
 
 
   Future<void> init() async {
@@ -226,7 +237,7 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       "pincode":pincodeController.text ,
      "state":selectedState!.stateName.toString(),
      "city":selectedCity!.cityName.toString(),
-     "user_id": storage.read('wholesalerid').toString(),
+     "user_id": wholesellerID.toString(),
      
     };
     String AddAddress = Constants.ADD_ADDRESS;
@@ -267,7 +278,7 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
     update();
    
     var body = {
-      "user_id": storage.read('wholesalerid').toString(),
+      "user_id": wholesellerID.toString(),
       "first_name":fullNameController.text,
       "last_name": lastNameController.text,
       "mobile":numberController.text,

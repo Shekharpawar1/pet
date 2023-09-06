@@ -41,7 +41,8 @@ import 'package:pet/screens/user/notification.dart';
 
 
 class HomeSales extends StatelessWidget {
-   HomeSales({super.key});
+   HomeSales({super.key, this.wholeseller });
+  int? wholeseller;
  final HomeSalesController homesalecontroller = Get.put(HomeSalesController());
 
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
@@ -684,6 +685,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 InkWell(
                                                   onTap: () {
+                                                     homesalecontroller.fethUserId();
                                                     homesalecontroller
                                                         .addItemToWishList(
                                                             item.id!);

@@ -219,6 +219,9 @@ double? totalAmount;
           await ApiHelper.getApi(getUserProductDetailsUrl + "$productID"));
       print("urlapi");
       variantslist = productdetailwholemodel!.data!.variations;
+        // variantslist = productdetailmodel!.data!.variations;
+      if(variantslist!.isNotEmpty)
+      updateVariants(variantslist![0]);
       // var totalprice = 0;
 // var pricecount = productdetailmodel!.data!.price;
 // for(var i = 0; i< pricecount; i++){
