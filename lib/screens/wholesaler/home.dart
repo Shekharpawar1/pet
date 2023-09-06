@@ -50,8 +50,8 @@ class _HomeWholeState extends State<HomeWhole> {
   @override
   Widget build(BuildContext context) {
     //  homeusercontroller.getWishList();
-    print(GetStorage().read('wholesalerid').toString());
-    print(GetStorage().read('wholesalerData').toString());
+    print("WholeSaler Id: ${GetStorage().read('wholesalerid').toString()}");
+    print("WholeSaler Data: ${GetStorage().read('wholesalerData').toString()}");
     return Scaffold(
       key: _drawerkey,
       drawer: drawerWholeSaler(),
@@ -212,6 +212,7 @@ class _HomeWholeState extends State<HomeWhole> {
         child: Stack(
           children: [
             ListView(
+              physics: const BouncingScrollPhysics(),
               primary: true,
               shrinkWrap: true,
               children: [
@@ -262,6 +263,7 @@ class _HomeWholeState extends State<HomeWhole> {
 
                               var imagePath =
                                   "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                  print("=====>>>>>> Banners: $imagePath");
                               return Stack(
                                 children: [
                                   // Image.asset(item["image"]),
@@ -449,14 +451,19 @@ class _HomeWholeState extends State<HomeWhole> {
                                       // print(item.name!);
                                       var imagePath =
                                           "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
-                                      print(imagePath);
+                                      // print(imagePath);
 
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             wholesubcategorycontroller
                                                 .addproduct(item.id ?? 0);
+                                                wholesubcategorycontroller
+                                                .currentCategory(
+                                                    item.name ?? "");
+                                            await wholesubcategorycontroller
+                                                .productInitByCategory();
 
                                             Get.to(() => WholeAllcategory());
                                           },
@@ -590,7 +597,7 @@ class _HomeWholeState extends State<HomeWhole> {
 
                                         // var imagePath =
                                         //     "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
-                                        print(imagePath);
+                                        // print(imagePath);
                                         return InkWell(
                                           onTap: () async {
                                             wholeproductdetailsController
@@ -1010,7 +1017,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                           .where(
                                               (element) => element.canine == 1)
                                           .toList()[index];
-                                      print("ItemName: ${item.id!}");
+                                      // print("ItemName: ${item.id!}");
                                       var imagePath =
                                           "${Constants.BASE_URL}${Constants.BRAND_IMAGE_PATH}${item.image ?? ""}";
                                       var imageLogoPath =

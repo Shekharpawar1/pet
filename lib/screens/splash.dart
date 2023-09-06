@@ -35,63 +35,56 @@ class _SplashState extends State<Splash> {
         var id = await GetStorage().read("id");
         var data = await GetStorage().read("userData");
 
-          var wholesalerid = await GetStorage().read("wholesalerid");
-                    var wholesalerroleid = await GetStorage().read("wholesalerroleid");
+        var wholesalerid = await GetStorage().read("wholesalerid");
+        var wholesalerroleid = await GetStorage().read("wholesalerroleid");
 
         var wholesalerData = await GetStorage().read("wholesalerData");
 
-         var sellerid = await GetStorage().read("sellerid");
+        var sellerid = await GetStorage().read("sellerid");
         var sellerdata = await GetStorage().read("sellerData");
 
-        
-print("WholesalerroleID: ==> ${wholesalerroleid.toString()}" );
+        print("WholesalerroleID: ==> ${wholesalerroleid.toString()}");
         print("user Id : ===>>> ${id.toString()}");
         print("user Data : ===>>> ${data.toString()}");
-          print("wholesaler Id : ===>>> ${wholesalerid.toString()}");
+        print("wholesaler Id : ===>>> ${wholesalerid.toString()}");
         print("wholesaler Data : ===>>> ${wholesalerData.toString()}");
 
-           print("sellerid  : ===>>> ${sellerid.toString()}");
+        print("sellerid  : ===>>> ${sellerid.toString()}");
         print("sellerdata  : ===>>> ${sellerdata.toString()}");
-        id == null &&  wholesalerid == null && sellerid == null 
+        id == null && wholesalerid == null && sellerid == null
             ? Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => MyIntroductionScreen(),
                 ),
               )
-            :(wholesalerroleid == 1)?
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DashboardWhole(),
-                ),
-              )
-              
-     :(sellerid == GetStorage().read("sellerid"))?
-     Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DashboardSales(),
-                ),
-              )
-   
-   :
-             Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BottomNavBar(),
-                ),
-              );
-   
-   
-   
-    //  if(wholesalerdata["role"] == 1);
-    //     wholesalerid == null
+            : (wholesalerroleid != null)
+                ? Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DashboardWhole(),
+                    ),
+                  )
+                : (sellerid != null)
+                    ? Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DashboardSales(),
+                        ),
+                      )
+                    : Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BottomNavBar(),
+                        ),
+                      );
+
+        //  if(wholesalerdata["role"] == 1);
+        //     wholesalerid == null
 // print("WholesalerID${wholesalerdata["role"]}" );
-    
-       
+
 //        if(wholesalerdata["role"] == 1);
-       
+
 //         ? Navigator.pushReplacement(
 //                 context,
 //                 MaterialPageRoute(
@@ -104,8 +97,6 @@ print("WholesalerroleID: ==> ${wholesalerroleid.toString()}" );
 //                   builder: (context) => HomeWhole(),
 //                 ),
 //               );
-     
-     
       },
     );
   }

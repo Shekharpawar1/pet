@@ -104,7 +104,7 @@ class _DashboardWholeState extends State<DashboardWhole> {
                             Get.to(TotalOrder());
                           },
                           child: Container(
-                            width: 160,
+                            width: Get.width * 0.43,
                             height: 92,
                             decoration: BoxDecoration(
                                 color: Color(0xff008FFF),
@@ -160,7 +160,7 @@ class _DashboardWholeState extends State<DashboardWhole> {
                             Get.to(Balance());
                           },
                           child: Container(
-                            width: 160,
+                            width: Get.width * 0.43,
                             height: 92,
                             decoration: BoxDecoration(
                               color: Color(0xffFFCC00),

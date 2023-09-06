@@ -65,7 +65,7 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
       "$BASE_URL${API_V1_PATH}/banners/service";
   static const PETS_CATEGORY_IMAGE_PATH =
       "$BASE_URL/storage/app/public/category/";
-  static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/all_pets_breed";
+  static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/breed";
  static const USER_UPDATE_PROFILE =
       "$BASE_URL${API_V1_PATH}/auth/update-profile";
        static const SALES_UPDATE_PROFILE =
@@ -91,8 +91,10 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
   static const USER_REMOVE_FROM_FAV =
       "$BASE_URL${API_V1_PATH}/customer/wish-list/remove/";
   static const USER_GET_WISHLIST =
-      "$BASE_URL${API_V1_PATH}/customer/wish-list/";
+      "$BASE_URL${API_V1_PATH}/customer/wish-list";
   static const PRODUCT_HOME_IMAGE_PATH =
       "$BASE_URL/storage/app/public/product";
+  static const USER_PET_IMAGE_PATH =
+      "$BASE_URL/public";
 }
 // https://canine.hirectjob.in/storage/app/public/product/

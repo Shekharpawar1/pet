@@ -60,6 +60,9 @@ bool showLoading = false;
       // categories
       userCategoriesModel = UserCategoriesModel.fromJson(
           await ApiHelper.getApi(getUserCategoriesUrl));
+          
+      // userCategoriesModel!.data = userCategoriesModel!.data!.where((element) => element.moduleId == 1).toList();
+      
       print(userCategoriesModel);
       categoryLoaded = true;
       update();
@@ -78,6 +81,7 @@ bool showLoading = false;
       // properties
       userPropertiesModel = UserPropertiesModel.fromJson(
           await ApiHelper.getApi(getUserPropertiesUrl));
+      userPropertiesModel!.data = userPropertiesModel!.data!.where((element) => element.moduleId == 1).toList();
       print(userPropertiesModel);
       propertyLoaded = true;
       update();
@@ -95,6 +99,8 @@ bool showLoading = false;
       // banners
       wholeBannerModel =
           WholeBannerModel.fromJson(await ApiHelper.getApi(getBannerUrl));
+      // wholeBannerModel!.data = wholeBannerModel!.data!.where((element) => element.moduleId == 1).toList();
+      
       print(wholeBannerModel);
       bannerLoaded = true;
       update();
@@ -119,6 +125,9 @@ bool showLoading = false;
       //     userOurBrandModel!.data!.add(e);
       //   }
       // });
+      
+      // wholeOurBrandModel!.data = wholeOurBrandModel!.data!.where((element) => element.moduleId == 1).toList();
+      
       print(
           "CAnine products ===>>>> ${wholeOurBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
@@ -137,8 +146,8 @@ bool showLoading = false;
       try {
       // categories
       wishList =
-          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "${wholesalerId}"));
-       print(getWishListUrl + "${wholesalerId}");
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${wholesalerId}"));
+       print(getWishListUrl + "/${wholesalerId}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());

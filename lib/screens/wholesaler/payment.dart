@@ -39,8 +39,203 @@ class _PaymentwholeState extends State<Paymentwhole> {
   // bool _isOn = false;
   Choose? selectone;
 
+  String paymentMethod = '';
+  bool includeGST = false;
+  String paymentDate = '';
+
+  void _showDateDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Text('Select Payment Duration'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('6 Days'),
+                leading: Radio(
+                  value: '6',
+                  groupValue: paymentDate,
+                  onChanged: (value) {
+                    setState(() {
+                      paymentDate = value!;
+                      includeGST = false;
+                      paymentMethod = '';
+                      Navigator.of(context).pop(); // Close the current dialog
+                      _showPaymentDialog();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('14 Days'),
+                leading: Radio(
+                  value: '14',
+                  groupValue: paymentDate,
+                  onChanged: (value) {
+                    setState(() {
+                      paymentDate = value!;
+                      includeGST = false;
+                      paymentMethod = '';
+                      Navigator.of(context).pop(); // Close the current dialog
+                      _showPaymentDialog();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('45 Days'),
+                leading: Radio(
+                  value: '45',
+                  groupValue: paymentDate,
+                  onChanged: (value) {
+                    setState(() {
+                      paymentDate = value!;
+                      includeGST = false;
+                      paymentMethod = '';
+                      Navigator.of(context).pop(); // Close the current dialog
+                      _showPaymentDialog(); // Close the current dialog
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showPaymentDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Text('Select Payment Method'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('Cash'),
+                leading: Radio(
+                  value: 'Cash',
+                  groupValue: paymentMethod,
+                  onChanged: (value) {
+                    setState(() {
+                      paymentMethod = value!;
+                      Navigator.of(context).pop(); // Close the current dialog
+                      _showCashDialog();
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('UPI'),
+                leading: Radio(
+                  value: 'UPI',
+                  groupValue: paymentMethod,
+                  onChanged: (value) {
+                    setState(() {
+                      paymentMethod = value!;
+                      includeGST = false;
+                      Navigator.of(context).pop(); // Close the current dialog
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('Check'),
+                leading: Radio(
+                  value: 'Check',
+                  groupValue: paymentMethod,
+                  onChanged: (value) {
+                    setState(() {
+                      paymentMethod = value!;
+                      includeGST = false;
+                      Navigator.of(context).pop(); // Close the current dialog
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showCashDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Text('Cash Payment'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text('With GST'),
+                leading: Radio(
+                  value: true,
+                  groupValue: includeGST,
+                  onChanged: (value) {
+                    setState(() {
+                      includeGST = value!;
+                      Navigator.of(context).pop(); // Close the current dialog
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('Without GST'),
+                leading: Radio(
+                  value: false,
+                  groupValue: includeGST,
+                  onChanged: (value) {
+                    setState(() {
+                      includeGST = value!;
+                      Navigator.of(context).pop(); // Close the current dialog
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          // actions: <Widget>[
+          //   TextButton(
+          //     onPressed: () {
+          //       Navigator.of(context).pop(); // Close the current dialog
+          //     },
+          //     child: Text('Cancel'),
+          //   ),
+          //   TextButton(
+          //     onPressed: () {
+          //       Navigator.of(context).pop(); // Close the current dialog
+          //       // Handle the selected payment method and GST preference here
+          //       print('Selected Payment Method: $paymentMethod');
+          //       print('Include GST: $includeGST');
+          //     },
+          //     child: Text('OK'),
+          //   ),
+          // ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -133,6 +328,11 @@ class _PaymentwholeState extends State<Paymentwhole> {
                             setState(() {
                               selectone = value!;
                             });
+
+                            // _showPaymentDialog();
+                            _showDateDialog();
+                            print('Selected Payment Method: $paymentMethod');
+                            print('Include GST: $includeGST');
                           }),
                       Image.asset("assets/image/house.png", height: 40),
                       SizedBox(width: MediaQuery.of(context).size.width * 0.05),
@@ -143,7 +343,7 @@ class _PaymentwholeState extends State<Paymentwhole> {
                     ],
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 // Container(
                 //   width: 335,
                 //   height: 53,
@@ -198,6 +398,14 @@ class _PaymentwholeState extends State<Paymentwhole> {
                 // SizedBox(
                 //   height: MediaQuery.of(context).size.height * 0.05,
                 // ),
+                paymentMethod != ""
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            "Duration: $paymentDate Days, Method: $paymentMethod With GST $includeGST"),
+                      )
+                    : SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03),
                 InkWell(
                   onTap: () async {
                     // print(selectone == Choose.upi);
@@ -213,83 +421,88 @@ class _PaymentwholeState extends State<Paymentwhole> {
                       print("Cash payment");
                       mycartwholeController.addpaymenttype(
                           selectone == Choose.cash ? 'offline' : "online");
-                          try {
-await mycartwholeController.placeorder();
+                      try {
+                        await mycartwholeController.placeorder();
+                        
 
-                      await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            scrollable: true,
-                            // title:  Text("Login"),
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              scrollable: true,
+                              // title:  Text("Login"),
 
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                // Align(
-                                //   alignment: Alignment.topRight,
-                                //   child: IconButton(
-                                //     icon: Icon(Icons
-                                //         .close), // You can use any close icon you prefer
-                                //     onPressed: () {
-                                //       Get.back(); // Close the dialog
-                                //     },
-                                //   ),
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child:
-                                      Image.asset("assets/image/success.png", height: 50, width: 50,),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text("Order Placed Successfully"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // Align(
+                                  //   alignment: Alignment.topRight,
+                                  //   child: IconButton(
+                                  //     icon: Icon(Icons
+                                  //         .close), // You can use any close icon you prefer
+                                  //     onPressed: () {
+                                  //       Get.back(); // Close the dialog
+                                  //     },
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset(
+                                      "assets/image/success.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text("Order Placed Successfully"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
 
-                      Get.off(MyOrderWhole());
-                          } catch (e) {
- await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            scrollable: true,
-                            // title:  Text("Login"),
+                        Get.off(MyOrderWhole());
+                      } catch (e) {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              scrollable: true,
+                              // title:  Text("Login"),
 
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                // Align(
-                                //   alignment: Alignment.topRight,
-                                //   child: IconButton(
-                                //     icon: Icon(Icons
-                                //         .close), // You can use any close icon you prefer
-                                //     onPressed: () {
-                                //       Get.back(); // Close the dialog
-                                //     },
-                                //   ),
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child:
-                                      Image.asset("assets/image/multiply.png", height: 50, width: 50,),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text("Failed"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                          }
-                      
-                      // Get.to(Payment2User());
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // Align(
+                                  //   alignment: Alignment.topRight,
+                                  //   child: IconButton(
+                                  //     icon: Icon(Icons
+                                  //         .close), // You can use any close icon you prefer
+                                  //     onPressed: () {
+                                  //       Get.back(); // Close the dialog
+                                  //     },
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset(
+                                      "assets/image/multiply.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text("Failed"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      }
                     }
                     // Get.to(Payment2User());
                   },

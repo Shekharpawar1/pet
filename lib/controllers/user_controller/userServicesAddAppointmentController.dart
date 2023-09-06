@@ -288,7 +288,7 @@ class UserServicesAddAppointmentController extends GetxController {
       // sate list
       stateListModel =
           StateListModel.fromJson(await ApiHelper.getApi(getUserStateUrl));
-      print(stateListModel);
+      // print(stateListModel);
       stateLoaded = true;
       update();
     } catch (e) {
@@ -302,9 +302,10 @@ class UserServicesAddAppointmentController extends GetxController {
       );
     }
     try {
+      print("====>>>> pet url: ${getPetUrl +  storage.read('id').toString()}");
       // pet list
       petListModel =
-          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl +  storage.read('id')));
+          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl +  storage.read('id').toString()));
       print(petListModel);
       // notificationLoaded = true;
       update();
