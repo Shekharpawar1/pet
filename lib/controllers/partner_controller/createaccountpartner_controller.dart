@@ -20,7 +20,7 @@ import 'package:pet/models/cityModel.dart' as cityFile;
 import 'package:http/http.dart' as http;
 
 class CreateAccountPartnerController extends GetxController {
-  TextEditingController timeinput = TextEditingController();
+  TextEditingController latController = TextEditingController();
 
   TextEditingController fullNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -50,7 +50,7 @@ class CreateAccountPartnerController extends GetxController {
   List<String> typeDropDownList = ["0", "0.1", "0.2", "0.3", "0.4"];
 
   String? dropdownzone;
-  List<String> zoneDropDownList = ["North Zone", "South Zone"];
+  List<String> zoneDropDownList = [];
 
   String? dropdownIdentityType;
   List<String> identityTypeDropDownList = [
@@ -77,10 +77,10 @@ class CreateAccountPartnerController extends GetxController {
     update();
   }
 
-  // void updatezone(String zone) {
-  //   dropdownzone = zone;
-  //   update();
-  // }
+  void updatezone(String zone) {
+    dropdownzone = zone;
+    update();
+  }
 
   void updatetime(String time) {
     dropdownzone = time;
@@ -158,22 +158,22 @@ void updatepass() {
     }
   }
 
-  Future<void> selectTime(BuildContext context) async {
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-    if (pickedTime != null) {
-      print(pickedTime.format(context));
-      String formattedTime =
-          pickedTime.format(context).replaceAll(RegExp(r'[^0-9:]'), '');
-      print(formattedTime);
-      timeinput.text = formattedTime;
-      update();
-    } else {
-      print("Time is not selected");
-    }
-  }
+  // Future<void> selectTime(BuildContext context) async {
+  //   final TimeOfDay? pickedTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: TimeOfDay.now(),
+  //   );
+  //   if (pickedTime != null) {
+  //     print(pickedTime.format(context));
+  //     String formattedTime =
+  //         pickedTime.format(context).replaceAll(RegExp(r'[^0-9:]'), '');
+  //     print(formattedTime);
+  //     timeinput.text = formattedTime;
+  //     update();
+  //   } else {
+  //     print("Time is not selected");
+  //   }
+  // }
 
   // state list
   String getUserStateUrl = Constants.GET_STATE_LIST;
@@ -200,35 +200,36 @@ void updatepass() {
     update();
   }
 
-  // module list
-  String getModuleUrl = Constants.GET_MODULE_LIST;
-  ModuleModel? moduleListModel;
-  bool moduleLoaded = false;
-  moduleFile.Module? selectedModule;
-  Future<void> updateModule(moduleFile.Module module) async {
-    selectedModule = module;
-    update();
-  }
+
+  // // module list
+  // String getModuleUrl = Constants.GET_MODULE_LIST;
+  // ModuleModel? moduleListModel;
+  // bool moduleLoaded = false;
+  // moduleFile.Module? selectedModule;
+  // Future<void> updateModule(moduleFile.Module module) async {
+  //   selectedModule = module;
+  //   update();
+  // }
 
   Future<void> init() async {
-    try {
-      // module list
-      moduleListModel =
-          ModuleModel.fromJson(await ApiHelper.getApi(getModuleUrl));
-      print(moduleListModel);
-      moduleLoaded = true;
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Module: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-    try {
+    // try {
+    //   // module list
+    //   moduleListModel =
+    //       ModuleModel.fromJson(await ApiHelper.getApi(getModuleUrl));
+    //   print(moduleListModel);
+    //   moduleLoaded = true;
+    //   update();
+    // } catch (e) {
+    //   print('Error: $e');
+    //   Get.snackbar(
+    //     'Error',
+    //     'Unable to Module: $e',
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //   );
+    // }
+     try {
       // zone list
       zoneListModel = ZoneModel.fromJson(await ApiHelper.getApi(getZoneUrl));
       print(zoneListModel);

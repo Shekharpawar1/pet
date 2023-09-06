@@ -5,6 +5,7 @@ import 'package:pet/models/salesmanModel/bannerModel.dart';
 import 'package:pet/models/salesmanModel/getUserCategoriesModel.dart';
 import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
 import 'package:pet/models/salesmanModel/ourBrandModel.dart';
+import 'package:pet/models/salesmanModel/salesProductByPartnerModel.dart';
 import 'package:pet/models/salesmanModel/salesWishListModel.dart';
 import 'package:pet/models/usersModel/bannerModel.dart';
 import 'package:http/http.dart' as http;
@@ -63,6 +64,12 @@ var wholesellerID ;
   String getBannerUrl = '${Constants.GET_USER_BANNER}';
   SalesBannerModel? salesBannerModel;
   bool bannerLoaded = false;
+
+
+ // ProductByPartner
+  String getProductByPartnerUrl = '${Constants.GET_PRODUCTBYPARTNER}';
+  SalesProductByPartnerModel? salesProductPartnerModel;
+  bool partnerLoaded = false;
 
    // our brand
   String getBrandUrl = '${Constants.GET_OUR_BRAND}';
@@ -156,6 +163,25 @@ fethUserId() {
       print(
           "CAnine products ===>>>> ${salesBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+       try {
+      // ProductByPartner
+      salesProductPartnerModel = SalesProductByPartnerModel.fromJson(
+          await ApiHelper.getApi(getProductByPartnerUrl));
+      print(salesProductPartnerModel);
+      partnerLoaded = true;
+      
       update();
     } catch (e) {
       print('Error: $e');

@@ -49,9 +49,10 @@ class  PartnerLoginController extends GetxController {
     return completer.future;
   }
   Future<void> getOtp() async {
+    
     try {
       // sate list
-      var body = {"vendor_type":"owner" ,"email":emailController.text.trim(),"password":passwordController.text.trim().toString()};
+      var body = {"vendor_type":"owner" ,"email":emailController.text.trim().toString(),"password":passwordController.text.trim().toString()};
       await ApiHelper.postApi(url: Constants.PARTNER_LOGIN, body: body);
       // print(stateListModel);
       // stateLoaded = true;

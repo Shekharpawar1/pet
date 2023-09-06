@@ -46,6 +46,8 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
   static const GET_USER_BANNER = "$BASE_URL${API_V1_PATH}/banners";
    static const GET_WHOLE_TOTALORDER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_orders/";
    static const GET_WHOLESELLER_TOTAL = "$BASE_URL${API_V1_PATH}/auth/wholesaler_list/";
+  static const GET_PRODUCTBYPARTNER = "$BASE_URL${API_V1_PATH}/vendor/all_vendor";
+
 
      static const GET_TOTALSELLER_ORDER = "$BASE_URL${API_V1_PATH}/auth/seller_orders/";
 

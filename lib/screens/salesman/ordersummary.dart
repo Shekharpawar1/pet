@@ -168,7 +168,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                         Constants.PRODUCT_HOME_IMAGE_PATH +
                                             "/${item.image!}";
                                     // var imagePath = "${item.image ?? ""}";
-                                    print(imagePath);
+                                    // print(imagePath);
 
                                     //  addtocartController.sizes = addtocartController.mycartmodel!.data!.map((e) => 1).toList();
                                     return (addtocartController

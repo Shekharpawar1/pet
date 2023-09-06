@@ -164,8 +164,8 @@ class _TotalOrdersalesState extends State<TotalOrdersales> {
                             : InkWell(
                                 onTap: () {
                                   Get.to(OrderDetailssales(
-                                    orderid:item.id??0,
-                                    orderStatus: item.orderStatus??'',
+                                    orderId:item.id??0,
+                                    orderstatus: item.orderStatus??'',
                                     couponcode: item.couponCode??'',
                                     paymentmethod: item.paymentMethod??'',
                                   ));

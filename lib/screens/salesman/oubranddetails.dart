@@ -23,7 +23,7 @@ class SalesOurBrandDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var imagePath = "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo??''}";
+    var imagePath = "${Constants.BASE_URL}/storage/app/public/product/${ourbranddeatilscontrroller.brandlogo??''}";
     return Scaffold(
 
       

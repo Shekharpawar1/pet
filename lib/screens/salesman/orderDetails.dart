@@ -5,18 +5,19 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
+import 'package:pet/controllers/salesman_controller/order_tracker_controller.dart';
+import 'package:pet/screens/salesman/locationScreenSalesMan.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class OrderDetailssales extends StatefulWidget {
-   OrderDetailssales({super.key,   this.orderid, this.orderStatus, this.couponcode,this.paymentmethod});
-   int? orderid;
-   String? orderStatus;
-     String? couponcode;
-   String? paymentmethod;
-
+   OrderDetailssales({super.key,   this.orderId, this.orderstatus, this.couponcode,this.paymentmethod});
+     int? orderId;
+  String? couponcode;
+  String? paymentmethod;
+  String? orderstatus;
   @override
   State<OrderDetailssales> createState() => _OrderDetailssalesState();
 }
@@ -184,13 +185,13 @@ fontWeight: FontWeight.w700,),)
                             height: MediaQuery.of(context).size.height * 0.05,
                             width: MediaQuery.of(context).size.width * 0.3,
                             decoration: BoxDecoration(
-                                color: MyColors.yellow,
+                                color: (widget.orderstatus == "pending")?MyColors.orange:MyColors.green1,
                                 borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(25),
                                     bottomLeft: Radius.circular(20))),
                             child: Center(
                                 child: Text(
-                              widget.orderStatus.toString(),
+                              widget.orderstatus.toString(),
                               style: CustomTextStyle.popinstextsmall12,
                             )),
                           ),
@@ -591,11 +592,14 @@ Container(
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               InkWell(
-                onTap: () {
-                //        OrderTrackerWholeController ordertrackcontroller = Get.put(OrderTrackerWholeController());
-                //   ordertrackcontroller.updateOrder(widget.orderId??0);
-                //  await ordertrackcontroller.init();
-                //   Get.to(LocationPickerMapWhole1());
+                onTap: () async {
+                       OrderTrackerSalesController ordertrackcontroller = Get.put(OrderTrackerSalesController());
+                  ordertrackcontroller.updateOrder(widget.orderId??0);
+
+                 await ordertrackcontroller.init();
+                  Get.to(LocationPickerMapSalesMan(
+                    
+                  ));
                 },
                 child: Center(
                   child: Container(

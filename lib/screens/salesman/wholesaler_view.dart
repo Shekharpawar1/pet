@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/controllers/salesman_controller/addwholeseller_controller.dart';
 import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
+import 'package:pet/controllers/salesman_controller/myOrdersales_controller.dart';
 
 import 'package:pet/controllers/salesman_controller/wholesaler_controller.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
@@ -15,6 +16,7 @@ import 'package:pet/screens/salesman/home.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
 import 'package:pet/screens/salesman/orderHistory.dart';
+import 'package:pet/screens/salesman/salesmyOrderPage.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -22,6 +24,7 @@ import 'package:pet/utils/fontstyle.dart';
 class SalesWholeSalerScreen extends StatelessWidget {
   SalesWholeSalerScreen({super.key});
   TextEditingController _searchcontroller = TextEditingController();
+  SalesMyOrderController myordercontroller = Get.put(SalesMyOrderController());
   final SalesAddwholeControllers addwholesellerController =
       Get.put(SalesAddwholeControllers());
       final storage = GetStorage();
@@ -383,7 +386,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                           color: MyColors.black,
                           ),
                         ),
                       ),
@@ -409,7 +412,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "Last Name",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                             color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -419,7 +422,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                            color: MyColors.black,
                           ),
                         ),
                       ),
@@ -444,7 +447,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "Email ID",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                              color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -508,10 +511,10 @@ class SalesWholeSalerScreen extends StatelessWidget {
                               hintText: "DD/MM/YYYY",
                               suffixIcon: Icon(
                                 Icons.calendar_month_outlined,
-                                color: MyColors.white,
+                                color: MyColors.black,
                               ),
                               hintStyle: TextStyle(
-                                  color: MyColors.white,
+                               color: MyColors.black,
                                   fontFamily: "SF-Pro-Display",
                                   fontSize: 14)),
                         ),
@@ -544,7 +547,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                             hintText: "Mobile No",
                             counterText: '',
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                              color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -554,7 +557,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                             color: MyColors.black,
                           ),
                         ),
                       ),
@@ -783,7 +786,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "Aadhar Number",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                              color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -793,7 +796,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                           color: MyColors.black,
                           ),
                         ),
                       ),
@@ -817,7 +820,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "GST Number",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                               color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -827,7 +830,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                          color: MyColors.black,
                           ),
                         ),
                       ),
@@ -852,7 +855,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "Business Name",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                               color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -862,7 +865,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                            color: MyColors.black,
                           ),
                         ),
                       ),
@@ -887,7 +890,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "Pincode",
                              hintStyle: TextStyle(
-                              color: MyColors.white,
+                              color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -897,7 +900,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                            color: MyColors.black,
                           ),
                         ),
                       ),
@@ -922,7 +925,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: "Password",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
+                              color: MyColors.black,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -932,7 +935,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                           ),
                           style: TextStyle(
                             fontSize: 16,
-                            color: MyColors.white,
+                           color: MyColors.black,
                           ),
                         ),
                       ),
@@ -976,7 +979,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 hintText: "State",
                                  hintStyle: TextStyle(
-                              color: MyColors.white,
+                           color: MyColors.black,
                             ),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
@@ -1042,7 +1045,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                                 decoration: InputDecoration(
                                   hintText: "City",
                                    hintStyle: TextStyle(
-                              color: MyColors.white,
+                               color: MyColors.black,
                             ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 5),
@@ -1263,16 +1266,9 @@ class SalesWholeSalerScreen extends StatelessWidget {
                               width: Get.width * 0.40,
                               height: 80,
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color: Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ), 
                               child: Center(
                                 child:  Column(
                                           mainAxisAlignment:
@@ -1281,14 +1277,14 @@ class SalesWholeSalerScreen extends StatelessWidget {
                                             Text(
                                               "Upload Profile",
                                               style: CustomTextStyle
-                                                  .popinstextsmall124,
+                                                  .popinssmall0,
                                             ),
                                             addwholesellerController
                                                         .profileFilePath ==
                                                     ""
                                                 ? Icon(
                                                     Icons.upload,
-                                                    color: MyColors.white,
+                                                  color: MyColors.black,
                                                     size: 25,
                                                   )
                                                 : SizedBox(
@@ -1323,35 +1319,28 @@ class SalesWholeSalerScreen extends StatelessWidget {
                             child: Container(
                               height: 80,
                               width: Get.width * 0.40,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color: Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
+                                 decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ), 
                               child: Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       "Upload Document",
-                                      style: CustomTextStyle.popinstextsmall124,
+                                      style: CustomTextStyle.popinssmall0,
                                     ),
                                     Text(
                                       "Ex. GST, Adhar card...",
-                                      style: CustomTextStyle.popinstextsmall124,
+                                      style: CustomTextStyle.popinssmall0,
                                     ),
                                   addwholesellerController
                                                       .logoFilePath ==
                                                   ""
                                               ? Icon(
                                                   Icons.upload,
-                                                  color: MyColors.white,
+                                                   color: MyColors.black,
                                                   size: 25,
                                                 )
                                               : SizedBox(
@@ -1516,79 +1505,81 @@ class SalesWholeSalerScreen extends StatelessWidget {
               )
                     : 
                     Column(children: [
-                        Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                        height: 45,
-                        width: 265,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(17),
-
-                          // border: Border.all(color:brandcolor ),
-
-                          color: MyColors.white,
-                        ),
-                        child: TextFormField(
-                          controller: _searchcontroller,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: MyColors.voliet,
-                            fontFamily: "SF-Pro-Display",
-                          ),
-                          decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 15),
-                              fillColor: MyColors.white,
-                              focusColor: MyColors.white,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                // borderRadius: BorderRadius.circular(50),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                //  borderRadius: BorderRadius.circular(50),
-                              ),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                //  borderRadius: BorderRadius.circular(50),
-                              ),
-                              hintText: "Search",
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Image.asset(
-                                  "assets/image/searchnormal.png",
-                                  width: 10,
-                                ),
-                              ),
-                              hintStyle: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400)),
-                        ),
-                  ),
-
-                  //  SizedBox(width: 10,),
-                  Container(
-                          width: 45,
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
                           height: 45,
+                          width: 265,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Color(0xffffcc00)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Image.asset(
-                              "assets/image/filter3.png",
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(17),
+                        
+                            // border: Border.all(color:brandcolor ),
+                        
+                            color: MyColors.white,
+                          ),
+                          child: TextFormField(
+                            controller: _searchcontroller,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: MyColors.voliet,
+                              fontFamily: "SF-Pro-Display",
                             ),
-                          ))
-                ],
-              ),
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 15),
+                                fillColor: MyColors.white,
+                                focusColor: MyColors.white,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  // borderRadius: BorderRadius.circular(50),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  //  borderRadius: BorderRadius.circular(50),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  //  borderRadius: BorderRadius.circular(50),
+                                ),
+                                hintText: "Search",
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Image.asset(
+                                    "assets/image/searchnormal.png",
+                                    width: 10,
+                                  ),
+                                ),
+                                hintStyle: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400)),
+                          ),
+                                          ),
+                        
+                                          //  SizedBox(width: 10,),
+                                          Container(
+                            width: 45,
+                            height: 45,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color(0xffffcc00)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Image.asset(
+                                "assets/image/filter3.png",
+                              ),
+                            ))
+                                        ],
+                                      ),
+                        ),
 SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height * 0.02,
                                     ),
-                    ],),
-                    
+                         
                     GetBuilder<DashBoardController>(
           init: dashBoardController,
           builder: (_) {
@@ -1808,21 +1799,27 @@ SizedBox(
                                                     ),
                                                     SizedBox(width: 20),
                                                     GestureDetector(
-                                                      onTap: (){
-                                                         Get.to(OrderHistorysales());
+                                                      onTap: () async{
+                                                          
+      myordercontroller.fethUserId();
+        await myordercontroller.init();
+                                                         Get.to(MyOrderSales(
+                                                          wholesellerID: item.id??0,
+                                                         ));
+                                                        //  Get.to(OrderHistorysales());
                                                       },
                                                       child: Container(
                                                           width: 130,
                                                           height: 40,
-                                                          decoration: BoxDecoration(
+                                                         decoration: BoxDecoration(
                                                               borderRadius:
                                                                   BorderRadius.circular(
                                                                       26.405324935913086),
-                                                              color: MyColors
-                                                                  .yellowlight),
+                                                              color:MyColors.yellow
+                                                                ),
                                                           child: Center(
                                                               child: Text(
-                                                            "Order History",
+                                                            "Order",
                                                             style: CustomTextStyle
                                                                 .popinssmall1,
                                                           ))),
@@ -1840,6 +1837,9 @@ SizedBox(
                           );
                       }
                     )
+              
+                   
+                    ],),
               ],
             );
           }),

@@ -35,7 +35,7 @@ class Data {
   int? categoryId;
   String? subCategory;
   String? categoryIds;
-  String? variations;
+  // String? variations;
   String? addOns;
   String? attributes;
   String? choiceOptions;
@@ -75,7 +75,7 @@ class Data {
       this.categoryId,
       this.subCategory,
       this.categoryIds,
-      this.variations,
+      // this.variations,
       this.addOns,
       this.attributes,
       this.choiceOptions,
@@ -115,7 +115,7 @@ class Data {
     categoryId = json['category_id'];
     subCategory = json['sub_category'];
     categoryIds = json['category_ids'];
-    variations = json['variations'];
+    // variations = json['variations'];
     addOns = json['add_ons'];
     attributes = json['attributes'];
     choiceOptions = json['choice_options'];
@@ -157,7 +157,7 @@ class Data {
     data['category_id'] = this.categoryId;
     data['sub_category'] = this.subCategory;
     data['category_ids'] = this.categoryIds;
-    data['variations'] = this.variations;
+    // data['variations'] = this.variations;
     data['add_ons'] = this.addOns;
     data['attributes'] = this.attributes;
     data['choice_options'] = this.choiceOptions;

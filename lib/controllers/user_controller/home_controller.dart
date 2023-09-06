@@ -7,6 +7,7 @@ import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/servicesCategoriesModel.dart';
+import 'package:pet/models/usersModel/userProductByPartnerModel.dart';
 import 'package:pet/models/usersModel/userWishListModel.dart';
 import 'package:pet/screens/user/allcategory.dart';
 
@@ -55,6 +56,11 @@ class HomeuserController extends GetxController {
   ServicesModel? userServicesModel;
   bool servicesLoaded = false;
 
+ // ProductByPartner
+  String getProductByPartnerUrl = '${Constants.GET_PRODUCTBYPARTNER}';
+  UserProductByPartnerModel? userProductPartnerModel;
+  bool partnerLoaded = false;
+  
   // wishlist list
   WishListModel? wishList;
   String getWishListUrl = Constants.USER_GET_WISHLIST;
@@ -165,6 +171,24 @@ class HomeuserController extends GetxController {
           ServicesModel.fromJson(await ApiHelper.getApi(getServicesUrl));
       print(userServicesModel);
       servicesLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+      try {
+      // ProductByPartner
+      userProductPartnerModel = UserProductByPartnerModel.fromJson(
+          await ApiHelper.getApi(getProductByPartnerUrl));
+      print(userProductPartnerModel);
+      partnerLoaded = true;
+      
       update();
     } catch (e) {
       print('Error: $e');

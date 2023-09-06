@@ -469,99 +469,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                           SizedBox(
                             height: 5,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                              //                    width: 335,
-                              // height: 45,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color:
-                                          Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your name';
-                                  }
-                                  return null;
-                                },
-                                controller: createAccountpartnercontroller
-                                    .fullNameController,
-                                decoration: InputDecoration(
-                                  hintText: "Partners Name",
-                                  hintStyle: TextStyle(
-                                    color: MyColors.white,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: MyColors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-
-
- Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                              //                    width: 335,
-                              // height: 45,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color:
-                                          Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your name';
-                                  }
-                                  return null;
-                                },
-                                controller: createAccountpartnercontroller
-                                    .companyNameController,
-                                decoration: InputDecoration(
-                                  hintText: "Company Name",
-                                  hintStyle: TextStyle(
-                                    color: MyColors.white,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: MyColors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-          
+                    
 
           
  Padding(
@@ -767,166 +675,331 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                             ),
                           ),
 
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color:
-                                          Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Time';
-                                  }
-                                  return null;
-                                },
-                                readOnly: true,
-                                // keyboardType: TextInputType.emailAddress,
-                                controller:
-                                    createAccountpartnercontroller.timeinput,
-                                decoration: InputDecoration(
-                                  hintText: "Approx Delivery Time",
-                                  suffixIcon: Icon(
-                                    Icons.timer_outlined,
-                                    color: MyColors.white,
-                                  ),
-                                  hintStyle: TextStyle(
-                                    color: MyColors.white,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-
-                                onTap: () async {
-                                  await createAccountpartnercontroller
-                                      .selectTime(context);
-                                },
-                                onChanged: (String? value) {
-                                  createAccountpartnercontroller.selectTime(
-                                      (value ?? "") as BuildContext);
-                                  // Perform actions when country is changed
-                                },
-
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: MyColors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          // Row(
-                          //   children: [
-                          //     Expanded(
-                          //       child: Padding(
-                          //         padding: const EdgeInsets.all(8.0),
-                          //         child: Container(
-                          //           height: 50,
-                          //           width: 155,
-                          //           // height: 45,
-                          //           decoration: BoxDecoration(
-                          //               color:
-                          //                   Color.fromRGBO(255, 255, 255, 0.10),
-                          //               boxShadow: [
-                          //                 BoxShadow(
-                          //                   offset: const Offset(0.0, 0.0),
-                          //                   color: Color.fromRGBO(
-                          //                       255, 255, 255, 0.10),
-                          //                   blurRadius: 0.0,
-                          //                   spreadRadius: 0.0,
-                          //                 ),
-                          //               ],
-                          //               borderRadius:
-                          //                   BorderRadius.circular(40)),
-                          //           child: TextFormField(
-                          //             validator: (value) {
-                          //               if (value == null || value.isEmpty) {
-                          //                 return 'Please enter Latitude';
-                          //               }
-                          //               return null;
-                          //             },
-                          //             controller: createAccountpartnercontroller
-                          //                 .latitudeController,
-                          //             decoration: InputDecoration(
-                          //               hintText: "Latitude",
-                          //               hintStyle: TextStyle(
-                          //                 color: MyColors.white,
-                          //               ),
-                          //               contentPadding: EdgeInsets.symmetric(
-                          //                   horizontal: 20, vertical: 10),
-                          //               border: InputBorder.none,
-                          //               enabledBorder: InputBorder.none,
-                          //               focusedBorder: InputBorder.none,
-                          //             ),
-                          //             style: TextStyle(
-                          //               fontSize: 16,
-                          //               color: MyColors.white,
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //     Padding(
-                          //       padding: const EdgeInsets.all(8.0),
-                          //       child: Container(
-                          //         height: 50,
-                          //         width: 155,
-                          //         // height: 45,
-                          //         decoration: BoxDecoration(
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: Container(
+                          //     height: 50,
+                          //     decoration: BoxDecoration(
+                          //         color: Color.fromRGBO(255, 255, 255, 0.10),
+                          //         boxShadow: [
+                          //           BoxShadow(
+                          //             offset: const Offset(0.0, 0.0),
                           //             color:
                           //                 Color.fromRGBO(255, 255, 255, 0.10),
-                          //             boxShadow: [
-                          //               BoxShadow(
-                          //                 offset: const Offset(0.0, 0.0),
-                          //                 color: Color.fromRGBO(
-                          //                     255, 255, 255, 0.10),
-                          //                 blurRadius: 0.0,
-                          //                 spreadRadius: 0.0,
-                          //               ),
-                          //             ],
-                          //             borderRadius: BorderRadius.circular(40)),
-                          //         child: TextFormField(
-                          //           validator: (value) {
-                          //             if (value == null || value.isEmpty) {
-                          //               return 'Please enter Longitude';
-                          //             }
-                          //             return null;
-                          //           },
-                          //           controller: createAccountpartnercontroller
-                          //               .longitudeController,
-                          //           decoration: InputDecoration(
-                          //             hintText: "Longitude",
-                          //             hintStyle: TextStyle(
-                          //               color: MyColors.white,
-                          //             ),
-                          //             contentPadding: EdgeInsets.symmetric(
-                          //                 horizontal: 20, vertical: 10),
-                          //             border: InputBorder.none,
-                          //             enabledBorder: InputBorder.none,
-                          //             focusedBorder: InputBorder.none,
+                          //             blurRadius: 0.0,
+                          //             spreadRadius: 0.0,
                           //           ),
-                          //           style: TextStyle(
-                          //             fontSize: 16,
-                          //             color: MyColors.white,
-                          //           ),
+                          //         ],
+                          //         borderRadius: BorderRadius.circular(40)),
+                          //     child: TextFormField(
+                          //       validator: (value) {
+                          //         if (value == null || value.isEmpty) {
+                          //           return 'Please enter Lat';
+                          //         }
+                          //         return null;
+                          //       },
+                          //       readOnly: true,
+                          //       // keyboardType: TextInputType.emailAddress,
+                          //       controller:
+                          //           createAccountpartnercontroller.latController,
+                          //       decoration: InputDecoration(
+                          //         hintText: "Lat Ex 0.09988445",
+                          //         suffixIcon: Icon(
+                          //           Icons.timer_outlined,
+                          //           color: MyColors.white,
                           //         ),
+                          //         hintStyle: TextStyle(
+                          //           color: MyColors.white,
+                          //         ),
+                          //         contentPadding: EdgeInsets.symmetric(
+                          //             horizontal: 20, vertical: 10),
+                          //         border: InputBorder.none,
+                          //         enabledBorder: InputBorder.none,
+                          //         focusedBorder: InputBorder.none,
+                          //       ),
+
+                          //       onTap: () async {
+                          //         await createAccountpartnercontroller
+                          //             .selectTime(context);
+                          //       },
+                          //       onChanged: (String? value) {
+                          //         createAccountpartnercontroller.selectTime(
+                          //             (value ?? "") as BuildContext);
+                          //         // Perform actions when country is changed
+                          //       },
+
+                          //       style: TextStyle(
+                          //         fontSize: 16,
+                          //         color: MyColors.white,
                           //       ),
                           //     ),
-                          //   ],
-                          // )
+                          //   ),
+                          // ),
+      
+      
+      
+//       Padding(
+//                             padding: const EdgeInsets.all(8.0),
+//                             child: Container(
+//                               height: 50,
+//                               //                    width: 335,
+//                               // height: 45,
+//                               decoration: BoxDecoration(
+//                                   color: Color.fromRGBO(255, 255, 255, 0.10),
+//                                   boxShadow: [
+//                                     BoxShadow(
+//                                       offset: const Offset(0.0, 0.0),
+//                                       color:
+//                                           Color.fromRGBO(255, 255, 255, 0.10),
+//                                       blurRadius: 0.0,
+//                                       spreadRadius: 0.0,
+//                                     ),
+//                                   ],
+//                                   borderRadius: BorderRadius.circular(40)),
+//                               child: TextFormField(
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Please enter your name';
+//                                   }
+//                                   return null;
+//                                 },
+//                                 controller: createAccountpartnercontroller
+//                                     .fullNameController,
+//                                 decoration: InputDecoration(
+//                                   hintText: "Partners Name",
+//                                   hintStyle: TextStyle(
+//                                     color: MyColors.white,
+//                                   ),
+//                                   contentPadding: EdgeInsets.symmetric(
+//                                       horizontal: 20, vertical: 10),
+//                                   border: InputBorder.none,
+//                                   enabledBorder: InputBorder.none,
+//                                   focusedBorder: InputBorder.none,
+//                                 ),
+//                                 style: TextStyle(
+//                                   fontSize: 16,
+//                                   color: MyColors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+
+
+//  Padding(
+//                             padding: const EdgeInsets.all(8.0),
+//                             child: Container(
+//                               height: 50,
+//                               //                    width: 335,
+//                               // height: 45,
+//                               decoration: BoxDecoration(
+//                                   color: Color.fromRGBO(255, 255, 255, 0.10),
+//                                   boxShadow: [
+//                                     BoxShadow(
+//                                       offset: const Offset(0.0, 0.0),
+//                                       color:
+//                                           Color.fromRGBO(255, 255, 255, 0.10),
+//                                       blurRadius: 0.0,
+//                                       spreadRadius: 0.0,
+//                                     ),
+//                                   ],
+//                                   borderRadius: BorderRadius.circular(40)),
+//                               child: TextFormField(
+//                                 validator: (value) {
+//                                   if (value == null || value.isEmpty) {
+//                                     return 'Please enter your name';
+//                                   }
+//                                   return null;
+//                                 },
+//                                 controller: createAccountpartnercontroller
+//                                     .companyNameController,
+//                                 decoration: InputDecoration(
+//                                   hintText: "Company Name",
+//                                   hintStyle: TextStyle(
+//                                     color: MyColors.white,
+//                                   ),
+//                                   contentPadding: EdgeInsets.symmetric(
+//                                       horizontal: 20, vertical: 10),
+//                                   border: InputBorder.none,
+//                                   enabledBorder: InputBorder.none,
+//                                   focusedBorder: InputBorder.none,
+//                                 ),
+//                                 style: TextStyle(
+//                                   fontSize: 16,
+//                                   color: MyColors.white,
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+          
+
+                   
+  createAccountpartnercontroller.zoneListModel == null
+                              ? SizedBox()
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color.fromRGBO(255, 255, 255, 0.10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: const Offset(0.0, 0.0),
+                                            color: Color.fromRGBO(
+                                                255, 255, 255, 0.10),
+                                            blurRadius: 0.0,
+                                            spreadRadius: 0.0,
+                                          ),
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(40)),
+                                    child:
+                                        DropdownButtonFormField<zoneFile.Zone>(
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.name!.isEmpty) {
+                                          return 'Please select a zone';
+                                        }
+                                        return null;
+                                      },
+                                      value:      createAccountpartnercontroller
+
+                                          .selectedZone, // Set the selected country value
+                                      decoration: InputDecoration(
+                                        hintText: "Zone",
+                                        hintStyle: TextStyle(
+                                          color: MyColors.white,
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 5),
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        // iconColor: MyColors.white,
+                                      ),
+                                      icon: Icon(
+                                        Icons.arrow_drop_down,
+                                        color: MyColors.white,
+                                      ),
+                                      style: TextStyle(
+                                          fontSize: 16, color: MyColors.black),
+                                      items:       createAccountpartnercontroller
+
+                                          .zoneListModel!.data!
+                                          .map((zone) {
+                                        return DropdownMenuItem<zoneFile.Zone>(
+                                          value: zone,
+                                          child: Text(zone.name!),
+                                        );
+                                      }).toList(),
+                                      onChanged: (zoneFile.Zone? value) {
+                                        createAccountpartnercontroller
+                                            .updateZone(value!);
+                                        // Perform actions when country is changed
+                                      },
+                                    ),
+                                  ),
+                                ),
+              
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    height: 50,
+                                    width: 155,
+                                    // height: 45,
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Color.fromRGBO(255, 255, 255, 0.10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            offset: const Offset(0.0, 0.0),
+                                            color: Color.fromRGBO(
+                                                255, 255, 255, 0.10),
+                                            blurRadius: 0.0,
+                                            spreadRadius: 0.0,
+                                          ),
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(40)),
+                                    child: TextFormField(
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter Latitude';
+                                        }
+                                        return null;
+                                      },
+                                      controller: createAccountpartnercontroller
+                                          .latitudeController,
+                                      decoration: InputDecoration(
+                                        hintText: "Latitude",
+                                        hintStyle: TextStyle(
+                                          color: MyColors.white,
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 20, vertical: 10),
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                      ),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: MyColors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 50,
+                                  width: 155,
+                                  // height: 45,
+                                  decoration: BoxDecoration(
+                                      color:
+                                          Color.fromRGBO(255, 255, 255, 0.10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          offset: const Offset(0.0, 0.0),
+                                          color: Color.fromRGBO(
+                                              255, 255, 255, 0.10),
+                                          blurRadius: 0.0,
+                                          spreadRadius: 0.0,
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(40)),
+                                  child: TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter Longitude';
+                                      }
+                                      return null;
+                                    },
+                                    controller: createAccountpartnercontroller
+                                        .longitudeController,
+                                    decoration: InputDecoration(
+                                      hintText: "Longitude",
+                                      hintStyle: TextStyle(
+                                        color: MyColors.white,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                    ),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: MyColors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
                           
                           
                           // Padding(
@@ -961,74 +1034,8 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                           //     ),
                           //   ),
                           // ),
-
-                          
-                          // createAccountpartnercontroller.zoneListModel == null
-                          //     ? SizedBox()
-                          //     : Padding(
-                          //         padding: const EdgeInsets.all(8.0),
-                          //         child: Container(
-                          //           height: 50,
-                          //           decoration: BoxDecoration(
-                          //               color:
-                          //                   Color.fromRGBO(255, 255, 255, 0.10),
-                          //               boxShadow: [
-                          //                 BoxShadow(
-                          //                   offset: const Offset(0.0, 0.0),
-                          //                   color: Color.fromRGBO(
-                          //                       255, 255, 255, 0.10),
-                          //                   blurRadius: 0.0,
-                          //                   spreadRadius: 0.0,
-                          //                 ),
-                          //               ],
-                          //               borderRadius:
-                          //                   BorderRadius.circular(40)),
-                          //           child:
-                          //               DropdownButtonFormField<zoneFile.Zone>(
-                          //             validator: (value) {
-                          //               if (value == null ||
-                          //                   value.name!.isEmpty) {
-                          //                 return 'Please select a zone';
-                          //               }
-                          //               return null;
-                          //             },
-                          //             value: createAccountpartnercontroller
-                          //                 .selectedZone, // Set the selected country value
-                          //             decoration: InputDecoration(
-                          //               hintText: "Zone",
-                          //               hintStyle: TextStyle(
-                          //                 color: MyColors.white,
-                          //               ),
-                          //               contentPadding: EdgeInsets.symmetric(
-                          //                   horizontal: 20, vertical: 5),
-                          //               border: InputBorder.none,
-                          //               enabledBorder: InputBorder.none,
-                          //               focusedBorder: InputBorder.none,
-                          //               // iconColor: MyColors.white,
-                          //             ),
-                          //             icon: Icon(
-                          //               Icons.arrow_drop_down,
-                          //               color: MyColors.white,
-                          //             ),
-                          //             style: TextStyle(
-                          //                 fontSize: 16, color: MyColors.black),
-                          //             items: createAccountpartnercontroller
-                          //                 .zoneListModel!.data!
-                          //                 .map((zone) {
-                          //               return DropdownMenuItem<zoneFile.Zone>(
-                          //                 value: zone,
-                          //                 child: Text(zone.name!),
-                          //               );
-                          //             }).toList(),
-                          //             onChanged: (zoneFile.Zone? value) {
-                          //               createAccountpartnercontroller
-                          //                   .updateZone(value!);
-                          //               // Perform actions when country is changed
-                          //             },
-                          //           ),
-                          //         ),
-                          //       ),
-                          // createAccountpartnercontroller.moduleListModel == null
+,
+                         // createAccountpartnercontroller.moduleListModel == null
                           //     ? SizedBox()
                           //     : Padding(
                           //         padding: const EdgeInsets.all(8.0),
@@ -1842,10 +1849,10 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                     //         .profileFile,
                                     // "partner-logo":
                                     //     createAccountpartnercontroller.logoFile,
-                                    "name": createAccountpartnercontroller
-                                        .fullNameController.text
-                                        .trim()
-                                        .toString(),
+                                    // "name": createAccountpartnercontroller
+                                    //     .fullNameController.text
+                                    //     .trim()
+                                    //     .toString(),
                                     "f_name": createAccountpartnercontroller
                                         .firstNameController.text
                                         .trim()
@@ -1858,16 +1865,16 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                         .mobileNumberController.text
                                         .trim()
                                         .toString(),
-                                    'status': '',
+                                    
                                     "address": createAccountpartnercontroller
                                         .addressController.text
                                         .trim()
                                         .toString(),
-                                    "delivery_time":
-                                        createAccountpartnercontroller
-                                            .timeinput.text
-                                            .trim()
-                                            .toString(),
+                                    // "delivery_time":
+                                    //     createAccountpartnercontroller
+                                    //         .timeinput.text
+                                    //         .trim()
+                                    //         .toString(),
                                     // "dob": createAccountpartnercontroller
                                     //     .dobController.text
                                     //     .trim()
@@ -1894,12 +1901,12 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                     //     createAccountpartnercontroller
                                     //         .selectedModule!.moduleName!
                                     //         .toString(),
-                                    "module_id": createAccountpartnercontroller
-                                        .selectedModule!.id!
-                                        .toString(),
-                                    "tax": createAccountpartnercontroller
-                                        .dropdowntype
-                                        .toString(),
+                                    // "module_id": createAccountpartnercontroller
+                                    //     .selectedModule!.id!
+                                    //     .toString(),
+                                    // "tax": createAccountpartnercontroller
+                                    //     .dropdowntype
+                                    //     .toString(),
                                   };
                                   // documentList.forEach((element) async {
                                   //   print(element["key"]! +
