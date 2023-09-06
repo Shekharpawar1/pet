@@ -40,11 +40,13 @@ class _HomeWholeState extends State<HomeWhole> {
   TextEditingController _searchcontroller = TextEditingController();
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
-  WholeProductDetailsController wholeproductdetailsController = Get.put(WholeProductDetailsController());
-  MyCartWholeController mycartwholeController = Get.put(MyCartWholeController());
+  WholeProductDetailsController wholeproductdetailsController =
+      Get.put(WholeProductDetailsController());
+  MyCartWholeController mycartwholeController =
+      Get.put(MyCartWholeController());
   WholeSubCategoryController wholesubcategorycontroller =
       Get.put(WholeSubCategoryController());
-  
+
   @override
   Widget build(BuildContext context) {
     //  homeusercontroller.getWishList();
@@ -53,7 +55,7 @@ class _HomeWholeState extends State<HomeWhole> {
     return Scaffold(
       key: _drawerkey,
       drawer: drawerWholeSaler(),
-       appBar: AppBar(
+      appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: Padding(
@@ -127,23 +129,24 @@ class _HomeWholeState extends State<HomeWhole> {
                   child: Stack(
                     children: <Widget>[
                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                    
                       GetBuilder<MyCartWholeController>(
-                  init: mycartwholeController,
-                  builder: (_) {
-                  return    Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text("5",
-                              // (mycartwholeController.wholemycartmodel!.data!.length).toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ));}),
+                          init: mycartwholeController,
+                          builder: (_) {
+                            return Positioned(
+                                top: 3.0,
+                                right: 4.0,
+                                child: Center(
+                                  child: Text(
+                                    "5",
+                                    // (mycartwholeController.wholemycartmodel!.data!.length).toString(),
+                                    // list.length.toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 8.0,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ));
+                          }),
                     ],
                   )),
             ],
@@ -158,7 +161,7 @@ class _HomeWholeState extends State<HomeWhole> {
         //   ),
         // ),
       ),
-      
+
 //       appBar: AppBar(
 //         elevation: 0,
 //         backgroundColor: Colors.transparent,
@@ -209,7 +212,7 @@ class _HomeWholeState extends State<HomeWhole> {
         child: Stack(
           children: [
             ListView(
-              primary:true,
+              primary: true,
               shrinkWrap: true,
               children: [
                 // SizedBox(height: MediaQuery.of(context).size.height*0.02,),
@@ -275,8 +278,9 @@ class _HomeWholeState extends State<HomeWhole> {
                                       placeholder: (context, url) => Center(
                                         child: CircularProgressIndicator(),
                                       ), // Replace with your own placeholder widget
-                                      errorWidget: (context, url, error) => Icon(Icons
-                                          .error), // Replace with your own error widget
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons
+                                              .error), // Replace with your own error widget
                                     ),
                                   ),
                                   // Positioned(
@@ -450,8 +454,8 @@ class _HomeWholeState extends State<HomeWhole> {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: InkWell(
-                                          onTap:(){
-                                             wholesubcategorycontroller
+                                          onTap: () {
+                                            wholesubcategorycontroller
                                                 .addproduct(item.id ?? 0);
 
                                             Get.to(() => WholeAllcategory());
@@ -478,8 +482,8 @@ class _HomeWholeState extends State<HomeWhole> {
                                                 height: 5,
                                               ),
                                               Text(item.name!,
-                                                  style:
-                                                      CustomTextStyle.popinssmall)
+                                                  style: CustomTextStyle
+                                                      .popinssmall)
                                             ],
                                           ),
                                         ),
@@ -541,7 +545,7 @@ class _HomeWholeState extends State<HomeWhole> {
 
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
-             GetBuilder<WholeHomeController>(
+                GetBuilder<WholeHomeController>(
                     init: wholehomecontroller,
                     builder: (_) {
                       return wholehomecontroller.userPropertiesModel == null
@@ -596,11 +600,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                             print("productid${item.id ?? 0}");
                                             await wholeproductdetailsController
                                                 .init();
-                                            Get.to(ProductDetailswhole(
-                                              
-                                            ));
-                                         
-                                            
+                                            Get.to(ProductDetailswhole());
                                           },
                                           child: Container(
                                             width: 140,
@@ -636,8 +636,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                                     child: Align(
                                                         alignment: Alignment
                                                             .centerRight,
-                                                        child: Icon(
-                                                          wholehomecontroller
+                                                        child: Icon(wholehomecontroller
                                                                 .wishListItemsId
                                                                 .contains(
                                                                     item.id!)
@@ -806,9 +805,8 @@ class _HomeWholeState extends State<HomeWhole> {
                                 );
                     }),
 
-
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-            Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -989,7 +987,13 @@ class _HomeWholeState extends State<HomeWhole> {
                       GetBuilder<WholeHomeController>(
                           init: wholehomecontroller,
                           builder: (_) {
-                            return wholehomecontroller.wholeOurBrandModel == null
+                            return wholehomecontroller.wholeOurBrandModel ==
+                                        null ||
+                                    wholehomecontroller
+                                            .wholeOurBrandModel!.data ==
+                                        null ||
+                                    wholehomecontroller
+                                        .wholeOurBrandModel!.data!.isEmpty
                                 ? SizedBox()
                                 : ListView.builder(
                                     primary: false,
@@ -1350,13 +1354,13 @@ class _HomeWholeState extends State<HomeWhole> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               ],
             ),
-       
-         GetBuilder<WholeHomeController>(
+
+            GetBuilder<WholeHomeController>(
                 init: wholehomecontroller,
                 builder: (_) {
                   return wholehomecontroller.showLoading
                       ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                           child: Container(
                             color: Colors.black.withOpacity(
                                 0.5), // Adjust the opacity as needed
@@ -1377,7 +1381,6 @@ class _HomeWholeState extends State<HomeWhole> {
                         )
                       : SizedBox();
                 }),
-         
           ],
         ),
       ),

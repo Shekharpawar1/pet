@@ -30,6 +30,13 @@ int? id;
     print("cat${categoryids}");
   }
 
+  String selectedCategory = "";
+  void currentCategory(String category) {
+    selectedCategory =category;
+    update();
+    print("cat ${selectedCategory}");
+  }
+
   //   void addsubcategory(int id) {
   //   subid =id;
   //   update();
@@ -110,6 +117,32 @@ void productinit() async{
 }
 
 
+Future<void> productInitByCategory() async{
+
+  
+     try {
+
+         userProductModel = ProductModel.fromJson(
+          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+      print('=========**${getUserproductUrl}${categoryids}/${selectedIndex}');
+      print('===============>>>>>>> Category $selectedCategory');
+      
+      print("===============>>>>>>> Old List ${userProductModel!.data!.map((element) => element.categoryIds).toList()}");
+      userProductModel!.data = userProductModel!.data!.where((element) => element.categoryIds == selectedCategory).toList();
+      print("===============>>>>>>> New List ${userProductModel!.data!}");
+      productLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+  }
+}
 
 
 

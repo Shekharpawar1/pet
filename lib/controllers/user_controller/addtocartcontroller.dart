@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/models/usersModel/addAddressModel.dart';
 import 'package:pet/models/usersModel/addressdeleteModel.dart';
 import 'package:pet/models/usersModel/mycartListModel.dart';
@@ -147,13 +148,14 @@ paymentStatus = paymentstatus;
   var subtotal;
 
   Future<void> init() async {
-    // showLoading = true;
+    showLoading = true;
+    update();
     try {
       // productdeatils
       mycartmodel = MyCartListModel.fromJson(
           await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('id')}"));
       print("====?//${mycartmodel}");
-      sizes = mycartmodel!.data!.map((e) => 1).toList();
+      sizes = mycartmodel!.data!.map((e) => e.quantity).toList();
       List<Map<String, dynamic>> cartJsonList =
           mycartmodel!.data!.map((item) => {
             "product_id": item.itemId,
@@ -187,6 +189,8 @@ paymentStatus = paymentstatus;
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
   String getUserMyCartDeleteUrl = '${Constants.GET_USER_MYCARTLISTDELETE}';
@@ -194,6 +198,8 @@ paymentStatus = paymentstatus;
   bool cartlistdeleteLoaded = false;
 
   Future<void> initdelete() async {
+    showLoading = true;
+    update();
     try {
       // productdeatils
       mycartdeletemodel = MyCartListDeleteModel.fromJson(
@@ -202,6 +208,10 @@ paymentStatus = paymentstatus;
       print("delete");
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
+      
+  final ProductDetailsController productdetailscontroller =
+      Get.put(ProductDetailsController());
+      await productdetailscontroller.isProductInCart();
       update();
     } catch (e) {
       print('Error: $e');
@@ -213,6 +223,8 @@ paymentStatus = paymentstatus;
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
   String getUserAllAddressUrl = '${Constants.GET_USER_ALLADDRESSLIST}';
@@ -220,6 +232,8 @@ paymentStatus = paymentstatus;
   bool addresslistLoaded = false;
 
   Future<void> alladdressinit() async {
+    showLoading = true;
+    update();
     try {
       // productdeatils
       allAddresslistModel = AllAddressListModel.fromJson(
@@ -239,6 +253,8 @@ paymentStatus = paymentstatus;
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
   String getUserAdressDeleteUrl = '${Constants.GET_USER_ADDRESS_DELETE}';
@@ -247,6 +263,8 @@ paymentStatus = paymentstatus;
   bool addressdeleteLoaded = false;
 
   Future<void> addressdeleteinit() async {
+    showLoading = true;
+    update();
     try {
       addressdeletemodel = AddressDeleteModel.fromJson(
           await ApiHelper.deleteApi(getUserAdressDeleteUrl + "$addressid"));
@@ -265,6 +283,8 @@ paymentStatus = paymentstatus;
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
   Future<void> placeorder() async {
@@ -328,6 +348,7 @@ paymentStatus = paymentstatus;
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+      throw "error";
     }
 
     showLoading = false;

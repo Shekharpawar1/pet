@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/wholesaler_controller/addresscontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/couponswhole_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
 import 'package:pet/models/wholesalerModel/addAddressModel.dart';
 import 'package:pet/models/wholesalerModel/addressdeleteModel.dart';
 import 'package:pet/models/wholesalerModel/mycartListModel.dart';
@@ -146,15 +147,27 @@ class MyCartWholeController extends GetxController {
   var subtotal;
 
   Future<void> init() async {
+    showLoading = true;
+    update();
     // showLoading = true;
     try {
       // productdeatils
       wholemycartmodel = WholeMyCartListModel.fromJson(
           await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerid')}"));
       print("====?//${wholemycartmodel}");
-      sizes = wholemycartmodel!.data!.map((e) => 1).toList();
+      sizes = wholemycartmodel!.data!.map((e) => e.quantity).toList();
+      // List<Map<String, dynamic>> cartJsonList =
+      //     wholemycartmodel!.data!.map((item) => item.toJson()).toList();
+      // cartList = cartJsonList;
       List<Map<String, dynamic>> cartJsonList =
-          wholemycartmodel!.data!.map((item) => item.toJson()).toList();
+          wholemycartmodel!.data!.map((item) => {
+            "product_id": item.itemId,
+            "quantity":item.quantity,
+            "variation":item.variant,
+            "tax_amount":13,
+            "discount_on_item":20,
+            "price":item.price
+          }).toList();
       cartList = cartJsonList;
 
 // mycartmodel!.data!.forEach((element) async {
@@ -178,6 +191,8 @@ class MyCartWholeController extends GetxController {
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
   String getUserMyCartDeleteUrl = '${Constants.GET_USER_MYCARTLISTDELETE}';
@@ -185,6 +200,8 @@ class MyCartWholeController extends GetxController {
   bool cartlistdeleteLoaded = false;
 
   Future<void> initdelete() async {
+    showLoading = true;
+    update();
     try {
       // productdeatils
       wholemycartdeletemodel = WholeMyCartListDeleteModel.fromJson(
@@ -193,6 +210,9 @@ class MyCartWholeController extends GetxController {
       print("delete");
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
+  final WholeProductDetailsController wholeproductdetailsController =
+      Get.put(WholeProductDetailsController());
+      await wholeproductdetailsController.isProductInCart();
       update();
     } catch (e) {
       print('Error: $e');
@@ -204,6 +224,8 @@ class MyCartWholeController extends GetxController {
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
 
   String getUserAllAddressUrl = '${Constants.GET_USER_ALLADDRESSLIST}';
@@ -265,7 +287,7 @@ class MyCartWholeController extends GetxController {
     Map<String, dynamic> body = {
       "user_id": storage.read('wholesalerid').toString(),
       "seller_id":null,
-      "coupon_discount_amount": (couponsController.maxAmount!).toString(),
+      "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": "paid",
       "order_status": "pending",
@@ -290,7 +312,7 @@ class MyCartWholeController extends GetxController {
       //                           '').toString(),
       "item_campaign_id": "",
       "order_amount": (((total) + (total * 0.05)) -
-              (double.parse(couponsController.maxAmount!)))
+              (double.parse(couponsController.maxAmount ?? "0")))
           .toString(),
       "cart": cartList,
     };
@@ -319,6 +341,7 @@ class MyCartWholeController extends GetxController {
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+      throw "error";
     }
 
     showLoading = false;

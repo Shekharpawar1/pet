@@ -13,31 +13,36 @@ import 'package:pet/screens/wholesaler/wholeUpiScreen.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/wholesaler/payment2.dart';
+
 enum Choose { upi, cash, phonepay, paytm }
+
 class Paymentwhole extends StatefulWidget {
-   Paymentwhole({super.key,  this.price,});
+  Paymentwhole({
+    super.key,
+    this.price,
+  });
   String? price;
-Choose? selectone;
+  Choose? selectone;
   @override
   State<Paymentwhole> createState() => _PaymentwholeState();
 }
 
 class _PaymentwholeState extends State<Paymentwhole> {
-    MyCartWholeController mycartwholeController = Get.put(MyCartWholeController());
+  MyCartWholeController mycartwholeController =
+      Get.put(MyCartWholeController());
 
   // String? selectedGender;
 
-    String? selectcredit ;
-    String? selectphoepay ;
-    String? selectpaytm;
-    // bool _isOn = false;
-Choose? selectone;
+  String? selectcredit;
+  String? selectphoepay;
+  String? selectpaytm;
+  // bool _isOn = false;
+  Choose? selectone;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
- 
-  appBar: AppBar(
+      appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: Padding(
@@ -73,10 +78,9 @@ Choose? selectone;
         //       )),
         // ],
       ),
-      body:
-       Stack(
-         children: [
-           Padding(
+      body: Stack(
+        children: [
+          Padding(
             padding: const EdgeInsets.all(15.0),
             child: ListView(
               shrinkWrap: true,
@@ -195,57 +199,96 @@ Choose? selectone;
                 //   height: MediaQuery.of(context).size.height * 0.05,
                 // ),
                 InkWell(
-                  onTap: () async{
-
+                  onTap: () async {
                     // print(selectone == Choose.upi);
-                    if(selectone == Choose.upi){
+                    if (selectone == Choose.upi) {
                       print("UPI payment");
- 
-  mycartwholeController.addpaymenttype(selectone == Choose.upi?'online':"offline");
+
+                      mycartwholeController.addpaymenttype(
+                          selectone == Choose.upi ? 'online' : "offline");
 
                       Get.to(WholeUpiScreen(
-amount: double.tryParse(widget.price.toString())));
-                    } else if(selectone == Choose.cash){
+                          amount: double.tryParse(widget.price.toString())));
+                    } else if (selectone == Choose.cash) {
                       print("Cash payment");
-mycartwholeController.addpaymenttype(selectone == Choose.cash?'offline':"online");
-                  await mycartwholeController.placeorder();
+                      mycartwholeController.addpaymenttype(
+                          selectone == Choose.cash ? 'offline' : "online");
+                          try {
+await mycartwholeController.placeorder();
 
-               await showDialog(
-  context: context,
-  builder: (BuildContext context) {
-    return AlertDialog(
-      scrollable: true,
-      // title:  Text("Login"),
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            scrollable: true,
+                            // title:  Text("Login"),
 
-      content: Column(mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              
-                  Align(alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: Icon(Icons.close), // You can use any close icon you prefer
-                      onPressed: () {
-                       Get.back(); // Close the dialog
-                      },
-                    ),
-                  ),
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // Align(
+                                //   alignment: Alignment.topRight,
+                                //   child: IconButton(
+                                //     icon: Icon(Icons
+                                //         .close), // You can use any close icon you prefer
+                                //     onPressed: () {
+                                //       Get.back(); // Close the dialog
+                                //     },
+                                //   ),
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child:
+                                      Image.asset("assets/image/success.png", height: 50, width: 50,),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Order Placed Successfully"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
 
-                   Padding(
-               padding:  EdgeInsets.all(10.0),
-               child: Image.asset("assets/image/success.png"),
-             ),
-             
-              
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Order Placed Successfully"),
-              ),
-            ],
-      ),
-    );
-  },
-);
-                       
-                         Get.to(MyOrderWhole( ));
+                      Get.off(MyOrderWhole());
+                          } catch (e) {
+ await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            scrollable: true,
+                            // title:  Text("Login"),
+
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // Align(
+                                //   alignment: Alignment.topRight,
+                                //   child: IconButton(
+                                //     icon: Icon(Icons
+                                //         .close), // You can use any close icon you prefer
+                                //     onPressed: () {
+                                //       Get.back(); // Close the dialog
+                                //     },
+                                //   ),
+                                // ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child:
+                                      Image.asset("assets/image/multiply.png", height: 50, width: 50,),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text("Failed"),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                          }
+                      
                       // Get.to(Payment2User());
                     }
                     // Get.to(Payment2User());
@@ -265,40 +308,40 @@ mycartwholeController.addpaymenttype(selectone == Choose.cash?'offline':"online"
                     ),
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
               ],
             ),
+          ),
+          GetBuilder<MyCartWholeController>(
+              init: mycartwholeController,
+              builder: (_) {
+                return mycartwholeController.showLoading
+                    ? BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                        child: Container(
+                          color: Colors.black
+                              .withOpacity(0.5), // Adjust the opacity as needed
+                        ),
+                      )
+                    : SizedBox();
+              }),
+          // Progress bar
+          GetBuilder<MyCartWholeController>(
+              init: mycartwholeController,
+              builder: (_) {
+                return mycartwholeController.showLoading
+                    ? Center(
+                        child: SpinKitCircle(
+                          color: Colors.white, // Color of the progress bar
+                          size: 50.0, // Size of the progress bar
+                        ),
+                      )
+                    : SizedBox();
+              }),
+        ],
       ),
-           GetBuilder<MyCartWholeController>(
-                init: mycartwholeController,
-                builder: (_) {
-                  return mycartwholeController.showLoading
-                      ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                          child: Container(
-                            color: Colors.black.withOpacity(
-                                0.5), // Adjust the opacity as needed
-                          ),
-                        )
-                      : SizedBox();
-                }),
-            // Progress bar
-            GetBuilder<MyCartWholeController>(
-                init: mycartwholeController,
-                builder: (_) {
-                  return mycartwholeController.showLoading
-                      ? Center(
-                          child: SpinKitCircle(
-                            color: Colors.white, // Color of the progress bar
-                            size: 50.0, // Size of the progress bar
-                          ),
-                        )
-                      : SizedBox();
-                }),
-          
-        
-         ],
-       ),
     );
   }
 }

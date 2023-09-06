@@ -140,30 +140,30 @@ class _HomeUserState extends State<HomeUser> {
                   child: Stack(
                     children: <Widget>[
                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                    
                       GetBuilder<MyCartController>(
-                  init: mycartController,
-                  builder: (_) {
-                  return  
-                  
-                                                        mycartController
-                              .mycartmodel == null || mycartController
-                              .mycartmodel!.data == null || mycartController
-                              .mycartmodel!.data!.isEmpty ? const SizedBox() :
-
-                    Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              (mycartController.mycartmodel!.data!.length).toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ));}),
+                          init: mycartController,
+                          builder: (_) {
+                            return mycartController.mycartmodel == null ||
+                                    mycartController.mycartmodel!.data ==
+                                        null ||
+                                    mycartController.mycartmodel!.data!.isEmpty
+                                ? const SizedBox()
+                                : Positioned(
+                                    top: 3.0,
+                                    right: 4.0,
+                                    child: Center(
+                                      child: Text(
+                                        (mycartController
+                                                .mycartmodel!.data!.length)
+                                            .toString(),
+                                        // list.length.toString(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 8.0,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ));
+                          }),
                     ],
                   )),
             ],
@@ -545,15 +545,22 @@ class _HomeUserState extends State<HomeUser> {
                                       // print(item.name!);
                                       var imagePath =
                                           "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
-                                      print(imagePath);
+                                      // print(imagePath);
 
-                                      return
-                                       Padding(
+                                      return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: InkWell(
-                                          onTap: () {
+                                          onTap: () async {
+                                            print(
+                                                "========>>>>>>>>>>> ###### ${item.name}");
                                             subcategorycontroller
                                                 .addproduct(item.id ?? 0);
+                                            subcategorycontroller
+                                                .currentCategory(
+                                                    item.name ?? "");
+                                            await subcategorycontroller
+                                                .productInitByCategory();
+
                                             Get.to(() => Allcategory());
                                           },
                                           child: Column(
@@ -690,19 +697,17 @@ class _HomeUserState extends State<HomeUser> {
 
                                         // var imagePath =
                                         //     "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
-                                        print(imagePath);
+                                        // print(imagePath);
                                         return InkWell(
                                           onTap: () async {
                                             productdeatilscontroller
                                                 .viewproduct(
                                               item.id ?? 0,
                                             );
-                                            print("productid${item.id ?? 0}");
+                                            // print("productid${item.id ?? 0}");
                                             await productdeatilscontroller
                                                 .init();
-                                            Get.to(ProductDetails(
-                                              
-                                            ));
+                                            Get.to(ProductDetails());
                                             // Get.to( ProductDetails());
                                             // Navigator.push(
                                             //     context,
@@ -2276,8 +2281,7 @@ class _HomeUserState extends State<HomeUser> {
                                   );
                           });
                     })
-         
-         
+
                 // GridView(
                 //   physics: NeverScrollableScrollPhysics(),
                 //   scrollDirection: Axis.vertical,
@@ -2985,7 +2989,7 @@ class _HomeUserState extends State<HomeUser> {
                 builder: (_) {
                   return homeusercontroller.showLoading
                       ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                           child: Container(
                             color: Colors.black.withOpacity(
                                 0.1), // Adjust the opacity as needed

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
+import 'package:pet/models/usersModel/mycartListModel.dart';
 import 'package:pet/models/wholesalerModel/ProductDetailsWholeModel.dart';
 import 'package:pet/models/wholesalerModel/ProductDetailsWholeModel.dart'as variantFile;
 
@@ -36,7 +37,7 @@ double? totalAmount;
   Future<void> updateVariants(variantFile.Variations variants) async {
     selectedvariants = variants;
 
-    showLoading = true;
+    // showLoading = true;
     update();
     print("variants${selectedvariants!.price}");
 // clearFields();
@@ -213,13 +214,15 @@ double? totalAmount;
   bool productdetailLoaded = false;
 
   Future<void> init() async {
+    showLoading = true;
+    update();
     try {
       // productdeatils
       productdetailwholemodel = ProductDetailsWholeModel.fromJson(
           await ApiHelper.getApi(getUserProductDetailsUrl + "$productID"));
       print("urlapi");
       variantslist = productdetailwholemodel!.data!.variations;
-        // variantslist = productdetailmodel!.data!.variations;
+      
       if(variantslist!.isNotEmpty)
       updateVariants(variantslist![0]);
       // var totalprice = 0;
@@ -245,7 +248,64 @@ double? totalAmount;
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
   }
+  String getUserMyCartUrl = Constants.GET_USER_MYCARTLIST;
+  MyCartListModel? mycartmodel;
+  bool isProductInCartBool = false;
+
+  
+  Future<void> isProductInCart() async {
+    showLoading = true;
+    update();
+    // showLoading = true;
+    try {
+      // productdeatils
+      mycartmodel = MyCartListModel.fromJson(
+          await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerid')}"));
+      print("====?//${mycartmodel}");
+      // sizes = mycartmodel!.data!.map((e) => 1).toList();
+      // mycartmodel!.data!.forEach((element) { 
+      //   if(element.itemId.toString() == productID.toString()){
+      //     isProductInCartBool = true;
+      //   }
+      // });
+      for(var element in mycartmodel!.data!){
+        if(element.itemId.toString() == productID.toString()){
+          isProductInCartBool = true;
+          break;
+        }
+        isProductInCartBool = false;
+      }
+      update();
+      // List<Map<String, dynamic>> cartJsonList =
+      //     mycartmodel!.data!.map((item) => {
+      //       "product_id": item.itemId,
+      //       "quantity":item.quantity,
+      //       "variation":item.variant,
+      //       "tax_amount":13,
+      //       "discount_on_item":20,
+      //       "price":item.price
+      //     }).toList();
+      // cartList = cartJsonList;
+      
+
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+    showLoading = false;
+    update();
+  }
+
 
 // List<variantFile.Variations> variants = productdetailmodel!.data!.variants
 
@@ -287,7 +347,7 @@ double? totalAmount;
 
       await ApiHelper.postFormData(request: request);
       update();
-      Get.back();
+      // Get.back();
       Get.snackbar(
         'Success',
         'Product Added',
