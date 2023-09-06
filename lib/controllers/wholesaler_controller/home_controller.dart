@@ -146,8 +146,8 @@ bool showLoading = false;
       try {
       // categories
       wishList =
-          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "${wholesalerId}"));
-       print(getWishListUrl + "${wholesalerId}");
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${wholesalerId}"));
+       print(getWishListUrl + "/${wholesalerId}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());

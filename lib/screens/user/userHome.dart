@@ -2082,7 +2082,12 @@ class _HomeUserState extends State<HomeUser> {
                 GetBuilder<SubCategoryController>(
                     init: subcategorycontroller,
                     builder: (_) {
-                      return GridView.builder(
+                      return 
+                      subcategorycontroller
+                              .usertoyModel == null || subcategorycontroller
+                              .usertoyModel!.data == null || subcategorycontroller
+                              .usertoyModel!.data!.isEmpty ? SizedBox() :
+                      GridView.builder(
                           primary: false,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
@@ -2230,7 +2235,7 @@ class _HomeUserState extends State<HomeUser> {
                                                             child: Center(
                                                               child: Text(
                                                                   // item.discount.toString(),
-                                                                  "Save${item.discount ?? 0}",
+                                                                  "Save${item.discount ?? "0"}",
                                                                   style: CustomTextStyle
                                                                       .popinstextsmal2222),
                                                             ),

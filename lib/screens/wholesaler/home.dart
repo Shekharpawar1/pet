@@ -263,6 +263,7 @@ class _HomeWholeState extends State<HomeWhole> {
 
                               var imagePath =
                                   "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                  print("=====>>>>>> Banners: $imagePath");
                               return Stack(
                                 children: [
                                   // Image.asset(item["image"]),

@@ -290,6 +290,26 @@ paymentStatus = paymentstatus;
   Future<void> placeorder() async {
     showLoading = true;
     update();
+    
+  MyCartController addtocartController = Get.put(MyCartController());
+    String sendingAddr = "";
+    if (addtocartController.allAddresslistModel == null ||
+        addtocartController.allAddresslistModel!.data == null ||
+        addtocartController.allAddresslistModel!.data!.isEmpty) {
+      sendingAddr = "Demo address";
+    } else {
+      sendingAddr = "${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].city ??
+              ""} ${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].area ??
+              ""} ${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].houseNo ??
+              ""} ${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].landmark ??
+              ""}";
+        print(sendingAddr);
+    }
+
 
     Map<String, dynamic> body = {
       "user_id": storage.read('id').toString(),

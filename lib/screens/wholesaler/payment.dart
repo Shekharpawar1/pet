@@ -98,7 +98,7 @@ class _PaymentwholeState extends State<Paymentwhole> {
                       includeGST = false;
                       paymentMethod = '';
                       Navigator.of(context).pop(); // Close the current dialog
-                      _showPaymentDialog();// Close the current dialog
+                      _showPaymentDialog(); // Close the current dialog
                     });
                   },
                 ),
@@ -235,6 +235,7 @@ class _PaymentwholeState extends State<Paymentwhole> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -422,6 +423,7 @@ class _PaymentwholeState extends State<Paymentwhole> {
                           selectone == Choose.cash ? 'offline' : "online");
                       try {
                         await mycartwholeController.placeorder();
+                        
 
                         await showDialog(
                           context: context,

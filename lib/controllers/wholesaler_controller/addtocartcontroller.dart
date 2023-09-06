@@ -152,22 +152,23 @@ class MyCartWholeController extends GetxController {
     // showLoading = true;
     try {
       // productdeatils
-      wholemycartmodel = WholeMyCartListModel.fromJson(
-          await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerid')}"));
+      wholemycartmodel = WholeMyCartListModel.fromJson(await ApiHelper.getApi(
+          getUserMyCartUrl + "${storage.read('wholesalerid')}"));
       print("====?//${wholemycartmodel}");
       sizes = wholemycartmodel!.data!.map((e) => e.quantity).toList();
       // List<Map<String, dynamic>> cartJsonList =
       //     wholemycartmodel!.data!.map((item) => item.toJson()).toList();
       // cartList = cartJsonList;
-      List<Map<String, dynamic>> cartJsonList =
-          wholemycartmodel!.data!.map((item) => {
-            "product_id": item.itemId,
-            "quantity":item.quantity,
-            "variation":item.variant,
-            "tax_amount":13,
-            "discount_on_item":20,
-            "price":item.price
-          }).toList();
+      List<Map<String, dynamic>> cartJsonList = wholemycartmodel!.data!
+          .map((item) => {
+                "product_id": item.itemId,
+                "quantity": item.quantity,
+                "variation": item.variant,
+                "tax_amount": 13,
+                "discount_on_item": 20,
+                "price": item.price
+              })
+          .toList();
       cartList = cartJsonList;
 
 // mycartmodel!.data!.forEach((element) async {
@@ -210,8 +211,8 @@ class MyCartWholeController extends GetxController {
       print("delete");
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
-  final WholeProductDetailsController wholeproductdetailsController =
-      Get.put(WholeProductDetailsController());
+      final WholeProductDetailsController wholeproductdetailsController =
+          Get.put(WholeProductDetailsController());
       await wholeproductdetailsController.isProductInCart();
       update();
     } catch (e) {
@@ -283,10 +284,30 @@ class MyCartWholeController extends GetxController {
   Future<void> placeorder() async {
     showLoading = true;
     update();
+    MyCartWholeController mycartwholeController =
+        Get.put(MyCartWholeController());
+
+    String sendingAddr = "";
+    if (mycartwholeController.wholeallAddresslistModel == null ||
+        mycartwholeController.wholeallAddresslistModel!.data == null ||
+        mycartwholeController.wholeallAddresslistModel!.data!.isEmpty) {
+      sendingAddr = "Demo address";
+    } else {
+      sendingAddr = "${mycartwholeController.wholeallAddresslistModel!
+                  .data![mycartwholeController.isselected ?? 0].city ??
+              ""} ${mycartwholeController.wholeallAddresslistModel!
+                  .data![mycartwholeController.isselected ?? 0].area ??
+              ""} ${mycartwholeController.wholeallAddresslistModel!
+                  .data![mycartwholeController.isselected ?? 0].houseNo ??
+              ""} ${mycartwholeController.wholeallAddresslistModel!
+                  .data![mycartwholeController.isselected ?? 0].landmark ??
+              ""}";
+        print(sendingAddr);
+    }
 
     Map<String, dynamic> body = {
       "user_id": storage.read('wholesalerid').toString(),
-      "seller_id":null,
+      "seller_id": null,
       "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": "paid",
@@ -305,7 +326,7 @@ class MyCartWholeController extends GetxController {
       "store_id": 1.toString(),
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
-      "delivery_address": "Delhi city 389",
+      "delivery_address": sendingAddr,
       // (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .area ??
