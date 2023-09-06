@@ -134,7 +134,7 @@ class _WholeAllcategoryState extends State<WholeAllcategory> {
             // SvgPicture.asset("assets/image/logofood.svg"),
             ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(15.0),
           child: ListView(
             shrinkWrap: true,
             primary: true,
@@ -456,7 +456,7 @@ class _WholeAllcategoryState extends State<WholeAllcategory> {
               ),
 
               Container(
-                height: MediaQuery.of(context).size.height * 0.9,
+                // height: MediaQuery.of(context).size.height * 0.9,
                 child: GetBuilder<WholeSubCategoryController>(
                     init: wholesubcategorycontroller,
                     builder: (_) {

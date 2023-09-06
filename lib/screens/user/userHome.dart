@@ -185,6 +185,7 @@ class _HomeUserState extends State<HomeUser> {
         child: Stack(
           children: [
             ListView(
+              physics: const BouncingScrollPhysics(),
               primary: false,
               // shrinkWrap: true,
 

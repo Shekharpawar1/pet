@@ -122,7 +122,10 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                           GetBuilder<MyCartWholeController>(
                               init: mycartwholeController,
                               builder: (_) {
-                                return Positioned(
+                                return 
+                                mycartwholeController
+                                                .wholemycartmodel == null ? SizedBox() :
+                                Positioned(
                                     top: 3.0,
                                     right: 4.0,
                                     child: Center(

@@ -6,28 +6,33 @@ import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
 class UserMyPetListController extends GetxController {
-
-final storage = GetStorage();
-var userID;
+  final storage = GetStorage();
+  var userID;
   @override
   void onInit() {
     init();
-     userID = storage.read('id');
+    userID = storage.read('id');
     super.onInit();
   }
 
-    GetPetModel? petListModel;
+  void clearFields() {
+    petListModel = null;
+    update();
+  }
+
+  GetPetModel? petListModel;
   String getPetUrl = Constants.GET_PET_USER;
   bool showLoading = false;
-int? userid = 1;
+
+  // int? userid = 1;
   Future<void> init() async {
-    // showLoading = true;
-    // update();
+    showLoading = true;
+    update();
     try {
       // pet list
       petListModel =
-          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl + "${userid}"));
-      print(getPetUrl + "${userid}");
+          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl + "${storage.read('id')}"));
+      // print(getPetUrl + "${userid}");
       // notificationLoaded = true;
       update();
     } catch (e) {
@@ -41,7 +46,7 @@ int? userid = 1;
       );
     }
 
-    // showLoading = false;
-    // update();
+    showLoading = false;
+    update();
   }
 }
