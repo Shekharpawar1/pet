@@ -20,10 +20,7 @@ class _SubscriptionState extends State<Subscription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:GetBuilder<SubscriptionController>(
-                  init: subscriptioncontroller,
-                  builder: (_) {
-          return Padding(
+      body: Padding(
             padding: const EdgeInsets.all(15.0),
             child: ListView(
              shrinkWrap: true,
@@ -50,139 +47,164 @@ class _SubscriptionState extends State<Subscription> {
                 //  GetBuilder<SubscriptionController>(
                 //                   init: subscriptioncontroller,
                 //                   builder: (_) {
-                //                     return
-            !subscriptioncontroller.subscritionLoaded
-                                ? SizedBox()
-                                : ListView.builder(
-                                    primary: false,
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                   itemCount: subscriptioncontroller
-                                        .subscriptionModel!.data!
-                                      
-                                        .length,
-                                    itemBuilder: (context, index) {
-                                      var item = subscriptioncontroller
-                                        .subscriptionModel!.data![index];
-                            return             
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.to(subsciptionpage2());
-                      },
-                      child: Container(
-                        height: 95,
-                        width: 140,
-                        decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 3,
-                                blurRadius: 7,
-                                offset: Offset(0, 3), // Offset of the shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(15),
-                            gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [Color(0xff3faafe), Color(0xff1789e3)]
-
-                                // subscriptioncontroller.toggle()
-
-                                //
-                                )),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 45,
-                              height: 25,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      bottomRight: Radius.circular(15)),
-                                  color: Color(0xfff95fae)),
-                              child: Center(
-                                  child: Text(
-                                "50% Off",
-                                style: CustomTextStyle.popinstextsmall12,
-                              )),
-                            ),
-                            Center(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Annual",
-                                    style: CustomTextStyle.popinstextsmall124,
+                //      
+                //
+                 Container(
+                  height: 100,
+                   child: GetBuilder<SubscriptionController>(
+                           init: subscriptioncontroller,
+                           builder: (_) {
+                             return 
+                                 subscriptioncontroller
+                                          .subscriptionModel!.data!  ==null?SizedBox()  
+                                                  :
+                             ListView.builder(
+                                      primary: false,
+                                      scrollDirection: Axis.horizontal,
+                                      shrinkWrap: true,
+                                     itemCount: subscriptioncontroller
+                                          .subscriptionModel!.data!
+                                        
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        var item = subscriptioncontroller
+                                          .subscriptionModel!.data![index];
+                              return     
+                              !subscriptioncontroller.subscritionLoaded
+                                  ? SizedBox()
+                                  :         
+                                 // Row(
+                                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                 //   children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+subscriptioncontroller.Dateinit();
+                            Get.to(subsciptionpage2(
+                              plantime:item.plantime??'',
+                              description: item.description??'',
+                              price: item.price??'',
+                              // date: item.
+                            ));
+                          },
+                          child: Container(
+                            height: 100,
+                            width: 140,
+                            
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 3,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3), // Offset of the shadow
                                   ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    "\$490.00",
-                                    style: CustomTextStyle.popinstextsmall12,
-                                  ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    "\$49.00/month",
-                                    style: CustomTextStyle.popinstextsmall12,
-                                  )
                                 ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Get.to(subsciptionpage2());
-                      },
-                      child: Container(
-                          height: 95,
-                          width: 140,
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // Offset of the shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(15),
-                              color: MyColors.white),
-                          child: Center(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [Color(0xff3faafe), Color(0xff1789e3)]
+                                       
+                                    // subscriptioncontroller.toggle()
+                                       
+                                    //
+                                    )),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                             crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Monthly",
-                                  style: CustomTextStyle.popinsboldlightsmall,
+                                Container(
+                                  width: 45,
+                                  height: 25,
+                                 
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(15)),
+                                      color: Color(0xfff95fae)),
+                                  child: Center(
+                                      child: Text(
+                                    "50% Off",
+                                    style: CustomTextStyle.popinstextsmall12,
+                                  )),
                                 ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Text(
-                                  "\$490.00",
-                                  style: CustomTextStyle.popinssmall0,
-                                ),
-                                // Text("\$49.00/month",style: CustomTextStyle.popinstextsmall12,)
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        item.plantime??'',
+                                        style: CustomTextStyle.popinstextsmall124,
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        "₹${item.price}",
+                                        style: CustomTextStyle.popinstextsmall12,
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                         "₹${item.price}/month",
+                                        style: CustomTextStyle.popinstextsmall12,
+                                      )
+                                    ],
+                                  ),
+                                )
                               ],
                             ),
-                          )),
-                    )
-                  ],
-                );
-                                    }),
-                //                   }
-                //  ),
-
+                          ),
+                        ),
+                      );
+                    ;
+                      // InkWell(
+                      //   onTap: () {
+                      //     Get.to(subsciptionpage2());
+                      //   },
+                      //   child: Container(
+                      //       height: 95,
+                      //       width: 140,
+                      //       decoration: BoxDecoration(
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color: Colors.grey.withOpacity(0.3),
+                      //               spreadRadius: 3,
+                      //               blurRadius: 7,
+                      //               offset: Offset(0, 3), // Offset of the shadow
+                      //             ),
+                      //           ],
+                      //           borderRadius: BorderRadius.circular(15),
+                      //           color: MyColors.white),
+                      //       child: Center(
+                      //         child: Column(
+                      //           mainAxisAlignment: MainAxisAlignment.center,
+                      //           children: [
+                      //             Text(
+                      //               item.plantime??'',
+                      //               style: CustomTextStyle.popinsboldlightsmall,
+                      //             ),
+                      //             SizedBox(
+                      //               height: 2,
+                      //             ),
+                      //             Text(
+                      //               "\$490.00",
+                      //               style: CustomTextStyle.popinssmall0,
+                      //             ),
+                      //             // Text("\$49.00/month",style: CustomTextStyle.popinstextsmall12,)
+                      //           ],
+                      //         ),
+                      //       )),
+                      // )
+                    
+                    
+                                 //   ],
+                                 // );
+                                      });
+                                
+                           }),
+                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
 
                 InkWell(
@@ -207,9 +229,8 @@ class _SubscriptionState extends State<Subscription> {
                 ),
               ],
             ),
-          );
-        }
-      ),
+          )
+       
     );
   }
 }

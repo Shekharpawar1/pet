@@ -87,6 +87,8 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
       "$BASE_URL${API_V1_PATH}/customer/wish-list/add_product";
         static const ADD_ADDRESS =
       "$BASE_URL${API_V1_PATH}/customer/address/add";
+        static const PURCHASE_PLAN =
+      "$BASE_URL${API_V1_PATH}/auth/purchace_plan";
          static const PLACE_ORDER =
       "$BASE_URL${API_V1_PATH}/customer/order/place";
         static const ADD_UPDATE_ADDRESS =
