@@ -7,6 +7,7 @@ import 'package:pet/models/wholesalerModel/bannerModel.dart';
 import 'package:pet/models/wholesalerModel/ourBrandModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
+import 'package:pet/models/usersModel/getUserPropertiesModel.dart' as Model;
 import 'package:http/http.dart' as http;
 import '../../models/wholesalerModel/wholeWishListModel.dart';
 
@@ -48,6 +49,63 @@ bool showLoading = false;
     super.onInit();
     init();
   }
+  
+  List<Model.Datum> searchScreenData = [];
+  void clearSearchData() {
+    searchScreenData = [];
+    update();
+  }
+
+  void searchDataFilter(UserPropertiesModel? dataModel, String keyword) {
+    // const String keyword = "999";
+
+    List<Model.Datum> filteredData = filter(keyword, dataModel!.data!);
+    searchScreenData = filteredData;
+    update();
+    print("###### KEYWORD:     $keyword");
+    // print(filteredData);
+    filteredData.forEach((item) {
+      print("${filteredData.indexOf(item)})   ${item.id}");
+      print("     ${item.name}");
+      print("     ${item.description}");
+      print("     ${item.subCategory}");
+      print("     ${item.categoryIds}");
+      print("     ${item.brandId}");
+      print("     ${item.lifeStageId}");
+      print("     ${item.helthConditionId}");
+      print("     ${item.petsbreedsId}");
+      print("     ${item.price}");
+      print("     ${item.wholePrice}");
+    });
+  }
+
+  List<Model.Datum> filter(String key, List<Model.Datum> data) {
+    Set<Model.Datum> finalData = {};
+
+    final List<String> keywords = key.toLowerCase().split(' ');
+
+    for (var item in data) {
+      var itemLower = item.toString().toLowerCase();
+
+      if (keywords.every((keyword) =>
+          itemLower.contains(keyword) ||
+          item.name.toString().toLowerCase().contains(keyword) ||
+          item.description.toString().toLowerCase().contains(keyword) ||
+          item.subCategory.toString().toLowerCase().contains(keyword) ||
+          item.categoryIds.toString().toLowerCase().contains(keyword) ||
+          item.brandId.toString().toLowerCase().contains(keyword) ||
+          item.lifeStageId.toString().toLowerCase().contains(keyword) ||
+          item.helthConditionId.toString().toLowerCase().contains(keyword) ||
+          item.petsbreedsId.toString().toLowerCase().contains(keyword) ||
+          item.price.toString().toLowerCase().contains(keyword) ||
+          item.wholePrice.toString().toLowerCase().contains(keyword))) {
+        finalData.add(item);
+      }
+    }
+
+    return finalData.toList();
+  }
+
 
   void getWishList() {
     wishListItemsId = GetStorage().read('wishListItems') ?? [];

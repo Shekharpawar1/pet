@@ -5,6 +5,7 @@ import 'package:pet/models/salesmanModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/bannerModel.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
+import 'package:pet/models/usersModel/getUserPropertiesModel.dart' as Model;
 import 'package:pet/models/usersModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/servicesCategoriesModel.dart';
 import 'package:pet/models/usersModel/userProductByPartnerModel.dart';
@@ -27,6 +28,62 @@ class HomeuserController extends GetxController {
         'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
       ..initialize();
     update();
+  }
+
+  List<Model.Datum> searchScreenData = [];
+  void clearSearchData() {
+    searchScreenData = [];
+    update();
+  }
+
+  void searchDataFilter(UserPropertiesModel? dataModel, String keyword) {
+    // const String keyword = "999";
+
+    List<Model.Datum> filteredData = filter(keyword, dataModel!.data!);
+    searchScreenData = filteredData;
+    update();
+    print("###### KEYWORD:     $keyword");
+    // print(filteredData);
+    filteredData.forEach((item) {
+      print("${filteredData.indexOf(item)})   ${item.id}");
+      print("     ${item.name}");
+      print("     ${item.description}");
+      print("     ${item.subCategory}");
+      print("     ${item.categoryIds}");
+      print("     ${item.brandId}");
+      print("     ${item.lifeStageId}");
+      print("     ${item.helthConditionId}");
+      print("     ${item.petsbreedsId}");
+      print("     ${item.price}");
+      print("     ${item.wholePrice}");
+    });
+  }
+
+  List<Model.Datum> filter(String key, List<Model.Datum> data) {
+    Set<Model.Datum> finalData = {};
+
+    final List<String> keywords = key.toLowerCase().split(' ');
+
+    for (var item in data) {
+      var itemLower = item.toString().toLowerCase();
+
+      if (keywords.every((keyword) =>
+          itemLower.contains(keyword) ||
+          item.name.toString().toLowerCase().contains(keyword) ||
+          item.description.toString().toLowerCase().contains(keyword) ||
+          item.subCategory.toString().toLowerCase().contains(keyword) ||
+          item.categoryIds.toString().toLowerCase().contains(keyword) ||
+          item.brandId.toString().toLowerCase().contains(keyword) ||
+          item.lifeStageId.toString().toLowerCase().contains(keyword) ||
+          item.helthConditionId.toString().toLowerCase().contains(keyword) ||
+          item.petsbreedsId.toString().toLowerCase().contains(keyword) ||
+          item.price.toString().toLowerCase().contains(keyword) ||
+          item.wholePrice.toString().toLowerCase().contains(keyword))) {
+        finalData.add(item);
+      }
+    }
+
+    return finalData.toList();
   }
 
   // categories
@@ -56,11 +113,11 @@ class HomeuserController extends GetxController {
   ServicesModel? userServicesModel;
   bool servicesLoaded = false;
 
- // ProductByPartner
+  // ProductByPartner
   String getProductByPartnerUrl = '${Constants.GET_PRODUCTBYPARTNER}';
   UserProductByPartnerModel? userProductPartnerModel;
   bool partnerLoaded = false;
-  
+
   // wishlist list
   WishListModel? wishList;
   String getWishListUrl = Constants.USER_GET_WISHLIST;
@@ -72,10 +129,11 @@ class HomeuserController extends GetxController {
   void onInit() {
     super.onInit();
 
-    videoController = VideoPlayerController.asset('assets/image/video1.eaf55f566741325a7b40.mp4')
+    videoController = VideoPlayerController.asset(
+        'assets/image/video1.eaf55f566741325a7b40.mp4')
       ..initialize().then((_) {
         // Video is initialized
-         videoController.play(); 
+        videoController.play();
         update();
       });
     init();
@@ -182,13 +240,13 @@ class HomeuserController extends GetxController {
         colorText: Colors.white,
       );
     }
-      try {
+    try {
       // ProductByPartner
       userProductPartnerModel = UserProductByPartnerModel.fromJson(
           await ApiHelper.getApi(getProductByPartnerUrl));
       print(userProductPartnerModel);
       partnerLoaded = true;
-      
+
       update();
     } catch (e) {
       print('Error: $e');
@@ -230,7 +288,7 @@ class HomeuserController extends GetxController {
   // String getServicesUrl = '${Constants.GET_USER_SERVICES}';
   ServicesCategoryModel? servicesCategoryModel;
   bool servicesCategoryLoaded = false;
- 
+
   Future<void> getServicesCategories(String url) async {
     showLoading = true;
     update();
@@ -435,7 +493,8 @@ class HomeuserController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/${storage.read('id').toString()}");
+      await ApiHelper.deleteByUrl(
+          url: url + "/$productId" + "/${storage.read('id').toString()}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
       update();
@@ -472,5 +531,4 @@ class HomeuserController extends GetxController {
     showLoading = false;
     update();
   }
-
 }

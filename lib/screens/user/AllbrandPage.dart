@@ -34,7 +34,7 @@ leading: Padding(
     ),
   ),
 ),
-         
+    centerTitle: true,     
         title: Center(child: Text("All Our Brands",style: CustomTextStyle.appbartext,)),
         ),
 
