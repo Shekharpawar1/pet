@@ -7,6 +7,8 @@ class Constants {
  static const GET_USER_MYSERVICES = "$BASE_URL${API_V1_PATH}/banners/get_allservicebooking";
     static const SALESMAN_IMAGEPATH_URL = "$BASE_URL/storage/app/public/delivery-man/";
 
+  static const GET_SUBSCRIPTION =
+      "$BASE_URL${API_V1_PATH}/auth/get_subscription";
    static const GET_USER_VETERNIARY = "$BASE_URL${API_V1_PATH}/banners/get_veterinary";
 static const GET_USER_PRODUCTDETAILS = "$BASE_URL${API_V1_PATH}/items/details/";
 static const GET_USER_MYCARTLIST = "$BASE_URL${API_V1_PATH}/customer/wish-list/add_to_card/";
@@ -16,6 +18,9 @@ static const GET_USER_ADDRESS_DELETE = "$BASE_URL${API_V1_PATH}/customer/address
 static const GET_USER_COUPON = "$BASE_URL${API_V1_PATH}/coupon/list";
 static const GET_USER_TOY = "$BASE_URL${API_V1_PATH}/items/subcty_product?";
 static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
+static const GET_WHOLESELLER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/wholesaler_profile/";
+static const GET_WHOLESELLER_UPDATE_PROFILE = "$BASE_URL${API_V1_PATH}/auth/wholesaler_update";
+
 static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deliveryman_profile/";
   static const GET_USER_CATEGORIES = "/categories";
   static const GET_USER_PROPERTIES = "/items/latest";
@@ -47,6 +52,7 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
    static const GET_WHOLE_TOTALORDER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_orders/";
    static const GET_WHOLESELLER_TOTAL = "$BASE_URL${API_V1_PATH}/auth/wholesaler_list/";
   static const GET_PRODUCTBYPARTNER = "$BASE_URL${API_V1_PATH}/vendor/all_vendor";
+  static const GET_USERREVIEW = "$BASE_URL${API_V1_PATH}/items/get_review";
 
 
      static const GET_TOTALSELLER_ORDER = "$BASE_URL${API_V1_PATH}/auth/seller_orders/";

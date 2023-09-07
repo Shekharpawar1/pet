@@ -191,7 +191,7 @@ class ProfileController extends GetxController {
       Get.back();
       Get.snackbar(
         'Success',
-        'Address Added',
+        'Update Profile',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,

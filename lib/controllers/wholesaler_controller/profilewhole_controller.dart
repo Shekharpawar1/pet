@@ -23,7 +23,7 @@ class WholeProfileController extends GetxController {
   bool showLoading = false;
   File? selectedImage;
   String? selectedImagePath;
-  var userId;
+  var wholeSellerId;
 
   Future<void> pickImage() async {
     final picker = ImagePicker();
@@ -32,6 +32,8 @@ class WholeProfileController extends GetxController {
     if (pickedImage != null) {
       selectedImagePath = pickedImage.path;
       selectedImage = File(pickedImage.path);
+
+      print("SelectImagepath ${selectedImagePath}");
     }
     update();
   }
@@ -120,10 +122,11 @@ class WholeProfileController extends GetxController {
   void onInit() {
     super.onInit();
     // init();
-    userId = storage.read('id');
+  wholeSellerId = storage.read('wholesalerid');
+  print("WHoleSeller  ${wholeSellerId}");
   }
 
-  String getUserProfile = '${Constants.GET_USER_PROFILE}';
+  String getUserProfile = '${Constants.GET_WHOLESELLER_PROFILE}';
   WholeMyProfileModel? wholemyprofilemodel;
   bool myprofileLoaded = false;
   // int userid = 244;
@@ -132,11 +135,11 @@ class WholeProfileController extends GetxController {
     try {
       // coupon
       wholemyprofilemodel = WholeMyProfileModel.fromJson(
-          await ApiHelper.getApi(getUserProfile + "${storage.read('id')}"));
+          await ApiHelper.getApi(getUserProfile + "${storage.read('wholesalerid')}"));
       // myprofilemodel!.data!.forEach((element) {
 
       //  });
-      print(getUserProfile + "$userId");
+      print("WholeSellerProfileURL"+getUserProfile + "$wholeSellerId");
       fullNameController.text = wholemyprofilemodel!.data![0].fName.toString();
       lastNameController.text = wholemyprofilemodel!.data![0].lName.toString();
       numberController.text = wholemyprofilemodel!.data![0].phone.toString();
@@ -169,7 +172,7 @@ class WholeProfileController extends GetxController {
       "phone": numberController.text,
       // "image": selectedImagePath.toString(),
     };
-    String UpdateProfile = Constants.USER_UPDATE_PROFILE;
+    String UpdateProfile = Constants.GET_WHOLESELLER_UPDATE_PROFILE;
     print(body);
     try {
       List documentList = [
@@ -177,6 +180,8 @@ class WholeProfileController extends GetxController {
       ];
       var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
       request.fields.addAll(body);
+
+      print("IMagePost ${documentList}");
 //       request.files.add(await http.MultipartFile.fromPath(
 // "image",selectedImagePath.toString()
       // ));
@@ -192,7 +197,7 @@ class WholeProfileController extends GetxController {
       Get.back();
       Get.snackbar(
         'Success',
-        'Address Added',
+        'Update Profile',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,

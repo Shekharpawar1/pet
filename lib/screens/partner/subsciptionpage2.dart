@@ -36,7 +36,7 @@ class _subsciptionpage2State extends State<subsciptionpage2> {
       
      
     Container(width: 335,
-height: 450,
+// height: 450,
 decoration: BoxDecoration(
  borderRadius: BorderRadius.circular(30),
  color: MyColors.white,

@@ -1861,28 +1861,33 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                         .lastNameController.text
                                         .trim()
                                         .toString(),
+ "email": createAccountpartnercontroller
+                                        .emailController.text
+                                        .trim()
+                                        .toString(),
+                                        
                                     "phone": createAccountpartnercontroller
                                         .mobileNumberController.text
                                         .trim()
                                         .toString(),
-                                    
+                                     "s_name": createAccountpartnercontroller
+                                        .shopNameController.text
+                                        .trim()
+                                        .toString(),
                                     "address": createAccountpartnercontroller
                                         .addressController.text
                                         .trim()
                                         .toString(),
-                                    // "delivery_time":
-                                    //     createAccountpartnercontroller
-                                    //         .timeinput.text
-                                    //         .trim()
-                                    //         .toString(),
-                                    // "dob": createAccountpartnercontroller
-                                    //     .dobController.text
-                                    //     .trim()
-                                    //     .toString(),
-                                    "email": createAccountpartnercontroller
-                                        .emailController.text
+                                    "gst":
+                                        createAccountpartnercontroller
+                                            .gstController.text
+                                            .trim()
+                                            .toString(),
+                                    "password": createAccountpartnercontroller
+                                        .passwordController.text
                                         .trim()
                                         .toString(),
+                                   
                                     "latitude": createAccountpartnercontroller
                                         .latitudeController.text
                                         .trim()

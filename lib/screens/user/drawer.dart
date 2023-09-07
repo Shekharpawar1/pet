@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
+import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
@@ -37,6 +38,8 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   MyOrderController myordercontroller = Get.put(MyOrderController());
+  
+ProfileController profilecontroller = Get.put(ProfileController());
 
   static final List<String> _listViewData = [
     "Profile",

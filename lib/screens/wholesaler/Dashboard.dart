@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -5,12 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/profilewhole_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/totalorderwhole_controller.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/complete.dart';
 import 'package:pet/screens/wholesaler/pendingcomplete.dart';
 
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/wholesaler/balance.dart';
 import 'package:pet/screens/wholesaler/home.dart';
@@ -30,7 +33,7 @@ class _DashboardWholeState extends State<DashboardWhole> {
       Get.put(WholeTotalOrderController());
   int len = 0;
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
-
+WholeProfileController wholeProfileController = Get.put(WholeProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,11 +67,43 @@ class _DashboardWholeState extends State<DashboardWhole> {
         actions: [
           //  SvgPicture.asset("assets/image/girl.svg"),
 
-          // SizedBox(width: 20),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: Image.asset("assets/image/girl.png"),
-          ),
+          // SizedBox(width: 20),l
+          GetBuilder<WholeProfileController>(
+              init: wholeProfileController,
+              builder: (_) {
+                return 
+                wholeProfileController
+                              .wholemyprofilemodel == null || wholeProfileController
+                              .wholemyprofilemodel!.data == null || wholeProfileController
+                              .wholemyprofilemodel!.data!.isEmpty ? SizedBox() :
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundColor: Colors.transparent,
+                    child: CachedNetworkImage(
+                      imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                          wholeProfileController
+                              .wholemyprofilemodel!
+                              .data![0].image
+                              .toString(),
+
+                      fit: BoxFit.cover,
+                      // width: 61,
+                      // height: 75,
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(),
+                      ), // Replace with your own placeholder widget
+                      errorWidget: (context, url, error) => Icon(
+                          Icons.error), // Replace with your own error widget
+                    ),
+                    //  Image.asset("assets/image/boyprofile3.png"),
+                  ),
+                );
+
+                // Image.asset("assets/image/girl.png")
+              }),
+        
         ],
       ),
       // backgroundcolor:MyColors.white,

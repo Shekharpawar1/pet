@@ -220,32 +220,18 @@ var sellerId = GetStorage().read("sellerid");
 
       myprofileLoaded = true;
 
-       var sellerid;
-        var sellerfname;
-      var selleremail;
-      var sellerlastname;
-
-      print(salesprofilemodel);
-      try {
-        sellerid = salesprofilemodel!.data![0].id;
-        sellerfname = salesprofilemodel!.data![0].fName;
-            sellerlastname = salesprofilemodel!.data![0].lName;
-        selleremail = salesprofilemodel!.data![0].email;
-      } catch (e) {
-       sellerid = salesprofilemodel!.data![0].id;
-        sellerfname = salesprofilemodel!.data![0].fName;
-            sellerlastname = salesprofilemodel!.data![0].lName;
-        selleremail = salesprofilemodel!.data![0].email;
-      }
-      // // var id = userLoginModel.data![0].id;
-      print("=====>>>> Id ${sellerid} FName: ${sellerfname} lName: ${sellerlastname} Email: ${selleremail}");
-      storage.write('sellerlastname', sellerlastname);
-      storage.write('sellerfname', sellerfname);
-       storage.write('selleremail', selleremail);
+      //  var sellerid;
+      
+      // }
+      // // // var id = userLoginModel.data![0].id;
+      // print("=====>>>> Id ${sellerid} FName: ${sellerfname} lName: ${sellerlastname} Email: ${selleremail}");
+      // storage.write('sellerlastname', sellerlastname);
+      // storage.write('sellerfname', sellerfname);
+      //  storage.write('selleremail', selleremail);
      
-      print(storage.read('sellerfname').toString());
-      print(storage.read('sellerlastname').toString());
-      print(storage.read('selleremail').toString());
+      // print(storage.read('sellerfname').toString());
+      // print(storage.read('sellerlastname').toString());
+      // print(storage.read('selleremail').toString());
       update();
     } catch (e) {
       print('Error: $e');
@@ -294,7 +280,7 @@ var sellerId = GetStorage().read("sellerid");
       Get.back();
       Get.snackbar(
         'Success',
-        'Address Added',
+        'Update Profile',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,

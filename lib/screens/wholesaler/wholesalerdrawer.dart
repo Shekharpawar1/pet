@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -5,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/profilewhole_controller.dart';
 import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/login.dart';
@@ -22,6 +24,8 @@ import 'package:pet/screens/wholesaler/wholetranscation.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
+import '../../utils/constants.dart';
+
 class drawerWholeSaler extends StatefulWidget {
   const drawerWholeSaler({
     super.key,
@@ -34,6 +38,7 @@ class drawerWholeSaler extends StatefulWidget {
 class _drawerWholeSalerState extends State<drawerWholeSaler> {
   WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
 
+WholeProfileController wholeProfileController = Get.put(WholeProfileController());
   static final List<String> _listViewData = [
     "Dashboard",
     "Profile",
@@ -67,82 +72,140 @@ class _drawerWholeSalerState extends State<drawerWholeSaler> {
            Container(height:MediaQuery.of(context).size.height*0.2,
 
                 child: DrawerHeader(
-
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(onTap:(){
-                        // Get.to(Profile());
-                      },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        children: [
+              child: GetBuilder<WholeProfileController>(
+                  init: wholeProfileController,
+                  builder: (_) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // Get.to(Profile());
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
                                             Center(
-              child: Stack(
-            alignment: Alignment.topCenter,
-                children:[
-                    Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-               child:CircleAvatar(
-                radius:35,
-                backgroundColor: Colors.transparent,
-                  child: Image.asset("assets/image/boyprofile3.png"),
-                ),),
-               
-                Positioned(
-                 
-                  bottom: 10,
-                  child: Image.asset("assets/image/drawer2.png",height: 25,),
-              
-                ) 
-              ]),
-            ),
-            SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                                          Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
-                                              children: <Widget>[
-                                                Text(
-                                                  "User",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,
-                                          color:MyColors.white),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  "user123@gmail.com",
-                                                  style: TextStyle(
-                                            color:MyColors.white,fontSize: 16),
-                                                ),
-                                              ]),
-                                        ],
-                                      ),
+                                              child: Stack(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 20),
+                                                      child: CircleAvatar(
+                                                        radius: 35,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        child:
+                                                        wholeProfileController
+                              .wholemyprofilemodel == null || wholeProfileController
+                              .wholemyprofilemodel!.data == null || wholeProfileController
+                              .wholemyprofilemodel!.data!.isEmpty ? const SizedBox() :
+                
+                                                            CachedNetworkImage(
+                                                          imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                                                              wholeProfileController
+                              .wholemyprofilemodel!
+                                                                  
+                                                                  .data![0]
+                                                                  .image
+                                                                  .toString(),
 
-                                    ]),
-
-                              ]),
+                                                          fit: BoxFit.cover,
+                                                          // width: 61,
+                                                          // height: 75,
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ), // Replace with your own placeholder widget
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons
+                                                                  .error), // Replace with your own error widget
+                                                        ),
+                                                        //  Image.asset("assets/image/boyprofile3.png"),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      bottom: 10,
+                                                      child: Image.asset(
+                                                        "assets/image/drawer2.png",
+                                                        height: 25,
+                                                      ),
+                                                    )
+                                                  ]),
+                                            ),
+                                            SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.05),
+                                            Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  
+                                                        wholeProfileController
+                              .wholemyprofilemodel == null || wholeProfileController
+                              .wholemyprofilemodel!.data == null || wholeProfileController
+                              .wholemyprofilemodel!.data!.isEmpty ? const SizedBox() :
+                                                  Text(
+                                                    "${wholeProfileController
+                              .wholemyprofilemodel!.data![0].fName.toString()} ${wholeProfileController
+                              .wholemyprofilemodel!.data![0].lName.toString()}",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  
+                                                        wholeProfileController
+                              .wholemyprofilemodel
+      == null || wholeProfileController
+                              .wholemyprofilemodel!.data == null || wholeProfileController
+                              .wholemyprofilemodel!.data!.isEmpty ? const SizedBox() :
+                                                  Text(
+                                                    wholeProfileController
+                              .wholemyprofilemodel!
+                                                        .data![0]
+                                                        .email
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: MyColors.white,
+                                                        fontSize: 16),
+                                                  ),
+                                                ]),
+                                          ],
+                                        ),
+                                      ]),
+                                ]),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-
+                      ],
+                    );
+                  }),
+            ),
               ),
           ListView.builder(
             shrinkWrap: true,
