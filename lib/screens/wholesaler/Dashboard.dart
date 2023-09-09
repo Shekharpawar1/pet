@@ -126,9 +126,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                           wholetotalordercontroller.wholetotalorderModel == null ||
                                   wholetotalordercontroller
                                           .wholetotalorderModel!.data ==
-                                      null ||
-                                  wholetotalordercontroller
-                                          .wholetotalorderModel!.data!.isEmpty
+                                      null 
                               ? SizedBox()
                               :InkWell(
                           onTap: () {

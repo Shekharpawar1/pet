@@ -18,6 +18,7 @@ import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/wholesaler/WholeAllbrandPage.dart';
 import 'package:pet/screens/wholesaler/ordersummary.dart';
 import 'package:pet/screens/wholesaler/wholeallcategory.dart';
+import 'package:pet/screens/wholesaler/wholesalerSearchScreen.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/ProductAlllistPage.dart';
 
@@ -364,7 +365,11 @@ class _HomeWholeState extends State<HomeWhole> {
 
                         color: MyColors.white,
                       ),
-                      child: TextFormField(
+                      child: TextFormField(onTap: () {
+                          wholehomecontroller.clearSearchData();
+                          Get.to(WholeSalerSearchScreen());
+                        },
+                        readOnly: true,
                         controller: _searchcontroller,
                         style: TextStyle(
                           fontSize: 14,
