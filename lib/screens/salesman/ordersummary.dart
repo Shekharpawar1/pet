@@ -14,6 +14,7 @@ import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
 import 'package:pet/screens/partner/partneraddress.dart';
+import 'package:pet/screens/salesman/paymentsales.dart';
 import 'package:pet/screens/salesman/salesaddnewAddress.dart';
 
 import 'package:pet/screens/swepcard.dart';
@@ -1240,7 +1241,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                     InkWell(
                       onTap: () {
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
-                        Get.to(PaymentUser(
+                        Get.to(PaymentSales(
                            price:(((addtocartController.total) + (addtocartController.total * 0.05)-(num.parse(couponsController.maxAmount!)))).toString()
                         // paymentstatus: ,
                         ));

@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
+import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -14,6 +15,8 @@ class MyOrderUser extends StatelessWidget {
   MyOrderUser({super.key});
 
   MyOrderController myordercontroller = Get.put(MyOrderController());
+  final UserReviewController userreviewcontroller =
+      Get.put(UserReviewController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,10 +145,11 @@ class MyOrderUser extends StatelessWidget {
                           return myordercontroller.myorderModel!.data == null
                               ? SizedBox()
                               : InkWell(
-                                  onTap: () {
+                                  onTap: () async{
                                     myordercontroller.addorder(item.id ?? 0);
                                     print("Orderid ${item.id}");
-                                    myordercontroller.orderdetailsinit();
+                                await    myordercontroller.orderdetailsinit();
+                                await    userreviewcontroller.init();
                                     Get.to(OrderDetailsUser(
                                         orderId: item.id ?? 0,
                                         couponcode: item.couponCode ?? '',

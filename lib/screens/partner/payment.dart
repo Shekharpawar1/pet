@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/screens/partner/Dashboard.dart';
 import 'package:pet/screens/partner/payment2.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -12,14 +13,14 @@ import 'package:pet/screens/wholesaler/payment2.dart';
 phonepay ,
 paytm
 }
-class Paymentpartner extends StatefulWidget {
-  const Paymentpartner({super.key});
+class Paymentpartner1 extends StatefulWidget {
+  const Paymentpartner1({super.key});
 
   @override
-  State<Paymentpartner> createState() => _PaymentpartnerState();
+  State<Paymentpartner1> createState() => _Paymentpartner1State();
 }
 
-class _PaymentpartnerState extends State<Paymentpartner> {
+class _Paymentpartner1State extends State<Paymentpartner1> {
   // String? selectedGender;
 
     String? selectcredit ;
@@ -159,7 +160,7 @@ fontWeight: FontWeight.w700,),)
         SizedBox(height: MediaQuery.of(context).size.height*0.05,),   
                       InkWell(onTap: (){
                        Get.to(
-                        Payment2partner()
+                        DashboardPartner()
                        );
                       },
                         child: Center(

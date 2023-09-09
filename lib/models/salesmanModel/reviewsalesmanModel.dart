@@ -1,11 +1,11 @@
-class WholeReviewModel {
+class SalesReviewModel {
   String? status;
   List<Data>? data;
   String? message;
 
-  WholeReviewModel({this.status, this.data, this.message});
+  SalesReviewModel({this.status, this.data, this.message});
 
-  WholeReviewModel.fromJson(Map<String, dynamic> json) {
+  SalesReviewModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];

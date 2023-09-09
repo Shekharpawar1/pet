@@ -1,30 +1,33 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/controllers/partner_controller/subscription_controller.dart';
+import 'package:pet/screens/partner/partnerpayment.dart';
 import 'package:pet/screens/partner/payment.dart';
 import 'package:pet/screens/wholesaler/payment.dart';
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class subsciptionpage2 extends StatefulWidget {
-   subsciptionpage2({super.key, this.plantime, this.description,this.price,this.date});
+   subsciptionpage2({super.key, this.id,this.plantime, this.description});
   String? plantime;
-  String? price;
+  // String? price;
   String? description;
-  String? date;
+  // String? date;
+  int? id ;
 
   @override
   State<subsciptionpage2> createState() => _subsciptionpage2State();
 }
 
 class _subsciptionpage2State extends State<subsciptionpage2> {
-    SubscriptionController subscriptioncontroller = SubscriptionController();
-//   var currentdate = DateTime.now();
-//   String expiryDateString = "2023-12-31"; // Replace with your actual expiry date string
-// var expiryDate = DateFormat("yyyy-MM-dd").parse(currentdate!);
+    SubscriptionController subscriptioncontroller = Get.put(SubscriptionController())
+    ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +50,12 @@ class _subsciptionpage2State extends State<subsciptionpage2> {
     GetBuilder<SubscriptionController>(
                            init: subscriptioncontroller,
                            builder: (_) {
+                            
                              return 
-                                 subscriptioncontroller
-                                          .subscriptionModel!.data!  ==null?SizedBox()  
-                                                  :
+
+                                //  subscriptioncontroller
+                                //           .subscriptionModel!.data!  ==null?SizedBox()  
+                                //                   :
          Container(width: 335,
 // height: 450,
 decoration: BoxDecoration(
@@ -67,9 +72,11 @@ decoration: BoxDecoration(
                                           ],
 ),
 child:Column(children: [
+
+  // 
   Container(
         height: 150,
-        width:  335,
+        width:  Get.width,
         decoration: BoxDecoration(
           
         borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
@@ -77,10 +84,25 @@ child:Column(children: [
             Color(0xff8496f3), Color(0xff2d4be7)
           ])
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(left:40,right:40,top:10,bottom:10),
-          child: Image.asset("assets/image/subcriptionimg.png",fit: BoxFit.cover,),
-        ),
+        child: CachedNetworkImage(
+                                                        imageUrl:
+                                                              "${Constants.SUBSCRIPTION_IMAGE_PATH}${subscriptioncontroller.image ?? ""}",
+                                                        // width: 50,
+                                                        // height: 135,
+                                                        fit: BoxFit.fill,
+                                                        placeholder:
+                                                            (context,
+                                                                    url) =>
+                                                                Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        ), // Replace with your own placeholder widget
+                                                        errorWidget: (context,
+                                                                url,
+                                                                error) =>
+                                                            Icon(Icons
+                                                                .error), // Replace with your own error widget
+                                                      ),
   )
 ,
 
@@ -95,7 +117,8 @@ Padding(
   
           
   
-          , SizedBox(height: MediaQuery.of(context).size.height*0.02),    
+          ,
+           SizedBox(height: MediaQuery.of(context).size.height*0.02),    
   
           
   
@@ -127,11 +150,11 @@ Padding(
   
           
   
-                     Text("₹${widget.price}",style: CustomTextStyle.popinsboldblue),
+                     Text("₹${subscriptioncontroller.price1}",style: CustomTextStyle.popinsboldblue),
   
           
   
-                     Text(" /first\nmonth ",style: CustomTextStyle.popinssmall0),
+                     Text("/${subscriptioncontroller.plantype1} ",style: CustomTextStyle.popinssmall0),
   
           
   
@@ -156,8 +179,11 @@ Padding(
           
   
            InkWell(
-            onTap: (){
-              Get.to(Paymentpartner());
+            onTap: () async{
+           await  subscriptioncontroller.purchaseinit();
+              Get.to(Paymentpartner(
+                 price: subscriptioncontroller.price1??'',
+              ));
             },
              child: Container(
              
@@ -232,7 +258,7 @@ Padding(
   
           
   
-          child: Center(child: Text(subscriptioncontroller.oneMonthLater.toString() ,style: CustomTextStyle.popinstextsmall12)),
+          child: Center(child: Text(subscriptioncontroller.expireyDate.toString() ,style: CustomTextStyle.popinstextsmall12)),
   
           
   

@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
-import 'package:pet/models/wholesalerModel/myOrderModel.dart' as OrderModel;
-import 'package:pet/screens/wholesaler/orderDetails.dart';
+import 'package:pet/controllers/partner_controller/dashBoard_controller.dart';
+
+import 'package:pet/models/partnerModel/partnerTotalOrderModel.dart' as TotalOrder;
+import 'package:pet/models/partnerModel/partnerTotalProductModel.dart' as TotalProduct;
+import 'package:pet/screens/salesman/orderDetails.dart';
+// import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+// import 'package:pet/models/wholesalerModel/myOrderModel.dart' as OrderModel;
+// import 'package:pet/screens/wholesaler/orderDetails.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+// import 'package:pet/models/salesmanModel/totalOrderSellerModel.dart' as TotalOrder;
 
-class PendingCompleteSreen extends StatefulWidget {
+
+class partnerPendingCompleteSreen extends StatefulWidget {
+ 
+   partnerPendingCompleteSreen({super.key, required this.data});
+  List<TotalOrder.Data>? data;
   
-   PendingCompleteSreen({super.key, required this.data});
-  List<OrderModel.Data>? data;
-
   @override
-  State<PendingCompleteSreen> createState() => _PendingCompleteSreenState();
+  State<partnerPendingCompleteSreen> createState() => _partnerPendingCompleteSreenState();
 }
 
-class _PendingCompleteSreenState extends State<PendingCompleteSreen> {
+class _partnerPendingCompleteSreenState extends State<partnerPendingCompleteSreen> {
     TextEditingController _searchcontroller = TextEditingController();
-      WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
-
+PartnerDashBoardController partnerdashBoardController = Get.put(PartnerDashBoardController());
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,31 +163,18 @@ fontWeight: FontWeight.w700,),)
                     // widget.data == null
                     //       ? SizedBox()
                     //       : 
-                
-                
-                  Column(
-                    children: [
-                       ...item.callback!.map((e) {
-                                    print("=====>>>>> zebra ff ${e.itemDetails![0].image.toString()}");
-                                     String imagePath = Constants.PRODUCT_HOME_IMAGE_PATH +"/${e.itemDetails![0].image.toString()}";
-                                    //  var imagePath  = Constants.PRODUCT_HOME_IMAGE_PATH +
-                                    //               "/${e.itemDetails![0].image!}";
-                                   
-                                   
-                                   
-                                    return 
-                      InkWell(onTap: (){
-                       wholemyordercontroller.addorder(item.id??0);
+                   InkWell(onTap: (){
+                       partnerdashBoardController.addorder(item.id??0);
                               print("Orderid ${item.id}");
-                             wholemyordercontroller.orderdetailsinit();
-                        Get.to(OrderDetailswhole(
+                             partnerdashBoardController.orderdetailsinit();
+                        Get.to(OrderDetailssales(
                           orderId: item.id??0,
                           orderstatus: item.orderStatus??'',
 
                         ));
                       },
                         child: Container(
-                                    width: 335,
+                                    // width: 335,
                                      height:  MediaQuery.of(context).size.height*0.4,
                                     decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(28),
@@ -235,7 +229,7 @@ fontWeight: FontWeight.w700,),)
                                       children: [
                                        Text("Order ID : ${item.id.toString()}",style:CustomTextStyle.popinsmedium,),
                                     SizedBox(  width: MediaQuery.of(context).size.width*0.15,),
-                                        Positioned(right:0,child: Text("₹${e.totalAddOnPrice.toString()}",style:CustomTextStyle.popinsmedium,)),
+                                        Positioned(right:0,child: Text("₹${item.orderAmount.toString()}",style:CustomTextStyle.popinsmedium,)),
                                       ],
                                     ),
                                     
@@ -248,8 +242,17 @@ fontWeight: FontWeight.w700,),)
                                       ],
                                     ),
                                     
-                                    Text("Name : ${e.variant.toString()}",style:CustomTextStyle.popinssmall0,),
-                                    Text("Quantity : ${e.quantity.toString()}",style:CustomTextStyle.popinssmall0,),
+                                      Row(
+                                        children: [
+                                         Text("Payment status :  ${item.paymentStatus.toString()}",style:CustomTextStyle.popinssmall0,),
+                                         SizedBox(  width: MediaQuery.of(context).size.width*0.08,),
+                                          // Text("2+ more",style:CustomTextStyle.popinssmall0,),
+                                        ],
+                                      ),
+                                      
+                                      Text("Coupon Title : ${item.couponDiscountTitle}",style:CustomTextStyle.popinssmall0,),
+                                      Text("Delivery Address : ${item.deliveryAddress.toString()}",style:CustomTextStyle.popinssmall0,),
+                                     
                                     ],)
                                         
                                         ,
@@ -257,76 +260,95 @@ fontWeight: FontWeight.w700,),)
                         
                                          ],),
                                     
-                                         Padding(
-                         padding: const EdgeInsets.only(left:17),
-                         child: Text("Sales Man",style:CustomTextStyle.popinssmall1,),
-                                         ),
-                                    
-                                         Padding(
-                         padding: const EdgeInsets.only(left:15,right:15),
-                         child: Card(elevation: 1.5,
-                           shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(21.0),
-                                      ),
-                           child: Container(
-                                 width: MediaQuery.of(context).size.width,
-                                   height:  MediaQuery.of(context).size.height*0.16,
-                                   decoration: BoxDecoration(color:MyColors.white, borderRadius: BorderRadius.circular(21)),child:Padding(
-                                     padding:  EdgeInsets.only(left:15.0,right:15,top:10,bottom:10),
-                                     child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                        //                  Padding(
+                        //  padding: const EdgeInsets.only(left:17),
+                        //  child: Text("Sales Man",style:CustomTextStyle.popinssmall1,),
+                        //                  ),
+
+                                //      ...item.userId!.map((e) {
+                
+                                // return 
+//                                          Padding(
+//                          padding: const EdgeInsets.only(left:15,right:15),
+//                          child: Card(elevation: 1.5,
+//                            shape: RoundedRectangleBorder(
+//                                         borderRadius: BorderRadius.circular(21.0),
+//                                       ),
+//                            child: Container(
+//                                  width: MediaQuery.of(context).size.width,
+//                                    height:  MediaQuery.of(context).size.height*0.16,
+//                                    decoration: BoxDecoration(color:MyColors.white, borderRadius: BorderRadius.circular(21)),child:Padding(
+//                                      padding:  EdgeInsets.only(left:15.0,right:15,top:10,bottom:10),
+//                                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                        
-                                       children: [
+//                                        children: [
                                    
                                        
-                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: [
-                                             Text("Nity Make",style:CustomTextStyle.popinsmedium,),
-                                    Container(height: 30,width: 30,
-                                    decoration: BoxDecoration(
+//                                          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                                            children: [
+//                                              Text("${e.fName} ${e.lName}",style:CustomTextStyle.popinsmedium,),
+//                                     Container(height: 30,width: 30,
+//                                     decoration: BoxDecoration(
                                       
-                                         shape: BoxShape.circle,
-                                      border: Border.all(
-                            color:MyColors.yellowcir,
-                            width:1.0,
-                          ),
-                                    ),
-                                    // child:Center(child: Text("05"))
-                                    )
+//                                          shape: BoxShape.circle,
+//                                       border: Border.all(
+//                             color:MyColors.yellowcir,
+//                             width:1.0,
+//                           ),
+//                                     ),
+//                                     // child:Center(child: Text("05"))
+//                                     )
                                         
-                                           ],
+//                                            ],
                                     
                                           
-                                         ),
+//                                          ),
                                     
+//                                                                Text("${e.phone}",style: CustomTextStyle.popinssmall01,) ,              
+//  Text("${e.email}",style: CustomTextStyle.popinssmall01,) ,              
+
                                     
+//                                     Row(children: [
+//                                     SvgPicture.asset("assets/image/yellowstar.svg"),
+//                                     SizedBox(width: 5,),
+//                                     SvgPicture.asset("assets/image/yellowstar.svg"),
+//                                     SizedBox(width: 5,),
+//                                     SvgPicture.asset("assets/image/yellowstar.svg"),
+//                                     SizedBox(width: 5,),
+//                                     SvgPicture.asset("assets/image/yellowstar.svg"),
+//                                     SizedBox(width: 5,),
+//                                     SvgPicture.asset("assets/image/yellowstar.svg"),
+//                                     SizedBox(width: 5,),
+//                                     Text("4.5")
+//                                     ],)
                                     
-                                    Row(children: [
-                                    SvgPicture.asset("assets/image/yellowstar.svg"),
-                                    SizedBox(width: 5,),
-                                    SvgPicture.asset("assets/image/yellowstar.svg"),
-                                    SizedBox(width: 5,),
-                                    SvgPicture.asset("assets/image/yellowstar.svg"),
-                                    SizedBox(width: 5,),
-                                    SvgPicture.asset("assets/image/yellowstar.svg"),
-                                    SizedBox(width: 5,),
-                                    SvgPicture.asset("assets/image/yellowstar.svg"),
-                                    SizedBox(width: 5,),
-                                    Text("4.5")
-                                    ],)
-                                    
-                                    ,SizedBox(height: 5,),
-                           Text("Lorem Ipsum is simply dummy text of the printing and typesetting",style: CustomTextStyle.popinssmall01,)               
-                                     ],),
-                                   )
-                                   ),
-                         ),
-                                         )
-                                    ],)
+//                                     ,SizedBox(height: 5,),
+//                            Text("${e.businessName}",style: CustomTextStyle.popinssmall01,)               
+//                                      ],),
+//                                    )
+//                                    ),
+//                          ),
+//                                          );
+//                     })
+                    ],)
                                     ),
                       );
-                    })
-                    ],
-                  );
+                    
+                
+                  // Column(
+                  //   children: [
+                  //      ...item.userId!.map((e) {
+                  //                   // print("=====>>>>> zebra ff ${e.itemDetails![0].image.toString()}");
+                  //                    String imagePath = Constants.PRODUCT_HOME_IMAGE_PATH +"/${e.image.toString()}";
+                  //                   //  var imagePath  = Constants.PRODUCT_HOME_IMAGE_PATH +
+                  //                   //               "/${e.itemDetails![0].image!}";
+                                   
+                                   
+                                   
+                  //                   return 
+                  //  })
+                  //   ],
+                  // );
                   // :Text("");
                
             //    SizedBox(height: 15,),

@@ -224,7 +224,7 @@ class _PaymentSalesState extends State<PaymentSales> {
                     if(selectone == Choose.upi){
                       print("UPI payment");
  
-  mycartController.addpaymenttype(selectone == Choose.upi?'online':"offline",selectone == Choose.cash? "paid": "unpaid");
+  mycartController.addpaymenttype(selectone == Choose.upi?'online':"offline",selectone == Choose.cash? "paid": "unpaid",);
 
                       Get.to(UserUpiScreen(
 amount: double.tryParse(widget.price)));

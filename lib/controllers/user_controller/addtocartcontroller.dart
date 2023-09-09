@@ -55,13 +55,17 @@ class MyCartController extends GetxController {
 //     update();
 //     print("sizes${sizes}");
 //   }
-  void addpaymenttype(String type, String paymentstatus ) {
+  void addpaymenttype(String type, String paymentstatus  ) {
     paymenttype = type;
 paymentStatus = paymentstatus;
 // orderStatus = orderstatus;
     update();
     print("paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
+
+  
+
+
 
   void adddiscount(int disprice, int price) {
     disCount = disprice;
@@ -318,6 +322,9 @@ paymentStatus = paymentstatus;
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": paymentStatus.toString(),
       "order_status": "pending",
+      "payment_mode": "0" ,
+      "gst_bill": "0",
+      "payment_day": "",
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",

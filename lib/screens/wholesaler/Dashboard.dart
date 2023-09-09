@@ -339,6 +339,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                       ),
                     )),
               ),
+              
               SizedBox(
                 height: 10,
               ),

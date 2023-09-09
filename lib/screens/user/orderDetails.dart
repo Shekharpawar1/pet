@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/orderdetails_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.dart';
 import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/user/notification.dart';
@@ -53,6 +55,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
   MyOrderController myordercontroller = Get.put(MyOrderController());
   OrderDetailsController orderdetailscontroller =
       Get.put(OrderDetailsController());
+  final UserReviewController userreviewcontroller =
+      Get.put(UserReviewController());
 
   @override
   Widget build(BuildContext context) {
@@ -160,18 +164,16 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                   init: myordercontroller,
                   builder: (_) {
                     return myordercontroller.orderdetailsModel == null ||
-                                        myordercontroller.orderdetailsModel!.data ==
-                                            null ||
-                                        myordercontroller.orderdetailsModel!.data!.isEmpty
-                                    ? const SizedBox()
-                                   
+                            myordercontroller.orderdetailsModel!.data == null ||
+                            myordercontroller.orderdetailsModel!.data!.isEmpty
+                        ? const SizedBox()
                         : ListView(
                             shrinkWrap: false,
                             primary: true,
                             children: [
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               ListView.builder(
                                   primary: false,
                                   shrinkWrap: true,
@@ -180,32 +182,44 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                   itemBuilder: (context, index) {
                                     var item = myordercontroller
                                         .orderdetailsModel!.data![index];
-                                    String imagePath =
-                                        Constants.PRODUCT_HOME_IMAGE_PATH +
-                                            "/${item.itemDetails![0].image ?? ''}";
-
+                                    String imagePath = Constants
+                                            .PRODUCT_HOME_IMAGE_PATH +
+                                        "/${item.itemDetails![0].image ?? ''}";
+ userreviewcontroller.reviewAdd(item.id??0, (myordercontroller.orderdetailsModel!
+                                                    .data![0].orderId ??
+                                                0));
                                     print("====>>>>imagepath ${imagePath}");
                                     return Container(
-                                      margin: EdgeInsets.symmetric(vertical: 10),
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 10),
                                       height:
-                                          MediaQuery.of(context).size.height * 0.18,
+                                          MediaQuery.of(context).size.height *
+                                              0.18,
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: MyColors.grey, width: 0.5),
-                                          borderRadius: BorderRadius.circular(25),
+                                          borderRadius:
+                                              BorderRadius.circular(25),
                                           color: MyColors.white),
                                       child: Row(children: [
                                         Padding(
                                           padding: const EdgeInsets.all(15.0),
                                           child: CachedNetworkImage(
-                                            imageUrl: imagePath, fit: BoxFit.cover,
-                                            width: MediaQuery.of(context).size.width * 0.3,
+                                            imageUrl: imagePath,
+                                            fit: BoxFit.cover,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
                                             // height: 75,
-                                            placeholder: (context, url) => Center(
-                                              child: CircularProgressIndicator(),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child:
+                                                  CircularProgressIndicator(),
                                             ), // Replace with your own placeholder widget
-                                            errorWidget: (context, url, error) =>
+                                            errorWidget: (context, url,
+                                                    error) =>
                                                 Icon(Icons
                                                     .error), // Replace with your own error widget
                                           ),
@@ -218,19 +232,21 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                           children: [
                                             Text(
                                               item.variant ?? '',
-                                              style: CustomTextStyle.popinsmedium,
+                                              style:
+                                                  CustomTextStyle.popinsmedium,
                                             ),
                                             Text(item.discountType ?? '',
-                                                style:
-                                                    CustomTextStyle.popinssmall0),
+                                                style: CustomTextStyle
+                                                    .popinssmall0),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   item.totalAddOnPrice ?? '',
-                                                  style:
-                                                      CustomTextStyle.popinsmedium,
+                                                  style: CustomTextStyle
+                                                      .popinsmedium,
                                                 ),
                                               ],
                                             )
@@ -280,7 +296,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                               //  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
 
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Sub Total",
@@ -298,10 +315,12 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 thickness: 1,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Moving Cart",
@@ -310,7 +329,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                       Text(
                                         orderdetailscontroller
                                             .getorderdetailsList["services"],
-                                        style: CustomTextStyle.popinssmallnormal,
+                                        style:
+                                            CustomTextStyle.popinssmallnormal,
                                       ),
                                     ],
                                   ),
@@ -326,10 +346,12 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 thickness: 1,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Discount",
@@ -338,13 +360,14 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                       Text(
                                         "Promo Code: " +
                                             widget.couponcode.toString(),
-                                        style: CustomTextStyle.popinssmallnormal,
+                                        style:
+                                            CustomTextStyle.popinssmallnormal,
                                       ),
                                     ],
                                   ),
                                   Text(
-                                    myordercontroller.orderdetailsModel!.data![0]
-                                            .discountOnItem ??
+                                    myordercontroller.orderdetailsModel!
+                                            .data![0].discountOnItem ??
                                         '',
                                     style: CustomTextStyle.popinssmall014,
                                   ),
@@ -355,7 +378,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 thickness: 1,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Total",
@@ -369,15 +393,15 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 ],
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.03),
                               Text(
                                 "Order Details",
                                 style: CustomTextStyle.popinssmall014,
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.01),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.01),
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
@@ -385,7 +409,8 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Order Number",
@@ -396,24 +421,29 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                                     .data![0].orderId ??
                                                 0)
                                             .toString(),
-                                        style: CustomTextStyle.popinsboldlightsmall,
+                                        style: CustomTextStyle
+                                            .popinsboldlightsmall,
                                       ),
                                       SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.02),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.02),
                                       Text(
                                         "Payment",
                                         style: CustomTextStyle.popinsboldlight,
                                       ),
                                       Text(
-                                        "Paid:" + widget.paymentmethod.toString(),
-                                        style: CustomTextStyle.popinsboldlightsmall,
+                                        "Paid:" +
+                                            widget.paymentmethod.toString(),
+                                        style: CustomTextStyle
+                                            .popinsboldlightsmall,
                                       ),
                                       SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.02),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.02),
                                       Text(
                                         "Date",
                                         style: CustomTextStyle.popinsboldlight,
@@ -421,12 +451,14 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                       Text(
                                         orderdetailscontroller
                                             .getorderdetailsList["date"],
-                                        style: CustomTextStyle.popinsboldlightsmall,
+                                        style: CustomTextStyle
+                                            .popinsboldlightsmall,
                                       ),
                                       SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.02),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.02),
                                       Text(
                                         "Phone Number",
                                         style: CustomTextStyle.popinsboldlight,
@@ -434,34 +466,42 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                       Text(
                                         orderdetailscontroller
                                             .getorderdetailsList["phonenumber"],
-                                        style: CustomTextStyle.popinsboldlightsmall,
+                                        style: CustomTextStyle
+                                            .popinsboldlightsmall,
                                       ),
                                       SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.02),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.02),
                                       Text(
                                         "Deliver To",
                                         style: CustomTextStyle.popinsboldlight,
                                       ),
                                       Text(
                                         orderdetailscontroller
-                                            .getorderdetailsList["deliverydate"],
-                                        style: CustomTextStyle.popinsboldlightsmall,
+                                                .getorderdetailsList[
+                                            "deliverydate"],
+                                        style: CustomTextStyle
+                                            .popinsboldlightsmall,
                                       ),
-                                      Divider(thickness: 1, color: MyColors.grey),
+                                      Divider(
+                                          thickness: 1, color: MyColors.grey),
                                       GestureDetector(
-                                        onTap: () => generateAndOpenPDF(context),
+                                        onTap: () =>
+                                            generateAndOpenPDF(context),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "download invoice",
-                                              style:
-                                                  CustomTextStyle.popinsboldlight,
+                                              style: CustomTextStyle
+                                                  .popinsboldlight,
                                             ),
-                                            Icon(Icons.arrow_forward_ios_outlined,
+                                            Icon(
+                                                Icons
+                                                    .arrow_forward_ios_outlined,
                                                 size: 15)
                                           ],
                                         ),
@@ -472,15 +512,15 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                               ),
 
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.03),
                               Text(
                                 "Address",
                                 style: CustomTextStyle.popinssmall014,
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.01),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.01),
                               Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -490,20 +530,22 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                     child: Text(
                                       orderdetailscontroller
                                           .getorderdetailsList["address"],
-                                      style: CustomTextStyle.popinsboldlightsmall,
+                                      style:
+                                          CustomTextStyle.popinsboldlightsmall,
                                     ),
                                   )),
 
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.03),
                               Text(
                                 "shipping Address",
                                 style: CustomTextStyle.popinssmall014,
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.01),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.01),
+
                               Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(15),
@@ -512,14 +554,310 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                     padding: const EdgeInsets.all(15.0),
                                     child: Text(
                                       orderdetailscontroller
-                                          .getorderdetailsList["shippingaddress"],
-                                      style: CustomTextStyle.popinsboldlightsmall,
+                                              .getorderdetailsList[
+                                          "shippingaddress"],
+                                      style:
+                                          CustomTextStyle.popinsboldlightsmall,
                                     ),
                                   )),
 
+ SizedBox(height: 15,),
+                           Text(
+                                      "Product Review",
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                            
+                                        GetBuilder<UserReviewController>(
+                                  init: userreviewcontroller,
+                                  builder: (_) {
+                    return
+                    userreviewcontroller.userReviewModel == null &&
+                            userreviewcontroller.userReviewModel!.data == null 
+                            // userreviewcontroller.userReviewModel!.data!.isEmpty
+                        ?  SizedBox():
+                                    
+                                     ListView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  itemCount:userreviewcontroller.userReviewModel!.data!.length??0,
+                                  itemBuilder: (context, index) {
+                                    var item = userreviewcontroller.userReviewModel!.data![index];
+                            
+                                   
+                                    return
+                                    
+                                       
+                                     Column(
+                                       children: [
+                                          ...item.userId!.map((e) {
+                                         print("NameReviewer ${e.fName}");
+                                return 
+                                         Container(
+                                          margin:
+                                              EdgeInsets.symmetric(vertical: 10),
+                                          // height:
+                                          //     MediaQuery.of(context).size.height *
+                                          //         0.18,
+                                          width: MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: MyColors.grey, width: 0.5),
+                    
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              color: MyColors.white),
+                                          child: 
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                     Text(
+                                                    "${e.fName} ${e.lName}",
+                                                    style:
+                                                        CustomTextStyle.popinsmedium,
+                                                  ),
+                                                  Text(
+                                                    item.comment ?? '',
+                                                    style:
+                                                        CustomTextStyle.popinsmedium,
+                                                  ),
+
+                                              
+                                            
+                                                                               InkWell(
+                                                                                  onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        // title:
+                                                        content: Column(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            // Align(
+                                                            //   alignment:
+                                                            //       Alignment.topRight,
+                                                            //   child: IconButton(
+                                                            //     icon: Icon(Icons
+                                                            //         .close), // You can use any close icon you prefer
+                                                            //     onPressed: () {
+                                                            //       Get.back(); // Close the dialog
+                                                            //     },
+                                                            //   ),
+                                                            // ),
+                                                            TextField(
+                                                              controller:
+                                                                  userreviewcontroller
+                                                                      .commentController,
+                                                              decoration: InputDecoration(
+                                                                hintText: 'description',
+                                                              ),
+                                                            ),
+                                                            TextField(
+                                                              controller:
+                                                                  userreviewcontroller
+                                                                      .ratingController,
+                                                              decoration: InputDecoration(
+                                                                hintText: 'Rating',
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        actions: <Widget>[
+                                                        
+                                                          TextButton(
+                                                            child: Text('Submit'),
+                                                            onPressed: () async {
+                                                          //   userreviewcontroller.reviewAdd(orderdetailscontroller, (myordercontroller.orderdetailsModel!
+                                                          //     .data![0].orderId ??
+                                                          // 0));
+                                                              await userreviewcontroller
+                                                                  .reviewinit();
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                },
+                                              );
+                                                                                  },
+                                                                                  child:
+                                            
+                                              // ListView.builder(
+                                              //                                 primary: false,
+                                              //                                 shrinkWrap: true,
+                                              //                                 // scrollDirection: Axis.horizontal,
+                                              //                                 itemCount:userreviewcontroller.userReviewModel?.data?.length ?? 0,
+                                              //                                 itemBuilder: (context, index) {
+                                              //                                   var item = userreviewcontroller
+                                              //                                     .userReviewModel!.data![index];
+                                              //                              return      userreviewcontroller
+                                              //                                     .userReviewModel!.data == null? SizedBox():
+                                                                              RatingStars(
+                                                value:( item.rating??0).toDouble(),
+                                              // onValueChanged: (v) {
+                                              //   //
+                                              //   setState(() {
+                                              //     value = v;
+                                              //   });
+                                              // },
+                                              starBuilder: (index, color) => Icon(
+                                                Icons.star,
+                                                color: color,
+                                                size: 15,
+                                              ),
+                                              starCount: 5,
+                                              starSize: 20,
+                                              // valueLabelColor: const Color(0xff9b9b9b),
+                                              // valueLabelTextStyle: const TextStyle(
+                                              //     color: Colors.white,
+                                              //     fontWeight: FontWeight.w400,
+                                              //     fontStyle: FontStyle.normal,
+                                              //     fontSize: 12.0),
+                                              // valueLabelRadius: 10,
+                                               maxValue:5,
+                                              starSpacing: 0.5,
+                                              maxValueVisibility: true,
+                                              valueLabelVisibility: false,
+                                              animationDuration:
+                                                      Duration(milliseconds: 5000),
+                                              // valueLabelPadding:
+                                              //     const EdgeInsets.symmetric(
+                                              //         vertical: 1, horizontal: 8),
+                                              // valueLabelMargin:
+                                              //     const EdgeInsets.only(right: 8),
+                                              starOffColor: const Color(0xffe7e8ea),
+                                              starColor: MyColors.yellow,
+                                                     ),
+                                                    //  }),
+                                                                              
+                                                                              
+                                                                                )
+                                                   
+                                                                              
+                                                  ],
+                                              ),
+                                            )
+                                         
+                                    );
+                                     })    ],
+                                     );
+                                 
+                                   
+                                   
+                                    });
+
+                                    
+                                    //  InkWell(
+                                    //   onTap: () {
+                                    //     showDialog(
+                                    //       context: context,
+                                    //       builder: (BuildContext context) {
+                                    //         return AlertDialog(
+                                    //           // title:
+                                    //           content: Column(
+                                    //             mainAxisSize: MainAxisSize.min,
+                                    //             children: [
+                                    //               // Align(
+                                    //               //   alignment:
+                                    //               //       Alignment.topRight,
+                                    //               //   child: IconButton(
+                                    //               //     icon: Icon(Icons
+                                    //               //         .close), // You can use any close icon you prefer
+                                    //               //     onPressed: () {
+                                    //               //       Get.back(); // Close the dialog
+                                    //               //     },
+                                    //               //   ),
+                                    //               // ),
+                                    //               TextField(
+                                    //                 controller:
+                                    //                     userreviewcontroller
+                                    //                         .commentController,
+                                    //                 decoration: InputDecoration(
+                                    //                   hintText: 'description',
+                                    //                 ),
+                                    //               ),
+                                    //               TextField(
+                                    //                 controller:
+                                    //                     userreviewcontroller
+                                    //                         .ratingController,
+                                    //                 decoration: InputDecoration(
+                                    //                   hintText: 'Rating',
+                                    //                 ),
+                                    //               ),
+                                    //             ],
+                                    //           ),
+                                    //           actions: <Widget>[
+                                    //             TextButton(
+                                    //               child: Text('Cancel'),
+                                    //               onPressed: () {
+                                    //                 Navigator.of(context).pop();
+                                    //               },
+                                    //             ),
+                                    //             TextButton(
+                                    //               child: Text('OK'),
+                                    //               onPressed: () async {
+                                    //             //   userreviewcontroller.reviewAdd(orderdetailscontroller, (myordercontroller.orderdetailsModel!
+                                    //             //     .data![0].orderId ??
+                                    //             // 0));
+                                    //                 await userreviewcontroller
+                                    //                     .reviewinit();
+                                    //                 Navigator.of(context).pop();
+                                    //               },
+                                    //             ),
+                                    //           ],
+                                    //         );
+                                    //       },
+                                    //     );
+                                    //   },
+                                    //   child: RatingStars(
+                                    //     value: userreviewcontroller.value!,
+                                    //     // onValueChanged: (v) {
+                                    //     //   //
+                                    //     //   setState(() {
+                                    //     //     value = v;
+                                    //     //   });
+                                    //     // },
+                                    //     starBuilder: (index, color) => Icon(
+                                    //       Icons.star,
+                                    //       color: color,
+                                    //       size: 15,
+                                    //     ),
+                                    //     starCount: 5,
+                                    //     starSize: 20,
+                                    //     // valueLabelColor: const Color(0xff9b9b9b),
+                                    //     // valueLabelTextStyle: const TextStyle(
+                                    //     //     color: Colors.white,
+                                    //     //     fontWeight: FontWeight.w400,
+                                    //     //     fontStyle: FontStyle.normal,
+                                    //     //     fontSize: 12.0),
+                                    //     // valueLabelRadius: 10,
+                                    //     maxValue:5,
+                                    //     starSpacing: 0.5,
+                                    //     maxValueVisibility: true,
+                                    //     valueLabelVisibility: false,
+                                    //     animationDuration:
+                                    //         Duration(milliseconds: 5000),
+                                    //     // valueLabelPadding:
+                                    //     //     const EdgeInsets.symmetric(
+                                    //     //         vertical: 1, horizontal: 8),
+                                    //     // valueLabelMargin:
+                                    //     //     const EdgeInsets.only(right: 8),
+                                    //     starOffColor: const Color(0xffe7e8ea),
+                                    //     starColor: MyColors.yellow,
+                                    //   ),
+                                    // );
+                                  
+                                  
+                                  }),
+
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.05),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.05),
                               InkWell(
                                 onTap: () {
                                   // Get.to(MyPetDetails());
@@ -530,12 +868,13 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                   child: Container(
                                     // width: MediaQuery.of(context).size.width*0.8,
 
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.08,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.08,
 
                                     decoration: BoxDecoration(
                                         color: MyColors.yellow,
-                                        borderRadius: BorderRadius.circular(25)),
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
 
                                     child: Center(
                                         child: Text(
@@ -546,40 +885,39 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                 ),
                               ),
                               SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                             ],
                           );
                   })),
         ),
-      
-      
-            GetBuilder<MyOrderController>(
-                init: myordercontroller,
-                builder: (_) {
-                  return myordercontroller.showLoading
-                      ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                          child: Container(
-                            color: Colors.black.withOpacity(
-                                0.1), // Adjust the opacity as needed
-                          ),
-                        )
-                      : SizedBox();
-                }),
-            // Progress bar
-            GetBuilder<MyOrderController>(
-                init: myordercontroller,
-                builder: (_) {
-                  return myordercontroller.showLoading
-                      ? Center(
-                          child: SpinKitCircle(
-                            color: Colors.white, // Color of the progress bar
-                            size: 50.0, // Size of the progress bar
-                          ),
-                        )
-                      : SizedBox();
-                }),
+
+        GetBuilder<MyOrderController>(
+            init: myordercontroller,
+            builder: (_) {
+              return myordercontroller.showLoading
+                  ? BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: Container(
+                        color: Colors.black
+                            .withOpacity(0.1), // Adjust the opacity as needed
+                      ),
+                    )
+                  : SizedBox();
+            }),
+        // Progress bar
+        GetBuilder<MyOrderController>(
+            init: myordercontroller,
+            builder: (_) {
+              return myordercontroller.showLoading
+                  ? Center(
+                      child: SpinKitCircle(
+                        color: Colors.white, // Color of the progress bar
+                        size: 50.0, // Size of the progress bar
+                      ),
+                    )
+                  : SizedBox();
+            }),
       ],
     );
   }

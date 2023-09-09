@@ -14,13 +14,30 @@ class SubscriptionController extends GetxController{
  bool showLoading = false;
   //  toggle(int index) => selectedIndex.value = index;
   int? selectedIndex;
+String? price1;
+ String? planname1;
+  String? plantype1;
+  String? advertistment1;
+  String? productLimit;
+  DateTime? expireyDate;
+  String? image;
 
-
-
-  void updateSelectedIndex(int id) {
+// void update(int id) {
+//     selectedIndex = id;
+//     update();
+//     print("subindex${selectedIndex}");
+//   }
+  void updateSelectedIndex(int id, String price, String planname, String plantype,String productlmt, String advertistment , DateTime expire,String image1 ) {
     selectedIndex = id;
+    price1= price;
+    plantype1 =plantype;
+    planname1=planname;
+    advertistment1 = advertistment;
+productLimit = productlmt;
+      expireyDate= expire;
+      image = image1;
     update();
-    print("subindex${selectedIndex}");
+    print(" SelectID ${selectedIndex} Expireydate ${expireyDate}");
   }
     late DateTime oneMonthLater;
   late DateTime sixMonthsLater;
@@ -30,27 +47,28 @@ class SubscriptionController extends GetxController{
   void onInit() {
     super.onInit();
     init();
-    Dateinit();
+    // Dateinit();
   }
 
-   void Dateinit() {
-    DateTime initialDate = DateTime.now(); // Replace with your initial date
-    oneMonthLater = initialDate.add(Duration(days: 30));
-    sixMonthsLater = initialDate.add(Duration(days: 30 * 6));
-    oneYearLater = initialDate.add(Duration(days: 365)); // Note: This is a simple approximation for one year, not accounting for leap years
+  //  void Dateinit() {
+  //    // Note: This is a simple approximation for one year, not accounting for leap years
 
-    print('Initial Date: ${formatDate(initialDate)}');
-    print('One Month Later: ${formatDate(oneMonthLater)}');
-    print('Six Months Later: ${formatDate(sixMonthsLater)}');
-    print('One Year Later: ${formatDate(oneYearLater)}');
-  }
+  //   print('Initial Date: ${formatDate(initialDate)}');
+  //   print('One Month Later: ${formatDate(oneMonthLater)}');
+  //   print('Six Months Later: ${formatDate(sixMonthsLater)}');
+  //   print('One Year Later: ${formatDate(oneYearLater)}');
+  // }
 
-  String formatDate(DateTime date) {
-    return DateFormat('dd-MM-yyyy').format(date);
-  }
+  // String formatDate(DateTime date) {
+  //   return DateFormat('dd-MM-yyyy').format(date);
+  // }
 
 
-
+//   void chooseplan(int planId){
+// isselected = planId;
+//  update();
+//  print("planId  ${isselected}");
+//   }
 
 
 //  late DateTime oneMonthLater;
@@ -103,53 +121,54 @@ class SubscriptionController extends GetxController{
     }
 
 
-// Future<void> purchaseinit() async {
-//     showLoading = true;
-//     update();
+Future<void> purchaseinit() async {
+    showLoading = true;
+    update();
    
-//      Map<String, String> body = {
-//         "vendor_id":fullNameController.text,
-//       "plan_name": lastNameController.text,
-//       "plan_price":numberController.text,
-//       "plan_type":flataddressController.text,
-//       "plan_purchase_date":areaaddressController.text,
-//       "plan_expaire_date": landmarkController.text,
-//       "product_upload":pincodeController.text ,
-//      "advertisement":selectedState!.stateName.toString(),
+     Map<String, String> body = {
+        "vendor_id":selectedIndex.toString(),
+      "plan_name": planname1.toString(),
+      "plan_price":price1.toString(),
+      "plan_type":plantype1.toString(),
+      "plan_purchase_date": DateTime.now().toString(),
+      "plan_expaire_date": expireyDate.toString(),
+      "product_upload":productLimit.toString() ,
+     "advertisement":advertistment1.toString(),
      
      
-//     };
-//     String PurchasePlanURl = Constants.PURCHASE_PLAN;
-//     print(body);
-//     try {
+    };
+    String PurchasePlanURl = Constants.PURCHASE_PLAN;
+    print(body);
+    try {
      
-//       var request = http.MultipartRequest('POST', Uri.parse(PurchasePlanURl));
-//       request.fields.addAll(body);
+      var request = http.MultipartRequest('POST', Uri.parse(PurchasePlanURl));
+      request.fields.addAll(body);
       
-//       await ApiHelper.postFormData(request: request);
-//       update();
-//       Get.back();
-//       Get.snackbar(
-//         'Success',
-//         'Address Added',
-//         snackPosition: SnackPosition.BOTTOM,
-//         backgroundColor: Colors.green,
-//         colorText: Colors.white,
-//       );
-//     } catch (e) {
-//       print('Error: $e');
-//       Get.snackbar(
-//         'Error',
-//         'An error occurred: $e',
-//         snackPosition: SnackPosition.BOTTOM,
-//         backgroundColor: Colors.red,
-//         colorText: Colors.white,
-//       );
-//     }
+      await ApiHelper.postFormData(request: request);
+      // print("PurchasePlanURL"+PurchasePlanURl);
+      update();
+      Get.back();
+      Get.snackbar(
+        'Success',
+        'Purchaes Plan',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
 
-//     showLoading = false;
-//     update();
-//   }
+    showLoading = false;
+    update();
+  }
 
 
 }

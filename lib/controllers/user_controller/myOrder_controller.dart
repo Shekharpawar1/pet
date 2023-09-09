@@ -77,7 +77,7 @@ String getMyOrderUrl =
       orderdetailsModel = OrderDetailsModel.fromJson(
           await ApiHelper.getApi(getMyOrderDetailsUrl+"${orderID}"));
       print(orderdetailsModel);
-       print(getMyOrderDetailsUrl+"${orderID}");
+       print("OrderDetils "+getMyOrderDetailsUrl+"${orderID}");
       // orderLoaded = true;
       update();
     } catch (e) {

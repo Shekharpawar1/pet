@@ -775,11 +775,40 @@ class ProductDetails extends StatelessWidget {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
+ Row(
+                                  children: [
+                                    Text(
+                                      "Petsbreeds",
+                                      style: CustomTextStyle.popinslight,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.15,
+                                    ),
+                                    Text(
+                                      productdetailscontroller
+                                          .productdetailmodel!.data!.petsbreedsId
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
 
                                 Row(
                                   children: [
                                     Text(
-                                      "Flavour",
+                                      "lifeStage",
                                       style: CustomTextStyle.popinslight,
                                     ),
                                     SizedBox(
@@ -787,11 +816,14 @@ class ProductDetails extends StatelessWidget {
                                           0.2,
                                     ),
                                     Text(
-                                      "",
+                                     productdetailscontroller
+                                          .productdetailmodel!.data!.lifeStageId
+                                          .toString(),
                                       style: CustomTextStyle.popinstext,
                                     ),
                                   ],
                                 ),
+                                // Petsbreeds
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),

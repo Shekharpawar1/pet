@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:pet/models/wholesalerModel/reviewwholeModel.dart';
-// import 'package:pet/models/salesmanModel/reviewsalesModel.dart';
-// import 'package:pet/models/usersModel/reviewuserModel.dart';
+import 'package:pet/models/salesmanModel/reviewsalesmanModel.dart';
+
+import 'package:pet/models/usersModel/reviewuserModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 
 import 'package:http/http.dart' as http;
-class WholeReviewController extends GetxController {
+class SalesReviewController extends GetxController {
   double value = 0;
   int? itemid1;
   int? orderId1;
@@ -22,13 +22,15 @@ final storage = GetStorage();
   // TextEditingController numberController = TextEditingController();
 // Review
   String getReviewUrl = '${Constants.GET_USERREVIEW}';
- WholeReviewModel? wholeReviewModel;
+ SalesReviewModel? salesReviewModel;
   bool reviewLoaded = false;
 
 
   @override
   void onInit() {
     super.onInit();
+
+    
     init();
   }
 
@@ -47,7 +49,7 @@ final storage = GetStorage();
     update();
     try {
       // Review
-      wholeReviewModel = WholeReviewModel.fromJson(
+      salesReviewModel = SalesReviewModel.fromJson(
           await ApiHelper.getApi(getReviewUrl+ "${itemid1}"));
           
       print("ReviewURL ===> ${getReviewUrl + "${itemid1}"}");
