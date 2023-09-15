@@ -14,9 +14,11 @@ import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/subcateogries_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/wholesalerFilterController.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/wholesaler/WholeAllbrandPage.dart';
 import 'package:pet/screens/wholesaler/ordersummary.dart';
+import 'package:pet/screens/wholesaler/wholeSalerFilterUI.dart';
 import 'package:pet/screens/wholesaler/wholeallcategory.dart';
 import 'package:pet/screens/wholesaler/wholesalerSearchScreen.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
@@ -410,7 +412,13 @@ class _HomeWholeState extends State<HomeWhole> {
                     //  SizedBox(width: 10,),
                     GestureDetector(
                       onTap: () {
-                        Get.to(FilterScreen());
+                        WholeSalerFilterController filtercontroller =
+                            Get.put(WholeSalerFilterController());
+                        // filtercontroller.init();
+                        filtercontroller.loadDefaultData();
+                        filtercontroller.clearFields();
+                        // Get.to(FilterScreen());
+                        Get.to(WholeSalerFilterScreenUI());
                       },
                       child: Container(
                           width: 45,

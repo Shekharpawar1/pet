@@ -14,7 +14,7 @@ import 'package:pet/others/Filter.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
-class SalesManFilterController extends GetxController {
+class WholeSalerFilterController extends GetxController {
   bool showLoading = false;
   List<filterMod.Datum> filteredProducts = [];
   List<String> branditems = [];
@@ -460,10 +460,11 @@ class SalesManFilterController extends GetxController {
     update();
     FilterListModel products = FilterListModel();
     try {
+  String getUserPropertiesUrl =
+      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
       products = FilterListModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
-
-           
+          await ApiHelper.getApi(getUserPropertiesUrl));
+          
       products.data = products.data!.where((element) => element.moduleId == 1).toList();
       
       update();
@@ -494,7 +495,7 @@ class SalesManFilterController extends GetxController {
     try {
       products = FilterListModel.fromJson(
           await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
-          
+     
       products.data = products.data!.where((element) => element.moduleId == 1).toList();
       
       update();
