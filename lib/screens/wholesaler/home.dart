@@ -301,7 +301,8 @@ class _HomeWholeState extends State<HomeWhole> {
 
                         color: MyColors.white,
                       ),
-                      child: TextFormField(onTap: () {
+                      child: TextFormField(
+                        onTap: () {
                           wholehomecontroller.clearSearchData();
                           Get.to(WholeSalerSearchScreen());
                         },
@@ -352,7 +353,9 @@ class _HomeWholeState extends State<HomeWhole> {
                         filtercontroller.loadDefaultData();
                         filtercontroller.clearFields();
                         // Get.to(FilterScreen());
+                        filtercontroller.init();
                         Get.to(WholeSalerFilterScreenUI());
+                        Get.to(FilterScreen());
                       },
                       child: Container(
                           width: 45,
@@ -406,7 +409,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                           onTap: () async {
                                             wholesubcategorycontroller
                                                 .addproduct(item.id ?? 0);
-                                                wholesubcategorycontroller
+                                            wholesubcategorycontroller
                                                 .currentCategory(
                                                     item.name ?? "");
                                             await wholesubcategorycontroller
