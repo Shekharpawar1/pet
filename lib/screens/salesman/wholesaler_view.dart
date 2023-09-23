@@ -17,6 +17,7 @@ import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
 import 'package:pet/screens/salesman/orderHistory.dart';
 import 'package:pet/screens/salesman/salesmyOrderPage.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -225,44 +226,46 @@ class SalesWholeSalerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 15),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.arrow_left, color: MyColors.black)),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "Total Wholeseller",
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.black,
-            fontWeight: FontWeight.w700,
-          ),
-        )),
-        actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
+       appBar:CustomAppBarSalesWholeback(title:"Total Wholeseller" ,)
+//         elevation: 0,
+//         backgroundColor: Colors.transparent,
+//         leading: Padding(
+//           padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 15),
+//           child: GestureDetector(
+//               onTap: () {
+//                 Navigator.pop(context);
+//               },
+//               child: Icon(Icons.arrow_left, color: MyColors.black)),
+//         ),
+//         title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child: Text(
+//           "Total Wholeseller",
+//           style: TextStyle(
+//             fontSize: 16,
+//             color: MyColors.black,
+//             fontWeight: FontWeight.w700,
+//           ),
+//         )),
+//         actions: [
+//           //  SvgPicture.asset("assets/image/girl.svg"),
 
-          // SizedBox(width: 20),
-          InkWell(
-            onTap: () {
-              Get.to(NotificationSales());
-            },
-            child: Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: SvgPicture.asset("assets/image/notification.svg"),
-              //  Image.asset("assets/image/girl.png"),
-            ),
-          ),
-        ],
-      ),
+//           // SizedBox(width: 20),
+//           InkWell(
+//             onTap: () {
+//               Get.to(NotificationSales());
+//             },
+//             child: Padding(
+//               padding: EdgeInsets.only(right: 20.0),
+//               child: SvgPicture.asset("assets/image/notification.svg"),
+//               //  Image.asset("assets/image/girl.png"),
+//             ),
+//           ),
+//         ],
+//       ),
+     
+ ,    
       body: GetBuilder<SalesAddwholeControllers>(
           init: addwholesellerController,
           builder: (_) {
@@ -1586,6 +1589,7 @@ SizedBox(
                         return  ListView.builder(
                     primary: true,
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount:dashBoardController.total1wholesellerModel
               !.data!.length,
                     itemBuilder: (context, index) {
@@ -1606,14 +1610,9 @@ SizedBox(
                                       onTap: () {
                                         
                                          print("iTem  ${item.id}");
-//                                          try {
-//   storage.write('wholesalerid', item.id);
-//   print("IDDDD");
-//   print(storage.read('wholesalerid').toString());
-// } catch (e) {
-//   print("Error: $e");
+
 // }
-                                          storage.write('wholesalerId', item.id);
+                                         storage.write('wholesalerId', item.id);
   print("IDDDD");
  print(storage.read('wholesalerId').toString());
                                         // Get.to(OrderDetailssales());
@@ -1623,12 +1622,13 @@ SizedBox(
                                       },
                                       child: Container(
                                           width: 335,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.3,
+                                          // height:
+                                          //     MediaQuery.of(context).size.height *
+                                          //         0.3,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(28),
                                             gradient: LinearGradient(
+
                                               begin: Alignment.topCenter,
                                               end: Alignment.bottomCenter,
                                               colors: [
@@ -1778,6 +1778,9 @@ SizedBox(
       
                                                          Get.to(HomeSales(
                                                         wholeseller: item.id??0
+//                                                       var whole =      storage.write('wholesalerId', item.id);
+//   print("IDDDD");
+//  print(storage.read('wholesalerId').toString());
                                                          ));
 
                                                       },

@@ -237,7 +237,7 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       "pincode":pincodeController.text ,
      "state":selectedState!.stateName.toString(),
      "city":selectedCity!.cityName.toString(),
-     "user_id": wholesellerID.toString(),
+     "user_id":storage.read('wholesalerId').toString(),
      
     };
     String AddAddress = Constants.ADD_ADDRESS;
@@ -278,7 +278,7 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
     update();
    
     var body = {
-      "user_id": wholesellerID.toString(),
+      "user_id": storage.read('wholesalerId').toString(),
       "first_name":fullNameController.text,
       "last_name": lastNameController.text,
       "mobile":numberController.text,

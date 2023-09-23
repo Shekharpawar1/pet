@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -25,6 +26,7 @@ import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/userfavourite.dart';
 import 'package:pet/screens/user/usertranscation.dart';
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class drawer extends StatefulWidget {
@@ -38,8 +40,18 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   MyOrderController myordercontroller = Get.put(MyOrderController());
-  
-ProfileController profilecontroller = Get.put(ProfileController());
+
+  ProfileController profilecontroller = Get.put(ProfileController());
+
+ @override
+  void initState() {
+    super.initState();
+    
+
+profilecontroller.myprofile();
+
+  }
+
 
   static final List<String> _listViewData = [
     "Profile",
@@ -49,7 +61,7 @@ ProfileController profilecontroller = Get.put(ProfileController());
     "My Pet",
     "My Services",
     "Veterniary",
-    "My Transaction",
+  
    "Logout"
   ];
 
@@ -61,16 +73,17 @@ ProfileController profilecontroller = Get.put(ProfileController());
     Icons.pets,
     Icons.cleaning_services,
     Icons.medication_liquid_outlined,
-    Icons.payment_outlined,
+    // Icons.payment_outlined,
     Icons.logout,
- 
-   
   ];
 
   int _currentSelected = 0;
 
   @override
   Widget build(BuildContext context) {
+    // print("ImageUser ${Constants.USERPROFILE_IMAGEPATH_URL+ 
+    //                                        profilecontroller
+    //                           .myprofilemodel!.data![0].image.toString()}");
     return Drawer(
       backgroundColor: MyColors.bgcolor,
       child: ListView(
@@ -81,82 +94,149 @@ ProfileController profilecontroller = Get.put(ProfileController());
 
                 child: DrawerHeader(
 
-                  child: ListView(
-                   shrinkWrap: true,
-        primary: false,
-                    children: [
-                      InkWell(onTap:(){
-                        // Get.to(Profile());
-                      },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        children: [
+                  child:  GetBuilder<ProfileController>(
+                  init: profilecontroller,
+                  builder: (_) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            // Get.to(Profile());
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
                                             Center(
-              child: Stack(
-            alignment: Alignment.topCenter,
-                children:[
-                    Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-               child:CircleAvatar(
-                radius:35,
-                backgroundColor: Colors.transparent,
-                  child: Image.asset("assets/image/boyprofile3.png"),
-                ),),
-               
-                Positioned(
-                 
-                  bottom: 10,
-                  child: Image.asset("assets/image/drawer2.png",height: 25,),
-              
-                ) 
-              ]),
-            ),
-            SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                                          Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
-                                              children: <Widget>[
-                                                Text(
-                                                  "User",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,
-                                          color:MyColors.white),
-                                                ),
-                                                SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  "user123@gmail.com",
-                                                  style: TextStyle(
-                                            color:MyColors.white,fontSize: 16),
-                                                ),
-                                              ]),
-                                        ],
-                                      ),
+                                              child: Stack(
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                  children: [
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: 20),
+                                                      child: CircleAvatar(
+                                                        radius: 35,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        child:
+                                                        profilecontroller
+                              .myprofilemodel == null || profilecontroller
+                              .myprofilemodel!.data == null || profilecontroller
+                              .myprofilemodel!.data!.isEmpty ?   Image.asset("assets/image/boyprofile3.png") :
+                
+                                                            CachedNetworkImage(
+                                                          imageUrl: "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                            profilecontroller
+                              .myprofilemodel!.data![0].image.toString(),
 
-                                    ]),
-
-                              ]),
+                                                          fit: BoxFit.cover,
+                                                          
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ), // Replace with your own placeholder widget
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons
+                                                                  .error), // Replace with your own error widget
+                                                        ),
+                                                        //  Image.asset("assets/image/boyprofile3.png"),
+                                                      ),
+                                                    ),
+                                                    Positioned(
+                                                      bottom: 10,
+                                                      child: InkWell(
+                                                        onTap:(){
+                                                          Get.to(UserProfile());
+                                                        },
+                                                        child: Image.asset(
+                                                          "assets/image/drawer2.png",
+                                                          height: 25,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ]),
+                                            ),
+                                            SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.05),
+                                            Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  
+                                                        profilecontroller
+                              .myprofilemodel == null || profilecontroller
+                              .myprofilemodel!.data == null || profilecontroller
+                              .myprofilemodel!.data!.isEmpty ?  Text("Username",style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),) :
+                                                  Text(
+                                                    "${profilecontroller.myprofilemodel!.data![0].fName.toString()} ${profilecontroller.myprofilemodel!.data![0].lName.toString()}",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  
+                                                        profilecontroller
+                              .myprofilemodel == null || profilecontroller
+                              .myprofilemodel!.data == null || profilecontroller
+                              .myprofilemodel!.data!.isEmpty ? Text("Email",style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),) :
+                                                  Text(
+                                                    profilecontroller
+                                                        .myprofilemodel!
+                                                        .data![0]
+                                                        .email
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: MyColors.white,
+                                                        fontSize: 16),
+                                                  ),
+                                                ]),
+                                          ],
+                                        ),
+                                      ]),
+                                ]),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                      ],
+                    );
+                  }),
+              ),
 
               ),
+            // ),
+          // ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: _listViewData.length,
@@ -206,11 +286,11 @@ ProfileController profilecontroller = Get.put(ProfileController());
         Get.to(UserProfile());
         break;
       case 1:
-     await myordercontroller.init();
+      myordercontroller.init();
       Get.to(MyOrderUser());
         break;
       case 2:
-        Get.to(NotificationUser());
+        Get.to(const NotificationUser());
         break;
       case 3:
         Get.to(Userfavourite());
@@ -219,15 +299,15 @@ ProfileController profilecontroller = Get.put(ProfileController());
         Get.to(MyPetDetails());
         break;
       case 5:
-      Get.to(Myservices());
+        Get.to(Myservices());
         break;
-           case 6:
-      Get.to(AllVeterniary());
+      case 6:
+        Get.to(AllVeterniary());
         break;
-     case 7:
-      Get.to(Usertranscation());
-        break;
-      case 8:
+    //  case 7:
+    //   Get.to(Usertranscation());
+    //     break;
+      case 7:
         await GetStorage().erase();
         Get.offAll(LoginUser());
         break;

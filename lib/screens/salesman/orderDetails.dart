@@ -2,12 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
 import 'package:pet/controllers/salesman_controller/order_tracker_controller.dart';
+import 'package:pet/controllers/salesman_controller/salesreview_controller.dart';
 import 'package:pet/screens/salesman/locationScreenSalesMan.dart';
 import 'package:pet/screens/salesman/notification.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -25,46 +28,48 @@ class OrderDetailssales extends StatefulWidget {
 class _OrderDetailssalesState extends State<OrderDetailssales> {
   
   DashBoardController dashBoardController = Get.put(DashBoardController());
+  SalesReviewController salesReviewController = Get.put(SalesReviewController());
 
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left:15.0,top: 15,bottom: 15),
-            child: GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },child:Icon(Icons.arrow_left,color:MyColors.black)
-            ),
-          ),
-          title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child:Text("Order Details",style: TextStyle(fontSize: 16,color: MyColors.black,
-fontWeight: FontWeight.w700,),)
-          ),
-          actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
+       appBar: CustomAppBarSalesWholeback( title: "Order Details",),
+//        AppBar(
+//             elevation: 0,
+//           backgroundColor:Colors.transparent,
+//           leading: Padding(
+//             padding: const EdgeInsets.only(left:15.0,top: 15,bottom: 15),
+//             child: GestureDetector(
+//                 onTap: (){
+//                   Navigator.pop(context);
+//                 },child:Icon(Icons.arrow_left,color:MyColors.black)
+//             ),
+//           ),
+//           title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child:Text("Order Details",style: TextStyle(fontSize: 16,color: MyColors.black,
+// fontWeight: FontWeight.w700,),)
+//           ),
+//           actions: [
+//           //  SvgPicture.asset("assets/image/girl.svg"),
            
-            // SizedBox(width: 20),
-            InkWell(
-              onTap: (){
- Get.to (NotificationSales());
-},
-              child: Padding(
-                padding:  EdgeInsets.only(right:20.0),
-                child: SvgPicture.asset("assets/image/notification.svg"),
-                //  Image.asset("assets/image/girl.png"),
-              ),
-            ),
+//             // SizedBox(width: 20),
+//             InkWell(
+//               onTap: (){
+//  Get.to (NotificationSales());
+// },
+//               child: Padding(
+//                 padding:  EdgeInsets.only(right:20.0),
+//                 child: SvgPicture.asset("assets/image/notification.svg"),
+//                 //  Image.asset("assets/image/girl.png"),
+//               ),
+//             ),
            
-          ],
+//           ],
          
-        ),
+//         ),
       
      body:
 
@@ -523,6 +528,300 @@ Container(
                 style: CustomTextStyle.popinsboldlightsmall,
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                 SizedBox(height: 15,),
+                           Text(
+                                      "Product Review",
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                            
+                                        GetBuilder<SalesReviewController>(
+                                  init: salesReviewController,
+                                  builder: (_) {
+                    return
+                    salesReviewController.salesReviewModel == null &&
+                            salesReviewController.salesReviewModel!.data == null 
+                            // userreviewcontroller.userReviewModel!.data!.isEmpty
+                        ?  SizedBox():
+                                    
+                                     ListView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  itemCount:   salesReviewController.salesReviewModel!.data!.length??0,
+                                  itemBuilder: (context, index) {
+                                    var item =    salesReviewController.salesReviewModel!.data![index];
+                            
+                                   
+                                    return
+                                    
+                                       
+                                     Column(
+                                       children: [
+                                          ...item.userId!.map((e) {
+                                         print("NameReviewer ${e.fName}");
+                                return 
+                                         Container(
+                                          margin:
+                                              EdgeInsets.symmetric(vertical: 10),
+                                          // height:
+                                          //     MediaQuery.of(context).size.height *
+                                          //         0.18,
+                                          width: MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: MyColors.grey, width: 0.5),
+                    
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              color: MyColors.white),
+                                          child: 
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                     Text(
+                                                    "${e.fName} ${e.lName}",
+                                                    style:
+                                                        CustomTextStyle.popinsmedium,
+                                                  ),
+                                                  Text(
+                                                    item.comment ?? '',
+                                                    style:
+                                                        CustomTextStyle.popinsmedium,
+                                                  ),
+
+                                              
+                                            
+                                                                               InkWell(
+                                                                                  onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        // title:
+                                                        content: Column(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          children: [
+                                                            // Align(
+                                                            //   alignment:
+                                                            //       Alignment.topRight,
+                                                            //   child: IconButton(
+                                                            //     icon: Icon(Icons
+                                                            //         .close), // You can use any close icon you prefer
+                                                            //     onPressed: () {
+                                                            //       Get.back(); // Close the dialog
+                                                            //     },
+                                                            //   ),
+                                                            // ),
+                                                            TextField(
+                                                              controller:
+                                                                  salesReviewController
+                                                                      .commentController,
+                                                              decoration: InputDecoration(
+                                                                hintText: 'description',
+                                                              ),
+                                                            ),
+                                                            TextField(
+                                                              controller:
+                                                                  salesReviewController
+                                                                      .ratingController,
+                                                              decoration: InputDecoration(
+                                                                hintText: 'Rating',
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        actions: <Widget>[
+                                                        
+                                                          TextButton(
+                                                            child: Text('Submit'),
+                                                            onPressed: () async {
+                                                          //   userreviewcontroller.reviewAdd(orderdetailscontroller, (myordercontroller.orderdetailsModel!
+                                                          //     .data![0].orderId ??
+                                                          // 0));
+                                                              await salesReviewController
+                                                                  .reviewinit();
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                          ),
+                                                        ],
+                                                      );
+                                                },
+                                              );
+                                                                                  },
+                                                                                  child:
+                                            
+                                              // ListView.builder(
+                                              //                                 primary: false,
+                                              //                                 shrinkWrap: true,
+                                              //                                 // scrollDirection: Axis.horizontal,
+                                              //                                 itemCount:userreviewcontroller.userReviewModel?.data?.length ?? 0,
+                                              //                                 itemBuilder: (context, index) {
+                                              //                                   var item = userreviewcontroller
+                                              //                                     .userReviewModel!.data![index];
+                                              //                              return      userreviewcontroller
+                                              //                                     .userReviewModel!.data == null? SizedBox():
+                                                                              RatingStars(
+                                                value:( item.rating??0).toDouble(),
+                                              // onValueChanged: (v) {
+                                              //   //
+                                              //   setState(() {
+                                              //     value = v;
+                                              //   });
+                                              // },
+                                              starBuilder: (index, color) => Icon(
+                                                Icons.star,
+                                                color: color,
+                                                size: 15,
+                                              ),
+                                              starCount: 5,
+                                              starSize: 20,
+                                              // valueLabelColor: const Color(0xff9b9b9b),
+                                              // valueLabelTextStyle: const TextStyle(
+                                              //     color: Colors.white,
+                                              //     fontWeight: FontWeight.w400,
+                                              //     fontStyle: FontStyle.normal,
+                                              //     fontSize: 12.0),
+                                              // valueLabelRadius: 10,
+                                               maxValue:5,
+                                              starSpacing: 0.5,
+                                              maxValueVisibility: true,
+                                              valueLabelVisibility: false,
+                                              animationDuration:
+                                                      Duration(milliseconds: 5000),
+                                              // valueLabelPadding:
+                                              //     const EdgeInsets.symmetric(
+                                              //         vertical: 1, horizontal: 8),
+                                              // valueLabelMargin:
+                                              //     const EdgeInsets.only(right: 8),
+                                              starOffColor: const Color(0xffe7e8ea),
+                                              starColor: MyColors.yellow,
+                                                     ),
+                                                    //  }),
+                                                                              
+                                                                              
+                                                                                )
+                                                   
+                                                                              
+                                                  ],
+                                              ),
+                                            )
+                                         
+                                    );
+                                     })    ],
+                                     );
+                                 
+                                   
+                                   
+                                    });
+
+                                    
+                                    //  InkWell(
+                                    //   onTap: () {
+                                    //     showDialog(
+                                    //       context: context,
+                                    //       builder: (BuildContext context) {
+                                    //         return AlertDialog(
+                                    //           // title:
+                                    //           content: Column(
+                                    //             mainAxisSize: MainAxisSize.min,
+                                    //             children: [
+                                    //               // Align(
+                                    //               //   alignment:
+                                    //               //       Alignment.topRight,
+                                    //               //   child: IconButton(
+                                    //               //     icon: Icon(Icons
+                                    //               //         .close), // You can use any close icon you prefer
+                                    //               //     onPressed: () {
+                                    //               //       Get.back(); // Close the dialog
+                                    //               //     },
+                                    //               //   ),
+                                    //               // ),
+                                    //               TextField(
+                                    //                 controller:
+                                    //                     userreviewcontroller
+                                    //                         .commentController,
+                                    //                 decoration: InputDecoration(
+                                    //                   hintText: 'description',
+                                    //                 ),
+                                    //               ),
+                                    //               TextField(
+                                    //                 controller:
+                                    //                     userreviewcontroller
+                                    //                         .ratingController,
+                                    //                 decoration: InputDecoration(
+                                    //                   hintText: 'Rating',
+                                    //                 ),
+                                    //               ),
+                                    //             ],
+                                    //           ),
+                                    //           actions: <Widget>[
+                                    //             TextButton(
+                                    //               child: Text('Cancel'),
+                                    //               onPressed: () {
+                                    //                 Navigator.of(context).pop();
+                                    //               },
+                                    //             ),
+                                    //             TextButton(
+                                    //               child: Text('OK'),
+                                    //               onPressed: () async {
+                                    //             //   userreviewcontroller.reviewAdd(orderdetailscontroller, (myordercontroller.orderdetailsModel!
+                                    //             //     .data![0].orderId ??
+                                    //             // 0));
+                                    //                 await userreviewcontroller
+                                    //                     .reviewinit();
+                                    //                 Navigator.of(context).pop();
+                                    //               },
+                                    //             ),
+                                    //           ],
+                                    //         );
+                                    //       },
+                                    //     );
+                                    //   },
+                                    //   child: RatingStars(
+                                    //     value: userreviewcontroller.value!,
+                                    //     // onValueChanged: (v) {
+                                    //     //   //
+                                    //     //   setState(() {
+                                    //     //     value = v;
+                                    //     //   });
+                                    //     // },
+                                    //     starBuilder: (index, color) => Icon(
+                                    //       Icons.star,
+                                    //       color: color,
+                                    //       size: 15,
+                                    //     ),
+                                    //     starCount: 5,
+                                    //     starSize: 20,
+                                    //     // valueLabelColor: const Color(0xff9b9b9b),
+                                    //     // valueLabelTextStyle: const TextStyle(
+                                    //     //     color: Colors.white,
+                                    //     //     fontWeight: FontWeight.w400,
+                                    //     //     fontStyle: FontStyle.normal,
+                                    //     //     fontSize: 12.0),
+                                    //     // valueLabelRadius: 10,
+                                    //     maxValue:5,
+                                    //     starSpacing: 0.5,
+                                    //     maxValueVisibility: true,
+                                    //     valueLabelVisibility: false,
+                                    //     animationDuration:
+                                    //         Duration(milliseconds: 5000),
+                                    //     // valueLabelPadding:
+                                    //     //     const EdgeInsets.symmetric(
+                                    //     //         vertical: 1, horizontal: 8),
+                                    //     // valueLabelMargin:
+                                    //     //     const EdgeInsets.only(right: 8),
+                                    //     starOffColor: const Color(0xffe7e8ea),
+                                    //     starColor: MyColors.yellow,
+                                    //   ),
+                                    // );
+                                  
+                                  
+                                  }),
+
               Text(
                 "Call",
                 style: CustomTextStyle.popinssmall014,

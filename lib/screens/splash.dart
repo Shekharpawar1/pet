@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/screens/bottomnavbar.dart';
 
 import 'package:pet/screens/intro2.dart';
+import 'package:pet/screens/partner/subsciption.dart';
 import 'package:pet/screens/salesman/Dashboard.dart';
 import 'package:pet/screens/user/userHome.dart';
 import 'package:pet/screens/wholesaler/Dashboard.dart';
@@ -43,6 +44,10 @@ class _SplashState extends State<Splash> {
         var sellerid = await GetStorage().read("sellerid");
         var sellerdata = await GetStorage().read("sellerData");
 
+ var partnerid = await GetStorage().read("partnerid");
+        var partnerdata = await GetStorage().read("partnerData");
+
+
         print("WholesalerroleID: ==> ${wholesalerroleid.toString()}");
         print("user Id : ===>>> ${id.toString()}");
         print("user Data : ===>>> ${data.toString()}");
@@ -51,7 +56,10 @@ class _SplashState extends State<Splash> {
 
         print("sellerid  : ===>>> ${sellerid.toString()}");
         print("sellerdata  : ===>>> ${sellerdata.toString()}");
-        id == null && wholesalerid == null && sellerid == null
+
+         print("partnerid  : ===>>> ${partnerid.toString()}");
+        print("partnerData  : ===>>> ${partnerdata.toString()}");
+        id == null && wholesalerid == null && sellerid == null && partnerid == null
             ? Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -65,7 +73,14 @@ class _SplashState extends State<Splash> {
                       builder: (context) => const DashboardWhole(),
                     ),
                   )
-                : (sellerid != null)
+                : (partnerid != null)
+                    ? Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Subscription(),
+                        ),
+                      )
+                       : (sellerid != null)
                     ? Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

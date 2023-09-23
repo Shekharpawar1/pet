@@ -31,6 +31,7 @@ class ProfileController extends GetxController {
     if (pickedImage != null) {
       selectedImagePath = pickedImage.path;
       selectedImage = File(pickedImage.path);
+      print("SELECEd image : 3${selectedImage}");
     }
     update();
   }
@@ -135,13 +136,16 @@ class ProfileController extends GetxController {
       // myprofilemodel!.data!.forEach((element) {
 
       //  });
-      print(getUserProfile + "$userId");
+      print("USERPROFILE URL" +getUserProfile + "$userId");
+      // selectedImage = myprofilemodel!.data![0].image.toString();/
       fullNameController.text = myprofilemodel!.data![0].fName.toString();
       lastNameController.text = myprofilemodel!.data![0].lName.toString();
       numberController.text = myprofilemodel!.data![0].phone.toString();
       emailController.text = myprofilemodel!.data![0].email.toString();
-      addressController.text = "Mumbai";
-      pincodeController.text = "420001";
+      // String state = myprofilemodel!.data![0].state.toString();
+      String city = myprofilemodel!.data![0].city == null ? "" : myprofilemodel!.data![0].city.toString();
+      addressController.text = city;
+      // pincodeController.text = "";
 
       myprofileLoaded = true;
       update();
@@ -166,6 +170,7 @@ class ProfileController extends GetxController {
       "l_name": lastNameController.text,
       "email": emailController.text,
       "phone": numberController.text,
+      "city": addressController.text,
       // "image": selectedImagePath.toString(),
     };
     String UpdateProfile = Constants.USER_UPDATE_PROFILE;

@@ -507,8 +507,7 @@ class _WholeAllcategoryState extends State<WholeAllcategory> {
                                             .wholeProductModel!.data ==
                                         null
                                     ? SizedBox(
-                                        child: Center(
-                                            child: Text("No Data Found")))
+                                        child: Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
                                     : InkWell(
                                         onTap: () async {
                                           wholeproductdetailsController
@@ -548,7 +547,7 @@ class _WholeAllcategoryState extends State<WholeAllcategory> {
                                                     alignment:
                                                         Alignment.centerRight,
                                                     child: Icon(
-                                                        Icons.favorite_border)),
+                                                        Icons.favorite_border,color:Colors.red)),
                                               ),
 
                                               Container(

@@ -60,8 +60,8 @@ class WholefavouriteController extends GetxController {
     try {
       // categories
       wishList =
-          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "${storage.read('wholesalerid')}"));
-      print(getWishListUrl + "${storage.read('wholesalerid')}");
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${storage.read('wholesalerid')}"));
+      print(getWishListUrl + "/${storage.read('wholesalerid')}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
@@ -93,7 +93,8 @@ class WholefavouriteController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "${storage.read('wholesalerid')}");
+      
+      await ApiHelper.deleteByUrl(url: url + "$productId" + "/${storage.read('wholesalerid')}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       wishList!.data!.removeWhere(
           (element) => element.itemId.toString() == productId.toString());

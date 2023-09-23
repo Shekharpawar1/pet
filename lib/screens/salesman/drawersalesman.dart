@@ -124,7 +124,7 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
                                                         salesprofilecontroller
                               .salesprofilemodel == null || salesprofilecontroller
                               .salesprofilemodel!.data == null || salesprofilecontroller
-                              .salesprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .salesprofilemodel!.data!.isEmpty ?   Image.asset("assets/image/boyprofile3.png")  :
                 
                                                             CachedNetworkImage(
                                                           imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
@@ -266,7 +266,7 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
      
       case 2:
       myordercontroller.fethUserId();
-        await myordercontroller.init();
+         myordercontroller.init();
         Get.to(MyOrderSales());
         break;
       case 3:

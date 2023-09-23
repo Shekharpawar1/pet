@@ -8,6 +8,7 @@ import 'package:pet/utils/constants.dart';
 class UserfavouriteController extends GetxController {
   final storage = GetStorage();
   var userID;
+ 
 // List wishlist = [
 //       {
 //       "image": "assets/image/food3.png",
@@ -59,8 +60,8 @@ class UserfavouriteController extends GetxController {
     try {
       // categories
       wishList =
-          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "${storage.read('id')}"));
-      print("UserWishlistUrl "+getWishListUrl + "${storage.read('id')}");
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${storage.read('id')}"));
+      print("UserWishlistUrl "+getWishListUrl + "/${storage.read('id')}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
@@ -83,6 +84,7 @@ class UserfavouriteController extends GetxController {
 
   Future<void> removeItemFromWishList(int productId) async {
     showLoading = true;
+
     update();
     print("Removing item");
     try {
@@ -92,7 +94,8 @@ class UserfavouriteController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "${storage.read('id')}");
+      await ApiHelper.deleteByUrl(url: url + "$productId" + "/${storage.read('id')}");
+      print("Removing item"+ url + "$productId" + "/${storage.read('id')}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       wishList!.data!.removeWhere(
           (element) => element.itemId.toString() == productId.toString());

@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/screens/user/notification.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
@@ -26,36 +27,8 @@ class _UsercouponPageState extends State<UsercouponPage> {
   Widget build(BuildContext context) {
  print(widget.price);
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-                child: Icon(Icons.arrow_back_ios_new_outlined,
-                    color: MyColors.black)),
-          ),
-          title: Center(
-              child: Text(
-            "Coupons",
-            style: CustomTextStyle.appbartext,
-          )),
-          actions: [
-            InkWell(
-                onTap: () {
-                  Get.to(NotificationUser());
-                },
-                child: SvgPicture.asset("assets/image/notification.svg")),
-            SizedBox(width: 20),
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: SvgPicture.asset("assets/image/bag.svg"),
-            ),
-          ],
-        ),
+        appBar: CustomAppBarback(),
+       
         body: ListView(
           shrinkWrap: true,
           primary: true,

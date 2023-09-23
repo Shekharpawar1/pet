@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/models/salesmanModel/mysalesOrderModel.dart';
 import 'package:pet/models/salesmanModel/salesProductDetailsModel.dart';
 
 // import 'package:pet/models/usersModel/ProductDetailsModel.dart';
 import 'package:pet/models/salesmanModel/salesProductDetailsModel.dart' as variantFile;
+import 'package:pet/models/salesmanModel/salesmycartListModel.dart';
 // import 'package:pet/models/usersModel/cardItemModel.dart';
 // import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 // import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
@@ -24,6 +26,7 @@ var sellerId = GetStorage().read("sellerid");
   var wholesellerID;
 double? totalAmount;
   bool showLoading = false;
+   bool isProductInCartBool = false;
 // ProductDetailsModel? productdetailsmodel;
 // var selectedVariants ;
 
@@ -224,6 +227,65 @@ fethUserId() {
   SalesProductDetailsModel? salesproductdetailmodel;
   bool productdetailLoaded = false;
 
+
+
+  String getUserMyCartUrl = '${Constants.GET_USER_MYCARTLIST}';
+  SalesMyCartListModel? salemycartmodel;
+  bool cartlistLoaded = false;
+
+  var subtotal;
+
+  Future<void> salesisProductInCart() async {
+    showLoading = true;
+    update();
+    // showLoading = true;
+    try {
+      // productdeatils
+      salemycartmodel = SalesMyCartListModel.fromJson(
+          await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerId')}"));
+      print("====?//${salemycartmodel}");
+      // sizes = mycartmodel!.data!.map((e) => 1).toList();
+      // mycartmodel!.data!.forEach((element) { 
+      //   if(element.itemId.toString() == productID.toString()){
+      //     isProductInCartBool = true;
+      //   }
+      // });
+      for(var element in salemycartmodel!.data!){
+        if(element.itemId.toString() == productID.toString()){
+          isProductInCartBool = true;
+          break;
+        }
+        isProductInCartBool = false;
+      }
+      update();
+      // List<Map<String, dynamic>> cartJsonList =
+      //     mycartmodel!.data!.map((item) => {
+      //       "product_id": item.itemId,
+      //       "quantity":item.quantity,
+      //       "variation":item.variant,
+      //       "tax_amount":13,
+      //       "discount_on_item":20,
+      //       "price":item.price
+      //     }).toList();
+      // cartList = cartJsonList;
+      
+
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+    showLoading = false;
+    update();
+  }
+
+
   Future<void> init() async {
     try {
       // productdeatils
@@ -265,7 +327,7 @@ fethUserId() {
     update();
     // await Future.delayed(Duration(seconds: 4));
     var body = {
-      "user_id": wholesellerID.toString(),
+      "user_id": storage.read('wholesalerId').toString(),
       "item_id": productID.toString(),
       "item_name": salesproductdetailmodel!.data!.name.toString(),
       "variant": selectedvariants!.type??'',
@@ -280,11 +342,12 @@ fethUserId() {
       // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
     };
     String AddProduct = Constants.ADD_PRODUCT;
+     print("BodyAddProduct  ");
     print(body);
     try {
       var request = http.MultipartRequest('POST', Uri.parse(AddProduct));
       request.fields.addAll({
-       "user_id": wholesellerID.toString(),
+       "user_id": storage.read('wholesalerId').toString(),
         "item_id": productID.toString(),
         "item_name": salesproductdetailmodel!.data!.name.toString(),
         "variant": selectedvariants!.type.toString(),
@@ -300,7 +363,7 @@ fethUserId() {
 
       await ApiHelper.postFormData(request: request);
       update();
-      Get.back();
+      // Get.back();
       Get.snackbar(
         'Success',
         'Product Added',

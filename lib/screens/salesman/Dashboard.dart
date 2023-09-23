@@ -18,6 +18,8 @@ import 'package:pet/screens/salesman/pending.dart';
 import 'package:pet/screens/salesman/salespendingcomplete.dart';
 import 'package:pet/screens/salesman/totalorder.dart';
 import 'package:pet/screens/salesman/wholesaler_view.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -44,72 +46,7 @@ class _DashboardSalesState extends State<DashboardSales> {
     return Scaffold(
       key: _drawerkey,
       drawer: drawerSalesMan(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "DashBoard",
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.black,
-            fontWeight: FontWeight.w700,
-          ),
-        )),
-        actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
-
-          // SizedBox(width: 20),
-          GetBuilder<SalesProfileController>(
-              init: salesprofilecontroller,
-              builder: (_) {
-                return 
-                salesprofilecontroller
-                              .salesprofilemodel == null || salesprofilecontroller
-                              .salesprofilemodel!.data == null || salesprofilecontroller
-                              .salesprofilemodel!.data!.isEmpty ? SizedBox() :
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.transparent,
-                    child: CachedNetworkImage(
-                      imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                          salesprofilecontroller
-                              .salesprofilemodel!.data![0].image
-                              .toString(),
-
-                      fit: BoxFit.cover,
-                      // width: 61,
-                      // height: 75,
-                      placeholder: (context, url) => Center(
-                        child: CircularProgressIndicator(),
-                      ), // Replace with your own placeholder widget
-                      errorWidget: (context, url, error) => Icon(
-                          Icons.error), // Replace with your own error widget
-                    ),
-                    //  Image.asset("assets/image/boyprofile3.png"),
-                  ),
-                );
-
-                // Image.asset("assets/image/girl.png")
-              }),
-        ],
-      ),
-      // backgroundcolor:MyColors.white,
+    appBar:CustomAppBarSales(drawerKey: _drawerkey,title: "DashBoard",), // backgroundcolor:MyColors.white,
       body: Stack(
         children: [
           Padding(
@@ -117,7 +54,8 @@ class _DashboardSalesState extends State<DashboardSales> {
             child: GetBuilder<DashBoardController>(
                 init: dashBoardController,
                 builder: (_) {
-                  return ListView(
+                  return  dashBoardController.total1wholesellerModel == null || dashBoardController.totalordersellerModel == null? SizedBox():
+                  ListView(
                     shrinkWrap: true,
                     primary: true,
                     children: [

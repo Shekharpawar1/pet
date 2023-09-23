@@ -53,9 +53,36 @@ class  PartnerLoginController extends GetxController {
     try {
       // sate list
       var body = {"vendor_type":"owner" ,"email":emailController.text.trim().toString(),"password":passwordController.text.trim().toString()};
-      await ApiHelper.postApi(url: Constants.PARTNER_LOGIN, body: body);
+     var response=     await ApiHelper.postApi(url: Constants.PARTNER_LOGIN, body: body);
       // print(stateListModel);
       // stateLoaded = true;
+ storage.write('login', true);
+      print("============= Success ${storage.read("login")}=============");
+        var partnerid;
+        var partnertoken;
+      var partnerData;
+
+      print(response["data"]);
+      try {
+        partnerid = response["data"]["id"];
+        partnertoken = response["data"]["token"];
+        partnerData = response["data"];
+      } catch (e) {
+       partnerid = response["data"]["id"];
+        partnertoken = response["data"]["token"];
+        partnerData = response["data"];
+      }
+      // // var id = userLoginModel.data![0].id;
+      print("=====>>>> Id ${partnerid} token: ${partnertoken} data: ${partnerData}");
+      storage.write('partnerData', partnerData);
+      storage.write('partnerid', partnerid);
+       storage.write('partnertoken', partnertoken);
+     
+      print(storage.read('partnerid').toString());
+      print(storage.read('partnerData').toString());
+      print(storage.read('partnertoken').toString());
+
+
       update();
     } catch (e) {
       print('Error: $e');

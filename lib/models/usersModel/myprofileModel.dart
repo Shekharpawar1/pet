@@ -53,6 +53,8 @@ class Data {
   // Null? zoneId;
   String? walletBalance;
   String? loyaltyPoint;
+  String? state;
+  String? city;
   // Null? refCode;
   String? currentLanguageKey;
 
@@ -77,6 +79,8 @@ class Data {
       // this.socialId,
       // this.zoneId,
       this.walletBalance,
+      this.state,
+      this.city,
       this.loyaltyPoint,
       // this.refCode,
       this.currentLanguageKey});
@@ -102,6 +106,8 @@ class Data {
     // socialId = json['social_id'];
     // zoneId = json['zone_id'];
     walletBalance = json['wallet_balance'];
+    state = json['state'];
+    city = json['city'];
     loyaltyPoint = json['loyalty_point'];
     // refCode = json['ref_code'];
     currentLanguageKey = json['current_language_key'];
@@ -128,7 +134,8 @@ class Data {
     // data['login_medium'] = this.loginMedium;
     // data['social_id'] = this.socialId;
     // data['zone_id'] = this.zoneId;
-    data['wallet_balance'] = this.walletBalance;
+    data['city'] = this.city;
+    data['state'] = this.state;
     data['loyalty_point'] = this.loyaltyPoint;
     // data['ref_code'] = this.refCode;
     data['current_language_key'] = this.currentLanguageKey;

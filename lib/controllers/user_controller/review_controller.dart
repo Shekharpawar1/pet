@@ -1,32 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pet/models/salesmanModel/reviewsalesModel.dart';
+import 'package:get_storage/get_storage.dart';
+
 import 'package:pet/models/usersModel/reviewuserModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 
+import 'package:http/http.dart' as http;
 class UserReviewController extends GetxController {
-  double value = 3.5;
-bool showLoading = false;
+  double value = 0;
+  int? itemid1;
+  int? orderId1;
+  var userId = GetStorage().read("id");
 
+bool showLoading = false;
+final storage = GetStorage();
+  TextEditingController commentController = TextEditingController();
+  TextEditingController ratingController = TextEditingController();
+  // TextEditingController numberController = TextEditingController();
 // Review
   String getReviewUrl = '${Constants.GET_USERREVIEW}';
  UserReviewModel? userReviewModel;
   bool reviewLoaded = false;
 
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    
+    init();
+  }
+
+
+  void reviewAdd(int itemid,int orderId) {
+    itemid1 = itemid;
+    orderId1 = orderId;
+
+    update();
+    print("orderID${orderId1}  itemid${itemid1}");
+  }
  
   @override
  Future<void> init() async {
    showLoading = true;
     update();
     try {
-      // coupon
+      // Review
       userReviewModel = UserReviewModel.fromJson(
-          await ApiHelper.getApi(getReviewUrl));
+          await ApiHelper.getApi(getReviewUrl+ "${itemid1}"));
           
-      print(getReviewUrl);
+      print("ReviewURL ===> ${getReviewUrl + "${itemid1}"}");
       reviewLoaded = true;
       update();
     } catch (e) {
@@ -44,6 +69,55 @@ bool showLoading = false;
     
     }
   
+
+  
+Future<void> reviewinit() async {
+    showLoading = true;
+    update();
+   
+     Map<String, String> body = {
+        "item_id":itemid1.toString(),
+      "user_id": userId.toString(),
+      "order_id":orderId1.toString(),
+      "comment":commentController.text.toString(),
+      "rating": ratingController.text.toString(),
+      
+     
+    };
+    String PurchasePlanURl = Constants.REVIEW;
+    print(body);
+    try {
+     
+      var request = http.MultipartRequest('POST', Uri.parse(PurchasePlanURl));
+      request.fields.addAll(body);
+      
+      await ApiHelper.postFormData(request: request);
+      // print("PurchasePlanURL"+PurchasePlanURl);
+      update();
+      Get.back();
+      Get.snackbar(
+        'Success',
+        'Purchaes Plan',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+
   List reviewlist = [
     {
       

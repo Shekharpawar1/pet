@@ -28,9 +28,12 @@ class MyCartController extends GetxController {
   var userID;
   int total = 1;
   String? paymenttype;
+  int? isselected1;
   String? paymentStatus;
   String? orderStatus;
+  String? paymentMethodUser1;
   var tex;
+  var  addressuser;
   List<Map<String, dynamic>> cartList = [];
 // void  incrementSize(){
 // sizes[]++;
@@ -50,18 +53,28 @@ class MyCartController extends GetxController {
     print("ID${addressid}");
   }
 
+  void chooseaddressID(int id) {
+    isselected1 = id;
+    update();
+    print("Address Id ====>>>>> $isselected1");
+  }
 //  void productsizes(List sizedproduct) {
 //     sizes = sizedproduct;
 //     update();
 //     print("sizes${sizes}");
 //   }
-  void addpaymenttype(String type, String paymentstatus ) {
+  void addpaymenttype(String type, String paymentstatus, String paymentMethodUser  ) {
     paymenttype = type;
 paymentStatus = paymentstatus;
+    paymentMethodUser1    = paymentMethodUser;
 // orderStatus = orderstatus;
     update();
-    print("paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
+    print("paymentMethod1: ${paymentMethodUser1},paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
+
+  
+
+
 
   void adddiscount(int disprice, int price) {
     disCount = disprice;
@@ -77,6 +90,8 @@ paymentStatus = paymentstatus;
 
     init();
     userID = storage.read('id');
+  addressuser =   storage.read('useraddresscity');
+
   }
 
   incrementSize(int index) {
@@ -114,6 +129,7 @@ paymentStatus = paymentstatus;
   //   });
   // }
 
+
   void updateTotal() {
     total = 0;
 
@@ -141,6 +157,7 @@ paymentStatus = paymentstatus;
     print("Index updated ====>>>>> $isselected");
   }
 
+ 
   String getUserMyCartUrl = '${Constants.GET_USER_MYCARTLIST}';
   MyCartListModel? mycartmodel;
   bool cartlistLoaded = false;
@@ -293,6 +310,7 @@ paymentStatus = paymentstatus;
     
   MyCartController addtocartController = Get.put(MyCartController());
     String sendingAddr = "";
+      int sendingAddrID = 0;
     if (addtocartController.allAddresslistModel == null ||
         addtocartController.allAddresslistModel!.data == null ||
         addtocartController.allAddresslistModel!.data!.isEmpty) {
@@ -310,6 +328,16 @@ paymentStatus = paymentstatus;
         print(sendingAddr);
     }
 
+    if (addtocartController.allAddresslistModel == null ||
+        addtocartController.allAddresslistModel!.data == null ||
+        addtocartController.allAddresslistModel!.data!.isEmpty) {
+      sendingAddrID = 0;
+    } else {
+      sendingAddrID = isselected1??0;
+        print(sendingAddr);
+    }
+
+
 
     Map<String, dynamic> body = {
       "user_id": storage.read('id').toString(),
@@ -318,10 +346,13 @@ paymentStatus = paymentstatus;
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": paymentStatus.toString(),
       "order_status": "pending",
+      "gst_bill": "0",
+      "payment_day": "0",
+       "payment_mode": paymentMethodUser1.toString(),
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
-      "delivery_address_id": 2.toString(),
+      "delivery_address_id": sendingAddrID.toString(),
       //  (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .id ??
@@ -332,14 +363,14 @@ paymentStatus = paymentstatus;
       "store_id": 1.toString(),
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
-      "delivery_address": "Delhi city 389",
+      "delivery_address":  storage.read('useraddresscity').toString(),
       // (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .area ??
       //                           '').toString(),
       "item_campaign_id": "",
       "order_amount": (((total) + (total * 0.05)) -
-              (double.parse(couponsController.maxAmount ?? "0")))
+              (double.parse(couponsController.maxAmount ?? "0.0")))
           .toString(),
       "cart": cartList,
     };
@@ -351,7 +382,7 @@ paymentStatus = paymentstatus;
 
       await ApiHelper.postApi(body: body, url: PlaceOrderUrl);
       update();
-      Get.back();
+      // Get.back();
       Get.snackbar(
         'Success',
         'Address Added',

@@ -74,6 +74,14 @@ class CustomTextStyle {
       fontWeight: FontWeight.w500,
       fontFamily: "Poppins");
 
+      //MyColors.red
+
+      static TextStyle popinstextsmal2222red = const TextStyle(
+      color: MyColors.red,
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Poppins");
+
   static TextStyle popinstextsmall124 = const TextStyle(
       color: Colors.white,
       fontSize: 12,

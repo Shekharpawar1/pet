@@ -266,7 +266,7 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
     update();
    
     var body = {
-      "user_id":storage.read('id').toString(),
+      "user_id":storage.read('wholesalerid').toString(),
       "first_name":fullNameController.text,
       "last_name": lastNameController.text,
       "mobile":numberController.text,

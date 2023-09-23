@@ -11,6 +11,7 @@ import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/user/productdetails.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -30,109 +31,13 @@ class _AllcategoryState extends State<Allcategory> {
       Get.put(SubCategoryController());
   ProductDetailsController productdeatilscontroller =
       Get.put(ProductDetailsController());
+        final HomeuserController homeusercontroller = Get.put(HomeuserController());
+
   @override
   Widget build(BuildContext context) {
     // subcategorycontroller.categoryids = widget.id;
     return Scaffold(
-        appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: Padding(
-              padding:
-                  EdgeInsets.only(left: 20.0, top: 10, bottom: 10, right: 0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: MyColors.black,
-                  size: 20,
-                ),
-              ),
-            ),
-            actions: [
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(NotificationUser());
-                      },
-                      child: Center(
-                        child: Icon(Icons.notifications, color: MyColors.black),
-                      )),
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(width: 20),
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(AddToCardUser());
-                      },
-                      child: Center(
-                          child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              )
-            ],
-            title: Center(
-                child: Text(
-              "All Category",
-              style: CustomTextStyle.appbartext,
-            ))
-            // SvgPicture.asset("assets/image/logofood.svg"),
-            ),
-        body: Padding(
+        appBar: CustomAppBarback(), body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: ListView(
             shrinkWrap: true,
@@ -502,17 +407,18 @@ class _AllcategoryState extends State<Allcategory> {
                               subcategorycontroller.userProductModel!.data ==
                                       null
                                   ? SizedBox(
-                                      child: Center(
-                                          child: Text("No Data Found")))
+                                      child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
                                   : InkWell(
                                       onTap: () async {
                                          productdeatilscontroller
                                                 .viewproduct(
                                               item.id ?? 0,
                                             );
-                                        //     print("productid${item.id ?? 0}");
+                                             print("productippppd${item.id ?? 0}");
                                         await productdeatilscontroller.init();
-                                        Get.to(ProductDetails());
+                                        Get.to(ProductDetails(
+                                         id: item.id??0, 
+                                        ));
                                       },
                                       child: Container(
                                         width: 140,
@@ -535,16 +441,29 @@ class _AllcategoryState extends State<Allcategory> {
                                         ),
                                         child: Column(
                                           children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Align(
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Icon(
-                                                      Icons.favorite_border)),
-                                            ),
-
+                                           InkWell(
+                                                  onTap: () {
+                                                    homeusercontroller
+                                                        .addItemToWishList(
+                                                            item.id!);
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: Icon(homeusercontroller
+                                                                .wishListItemsId
+                                                                .contains(
+                                                                    item.id!)
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_border,color:Colors.red)),
+                                                  ),
+                                                ),
+ 
                                             Container(
                                               height: 125,
 
@@ -588,8 +507,12 @@ class _AllcategoryState extends State<Allcategory> {
                                                         style: CustomTextStyle
                                                             .popinsmedium),
                                                     Text(
-                                                        item.description
-                                                            .toString(),
+                                                         item.description
+                                                                        .toString()
+                                                                        .length <
+                                                                    30
+                                                                ?  item.description!
+                                                                : item.description!.substring(0, 19),
                                                         style: CustomTextStyle
                                                             .popinssmall0),
                                                     SizedBox(height: 5),

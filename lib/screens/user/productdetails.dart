@@ -9,12 +9,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/user/payment.dart';
 import 'package:pet/models/usersModel/ProductDetailsModel.dart' as variantFile;
 import 'package:pet/screens/user/userAllReview.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -23,12 +25,13 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:pet/screens/user/notification.dart';
 
 class ProductDetails extends StatelessWidget {
-  ProductDetails({super.key});
+  ProductDetails({super.key ,this.id});
   // dynamic itemdetails;
+  int? id;
 
   final ProductDetailsController productdetailscontroller =
       Get.put(ProductDetailsController());
-
+MyOrderController myordercontroller = Get.put(MyOrderController());
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
   MyCartController mycartController = Get.put(MyCartController());
   final UserReviewController userreviewcontroller =
@@ -44,249 +47,199 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     productdetailscontroller.isProductInCart();
-    var imagePath;
-
-    if (productdetailscontroller.productdetailmodel != null) {
-      imagePath =
-          "${Constants.BASE_URL}/storage/app/public/product/${productdetailscontroller.productdetailmodel!.data!.image ?? ''}";
-    } else {
-      imagePath = "";
-    }
+   
     // "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: MyColors.lightbg,
-            leading: InkWell(
-              onTap: () {
-                Get.back();
-              },
-              child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-                  child: Icon(Icons.arrow_back_ios_new_outlined,
-                      color: MyColors.black)),
-            ),
-
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
-            actions: [
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(NotificationUser());
-                      },
-                      child: Center(
-                        child: Icon(Icons.notifications, color: MyColors.black),
-                      )),
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(width: 20),
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(AddToCardUser());
-                      },
-                      child: Center(
-                          child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              )
-            ],
-
-            // shape: RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.vertical(
-            //     bottom: Radius.circular(20),
-            //   ),
-            // ),
-          ),
-          body: ListView(
+           appBar:CustomAppBarback(), body: ListView(
             shrinkWrap: true,
             primary: true,
             children: [
               Stack(
                 children: [
-                  Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: MyColors.lightbg,
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(500))),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 15.0),
-                        child: CachedNetworkImage(
-                          imageUrl: imagePath,
-                          // width: 61,
-                          // height: 75,
-                          placeholder: (context, url) => Center(
-                            child: CircularProgressIndicator(),
-                          ), // Replace with your own placeholder widget
-                          errorWidget: (context, url, error) => Icon(Icons
-                              .error), // Replace with your own error widget
-                        ),
-                      )),
-                  InkWell(
-                    onTap: () {
-                      homeusercontroller.addItemToWishList(
-                          productdetailscontroller!
-                              .productdetailmodel!.data!.id!);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.favorite_outline,
-                          )),
-                    ),
+                GetBuilder<ProductDetailsController>(
+                  init: productdetailscontroller,
+                  builder: (_) {
+                      return Container(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: MyColors.lightbg,
+                              borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(500))),
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 15.0),
+                            child: CachedNetworkImage(
+                              imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${productdetailscontroller.productdetailmodel!.data!.images![productdetailscontroller.selectImages??0].toString()}",
+                              // width: 61,
+                              // height: 75,
+                            
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(),
+                              ), // Replace with your own placeholder widget
+                              errorWidget: (context, url, error) => Icon(Icons
+                                  .error), // Replace with your own error widget
+                            ),
+                          ));
+                    }
                   ),
-                ],
+                    InkWell(
+                                                  onTap: () {
+                                                    homeusercontroller
+                                                        .addItemToWishList(
+                                                              productdetailscontroller.productdetailmodel!.data!.id!);
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: Icon(homeusercontroller
+                                                                .wishListItemsId
+                                                                .contains(
+                                                                    productdetailscontroller.productdetailmodel!.data!.id!)
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_border,color:Colors.red)),
+                                                  ),
+                                                ),
+
+                                                 ],
               ),
               // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Row(
-                  children: kg
-                      .sublist(0, 3)
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              // var tab = e
-                              //
-                              //  e  *  ( widget.itemdetails.price) ;
-                              //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-                            },
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        color: productdetailscontroller.isAdding
-                                            ? MyColors.pink
-                                            : MyColors.grey,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: imagePath,
-                                        width: 61,
-                                        height: 75,
-                                        placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(),
-                                        ), // Replace with your own placeholder widget
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons
-                                                .error), // Replace with your own error widget
+               GetBuilder<ProductDetailsController>(
+                  init: productdetailscontroller,
+                  builder: (_) {
+                  return Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: productdetailscontroller.productdetailmodel!.data!.images!
+                              .sublist(0, 3)
+                              .map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      
+                                      // print(productdetailscontroller.productdetailmodel!.data!.images!.indexOf(e));
+                                      productdetailscontroller.selectImagesProduct(productdetailscontroller.productdetailmodel!.data!.images!.indexOf(e));
+                                      // var tab = e
+                                      print("IamgeSelect");
+                                      print(productdetailscontroller.productdetailmodel!.data!.images!.indexOf(e));
+                                      //  e  *  ( widget.itemdetails.price) ;
+                                      //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                                    },
+                                    child: Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 60,
+                                            width: 60,
+                                            decoration: BoxDecoration(
+                                                color: productdetailscontroller.selectImages == productdetailscontroller.productdetailmodel!.data!.images!.indexOf(e)
+                                                    ? MyColors.pink
+                                                    : MyColors.grey,
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: CachedNetworkImage(
+                                                imageBuilder:(context, imageProvider) => Container(
+
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+      image: DecorationImage(
+        image: imageProvider, fit: BoxFit.cover),
+    ),
+                                                ) ,
+                                                imageUrl:  "${Constants.BASE_URL}/storage/app/public/product/${e.replaceAll("\\", "")}",
+                                                //  imagesPath.replaceAll("\\", ""),
+                                                  fit: BoxFit.fill,
+                                                // width: 61,
+                                                // height: 75,
+                                                placeholder: (context, url) => Center(
+                                                  child: CircularProgressIndicator(),
+                                                ), // Replace with your own placeholder widget
+                                                errorWidget: (context, url, error) =>
+                                                    Icon(Icons
+                                                        .error), // Replace with your own error widget
+                                              ),
+                                            ),
+                                          ),
+                                          // SizedBox(
+                                          //   height: 5,
+                                          // ),
+                                          // Text("$e Kg",
+                                          //     style: CustomTextStyle.popinssmall0)
+                                        ],
                                       ),
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //   height: 5,
-                                  // ),
-                                  // Text("$e Kg",
-                                  //     style: CustomTextStyle.popinssmall0)
-                                ],
-                              ),
-                            ),
-                          ),
+                                ),
+                              )
+                              .toList(),
+                          // [
+                          //   Container(
+                          //     child: Column(
+                          //       children: [
+                          //         Container(
+                          //           height: 60,
+                          //           width: 60,
+                          //           decoration: BoxDecoration(
+                          //               color: MyColors.pink,
+                          //               borderRadius: BorderRadius.circular(15)),
+                          //           child: Padding(
+                          //             padding: const EdgeInsets.all(8.0),
+                          //             child: CachedNetworkImage(
+                          //               imageUrl: imagePath,
+                          //               width: 61,
+                          //               height: 75,
+                          //               placeholder: (context, url) => Center(
+                          //                 child: CircularProgressIndicator(),
+                          //               ), // Replace with your own placeholder widget
+                          //               errorWidget: (context, url, error) => Icon(Icons
+                          //                   .error), // Replace with your own error widget
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         SizedBox(
+                          //           height: 5,
+                          //         ),
+                          //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+                          //       ],
+                          //     ),
+                          //   ),
+                          //  ],
                         ),
-                      )
-                      .toList(),
-                  // [
-                  //   Container(
-                  //     child: Column(
-                  //       children: [
-                  //         Container(
-                  //           height: 60,
-                  //           width: 60,
-                  //           decoration: BoxDecoration(
-                  //               color: MyColors.pink,
-                  //               borderRadius: BorderRadius.circular(15)),
-                  //           child: Padding(
-                  //             padding: const EdgeInsets.all(8.0),
-                  //             child: CachedNetworkImage(
-                  //               imageUrl: imagePath,
-                  //               width: 61,
-                  //               height: 75,
-                  //               placeholder: (context, url) => Center(
-                  //                 child: CircularProgressIndicator(),
-                  //               ), // Replace with your own placeholder widget
-                  //               errorWidget: (context, url, error) => Icon(Icons
-                  //                   .error), // Replace with your own error widget
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           height: 5,
-                  //         ),
-                  //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-                  //       ],
-                  //     ),
-                  //   ),
-                  //  ],
-                ),
+             
+                       Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(Icons.crop_square_sharp, color:(productdetailscontroller
+                                                      .productdetailmodel!
+                                                      .data!
+                                                      .veg ==
+                                                  1)
+                                              ? Colors.red:Colors.green, size: 30,),
+            Icon(Icons.circle, color:(productdetailscontroller
+                                                      .productdetailmodel!
+                                                      .data!
+                                                      .veg ==
+                                                  1)
+                                              ? Colors.red: Colors.green, size: 10),
+          ],
+        ),
+             
+                      ],
+                    ),
+                  );
+                }
               ),
 
               GetBuilder<ProductDetailsController>(
@@ -569,23 +522,24 @@ class ProductDetails extends StatelessWidget {
                                                         style: CustomTextStyle
                                                             .discounttext),
                                                 SizedBox(width: 3),
-                                                Container(
-                                                  height: 20,
-                                                  width: 40,
-                                                  decoration: BoxDecoration(
-                                                      color: MyColors.red,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      border: Border.all(
-                                                          color: MyColors.red)),
-                                                  child: Center(
-                                                    child: Text(
+                                                // Container(
+                                                //   height: 20,
+                                                //   width: 40,
+                                                //   decoration: BoxDecoration(
+                                                //       color: MyColors.red,
+                                                //       borderRadius:
+                                                //           BorderRadius.circular(
+                                                //               10),
+                                                //       border: Border.all(
+                                                //           color: MyColors.red)),
+                                                //   child: Center(
+                                                //     child:
+                                                     Text(
                                                         "Save${productdetailscontroller.productdetailmodel!.data!.discount!.toString()}%",
                                                         style: CustomTextStyle
-                                                            .popinstextsmal2222),
-                                                  ),
-                                                ),
+                                                            .popinstextsmal2222red),
+                                                //   ),
+                                                // ),
                                               ],
                                             ),
                                             SizedBox(height: 5),
@@ -748,13 +702,16 @@ class ProductDetails extends StatelessWidget {
                                         0.01),
                                 Row(
                                   children: [
-                                    Text(
-                                      "Brand",
-                                      style: CustomTextStyle.popinslight,
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "Brand",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.2,
+                                          0.1,
                                     ),
                                     Text(
                                       productdetailscontroller
@@ -775,19 +732,22 @@ class ProductDetails extends StatelessWidget {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
-
-                                Row(
+ Row(
                                   children: [
-                                    Text(
-                                      "Flavour",
-                                      style: CustomTextStyle.popinslight,
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Petsbreeds",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.2,
+                                          0.1,
                                     ),
                                     Text(
-                                      "",
+                                      productdetailscontroller
+                                          .productdetailmodel!.data!.petsbreedsId
+                                          .toString(),
                                       style: CustomTextStyle.popinstext,
                                     ),
                                   ],
@@ -807,7 +767,7 @@ class ProductDetails extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      "Diet type",
+                                      "lifeStage",
                                       style: CustomTextStyle.popinslight,
                                     ),
                                     SizedBox(
@@ -815,11 +775,44 @@ class ProductDetails extends StatelessWidget {
                                           0.2,
                                     ),
                                     Text(
+                                     productdetailscontroller
+                                          .productdetailmodel!.data!.lifeStageId
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                // Petsbreeds
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+
+                                Row(
+                                  children: [
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Diet type",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.10,
+                                    ),
+                                    Text(
                                       (productdetailscontroller
                                                   .productdetailmodel!
                                                   .data!
                                                   .veg ==
-                                              1)
+                                              0)
                                           ? "Veg"
                                           : "Nonveg",
                                       style: CustomTextStyle.popinstext,
@@ -834,45 +827,48 @@ class ProductDetails extends StatelessWidget {
                                   thickness: 1,
                                   height: 1,
                                 ),
+                                // SizedBox(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.02),
+
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       "Age Range",
+                                //       style: CustomTextStyle.popinslight,
+                                //     ),
+                                //     SizedBox(
+                                //       width: MediaQuery.of(context).size.width *
+                                //           0.18,
+                                //     ),
+                                //     Text(
+                                //       "",
+                                //       // productdetailscontroller.productList.agerange
+                                //       //     .toString(),
+                                //       style: CustomTextStyle.popinstext,
+                                //     ),
+                                //   ],
+                                // ),
+                            
+                                // SizedBox(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.02),
+                                // Divider(
+                                //   color: MyColors.lightdivider,
+                                //   thickness: 1,
+                                //   height: 1,
+                                // ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
 
                                 Row(
                                   children: [
-                                    Text(
-                                      "Age Range",
-                                      style: CustomTextStyle.popinslight,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.18,
-                                    ),
-                                    Text(
-                                      "",
-                                      // productdetailscontroller.productList.agerange
-                                      //     .toString(),
-                                      style: CustomTextStyle.popinstext,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Divider(
-                                  color: MyColors.lightdivider,
-                                  thickness: 1,
-                                  height: 1,
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Traget Species",
-                                      style: CustomTextStyle.popinslight,
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Traget Species",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
@@ -901,22 +897,22 @@ class ProductDetails extends StatelessWidget {
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
 
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Item From ",
-                                      style: CustomTextStyle.popinslight,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                    ),
-                                    Text(
-                                      "",
-                                      style: CustomTextStyle.popinstext,
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       "Item From ",
+                                //       style: CustomTextStyle.popinslight,
+                                //     ),
+                                //     SizedBox(
+                                //       width: MediaQuery.of(context).size.width *
+                                //           0.2,
+                                //     ),
+                                //     Text(
+                                //       "",
+                                //       style: CustomTextStyle.popinstext,
+                                //     ),
+                                //   ],
+                                // ),
                                 //           SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 //  Divider(color: lightdivider,thickness: 1,height: 1,),
                                 SizedBox(
@@ -944,124 +940,267 @@ class ProductDetails extends StatelessWidget {
                                     height: MediaQuery.of(context).size.height *
                                         0.01),
 
-                                GetBuilder<UserReviewController>(
+    GetBuilder<UserReviewController>(
                                     init: userreviewcontroller,
                                     builder: (_) {
-                                      return ListView.builder(
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        itemCount: userreviewcontroller
-                                            .getreviewList.length,
-                                        itemBuilder: (context, index) {
-                                          var item = userreviewcontroller
-                                              .getreviewList[index];
+                                      return  userreviewcontroller
+                                                    .userReviewModel ==
+                                                null &&
+                                            userreviewcontroller
+                                                    .userReviewModel!.data ==
+                                                null
+                                        // userreviewcontroller.userReviewModel!.data!.isEmpty
+                                        ? SizedBox(): ListView.builder(
+                                           primary: false,
+                                            shrinkWrap: true,
+                                       itemCount: userreviewcontroller
+                                                    .userReviewModel!
+                                                    .data!
+                                                    .length ??
+                                                0,
+                                            itemBuilder: (context, index) {
+                                              var item = userreviewcontroller
+                                                  .userReviewModel!
+                                                  .data![index];
+//                                             print("UserName");
+// print((item.callback![0].userProfile![0].fName??''));
+                                          return
 
-                                          return ListView(
+                                          //  (wholemyordercontroller.wholemyorderModel!.data == null)?SizedBox():
+                                    //  (item.callback![0].userDetails!.comment == null)?SizedBox():
+                                        ListView(
                                             primary: false,
                                             shrinkWrap: true,
                                             children: [
+                                              // Text(
+                                              //   "bbbb",
+                                              //   style: CustomTextStyle
+                                              //       .popinssmall0,
+                                              // ),
+// (e.userDetails!.comment == null) ? Text("No Comment"):
                                               Text(
-                                                item["title"],
+                                                (item.comment??'').toString(),
                                                 style: CustomTextStyle
                                                     .popinssmall0,
                                               ),
                                               SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.01),
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.01),
                                               Row(
-                                                children: [
-                                                  RatingStars(
-                                                    value: userreviewcontroller
-                                                        .value!,
-                                                    // onValueChanged: (v) {
-                                                    //   //
-                                                    //   setState(() {
-                                                    //     value = v;
-                                                    //   });
-                                                    // },
-                                                    starBuilder:
-                                                        (index, color) => Icon(
-                                                      Icons.star,
-                                                      color: color,
-                                                      size: 15,
-                                                    ),
-                                                    starCount: 5,
-                                                    starSize: 20,
-                                                    // valueLabelColor: const Color(0xff9b9b9b),
-                                                    // valueLabelTextStyle: const TextStyle(
-                                                    //     color: Colors.white,
-                                                    //     fontWeight: FontWeight.w400,
-                                                    //     fontStyle: FontStyle.normal,
-                                                    //     fontSize: 12.0),
-                                                    // valueLabelRadius: 10,
-                                                    maxValue: 5,
-                                                    starSpacing: 0.5,
-                                                    maxValueVisibility: true,
-                                                    valueLabelVisibility: false,
-                                                    animationDuration: Duration(
-                                                        milliseconds: 5000),
-                                                    // valueLabelPadding:
-                                                    //     const EdgeInsets.symmetric(
-                                                    //         vertical: 1, horizontal: 8),
-                                                    // valueLabelMargin:
-                                                    //     const EdgeInsets.only(right: 8),
-                                                    starOffColor:
-                                                        const Color(0xffe7e8ea),
-                                                    starColor: MyColors.yellow,
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  Image.asset(item["image"],
-                                                      height: 30),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        item["name"],
-                                                        style: CustomTextStyle
-                                                            .popinstext,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons
-                                                                .person_2_outlined,
-                                                            size: 13,
-                                                          ),
-                                                          Text(
-                                                            item["count"],
-                                                            style: CustomTextStyle
-                                                                .popinssmall0,
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
+                                         children: [
+                                           RatingStars(
+                                             value: (item.rating??0).toDouble(),
+                                             // onValueChanged: (v) {
+                                             //   //
+                                             //   setState(() {
+                                             //     value = v;
+                                             //   });
+                                             // },
+                                             starBuilder:
+                                                 (index, color) => Icon(
+                                               Icons.star,
+                                               color: color,
+                                               size: 15,
+                                             ),
+                                             starCount: 5,
+                                             starSize: 20,
+                                             // valueLabelColor: const Color(0xff9b9b9b),
+                                             // valueLabelTextStyle: const TextStyle(
+                                             //     color: Colors.white,
+                                             //     fontWeight: FontWeight.w400,
+                                             //     fontStyle: FontStyle.normal,
+                                             //     fontSize: 12.0),
+                                             // valueLabelRadius: 10,
+                                             maxValue: 5,
+                                             starSpacing: 0.5,
+                                             maxValueVisibility: true,
+                                             valueLabelVisibility: false,
+                                             animationDuration: Duration(
+                                                 milliseconds: 5000),
+                                             // valueLabelPadding:
+                                             //     const EdgeInsets.symmetric(
+                                             //         vertical: 1, horizontal: 8),
+                                             // valueLabelMargin:
+                                             //     const EdgeInsets.only(right: 8),
+                                             starOffColor:
+                                                 const Color(0xffe7e8ea),
+                                             starColor: MyColors.yellow,
+                                           ),
+                                           SizedBox(width: 10),
+                                           // Image.asset(item["image"],
+                                           //     height: 30),
+                                           Column(
+                                             crossAxisAlignment:
+                                                 CrossAxisAlignment
+                                                     .start,
+                                             children: [
+                                               Text(
+                                                 item.userId![0].fName.toString()+" "+  item.userId![0].lName.toString(),
+                                                 style: CustomTextStyle
+                                                     .popinstext,
+                                               ),
+                                               // Row(
+                                               //   children: [
+                                               //     Icon(
+                                               //       Icons
+                                               //           .person_2_outlined,
+                                               //       size: 13,
+                                               //     ),
+                                               //     Text(
+                                               //      ( item.callback![0].itemDetails![0].ratingCount??0).toString(),
+                                               //       style: CustomTextStyle
+                                               //           .popinssmall0,
+                                               //     ),
+                                               //   ],
+                                               // )
+                                             ],
+                                           )
+                                         ],
                                               ),
+                                             
                                               SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.02),
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.02),
                                               Divider(
-                                                color: MyColors.lightdivider,
-                                                thickness: 1,
-                                                height: 1,
+                                         color: MyColors.lightdivider,
+                                         thickness: 1,
+                                         height: 1,
                                               ),
                                               SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.02),
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.02),
                                             ],
                                           );
                                         },
                                       );
-                                    }),
+                                    }
+                                    ),
+                             
+                                // GetBuilder<UserReviewController>(
+                                //     init: userreviewcontroller,
+                                //     builder: (_) {
+                                //       return ListView.builder(
+                                //         primary: false,
+                                //         shrinkWrap: true,
+                                //         itemCount: userreviewcontroller
+                                //             .getreviewList.length,
+                                //         itemBuilder: (context, index) {
+                                //           var item = userreviewcontroller
+                                //               .getreviewList[index];
+
+                                //           return ListView(
+                                //             primary: false,
+                                //             shrinkWrap: true,
+                                //             children: [
+                                //               Text(
+                                //                 item["title"],
+                                //                 style: CustomTextStyle
+                                //                     .popinssmall0,
+                                //               ),
+                                //               SizedBox(
+                                //                   height: MediaQuery.of(context)
+                                //                           .size
+                                //                           .height *
+                                //                       0.01),
+                                //               Row(
+                                //                 children: [
+                                //                   RatingStars(
+                                //                     value: userreviewcontroller
+                                //                         .value!,
+                                //                     // onValueChanged: (v) {
+                                //                     //   //
+                                //                     //   setState(() {
+                                //                     //     value = v;
+                                //                     //   });
+                                //                     // },
+                                //                     starBuilder:
+                                //                         (index, color) => Icon(
+                                //                       Icons.star,
+                                //                       color: color,
+                                //                       size: 15,
+                                //                     ),
+                                //                     starCount: 5,
+                                //                     starSize: 20,
+                                //                     // valueLabelColor: const Color(0xff9b9b9b),
+                                //                     // valueLabelTextStyle: const TextStyle(
+                                //                     //     color: Colors.white,
+                                //                     //     fontWeight: FontWeight.w400,
+                                //                     //     fontStyle: FontStyle.normal,
+                                //                     //     fontSize: 12.0),
+                                //                     // valueLabelRadius: 10,
+                                //                     maxValue: 5,
+                                //                     starSpacing: 0.5,
+                                //                     maxValueVisibility: true,
+                                //                     valueLabelVisibility: false,
+                                //                     animationDuration: Duration(
+                                //                         milliseconds: 5000),
+                                //                     // valueLabelPadding:
+                                //                     //     const EdgeInsets.symmetric(
+                                //                     //         vertical: 1, horizontal: 8),
+                                //                     // valueLabelMargin:
+                                //                     //     const EdgeInsets.only(right: 8),
+                                //                     starOffColor:
+                                //                         const Color(0xffe7e8ea),
+                                //                     starColor: MyColors.yellow,
+                                //                   ),
+                                //                   SizedBox(width: 10),
+                                //                   Image.asset(item["image"],
+                                //                       height: 30),
+                                //                   Column(
+                                //                     crossAxisAlignment:
+                                //                         CrossAxisAlignment
+                                //                             .start,
+                                //                     children: [
+                                //                       Text(
+                                //                         item["name"],
+                                //                         style: CustomTextStyle
+                                //                             .popinstext,
+                                //                       ),
+                                //                       Row(
+                                //                         children: [
+                                //                           Icon(
+                                //                             Icons
+                                //                                 .person_2_outlined,
+                                //                             size: 13,
+                                //                           ),
+                                //                           Text(
+                                //                             item["count"],
+                                //                             style: CustomTextStyle
+                                //                                 .popinssmall0,
+                                //                           ),
+                                //                         ],
+                                //                       )
+                                //                     ],
+                                //                   )
+                                //                 ],
+                                //               ),
+                                //               SizedBox(
+                                //                   height: MediaQuery.of(context)
+                                //                           .size
+                                //                           .height *
+                                //                       0.02),
+                                //               Divider(
+                                //                 color: MyColors.lightdivider,
+                                //                 thickness: 1,
+                                //                 height: 1,
+                                //               ),
+                                //               SizedBox(
+                                //                   height: MediaQuery.of(context)
+                                //                           .size
+                                //                           .height *
+                                //                       0.02),
+                                //             ],
+                                //           );
+                                //         },
+                                //       );
+                                //     }),
+                               
                                 // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
@@ -1112,23 +1251,24 @@ class ProductDetails extends StatelessWidget {
                                                     style: CustomTextStyle
                                                         .discounttext),
                                             SizedBox(width: 3),
-                                            Container(
-                                              height: 20,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: MyColors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                      color: MyColors.red)),
-                                              child: Center(
-                                                child: Text(
+                                            // Container(
+                                            //   height: 20,
+                                            //   width: 40,
+                                            //   decoration: BoxDecoration(
+                                            //       color: MyColors.red,
+                                            //       borderRadius:
+                                            //           BorderRadius.circular(10),
+                                            //       border: Border.all(
+                                            //           color: MyColors.red)),
+                                            //   child: Center(
+                                            //     child:
+                                                 Text(
                                                     // item.discount.toString(),
                                                     "Save${productdetailscontroller.productdetailmodel!.data!.discount.toString()}%",
                                                     style: CustomTextStyle
-                                                        .popinstextsmal2222),
-                                              ),
-                                            ),
+                                                        .popinstextsmal2222red),
+                                            //   ),
+                                            // ),
                                             SizedBox(width: 10),
                                             productdetailscontroller
                                                         .selectedvariants
@@ -1254,7 +1394,7 @@ class ProductDetails extends StatelessWidget {
                                                       if (productdetailscontroller
                                                           .isProductInCartBool) {
                                                         mycartController.init();
-                                                        Get.to(AddToCardUser());
+                                                        Get.to(const AddToCardUser());
                                                       } else {
                                                         await productdetailscontroller
                                                             .addProduct();
@@ -1263,7 +1403,7 @@ class ProductDetails extends StatelessWidget {
                                                       }
                                                       // ?   :
                                                       // mycartController.init();
-                                                      // Get.to(AddToCardUser());
+                                                      // Get.to(const AddToCardUser());
 
                                                       //     productdetailscontroller.addToCart(
 

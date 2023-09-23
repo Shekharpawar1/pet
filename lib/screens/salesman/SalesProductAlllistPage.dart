@@ -60,7 +60,7 @@ class _SalesProductAlllistPageState extends State<SalesProductAlllistPage> {
             children: [
               InkWell(
                   onTap: () {
-                     Get.to(NotificationUser());
+                     Get.to(const NotificationUser());
                   },
                   child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
  
@@ -98,7 +98,7 @@ class _SalesProductAlllistPageState extends State<SalesProductAlllistPage> {
             children: [
               InkWell(
                   onTap: () {
-                      Get.to(AddToCardUser());
+                      Get.to(const AddToCardUser());
                    
                   },
                   child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
@@ -291,7 +291,7 @@ filtercontroller.init();
                                           child: Align(
                                               alignment: Alignment.centerRight,
                                               child:
-                                                  Icon(Icons.favorite_border)),
+                                                  Icon(Icons.favorite_border,color:Colors.red)),
                                         ),
 
                                         Container(
