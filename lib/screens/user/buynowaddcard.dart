@@ -1,3 +1,5 @@
+
+
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,6 +14,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
+import 'package:pet/models/usersModel/mycartListModel.dart' as MyOrder;
 import 'package:pet/screens/partner/partneraddress.dart';
 
 import 'package:pet/screens/swepcard.dart';
@@ -25,38 +28,44 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
-class AddToCardUser extends StatefulWidget {
-  const AddToCardUser({super.key});
+class BuyNowAddToCardUser extends StatefulWidget {
+   BuyNowAddToCardUser({super.key,this.data,this.tax});
+ MyOrder.Datum ? data;
+ int? tax;
+
+
 
   @override
-  State<AddToCardUser> createState() => _AddToCardUserState();
+  State<BuyNowAddToCardUser> createState() => _BuyNowAddToCardUserState();
 }
 
-class _AddToCardUserState extends State<AddToCardUser> {
+class _BuyNowAddToCardUserState extends State<BuyNowAddToCardUser> {
   AddressController addressController = Get.put(AddressController());
   MyCartController addtocartController = Get.put(MyCartController());
+  
   CouponsController couponsController = Get.put(CouponsController());
   @override
   Widget build(BuildContext context) {
+    print("DataBuyNow");
+    print(widget.data);
     addtocartController.updateTotal();
     return Stack(
       children: [
         Scaffold(
-         appBar:CustomAppBarback(),
-          body: Padding(
+         appBar:CustomAppBarback(), body: Padding(
             padding: EdgeInsets.all(15),
             child: ListView(
               shrinkWrap: true,
               primary: true,
               //  physics: NeverScrollableScrollPhysics(),
               children: [
-                GetBuilder<MyCartController>(
-                    init: addtocartController,
-                    builder: (_) {
-                      return addtocartController.mycartmodel == null
-                          ? SizedBox()
-                          : addtocartController.cartlistLoaded == false
-                              ? SizedBox()
+                // GetBuilder<MyCartController>(
+                //     init: addtocartController,
+                //     builder: (_) {
+                //       return addtocartController.mycartmodel == null
+                //           ? SizedBox()
+                //           : addtocartController.cartlistLoaded == false
+                //               ? SizedBox()
                               //  !addtocartController.cartlistLoaded
                               //   ? Center(
                               //       child: SpinKitCircle(
@@ -64,9 +73,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                               //         size: 30.0, // Size of the progress bar
                               //       ),
                               //     )
-                              : 
-addtocartController
-                                          .mycartmodel!.data!.isEmpty?
+                              // : 
+widget.data == null?
                                           Center(
                                             child: ElevatedButton(
                                                         onPressed: () {
@@ -77,31 +85,32 @@ addtocartController
                                                         child: Text('Continue Shopping')
                                                       ),
                                           ):
-                              Container(
-                                  //  height: MediaQuery.of(context).size.height * 0.66,
-                                  child: ListView.builder(
-                                      primary: false,
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      itemCount: addtocartController
-                                          .mycartmodel!.data!.length,
-                                      itemBuilder: (context, index) {
-                                        var item = addtocartController
-                                            .mycartmodel!.data![index];
-                                        // print(item.name!);
-                                        // ${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}
-                                        String imagePath =
-                                            Constants.PRODUCT_HOME_IMAGE_PATH +
-                                                "/${item.image!}";
-                                        // var imagePath = "${item.image ?? ""}";
-                                        print(imagePath);
+                              // Container(
+                              //     //  height: MediaQuery.of(context).size.height * 0.66,
+                              //     child:
+                              //      ListView.builder(
+                              //         primary: false,
+                              //         scrollDirection: Axis.vertical,
+                              //         shrinkWrap: true,
+                              //         itemCount:  1,
+                              //         itemBuilder: (context, index) {
+                              //           var item = widget.data!;
+                              //            print(item.itemName);
+                              //           // ${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}
+                              //           String imagePath =
+                              //               Constants.PRODUCT_HOME_IMAGE_PATH +
+                              //                   "/${item.image??''}";
+                              //           // var imagePath = "${item.image ?? ""}";
+                              //           print(imagePath);
 
-                                        //  addtocartController.sizes = addtocartController.mycartmodel!.data!.map((e) => 1).toList();
-                                        return (addtocartController
-                                                    .mycartmodel!.data ==
+                              //           //  addtocartController.sizes = addtocartController.mycartmodel!.data!.map((e) => 1).toList();
+                              //           return
+                              (widget.data ==
                                                 null)
                                             ? SizedBox()
-                                            : Container(
+                                            :
+                                            
+                                             Container(
                                                 margin: EdgeInsets.symmetric(
                                                     vertical: 10),
                                                 height: MediaQuery.of(context)
@@ -136,10 +145,10 @@ addtocartController
                                                                 //  items.removeAt(index);
                                                                 addtocartController
                                                                     .additem(
-                                                                        item.id ??
+                                                                        widget.data!.id ??
                                                                             0);
                                                                 print(
-                                                                    "Item${item.id}");
+                                                                    "Item${widget.data!.id}");
                                                                 await addtocartController
                                                                     .initdelete();
                                                                 addtocartController
@@ -160,7 +169,8 @@ addtocartController
                                                             //   "assets/image/fooddog.png",
                                                             // ),
                                                             CachedNetworkImage(
-                                                          imageUrl: imagePath,
+                                                          imageUrl: Constants.PRODUCT_HOME_IMAGE_PATH +
+                                                "/${widget.data!.image??''}",
                                                           width: 65,
                                                           height: 95,
                                                           placeholder:
@@ -184,14 +194,14 @@ addtocartController
                                                                 .center,
                                                         children: [
                                                           Text(
-                                                            (item.itemName ??
+                                                            (widget.data!.itemName ??
                                                                     '')
                                                                 .toString(),
                                                             style: CustomTextStyle
                                                                 .popinsmedium,
                                                           ),
                                                           Text(
-                                                              (item.variant ??
+                                                              (widget.data!.variant ??
                                                                       '')
                                                                   .toString(),
                                                               style: CustomTextStyle
@@ -203,7 +213,7 @@ addtocartController
                                                             children: [
                                                               Text(
                                                                 "₹" +
-                                                                    item.price
+                                                                    widget.data!.price
                                                                         .toString(),
                                                                 style: CustomTextStyle
                                                                     .popinsmedium,
@@ -217,89 +227,93 @@ addtocartController
                                                               ),
                                                               Row(
                                                                 children: [
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      addtocartController
-                                                                          .decrementSize(
-                                                                              index);
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width: 25,
-                                                                      height:
-                                                                          25,
-                                                                      decoration: BoxDecoration(
-                                                                          shape: BoxShape
-                                                                              .rectangle,
-                                                                          color: MyColors
-                                                                              .yellow,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10)),
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .remove,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.black),
-                                                                      //  Icon(
-                                                                      //   Icons.minimize,
-                                                                      //   size: 8,
-                                                                      //   color: Colors.white,
-                                                                      // ),
-                                                                    ),
-                                                                  ),
+                                                                  // GestureDetector(
+                                                                  //   onTap: () {
+                                                                  //     addtocartController
+                                                                  //         .decrementSize(
+                                                                  //             index);
+                                                                  //   },
+                                                                  //   child:
+                                                                  //       Container(
+                                                                  //     width: 25,
+                                                                  //     height:
+                                                                  //         25,
+                                                                  //     decoration: BoxDecoration(
+                                                                  //         shape: BoxShape
+                                                                  //             .rectangle,
+                                                                  //         color: MyColors
+                                                                  //             .yellow,
+                                                                  //         borderRadius:
+                                                                  //             BorderRadius.circular(10)),
+                                                                  //     child: Icon(
+                                                                  //         Icons
+                                                                  //             .remove,
+                                                                  //         size:
+                                                                  //             15,
+                                                                  //         color:
+                                                                  //             Colors.black),
+                                                                  //     //  Icon(
+                                                                  //     //   Icons.minimize,
+                                                                  //     //   size: 8,
+                                                                  //     //   color: Colors.white,
+                                                                  //     // ),
+                                                                  //   ),
+                                                                  // ),
+                                                                 
                                                                   SizedBox(
                                                                     width: 3,
                                                                   ),
-                                                                  GetBuilder<
-                                                                          MyCartController>(
-                                                                      init:
-                                                                          addtocartController,
-                                                                      builder:
-                                                                          (_) {
-                                                                        return Container(
-                                                                            width:
-                                                                                30,
-                                                                            height:
-                                                                                40,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(50),
-                                                                            ),
-                                                                            child: Center(
-                                                                                child: Text(
-                                                                              addtocartController.sizes[index].toString(),
-                                                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                                                            )));
-                                                                      }),
+                                                                  // GetBuilder<
+                                                                  //         MyCartController>(
+                                                                  //     init:
+                                                                  //         addtocartController,
+                                                                  //     builder:
+                                                                  //         (_) {
+                                                                        // return 
+                                                                        // Container(
+                                                                        //     width:
+                                                                        //         30,
+                                                                        //     height:
+                                                                        //         40,
+                                                                        //     decoration:
+                                                                        //         BoxDecoration(
+                                                                        //       borderRadius: BorderRadius.circular(50),
+                                                                        //     ),
+                                                                        //     child: Center(
+                                                                        //         child: Text(
+                                                                        //       addtocartController.sizes[index].toString(),
+                                                                        //       style: TextStyle(fontWeight: FontWeight.w500),
+                                                                        //     ))),
+
+// }),
                                                                   SizedBox(
                                                                     width: 3,
                                                                   ),
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      addtocartController
-                                                                          .incrementSize(
-                                                                              index);
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width: 25,
-                                                                      height:
-                                                                          25,
-                                                                      decoration: BoxDecoration(
-                                                                          //shape: BoxShape.rectangle,
-                                                                          borderRadius: BorderRadius.circular(10),
-                                                                          color: MyColors.yellow),
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .add,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.black),
-                                                                    ),
-                                                                  ),
+                                                                  // GestureDetector(
+                                                                  //   onTap: () {
+                                                                  //     addtocartController
+                                                                  //         .incrementSize(
+                                                                  //             index);
+                                                                  //   },
+                                                                  //   child:
+                                                                  //       Container(
+                                                                  //     width: 25,
+                                                                  //     height:
+                                                                  //         25,
+                                                                  //     decoration: BoxDecoration(
+                                                                  //         //shape: BoxShape.rectangle,
+                                                                  //         borderRadius: BorderRadius.circular(10),
+                                                                  //         color: MyColors.yellow),
+                                                                  //     child: Icon(
+                                                                  //         Icons
+                                                                  //             .add,
+                                                                  //         size:
+                                                                  //             15,
+                                                                  //         color:
+                                                                  //             Colors.black),
+                                                                  //   ),
+                                                                  // ),
+                                                              
                                                                 ],
                                                               )
                                                             ],
@@ -309,9 +323,9 @@ addtocartController
                                                     ]),
                                                   ],
                                                 ),
-                                              );
-                                      }));
-                    }),
+                                              ),
+                                      // }))
+                    // }),
 
                 //          Container(
                 //                     height: MediaQuery.of(context).size.height * 0.18,
@@ -581,8 +595,8 @@ addtocartController
                   onTap: () async {
                     await couponsController.init();
                     Get.to(UsercouponPage(
-                      price: (addtocartController.total) +
-                          (addtocartController.total * 0.05),
+                      price: (   widget.data!.price!) +
+                          ((widget.tax??0)),
                     ));
                   },
                   child: Container(
@@ -627,11 +641,12 @@ addtocartController
                 SizedBox(
                   height: 20,
                 ),
-                GetBuilder<MyCartController>(
-                  init: addtocartController,
-                  // initState: (_) {},
-                  builder: (_) {
-                    return Container(
+                // GetBuilder<MyCartController>(
+                //   init: addtocartController,
+                //   // initState: (_) {},
+                //   builder: (_) {
+                //     return 
+                    Container(
                       // height: MediaQuery.of(context).size.height * 0.24,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
@@ -659,13 +674,13 @@ addtocartController
                                   //       MediaQuery.of(context).size.width * 0.2,
                                   // ),
                                   Spacer(),
-                                (addtocartController.total == 0 )  ?
+                                // (addtocartController.total == 0 )  ?
+                                //   Text(
+                                //     addtocartController.price.toString(),
+                                //     style: CustomTextStyle.popinstext,
+                                //   ):
                                   Text(
-                                    addtocartController.price.toString(),
-                                    style: CustomTextStyle.popinstext,
-                                  ):
-                                  Text(
-                                    addtocartController.total.toString(),
+                                    widget.data!.price.toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
                                 ],
@@ -689,7 +704,7 @@ addtocartController
                                   ),
                                   Spacer(),
                                   Text(
-                                    (addtocartController.total * 0.05)
+                                    (widget.tax??0)
                                         .toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
@@ -737,7 +752,7 @@ addtocartController
                                   ),
                                  Spacer(),
                                   Text(
-                                    "₹${(((addtocartController.total) + (addtocartController.total * 0.05)) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                    "₹${(((widget.data!.price!) + ((widget.tax??0))) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
                                     // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
@@ -747,9 +762,9 @@ addtocartController
                           ),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                //   },
+                // ),
 
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
@@ -1155,14 +1170,15 @@ addtocartController
                             //       ),
                             Text("Total", style: CustomTextStyle.popinstext),
 
-                            GetBuilder<MyCartController>(
-                                init: addtocartController,
-                                // initState: (_) {},
-                                builder: (_) {
-                                  return Text(
-                                      "₹${(((addtocartController.total) + (addtocartController.total * 0.05) - (double.parse(couponsController.maxAmount ?? "0.0")))).toString()}",
-                                      style: CustomTextStyle.appbartext);
-                                })
+                            // GetBuilder<MyCartController>(
+                            //     init: addtocartController,
+                            //     // initState: (_) {},
+                            //     builder: (_) {
+                            //       return 
+                                  Text(
+                                      "₹${(((widget.data!.price!) + ((widget.tax??0))) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                      style: CustomTextStyle.appbartext)
+                                // })
                             // Row(
                             //   children: [
                             //     Text("₹ 620", style: CustomTextStyle.discounttext),
@@ -1271,32 +1287,33 @@ addtocartController
           ),
         ),
 
-        GetBuilder<MyCartController>(
-            init: addtocartController,
-            builder: (_) {
-              return addtocartController.showLoading
-                  ? BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                      child: Container(
-                        color: Colors.black
-                            .withOpacity(0.1), // Adjust the opacity as needed
-                      ),
-                    )
-                  : SizedBox();
-            }),
-        // Progress bar
-        GetBuilder<MyCartController>(
-            init: addtocartController,
-            builder: (_) {
-              return addtocartController.showLoading
-                  ? Center(
-                      child: SpinKitCircle(
-                        color: Colors.white, // Color of the progress bar
-                        size: 50.0, // Size of the progress bar
-                      ),
-                    )
-                  : SizedBox();
-            }),
+        // GetBuilder<MyCartController>(
+        //     init: addtocartController,
+        //     builder: (_) {
+        //       return addtocartController.showLoading
+        //           ? BackdropFilter(
+        //               filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+        //               child: Container(
+        //                 color: Colors.black
+        //                     .withOpacity(0.1), // Adjust the opacity as needed
+        //               ),
+        //             )
+        //           : SizedBox();
+        //     }),
+        // // Progress bar
+        // GetBuilder<MyCartController>(
+        //     init: addtocartController,
+        //     builder: (_) {
+        //       return addtocartController.showLoading
+        //           ? Center(
+        //               child: SpinKitCircle(
+        //                 color: Colors.white, // Color of the progress bar
+        //                 size: 50.0, // Size of the progress bar
+        //               ),
+        //             )
+        //           : SizedBox();
+        //     }),
+      
       ],
     );
   }

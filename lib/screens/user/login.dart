@@ -183,7 +183,7 @@ class _LoginUserState extends State<LoginUser> {
                                         //   print(phoneNumber.completeNumber);
                                         // },
                                       ),
-                                    // SizedBox(height: 8.0), // Add spacing between TextField and Text
+                                     SizedBox(height: 7.0), // Add spacing between TextField and Text
           // Text(
           //  userLoginController.errormsg??'',
           //   style: TextStyle(

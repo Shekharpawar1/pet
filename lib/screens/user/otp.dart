@@ -156,6 +156,21 @@ class OtpUser extends StatelessWidget {
                           activeColor: MyColors.yellow,
                           isFinished: userLoginController.isFinishedOtp,
                           onWaitingProcess: () {
+                           if (userLoginController.otpText == null || userLoginController.otpText == "" || userLoginController.otpText!.isEmpty
+                                ) {
+                                  print("Tapped");
+                             
+      // print('Error: 'Invalid Otp');
+      Get.snackbar(
+        'Error',
+        'Invalid Otp',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    
+                              return;
+                            }  
                             Future.delayed(Duration(seconds: 2), () {
                               // setState(() {
                               //   isFinished = true;
@@ -164,7 +179,29 @@ class OtpUser extends StatelessWidget {
                             });
                           },
                           onFinish: () async {
-                            Get.put(HomeuserController());
+
+                          if (userLoginController.otpText == null || userLoginController.otpText == "" || userLoginController.otpText!.isEmpty
+                                ) {
+                                  print("Tapped");
+                                    Get.snackbar(
+        'Error',
+        'Invalid Otp',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+                                  
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   const SnackBar(
+                              //       content: Text(
+                              //     "Invalid OTP",
+                              //     style: TextStyle(color: Colors.red),
+                              //   )),
+                              // );
+                              return;
+                            } else {
+
+                               Get.put(HomeuserController());
                             final HomeuserController userHomeController =
                                 Get.find<HomeuserController>();
 
@@ -180,6 +217,8 @@ class OtpUser extends StatelessWidget {
                               );
                               userHomeController.onInit();
                             } catch (e) {}
+                            }
+                           
                             // try {
                             //   await userLoginController.postUserData();
                             // } catch (e) {}

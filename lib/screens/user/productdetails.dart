@@ -12,8 +12,10 @@ import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
+import 'package:pet/screens/user/buynowaddcard.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/user/payment.dart';
+import 'package:pet/models/usersModel/mycartListModel.dart' as MyOrder;
 import 'package:pet/models/usersModel/ProductDetailsModel.dart' as variantFile;
 import 'package:pet/screens/user/userAllReview.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
@@ -1343,7 +1345,36 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                 await productdetailscontroller
                                                     .addProduct();
                                                 mycartController.init();
-                                                Get.to(const AddToCardUser());
+                                                MyOrder.Datum foo = MyOrder.Datum(
+                                                
+                                                  userId:productdetailscontroller.userId,
+                                                  id:productdetailscontroller
+                                                                    .productdetailmodel!
+                                                                    .data!
+                                                                    .id,
+
+                                                  image:productdetailscontroller
+                                                                    .productdetailmodel!
+                                                                    .data!
+                                                                    .image,
+                                                                    itemName:productdetailscontroller.productdetailmodel!.data!.name ,
+                                                                    variant: productdetailscontroller.selectedvariants!.type.toString(),
+                                                                    quantity:(productdetailscontroller.sizecount),
+                                                                    price: ((productdetailscontroller.selectedvariants?.price ?? 0) * (productdetailscontroller.sizecount ?? 0) -
+              (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount ?? 0) *
+                  (productdetailscontroller.productdetailmodel!.data!.discount!) /
+                  100))
+    
+
+                                                                     );
+                                                
+
+                                        
+                                                Get.to( BuyNowAddToCardUser(
+data:foo,
+tax:productdetailscontroller.productdetailmodel!.data!.tax!
+                                                )
+                                                );
                                               },
                                               child: Container(
                                                 width: MediaQuery.of(context)

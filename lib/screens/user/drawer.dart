@@ -9,6 +9,7 @@ import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
+import 'package:pet/screens/user/addPet.dart';
 import 'package:pet/screens/user/login.dart';
 import 'package:pet/screens/user/UserMyPet.dart';
 import 'package:pet/screens/user/allveterniary.dart';
@@ -296,7 +297,8 @@ profilecontroller.myprofile();
         Get.to(Userfavourite());
         break;
       case 4:
-        Get.to(MyPetDetails());
+        // Get.to(MyPetDetails());
+        Get.to(AddPet());
         break;
       case 5:
         Get.to(Myservices());
