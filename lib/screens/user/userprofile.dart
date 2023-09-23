@@ -78,7 +78,7 @@ class _UserProfileState extends State<UserProfile> {
                                               "assets/image/boyprofile3.png")
                                           : (profilecontroller.myprofilemodel!
                                                           .data![0].image ==
-                                                      null) ||
+                                                      null) &&
                                                   profilecontroller
                                                           .selectedImage ==
                                                       null
