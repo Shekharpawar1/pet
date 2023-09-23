@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/service_controller.dart';
 import 'package:pet/screens/user/drawer.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
@@ -40,6 +41,15 @@ class _ServicePageState extends State<ServicePage> {
   final UserServicesAddAppointmentController
       userServicesAddUserServicesAddAppointmentController =
       Get.put(UserServicesAddAppointmentController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
+
+  @override
+  void onInit() {
+    notificationcontroller.init();
+    // super.onInit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

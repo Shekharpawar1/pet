@@ -40,8 +40,8 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   MyOrderController myordercontroller = Get.put(MyOrderController());
-  
-ProfileController profilecontroller = Get.put(ProfileController());
+
+  ProfileController profilecontroller = Get.put(ProfileController());
 
  @override
   void initState() {
@@ -75,8 +75,6 @@ profilecontroller.myprofile();
     Icons.medication_liquid_outlined,
     // Icons.payment_outlined,
     Icons.logout,
- 
-   
   ];
 
   int _currentSelected = 0;
@@ -237,6 +235,8 @@ profilecontroller.myprofile();
               ),
 
               ),
+            // ),
+          // ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: _listViewData.length,
@@ -290,7 +290,7 @@ profilecontroller.myprofile();
       Get.to(MyOrderUser());
         break;
       case 2:
-        Get.to(NotificationUser());
+        Get.to(const NotificationUser());
         break;
       case 3:
         Get.to(Userfavourite());
@@ -299,10 +299,10 @@ profilecontroller.myprofile();
         Get.to(MyPetDetails());
         break;
       case 5:
-      Get.to(Myservices());
+        Get.to(Myservices());
         break;
-           case 6:
-      Get.to(AllVeterniary());
+      case 6:
+        Get.to(AllVeterniary());
         break;
     //  case 7:
     //   Get.to(Usertranscation());

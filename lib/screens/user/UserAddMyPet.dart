@@ -176,17 +176,17 @@ class AddMypet extends StatelessWidget {
 
 //           SizedBox(width: 20),
 
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(AddToCardUser());
-//                   },
-//                   child: Center(
-//                       child: SvgPicture.asset(
-//                     "assets/image/bag.svg",
-//                     color: Colors.white,
-//                   ))),
+          // Stack(
+          //   children: [
+          //     InkWell(
+          //         onTap: () {
+          //           Get.to(const AddToCardUser());
+          //         },
+          //         child: Center(
+          //             child: SvgPicture.asset(
+          //           "assets/image/bag.svg",
+          //           color: Colors.white,
+          //         ))),
 
 // // (getCardModel!.data!.isEmpty)?
 // // SizedBox():
@@ -218,25 +218,25 @@ class AddMypet extends StatelessWidget {
 //             width: 20,
 //           )
 
-//           // ],
-//           //   InkWell(
-//           //       onTap: () {
-//           //         Get.to(NotificationUser());
-//           //       },
-//           //       child: SvgPicture.asset(
-//           //         "assets/image/notification.svg",
-//           //         color: MyColors.white,
-//           //       )),
-//           //   // Image.asset("assets/image/cartimg.png"),
-//           //   SizedBox(width: 20),
-//           //   Padding(
-//           //     padding: EdgeInsets.only(right: 20.0),
-//           //     child: SvgPicture.asset(
-//           //       "assets/image/bag.svg",
-//           //       color: MyColors.white,
-//           //     ),
-//           //   ),
-//         ],
+          // ],
+          //   InkWell(
+          //       onTap: () {
+          //         Get.to(const NotificationUser());
+          //       },
+          //       child: SvgPicture.asset(
+          //         "assets/image/notification.svg",
+          //         color: MyColors.white,
+          //       )),
+          //   // Image.asset("assets/image/cartimg.png"),
+          //   SizedBox(width: 20),
+          //   Padding(
+          //     padding: EdgeInsets.only(right: 20.0),
+          //     child: SvgPicture.asset(
+          //       "assets/image/bag.svg",
+          //       color: MyColors.white,
+          //     ),
+          //   ),
+        // ],
 
 //         // title: Text(
 //         //   "My Pet",

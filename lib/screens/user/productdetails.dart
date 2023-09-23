@@ -1394,7 +1394,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                       if (productdetailscontroller
                                                           .isProductInCartBool) {
                                                         mycartController.init();
-                                                        Get.to(AddToCardUser());
+                                                        Get.to(const AddToCardUser());
                                                       } else {
                                                         await productdetailscontroller
                                                             .addProduct();
@@ -1403,7 +1403,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                       }
                                                       // ?   :
                                                       // mycartController.init();
-                                                      // Get.to(AddToCardUser());
+                                                      // Get.to(const AddToCardUser());
 
                                                       //     productdetailscontroller.addToCart(
 

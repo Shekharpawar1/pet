@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/myPetListController.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/drawer.dart';
 import 'package:pet/screens/user/notification.dart';
@@ -27,10 +28,14 @@ class AddPet extends StatefulWidget {
 class _AddPetState extends State<AddPet> {
   UserMyPetListController userMyPetListController =
       Get.put(UserMyPetListController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
+
        final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   void initState() {
     userMyPetListController.clearFields();
     userMyPetListController.init();
+    notificationcontroller.init();
     super.initState();
   }
 
@@ -237,18 +242,22 @@ class _AddPetState extends State<AddPet> {
                                             null)
                                         ? const SizedBox()
                                         : Padding(
-                                            padding: EdgeInsets.only(top: 200.0),
+                                            padding:
+                                                EdgeInsets.only(top: 200.0),
                                             child: Container(
                                               height: MediaQuery.of(context)
                                                   .size
                                                   .height,
-                                              width:
-                                                  MediaQuery.of(context).size.width,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                               decoration: BoxDecoration(
                                                 color: MyColors.white,
                                                 borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(30),
-                                                    topRight: Radius.circular(30)),
+                                                    topLeft:
+                                                        Radius.circular(30),
+                                                    topRight:
+                                                        Radius.circular(30)),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.all(20),
@@ -256,19 +265,20 @@ class _AddPetState extends State<AddPet> {
                                                   alignment: Alignment.topLeft,
                                                   children: <Widget>[
                                                     Padding(
-                                                      padding:
-                                                          EdgeInsets.only(top: 10),
+                                                      padding: EdgeInsets.only(
+                                                          top: 10),
                                                       child: Container(
                                                         width: 400,
                                                         height: 150,
-                                                        margin:
-                                                            EdgeInsets.all(16.0),
+                                                        margin: EdgeInsets.all(
+                                                            16.0),
                                                         child: Card(
                                                           shape:
                                                               RoundedRectangleBorder(
                                                             borderRadius:
                                                                 BorderRadius
-                                                                    .circular(20),
+                                                                    .circular(
+                                                                        20),
                                                           ),
                                                           color: Colors.white,
                                                           child: Column(
@@ -285,13 +295,11 @@ class _AddPetState extends State<AddPet> {
                                                                     child:
                                                                         Container(
                                                                       //alignment: Alignment.topRight,
-                                                                      height: MediaQuery.of(
-                                                                                  context)
+                                                                      height: MediaQuery.of(context)
                                                                               .size
                                                                               .height *
                                                                           0.03,
-                                                                      width: MediaQuery.of(
-                                                                                  context)
+                                                                      width: MediaQuery.of(context)
                                                                               .size
                                                                               .width *
                                                                           0.4,
@@ -299,13 +307,10 @@ class _AddPetState extends State<AddPet> {
                                                                           color: MyColors
                                                                               .yellow,
                                                                           borderRadius: BorderRadius.only(
-                                                                              topRight: Radius.circular(
-                                                                                  20),
-                                                                              bottomLeft:
-                                                                                  Radius.circular(20))),
+                                                                              topRight: Radius.circular(20),
+                                                                              bottomLeft: Radius.circular(20))),
                                                                       child: Center(
-                                                                          child:
-                                                                              Text(
+                                                                          child: Text(
                                                                         "${pet.age.toString()}",
                                                                         style: CustomTextStyle
                                                                             .popinssmall0,
@@ -328,7 +333,8 @@ class _AddPetState extends State<AddPet> {
                                                               Text(
                                                                 "Pet Name: ${pet.petName.toString()}",
                                                                 textAlign:
-                                                                    TextAlign.start,
+                                                                    TextAlign
+                                                                        .start,
                                                                 style: CustomTextStyle
                                                                     .popinssmall1,
                                                               ),
@@ -345,23 +351,23 @@ class _AddPetState extends State<AddPet> {
                                                                 children: [
                                                                   Padding(
                                                                     padding:
-                                                                        const EdgeInsets
-                                                                                .all(
+                                                                        const EdgeInsets.all(
                                                                             8.0),
-                                                                    child: Column(
+                                                                    child:
+                                                                        Column(
                                                                       crossAxisAlignment:
                                                                           CrossAxisAlignment
                                                                               .center,
                                                                       children: [
                                                                         Text(
                                                                           "${pet.petsType.toString()}",
-                                                                          style: CustomTextStyle
-                                                                              .popinstext,
+                                                                          style:
+                                                                              CustomTextStyle.popinstext,
                                                                         ),
                                                                         Text(
                                                                           "${pet.gender.toString()}",
-                                                                          style: CustomTextStyle
-                                                                              .popinssmall0,
+                                                                          style:
+                                                                              CustomTextStyle.popinssmall0,
                                                                         ),
                                                                       ],
                                                                     ),
@@ -391,14 +397,18 @@ class _AddPetState extends State<AddPet> {
                                                       height: 70,
                                                       width: 70,
                                                       child: CachedNetworkImage(
-                                                        imageUrl: Constants.USER_PET_IMAGE_PATH +"/" + pet.image!,
+                                                        imageUrl: Constants
+                                                                .USER_PET_IMAGE_PATH +
+                                                            "/" +
+                                                            pet.image!,
                                                         width: 50,
                                                         height: 50,
                                                         placeholder:
                                                             (context, url) =>
                                                                 Center(
                                                           child: Center(
-                                                            child: SpinKitCircle(
+                                                            child:
+                                                                SpinKitCircle(
                                                               color: Colors
                                                                   .blue, // Color of the progress bar
                                                               size:
@@ -406,8 +416,8 @@ class _AddPetState extends State<AddPet> {
                                                             ),
                                                           ),
                                                         ), // Replace with your own placeholder widget
-                                                        errorWidget: (context, url,
-                                                                error) =>
+                                                        errorWidget: (context,
+                                                                url, error) =>
                                                             Icon(Icons
                                                                 .pets), // Replace with your own error widget
                                                       ),
@@ -762,37 +772,33 @@ class _AddPetState extends State<AddPet> {
 //           ],),
 
             ),
-     
-     
 
-            GetBuilder<UserMyPetListController>(
-                init: userMyPetListController,
-                builder: (_) {
-                  return userMyPetListController.showLoading
-                      ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                          child: Container(
-                            color: Colors.black.withOpacity(
-                                0.5), // Adjust the opacity as needed
-                          ),
-                        )
-                      : SizedBox();
-                }),
-            // Progress bar
-            GetBuilder<UserMyPetListController>(
-                init: userMyPetListController,
-                builder: (_) {
-                  return userMyPetListController.showLoading
-                      ? Center(
-                          child: SpinKitCircle(
-                            color: Colors.white, // Color of the progress bar
-                            size: 50.0, // Size of the progress bar
-                          ),
-                        )
-                      : SizedBox();
-                }),
-     
-     
+        GetBuilder<UserMyPetListController>(
+            init: userMyPetListController,
+            builder: (_) {
+              return userMyPetListController.showLoading
+                  ? BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                      child: Container(
+                        color: Colors.black
+                            .withOpacity(0.5), // Adjust the opacity as needed
+                      ),
+                    )
+                  : SizedBox();
+            }),
+        // Progress bar
+        GetBuilder<UserMyPetListController>(
+            init: userMyPetListController,
+            builder: (_) {
+              return userMyPetListController.showLoading
+                  ? Center(
+                      child: SpinKitCircle(
+                        color: Colors.white, // Color of the progress bar
+                        size: 50.0, // Size of the progress bar
+                      ),
+                    )
+                  : SizedBox();
+            }),
       ],
     );
   }

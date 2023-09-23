@@ -46,7 +46,7 @@ class _SalescouponPageState extends State<SalescouponPage> {
           actions: [
             InkWell(
                 onTap: () {
-                  Get.to(NotificationUser());
+                  Get.to(const NotificationUser());
                 },
                 child: SvgPicture.asset("assets/image/notification.svg")),
             SizedBox(width: 20),

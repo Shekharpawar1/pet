@@ -12,6 +12,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
@@ -62,8 +63,16 @@ class _HomeUserState extends State<HomeUser> {
   OurBrandDetailsController Ourbranddetailscontroller =
       Get.put(OurBrandDetailsController());
   MyCartController mycartController = Get.put(MyCartController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
+
 ProfileController profilecontroller = Get.put(ProfileController());
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+  @override
+  void onInit() {
+    notificationcontroller.init();
+    // super.onInit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,21 +82,25 @@ ProfileController profilecontroller = Get.put(ProfileController());
     print(GetStorage().read('userData').toString());
     return Scaffold(
       key: _drawerkey,
-      drawer: drawer(),
-      appBar:CustomAppBar(drawerKey: _drawerkey),
-      
-//       appBar:  AppBar(
-//         elevation: 0,
-//         backgroundColor: Colors.transparent,
-//         leading: Padding(
-//           padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
-//           child: GestureDetector(
-//             onTap: () {
-//               _drawerkey.currentState!.openDrawer();
-//             },
-//             child: Image.asset(
-//               "assets/image/menu2.png",
-//             ),
+      drawer: const drawer(),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
+          child: GestureDetector(
+            onTap: () {
+              _drawerkey.currentState!.openDrawer();
+            },
+            child: Image.asset(
+              "assets/image/menu2.png",
+            ),
+          ),
+        ),),
+//           title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child:Text("")
 //           ),
 //         ),
 // //           title: Center(

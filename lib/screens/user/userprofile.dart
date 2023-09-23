@@ -8,9 +8,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/drawer.dart';
+import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/user/userMyPet.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
@@ -25,8 +28,15 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
-final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 ProfileController profilecontroller = Get.put(ProfileController());
+
+MyCartController mycartController = Get.put(MyCartController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
+final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+
+// final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+// ProfileController profilecontroller = Get.put(ProfileController());
 
 class _UserProfileState extends State<UserProfile> {
   @override
