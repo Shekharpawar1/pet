@@ -12,6 +12,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
@@ -55,8 +56,15 @@ class _HomeUserState extends State<HomeUser> {
   OurBrandDetailsController Ourbranddetailscontroller =
       Get.put(OurBrandDetailsController());
   MyCartController mycartController = Get.put(MyCartController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
 
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+  @override
+  void onInit() {
+    notificationcontroller.init();
+    // super.onInit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +73,7 @@ class _HomeUserState extends State<HomeUser> {
     print(GetStorage().read('userData').toString());
     return Scaffold(
       key: _drawerkey,
-      drawer: drawer(),
+      drawer: const drawer(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -91,7 +99,7 @@ class _HomeUserState extends State<HomeUser> {
             children: [
               InkWell(
                   onTap: () {
-                    Get.to(NotificationUser());
+                    Get.to(const NotificationUser());
                   },
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.black),
@@ -107,7 +115,12 @@ class _HomeUserState extends State<HomeUser> {
                           right: 4.0,
                           child: Center(
                             child: Text(
-                              ("5").toString(),
+                             
+                              notificationcontroller
+                              .userNotificationModel == null || notificationcontroller
+                              .userNotificationModel!.state == null ? "" :
+                              notificationcontroller
+                              .userNotificationModel!.state!.length.toString(),
                               // list.length.toString(),
                               style: TextStyle(
                                   color: Colors.white,
@@ -125,8 +138,8 @@ class _HomeUserState extends State<HomeUser> {
               InkWell(
                   onTap: () {
                     mycartController.init();
-                    Get.to(AddToCardUser());
-                    // Get.to(AddToCardUser());
+                    Get.to(const AddToCardUser());
+                    // Get.to(const AddToCardUser());
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),

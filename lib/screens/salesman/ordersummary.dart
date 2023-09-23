@@ -62,7 +62,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
             children: [
               InkWell(
                   onTap: () {
-                    Get.to(NotificationUser());
+                    Get.to(const NotificationUser());
                   },
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.black),

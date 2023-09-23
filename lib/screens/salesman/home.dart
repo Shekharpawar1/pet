@@ -112,7 +112,7 @@ SalesOurBrandDetailsController salesOurBrandDetailsController = Get.put(SalesOur
                   onTap: () {
                     // salesmycartController.init();
                     Get.to(AddToCardSales());
-                    // Get.to(AddToCardUser());
+                    // Get.to(const AddToCardUser());
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),

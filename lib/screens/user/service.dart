@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/service_controller.dart';
 import 'package:pet/screens/user/drawer.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
@@ -39,11 +40,20 @@ class _ServicePageState extends State<ServicePage> {
   final UserServicesAddAppointmentController
       userServicesAddUserServicesAddAppointmentController =
       Get.put(UserServicesAddAppointmentController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
+
+  @override
+  void onInit() {
+    notificationcontroller.init();
+    // super.onInit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerkey,
-      drawer: drawer(),
+      drawer: const drawer(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -68,7 +78,7 @@ class _ServicePageState extends State<ServicePage> {
             children: [
               InkWell(
                   onTap: () {
-                    Get.to(NotificationUser());
+                    Get.to(const NotificationUser());
                   },
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.black),
@@ -84,7 +94,16 @@ class _ServicePageState extends State<ServicePage> {
                           right: 4.0,
                           child: Center(
                             child: Text(
-                              ('5').toString(),
+                              notificationcontroller.userNotificationModel ==
+                                          null ||
+                                      notificationcontroller
+                                              .userNotificationModel!.state ==
+                                          null
+                                  ? ""
+                                  : notificationcontroller
+                                      .userNotificationModel!.state!.length
+                                      .toString(),
+
                               // list.length.toString(),
                               style: TextStyle(
                                   color: Colors.white,
@@ -101,7 +120,7 @@ class _ServicePageState extends State<ServicePage> {
             children: [
               InkWell(
                   onTap: () {
-                    Get.to(AddToCardUser());
+                    Get.to(const AddToCardUser());
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),

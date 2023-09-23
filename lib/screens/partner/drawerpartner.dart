@@ -205,7 +205,7 @@ class _drawerpartnerState extends State<drawerpartner> {
       Get.to(MyOrderUser());
         break;
       case 2:
-        Get.to(NotificationUser());
+        Get.to(const NotificationUser());
         break;
       case 3:
         Get.to(Userfavourite());

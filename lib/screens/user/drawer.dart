@@ -38,8 +38,8 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   MyOrderController myordercontroller = Get.put(MyOrderController());
-  
-ProfileController profilecontroller = Get.put(ProfileController());
+
+  ProfileController profilecontroller = Get.put(ProfileController());
 
   static final List<String> _listViewData = [
     "Profile",
@@ -50,7 +50,7 @@ ProfileController profilecontroller = Get.put(ProfileController());
     "My Services",
     "Veterniary",
     "My Transaction",
-   "Logout"
+    "Logout"
   ];
 
   static final List<IconData> _listViewIcons = [
@@ -63,8 +63,6 @@ ProfileController profilecontroller = Get.put(ProfileController());
     Icons.medication_liquid_outlined,
     Icons.payment_outlined,
     Icons.logout,
- 
-   
   ];
 
   int _currentSelected = 0;
@@ -77,86 +75,97 @@ ProfileController profilecontroller = Get.put(ProfileController());
         shrinkWrap: true,
         primary: true,
         children: [
-           Container(height:MediaQuery.of(context).size.height*0.2,
-
-                child: DrawerHeader(
-
-                  child: ListView(
-                   shrinkWrap: true,
-        primary: false,
-                    children: [
-                      InkWell(onTap:(){
-                        // Get.to(Profile());
-                      },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
+          Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: DrawerHeader(
+              child: ListView(
+                shrinkWrap: true,
+                primary: false,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      // Get.to(Profile());
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                        children: [
-                                            Center(
-              child: Stack(
-            alignment: Alignment.topCenter,
-                children:[
-                    Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-               child:CircleAvatar(
-                radius:35,
-                backgroundColor: Colors.transparent,
-                  child: Image.asset("assets/image/boyprofile3.png"),
-                ),),
-               
-                Positioned(
-                 
-                  bottom: 10,
-                  child: Image.asset("assets/image/drawer2.png",height: 25,),
-              
-                ) 
-              ]),
-            ),
-            SizedBox(width: MediaQuery.of(context).size.width*0.05),
-                                          Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment
-                                                  .start,
-                                              children: <Widget>[
-                                                Text(
-                                                  "User",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,
-                                          color:MyColors.white),
+                                    children: [
+                                      Center(
+                                        child: Stack(
+                                            alignment: Alignment.topCenter,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    EdgeInsets.only(bottom: 20),
+                                                child: CircleAvatar(
+                                                  radius: 35,
+                                                  backgroundColor: Colors.white,
+                                                  // child: Image.asset("assets/image/boyprofile3.png"),
+                                                  child: Icon(
+                                                    Icons.person,
+                                                    size: 50,
+                                                  ),
                                                 ),
-                                                SizedBox(
-                                                  height: 5,
+                                              ),
+                                              Positioned(
+                                                bottom: 10,
+                                                child: Image.asset(
+                                                  "assets/image/drawer2.png",
+                                                  height: 25,
                                                 ),
-                                                Text(
-                                                  "user123@gmail.com",
-                                                  style: TextStyle(
-                                            color:MyColors.white,fontSize: 16),
-                                                ),
-                                              ]),
-                                        ],
+                                              )
+                                            ]),
                                       ),
-
-                                    ]),
-
-                              ]),
-                        ),
-                      ),
-                    ],
+                                      SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.04),
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: const <Widget>[
+                                            Text(
+                                              "User",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: MyColors.white),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              "user123@gmail.com",
+                                              style: TextStyle(
+                                                  color: MyColors.white,
+                                                  fontSize: 16),
+                                            ),
+                                            SizedBox(
+                                              height:18,
+                                            ),
+                                          ]),
+                                    ],
+                                  ),
+                                ]),
+                          ]),
+                    ),
                   ),
-                ),
-
+                ],
               ),
+            ),
+          ),
           ListView.builder(
             shrinkWrap: true,
             itemCount: _listViewData.length,
@@ -206,11 +215,11 @@ ProfileController profilecontroller = Get.put(ProfileController());
         Get.to(UserProfile());
         break;
       case 1:
-     await myordercontroller.init();
-      Get.to(MyOrderUser());
+        await myordercontroller.init();
+        Get.to(MyOrderUser());
         break;
       case 2:
-        Get.to(NotificationUser());
+        Get.to(const NotificationUser());
         break;
       case 3:
         Get.to(Userfavourite());
@@ -219,13 +228,13 @@ ProfileController profilecontroller = Get.put(ProfileController());
         Get.to(MyPetDetails());
         break;
       case 5:
-      Get.to(Myservices());
+        Get.to(Myservices());
         break;
-           case 6:
-      Get.to(AllVeterniary());
+      case 6:
+        Get.to(AllVeterniary());
         break;
-     case 7:
-      Get.to(Usertranscation());
+      case 7:
+        Get.to(Usertranscation());
         break;
       case 8:
         await GetStorage().erase();

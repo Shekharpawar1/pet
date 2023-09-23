@@ -44,7 +44,7 @@ class _salesProfileState extends State<salesProfile> {
         actions: [
           InkWell(
               onTap: () {
-                Get.to(NotificationUser());
+                Get.to(const NotificationUser());
               },
               child: SvgPicture.asset("assets/image/notification.svg")),
           // Image.asset("assets/image/cartimg.png"),

@@ -104,7 +104,7 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                       onTap: () {
                         mycartwholeController.init();
                         Get.to(AddToCardwhole());
-                        // Get.to(AddToCardUser());
+                        // Get.to(const AddToCardUser());
                       },
                       child: Center(
                           child: SvgPicture.asset("assets/image/bag.svg"))),

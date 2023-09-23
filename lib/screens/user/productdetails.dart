@@ -80,7 +80,7 @@ class ProductDetails extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Get.to(NotificationUser());
+                        Get.to(const NotificationUser());
                       },
                       child: Center(
                         child: Icon(Icons.notifications, color: MyColors.black),
@@ -114,7 +114,7 @@ class ProductDetails extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Get.to(AddToCardUser());
+                        Get.to(const AddToCardUser());
                       },
                       child: Center(
                           child: SvgPicture.asset("assets/image/bag.svg"))),
@@ -1254,7 +1254,7 @@ class ProductDetails extends StatelessWidget {
                                                       if (productdetailscontroller
                                                           .isProductInCartBool) {
                                                         mycartController.init();
-                                                        Get.to(AddToCardUser());
+                                                        Get.to(const AddToCardUser());
                                                       } else {
                                                         await productdetailscontroller
                                                             .addProduct();
@@ -1263,7 +1263,7 @@ class ProductDetails extends StatelessWidget {
                                                       }
                                                       // ?   :
                                                       // mycartController.init();
-                                                      // Get.to(AddToCardUser());
+                                                      // Get.to(const AddToCardUser());
 
                                                       //     productdetailscontroller.addToCart(
 
