@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -68,6 +69,18 @@ class _HomeUserState extends State<HomeUser> {
 
   ProfileController profilecontroller = Get.put(ProfileController());
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+  final List<Color> _randomColors = [
+    MyColors.yellowlight,
+    Colors.blue,
+    Colors.green,
+    // Colors.orange,
+  ];
+
+  Color _getRandomColor() {
+    final random = Random();
+    return _randomColors[random.nextInt(_randomColors.length)];
+  }
+
   @override
   void onInit() {
     notificationcontroller.init();
@@ -787,9 +800,24 @@ class _HomeUserState extends State<HomeUser> {
                                                 width: 140,
                                                 // height: 700,
                                                 decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // MyColors.white
+                                                      //     .withOpacity(0.1),
+                                                      MyColors.white,
+                                                      MyColors.white,
+                                                      // MyColors.white,
+                                                    ],
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                  ),
                                                   borderRadius:
                                                       BorderRadius.circular(25),
-                                                  color: MyColors.white,
+                                                  // color: MyColors.white,
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Colors.grey
@@ -835,7 +863,21 @@ class _HomeUserState extends State<HomeUser> {
 
                                                     Container(
                                                       height: 125,
-
+                                                      decoration: BoxDecoration(
+                                                          // gradient:
+                                                          //     LinearGradient(
+                                                          //   colors: [
+                                                          //     _getRandomColor(),
+                                                          //     _getRandomColor(),
+                                                          //     _getRandomColor(),
+                                                          //     _getRandomColor(),
+                                                          //   ],
+                                                          //   begin:
+                                                          //       Alignment.topLeft,
+                                                          //   end: Alignment
+                                                          //       .bottomRight,
+                                                          // ),
+                                                          ),
                                                       // decoration: BoxDecoration(
                                                       //     borderRadius: BorderRadius.circular(30),
                                                       //     color: MyColors.white),
@@ -945,10 +987,11 @@ class _HomeUserState extends State<HomeUser> {
                                                                       children: [
                                                                         SizedBox(
                                                                           width:
-                                                                                Get.width * 0.23,
-                                                                          child: Text(
+                                                                              Get.width * 0.23,
+                                                                          child:
+                                                                              Text(
                                                                             "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-                                                                        
+
                                                                             // "₹" +
                                                                             //     item.price!,
                                                                             style:
@@ -2447,9 +2490,25 @@ class _HomeUserState extends State<HomeUser> {
                                                   0.7,
                                               // width: MediaQuery.of(context).size.width * 0.46,
                                               decoration: BoxDecoration(
+                                                 gradient: LinearGradient(
+                                                    colors: [
+                                                      _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // MyColors.white
+                                                      //     .withOpacity(0.1),
+                                                      MyColors.white,
+                                                      MyColors.white,
+                                                      // MyColors.white,
+                                                    ],
+                                                    tileMode: TileMode.clamp,
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                  ),
                                                 borderRadius:
                                                     BorderRadius.circular(25),
-                                                color: MyColors.white,
+                                                // color: MyColors.white,
                                                 boxShadow: [
                                                   BoxShadow(
                                                     color: Colors.grey
@@ -2602,21 +2661,23 @@ class _HomeUserState extends State<HomeUser> {
                                                                     height: 5),
                                                                 Row(
                                                                   children: [
-                                                                     SizedBox(
-                                                                          width:
-                                                                                Get.width * 0.23,
-                                                                          child: Text(
-                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-                                                                        
-                                                                            // "₹" +
-                                                                            //     item.price!,
-                                                                            style:
-                                                                                CustomTextStyle.popinsmedium,
-                                                                          ),
-                                                                        ),
-                                                                        SizedBox(
-                                                                            width:
-                                                                                Get.width * 0.073),
+                                                                    SizedBox(
+                                                                      width: Get
+                                                                              .width *
+                                                                          0.23,
+                                                                      child:
+                                                                          Text(
+                                                                        "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+
+                                                                        // "₹" +
+                                                                        //     item.price!,
+                                                                        style: CustomTextStyle
+                                                                            .popinsmedium,
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                        width: Get.width *
+                                                                            0.073),
                                                                     Padding(
                                                                       padding: const EdgeInsets
                                                                               .only(
