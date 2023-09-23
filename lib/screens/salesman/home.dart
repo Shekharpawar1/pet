@@ -288,7 +288,7 @@ class HomeSales extends StatelessWidget {
                         //  SizedBox(width: 10,),
                         GestureDetector(
                           onTap: () {
-                            Get.to(FilterScreen());
+                            // Get.to(FilterScreen());
                         SalesManFilterController filtercontroller =
                             Get.put(SalesManFilterController());
                         // filtercontroller.init();

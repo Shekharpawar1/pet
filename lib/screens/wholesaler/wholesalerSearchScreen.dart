@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
 import 'package:pet/screens/user/productdetails.dart';
+import 'package:pet/screens/wholesaler/productdetails.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -22,7 +24,7 @@ class WholeSalerSearchScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Text(
           "Search",
-         style: CustomTextStyle.appbartext,
+          style: CustomTextStyle.appbartext,
         ),
         centerTitle: true,
         leading: Padding(
@@ -191,21 +193,15 @@ class WholeSalerSearchScreen extends StatelessWidget {
                             print(imagePath);
                             return InkWell(
                               onTap: () async {
-                                ProductDetailsController
-                                    productdeatilscontroller =
-                                    Get.put(ProductDetailsController());
-                                productdeatilscontroller.viewproduct(
+                                WholeProductDetailsController
+                                    wholeproductdetailsController =
+                                    Get.put(WholeProductDetailsController());
+                                wholeproductdetailsController.viewproduct(
                                   item.id ?? 0,
                                 );
-                                // print("productid${item.id ?? 0}");
-                                await productdeatilscontroller.init();
-                                Get.to(ProductDetails());
-                                // Get.to( ProductDetails());
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //           ));
+                                print("productid${item.id ?? 0}");
+                                await wholeproductdetailsController.init();
+                                Get.to(ProductDetailswhole());
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
