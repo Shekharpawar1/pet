@@ -7,6 +7,7 @@ import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
 import 'package:pet/screens/salesman/home.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
 import 'package:pet/screens/salesman/orderHistory.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/wholesaler/orderDetails.dart';
@@ -25,40 +26,7 @@ class _TotalOrdersalesState extends State<TotalOrdersales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 15, bottom: 15),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_left, color: MyColors.black)),
-          ),
-          title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-              child: Text(
-            "Total Order",
-            style: TextStyle(
-              fontSize: 16,
-              color: MyColors.black,
-              fontWeight: FontWeight.w700,
-            ),
-          )),
-          actions: [
-            //  SvgPicture.asset("assets/image/girl.svg"),
-
-            // SizedBox(width: 20),
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: SvgPicture.asset("assets/image/notification.svg"),
-              //  Image.asset("assets/image/girl.png"),
-            ),
-          ],
-        ),
-        body: GetBuilder<DashBoardController>(
+        appBar: CustomAppBarSalesWholeback(title: "Total Order ",),  body: GetBuilder<DashBoardController>(
             init: dashBoardController,
             builder: (_) {
               return ListView(

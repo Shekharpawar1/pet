@@ -65,7 +65,6 @@ void updatepass() {
                 wholesalerroleid = response["data"]![0]["role"];
         wholesalerData = response["data"][0];
       }
-      // // var id = userLoginModel.data![0].id;
       print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData} Role: ${wholesalerroleid}");
       storage.write('wholesalerData', wholesalerData);
       storage.write('wholesalerid', wholesalerid);

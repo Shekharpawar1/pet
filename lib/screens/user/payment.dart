@@ -26,7 +26,7 @@ class PaymentUser extends StatefulWidget {
       //  this.ordertype,this.totaltexamount,this.coupondiscountamount,
       //  this.coupondiscounttitle,this.orderstatus, this.storeId
       });
-  String price;
+  double price;
 
   // String? deliveredstatus;
   // int? deliveredId;
@@ -223,15 +223,18 @@ class _PaymentUserState extends State<PaymentUser> {
 
                       mycartController.addpaymenttype(
                           selectone == Choose.upi ? 'online' : "offline",
-                          selectone == Choose.cash ? "paid" : "unpaid");
+                          selectone == Choose.cash ? "paid" : "unpaid",
+                           selectone == Choose.upi ? 'upi' : "cash",
+                          );
 
                       Get.to(
-                          UserUpiScreen(amount: double.tryParse(widget.price)));
+                          UserUpiScreen(amount: (widget.price)));
                     } else if (selectone == Choose.cash) {
                       print("Cash payment");
                       mycartController.addpaymenttype(
                           selectone == Choose.cash ? 'offline' : "online",
-                          selectone == Choose.cash ? "unpaid" : "paid");
+                          selectone == Choose.cash ? "unpaid" : "paid",
+                           selectone == Choose.cash ? 'cash' : "upi",);
                           try {
 
                       await mycartController.placeorder();

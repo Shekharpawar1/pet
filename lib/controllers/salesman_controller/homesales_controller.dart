@@ -11,12 +11,13 @@ import 'package:pet/models/usersModel/bannerModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
+import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart' as Model;
 
 class HomeSalesController extends GetxController {
-   bool showLoading = false;
-   final storage = GetStorage();
+  bool showLoading = false;
+  final storage = GetStorage();
   //  var sellerId = GetStorage().read("sellerid");
-var wholesellerID ;
+  var wholesellerID;
   List _cartList = [
     Colors.blue,
     Colors.green,
@@ -29,6 +30,62 @@ var wholesellerID ;
     Colors.blue,
     Colors.green,
   ].obs;
+
+  List<Model.Datum> searchScreenData = [];
+  void clearSearchData() {
+    searchScreenData = [];
+    update();
+  }
+
+  void searchDataFilter(SalesPropertiesModel? dataModel, String keyword) {
+    // const String keyword = "999";
+
+    List<Model.Datum> filteredData = filter(keyword, dataModel!.data!);
+    searchScreenData = filteredData;
+    update();
+    print("###### KEYWORD:     $keyword");
+    // print(filteredData);
+    filteredData.forEach((item) {
+      print("${filteredData.indexOf(item)})   ${item.id}");
+      print("     ${item.name}");
+      print("     ${item.description}");
+      print("     ${item.subCategory}");
+      print("     ${item.categoryIds}");
+      print("     ${item.brandId}");
+      print("     ${item.lifeStageId}");
+      print("     ${item.helthConditionId}");
+      print("     ${item.petsbreedsId}");
+      print("     ${item.price}");
+      print("     ${item.wholePrice}");
+    });
+  }
+
+  List<Model.Datum> filter(String key, List<Model.Datum> data) {
+    Set<Model.Datum> finalData = {};
+
+    final List<String> keywords = key.toLowerCase().split(' ');
+
+    for (var item in data) {
+      var itemLower = item.toString().toLowerCase();
+
+      if (keywords.every((keyword) =>
+          itemLower.contains(keyword) ||
+          item.name.toString().toLowerCase().contains(keyword) ||
+          item.description.toString().toLowerCase().contains(keyword) ||
+          item.subCategory.toString().toLowerCase().contains(keyword) ||
+          item.categoryIds.toString().toLowerCase().contains(keyword) ||
+          item.brandId.toString().toLowerCase().contains(keyword) ||
+          item.lifeStageId.toString().toLowerCase().contains(keyword) ||
+          item.helthConditionId.toString().toLowerCase().contains(keyword) ||
+          item.petsbreedsId.toString().toLowerCase().contains(keyword) ||
+          item.price.toString().toLowerCase().contains(keyword) ||
+          item.wholePrice.toString().toLowerCase().contains(keyword))) {
+        finalData.add(item);
+      }
+    }
+
+    return finalData.toList();
+  }
 
   List _animalList = [
     {
@@ -65,13 +122,12 @@ var wholesellerID ;
   SalesBannerModel? salesBannerModel;
   bool bannerLoaded = false;
 
-
- // ProductByPartner
+  // ProductByPartner
   String getProductByPartnerUrl = '${Constants.GET_PRODUCTBYPARTNER}';
   SalesProductByPartnerModel? salesProductPartnerModel;
   bool partnerLoaded = false;
 
-   // our brand
+  // our brand
   String getBrandUrl = '${Constants.GET_OUR_BRAND}';
   SalesOurBrandModel? salesBrandModel;
   SalesOurBrandModel? salesOurBrandModel = SalesOurBrandModel();
@@ -88,13 +144,12 @@ var wholesellerID ;
     init();
   }
 
+  fethUserId() {
+    wholesellerID = storage.read('wholesalerId');
+    print("WholeSellerID ==>${wholesellerID}");
+    //  print("SellerID ==>${sellerId}");
+  }
 
-fethUserId() {
-  
-     wholesellerID = storage.read('wholesalerId');
-     print("WholeSellerID ==>${wholesellerID}");
-      //  print("SellerID ==>${sellerId}");
-}
   void init() async {
     showLoading = true;
     update();
@@ -119,6 +174,10 @@ fethUserId() {
       // pets
       salesPropertiesModel = SalesPropertiesModel.fromJson(
           await ApiHelper.getApi(getUserPropertiesUrl));
+      salesPropertiesModel!.data = salesPropertiesModel!.data!
+          .where((element) => element.moduleId == 1)
+          .toList();
+
       print(salesPropertiesModel);
       propertyLoaded = true;
       update();
@@ -149,9 +208,9 @@ fethUserId() {
         colorText: Colors.white,
       );
     }
-      try {
+    try {
       // our brands
-     salesBrandModel =
+      salesBrandModel =
           SalesOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
       // userOurBrandModel = userBrandModel;
       // userOurBrandModel!.data = [];
@@ -175,13 +234,13 @@ fethUserId() {
       );
     }
 
-       try {
+    try {
       // ProductByPartner
       salesProductPartnerModel = SalesProductByPartnerModel.fromJson(
           await ApiHelper.getApi(getProductByPartnerUrl));
       print(salesProductPartnerModel);
       partnerLoaded = true;
-      
+
       update();
     } catch (e) {
       print('Error: $e');
@@ -197,7 +256,6 @@ fethUserId() {
     showLoading = false;
     update();
   }
-
 
   Future<void> addItemToWishList(int productId) async {
     showLoading = true;

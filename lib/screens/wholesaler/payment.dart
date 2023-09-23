@@ -411,16 +411,20 @@ class _PaymentwholeState extends State<Paymentwhole> {
                     // print(selectone == Choose.upi);
                     if (selectone == Choose.upi) {
                       print("UPI payment");
-
+mycartwholeController.addpaymentPopup(
+                          paymentDate,includeGST, paymentMethod
+                          );
                       mycartwholeController.addpaymenttype(
-                          selectone == Choose.upi ? 'online' : "offline");
+                          selectone == Choose.upi ? 'online' : "offline",
+                          selectone == Choose.cash ? "unpaid" : "paid");
 
                       Get.to(WholeUpiScreen(
                           amount: double.tryParse(widget.price.toString())));
                     } else if (selectone == Choose.cash) {
                       print("Cash payment");
                       mycartwholeController.addpaymenttype(
-                          selectone == Choose.cash ? 'offline' : "online");
+                          selectone == Choose.cash ? 'offline' : "online",
+                          selectone == Choose.cash ? "unpaid" : "paid");
                       try {
                         await mycartwholeController.placeorder();
                         

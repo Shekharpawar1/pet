@@ -1075,7 +1075,7 @@ class _AddToCardwholeState extends State<AddToCardwhole> {
                                                                             GestureDetector(
                                                                               onTap:
                                                                                   () {
-                                                                                // addressController.areaaddressController.toString();
+                                                                                mycartwholeController.chooseaddressID(item.id??0);
                                                                                 mycartwholeController.chooseaddress(index);
                                                                                 Get.back();
                                                                               },

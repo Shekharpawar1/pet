@@ -14,7 +14,9 @@ import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
 import 'package:pet/screens/partner/partneraddress.dart';
+import 'package:pet/screens/salesman/paymentsales.dart';
 import 'package:pet/screens/salesman/salesaddnewAddress.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 
 import 'package:pet/screens/swepcard.dart';
 import 'package:pet/screens/user/notification.dart';
@@ -41,95 +43,95 @@ class _AddToCardSalesState extends State<AddToCardSales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
-          child: InkWell(
-              onTap: () {
-                Get.back();
-              },
-              child: Icon(Icons.arrow_left, color: MyColors.black)),
-        ),
-        title: Center(
-            child: Text(
-          "My Cart",
-          style: CustomTextStyle.appbartext,
-        )),
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(const NotificationUser());
-                  },
-                  child: Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(AddToCardSales());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+      appBar: CustomAppBarSalesWholeback( title: "My Cart",),
+//         elevation: 0,
+//         backgroundColor: Colors.transparent,
+//         leading: Padding(
+//           padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
+//           child: InkWell(
+//               onTap: () {
+//                 Get.back();
+//               },
+//               child: Icon(Icons.arrow_left, color: MyColors.black)),
+//         ),
+//         title: Center(
+//             child: Text(
+//           "My Cart",
+//           style: CustomTextStyle.appbartext,
+//         )),
+//         actions: [
+//           Stack(
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.to(NotificationUser());
+//                   },
+//                   child: Center(
+//                     child: Icon(Icons.notifications, color: MyColors.black),
+//                   )),
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       Positioned(
+//                           top: 3.0,
+//                           right: 4.0,
+//                           child: Center(
+//                             child: Text(
+//                               ('5').toString(),
+//                               // list.length.toString(),
+//                               style: TextStyle(
+//                                   color: Colors.white,
+//                                   fontSize: 8.0,
+//                                   fontWeight: FontWeight.w500),
+//                             ),
+//                           )),
+//                     ],
+//                   )),
+//             ],
+//           ),
+//           SizedBox(width: 20),
+//           Stack(
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.to(AddToCardSales());
+//                   },
+//                   child:
+//                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-      ),
+// // (getCardModel!.data!.isEmpty)?
+// // SizedBox():
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       Positioned(
+//                           top: 3.0,
+//                           right: 4.0,
+//                           child: Center(
+//                             child: Text(
+//                               ('5').toString(),
+//                               // list.length.toString(),
+//                               style: TextStyle(
+//                                   color: Colors.white,
+//                                   fontSize: 8.0,
+//                                   fontWeight: FontWeight.w500),
+//                             ),
+//                           )),
+//                     ],
+//                   )),
+//             ],
+//           ),
+//           SizedBox(
+//             width: 20,
+//           )
+//         ],
+//       ),
       body: Padding(
         padding: EdgeInsets.all(15),
         child: ListView(
@@ -1240,8 +1242,8 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                     InkWell(
                       onTap: () {
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
-                        Get.to(PaymentUser(
-                           price:(((addtocartController.total) + (addtocartController.total * 0.05)-(num.parse(couponsController.maxAmount!)))).toString()
+                        Get.to(PaymentSales(
+                         price:(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()
                         // paymentstatus: ,
                         ));
                           // deliveredAddress: (addtocartController

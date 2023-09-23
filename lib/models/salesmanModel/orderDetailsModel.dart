@@ -113,6 +113,7 @@ class Data {
 
 class ItemDetails {
   String? image;
+  
 
   ItemDetails({this.image});
 

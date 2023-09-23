@@ -31,6 +31,7 @@ class ProfileController extends GetxController {
     if (pickedImage != null) {
       selectedImagePath = pickedImage.path;
       selectedImage = File(pickedImage.path);
+      print("SELECEd image : 3${selectedImage}");
     }
     update();
   }
@@ -135,7 +136,8 @@ class ProfileController extends GetxController {
       // myprofilemodel!.data!.forEach((element) {
 
       //  });
-      print(getUserProfile + "$userId");
+      print("USERPROFILE URL" +getUserProfile + "$userId");
+      // selectedImage = myprofilemodel!.data![0].image.toString();/
       fullNameController.text = myprofilemodel!.data![0].fName.toString();
       lastNameController.text = myprofilemodel!.data![0].lName.toString();
       numberController.text = myprofilemodel!.data![0].phone.toString();

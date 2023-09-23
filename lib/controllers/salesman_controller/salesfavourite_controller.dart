@@ -54,6 +54,7 @@ final storage = GetStorage();
   void onInit() {
     super.onInit();
      init();
+     
     // wholesalerID = storage.read('wholesalerid');
     // print("WholeSellerIDWIsh==>${wholesellerID}");
   }
@@ -70,8 +71,8 @@ final storage = GetStorage();
     try {
       // categories
       wishList =
-          SalesWishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "${wholesellerID}"));
-      print(  "WhisListSalesURL"+getWishListUrl + "${wholesellerID}");
+          SalesWishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${wholesellerID}"));
+      print(  "WhisListSalesURL"+getWishListUrl + "/${wholesellerID}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
@@ -103,7 +104,7 @@ final storage = GetStorage();
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "${wholesellerID}");
+      await ApiHelper.deleteByUrl(url: url + "$productId" + "/${wholesellerID}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       wishList!.data!.removeWhere(
           (element) => element.itemId.toString() == productId.toString());

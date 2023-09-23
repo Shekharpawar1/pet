@@ -540,7 +540,7 @@ ourbranddeatilscontrroller.productinit();
                       //   )
                       // : 
            ourbranddeatilscontrroller.userourbrandProductModel!.data == null
-                              ? SizedBox(child:Center(child: Text("No Data Found"))):
+                              ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                    InkWell(
                                     onTap: () async {
                                    var url = '${ item.productUrl.toString()}';  // Replace with the URL you want to open
@@ -576,7 +576,7 @@ ourbranddeatilscontrroller.productinit();
                                             child: Align(
                                                 alignment: Alignment.centerRight,
                                                 child:
-                                                    Icon(Icons.favorite_border)),
+                                                    Icon(Icons.favorite_border,color:Colors.red)),
                                           ),
                                          
                                               Container(

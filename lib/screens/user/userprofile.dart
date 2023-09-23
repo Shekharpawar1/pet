@@ -12,6 +12,7 @@ import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/drawer.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/user/userMyPet.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -31,170 +32,16 @@ MyCartController mycartController = Get.put(MyCartController());
       Get.put(NotificationController());
 final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 
+// final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+// ProfileController profilecontroller = Get.put(ProfileController());
+
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//       appBar: AppBar(
-//         elevation: 0,
-//         backgroundColor: Colors.transparent,
-//         leading: Padding(
-//           padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-//           child: Image.asset(
-//             "assets/image/menu2.png",
-//           ),
-//         ),
-//         title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child: Text(
-//           "Profile",
-//           style: CustomTextStyle.appbartext,
-//         )),
-//         actions: [
-//           InkWell(
-//               onTap: () {
-//                 Get.to(const NotificationUser());
-//               },
-//               child: SvgPicture.asset("assets/image/notification.svg")),
-//           // Image.asset("assets/image/cartimg.png"),
-//           SizedBox(width: 20),
-//           Padding(
-//             padding: EdgeInsets.only(right: 20.0),
-//             child: SvgPicture.asset("assets/image/bag.svg"),
-//           ),
-//         ],
-//         // shape: RoundedRectangleBorder(
-//         //   borderRadius: BorderRadius.vertical(
-//         //     bottom: Radius.circular(20),
-//         //   ),
-//         // ),
-//       ),
-
-      drawer: const drawer(),
       key: _drawerkey,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              print("Tapped...");
-              _drawerkey.currentState!.openDrawer();
-              print("End...");
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
-
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(const NotificationUser());
-                  },
-                  child: const Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      const Icon(Icons.brightness_1,
-                          size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              // ("5").toString(),
-                              notificationcontroller
-                              .userNotificationModel == null || notificationcontroller
-                              .userNotificationModel!.state == null ? "" :
-                              notificationcontroller
-                              .userNotificationModel!.state!.length.toString(),
-                              // list.length.toString(),
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          const SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    mycartController.init();
-                    Get.to(const AddToCardUser());
-                    // Get.to(const AddToCardUser());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      GetBuilder<MyCartController>(
-                          init: mycartController,
-                          builder: (_) {
-                            return mycartController.mycartmodel == null ||
-                                    mycartController.mycartmodel!.data ==
-                                        null ||
-                                    mycartController.mycartmodel!.data!.isEmpty
-                                ? const SizedBox()
-                                : Positioned(
-                                    top: 3.0,
-                                    right: 4.0,
-                                    child: Center(
-                                      child: Text(
-                                        (mycartController
-                                                .mycartmodel!.data!.length)
-                                            .toString(),
-                                        // list.length.toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 8.0,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ));
-                          }),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
-      ),
-      // backgroundcolor:MyColors.white,
-
+      drawer: drawer(),
+      appBar: CustomAppBar(drawerKey: _drawerkey),
       body: ListView(
         shrinkWrap: true,
         primary: true,
@@ -222,14 +69,22 @@ class _UserProfileState extends State<UserProfile> {
                                     child: CircleAvatar(
                                       radius: 60,
                                       backgroundColor: Colors.transparent,
-                                      child: profilecontroller.profileImage !=
-                                              null
-                                          ? CachedNetworkImage(
+                                      child: (profilecontroller.myprofilemodel!
+                                                  .data![0].image ==
+                                              null)
+                                          ? Image.file(
+                                              profilecontroller.selectedImage!)
+                                          : CachedNetworkImage(
                                               imageUrl:
-                                                  "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                  "${Constants.USERPROFILE_IMAGEPATH_URL}" +
                                                       profilecontroller
-                                                          .profileImage
+                                                          .myprofilemodel!
+                                                          .data![0]
+                                                          .image
                                                           .toString(),
+                                              // imageUrl:
+                                              //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                              //         profilecontroller.profileImage.toString(),
                                               progressIndicatorBuilder:
                                                   (context, url,
                                                           downloadProgress) =>
@@ -242,14 +97,8 @@ class _UserProfileState extends State<UserProfile> {
                                               errorWidget:
                                                   (context, url, error) =>
                                                       Icon(Icons.error),
-                                            )
-                                          //  Image.asset("assets/image/boyprofile3.png"),
-                                          : profilecontroller.selectedImage !=
-                                                  null
-                                              ? Image.file(profilecontroller
-                                                  .selectedImage!)
-                                              : Image.asset(
-                                                  "assets/image/boyprofile3.png"),
+                                            ),
+                                      //  Image.asset("assets/image/boyprofile3.png"),
                                     ),
                                   ),
                                   Positioned(
@@ -458,94 +307,89 @@ class _UserProfileState extends State<UserProfile> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 15.0,
-                            ),
-                            child: Text(
-                              "City",
-                              style: CustomTextStyle.popinstext,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                              //                    width: 335,
-                              // height: 45,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.grey.shade200,
-                              ),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your city';
-                                  }
-                                  return null;
-                                },
-                                controller: profilecontroller.addressController,
-                                decoration: InputDecoration(
-                                  hintText: "enter city",
-                                  hintStyle: TextStyle(
-                                    color: MyColors.black,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: MyColors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 15.0,
-                            ),
-                            child: Text(
-                              "Pincode",
-                              style: CustomTextStyle.popinstext,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.grey.shade200,
-                              ),
-                              child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please pincode';
-                                  }
-                                  return null;
-                                },
-                                controller: profilecontroller.pincodeController,
-                                decoration: InputDecoration(
-                                  hintText: "78980",
-                                  hintStyle: TextStyle(
-                                    color: MyColors.black,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: MyColors.black,
-                                ),
-                              ),
-                            ),
-                          ),
+
+                          // Padding(
+                          //   padding: const EdgeInsets.only(left:15.0,),
+                          //   child:   Text("Address",style:  CustomTextStyle.popinstext,),
+                          // ),
+
+                          //                 Padding(
+                          //                   padding: const EdgeInsets.all(8.0),
+                          //                   child: Container(
+                          //                     height: 50,
+                          //                     //                    width: 335,
+                          //                     // height: 45,
+                          //                    decoration: BoxDecoration(
+                          //                       borderRadius: BorderRadius.circular(50),
+                          //                       color: Colors.grey.shade200,
+                          //                     ), child: TextFormField(
+                          //                       validator: (value) {
+                          //                         if (value == null || value.isEmpty) {
+                          //                           return 'Please enter your address';
+                          //                         }
+                          //                         return null;
+                          //                       },
+                          //                       controller:
+                          //                           profilecontroller.addressController,
+                          //                       decoration: InputDecoration(
+                          //                         hintText: "Mumbai",
+                          //                         hintStyle: TextStyle(
+                          //                           color: MyColors.black,
+                          //                         ),
+                          //                         contentPadding: EdgeInsets.symmetric(
+                          //                             horizontal: 20, vertical: 10),
+                          //                         border: InputBorder.none,
+                          //                         enabledBorder: InputBorder.none,
+                          //                         focusedBorder: InputBorder.none,
+                          //                       ),
+                          //                       style: TextStyle(
+                          //                         fontSize: 16,
+                          //                         color: MyColors.black,
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+
+                          //   Padding(
+                          //   padding: const EdgeInsets.only(left:15.0,),
+                          //   child:   Text("Pincode",style:  CustomTextStyle.popinstext,),
+                          // ),
+                          //                Padding(
+                          //                   padding: const EdgeInsets.all(8.0),
+                          //                   child: Container(
+                          //                     height: 50,
+                          //                     decoration: BoxDecoration(
+                          //                       borderRadius: BorderRadius.circular(50),
+                          //                       color: Colors.grey.shade200,
+                          //                     ),
+                          //                     child: TextFormField(
+                          //                       validator: (value) {
+                          //                         if (value == null || value.isEmpty) {
+                          //                           return 'Please pincode';
+                          //                         }
+                          //                         return null;
+                          //                       },
+                          //                       controller: profilecontroller
+                          //                           .pincodeController,
+                          //                       decoration: InputDecoration(
+                          //                         hintText: "78980",
+                          //                          hintStyle: TextStyle(
+                          //                           color: MyColors.black,
+                          //                         ),
+                          //                         contentPadding: EdgeInsets.symmetric(
+                          //                             horizontal: 20, vertical: 10),
+                          //                         border: InputBorder.none,
+                          //                         enabledBorder: InputBorder.none,
+                          //                         focusedBorder: InputBorder.none,
+                          //                       ),
+                          //                       style: TextStyle(
+                          //                         fontSize: 16,
+                          //                         color: MyColors.black,
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+
                           SizedBox(height: 10),
                           GestureDetector(
                             onTap: () async {

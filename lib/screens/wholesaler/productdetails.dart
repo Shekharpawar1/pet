@@ -9,6 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/wholereview_controller.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
@@ -16,6 +18,7 @@ import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/screens/wholesaler/ordersummary.dart';
 import 'package:pet/screens/wholesaler/payment.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -34,128 +37,30 @@ class ProductDetailswhole extends StatefulWidget {
 class _ProductDetailswholeState extends State<ProductDetailswhole> {
   WholeProductDetailsController wholeproductdetailsController =
       Get.put(WholeProductDetailsController());
-  WholeReviewController wholeReviewController =
+       final WholeReviewController wholereviewcontroller =
       Get.put(WholeReviewController());
+       WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
+  // WholeReviewController wholeReviewController =
+  //     Get.put(WholeReviewController());
   MyCartWholeController mycartwholeController =
       Get.put(MyCartWholeController());
+      WholeMyOrderController wholemyordercontroller =
+      Get.put(WholeMyOrderController());
   List kg = [1, 2, 5];
   //  var imagePath =
   //       "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${widget.itemdetails.image ?? ""}";
   @override
   Widget build(BuildContext context) {
-    wholeproductdetailsController.isProductInCart();
+    // wholeproductdetailsController.isProductInCart();
     var imagePath =
         // "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
         "${Constants.BASE_URL}/storage/app/public/product/${wholeproductdetailsController!.productdetailwholemodel!.data!.image ?? ''}";
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: MyColors.lightbg,
-            leading: InkWell(
-              onTap: () {
-                Get.back();
-              },
-              child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-                  child: Icon(Icons.arrow_back_ios_new_outlined,
-                      color: MyColors.black)),
-            ),
-            actions: [
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(NotificationWhole());
-                      },
-                      child: Center(
-                        child: Icon(Icons.notifications, color: MyColors.black),
-                      )),
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ("5").toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(width: 20),
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        mycartwholeController.init();
-                        Get.to(AddToCardwhole());
-                        // Get.to(const AddToCardUser());
-                      },
-                      child: Center(
-                          child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          GetBuilder<MyCartWholeController>(
-                              init: mycartwholeController,
-                              builder: (_) {
-                                return 
-                                mycartwholeController
-                                                .wholemycartmodel == null ? SizedBox() :
-                                Positioned(
-                                    top: 3.0,
-                                    right: 4.0,
-                                    child: Center(
-                                      child: Text(
-                                        (mycartwholeController
-                                                .wholemycartmodel!.data!.length)
-                                            .toString(),
-                                        // list.length.toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 8.0,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ));
-                              }),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              )
-            ],
-            // shape: RoundedRectangleBorder(
-            //   borderRadius: BorderRadius.vertical(
-            //     bottom: Radius.circular(20),
-            //   ),
-            // ),
-          ),
-          body: ListView(
+           appBar: CustomAppBarWholeback(
+       
+      ),body: ListView(
             shrinkWrap: true,
             primary: true,
             children: [
@@ -181,104 +86,143 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                               .error), // Replace with your own error widget
                         ),
                       )),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20.0),
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Icon(
-                          Icons.favorite_outline,
-                        )),
-                  ),
+                   InkWell(
+                                                  onTap: () {
+                                                    wholehomecontroller
+                                                        .addItemToWishList(
+                                                             wholeproductdetailsController!.productdetailwholemodel!.data!.id!);
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: Icon(wholehomecontroller
+                                                                .wishListItemsId
+                                                                .contains(
+                                                                   wholeproductdetailsController!.productdetailwholemodel!.data!.id!)
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_border,color:Colors.red)),
+                                                  ),
+                                                ),
+
+                    
                 ],
               ),
               // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Padding(
                 padding: EdgeInsets.all(20.0),
-                child: Row(
-                  children: kg
-                      .sublist(0, 3)
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              // var tab = e
-                              //
-                              //  e  *  ( widget.itemdetails.price) ;
-                              //  wholeproductdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-                            },
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        color: wholeproductdetailsController
-                                                .isAdding
-                                            ? MyColors.pink
-                                            : MyColors.grey,
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: imagePath,
-                                        width: 61,
-                                        height: 75,
-                                        placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(),
-                                        ), // Replace with your own placeholder widget
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons
-                                                .error), // Replace with your own error widget
+                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: kg
+                          .sublist(0, 3)
+                          .map(
+                            (e) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  // var tab = e
+                                  //
+                                  //  e  *  ( widget.itemdetails.price) ;
+                                  //  wholeproductdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                                },
+                                child: Container(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        height: 60,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                            color: wholeproductdetailsController
+                                                    .isAdding
+                                                ? MyColors.pink
+                                                : MyColors.grey,
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl: imagePath,
+                                            width: 61,
+                                            height: 75,
+                                            placeholder: (context, url) => Center(
+                                              child: CircularProgressIndicator(),
+                                            ), // Replace with your own placeholder widget
+                                            errorWidget: (context, url, error) =>
+                                                Icon(Icons
+                                                    .error), // Replace with your own error widget
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      // SizedBox(
+                                      //   height: 5,
+                                      // ),
+                                      // Text("$e Kg",
+                                      //     style: CustomTextStyle.popinssmall0)
+                                    ],
                                   ),
-                                  // SizedBox(
-                                  //   height: 5,
-                                  // ),
-                                  // Text("$e Kg",
-                                  //     style: CustomTextStyle.popinssmall0)
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  // [
-                  //   Container(
-                  //     child: Column(
-                  //       children: [
-                  //         Container(
-                  //           height: 60,
-                  //           width: 60,
-                  //           decoration: BoxDecoration(
-                  //               color: MyColors.pink,
-                  //               borderRadius: BorderRadius.circular(15)),
-                  //           child: Padding(
-                  //             padding: const EdgeInsets.all(8.0),
-                  //             child: CachedNetworkImage(
-                  //               imageUrl: imagePath,
-                  //               width: 61,
-                  //               height: 75,
-                  //               placeholder: (context, url) => Center(
-                  //                 child: CircularProgressIndicator(),
-                  //               ), // Replace with your own placeholder widget
-                  //               errorWidget: (context, url, error) => Icon(Icons
-                  //                   .error), // Replace with your own error widget
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           height: 5,
-                  //         ),
-                  //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-                  //       ],
-                  //     ),
-                  //   ),
-                  //  ],
+                          )
+                          .toList(),
+                      // [
+                      //   Container(
+                      //     child: Column(
+                      //       children: [
+                      //         Container(
+                      //           height: 60,
+                      //           width: 60,
+                      //           decoration: BoxDecoration(
+                      //               color: MyColors.pink,
+                      //               borderRadius: BorderRadius.circular(15)),
+                      //           child: Padding(
+                      //             padding: const EdgeInsets.all(8.0),
+                      //             child: CachedNetworkImage(
+                      //               imageUrl: imagePath,
+                      //               width: 61,
+                      //               height: 75,
+                      //               placeholder: (context, url) => Center(
+                      //                 child: CircularProgressIndicator(),
+                      //               ), // Replace with your own placeholder widget
+                      //               errorWidget: (context, url, error) => Icon(Icons
+                      //                   .error), // Replace with your own error widget
+                      //             ),
+                      //           ),
+                      //         ),
+                      //         SizedBox(
+                      //           height: 5,
+                      //         ),
+                      //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+                      //       ],
+                      //     ),
+                      //   ),
+                      //  ],
+                    ),
+                  
+                   Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(Icons.crop_square_sharp, color:(wholeproductdetailsController
+                                                  .productdetailwholemodel!
+                                                  .data!
+                                                  .veg ==
+                                              1)
+                                          ? Colors.red:Colors.green, size: 30,),
+            Icon(Icons.circle, color:(wholeproductdetailsController
+                                                  .productdetailwholemodel!
+                                                  .data!
+                                                  .veg ==
+                                              1)
+                                          ? Colors.red: Colors.green, size: 10),
+          ],
+        ),
+             
+                  ],
                 ),
               ),
 
@@ -730,19 +674,56 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.01),
+                                    SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.01),
                                 Row(
                                   children: [
-                                    Text(
-                                      "Brand",
-                                      style: CustomTextStyle.popinslight,
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "Brand",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.2,
+                                          0.1,
                                     ),
                                     Text(
                                       wholeproductdetailsController
-                                          .productdetailwholemodel!.data!.name
+                                      .productdetailwholemodel!.data!.name
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+ Row(
+                                  children: [
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Petsbreeds",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Text(
+                                      wholeproductdetailsController
+                                      .productdetailwholemodel!.data!.petsbreedsId
                                           .toString(),
                                       style: CustomTextStyle.popinstext,
                                     ),
@@ -763,7 +744,7 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                 Row(
                                   children: [
                                     Text(
-                                      "Flavour",
+                                      "lifeStage",
                                       style: CustomTextStyle.popinslight,
                                     ),
                                     SizedBox(
@@ -771,11 +752,14 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                           0.2,
                                     ),
                                     Text(
-                                      "",
+                                     wholeproductdetailsController
+                                      .productdetailwholemodel!.data!.lifeStageId
+                                          .toString(),
                                       style: CustomTextStyle.popinstext,
                                     ),
                                   ],
                                 ),
+                                // Petsbreeds
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
@@ -790,20 +774,22 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
 
                                 Row(
                                   children: [
-                                    Text(
-                                      "Diet type",
-                                      style: CustomTextStyle.popinslight,
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Diet type",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.2,
+                                          0.10,
                                     ),
                                     Text(
-                                      (wholeproductdetailsController
-                                                  .productdetailwholemodel!
+                                      ( wholeproductdetailsController
+                                      .productdetailwholemodel!
                                                   .data!
                                                   .veg ==
-                                              1)
+                                              0)
                                           ? "Veg"
                                           : "Nonveg",
                                       style: CustomTextStyle.popinstext,
@@ -818,53 +804,56 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                   thickness: 1,
                                   height: 1,
                                 ),
+                                // SizedBox(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.02),
+
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       "Age Range",
+                                //       style: CustomTextStyle.popinslight,
+                                //     ),
+                                //     SizedBox(
+                                //       width: MediaQuery.of(context).size.width *
+                                //           0.18,
+                                //     ),
+                                //     Text(
+                                //       "",
+                                //       // productdetailscontroller.productList.agerange
+                                //       //     .toString(),
+                                //       style: CustomTextStyle.popinstext,
+                                //     ),
+                                //   ],
+                                // ),
+                            
+                                // SizedBox(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.02),
+                                // Divider(
+                                //   color: MyColors.lightdivider,
+                                //   thickness: 1,
+                                //   height: 1,
+                                // ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
 
                                 Row(
                                   children: [
-                                    Text(
-                                      "Age Range",
-                                      style: CustomTextStyle.popinslight,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.18,
-                                    ),
-                                    Text(
-                                      "",
-                                      // wholeproductdetailscontroller.productList.agerange
-                                      //     .toString(),
-                                      style: CustomTextStyle.popinstext,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Divider(
-                                  color: MyColors.lightdivider,
-                                  thickness: 1,
-                                  height: 1,
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Traget Species",
-                                      style: CustomTextStyle.popinslight,
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Traget Species",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.1,
                                     ),
                                     Text(
-                                      wholeproductdetailsController
-                                          .productdetailwholemodel!
+                                       wholeproductdetailsController
+                                      .productdetailwholemodel!
                                           .data!
                                           .module!
                                           .moduleName
@@ -881,29 +870,7 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                   thickness: 1,
                                   height: 1,
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Item From ",
-                                      style: CustomTextStyle.popinslight,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                    ),
-                                    Text(
-                                      "",
-                                      style: CustomTextStyle.popinstext,
-                                    ),
-                                  ],
-                                ),
-                                //           SizedBox(height: MediaQuery.of(context).size.height*0.02),
-                                //  Divider(color: lightdivider,thickness: 1,height: 1,),
-                                SizedBox(
+                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.05),
                                 Row(
@@ -927,126 +894,150 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.01),
-
-                                GetBuilder<WholeReviewController>(
-                                    init: wholeReviewController,
+// wholemyordercontroller.wholemyorderModel ==  null? SizedBox():
+                          
+    GetBuilder<WholeReviewController>(
+                                    init: wholereviewcontroller,
                                     builder: (_) {
-                                      return ListView.builder(
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        itemCount: wholeReviewController
-                                            .getreviewList.length,
-                                        itemBuilder: (context, index) {
-                                          var item = wholeReviewController
-                                              .getreviewList[index];
+                                      return  wholereviewcontroller
+                                                    .wholeReviewModel ==
+                                                null &&
+                                           wholereviewcontroller
+                                                    .wholeReviewModel!.data ==
+                                                null
+                                        // userreviewcontroller.userReviewModel!.data!.isEmpty
+                                        ? SizedBox(): ListView.builder(
+                                           primary: false,
+                                            shrinkWrap: true,
+                                       itemCount: wholereviewcontroller
+                                                    .wholeReviewModel!
+                                                    .data!
+                                                    .length ??
+                                                0,
+                                            itemBuilder: (context, index) {
+                                              var item = wholereviewcontroller
+                                                    .wholeReviewModel!
+                                                  .data![index];
+//                                             print("UserName");
+// print((item.callback![0].userProfile![0].fName??''));
+                                          return
 
-                                          return ListView(
+                                          //  (wholemyordercontroller.wholemyorderModel!.data == null)?SizedBox():
+                                    //  (item.callback![0].userDetails!.comment == null)?SizedBox():
+                                        ListView(
                                             primary: false,
                                             shrinkWrap: true,
                                             children: [
+                                              // Text(
+                                              //   "bbbb",
+                                              //   style: CustomTextStyle
+                                              //       .popinssmall0,
+                                              // ),
+// (e.userDetails!.comment == null) ? Text("No Comment"):
                                               Text(
-                                                item["title"],
+                                                (item.comment??'').toString(),
                                                 style: CustomTextStyle
                                                     .popinssmall0,
                                               ),
                                               SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.01),
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.01),
                                               Row(
-                                                children: [
-                                                  RatingStars(
-                                                    value: wholeReviewController
-                                                        .value!,
-                                                    // onValueChanged: (v) {
-                                                    //   //
-                                                    //   setState(() {
-                                                    //     value = v;
-                                                    //   });
-                                                    // },
-                                                    starBuilder:
-                                                        (index, color) => Icon(
-                                                      Icons.star,
-                                                      color: color,
-                                                      size: 15,
-                                                    ),
-                                                    starCount: 5,
-                                                    starSize: 20,
-                                                    // valueLabelColor: const Color(0xff9b9b9b),
-                                                    // valueLabelTextStyle: const TextStyle(
-                                                    //     color: Colors.white,
-                                                    //     fontWeight: FontWeight.w400,
-                                                    //     fontStyle: FontStyle.normal,
-                                                    //     fontSize: 12.0),
-                                                    // valueLabelRadius: 10,
-                                                    maxValue: 5,
-                                                    starSpacing: 0.5,
-                                                    maxValueVisibility: true,
-                                                    valueLabelVisibility: false,
-                                                    animationDuration: Duration(
-                                                        milliseconds: 5000),
-                                                    // valueLabelPadding:
-                                                    //     const EdgeInsets.symmetric(
-                                                    //         vertical: 1, horizontal: 8),
-                                                    // valueLabelMargin:
-                                                    //     const EdgeInsets.only(right: 8),
-                                                    starOffColor:
-                                                        const Color(0xffe7e8ea),
-                                                    starColor: MyColors.yellow,
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  Image.asset(item["image"],
-                                                      height: 30),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        item["name"],
-                                                        style: CustomTextStyle
-                                                            .popinstext,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons
-                                                                .person_2_outlined,
-                                                            size: 13,
-                                                          ),
-                                                          Text(
-                                                            item["count"],
-                                                            style: CustomTextStyle
-                                                                .popinssmall0,
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
+                                         children: [
+                                           RatingStars(
+                                             value: (item.rating??0).toDouble(),
+                                             // onValueChanged: (v) {
+                                             //   //
+                                             //   setState(() {
+                                             //     value = v;
+                                             //   });
+                                             // },
+                                             starBuilder:
+                                                 (index, color) => Icon(
+                                               Icons.star,
+                                               color: color,
+                                               size: 15,
+                                             ),
+                                             starCount: 5,
+                                             starSize: 20,
+                                             // valueLabelColor: const Color(0xff9b9b9b),
+                                             // valueLabelTextStyle: const TextStyle(
+                                             //     color: Colors.white,
+                                             //     fontWeight: FontWeight.w400,
+                                             //     fontStyle: FontStyle.normal,
+                                             //     fontSize: 12.0),
+                                             // valueLabelRadius: 10,
+                                             maxValue: 5,
+                                             starSpacing: 0.5,
+                                             maxValueVisibility: true,
+                                             valueLabelVisibility: false,
+                                             animationDuration: Duration(
+                                                 milliseconds: 5000),
+                                             // valueLabelPadding:
+                                             //     const EdgeInsets.symmetric(
+                                             //         vertical: 1, horizontal: 8),
+                                             // valueLabelMargin:
+                                             //     const EdgeInsets.only(right: 8),
+                                             starOffColor:
+                                                 const Color(0xffe7e8ea),
+                                             starColor: MyColors.yellow,
+                                           ),
+                                           SizedBox(width: 10),
+                                           // Image.asset(item["image"],
+                                           //     height: 30),
+                                           Column(
+                                             crossAxisAlignment:
+                                                 CrossAxisAlignment
+                                                     .start,
+                                             children: [
+                                               Text(
+                                                 item.userId![0].fName.toString()+" "+  item.userId![0].lName.toString(),
+                                                 style: CustomTextStyle
+                                                     .popinstext,
+                                               ),
+                                               // Row(
+                                               //   children: [
+                                               //     Icon(
+                                               //       Icons
+                                               //           .person_2_outlined,
+                                               //       size: 13,
+                                               //     ),
+                                               //     Text(
+                                               //      ( item.callback![0].itemDetails![0].ratingCount??0).toString(),
+                                               //       style: CustomTextStyle
+                                               //           .popinssmall0,
+                                               //     ),
+                                               //   ],
+                                               // )
+                                             ],
+                                           )
+                                         ],
                                               ),
+                                             
                                               SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.02),
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.02),
                                               Divider(
-                                                color: MyColors.lightdivider,
-                                                thickness: 1,
-                                                height: 1,
+                                         color: MyColors.lightdivider,
+                                         thickness: 1,
+                                         height: 1,
                                               ),
                                               SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.02),
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.02),
                                             ],
                                           );
                                         },
                                       );
-                                    }),
-                                // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                                    }
+                                    ),
+        // // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.04),
@@ -1096,23 +1087,24 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                                     style: CustomTextStyle
                                                         .discounttext),
                                             SizedBox(width: 3),
-                                            Container(
-                                              height: 20,
-                                              width: 40,
-                                              decoration: BoxDecoration(
-                                                  color: MyColors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                      color: MyColors.red)),
-                                              child: Center(
-                                                child: Text(
+                                            // Container(
+                                            //   height: 20,
+                                            //   width: 40,
+                                            //   // decoration: BoxDecoration(
+                                            //   //     color: MyColors.red,
+                                            //   //     borderRadius:
+                                            //   //         BorderRadius.circular(10),
+                                            //   //     border: Border.all(
+                                            //   //         color: MyColors.red)),
+                                            //   child: Center(
+                                                // child:
+                                                 Text(
                                                     // item.discount.toString(),
                                                     "Save${wholeproductdetailsController.productdetailwholemodel!.data!.discount.toString()}%",
                                                     style: CustomTextStyle
-                                                        .popinstextsmal2222),
-                                              ),
-                                            ),
+                                                        .popinstextsmal2222red),
+                                            //   ),
+                                            // ),
                                             SizedBox(width: 10),
                                             wholeproductdetailsController
                                                         .selectedvariants
@@ -1226,17 +1218,23 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                                       // mycartwholeController
                                                       //     .init();
                                                       // Get.to(AddToCardwhole());
-                                                      
-                                                      if (wholeproductdetailsController
-                                                          .isProductInCartBool) {
+                                                     
+                                                      await wholeproductdetailsController
+                                                    .addProduct();
                                                         mycartwholeController.init();
                                                         Get.to(const AddToCardwhole());
-                                                      } else {
-                                                        await wholeproductdetailsController
-                                                            .addProduct();
-                                                        await wholeproductdetailsController
-                                                            .isProductInCart();
-                                                      }
+                                             
+                                                      
+                                                    //   if (wholeproductdetailsController
+                                                    //       .isProductInCartBool) {
+                                                    //       mycartwholeController.init();
+                                                    //    Get.to( AddToCardwhole());
+                                                    //   } else {
+                                                    //       await wholeproductdetailsController
+                                                    // .addProduct();
+                                                    //     await wholeproductdetailsController
+                                                    //         .isProductInCart();
+                                                    //   }
 
                                                       //     wholeproductdetailscontroller.addToCart(
 
@@ -1281,10 +1279,11 @@ class _ProductDetailswholeState extends State<ProductDetailswhole> {
                                                             width: 10,
                                                           ),
                                                           Text(
-                                                            wholeproductdetailsController
-                                                                    .isProductInCartBool
-                                                                ? "Go To Cart"
-                                                                : "Add To Cart",
+                                                            // wholeproductdetailsController
+                                                            //         .isProductInCartBool
+                                                            //     ? "Go To Cart"
+                                                                // : 
+                                                                "Add To Cart",
                                                             style: CustomTextStyle
                                                                 .mediumtextreem,
                                                           )

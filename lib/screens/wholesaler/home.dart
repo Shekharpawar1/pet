@@ -13,15 +13,18 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/profilewhole_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/subcateogries_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/wholesaler/WholeAllbrandPage.dart';
 import 'package:pet/screens/wholesaler/ordersummary.dart';
 import 'package:pet/screens/wholesaler/wholeallcategory.dart';
+import 'package:pet/screens/wholesaler/wholesalerSearchScreen.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/ProductAlllistPage.dart';
 
 import 'package:pet/screens/wholesaler/productdetails.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -46,6 +49,7 @@ class _HomeWholeState extends State<HomeWhole> {
       Get.put(MyCartWholeController());
   WholeSubCategoryController wholesubcategorycontroller =
       Get.put(WholeSubCategoryController());
+      WholeProfileController wholeProfileController = Get.put(WholeProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -55,113 +59,9 @@ class _HomeWholeState extends State<HomeWhole> {
     return Scaffold(
       key: _drawerkey,
       drawer: drawerWholeSaler(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
-
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(NotificationWhole());
-                  },
-                  child: Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ("5").toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    // mycartwholeController.init();
-                    Get.to(AddToCardwhole());
-                    // Get.to(const AddToCardUser());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      GetBuilder<MyCartWholeController>(
-                          init: mycartwholeController,
-                          builder: (_) {
-                            return Positioned(
-                                top: 3.0,
-                                right: 4.0,
-                                child: Center(
-                                  child: Text(
-                                    "5",
-                                    // (mycartwholeController.wholemycartmodel!.data!.length).toString(),
-                                    // list.length.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 8.0,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ));
-                          }),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
+     appBar: CustomAppBarWhole(
+        drawerKey: _drawerkey,
       ),
-
 //       appBar: AppBar(
 //         elevation: 0,
 //         backgroundColor: Colors.transparent,
@@ -228,7 +128,42 @@ class _HomeWholeState extends State<HomeWhole> {
                           style: CustomTextStyle.popinstext,
                         )),
 
-                    GestureDetector(child: Image.asset("assets/image/girl.png"))
+                   GetBuilder<WholeProfileController>(
+              init: wholeProfileController,
+              builder: (_) {
+                return 
+                wholeProfileController
+                              .wholemyprofilemodel == null || wholeProfileController
+                              .wholemyprofilemodel!.data == null || wholeProfileController
+                              .wholemyprofilemodel!.data!.isEmpty ? SizedBox() :
+                Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundColor: Colors.transparent,
+                    child: CachedNetworkImage(
+                      imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                          wholeProfileController
+                              .wholemyprofilemodel!
+                              .data![0].image
+                              .toString(),
+
+                      fit: BoxFit.cover,
+                      // width: 61,
+                      // height: 75,
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(),
+                      ), // Replace with your own placeholder widget
+                      errorWidget: (context, url, error) => Icon(
+                          Icons.error), // Replace with your own error widget
+                    ),
+                    //  Image.asset("assets/image/boyprofile3.png"),
+                  ),
+                );
+
+                // Image.asset("assets/image/girl.png")
+              }),
+        
                     //  SvgPicture.asset("assets/image/girl.svg"),
                   ],
                 ),
@@ -262,7 +197,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                   .wholeBannerModel!.data![index];
 
                               var imagePath =
-                                  "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                  "${Constants.BANNER_IMAGE_PATH}${item.image ?? ""}";
                                   print("=====>>>>>> Banners: $imagePath");
                               return Stack(
                                 children: [
@@ -364,7 +299,11 @@ class _HomeWholeState extends State<HomeWhole> {
 
                         color: MyColors.white,
                       ),
-                      child: TextFormField(
+                      child: TextFormField(onTap: () {
+                          wholehomecontroller.clearSearchData();
+                          Get.to(WholeSalerSearchScreen());
+                        },
+                        readOnly: true,
                         controller: _searchcontroller,
                         style: TextStyle(
                           fontSize: 14,
@@ -649,7 +588,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                                                     item.id!)
                                                             ? Icons.favorite
                                                             : Icons
-                                                                .favorite_border)),
+                                                                .favorite_border,color:Colors.red)),
                                                   ),
                                                 ),
 

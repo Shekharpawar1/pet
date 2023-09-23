@@ -20,6 +20,7 @@ class ProductDetailsController extends GetxController {
   var userId;
 double? totalAmount;
   bool showLoading = false;
+  int? selectImages = 0;
 // ProductDetailsModel? productdetailsmodel;
 // var selectedVariants ;
 
@@ -30,7 +31,34 @@ double? totalAmount;
   }
 
 
+ var imagePath;
+     var imagesPath;
 
+    // if (productdetailmodel != null) {
+
+    void  selectImageUpate( ){
+
+imagesPath =
+          "${Constants.BASE_URL}/storage/app/public/product/${productdetailmodel!.data!.images??''}";
+      imagePath =
+          "${Constants.BASE_URL}/storage/app/public/product/${productdetailmodel!.data!.images![selectImages??0].toString()}";
+    
+    print(imagePath);
+    update();
+      }
+      
+          
+    // } else {
+    //   imagePath = "";
+    // }
+    
+ selectImagesProduct(int index) {
+    selectImages = index;
+    print("Images");
+    print(selectImages);
+    print(productdetailmodel!.data!.images![selectImages??0]);
+    update();
+  }
   variantFile.Variations? selectedvariants;
 
   Future<void> updateVariants(variantFile.Variations variants) async {

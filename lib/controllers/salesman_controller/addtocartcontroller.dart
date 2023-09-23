@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/salesman_controller/addresscontroller.dart';
 import 'package:pet/controllers/salesman_controller/salescoupons_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/models/salesmanModel/addAddressModel.dart';
 
 import 'package:pet/models/salesmanModel/addressdeleteModel.dart';
@@ -32,6 +33,10 @@ var sellerId = GetStorage().read("sellerid");
   String? paymenttype;
   String? paymentStatus;
   String? orderStatus;
+  int? isselected1;
+    String? paymentdays1;
+  String? paymentmethod1;
+  bool? gst1;
   var tex;
   List<Map<String, dynamic>> cartList = [];
 // void  incrementSize(){
@@ -65,6 +70,15 @@ paymentStatus = paymentstatus;
     print("paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
 
+    void addpaymentPopup(String paymentday,bool gst, String paymnetmethod ) {
+    paymentdays1 = paymentday;
+gst1 = gst;
+    paymentmethod1  = paymnetmethod;
+// orderStatus = gst;
+    update();
+    print("paymentdays1: ${paymentdays1},gst1: ${gst} paymentmethod: ${paymnetmethod}",);
+  }
+
   void adddiscount(int disprice, int price) {
     disCount = disprice;
     price = price;
@@ -78,7 +92,7 @@ paymentStatus = paymentstatus;
     super.onInit();
 
     init();
-     wholesellerID = storage.read('wholesalerid');
+     wholesellerID = storage.read('wholesalerId');
      print("WholeSellerIDCart ==>${wholesellerID}");
        print("SellerIDCart ==>${sellerId}");
   //  wholesellerID = storage.read('wholesalerid');
@@ -157,7 +171,7 @@ paymentStatus = paymentstatus;
     try {
       // productdeatils
       mycartmodel = SalesMyCartListModel.fromJson(
-          await ApiHelper.getApi(getUserMyCartUrl + "${wholesellerID}"));
+          await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerId')}"));
       print("====?//${mycartmodel}");
       sizes = mycartmodel!.data!.map((e) => e.quantity).toList();
       List<Map<String, dynamic>> cartJsonList =
@@ -179,7 +193,7 @@ paymentStatus = paymentstatus;
       //   print("total${total}");
       // });
 
-      print("URL====${getUserMyCartUrl + "${wholesellerID}"}");
+      print("URL====${getUserMyCartUrl + "${storage.read('wholesalerId')}"}");
       print(mycartmodel);
       cartlistLoaded = true;
       update();
@@ -229,10 +243,10 @@ SalesAllAddressListModel? allAddresslistModel;
     try {
       // productdeatils
       allAddresslistModel = SalesAllAddressListModel.fromJson(
-          await ApiHelper.getApi(getUserAllAddressUrl + "$wholesellerID"));
+          await ApiHelper.getApi(getUserAllAddressUrl + "${storage.read('wholesalerId')}"));
       print(allAddresslistModel);
 
-      print(getUserAllAddressUrl + "$wholesellerID");
+      print(getUserAllAddressUrl + "${storage.read('wholesalerId')}");
       addresslistLoaded = true;
       update();
     } catch (e) {
@@ -277,13 +291,33 @@ SalesAllAddressListModel? allAddresslistModel;
     showLoading = true;
     update();
 
+    
+  MyCartWholeController mycartwholeController = Get.put(MyCartWholeController());
+
+    String sendingAddr = "";
+    int sendingAddrId = 0;
+    if (mycartwholeController.wholeallAddresslistModel == null ||
+        mycartwholeController.wholeallAddresslistModel!.data == null ||
+        mycartwholeController.wholeallAddresslistModel!.data!.isEmpty) {
+      sendingAddr = "Demo address";
+    } else {
+      sendingAddr =
+          "${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].city ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].area ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].houseNo ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].landmark ?? ""}";
+      print(sendingAddr);
+      // sendingAddrId = "${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0]} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].area ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].houseNo ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].landmark ?? ""}";
+      // print(sendingAddr);
+    }
+
     Map<String, dynamic> body = {
-      "user_id": wholesellerID.toString(),
+      "user_id": storage.read('wholesalerId').toString(),
       "seller_id":sellerId.toString(),
-      "coupon_discount_amount": (couponsController.maxAmount!).toString(),
+      "coupon_discount_amount":  (couponsController.maxAmount ?? "0").toString(),
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": paymentStatus.toString(),
       "order_status": "pending",
+      "payment_mode": paymentmethod1.toString(),
+      "gst_bill": gst1,
+      "payment_day": paymentdays1.toString(),
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
@@ -298,14 +332,14 @@ SalesAllAddressListModel? allAddresslistModel;
       "store_id": 1.toString(),
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
-      "delivery_address": "Delhi city 389",
+      "delivery_address": sendingAddr,
       // (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .area ??
       //                           '').toString(),
       "item_campaign_id": "",
-      "order_amount": (((total) + (total * 0.05)) -
-              (double.parse(couponsController.maxAmount!)))
+      "order_amount":  (((total) + (total * 0.05)) -
+              (double.parse(couponsController.maxAmount ?? "0")))
           .toString(),
       "cart": cartList,
     };

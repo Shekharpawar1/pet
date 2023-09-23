@@ -30,13 +30,17 @@ class WholeMyOrderModel {
 class Data {
   int? id;
   int? userId;
-  String? orderAmount;
+  int? sellerId;
+String? orderAmount;
   String? couponDiscountAmount;
   String? couponDiscountTitle;
   String? paymentStatus;
   String? orderStatus;
   String? totalTaxAmount;
   String? paymentMethod;
+  String? paymentDay;
+  String? gstBill;
+  String? paymentMode;
   String? transactionReference;
   int? deliveryAddressId;
   String? deliveryManId;
@@ -85,6 +89,7 @@ class Data {
   Data(
       {this.id,
       this.userId,
+      this.sellerId,
       this.orderAmount,
       this.couponDiscountAmount,
       this.couponDiscountTitle,
@@ -92,6 +97,9 @@ class Data {
       this.orderStatus,
       this.totalTaxAmount,
       this.paymentMethod,
+      this.paymentDay,
+      this.gstBill,
+      this.paymentMode,
       this.transactionReference,
       this.deliveryAddressId,
       this.deliveryManId,
@@ -140,6 +148,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
+    sellerId = json['seller_id'];
     orderAmount = json['order_amount'];
     couponDiscountAmount = json['coupon_discount_amount'];
     couponDiscountTitle = json['coupon_discount_title'];
@@ -147,6 +156,9 @@ class Data {
     orderStatus = json['order_status'];
     totalTaxAmount = json['total_tax_amount'];
     paymentMethod = json['payment_method'];
+    paymentDay = json['payment_day'];
+    gstBill = json['gst_bill'];
+    paymentMode = json['payment_mode'];
     transactionReference = json['transaction_reference'];
     deliveryAddressId = json['delivery_address_id'];
     deliveryManId = json['delivery_man_id'];
@@ -202,6 +214,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
+    data['seller_id'] = this.sellerId;
     data['order_amount'] = this.orderAmount;
     data['coupon_discount_amount'] = this.couponDiscountAmount;
     data['coupon_discount_title'] = this.couponDiscountTitle;
@@ -209,6 +222,9 @@ class Data {
     data['order_status'] = this.orderStatus;
     data['total_tax_amount'] = this.totalTaxAmount;
     data['payment_method'] = this.paymentMethod;
+    data['payment_day'] = this.paymentDay;
+    data['gst_bill'] = this.gstBill;
+    data['payment_mode'] = this.paymentMode;
     data['transaction_reference'] = this.transactionReference;
     data['delivery_address_id'] = this.deliveryAddressId;
     data['delivery_man_id'] = this.deliveryManId;
@@ -267,15 +283,17 @@ class Callback {
   List<ItemDetails>? itemDetails;
   String? variation;
   String? addOns;
-  String? discountOnItem;
+  Null? discountOnItem;
   String? discountType;
   int? quantity;
   String? taxAmount;
   String? variant;
   String? createdAt;
   String? updatedAt;
-  String? itemCampaignId;
+  Null? itemCampaignId;
   String? totalAddOnPrice;
+  UserDetails? userDetails;
+  List<UserProfile>? userProfile;
 
   Callback(
       {this.id,
@@ -293,7 +311,9 @@ class Callback {
       this.createdAt,
       this.updatedAt,
       this.itemCampaignId,
-      this.totalAddOnPrice});
+      this.totalAddOnPrice,
+      this.userDetails,
+      this.userProfile});
 
   Callback.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -317,6 +337,15 @@ class Callback {
     updatedAt = json['updated_at'];
     itemCampaignId = json['item_campaign_id'];
     totalAddOnPrice = json['total_add_on_price'];
+    userDetails = json['user_details'] != null
+        ? new UserDetails.fromJson(json['user_details'])
+        : null;
+    if (json['user_profile'] != null) {
+      userProfile = <UserProfile>[];
+      json['user_profile'].forEach((v) {
+        userProfile!.add(new UserProfile.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -339,22 +368,215 @@ class Callback {
     data['updated_at'] = this.updatedAt;
     data['item_campaign_id'] = this.itemCampaignId;
     data['total_add_on_price'] = this.totalAddOnPrice;
+    if (this.userDetails != null) {
+      data['user_details'] = this.userDetails!.toJson();
+    }
+    if (this.userProfile != null) {
+      data['user_profile'] = this.userProfile!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }
 
 class ItemDetails {
   String? image;
+  int? ratingCount;
 
-  ItemDetails({this.image});
+  ItemDetails({this.image, this.ratingCount});
 
   ItemDetails.fromJson(Map<String, dynamic> json) {
     image = json['image'];
+    ratingCount = json['rating_count'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['image'] = this.image;
+    data['rating_count'] = this.ratingCount;
+    return data;
+  }
+}
+
+class UserDetails {
+  int? rating;
+  String? comment;
+
+  UserDetails({this.rating, this.comment});
+
+  UserDetails.fromJson(Map<String, dynamic> json) {
+    rating = json['rating'];
+    comment = json['comment'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['rating'] = this.rating;
+    data['comment'] = this.comment;
+    return data;
+  }
+}
+
+class UserProfile {
+  int? id;
+  int? role;
+  Null? sellerId;
+  String? fName;
+  String? lName;
+  String? phone;
+  String? email;
+  String? dateofbirth;
+  String? state;
+  String? city;
+  String? businessName;
+  String? aadharNumber;
+  String? gstNumber;
+  String? pincode;
+  Null? upload1;
+  Null? upload2;
+  String? image;
+  String? verified;
+  Null? payLaterTime;
+  Null? payLaterAmount;
+  Null? payLaterLimit;
+  int? isPhoneVerified;
+  Null? emailVerifiedAt;
+  String? password;
+  Null? rememberToken;
+  String? createdAt;
+  String? updatedAt;
+  Null? interest;
+  Null? cmFirebaseToken;
+  int? status;
+  int? orderCount;
+  Null? loginMedium;
+  Null? socialId;
+  int? zoneId;
+  String? walletBalance;
+  String? loyaltyPoint;
+  Null? refCode;
+  String? currentLanguageKey;
+
+  UserProfile(
+      {this.id,
+      this.role,
+      this.sellerId,
+      this.fName,
+      this.lName,
+      this.phone,
+      this.email,
+      this.dateofbirth,
+      this.state,
+      this.city,
+      this.businessName,
+      this.aadharNumber,
+      this.gstNumber,
+      this.pincode,
+      this.upload1,
+      this.upload2,
+      this.image,
+      this.verified,
+      this.payLaterTime,
+      this.payLaterAmount,
+      this.payLaterLimit,
+      this.isPhoneVerified,
+      this.emailVerifiedAt,
+      this.password,
+      this.rememberToken,
+      this.createdAt,
+      this.updatedAt,
+      this.interest,
+      this.cmFirebaseToken,
+      this.status,
+      this.orderCount,
+      this.loginMedium,
+      this.socialId,
+      this.zoneId,
+      this.walletBalance,
+      this.loyaltyPoint,
+      this.refCode,
+      this.currentLanguageKey});
+
+  UserProfile.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    role = json['role'];
+    sellerId = json['seller_id'];
+    fName = json['f_name'];
+    lName = json['l_name'];
+    phone = json['phone'];
+    email = json['email'];
+    dateofbirth = json['dateofbirth'];
+    state = json['state'];
+    city = json['city'];
+    businessName = json['business_name'];
+    aadharNumber = json['aadhar_number'];
+    gstNumber = json['gst_number'];
+    pincode = json['pincode'];
+    upload1 = json['upload_1'];
+    upload2 = json['upload_2'];
+    image = json['image'];
+    verified = json['verified'];
+    payLaterTime = json['pay_later_time'];
+    payLaterAmount = json['pay_later_amount'];
+    payLaterLimit = json['pay_later_limit'];
+    isPhoneVerified = json['is_phone_verified'];
+    emailVerifiedAt = json['email_verified_at'];
+    password = json['password'];
+    rememberToken = json['remember_token'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    interest = json['interest'];
+    cmFirebaseToken = json['cm_firebase_token'];
+    status = json['status'];
+    orderCount = json['order_count'];
+    loginMedium = json['login_medium'];
+    socialId = json['social_id'];
+    zoneId = json['zone_id'];
+    walletBalance = json['wallet_balance'];
+    loyaltyPoint = json['loyalty_point'];
+    refCode = json['ref_code'];
+    currentLanguageKey = json['current_language_key'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['role'] = this.role;
+    data['seller_id'] = this.sellerId;
+    data['f_name'] = this.fName;
+    data['l_name'] = this.lName;
+    data['phone'] = this.phone;
+    data['email'] = this.email;
+    data['dateofbirth'] = this.dateofbirth;
+    data['state'] = this.state;
+    data['city'] = this.city;
+    data['business_name'] = this.businessName;
+    data['aadhar_number'] = this.aadharNumber;
+    data['gst_number'] = this.gstNumber;
+    data['pincode'] = this.pincode;
+    data['upload_1'] = this.upload1;
+    data['upload_2'] = this.upload2;
+    data['image'] = this.image;
+    data['verified'] = this.verified;
+    data['pay_later_time'] = this.payLaterTime;
+    data['pay_later_amount'] = this.payLaterAmount;
+    data['pay_later_limit'] = this.payLaterLimit;
+    data['is_phone_verified'] = this.isPhoneVerified;
+    data['email_verified_at'] = this.emailVerifiedAt;
+    data['password'] = this.password;
+    data['remember_token'] = this.rememberToken;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['interest'] = this.interest;
+    data['cm_firebase_token'] = this.cmFirebaseToken;
+    data['status'] = this.status;
+    data['order_count'] = this.orderCount;
+    data['login_medium'] = this.loginMedium;
+    data['social_id'] = this.socialId;
+    data['zone_id'] = this.zoneId;
+    data['wallet_balance'] = this.walletBalance;
+    data['loyalty_point'] = this.loyaltyPoint;
+    data['ref_code'] = this.refCode;
+    data['current_language_key'] = this.currentLanguageKey;
     return data;
   }
 }

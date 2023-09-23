@@ -7,14 +7,14 @@ import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
-class PaymentDoneScreen extends StatefulWidget {
-  const PaymentDoneScreen({super.key});
+class PartnerPaymentDoneScreen extends StatefulWidget {
+  const PartnerPaymentDoneScreen({super.key});
 
   @override
-  State<PaymentDoneScreen> createState() => _PaymentDoneScreenState();
+  State<PartnerPaymentDoneScreen> createState() => _PartnerPaymentDoneScreenState();
 }
 
-class _PaymentDoneScreenState extends State<PaymentDoneScreen> {
+class _PartnerPaymentDoneScreenState extends State<PartnerPaymentDoneScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

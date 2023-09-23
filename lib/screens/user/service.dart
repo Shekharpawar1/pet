@@ -8,6 +8,7 @@ import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/service_controller.dart';
 import 'package:pet/screens/user/drawer.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 
@@ -53,108 +54,101 @@ class _ServicePageState extends State<ServicePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerkey,
-      drawer: const drawer(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-        title: Center(
-            child: Text(
-          "Services",
-          style: CustomTextStyle.appbartext,
-        )),
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(const NotificationUser());
-                  },
-                  child: Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              notificationcontroller.userNotificationModel ==
-                                          null ||
-                                      notificationcontroller
-                                              .userNotificationModel!.state ==
-                                          null
-                                  ? ""
-                                  : notificationcontroller
-                                      .userNotificationModel!.state!.length
-                                      .toString(),
+      drawer: drawer(),
+       appBar:CustomAppBar(drawerKey: _drawerkey),
+//       appBar: AppBar(
+//         elevation: 0,
+//         backgroundColor: Colors.transparent,
+//         leading: Padding(
+//           padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
+//           child: GestureDetector(
+//             onTap: () {
+//               _drawerkey.currentState!.openDrawer();
+//             },
+//             child: Image.asset(
+//               "assets/image/menu2.png",
+//             ),
+//           ),
+//         ),
+//         title: Center(
+//             child: Text(
+//           "Services",
+//           style: CustomTextStyle.appbartext,
+//         )),
+//         actions: [
+//           Stack(
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.to(NotificationUser());
+//                   },
+//                   child: Center(
+//                     child: Icon(Icons.notifications, color: MyColors.black),
+//                   )),
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       Positioned(
+//                           top: 3.0,
+//                           right: 4.0,
+//                           child: Center(
+//                             child: Text(
+//                               ('5').toString(),
+//                               // list.length.toString(),
+//                               style: TextStyle(
+//                                   color: Colors.white,
+//                                   fontSize: 8.0,
+//                                   fontWeight: FontWeight.w500),
+//                             ),
+//                           )),
+//                     ],
+//                   )),
+//             ],
+//           ),
+//           SizedBox(width: 20),
+//           Stack(
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.to(AddToCardUser());
+//                   },
+//                   child:
+//                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
 
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(const AddToCardUser());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-      ),
+// // (getCardModel!.data!.isEmpty)?
+// // SizedBox():
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       Positioned(
+//                           top: 3.0,
+//                           right: 4.0,
+//                           child: Center(
+//                             child: Text(
+//                               ('5').toString(),
+//                               // list.length.toString(),
+//                               style: TextStyle(
+//                                   color: Colors.white,
+//                                   fontSize: 8.0,
+//                                   fontWeight: FontWeight.w500),
+//                             ),
+//                           )),
+//                     ],
+//                   )),
+//             ],
+//           ),
+//           SizedBox(
+//             width: 20,
+//           )
+//         ],
+//       ),
+      
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
