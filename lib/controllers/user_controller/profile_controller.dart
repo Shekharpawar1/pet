@@ -168,6 +168,7 @@ class ProfileController extends GetxController {
       "l_name": lastNameController.text,
       "email": emailController.text,
       "phone": numberController.text,
+      "city": addressController.text,
       // "image": selectedImagePath.toString(),
     };
     String UpdateProfile = Constants.USER_UPDATE_PROFILE;
