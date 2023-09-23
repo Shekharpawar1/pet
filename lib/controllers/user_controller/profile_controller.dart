@@ -136,14 +136,18 @@ class ProfileController extends GetxController {
       // myprofilemodel!.data!.forEach((element) {
 
       //  });
-      print("USERPROFILE URL" +getUserProfile + "$userId");
+      print("USERPROFILE URL" + getUserProfile + "$userId");
       // selectedImage = myprofilemodel!.data![0].image.toString();/
       fullNameController.text = myprofilemodel!.data![0].fName.toString();
       lastNameController.text = myprofilemodel!.data![0].lName.toString();
       numberController.text = myprofilemodel!.data![0].phone.toString();
       emailController.text = myprofilemodel!.data![0].email.toString();
-      addressController.text = "Mumbai";
-      pincodeController.text = "420001";
+      String city = myprofilemodel!.data![0].city == null
+          ? ""
+          : myprofilemodel!.data![0].city.toString();
+
+      addressController.text = city;
+      // pincodeController.text = "";
 
       myprofileLoaded = true;
       update();
