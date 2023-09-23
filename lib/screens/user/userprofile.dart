@@ -28,8 +28,8 @@ class UserProfile extends StatefulWidget {
 ProfileController profilecontroller = Get.put(ProfileController());
 
 MyCartController mycartController = Get.put(MyCartController());
-  NotificationController notificationcontroller =
-      Get.put(NotificationController());
+NotificationController notificationcontroller =
+    Get.put(NotificationController());
 final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 
 // final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
@@ -69,35 +69,50 @@ class _UserProfileState extends State<UserProfile> {
                                     child: CircleAvatar(
                                       radius: 60,
                                       backgroundColor: Colors.transparent,
-                                      child: (profilecontroller.myprofilemodel!
-                                                  .data![0].image ==
-                                              null)
-                                          ? Image.file(
-                                              profilecontroller.selectedImage!)
-                                          : CachedNetworkImage(
-                                              imageUrl:
-                                                  "${Constants.USERPROFILE_IMAGEPATH_URL}" +
-                                                      profilecontroller
-                                                          .myprofilemodel!
-                                                          .data![0]
-                                                          .image
-                                                          .toString(),
-                                              // imageUrl:
-                                              //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
-                                              //         profilecontroller.profileImage.toString(),
-                                              progressIndicatorBuilder:
-                                                  (context, url,
-                                                          downloadProgress) =>
-                                                      CircularProgressIndicator(
-                                                          color: Colors
-                                                              .grey.shade700,
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress),
-                                              errorWidget:
-                                                  (context, url, error) =>
-                                                      Icon(Icons.error),
-                                            ),
+                                      child: (profilecontroller
+                                                      .myprofilemodel ==
+                                                  null &&
+                                              profilecontroller.selectedImage ==
+                                                  null)
+                                          ? Image.asset(
+                                              "assets/image/boyprofile3.png")
+                                          : (profilecontroller.myprofilemodel!
+                                                          .data![0].image ==
+                                                      null) ||
+                                                  profilecontroller
+                                                          .selectedImage ==
+                                                      null
+                                              ? Image.asset(
+                                                  "assets/image/boyprofile3.png")
+                                              : profilecontroller
+                                                          .selectedImage !=
+                                                      null
+                                                  ? Image.file(profilecontroller
+                                                      .selectedImage!)
+                                                  : CachedNetworkImage(
+                                                      imageUrl:
+                                                          "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                              profilecontroller
+                                                                  .myprofilemodel!
+                                                                  .data![0]
+                                                                  .image
+                                                                  .toString(),
+                                                      // imageUrl:
+                                                      //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                      //         profilecontroller.profileImage.toString(),
+                                                      progressIndicatorBuilder: (context,
+                                                              url,
+                                                              downloadProgress) =>
+                                                          CircularProgressIndicator(
+                                                              color: Colors.grey
+                                                                  .shade700,
+                                                              value:
+                                                                  downloadProgress
+                                                                      .progress),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Icon(Icons.error),
+                                                    ),
                                       //  Image.asset("assets/image/boyprofile3.png"),
                                     ),
                                   ),

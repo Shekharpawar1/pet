@@ -196,8 +196,8 @@ class _AddPetState extends State<AddPet> {
               init: userMyPetListController,
               // initState: (_) {},
               builder: (_) {
-                return userMyPetListController.petListModel != null ||
-                        userMyPetListController.petListModel!.data != null
+                return userMyPetListController.petListModel == null ||
+                        userMyPetListController.petListModel!.data == null
                     || userMyPetListController
                                       .petListModel!.data!.isEmpty?
             Center(child: Image.asset("assets/image/dogImage.gif"))
