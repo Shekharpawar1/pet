@@ -10,6 +10,7 @@ import 'package:pet/controllers/salesman_controller/order_tracker_controller.dar
 import 'package:pet/controllers/salesman_controller/salesreview_controller.dart';
 import 'package:pet/screens/salesman/locationScreenSalesMan.dart';
 import 'package:pet/screens/salesman/notification.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -33,41 +34,42 @@ class _OrderDetailssalesState extends State<OrderDetailssales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left:15.0,top: 15,bottom: 15),
-            child: GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },child:Icon(Icons.arrow_left,color:MyColors.black)
-            ),
-          ),
-          title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child:Text("Order Details",style: TextStyle(fontSize: 16,color: MyColors.black,
-fontWeight: FontWeight.w700,),)
-          ),
-          actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
+       appBar: CustomAppBarSalesWholeback( title: "Order Details",),
+//        AppBar(
+//             elevation: 0,
+//           backgroundColor:Colors.transparent,
+//           leading: Padding(
+//             padding: const EdgeInsets.only(left:15.0,top: 15,bottom: 15),
+//             child: GestureDetector(
+//                 onTap: (){
+//                   Navigator.pop(context);
+//                 },child:Icon(Icons.arrow_left,color:MyColors.black)
+//             ),
+//           ),
+//           title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child:Text("Order Details",style: TextStyle(fontSize: 16,color: MyColors.black,
+// fontWeight: FontWeight.w700,),)
+//           ),
+//           actions: [
+//           //  SvgPicture.asset("assets/image/girl.svg"),
            
-            // SizedBox(width: 20),
-            InkWell(
-              onTap: (){
- Get.to (NotificationSales());
-},
-              child: Padding(
-                padding:  EdgeInsets.only(right:20.0),
-                child: SvgPicture.asset("assets/image/notification.svg"),
-                //  Image.asset("assets/image/girl.png"),
-              ),
-            ),
+//             // SizedBox(width: 20),
+//             InkWell(
+//               onTap: (){
+//  Get.to (NotificationSales());
+// },
+//               child: Padding(
+//                 padding:  EdgeInsets.only(right:20.0),
+//                 child: SvgPicture.asset("assets/image/notification.svg"),
+//                 //  Image.asset("assets/image/girl.png"),
+//               ),
+//             ),
            
-          ],
+//           ],
          
-        ),
+//         ),
       
      body:
 

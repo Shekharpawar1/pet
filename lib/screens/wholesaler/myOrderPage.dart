@@ -165,9 +165,9 @@ class MyOrderWhole extends StatelessWidget {
                                   child: Container(
                                       margin:
                                           EdgeInsets.symmetric(vertical: 10),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.2,
+                                      // height:
+                                      //     MediaQuery.of(context).size.height *
+                                      //         0.2,
                                       width: MediaQuery.of(context).size.width,
                                       decoration: BoxDecoration(
                                           border: Border.all(

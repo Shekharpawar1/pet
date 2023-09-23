@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
+import 'package:pet/controllers/salesman_controller/salesreview_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/models/salesmanModel/salesProductDetailsModel.dart' as variantFile;
@@ -15,6 +16,7 @@ import 'package:pet/models/salesmanModel/salesProductDetailsModel.dart' as varia
 import 'package:pet/screens/salesman/ordersummary.dart';
 // import 'package:pet/screens/salesman/ordersummary1.dart';
 import 'package:pet/screens/salesman/paymentsales.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -31,12 +33,12 @@ class ProductDetailssale extends StatefulWidget {
 class _ProductDetailssaleState extends State<ProductDetailssale> {
  final SalesProductDetailsController salesproductdetailscontroller =
       Get.put(SalesProductDetailsController());
-
+ SalesReviewController salesReviewController = Get.put(SalesReviewController());
  final HomeSalesController homesalecontroller = Get.put(HomeSalesController());
  SalesMyCartController mycartController = Get.put(SalesMyCartController());
   final UserReviewController userreviewcontroller =
       Get.put(UserReviewController());
-
+ bool isProductInCartBool = false;
   List kg = [1, 2, 5];
  
   @override
@@ -46,104 +48,8 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
     // "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
         "${Constants.BASE_URL}/storage/app/public/product/${salesproductdetailscontroller!.salesproductdetailmodel!.data!.image??''}";
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: MyColors.lightbg,
-        leading: InkWell(
-          onTap: () {
-            Get.back();
-          },
-          child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-              child: Icon(Icons.arrow_back_ios_new_outlined,
-                  color: MyColors.black)),
-        ),
-
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(NotificationUser());
-                  },
-                  child: Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    // Get.to(AddToCardUser());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
-      ),
-      body: ListView(
+      appBar:CustomAppBarSalesWholeback(title : "Product Details"),
+        body: ListView(
         shrinkWrap: true,
         primary: true,
         children: [
@@ -170,108 +76,133 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                     ),
                   )),
            
-              InkWell(
-                  onTap: () {
+             InkWell(
+                                                  onTap: () {
                                                     homesalecontroller
                                                         .addItemToWishList(
                                                             salesproductdetailscontroller!.salesproductdetailmodel!.data!.id!);
                                                   },
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Icon(
-                        Icons.favorite_outline,
-                      )),
-                ),
-              ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Align(
+                                                        alignment: Alignment
+                                                            .centerRight,
+                                                        child: Icon(homesalecontroller
+                                                                    .wishListItemsId
+                                                                .contains(
+                                                                   salesproductdetailscontroller!.salesproductdetailmodel!.data!.id!)
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_border,color:Colors.red)),
+                                                  ),
+                                                ),
             ],
           ),
           // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           Padding(
             padding: EdgeInsets.all(20.0),
-            child: Row(
-              children: kg
-                  .sublist(0, 3)
-                  .map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          // var tab = e
-                          //
-                          //  e  *  ( widget.itemdetails.price) ;
-                          //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-                        },
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    color: salesproductdetailscontroller.isAdding
-                                        ? MyColors.pink
-                                        : MyColors.grey,
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: imagePath,
-                                    width: 61,
-                                    height: 75,
-                                    placeholder: (context, url) => Center(
-                                      child: CircularProgressIndicator(),
-                                    ), // Replace with your own placeholder widget
-                                    errorWidget: (context, url, error) => Icon(Icons
-                                        .error), // Replace with your own error widget
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: kg
+                      .sublist(0, 3)
+                      .map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              // var tab = e
+                              //
+                              //  e  *  ( widget.itemdetails.price) ;
+                              //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 60,
+                                    decoration: BoxDecoration(
+                                        color: salesproductdetailscontroller.isAdding
+                                            ? MyColors.pink
+                                            : MyColors.grey,
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CachedNetworkImage(
+                                        imageUrl: imagePath,
+                                        width: 61,
+                                        height: 75,
+                                        placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator(),
+                                        ), // Replace with your own placeholder widget
+                                        errorWidget: (context, url, error) => Icon(Icons
+                                            .error), // Replace with your own error widget
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  // SizedBox(
+                                  //   height: 5,
+                                  // ),
+                                  // Text("$e Kg",
+                                  //     style: CustomTextStyle.popinssmall0)
+                                ],
                               ),
-                              // SizedBox(
-                              //   height: 5,
-                              // ),
-                              // Text("$e Kg",
-                              //     style: CustomTextStyle.popinssmall0)
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              // [
-              //   Container(
-              //     child: Column(
-              //       children: [
-              //         Container(
-              //           height: 60,
-              //           width: 60,
-              //           decoration: BoxDecoration(
-              //               color: MyColors.pink,
-              //               borderRadius: BorderRadius.circular(15)),
-              //           child: Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: CachedNetworkImage(
-              //               imageUrl: imagePath,
-              //               width: 61,
-              //               height: 75,
-              //               placeholder: (context, url) => Center(
-              //                 child: CircularProgressIndicator(),
-              //               ), // Replace with your own placeholder widget
-              //               errorWidget: (context, url, error) => Icon(Icons
-              //                   .error), // Replace with your own error widget
-              //             ),
-              //           ),
-              //         ),
-              //         SizedBox(
-              //           height: 5,
-              //         ),
-              //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-              //       ],
-              //     ),
-              //   ),
-              //  ],
+                      )
+                      .toList(),
+                  // [
+                  //   Container(
+                  //     child: Column(
+                  //       children: [
+                  //         Container(
+                  //           height: 60,
+                  //           width: 60,
+                  //           decoration: BoxDecoration(
+                  //               color: MyColors.pink,
+                  //               borderRadius: BorderRadius.circular(15)),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(8.0),
+                  //             child: CachedNetworkImage(
+                  //               imageUrl: imagePath,
+                  //               width: 61,
+                  //               height: 75,
+                  //               placeholder: (context, url) => Center(
+                  //                 child: CircularProgressIndicator(),
+                  //               ), // Replace with your own placeholder widget
+                  //               errorWidget: (context, url, error) => Icon(Icons
+                  //                   .error), // Replace with your own error widget
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //           height: 5,
+                  //         ),
+                  //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+                  //       ],
+                  //     ),
+                  //   ),
+                  //  ],
+                ),
+                Stack(
+          alignment: Alignment.center,
+          children: [
+            Icon(Icons.crop_square_sharp, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
+                                                  .veg ==
+                                              1)
+                                          ? Colors.red:Colors.green, size: 30,),
+            Icon(Icons.circle, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
+                                                  .veg ==
+                                              1)
+                                          ? Colors.red: Colors.green, size: 10),
+          ],
+        ),
+             
+              ],
             ),
           ),
           
@@ -694,7 +625,7 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                             width: MediaQuery.of(context).size.width * 0.2,
                           ),
                           Text(
-                           (salesproductdetailscontroller.salesproductdetailmodel!.data!.veg == 1)?"Veg":"Nonveg",
+                           (salesproductdetailscontroller.salesproductdetailmodel!.data!.veg == 0)?"Veg":"Nonveg",
                             style: CustomTextStyle.popinstext,
                           ),
                         ],
@@ -706,32 +637,32 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                         thickness: 1,
                         height: 1,
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
+                      // SizedBox(
+                      //     height: MediaQuery.of(context).size.height * 0.02),
 
-                      Row(
-                        children: [
-                          Text(
-                            "Age Range",
-                            style: CustomTextStyle.popinslight,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.18,
-                          ),
-                          Text("",
-                            // productdetailscontroller.productList.agerange
-                            //     .toString(),
-                            style: CustomTextStyle.popinstext,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      Divider(
-                        color: MyColors.lightdivider,
-                        thickness: 1,
-                        height: 1,
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       "Age Range",
+                      //       style: CustomTextStyle.popinslight,
+                      //     ),
+                      //     SizedBox(
+                      //       width: MediaQuery.of(context).size.width * 0.18,
+                      //     ),
+                      //     Text("",
+                      //       // productdetailscontroller.productList.agerange
+                      //       //     .toString(),
+                      //       style: CustomTextStyle.popinstext,
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //     height: MediaQuery.of(context).size.height * 0.02),
+                      // Divider(
+                      //   color: MyColors.lightdivider,
+                      //   thickness: 1,
+                      //   height: 1,
+                      // ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02),
 
@@ -757,24 +688,24 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                         thickness: 1,
                         height: 1,
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
+                      // SizedBox(
+                      //     height: MediaQuery.of(context).size.height * 0.02),
 
-                      Row(
-                        children: [
-                          Text(
-                            "Item From ",
-                            style: CustomTextStyle.popinslight,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                          ),
-                          Text(
-                            "",
-                            style: CustomTextStyle.popinstext,
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       "Item From ",
+                      //       style: CustomTextStyle.popinslight,
+                      //     ),
+                      //     SizedBox(
+                      //       width: MediaQuery.of(context).size.width * 0.2,
+                      //     ),
+                      //     Text(
+                      //       "",
+                      //       style: CustomTextStyle.popinstext,
+                      //     ),
+                      //   ],
+                      // ),
                       //           SizedBox(height: MediaQuery.of(context).size.height*0.02),
                       //  Divider(color: lightdivider,thickness: 1,height: 1,),
                       SizedBox(
@@ -800,114 +731,148 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
 
-                      GetBuilder<UserReviewController>(
-                          init: userreviewcontroller,
-                          builder: (_) {
-                            return ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount:
-                                  userreviewcontroller.getreviewList.length,
-                              itemBuilder: (context, index) {
-                                var item =
-                                    userreviewcontroller.getreviewList[index];
+                     GetBuilder<SalesReviewController>(
+                                    init: salesReviewController,
+                                    builder: (_) {
+                                      return  salesReviewController
+                                                    .salesReviewModel ==
+                                                null &&
+                                           salesReviewController
+                                                    .salesReviewModel!.data ==
+                                                null
+                                        // userreviewcontroller.userReviewModel!.data!.isEmpty
+                                        ? SizedBox(): ListView.builder(
+                                           primary: false,
+                                            shrinkWrap: true,
+                                       itemCount:   salesReviewController
+                                                    .salesReviewModel!
+                                                    .data!
+                                                    .length ??
+                                                0,
+                                            itemBuilder: (context, index) {
+                                              var item =  salesReviewController
+                                                    .salesReviewModel!
+                                                  .data![index];
+//                                             print("UserName");
+// print((item.callback![0].userProfile![0].fName??''));
+                                          return
 
-                                return ListView(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  children: [
-                                    Text(
-                                      item["title"],
-                                      style: CustomTextStyle.popinssmall0,
+                                          //  (wholemyordercontroller.wholemyorderModel!.data == null)?SizedBox():
+                                    //  (item.callback![0].userDetails!.comment == null)?SizedBox():
+                                        ListView(
+                                            primary: false,
+                                            shrinkWrap: true,
+                                            children: [
+                                              // Text(
+                                              //   "bbbb",
+                                              //   style: CustomTextStyle
+                                              //       .popinssmall0,
+                                              // ),
+// (e.userDetails!.comment == null) ? Text("No Comment"):
+                                              Text(
+                                                (item.comment??'').toString(),
+                                                style: CustomTextStyle
+                                                    .popinssmall0,
+                                              ),
+                                              SizedBox(
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.01),
+                                              Row(
+                                         children: [
+                                           RatingStars(
+                                             value: (item.rating??0).toDouble(),
+                                             // onValueChanged: (v) {
+                                             //   //
+                                             //   setState(() {
+                                             //     value = v;
+                                             //   });
+                                             // },
+                                             starBuilder:
+                                                 (index, color) => Icon(
+                                               Icons.star,
+                                               color: color,
+                                               size: 15,
+                                             ),
+                                             starCount: 5,
+                                             starSize: 20,
+                                             // valueLabelColor: const Color(0xff9b9b9b),
+                                             // valueLabelTextStyle: const TextStyle(
+                                             //     color: Colors.white,
+                                             //     fontWeight: FontWeight.w400,
+                                             //     fontStyle: FontStyle.normal,
+                                             //     fontSize: 12.0),
+                                             // valueLabelRadius: 10,
+                                             maxValue: 5,
+                                             starSpacing: 0.5,
+                                             maxValueVisibility: true,
+                                             valueLabelVisibility: false,
+                                             animationDuration: Duration(
+                                                 milliseconds: 5000),
+                                             // valueLabelPadding:
+                                             //     const EdgeInsets.symmetric(
+                                             //         vertical: 1, horizontal: 8),
+                                             // valueLabelMargin:
+                                             //     const EdgeInsets.only(right: 8),
+                                             starOffColor:
+                                                 const Color(0xffe7e8ea),
+                                             starColor: MyColors.yellow,
+                                           ),
+                                           SizedBox(width: 10),
+                                           // Image.asset(item["image"],
+                                           //     height: 30),
+                                           Column(
+                                             crossAxisAlignment:
+                                                 CrossAxisAlignment
+                                                     .start,
+                                             children: [
+                                               Text(
+                                                 item.userId![0].fName.toString()+" "+  item.userId![0].lName.toString(),
+                                                 style: CustomTextStyle
+                                                     .popinstext,
+                                               ),
+                                               // Row(
+                                               //   children: [
+                                               //     Icon(
+                                               //       Icons
+                                               //           .person_2_outlined,
+                                               //       size: 13,
+                                               //     ),
+                                               //     Text(
+                                               //      ( item.callback![0].itemDetails![0].ratingCount??0).toString(),
+                                               //       style: CustomTextStyle
+                                               //           .popinssmall0,
+                                               //     ),
+                                               //   ],
+                                               // )
+                                             ],
+                                           )
+                                         ],
+                                              ),
+                                             
+                                              SizedBox(
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.02),
+                                              Divider(
+                                         color: MyColors.lightdivider,
+                                         thickness: 1,
+                                         height: 1,
+                                              ),
+                                              SizedBox(
+                                           height: MediaQuery.of(context)
+                                                   .size
+                                                   .height *
+                                               0.02),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    }
                                     ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.01),
-                                    Row(
-                                      children: [
-                                        RatingStars(
-                                          value: userreviewcontroller.value!,
-                                          // onValueChanged: (v) {
-                                          //   //
-                                          //   setState(() {
-                                          //     value = v;
-                                          //   });
-                                          // },
-                                          starBuilder: (index, color) => Icon(
-                                            Icons.star,
-                                            color: color,
-                                            size: 15,
-                                          ),
-                                          starCount: 5,
-                                          starSize: 20,
-                                          // valueLabelColor: const Color(0xff9b9b9b),
-                                          // valueLabelTextStyle: const TextStyle(
-                                          //     color: Colors.white,
-                                          //     fontWeight: FontWeight.w400,
-                                          //     fontStyle: FontStyle.normal,
-                                          //     fontSize: 12.0),
-                                          // valueLabelRadius: 10,
-                                          maxValue: 5,
-                                          starSpacing: 0.5,
-                                          maxValueVisibility: true,
-                                          valueLabelVisibility: false,
-                                          animationDuration:
-                                              Duration(milliseconds: 5000),
-                                          // valueLabelPadding:
-                                          //     const EdgeInsets.symmetric(
-                                          //         vertical: 1, horizontal: 8),
-                                          // valueLabelMargin:
-                                          //     const EdgeInsets.only(right: 8),
-                                          starOffColor: const Color(0xffe7e8ea),
-                                          starColor: MyColors.yellow,
-                                        ),
-                                        SizedBox(width: 10),
-                                        Image.asset(item["image"], height: 30),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              item["name"],
-                                              style: CustomTextStyle.popinstext,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.person_2_outlined,
-                                                  size: 13,
-                                                ),
-                                                Text(
-                                                  item["count"],
-                                                  style: CustomTextStyle
-                                                      .popinssmall0,
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.02),
-                                    Divider(
-                                      color: MyColors.lightdivider,
-                                      thickness: 1,
-                                      height: 1,
-                                    ),
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.02),
-                                  ],
-                                );
-                              },
-                            );
-                          }),
-                      // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+     // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.04),
 
@@ -974,24 +939,30 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                               Row(
                                 children: [
                                   InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PaymentSales(
+                                    onTap: ()async {
+                                       salesproductdetailscontroller.fethUserId();
+                                   await salesproductdetailscontroller.addProduct();
+                                        mycartController.init();
+                                         Get.to(AddToCardSales());
+//                                       Navigator.push(
+//                                           context,
+//                                           MaterialPageRoute(
+//                                               builder: (context) =>
+//                                                   PaymentSales(
 
-                                                    price:
-salesproductdetailscontroller.selectedvariants?.price == null?
-   (
-                                      (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)-
-                                    (( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
-                                    ).toString()
-                                                        :(
-                                      (salesproductdetailscontroller.selectedvariants?.price??0)*(salesproductdetailscontroller.sizecount??0)-
-                                    (( (salesproductdetailscontroller.selectedvariants?.price??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
-                                    ).toString(),
-                                                  )));
+//                                                     price:
+// salesproductdetailscontroller.selectedvariants?.price == null?
+//    (
+//                                       (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)-
+//                                     (( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
+//                                     ).toString()
+//                                                         :(
+//                                       (salesproductdetailscontroller.selectedvariants?.price??0)*(salesproductdetailscontroller.sizecount??0)-
+//                                     (( (salesproductdetailscontroller.selectedvariants?.price??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
+//                                     ).toString(),
+//                                                   )));
+                                   
+                                   
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
@@ -1040,8 +1011,19 @@ salesproductdetailscontroller.selectedvariants?.price == null?
   salesproductdetailscontroller.fethUserId();
                                    await salesproductdetailscontroller.addProduct();
                                         mycartController.init();
-                                      
-                                    Get.to(AddToCardSales());
+                                        Get.to(AddToCardSales());
+
+                                      // if ( salesproductdetailscontroller
+                                      //                     .isProductInCartBool) {
+                                      //                   mycartController.init();
+                                      //                  Get.to(AddToCardSales());
+                                      //                 } else {
+                                      //                   await salesproductdetailscontroller
+                                      //                       .addProduct();
+                                      //                   await salesproductdetailscontroller
+                                      //                       .salesisProductInCart();
+                                      //                 }
+                                    
                                
                                   //     productdetailscontroller.addToCart(
                                                 
@@ -1077,7 +1059,10 @@ salesproductdetailscontroller.selectedvariants?.price == null?
                                             width: 10,
                                           ),
                                           Text(
-                                            "Add To Cart",
+                                             salesproductdetailscontroller
+                                                                    .isProductInCartBool
+                                                                ? "Go To Cart"
+                                                                : "Add To Cart",
                                             style:
                                                 CustomTextStyle.mediumtextreem,
                                           )

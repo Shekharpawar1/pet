@@ -7,6 +7,9 @@ import 'package:pet/models/salesmanModel/mysalesOrderModel.dart';
 import 'package:pet/models/salesmanModel/orderDetailsModel.dart';
 
 
+ import 'dart:io';
+
+import 'package:pdf/widgets.dart' as pw;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
@@ -56,9 +59,9 @@ String getMyOrderUrl =
     try {
       // myorder
       salesmyorderModel = SalesMyOrderModel.fromJson(
-          await ApiHelper.getApi(getMyOrderUrl+"${storage.read('wholesalerid')}"));
+          await ApiHelper.getApi(getMyOrderUrl+"${storage.read('wholesalerId')}"));
       print(salesmyorderModel);
-       print("MYORDERUrl"+getMyOrderUrl+"${storage.read('wholesalerid')}");
+       print("MYORDERUrl"+getMyOrderUrl+"${storage.read('wholesalerId')}");
        orderLoaded = true;
       update();
     } catch (e) {
@@ -102,4 +105,22 @@ String getMyOrderUrl =
     update();
     }
  
+
+
+
+
+Future<void> downloadInvoice() async {
+  final pdf = pw.Document();
+
+  pdf.addPage(
+    pw.Page(
+      build: (pw.Context context) => pw.Center(
+        child: pw.Text('Hello World!'),
+      ),
+    ),
+  );
+
+  final file = File('example.pdf');
+  await file.writeAsBytes(await pdf.save());
+}
 }

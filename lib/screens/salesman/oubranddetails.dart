@@ -576,7 +576,7 @@ ourbranddeatilscontrroller.productinit();
                                             child: Align(
                                                 alignment: Alignment.centerRight,
                                                 child:
-                                                    Icon(Icons.favorite_border)),
+                                                    Icon(Icons.favorite_border,color:Colors.red)),
                                           ),
                                          
                                               Container(

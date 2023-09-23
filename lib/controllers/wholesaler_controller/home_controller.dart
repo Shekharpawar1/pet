@@ -205,7 +205,7 @@ bool showLoading = false;
       // categories
       wishList =
           WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${wholesalerId}"));
-       print(getWishListUrl + "/${wholesalerId}");
+       print( "======>>>>> w "+getWishListUrl + "/${wholesalerId}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
@@ -413,7 +413,7 @@ bool showLoading = false;
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$wholesalerId");
+      await ApiHelper.deleteByUrl(url: url + "$productId" + "/$wholesalerId");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
       update();

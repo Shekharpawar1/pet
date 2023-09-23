@@ -38,6 +38,14 @@ class drawerWholeSaler extends StatefulWidget {
 class _drawerWholeSalerState extends State<drawerWholeSaler> {
   WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
 
+ @override
+  void initState() {
+    super.initState();
+    
+
+wholeProfileController.myprofile();
+
+  }
 WholeProfileController wholeProfileController = Get.put(WholeProfileController());
   static final List<String> _listViewData = [
     "Dashboard",
@@ -115,7 +123,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                                         wholeProfileController
                               .wholemyprofilemodel == null || wholeProfileController
                               .wholemyprofilemodel!.data == null || wholeProfileController
-                              .wholemyprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .wholemyprofilemodel!.data!.isEmpty ?  Image.asset("assets/image/boyprofile3.png") :
                 
                                                             CachedNetworkImage(
                                                           imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
@@ -143,12 +151,17 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                                         //  Image.asset("assets/image/boyprofile3.png"),
                                                       ),
                                                     ),
-                                                    Positioned(
-                                                      bottom: 10,
-                                                      child: Image.asset(
-                                                        "assets/image/drawer2.png",
-                                                        height: 25,
-                                                      ),
+                                                   Positioned(
+                                                        bottom: 10,
+                                                        child:   InkWell(
+                                                      onTap:(){
+Get.to(WholeSalerProfile());
+                                                      },
+                                                      child:Image.asset(
+                                                          "assets/image/drawer2.png",
+                                                          height: 25,
+                                                        ),)
+                                                      
                                                     )
                                                   ]),
                                             ),
@@ -165,7 +178,11 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                                         wholeProfileController
                               .wholemyprofilemodel == null || wholeProfileController
                               .wholemyprofilemodel!.data == null || wholeProfileController
-                              .wholemyprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .wholemyprofilemodel!.data!.isEmpty ? Text("Username",style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),) :
                                                   Text(
                                                     "${wholeProfileController
                               .wholemyprofilemodel!.data![0].fName.toString()} ${wholeProfileController
@@ -184,7 +201,11 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                               .wholemyprofilemodel
       == null || wholeProfileController
                               .wholemyprofilemodel!.data == null || wholeProfileController
-                              .wholemyprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .wholemyprofilemodel!.data!.isEmpty ? Text("Email",style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),) :
                                                   Text(
                                                     wholeProfileController
                               .wholemyprofilemodel!
@@ -260,7 +281,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
         Get.to(WholeSalerProfile());
         break;
       case 2:
-      await wholemyordercontroller.init();
+       wholemyordercontroller.init();
       Get.to(MyOrderWhole());
         break;
       case 3:

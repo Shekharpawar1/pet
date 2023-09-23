@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pet/screens/user/addPet.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
@@ -25,6 +26,7 @@ class _MyPetDetailsState extends State<MyPetDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar:   CustomAppBarwhite(),
       //         appBar: AppBar(
       //             elevation: 0,
       //           backgroundColor:green,
@@ -53,7 +55,9 @@ class _MyPetDetailsState extends State<MyPetDetails> {
       //         title: Text("My Pet",style: CustomTextStyle.appbartextwhite,),
       //         ),
 
-      body: Stack(
+      body:
+      
+       Stack(
         children: [
           Container(
               height: MediaQuery.of(context).size.height * 0.4,
@@ -62,51 +66,9 @@ class _MyPetDetailsState extends State<MyPetDetails> {
                 "assets/image/girlwithdog.png",
                 fit: BoxFit.cover,
               )),
-          Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Icon(
-                        Icons.arrow_back_ios_new,
-                        color: MyColors.white,
-                        size: 20,
-                      ),
-                      Text(
-                        "My Pet",
-                        style: CustomTextStyle.appbartextwhite,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/image/notification.svg",
-                            color: MyColors.white,
-                          ),
-                          // Image.asset("assets/image/cartimg.png"),
-                          SizedBox(width: 20),
-                          Padding(
-                            padding: EdgeInsets.only(right: 0.0),
-                            child: SvgPicture.asset(
-                              "assets/image/bag.svg",
-                              color: MyColors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+      
+          
+          
           Container(
             height: MediaQuery.of(context).size.height,
             child: ListView(children: [

@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
@@ -16,8 +17,10 @@ import 'package:pet/screens/partner/partneraddress.dart';
 import 'package:pet/screens/swepcard.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/payment.dart';
+import 'package:pet/screens/user/userHome.dart';
 import 'package:pet/screens/user/useraddnewAddress.dart';
 import 'package:pet/screens/user/usercouponPage.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -39,99 +42,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: Padding(
-              padding:
-                  EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
-              child: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Icon(Icons.arrow_left, color: MyColors.black)),
-            ),
-            title: Center(
-                child: Text(
-              "My Cart",
-              style: CustomTextStyle.appbartext,
-            )),
-            actions: [
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(NotificationUser());
-                      },
-                      child: Center(
-                        child: Icon(Icons.notifications, color: MyColors.black),
-                      )),
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(width: 20),
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(AddToCardUser());
-                      },
-                      child: Center(
-                          child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1,
-                              size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              )
-            ],
-          ),
-          body: Padding(
+         appBar:CustomAppBarback(), body: Padding(
             padding: EdgeInsets.all(15),
             child: ListView(
               shrinkWrap: true,
@@ -152,7 +63,20 @@ class _AddToCardUserState extends State<AddToCardUser> {
                               //         size: 30.0, // Size of the progress bar
                               //       ),
                               //     )
-                              : Container(
+                              : 
+addtocartController
+                                          .mycartmodel!.data!.isEmpty?
+                                          Center(
+                                            child: ElevatedButton(
+                                                        onPressed: () {
+                                                       Get.to(HomeUser(
+
+                                                       ));
+                                                        },
+                                                        child: Text('Continue Shopping')
+                                                      ),
+                                          ):
+                              Container(
                                   //  height: MediaQuery.of(context).size.height * 0.66,
                                   child: ListView.builder(
                                       primary: false,
@@ -733,6 +657,11 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.2,
                                   ),
+                                (addtocartController.total == 0 )  ?
+                                  Text(
+                                    addtocartController.price.toString(),
+                                    style: CustomTextStyle.popinstext,
+                                  ):
                                   Text(
                                     addtocartController.total.toString(),
                                     style: CustomTextStyle.popinstext,
@@ -916,7 +845,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Row(
                                           mainAxisAlignment:
@@ -956,6 +885,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                 .selectaddadress(
                                                                     item.id ??
                                                                         0);
+ 
                                                           },
                                                           child: Padding(
                                                             padding:
@@ -1069,9 +999,18 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                             SizedBox(width: 5),
                                                                             GestureDetector(
                                                                               onTap: () {
-                                                                                // addressController.areaaddressController.toString();
+                                                                                addtocartController.chooseaddressID(item.id??0);
                                                                                 addtocartController.chooseaddress(index);
                                                                                 Get.back();
+
+                                                                                 final storage = GetStorage();
+                                                                        
+// }
+                                         storage.write('useraddress',item.area);
+                                            storage.write('useraddresscity',item.city);
+  print("Useraddress");
+ print(storage.read('useraddress').toString());
+  print(storage.read('useraddresscity').toString());
                                                                               },
                                                                               child: Container(
                                                                                   height: 25,
@@ -1235,12 +1174,15 @@ class _AddToCardUserState extends State<AddToCardUser> {
                           onTap: () {
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                             Get.to(PaymentUser(
-                                price: (((addtocartController.total) +
-                                        (addtocartController.total * 0.05) -
-                                        (num.parse(
-                                            couponsController.maxAmount ??
-                                                "0"))))
-                                    .toString()));
+                              price:  (addtocartController.total +
+    addtocartController.total * 0.05 -
+    double.parse(couponsController.maxAmount ?? "0.0")).toDouble()));
+                                // price: (((addtocartController.total) +
+                                //         (addtocartController.total * 0.05) -
+                                //         (double.parse(
+                                //             couponsController.maxAmount ??
+                                //                 "0")))).toDouble()
+                                //     .toString()));
                             // deliveredAddress: (addtocartController
                             //             .allAddresslistModel!
                             //             .data![

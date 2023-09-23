@@ -246,7 +246,7 @@ class SearchScreen extends StatelessWidget {
                                       //                     item.id!)
                                       //             ? Icons.favorite
                                       //             : Icons
-                                      //                 .favorite_border)),
+                                      //                 .favorite_border,color:Colors.red)),
                                       //   ),
                                       // ),
 

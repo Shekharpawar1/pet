@@ -6,6 +6,7 @@ class Constants {
       "$BASE_URL${API_V1_PATH}/banners/service_category";
  static const GET_USER_MYSERVICES = "$BASE_URL${API_V1_PATH}/banners/get_allservicebooking";
     static const SALESMAN_IMAGEPATH_URL = "$BASE_URL/storage/app/public/delivery-man/";
+    static const USERPROFILE_IMAGEPATH_URL = "$BASE_URL/storage/app/public/profile/";
 
   static const GET_SUBSCRIPTION =
       "$BASE_URL${API_V1_PATH}/auth/get_subscription";
@@ -35,6 +36,7 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
    static const BRANDLOGO_IMAGE_PATH ="/storage/app/public/brand_logo/";
   static const NOTIFICATION_IMAGE_PATH = "/storage/app/public/notification/";
   static const PRODUCT_IMAGE_PATH = "/storage/app/public/banner/";
+  static const BANNER_IMAGE_PATH = "$BASE_URL/storage/app/";
   static const GET_STATE_LIST = "$BASE_URL${API_V1_PATH}/auth/state";
   static const GET_ZONE_LIST = "$BASE_URL${API_V1_PATH}/zone/list";
   static const GET_MODULE_LIST = "$BASE_URL${API_V1_PATH}/module";
@@ -55,7 +57,7 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
   static const GET_PRODUCTBYPARTNER = "$BASE_URL${API_V1_PATH}/vendor/all_vendor";
   static const GET_USERREVIEW = "$BASE_URL${API_V1_PATH}/items/get_reviewitem/";
   static const GET_TOTALPRODUCT_PARTNER = "$BASE_URL${API_V1_PATH}/auth/get_vendorproduct/";
-
+static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items-list/";
   static const GET_TOTALORDER_PARTNER = "$BASE_URL${API_V1_PATH}/auth/get_vendororder/";
 
      static const GET_TOTALSELLER_ORDER = "$BASE_URL${API_V1_PATH}/auth/seller_orders/";
@@ -96,6 +98,8 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
       "$BASE_URL${API_V1_PATH}/auth/purchace_plan";
        static const REVIEW =
       "$BASE_URL${API_V1_PATH}/items/reviews/submit";
+       static const REFUND_URL  =
+      "$BASE_URL${API_V1_PATH}/customer/order/refund-request";
          static const PLACE_ORDER =
       "$BASE_URL${API_V1_PATH}/customer/order/place";
         static const ADD_UPDATE_ADDRESS =

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/userfavourite_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -37,103 +38,7 @@ class _UserfavouriteState extends State<Userfavourite> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.arrow_left, color: MyColors.black)),
-          ),
-          title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-              child: Text(
-            "Favourite",
-            style: TextStyle(
-              fontSize: 16,
-              color: MyColors.black,
-              fontWeight: FontWeight.w700,
-            ),
-          )),
-          actions: [
-            Stack(
-              children: [
-                InkWell(
-                    onTap: () {
-                      Get.to(NotificationUser());
-                    },
-                    child: Center(
-                      child: Icon(Icons.notifications, color: MyColors.black),
-                    )),
-                Positioned(
-                    top: 10.0,
-                    right: 0,
-                    child: Stack(
-                      children: <Widget>[
-                        Icon(Icons.brightness_1,
-                            size: 15.0, color: MyColors.red),
-                        Positioned(
-                            top: 3.0,
-                            right: 4.0,
-                            child: Center(
-                              child: Text(
-                                ('5').toString(),
-                                // list.length.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            )),
-                      ],
-                    )),
-              ],
-            ),
-            SizedBox(width: 20),
-            Stack(
-              children: [
-                InkWell(
-                    onTap: () {
-                      Get.to(AddToCardUser());
-                    },
-                    child: Center(
-                        child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-                Positioned(
-                    top: 10.0,
-                    right: 0,
-                    child: Stack(
-                      children: <Widget>[
-                        Icon(Icons.brightness_1,
-                            size: 15.0, color: MyColors.red),
-                        Positioned(
-                            top: 3.0,
-                            right: 4.0,
-                            child: Center(
-                              child: Text(
-                                ('5').toString(),
-                                // list.length.toString(),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            )),
-                      ],
-                    )),
-              ],
-            ),
-            SizedBox(
-              width: 20,
-            )
-          ],
-        ),
+        appBar:CustomAppBarback(),
         body: Stack(
           children: [
             ListView(

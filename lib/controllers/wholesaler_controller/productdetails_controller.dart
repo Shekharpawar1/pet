@@ -5,6 +5,7 @@ import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/mycartListModel.dart';
 import 'package:pet/models/wholesalerModel/ProductDetailsWholeModel.dart';
 import 'package:pet/models/wholesalerModel/ProductDetailsWholeModel.dart'as variantFile;
+import 'package:pet/models/wholesalerModel/mycartListModel.dart';
 
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
@@ -110,6 +111,11 @@ double? totalAmount;
     productID = id;
     update();
     print("productID${productID}");
+  }
+  void inCartUpdate(bool productdetailLoaded1) {
+    productdetailLoaded = productdetailLoaded1;
+    update();
+    print("productdetailLoaded${productdetailLoaded}");
   }
 
   void  allamount(){
@@ -252,7 +258,7 @@ double? totalAmount;
     update();
   }
   String getUserMyCartUrl = Constants.GET_USER_MYCARTLIST;
-  MyCartListModel? mycartmodel;
+  WholeMyCartListModel? mycartmodel;
   bool isProductInCartBool = false;
 
   
@@ -262,7 +268,7 @@ double? totalAmount;
     // showLoading = true;
     try {
       // productdeatils
-      mycartmodel = MyCartListModel.fromJson(
+      mycartmodel = WholeMyCartListModel.fromJson(
           await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerid')}"));
       print("====?//${mycartmodel}");
       // sizes = mycartmodel!.data!.map((e) => 1).toList();

@@ -547,7 +547,7 @@ class _WholeAllcategoryState extends State<WholeAllcategory> {
                                                     alignment:
                                                         Alignment.centerRight,
                                                     child: Icon(
-                                                        Icons.favorite_border)),
+                                                        Icons.favorite_border,color:Colors.red)),
                                               ),
 
                                               Container(

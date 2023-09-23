@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/partner_controller/partnerprofile_controller.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
+import 'package:pet/screens/partner/widget/wholeAppBar.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
 import 'package:pet/screens/user/userMyPet.dart';
 import 'package:pet/utils/colors.dart';
@@ -25,44 +26,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: InkWell(
-
-onTap: (){
-  Get.back();
-},          child: Padding(
-            padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-            child: Icon(Icons.arrow_back,color: MyColors.black,)
-          ),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "Profile",
-          style: CustomTextStyle.appbartext,
-        )),
-        actions: [
-          InkWell(
-              onTap: () {
-                Get.to(NotificationUser());
-              },
-              child: SvgPicture.asset("assets/image/notification.svg")),
-          // Image.asset("assets/image/cartimg.png"),
-          SizedBox(width: 20),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: SvgPicture.asset("assets/image/bag.svg"),
-          ),
-        ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
-      ),
+     appBar: CustomAppBarPartnerback(),
       body: ListView(
         shrinkWrap: true,
         primary: true,

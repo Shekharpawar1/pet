@@ -17,12 +17,16 @@ class MyCartWholeController extends GetxController {
   final storage = GetStorage();
   CouponsWholeController couponsController = Get.put(CouponsWholeController());
   WholeAddressController addressController = Get.put(WholeAddressController());
-
+WholeProductDetailsController wholeProductDeailsCOntroller = Get.put(WholeProductDetailsController());
 // int? itemID;
   int? additemid;
   int? disCount;
   int? addressid;
   int? price;
+  String? paymentStatus;
+  String? paymentdays1;
+  String? paymentmethod1;
+  bool? gst1;
 // var sizecount = 0;
   List sizes = [];
   bool showLoading = false;
@@ -36,6 +40,7 @@ class MyCartWholeController extends GetxController {
 //     update();
 //   }
   int? isselected;
+    int? isselected1;
 
   void additem(int id) {
     additemid = id;
@@ -49,13 +54,25 @@ class MyCartWholeController extends GetxController {
     print("ID${addressid}");
   }
 
+  void addpaymentPopup(String paymentday, bool gst, String paymnetmethod) {
+    paymentdays1 = paymentday;
+    gst1 = gst;
+    paymentmethod1 = paymnetmethod;
+// orderStatus = gst;
+    update();
+    print(
+      "paymentdays1: ${paymentdays1},gst1: ${gst} paymentmethod: ${paymnetmethod}",
+    );
+  }
+
 //  void productsizes(List sizedproduct) {
 //     sizes = sizedproduct;
 //     update();
 //     print("sizes${sizes}");
 //   }
-  void addpaymenttype(String type) {
+  void addpaymenttype(String type, String paymentstatus) {
     paymenttype = type;
+    paymentStatus = paymentstatus;
 
     update();
     print("paymenttype: ${paymenttype}");
@@ -93,7 +110,7 @@ class MyCartWholeController extends GetxController {
 
     updateTotal();
   }
-
+ 
   decrementSize(int index) {
     if (sizes[index] > 1) {
       sizes[index]--;
@@ -140,6 +157,12 @@ class MyCartWholeController extends GetxController {
     print("Index updated ====>>>>> $isselected");
   }
 
+  void chooseaddressID(int id) {
+    isselected1 = id;
+    update();
+    print("Address Id ====>>>>> $isselected1");
+  }
+
   String getUserMyCartUrl = '${Constants.GET_USER_MYCARTLIST}';
   WholeMyCartListModel? wholemycartmodel;
   bool cartlistLoaded = false;
@@ -155,6 +178,9 @@ class MyCartWholeController extends GetxController {
       wholemycartmodel = WholeMyCartListModel.fromJson(await ApiHelper.getApi(
           getUserMyCartUrl + "${storage.read('wholesalerid')}"));
       print("====?//${wholemycartmodel}");
+      print("==>MYCARTWHOLE   " +
+          getUserMyCartUrl +
+          "${storage.read('wholesalerid')}");
       sizes = wholemycartmodel!.data!.map((e) => e.quantity).toList();
       // List<Map<String, dynamic>> cartJsonList =
       //     wholemycartmodel!.data!.map((item) => item.toJson()).toList();
@@ -181,6 +207,7 @@ class MyCartWholeController extends GetxController {
       print("URL====${getUserMyCartUrl + "${storage.read('wholesalerid')}"}");
       print(wholemycartmodel);
       cartlistLoaded = true;
+      wholeProductDeailsCOntroller.inCartUpdate(false);
       update();
     } catch (e) {
       print('Error: $e');
@@ -293,16 +320,9 @@ class MyCartWholeController extends GetxController {
         mycartwholeController.wholeallAddresslistModel!.data!.isEmpty) {
       sendingAddr = "Demo address";
     } else {
-      sendingAddr = "${mycartwholeController.wholeallAddresslistModel!
-                  .data![mycartwholeController.isselected ?? 0].city ??
-              ""} ${mycartwholeController.wholeallAddresslistModel!
-                  .data![mycartwholeController.isselected ?? 0].area ??
-              ""} ${mycartwholeController.wholeallAddresslistModel!
-                  .data![mycartwholeController.isselected ?? 0].houseNo ??
-              ""} ${mycartwholeController.wholeallAddresslistModel!
-                  .data![mycartwholeController.isselected ?? 0].landmark ??
-              ""}";
-        print(sendingAddr);
+      sendingAddr =
+          "${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].city ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].area ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].houseNo ?? ""} ${mycartwholeController.wholeallAddresslistModel!.data![mycartwholeController.isselected ?? 0].landmark ?? ""}";
+      print(sendingAddr);
     }
 
     Map<String, dynamic> body = {
@@ -312,13 +332,13 @@ class MyCartWholeController extends GetxController {
       "coupon_discount_title": couponsController.coupontitle ?? '',
       "payment_status": "paid",
       "order_status": "pending",
-      "payment_mode": "0" ,
-      "gst_bill": "0",
-      "payment_day": "",
+      "payment_mode": paymentmethod1.toString(),
+      "gst_bill": gst1,
+      "payment_day": paymentdays1.toString(),
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
-      "delivery_address_id": 2.toString(),
+      "delivery_address_id": isselected1.toString(),
       //  (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .id ??

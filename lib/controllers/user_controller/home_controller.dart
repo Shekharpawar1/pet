@@ -8,6 +8,7 @@ import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart' as Model;
 import 'package:pet/models/usersModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/servicesCategoriesModel.dart';
+import 'package:pet/models/usersModel/userProductByPartnerItemModel.dart';
 import 'package:pet/models/usersModel/userProductByPartnerModel.dart';
 import 'package:pet/models/usersModel/userWishListModel.dart';
 import 'package:pet/screens/user/allcategory.dart';
@@ -22,6 +23,8 @@ class HomeuserController extends GetxController {
   var userId = GetStorage().read("id");
   late VideoPlayerController videoController;
   bool showLoading = false;
+
+  int? itempartnerId;
   //videoplayer
   updatevideo() {
     videoController = VideoPlayerController.networkUrl(Uri.parse(
@@ -86,6 +89,12 @@ class HomeuserController extends GetxController {
     return finalData.toList();
   }
 
+
+void viewpartner(int id) {
+    itempartnerId = id;
+    update();
+    print("itempartnerId${itempartnerId}");
+  }
   // categories
   String getUserCategoriesUrl =
       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
@@ -118,6 +127,9 @@ class HomeuserController extends GetxController {
   UserProductByPartnerModel? userProductPartnerModel;
   bool partnerLoaded = false;
 
+
+  // 
+
   // wishlist list
   WishListModel? wishList;
   String getWishListUrl = Constants.USER_GET_WISHLIST;
@@ -128,7 +140,7 @@ class HomeuserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+partnerIteminit();
     videoController = VideoPlayerController.asset(
         'assets/image/video1.eaf55f566741325a7b40.mp4')
       ..initialize().then((_) {
@@ -144,7 +156,7 @@ class HomeuserController extends GetxController {
     update();
   }
 
-  void init() async {
+  Future<void> init() async {
     showLoading = true;
     update();
     try {
@@ -259,9 +271,38 @@ class HomeuserController extends GetxController {
       );
     }
     try {
-      // categories
+      // wishlist
       wishList =
-          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/1"));
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
+      // print(wishList);
+      // wishList!.data!.map((e) => e.itemId).toList();
+      GetStorage().write('wishListItems',
+          wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
+      // categoryLoaded = true;
+      update();
+      print("${GetStorage().read('wishListItems')}");
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+  Future<void> fetchWishList() async {
+    
+    showLoading = true;
+    update();
+    try {
+      // wishlist
+      wishList =
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
       // print(wishList);
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
@@ -284,6 +325,35 @@ class HomeuserController extends GetxController {
     update();
   }
 
+   // ProductByPartnerItem
+  String getPartnerItemUrl = '${Constants.GET_PRODUCT_PARTNER_ITEM}';
+ProductByPartnerItemModel?  userproductbypartneritemModel;
+  bool partneritemLoaded = false;
+
+  Future<void> partnerIteminit() async {
+    showLoading = true;
+     try {
+      // our services
+      userproductbypartneritemModel =
+          ProductByPartnerItemModel.fromJson(await ApiHelper.getApi(getPartnerItemUrl+"${itempartnerId}"));
+      print(getPartnerItemUrl);
+      partneritemLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    
+    update();
+    }
   // our services
   // String getServicesUrl = '${Constants.GET_USER_SERVICES}';
   ServicesCategoryModel? servicesCategoryModel;
@@ -439,6 +509,8 @@ class HomeuserController extends GetxController {
       // });
       await ApiHelper.postFormData(request: request);
       wishListItemsId.add(productId);
+      print("product");
+      print(productId);
       update();
       GetStorage().write('wishListItems', wishListItemsId);
 
@@ -455,7 +527,7 @@ class HomeuserController extends GetxController {
     } catch (e) {
       print('Error: $e');
       if (e.toString() == "Error: Already in List") {
-        wishListItemsId.add(productId);
+        wishListItemsId.remove(productId);
         update();
         GetStorage().write('wishListItems', wishListItemsId);
         removeItemFromWishList(productId);
@@ -485,7 +557,7 @@ class HomeuserController extends GetxController {
     // var data = await GetStorage().read("userData");
     showLoading = true;
     update();
-    print("Removing item");
+    print("Removing item ##");
     try {
       // remove from wishlist
       // servicesCategoryModel =
@@ -493,12 +565,13 @@ class HomeuserController extends GetxController {
       // print(servicesCategoryModel);
       // servicesCategoryLoaded = true;
       String url = Constants.USER_REMOVE_FROM_FAV;
-      await ApiHelper.deleteByUrl(
-          url: url + "/$productId" + "/${storage.read('id').toString()}");
+     print("====>>>>> remove fav api ${url + "$productId" + "/${storage.read('id').toString()}"}");
+     await ApiHelper.deleteByUrl(
+          url: url + "$productId" + "/${storage.read('id').toString()}");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
       GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
       update();
-      Get.snackbar(
+        Get.snackbar(
         'Success',
         'Item Removed',
         snackPosition: SnackPosition.BOTTOM,

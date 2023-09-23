@@ -11,6 +11,7 @@ import 'package:pet/controllers/wholesaler_controller/totalorderwhole_controller
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
 import 'package:pet/screens/wholesaler/complete.dart';
 import 'package:pet/screens/wholesaler/pendingcomplete.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -39,74 +40,77 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
     return Scaffold(
       key: _drawerkey,
       drawer: drawerWholeSaler(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "DashBoard",
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.black,
-            fontWeight: FontWeight.w700,
-          ),
-        )),
-        actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
-
-          // SizedBox(width: 20),l
-          GetBuilder<WholeProfileController>(
-              init: wholeProfileController,
-              builder: (_) {
-                return 
-                wholeProfileController
-                              .wholemyprofilemodel == null || wholeProfileController
-                              .wholemyprofilemodel!.data == null || wholeProfileController
-                              .wholemyprofilemodel!.data!.isEmpty ? SizedBox() :
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.transparent,
-                    child: CachedNetworkImage(
-                      imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                          wholeProfileController
-                              .wholemyprofilemodel!
-                              .data![0].image
-                              .toString(),
-
-                      fit: BoxFit.cover,
-                      // width: 61,
-                      // height: 75,
-                      placeholder: (context, url) => Center(
-                        child: CircularProgressIndicator(),
-                      ), // Replace with your own placeholder widget
-                      errorWidget: (context, url, error) => Icon(
-                          Icons.error), // Replace with your own error widget
-                    ),
-                    //  Image.asset("assets/image/boyprofile3.png"),
-                  ),
-                );
-
-                // Image.asset("assets/image/girl.png")
-              }),
-        
-        ],
+      appBar: CustomAppBarWhole(
+        drawerKey: _drawerkey,
       ),
-      // backgroundcolor:MyColors.white,
+//       appBar: AppBar(
+//         elevation: 0,
+//         backgroundColor: Colors.transparent,
+//         leading: Padding(
+//           padding: const EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
+//           child: GestureDetector(
+//             onTap: () {
+//               _drawerkey.currentState!.openDrawer();
+//             },
+//             child: Image.asset(
+//               "assets/image/menu2.png",
+//             ),
+//           ),
+//         ),
+//         title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child: Text(
+//           "DashBoard",
+//           style: TextStyle(
+//             fontSize: 16,
+//             color: MyColors.black,
+//             fontWeight: FontWeight.w700,
+//           ),
+//         )),
+//         actions: [
+//           //  SvgPicture.asset("assets/image/girl.svg"),
+
+//           // SizedBox(width: 20),l
+//           GetBuilder<WholeProfileController>(
+//               init: wholeProfileController,
+//               builder: (_) {
+//                 return 
+//                 wholeProfileController
+//                               .wholemyprofilemodel == null || wholeProfileController
+//                               .wholemyprofilemodel!.data == null || wholeProfileController
+//                               .wholemyprofilemodel!.data!.isEmpty ? SizedBox() :
+//                 Padding(
+//                   padding: EdgeInsets.only(right: 20.0),
+//                   child: CircleAvatar(
+//                     radius: 35,
+//                     backgroundColor: Colors.transparent,
+//                     child: CachedNetworkImage(
+//                       imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
+//                           wholeProfileController
+//                               .wholemyprofilemodel!
+//                               .data![0].image
+//                               .toString(),
+
+//                       fit: BoxFit.cover,
+//                       // width: 61,
+//                       // height: 75,
+//                       placeholder: (context, url) => Center(
+//                         child: CircularProgressIndicator(),
+//                       ), // Replace with your own placeholder widget
+//                       errorWidget: (context, url, error) => Icon(
+//                           Icons.error), // Replace with your own error widget
+//                     ),
+//                     //  Image.asset("assets/image/boyprofile3.png"),
+//                   ),
+//                 );
+
+//                 // Image.asset("assets/image/girl.png")
+//               }),
+        
+//         ],
+//       ),
+//       // backgroundcolor:MyColors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),

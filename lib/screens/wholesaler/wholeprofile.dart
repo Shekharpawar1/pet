@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/profilewhole_controller.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -23,42 +24,8 @@ class _WholeSalerProfileState extends State<WholeSalerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-          child: Image.asset(
-            "assets/image/menu2.png",
-          ),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "Profile",
-          style: CustomTextStyle.appbartext,
-        )),
-        actions: [
-          InkWell(
-              onTap: () {
-                Get.to(NotificationUser());
-              },
-              child: SvgPicture.asset("assets/image/notification.svg")),
-          // Image.asset("assets/image/cartimg.png"),
-          SizedBox(width: 20),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: SvgPicture.asset("assets/image/bag.svg"),
-          ),
-        ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
-      ),
-      body: ListView(
+     appBar: CustomAppBarWholeback(),
+     body: ListView(
         shrinkWrap: true,
         primary: true,
         children: [
@@ -309,91 +276,91 @@ class _WholeSalerProfileState extends State<WholeSalerProfile> {
                         ),
                       ),
        
-      Padding(
-        padding: const EdgeInsets.only(left:15.0,),
-        child:   Text("Address",style:  CustomTextStyle.popinstext,),
-      ),
+      // Padding(
+      //   padding: const EdgeInsets.only(left:15.0,),
+      //   child:   Text("Address",style:  CustomTextStyle.popinstext,),
+      // ),
       
       
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 50,
-                          //                    width: 335,
-                          // height: 45,
-                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.grey.shade200,
-                          ), child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your address';
-                              }
-                              return null;
-                            },
-                            controller:
-                                wholeprofilecontroller.addressController,
-                            decoration: InputDecoration(
-                              hintText: "Mumbai",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                            ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: MyColors.black,
-                            ),
-                          ),
-                        ),
-                      ),
+      //                 Padding(
+      //                   padding: const EdgeInsets.all(8.0),
+      //                   child: Container(
+      //                     height: 50,
+      //                     //                    width: 335,
+      //                     // height: 45,
+      //                    decoration: BoxDecoration(
+      //                       borderRadius: BorderRadius.circular(50),
+      //                       color: Colors.grey.shade200,
+      //                     ), child: TextFormField(
+      //                       validator: (value) {
+      //                         if (value == null || value.isEmpty) {
+      //                           return 'Please enter your address';
+      //                         }
+      //                         return null;
+      //                       },
+      //                       controller:
+      //                           wholeprofilecontroller.addressController,
+      //                       decoration: InputDecoration(
+      //                         hintText: "Mumbai",
+      //                         hintStyle: TextStyle(
+      //                           color: MyColors.black,
+      //                         ),
+      //                         contentPadding: EdgeInsets.symmetric(
+      //                             horizontal: 20, vertical: 10),
+      //                         border: InputBorder.none,
+      //                         enabledBorder: InputBorder.none,
+      //                         focusedBorder: InputBorder.none,
+      //                       ),
+      //                       style: TextStyle(
+      //                         fontSize: 16,
+      //                         color: MyColors.black,
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
                   
       
                   
     
-        Padding(
-        padding: const EdgeInsets.only(left:15.0,),
-        child:   Text("Pincode",style:  CustomTextStyle.popinstext,),
-      ),
-                     Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Colors.grey.shade200,
-                          ),
-                          child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please pincode';
-                              }
-                              return null;
-                            },
-                            controller: wholeprofilecontroller
-                                .pincodeController,
-                            decoration: InputDecoration(
-                              hintText: "78980",
-                               hintStyle: TextStyle(
-                                color: MyColors.black,
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              border: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                            ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: MyColors.black,
-                            ),
-                          ),
-                        ),
-                      ),
+      //   Padding(
+      //   padding: const EdgeInsets.only(left:15.0,),
+      //   child:   Text("Pincode",style:  CustomTextStyle.popinstext,),
+      // ),
+      //                Padding(
+      //                   padding: const EdgeInsets.all(8.0),
+      //                   child: Container(
+      //                     height: 50,
+      //                     decoration: BoxDecoration(
+      //                       borderRadius: BorderRadius.circular(50),
+      //                       color: Colors.grey.shade200,
+      //                     ),
+      //                     child: TextFormField(
+      //                       validator: (value) {
+      //                         if (value == null || value.isEmpty) {
+      //                           return 'Please pincode';
+      //                         }
+      //                         return null;
+      //                       },
+      //                       controller: wholeprofilecontroller
+      //                           .pincodeController,
+      //                       decoration: InputDecoration(
+      //                         hintText: "78980",
+      //                          hintStyle: TextStyle(
+      //                           color: MyColors.black,
+      //                         ),
+      //                         contentPadding: EdgeInsets.symmetric(
+      //                             horizontal: 20, vertical: 10),
+      //                         border: InputBorder.none,
+      //                         enabledBorder: InputBorder.none,
+      //                         focusedBorder: InputBorder.none,
+      //                       ),
+      //                       style: TextStyle(
+      //                         fontSize: 16,
+      //                         color: MyColors.black,
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
       
      
       

@@ -17,6 +17,7 @@ import 'package:pet/screens/partner/partnerpendingcomplete.dart';
 import 'package:pet/screens/partner/pending.dart';
 import 'package:pet/screens/partner/totalorder.dart';
 import 'package:pet/screens/partner/wholesaler_view.dart';
+import 'package:pet/screens/partner/widget/wholeAppBar.dart';
 import 'package:pet/screens/salesman/balance.dart';
 import 'package:pet/screens/salesman/complete.dart';
 import 'package:pet/screens/salesman/home.dart';
@@ -49,88 +50,10 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
     return Scaffold(
       key: _drawerkey,
       drawer: drawerpartner(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 0.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "DashBoard",
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.black,
-            fontWeight: FontWeight.w700,
-          ),
-        )),
-        actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
-
-          // SizedBox(width: 20),
-
-
-   GetBuilder<PartnerProfileController>(
-              init: profilecontroller,
-              builder: (_) {
-                return 
-                profilecontroller
-                              .partnerprofilemodel == null || profilecontroller
-                              .partnerprofilemodel!.data == null || profilecontroller
-                              .partnerprofilemodel!.data!.isEmpty ? SizedBox() :
-                Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: Colors.transparent,
-                    child: CachedNetworkImage(
-                      imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                          profilecontroller
-                              .partnerprofilemodel!.data![0].vendorId![0].image
-                              .toString(),
-
-                      fit: BoxFit.cover,
-                      // width: 61,
-                      // height: 75,
-                      placeholder: (context, url) => Center(
-                        child: CircularProgressIndicator(),
-                      ), // Replace with your own placeholder widget
-                      errorWidget: (context, url, error) => Icon(
-                          Icons.error), // Replace with your own error widget
-                    ),
-                    //  Image.asset("assets/image/boyprofile3.png"),
-                  ),
-                );
-
-                // Image.asset("assets/image/girl.png")
-              }),
-        
-
-          // profilecontroller
-          // InkWell(
-          //   onTap: () {
-          //     // Get.to();
-          //   },
-          //   child: Padding(
-          //     padding: EdgeInsets.only(right: 20.0),
-          //     child: Image.asset("assets/image/girl.png"),
-          //   ),
-          // ),
-       
-        ],
+      appBar: CustomAppBarPartner(
+        drawerKey : _drawerkey
       ),
-      // backgroundcolor:MyColors.white,
-      body: Stack(
+       body: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.all(15.0),

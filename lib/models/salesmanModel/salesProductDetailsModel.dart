@@ -31,7 +31,7 @@ class Data {
   String? subCategory;
   String? categoryIds;
   List<Variations>? variations;
-  List<Null>? addOns;
+  // List<Null>? addOns;
   List<String>? attributes;
   List<ChoiceOptions>? choiceOptions;
   int? price;
@@ -55,7 +55,7 @@ class Data {
   int? stock;
   int? unitId;
   List<String>? images;
-  List<Null>? foodVariations;
+  // List<Null>? foodVariations;
   String? brandId;
   String? lifeStageId;
   String? helthConditionId;
@@ -78,7 +78,7 @@ class Data {
       this.subCategory,
       this.categoryIds,
       this.variations,
-      this.addOns,
+      // this.addOns,
       this.attributes,
       this.choiceOptions,
       this.price,
@@ -102,7 +102,7 @@ class Data {
       this.stock,
       this.unitId,
       this.images,
-      this.foodVariations,
+      // this.foodVariations,
       this.brandId,
       this.lifeStageId,
       this.helthConditionId,

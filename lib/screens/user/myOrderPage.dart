@@ -148,13 +148,26 @@ class MyOrderUser extends StatelessWidget {
                                   onTap: () async{
                                     myordercontroller.addorder(item.id ?? 0);
                                     print("Orderid ${item.id}");
-                                await    myordercontroller.orderdetailsinit();
+                                    myordercontroller.orderdetailsinit();
+                                 userreviewcontroller.reviewAdd(
+                                            0,item.id??0
+                                          );
                                 await    userreviewcontroller.init();
                                     Get.to(OrderDetailsUser(
                                         orderId: item.id ?? 0,
                                         couponcode: item.couponCode ?? '',
                                         paymentmethod: item.paymentMethod ?? '',
-                                        orderstatus: item.orderStatus ?? ''));
+                                        orderstatus: item.orderStatus ?? '',
+                                        orderAmount: item.orderAmount,
+                                        fname: item.callback![0].userProfile![0].fName??'',
+                                         lname: item.callback![0].userProfile![0].lName??'',
+                                        phone: item.callback![0].userProfile![0].phone??'',
+                                        email:item.callback![0].userProfile![0].email??'',
+                                        address: item.deliveryAddress??'',
+                                        delivered: item.delivered??'',
+                                        ));
+                                        print("Name");
+                                        print(item.callback![0].userProfile![0].fName??'');
                                   },
                                   child: Container(
                                       margin:
@@ -279,3 +292,7 @@ class MyOrderUser extends StatelessWidget {
     );
   }
 }
+
+
+
+

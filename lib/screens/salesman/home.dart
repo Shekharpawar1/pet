@@ -18,7 +18,8 @@ import 'package:pet/controllers/salesman_controller/salesprofile_controller.dart
 import 'package:pet/controllers/salesman_controller/salessubcateogries_controller.dart';
 import 'package:pet/others/Filter.dart';
 
-import 'package:pet/screens/salesman/AllbrandPage.dart';
+
+import 'package:pet/screens/salesman/AllbrandPagesales.dart';
 import 'package:pet/screens/salesman/Allservicepage.dart';
 
 import 'package:pet/screens/salesman/SalesProductAlllistPage.dart';
@@ -27,9 +28,11 @@ import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
 import 'package:pet/screens/salesman/ordersummary.dart';
 import 'package:pet/screens/salesman/productdetails.dart';
+import 'package:pet/screens/salesman/salesPageProductbybrand.dart';
 import 'package:pet/screens/salesman/salesallcategory.dart';
 import 'package:pet/screens/salesman/salesmanFilterUI.dart';
 import 'package:pet/screens/salesman/salesmanSearachScreen.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -63,122 +66,8 @@ class HomeSales extends StatelessWidget {
     return Scaffold(
       key: _drawerkey,
       drawer: drawerSalesMan(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(NotificationSales());
-                  },
-                  child: Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ("5").toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    // salesmycartController.init();
-                    Get.to(AddToCardSales());
-                    // Get.to(AddToCardUser());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      GetBuilder<SalesMyCartController>(
-                          init: mycartController,
-                          builder: (_) {
-                            return Positioned(
-                                top: 3.0,
-                                right: 4.0,
-                                child: Center(
-                                  child: Text(
-                                    (mycartController.mycartmodel!.data!.length)
-                                        .toString(),
-                                    // list.length.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 8.0,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ));
-                          }),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-
-//           actions: [
-//             InkWell(
-// onTap: (){
-//  Get.to (NotificationSales());
-// },
-//               child: SvgPicture.asset("assets/image/notification.svg")),
-//             // Image.asset("assets/image/cartimg.png"),
-//             SizedBox(width: 20),
-//             Padding(
-//               padding:  EdgeInsets.only(right:20.0),
-//               child: SvgPicture.asset("assets/image/bag.svg"),
-//             ),
-
-//           ],
-//           // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
-      ),
-      body: Stack(
+      appBar: CustomAppBarSales(drawerKey:  _drawerkey,title: "",), 
+       body: Stack(
         children: [
           ListView(
             primary: true,
@@ -259,7 +148,7 @@ class HomeSales extends StatelessWidget {
                                       .salesBannerModel!.data![index];
 
                                   var imagePath =
-                                      "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+                                      "${Constants.BANNER_IMAGE_PATH}${item.image ?? ""}";
                                   return Stack(
                                     children: [
                                       // Image.asset(item["image"]),
@@ -719,7 +608,7 @@ class HomeSales extends StatelessWidget {
                                                                             .id!)
                                                                 ? Icons.favorite
                                                                 : Icons
-                                                                    .favorite_border)),
+                                                                    .favorite_border,color:Colors.red)),
                                                       ),
                                                     ),
 
@@ -1035,7 +924,13 @@ class HomeSales extends StatelessWidget {
 
                         InkWell(
                           onTap: () {
-                            Get.to(() => AllbrandPagesales());
+                            Get.to(() => AllbrandPagesales(
+                              data: homesalecontroller
+                                            .salesBrandModel!.data!
+                                            .where((element) =>
+                                                element.canine == 1)
+                                            .toList()
+                            ));
                           },
                           child: Text('See All',
                               style: TextStyle(
@@ -1275,7 +1170,13 @@ class HomeSales extends StatelessWidget {
 
                         InkWell(
                           onTap: () {
-                            Get.to(AllbrandPagesales());
+                            Get.to(() => AllbrandPagesales(
+                              data: homesalecontroller
+                                            .salesBrandModel!.data!
+                                            .where((element) =>
+                                                element.canine == 0)
+                                            .toList()
+                            ));
                           },
                           child: Text('See All',
                               style: TextStyle(
@@ -1287,6 +1188,223 @@ class HomeSales extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.0),
+                    // Container(
+                    //   height: 250,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child: ListView(
+                    //     primary: false,
+                    //     shrinkWrap: true,
+                    //     scrollDirection: Axis.horizontal,
+                    //     children: [
+                    //       GetBuilder<HomeSalesController>(
+                    //           init: homesalecontroller,
+                    //           builder: (_) {
+                    //             return homesalecontroller.salesBrandModel ==
+                    //                     null
+                    //                 ? SizedBox()
+                    //                 : ListView.builder(
+                    //                     primary: false,
+                    //                     scrollDirection: Axis.horizontal,
+                    //                     shrinkWrap: true,
+                    //                     itemCount: homesalecontroller
+                    //                         .salesBrandModel!.data!.length,
+                    //                     itemBuilder: (context, index) {
+                    //                       var item = homesalecontroller
+                    //                           .salesBrandModel!.data![index];
+                    //                       // print(item.name!);
+                    //                       var imagePath =
+                    //                           "${Constants.BASE_URL}${Constants.BRAND_IMAGE_PATH}${item.image ?? ""}";
+                    //                       var imageLogoPath =
+                    //                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
+                    //                       // print(imagePath);
+                    //                       return InkWell(
+                    //                         onTap: () {
+                    //                           salesOurBrandDetailsController
+                    //                               .addproduct(item.id ?? 0,
+                    //                                   item.logo ?? '');
+                    //                           Get.to(OrderDetailssales());
+                    //                         },
+                    //                         child: Padding(
+                    //                           padding:
+                    //                               const EdgeInsets.all(8.0),
+                    //                           child: Column(
+                    //                             children: [
+                    //                               Container(
+                    //                                 height:
+                    //                                     MediaQuery.of(context)
+                    //                                             .size
+                    //                                             .width *
+                    //                                         0.55,
+                    //                                 width:
+                    //                                     MediaQuery.of(context)
+                    //                                             .size
+                    //                                             .width *
+                    //                                         0.46,
+                    //                                 decoration: BoxDecoration(
+                    //                                   borderRadius:
+                    //                                       BorderRadius.circular(
+                    //                                           30),
+                    //                                   // color: MyColors.white
+                    //                                 ),
+                    //                                 child: Stack(
+                    //                                   alignment:
+                    //                                       Alignment.topCenter,
+                    //                                   children: [
+                    //                                     // SizedBox(height: 140,),
+                    //                                     Container(
+                    //                                       height: MediaQuery.of(
+                    //                                                   context)
+                    //                                               .size
+                    //                                               .width *
+                    //                                           0.6,
+                    //                                       width: MediaQuery.of(
+                    //                                                   context)
+                    //                                               .size
+                    //                                               .width *
+                    //                                           0.46,
+                    //                                       decoration: BoxDecoration(
+                    //                                           borderRadius:
+                    //                                               BorderRadius
+                    //                                                   .circular(
+                    //                                                       30),
+                    //                                           color: Colors
+                    //                                               .transparent),
+                    //                                       child: Column(
+                    //                                         children: [
+                    //                                           Padding(
+                    //                                             padding:
+                    //                                                 const EdgeInsets
+                    //                                                         .only(
+                    //                                                     top:
+                    //                                                         25.0),
+                    //                                             child:
+                    //                                                 Container(
+                    //                                               decoration:
+                    //                                                   BoxDecoration(
+                    //                                                 borderRadius:
+                    //                                                     BorderRadius.circular(
+                    //                                                         30),
+                    //                                                 gradient:
+                    //                                                     LinearGradient(
+                    //                                                   begin: Alignment
+                    //                                                       .topCenter,
+                    //                                                   end: Alignment
+                    //                                                       .bottomCenter,
+                    //                                                   colors: [
+                    //                                                     Color(
+                    //                                                         0xFFFFF0BA),
+                    //                                                     Color.fromRGBO(
+                    //                                                         252,
+                    //                                                         233,
+                    //                                                         166,
+                    //                                                         0.00),
+                    //                                                   ],
+                    //                                                 ),
+                    //                                               ),
+                    //                                               child:
+                    //                                                   CachedNetworkImage(
+                    //                                                 imageUrl:
+                    //                                                     imagePath,
+                    //                                                 // width: 50,
+                    //                                                 height: 135,
+                    //                                                 placeholder:
+                    //                                                     (context,
+                    //                                                             url) =>
+                    //                                                         Center(
+                    //                                                   child:
+                    //                                                       CircularProgressIndicator(),
+                    //                                                 ), // Replace with your own placeholder widget
+                    //                                                 errorWidget: (context,
+                    //                                                         url,
+                    //                                                         error) =>
+                    //                                                     Icon(Icons
+                    //                                                         .error), // Replace with your own error widget
+                    //                                               ),
+                    //                                             ),
+                    //                                           ),
+                    //                                           SizedBox(
+                    //                                             height: 15,
+                    //                                           ),
+                    //                                           Text(item.title!,
+                    //                                               style: CustomTextStyle
+                    //                                                   .popinssmall0)
+                    //                                         ],
+                    //                                       ),
+                    //                                     ),
+                    //                                     Positioned(
+                    //                                       top: 3,
+                    //                                       child: Container(
+                    //                                         height: 50,
+                    //                                         width: 60,
+                    //                                         decoration: BoxDecoration(
+                    //                                             color: Colors
+                    //                                                 .white
+                    //                                                 .withOpacity(
+                    //                                                     0.3),
+                    //                                             borderRadius:
+                    //                                                 BorderRadius
+                    //                                                     .circular(
+                    //                                                         20)),
+                    //                                         child:
+                    //                                             // Image.asset(
+                    //                                             //   item["logo"],
+                    //                                             //   height: 50,
+                    //                                             // ),
+                    //                                             CachedNetworkImage(
+                    //                                           imageUrl:
+                    //                                               imageLogoPath,
+                    //                                           // width: 50,
+                    //                                           height: 50,
+                    //                                           placeholder:
+                    //                                               (context,
+                    //                                                       url) =>
+                    //                                                   Center(
+                    //                                             child:
+                    //                                                 CircularProgressIndicator(),
+                    //                                           ), // Replace with your own placeholder widget
+                    //                                           errorWidget: (context,
+                    //                                                   url,
+                    //                                                   error) =>
+                    //                                               Icon(Icons
+                    //                                                   .error), // Replace with your own error widget
+                    //                                         ),
+                    //                                       ),
+                    //                                     )
+                    //                                   ],
+                    //                                 ),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                           //  Stack(
+                    //                           //   children: [
+                    //                           //     Container(
+                    //                           //       width: 69,
+                    //                           //       height: 75,
+                    //                           //       decoration: BoxDecoration(
+                    //                           //         borderRadius: BorderRadius.circular(23),
+                    //                           //         color: item,
+                    //                           //         boxShadow: [
+                    //                           //           BoxShadow(
+                    //                           //             color: Colors.grey.withOpacity(0.3),
+                    //                           //             spreadRadius: 2,
+                    //                           //             blurRadius: 5,
+                    //                           //             offset: Offset(
+                    //                           //                 0, 3), // Offset of the shadow
+                    //                           //           ),
+                    //                           //         ],
+                    //                           //       ),
+                    //                           //     ),
+                    //                           //   ],
+                    //                           // )
+                    //                         ),
+                    //                       );
+                    //                     },
+                    //                   );
+                    //           }),
+                    //     ],
+                    //   ),
+                    // ),
+                   
                     Container(
                       height: 250,
                       width: MediaQuery.of(context).size.width,
@@ -1305,11 +1423,18 @@ class HomeSales extends StatelessWidget {
                                         primary: false,
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
-                                        itemCount: homesalecontroller
-                                            .salesBrandModel!.data!.length,
+                                         itemCount: homesalecontroller
+                                            .salesBrandModel!.data!
+                                            .where((element) =>
+                                                element.canine == 0)
+                                            .toList()
+                                            .length,
                                         itemBuilder: (context, index) {
                                           var item = homesalecontroller
-                                              .salesBrandModel!.data![index];
+                                              .salesBrandModel!.data!
+                                              .where((element) =>
+                                                  element.canine == 0)
+                                              .toList()[index];
                                           // print(item.name!);
                                           var imagePath =
                                               "${Constants.BASE_URL}${Constants.BRAND_IMAGE_PATH}${item.image ?? ""}";
@@ -1503,6 +1628,8 @@ class HomeSales extends StatelessWidget {
                         ],
                       ),
                     ),
+                   
+                   
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -1542,7 +1669,7 @@ class HomeSales extends StatelessWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 260),
+                                      mainAxisExtent: 265),
                               itemCount: salessubcategorycontroller
                                   .salestoyModel!.data!.length
                                   .clamp(0, 4),
@@ -1557,7 +1684,8 @@ class HomeSales extends StatelessWidget {
                                             null ||
                                         salessubcategorycontroller
                                                 .salestoyModel!.data ==
-                                            null
+                                            null  || salessubcategorycontroller
+                                          .salestoyModel!.data![index] == null
                                     ? SizedBox()
                                     : Container(
                                         height:
@@ -1632,7 +1760,7 @@ class HomeSales extends StatelessWidget {
                                                                     .id!)
                                                             ? Icons.favorite
                                                             : Icons
-                                                                .favorite_border)),
+                                                                .favorite_border,color:Colors.red)),
                                                   ),
                                                 ),
                                               ],
@@ -1761,7 +1889,7 @@ class HomeSales extends StatelessWidget {
 
                         InkWell(
                           onTap: () {
-                            Get.to(AllbrandPagesales());
+                            Get.to(SalesProdctbybrandPage());
                           },
                           child: Text('See All',
                               style: TextStyle(

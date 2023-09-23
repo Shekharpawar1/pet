@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/userLocationController.dart';
 import 'package:pet/screens/user/widgets/orderCancellationDialog.dart';
 import 'package:pet/screens/user/widgets/orderCancellationOtherDialog.dart';
@@ -30,7 +31,7 @@ class LocationPickerMapUser extends StatefulWidget {
 
 class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
    OrderTrackerUserController ordertrackusercontroller = Get.put(OrderTrackerUserController());
-
+  MyOrderController myordercontroller = Get.put(MyOrderController());
   List<TextDto> orderList = [
     TextDto("Your order has been placed", "Fri, 25th Mar '22 - 10:47pm"),
     TextDto("Seller ha processed your order", "Sun, 27th Mar '22 - 10:19am"),
@@ -404,6 +405,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                                     child: InkWell(
                                       onTap: () {
                                         // print(Status);
+                                       myordercontroller.Reorderinit();
                                         Get.dialog(OrderReturnDialog());
                                       },
                                       child: Container(
