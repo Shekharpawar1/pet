@@ -18,7 +18,9 @@ class UserLoginController extends GetxController {
   final storage = GetStorage();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController phoneNumberController = TextEditingController();
+  
   String? otpText;
+  String? errormsg = "";
 
   bool isFinishedOtp = false;
   void updateIsFinishedOtp(bool val) {
@@ -31,18 +33,29 @@ class UserLoginController extends GetxController {
     update();
   }
 
+void validateNumber(String value) {
+    // setState(() {
+      if (value.length < 4) {
+        errormsg = 'Enter OTP';
+      } else {
+        errormsg = '';
+      // }
+    }
+    update();
+    
+  }
   Future<bool> validateForm(BuildContext context) {
     final completer = Completer<bool>();
 
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
       completer.complete(true);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is invalid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
       completer.complete(false);
     }
 

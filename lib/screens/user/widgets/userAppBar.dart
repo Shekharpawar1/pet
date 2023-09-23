@@ -147,6 +147,144 @@ SizedBox():
 
 
 
+class CustomAppBarGreenDrawer extends StatelessWidget implements PreferredSizeWidget {
+  final GlobalKey<ScaffoldState> drawerKey;
+
+  CustomAppBarGreenDrawer({required this.drawerKey});
+    NotificationController notificationcontroller =
+      Get.put(NotificationController());
+  MyCartController mycartController = Get.put(MyCartController());
+  @override
+  Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+       backgroundColor: MyColors.green,
+     leading: Padding(
+          padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
+          child: GestureDetector(
+            onTap: () {
+              drawerKey.currentState!.openDrawer();
+            },
+            child: Image.asset(
+              "assets/image/menu2.png",color:Colors.white
+            ),
+          ),
+        ),
+//           title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child:Text("")
+//           ),
+
+        actions: [
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                    Get.to(NotificationUser());
+                  },
+                  child: Center(
+                    child: Icon(Icons.notifications, color: MyColors.white),
+                  )),
+                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
+SizedBox():
+              Positioned(
+                  top: 10.0,
+                  right: 0,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      GetBuilder<NotificationController>(
+                          init: notificationcontroller,
+                          builder: (_) {
+                            return   notificationcontroller.userNotificationModel == null ||
+                                    notificationcontroller.userNotificationModel!.state ==
+                                        null ||
+                                     notificationcontroller.userNotificationModel!.state!.isEmpty
+                                ? const SizedBox():
+                           Positioned(
+                              top: 3.0,
+                              right: 4.0,
+                              child: Center(
+                                child: Text(
+                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
+                                  // list.length.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ));
+                        }
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+          SizedBox(width: 20),
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                    mycartController.init();
+                    Get.to(AddToCardUser());
+                    // Get.to(AddToCardUser());
+                  },
+                  child:
+                      Center(child: SvgPicture.asset("assets/image/bag.svg",color:Colors.white))),
+
+// (getCardModel!.data!.isEmpty)?
+// SizedBox():
+mycartController.mycartmodel == null || mycartController.mycartmodel!.data!.isEmpty?
+SizedBox():
+              Positioned(
+                  top: 10.0,
+                  right: 0,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      GetBuilder<MyCartController>(
+                          init: mycartController,
+                          builder: (_) {
+                            return mycartController.mycartmodel == null ||
+                                    mycartController.mycartmodel!.data ==
+                                        null ||
+                                    mycartController.mycartmodel!.data!.isEmpty
+                                ? const SizedBox()
+                                : Positioned(
+                                    top: 3.0,
+                                    right: 4.0,
+                                    child: Center(
+                                      child: Text(
+                                        (mycartController
+                                                .mycartmodel!.data!.length)
+                                            .toString(),
+                                        // list.length.toString(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 8.0,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ));
+                          }),
+                    ],
+                  )),
+            ],
+          ),
+          SizedBox(
+            width: 20,
+          )
+        ],
+       
+    );
+  }
+}
+
+
+
 
 class CustomAppBarback extends StatelessWidget implements PreferredSizeWidget {
   // final GlobalKey<ScaffoldState> drawerKey;
@@ -287,6 +425,143 @@ SizedBox():
 
 
 
+
+
+class CustomAppBargreen extends StatelessWidget implements PreferredSizeWidget {
+    NotificationController notificationcontroller =
+      Get.put(NotificationController());
+  // CustomAppBarwhite({});
+  MyCartController mycartController = Get.put(MyCartController());
+  @override
+  Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
+
+  @override
+  Widget build(BuildContext context) {
+    return        AppBar(
+       elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: MyColors.green,
+        leading: Padding(
+            padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_left, color: MyColors.white)),
+          ),
+//           title: Center(
+// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
+// //
+//             child:Text("")
+//           ),
+
+        actions: [
+        Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                    Get.to(NotificationUser());
+                  },
+                  child: Center(
+                    child: Icon(Icons.notifications, color: MyColors.white),
+                  )),
+                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
+SizedBox():
+              Positioned(
+                  top: 10.0,
+                  right: 0,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      GetBuilder<NotificationController>(
+                          init: notificationcontroller,
+                          builder: (_) {
+                            return   notificationcontroller.userNotificationModel == null ||
+                                    notificationcontroller.userNotificationModel!.state ==
+                                        null ||
+                                     notificationcontroller.userNotificationModel!.state!.isEmpty
+                                ? const SizedBox():
+                           Positioned(
+                              top: 3.0,
+                              right: 4.0,
+                              child: Center(
+                                child: Text(
+                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
+                                  // list.length.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ));
+                        }
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+           SizedBox(width: 20),
+          Stack(
+            children: [
+              InkWell(
+                  onTap: () {
+                    mycartController.init();
+                    Get.to(AddToCardUser());
+                    // Get.to(AddToCardUser());
+                  },
+                  child:
+                      Center(child: SvgPicture.asset("assets/image/bag.svg",color:Colors.white))),
+
+// (getCardModel!.data!.isEmpty)?
+// SizedBox():
+ mycartController.mycartmodel!.data!.isEmpty?
+SizedBox():
+              Positioned(
+                  top: 10.0,
+                  right: 0,
+                  child: Stack(
+                    children: <Widget>[
+                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      GetBuilder<MyCartController>(
+                          init: mycartController,
+                          builder: (_) {
+                            return mycartController.mycartmodel == null ||
+                                    mycartController.mycartmodel!.data ==
+                                        null ||
+                                    mycartController.mycartmodel!.data!.isEmpty
+                                ? const SizedBox()
+                                : Positioned(
+                                    top: 3.0,
+                                    right: 4.0,
+                                    child: Center(
+                                      child: Text(
+                                        (mycartController
+                                                .mycartmodel!.data!.length)
+                                            .toString(),
+                                        // list.length.toString(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 8.0,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ));
+                          }),
+                    ],
+                  )),
+            ],
+          ),
+          SizedBox(
+            width: 20,
+          )
+        ],
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.vertical(
+        //     bottom: Radius.circular(20),
+        //   ),
+        // ),
+      );
+  }
+}
 
 
 class CustomAppBarwhite extends StatelessWidget implements PreferredSizeWidget {

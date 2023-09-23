@@ -11,6 +11,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/controllers/user_controller/myPetController.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -121,127 +122,129 @@ class AddMypet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: MyColors.green,
-        // leading: Padding(
-        //   padding:  EdgeInsets.only(left:20.0,top: 10,bottom: 10,right: 0),
-        //   child:   InkWell(onTap: (){
-        //     Navigator.pop(context);
-        //   },
-        //     child: Icon(Icons.arrow_back_ios,color: black,size: 20,
+//       appBar: AppBar(
+//         elevation: 0,
+//         automaticallyImplyLeading: false,
+//         backgroundColor: MyColors.green,
+//         // leading: Padding(
+//         //   padding:  EdgeInsets.only(left:20.0,top: 10,bottom: 10,right: 0),
+//         //   child:   InkWell(onTap: (){
+//         //     Navigator.pop(context);
+//         //   },
+//         //     child: Icon(Icons.arrow_back_ios,color: black,size: 20,
 
-        //     ),
-        //   ),
-        // ),
+//         //     ),
+//         //   ),
+//         // ),
 
-        actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(NotificationUser());
-                  },
-                  child: Center(
-                    child: Icon(
-                      Icons.notifications,
-                      color: MyColors.white,
-                    ),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: MyColors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
+//         actions: [
+//           Stack(
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.to(NotificationUser());
+//                   },
+//                   child: Center(
+//                     child: Icon(
+//                       Icons.notifications,
+//                       color: MyColors.white,
+//                     ),
+//                   )),
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       Positioned(
+//                           top: 3.0,
+//                           right: 4.0,
+//                           child: Center(
+//                             child: Text(
+//                               ('5').toString(),
+//                               // list.length.toString(),
+//                               style: TextStyle(
+//                                   color: MyColors.white,
+//                                   fontSize: 8.0,
+//                                   fontWeight: FontWeight.w500),
+//                             ),
+//                           )),
+//                     ],
+//                   )),
+//             ],
+//           ),
 
-          SizedBox(width: 20),
+//           SizedBox(width: 20),
 
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(AddToCardUser());
-                  },
-                  child: Center(
-                      child: SvgPicture.asset(
-                    "assets/image/bag.svg",
-                    color: Colors.white,
-                  ))),
+//           Stack(
+//             children: [
+//               InkWell(
+//                   onTap: () {
+//                     Get.to(AddToCardUser());
+//                   },
+//                   child: Center(
+//                       child: SvgPicture.asset(
+//                     "assets/image/bag.svg",
+//                     color: Colors.white,
+//                   ))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
+// // (getCardModel!.data!.isEmpty)?
+// // SizedBox():
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       Positioned(
+//                           top: 3.0,
+//                           right: 4.0,
+//                           child: Center(
+//                             child: Text(
+//                               ('5').toString(),
+//                               // list.length.toString(),
+//                               style: TextStyle(
+//                                   color: Colors.white,
+//                                   fontSize: 8.0,
+//                                   fontWeight: FontWeight.w500),
+//                             ),
+//                           )),
+//                     ],
+//                   )),
+//             ],
+//           ),
 
-          SizedBox(
-            width: 20,
-          )
+//           SizedBox(
+//             width: 20,
+//           )
 
-          // ],
-          //   InkWell(
-          //       onTap: () {
-          //         Get.to(NotificationUser());
-          //       },
-          //       child: SvgPicture.asset(
-          //         "assets/image/notification.svg",
-          //         color: MyColors.white,
-          //       )),
-          //   // Image.asset("assets/image/cartimg.png"),
-          //   SizedBox(width: 20),
-          //   Padding(
-          //     padding: EdgeInsets.only(right: 20.0),
-          //     child: SvgPicture.asset(
-          //       "assets/image/bag.svg",
-          //       color: MyColors.white,
-          //     ),
-          //   ),
-        ],
+//           // ],
+//           //   InkWell(
+//           //       onTap: () {
+//           //         Get.to(NotificationUser());
+//           //       },
+//           //       child: SvgPicture.asset(
+//           //         "assets/image/notification.svg",
+//           //         color: MyColors.white,
+//           //       )),
+//           //   // Image.asset("assets/image/cartimg.png"),
+//           //   SizedBox(width: 20),
+//           //   Padding(
+//           //     padding: EdgeInsets.only(right: 20.0),
+//           //     child: SvgPicture.asset(
+//           //       "assets/image/bag.svg",
+//           //       color: MyColors.white,
+//           //     ),
+//           //   ),
+//         ],
 
-        // title: Text(
-        //   "My Pet",
-        //   style: CustomTextStyle.appbartextwhite,
-        // ),
-      ),
+//         // title: Text(
+//         //   "My Pet",
+//         //   style: CustomTextStyle.appbartextwhite,
+//         // ),
+//       ),
+        
+        appBar:CustomAppBargreen(),
       body: GetBuilder<UserMyPetController>(
           init: userMyPetController,
           // initState: (_) {},
@@ -827,7 +830,7 @@ class AddMypet extends StatelessWidget {
                                                   child: Text(
                                                     item,
                                                     style: TextStyle(
-                                                      color: Colors.black26,
+                                                      color: Colors.black,
                                                       fontFamily:
                                                           "SF-Pro-Display",
                                                       fontSize: 14,
@@ -895,7 +898,7 @@ class AddMypet extends StatelessWidget {
                                               userMyPetController.dobController,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: Colors.black26,
+                                              color: Colors.black,
                                               fontFamily: "SF-Pro-Display"),
                                           decoration: InputDecoration(
 
@@ -1113,7 +1116,7 @@ class AddMypet extends StatelessWidget {
                                               .petNameController,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: Colors.black26,
+                                              color: Colors.black,
                                               fontFamily: "SF-Pro-Display"),
                                           decoration: InputDecoration(
 

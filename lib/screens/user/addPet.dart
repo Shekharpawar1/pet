@@ -41,7 +41,7 @@ class _AddPetState extends State<AddPet> {
         Scaffold(
              key: _drawerkey,
       drawer: drawer(),
-           appBar:CustomAppBar(drawerKey: _drawerkey),
+           appBar:CustomAppBarGreenDrawer(drawerKey: _drawerkey),
 //             appBar: AppBar(
 //               elevation: 0,
 //               automaticallyImplyLeading: false,
@@ -191,8 +191,8 @@ class _AddPetState extends State<AddPet> {
               init: userMyPetListController,
               // initState: (_) {},
               builder: (_) {
-                return userMyPetListController.petListModel != null ||
-                        userMyPetListController.petListModel!.data != null
+                return userMyPetListController.petListModel == null ||
+                        userMyPetListController.petListModel!.data == null
                     || userMyPetListController
                                       .petListModel!.data!.isEmpty?
             Center(child: Image.asset("assets/image/dogImage.gif"))
