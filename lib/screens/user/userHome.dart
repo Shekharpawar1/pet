@@ -388,7 +388,12 @@ class _HomeUserState extends State<HomeUser> {
                         filtercontroller.loadDefaultData();
                         filtercontroller.clearFields();
                         // Get.to(FilterScreen());
+                        // Get.to(FilterScreenUI());
+
+                        //  FilterController filtercontroller = Get.put(FilterController());
+                        filtercontroller.init();
                         Get.to(FilterScreenUI());
+                        Get.to(FilterScreen());
                       },
                       child: Container(
                           width: 45,
@@ -590,9 +595,9 @@ class _HomeUserState extends State<HomeUser> {
 
                     InkWell(
                       onTap: () {
-                        Get.to(() => ProductAlllistPage());
+                        Get.to(() => const ProductAlllistPage());
                       },
-                      child: Text('See All',
+                      child: const Text('See All',
                           style: TextStyle(
                               color: MyColors.bgcolor,
                               fontSize: 14,
@@ -614,18 +619,19 @@ class _HomeUserState extends State<HomeUser> {
                     init: homeusercontroller,
                     builder: (_) {
                       return homeusercontroller.userPropertiesModel == null
-                          ? SizedBox()
+                          ? const SizedBox()
                           : homeusercontroller.propertyLoaded == null
-                              ? SizedBox()
+                              ? const SizedBox()
                               : Container(
                                   // height: 600,
                                   child: GridView.builder(
                                       primary: false,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
                                               crossAxisSpacing: 15.0,
                                               mainAxisSpacing: 15.0,
@@ -686,7 +692,7 @@ class _HomeUserState extends State<HomeUser> {
                                                       .withOpacity(0.3),
                                                   spreadRadius: 3,
                                                   blurRadius: 7,
-                                                  offset: Offset(0,
+                                                  offset: const Offset(0,
                                                       3), // Offset of the shadow
                                                 ),
                                               ],
@@ -2118,34 +2124,41 @@ class _HomeUserState extends State<HomeUser> {
                                                     ),
                                                   ),
                                                 ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    homeusercontroller
-                                                        .addItemToWishList(
-                                                            homeusercontroller
-                                                                .userPropertiesModel!
-                                                                .data![index]
-                                                                .id!);
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Align(
-                                                        alignment:
-                                                            Alignment.topRight,
-                                                        child: Icon(homeusercontroller
-                                                                .wishListItemsId
-                                                                .contains(homeusercontroller
-                                                                    .userPropertiesModel!
-                                                                    .data![
-                                                                        index]
-                                                                    .id!)
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border)),
-                                                  ),
-                                                ),
+                                                GetBuilder<HomeuserController>(
+                                                    init: homeusercontroller,
+                                                    builder: (_) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                          homeusercontroller
+                                                              .addItemToWishList(
+                                                                  homeusercontroller
+                                                                      .userPropertiesModel!
+                                                                      .data![
+                                                                          index]
+                                                                      .id!);
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Align(
+                                                              alignment:
+                                                                  Alignment
+                                                                      .topRight,
+                                                              child: Icon(homeusercontroller
+                                                                      .wishListItemsId
+                                                                      .contains(homeusercontroller
+                                                                          .userPropertiesModel!
+                                                                          .data![
+                                                                              index]
+                                                                          .id!)
+                                                                  ? Icons
+                                                                      .favorite
+                                                                  : Icons
+                                                                      .favorite_border)),
+                                                        ),
+                                                      );
+                                                    }),
                                               ],
                                             ),
 

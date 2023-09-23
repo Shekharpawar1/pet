@@ -156,14 +156,36 @@ class OtpUser extends StatelessWidget {
                           activeColor: MyColors.yellow,
                           isFinished: userLoginController.isFinishedOtp,
                           onWaitingProcess: () {
-                            Future.delayed(Duration(seconds: 2), () {
-                              // setState(() {
-                              //   isFinished = true;
-                              // });\
-                              userLoginController.updateIsFinishedOtp(true);
-                            });
+                            // Future.delayed(Duration(seconds: 2), () {
+                            // setState(() {
+                            //   isFinished = true;
+                            // });\
+                             if (userLoginController.otpText == "" ||
+                                userLoginController.otpText!.length < 4) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                  "Invalid OTP",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                              );
+                              return;
+                            }
+                            userLoginController.updateIsFinishedOtp(true);
+                            // });
                           },
                           onFinish: () async {
+                            if (userLoginController.otpText == "" 
+                                ) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                  "Invalid OTP",
+                                  style: TextStyle(color: Colors.red),
+                                )),
+                              );
+                              return;
+                            }
                             Get.put(HomeuserController());
                             final HomeuserController userHomeController =
                                 Get.find<HomeuserController>();

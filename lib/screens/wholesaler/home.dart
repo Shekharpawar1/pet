@@ -266,7 +266,7 @@ class _HomeWholeState extends State<HomeWhole> {
 
                               var imagePath =
                                   "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
-                                  print("=====>>>>>> Banners: $imagePath");
+                              print("=====>>>>>> Banners: $imagePath");
                               return Stack(
                                 children: [
                                   // Image.asset(item["image"]),
@@ -367,7 +367,8 @@ class _HomeWholeState extends State<HomeWhole> {
 
                         color: MyColors.white,
                       ),
-                      child: TextFormField(onTap: () {
+                      child: TextFormField(
+                        onTap: () {
                           wholehomecontroller.clearSearchData();
                           Get.to(WholeSalerSearchScreen());
                         },
@@ -418,7 +419,9 @@ class _HomeWholeState extends State<HomeWhole> {
                         filtercontroller.loadDefaultData();
                         filtercontroller.clearFields();
                         // Get.to(FilterScreen());
+                        filtercontroller.init();
                         Get.to(WholeSalerFilterScreenUI());
+                        Get.to(FilterScreen());
                       },
                       child: Container(
                           width: 45,
@@ -472,7 +475,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                           onTap: () async {
                                             wholesubcategorycontroller
                                                 .addproduct(item.id ?? 0);
-                                                wholesubcategorycontroller
+                                            wholesubcategorycontroller
                                                 .currentCategory(
                                                     item.name ?? "");
                                             await wholesubcategorycontroller
