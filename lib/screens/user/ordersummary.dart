@@ -42,7 +42,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
     return Stack(
       children: [
         Scaffold(
-         appBar:CustomAppBarback(),
+        //  appBar:CustomAppBarback(),
           body: Padding(
             padding: EdgeInsets.all(15),
             child: ListView(
@@ -70,6 +70,7 @@ addtocartController
                                           Center(
                                             child: ElevatedButton(
                                                         onPressed: () {
+                                                          // Navif
                                                        Get.to(HomeUser(
 
                                                        ));
@@ -659,7 +660,7 @@ addtocartController
                                   //       MediaQuery.of(context).size.width * 0.2,
                                   // ),
                                   Spacer(),
-                                (addtocartController.total == 0 )  ?
+                                (addtocartController.total == 1)  ?
                                   Text(
                                     addtocartController.price.toString(),
                                     style: CustomTextStyle.popinstext,

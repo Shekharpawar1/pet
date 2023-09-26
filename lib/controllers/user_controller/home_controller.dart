@@ -153,6 +153,8 @@ partnerIteminit();
 
   void getWishList() {
     wishListItemsId = GetStorage().read('wishListItems') ?? [];
+    print("WIshListItem");
+    print(wishListItemsId);
     update();
   }
 
@@ -325,6 +327,35 @@ partnerIteminit();
     update();
   }
 
+
+Future<void> getWishinit() async{
+ showLoading = true;
+    update();
+
+ try {
+      // wishlist
+      wishList =
+          WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
+      // print(wishList);
+      // wishList!.data!.map((e) => e.itemId).toList();
+      GetStorage().write('wishListItems',
+          wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
+      // categoryLoaded = true;
+      update();
+      print("${GetStorage().read('wishListItems')}");
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+    showLoading = false;
+    update();
+}
    // ProductByPartnerItem
   String getPartnerItemUrl = '${Constants.GET_PRODUCT_PARTNER_ITEM}';
 ProductByPartnerItemModel?  userproductbypartneritemModel;

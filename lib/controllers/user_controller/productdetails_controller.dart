@@ -73,15 +73,29 @@ imagesPath =
   // var cartItems = <CartItemModel>[];
   int kg = 1;
 
-  var sizecount = 1;
+  int? sizecount = 1;
   String? dropdownsize;
   // List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
-
+//  @override
+//   void onClose() {
+//     print("closing...");
+//   clearFields();
+//     super.onClose();
+//   }
+  
   void clearFields() {
     selectedvariants = null;
+         sizecount = 1;
     print("Data cleared...");
     update();
   }
+
+  //  void sizeclearFields() {
+  //   sizecount = 1;
+  //   print("Data cleared...");
+  //   update();
+  // }
+  
   // void setSelectedVariant(String variant) {
   //   dropdownsize = variant;
   // }
@@ -92,15 +106,17 @@ imagesPath =
 // }
 
   void incrementSize() {
-    sizecount++;
+    sizecount = sizecount!+1; 
     update();
+      
   }
 
   decrementSize() {
-    if (sizecount > 1) {
-      sizecount--;
+    if (sizecount! > 1) {
+       sizecount = sizecount!-1; 
       update();
-    }
+    
+;    }
   }
 
   int? id;
@@ -141,7 +157,7 @@ imagesPath =
 
   void  allamount(){
       totalAmount = ((selectedvariants?.price ?? 0) * (sizecount ?? 0) -
-              (((selectedvariants?.price ?? 0) * sizecount ?? 0) *
+              (((selectedvariants?.price ?? 0) * sizecount! ?? 0) *
                   (productdetailmodel!.data!.discount!) /
                   100))
           ;
@@ -240,12 +256,17 @@ imagesPath =
   ProductDetailsModel? productdetailmodel;
   bool productdetailLoaded = false;
   void dispose() {
-    
+    clearFields();
+    //  sizecount= 1;
+    // sizeclearFields();
   productdetailmodel = null;
   update();
   }
   @override
   void onClose() {
+  // sizeclearFields();
+    // clearFields() ;
+    // sizecount= 1;
     dispose();
     super.onClose();
   }
@@ -356,7 +377,7 @@ imagesPath =
       "quantity": (sizecount ?? 0).toString(),
       "image": productdetailmodel!.data!.image ?? '',
       "price": ((selectedvariants?.price ?? 0) * (sizecount ?? 0) -
-              (((selectedvariants?.price ?? 0) * sizecount ?? 0) *
+              (((selectedvariants?.price ?? 0) * sizecount! ?? 0) *
                   (productdetailmodel!.data!.discount!) /
                   100))
           .toString(),
@@ -374,7 +395,7 @@ imagesPath =
         "quantity": (sizecount ?? 0).toString(),
         "image": productdetailmodel!.data!.image ?? '',
         "price": ((selectedvariants?.price ?? 0) * (sizecount ?? 0) -
-                (((selectedvariants?.price ?? 0) * sizecount ?? 0) *
+                (((selectedvariants?.price ?? 0) * sizecount! ?? 0) *
                     (productdetailmodel!.data!.discount!) /
                     100))
             .toString(),

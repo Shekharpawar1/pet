@@ -18,8 +18,8 @@ import 'package:pet/screens/wholesaler/payment2.dart';
 
 enum Choose { upi, cash, phonepay, paytm }
 
-class PaymentUser extends StatefulWidget {
-  PaymentUser(
+class PaymentUserBuyNow extends StatefulWidget {
+  PaymentUserBuyNow(
       {super.key, required this.price, this.orderstatus, this.paymentstatus
       //  this.deliveredstatus,
       //  this.deliveredId,this.deliveredAddress,this.cart,this.couponcode,
@@ -42,10 +42,10 @@ class PaymentUser extends StatefulWidget {
   // int? storeId;
 
   @override
-  State<PaymentUser> createState() => _PaymentUserState();
+  State<PaymentUserBuyNow> createState() => _PaymentUserBuyNowState();
 }
 
-class _PaymentUserState extends State<PaymentUser> {
+class _PaymentUserBuyNowState extends State<PaymentUserBuyNow> {
   MyCartController mycartController = Get.put(MyCartController());
 
   // String? selectedGender;
@@ -239,7 +239,7 @@ class _PaymentUserState extends State<PaymentUser> {
                            selectone == Choose.cash ? 'cash' : "upi",);
                           try {
 
-                      await mycartController.placeorder();
+                      await mycartController.buynowplaceorder();
 
                       await showDialog(
                         context: context,

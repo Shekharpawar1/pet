@@ -12,6 +12,7 @@ import 'package:pet/models/usersModel/GetPetModel.dart' as petFile;
 import 'package:pet/others/calender.dart';
 import 'package:pet/screens/Mypetdetails.dart';
 import 'package:pet/screens/user/notification.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
@@ -40,35 +41,38 @@ class UserServicesAddAppointmentState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.arrow_left, color: MyColors.black)),
-        ),
-        title: Center(
-            child: Text(
-          "Services",
-          style: CustomTextStyle.appbartext,
-        )),
-        // actions: [
-        //   InkWell(
-        //       onTap: () {
-        //         Get.to(const NotificationUser());
-        //       },
-        //       child: SvgPicture.asset("assets/image/notification.svg")),
-        //   SizedBox(width: 20),
-        //   Padding(
-        //     padding: EdgeInsets.only(right: 20.0),
-        //     child: SvgPicture.asset("assets/image/bag.svg"),
-        //   ),
-        // ],
-      ),
+      appBar: CustomAppBarback(),
+      // AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
+      //     child: GestureDetector(
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //         },
+      //         child: Icon(Icons.arrow_left, color: MyColors.black)),
+      //   ),
+      //   title: Center(
+      //       child: Text(
+      //     "Services",
+      //     style: CustomTextStyle.appbartext,
+      //   )),
+      //   // actions: [
+      //   //   InkWell(
+      //   //       onTap: () {
+      //   //         Get.to(const NotificationUser());
+      //   //       },
+      //   //       child: SvgPicture.asset("assets/image/notification.svg")),
+      //   //   SizedBox(width: 20),
+      //   //   Padding(
+      //   //     padding: EdgeInsets.only(right: 20.0),
+      //   //     child: SvgPicture.asset("assets/image/bag.svg"),
+      //   //   ),
+      //   // ],
+      // ),
+   
+   
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -782,6 +786,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                       ),
                     );
                   })
+             
               // : InkWell(
               //     onTap: () {
               //       userServicesAddAppointmentController.addService();

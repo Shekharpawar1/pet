@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/userfavourite_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
@@ -27,7 +28,7 @@ class _UserfavouriteState extends State<Userfavourite> {
   TextEditingController _searchcontroller = TextEditingController();
   UserfavouriteController userfavouriteController =
       Get.put(UserfavouriteController());
-
+ final HomeuserController homeusercontroller = Get.put(HomeuserController());
   @override
   void initState() {
     super.initState();
@@ -138,25 +139,32 @@ class _UserfavouriteState extends State<Userfavourite> {
                                                               .error), // Widget to show on error
                                                     ),
                                                   ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      userfavouriteController
-                                                          .removeItemFromWishList(
-                                                              item.itemId!);
-                                                    },
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Align(
-                                                          alignment: Alignment
-                                                              .centerRight,
-                                                          child: Icon(
-                                                             Icons.favorite,
-                                                            // color:
-                                                            //     MyColors.bgcolor,
-                                                          )),
-                                                    ),
+                                                            GetBuilder<HomeuserController>(
+                      init: homeusercontroller,
+                      builder: (_) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                          userfavouriteController
+                                                              .removeItemFromWishList(
+                                                                  item.itemId!);
+                                                                  
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets.all(
+                                                                  8.0),
+                                                          child: Align(
+                                                              alignment: Alignment
+                                                                  .centerRight,
+                                                              child: Icon(
+                                                                 Icons.favorite,
+                                                                 color: Colors.red,
+                                                                // color:
+                                                                //     MyColors.bgcolor,
+                                                              )),
+                                                        ),
+                                                      );
+                                                    }
                                                   ),
                                                 ],
                                               ),

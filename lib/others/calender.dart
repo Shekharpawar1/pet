@@ -455,7 +455,7 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                       height: boxHeight,
                       viewportFraction: 1,
                       enableInfiniteScroll: false,
-                      reverse: true,
+                      reverse: false,
                       onPageChanged: (index, reason) {
                         onWeekChange(index);
                       },

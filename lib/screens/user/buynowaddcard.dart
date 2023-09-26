@@ -20,6 +20,7 @@ import 'package:pet/screens/partner/partneraddress.dart';
 import 'package:pet/screens/swepcard.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/payment.dart';
+import 'package:pet/screens/user/paymentbuynow.dart';
 import 'package:pet/screens/user/userHome.dart';
 import 'package:pet/screens/user/useraddnewAddress.dart';
 import 'package:pet/screens/user/usercouponPage.dart';
@@ -48,11 +49,12 @@ class _BuyNowAddToCardUserState extends State<BuyNowAddToCardUser> {
   Widget build(BuildContext context) {
     print("DataBuyNow");
     print(widget.data);
-    addtocartController.updateTotal();
+    // addtocartController.updateTotal();
     return Stack(
       children: [
         Scaffold(
-         appBar:CustomAppBarback(), body: Padding(
+        //  appBar:CustomAppBarback(), 
+         body: Padding(
             padding: EdgeInsets.all(15),
             child: ListView(
               shrinkWrap: true,
@@ -225,97 +227,98 @@ widget.data == null?
                                                                         .width *
                                                                     0.1,
                                                               ),
-                                                              Row(
-                                                                children: [
-                                                                  // GestureDetector(
-                                                                  //   onTap: () {
-                                                                  //     addtocartController
-                                                                  //         .decrementSize(
-                                                                  //             index);
-                                                                  //   },
-                                                                  //   child:
-                                                                  //       Container(
-                                                                  //     width: 25,
-                                                                  //     height:
-                                                                  //         25,
-                                                                  //     decoration: BoxDecoration(
-                                                                  //         shape: BoxShape
-                                                                  //             .rectangle,
-                                                                  //         color: MyColors
-                                                                  //             .yellow,
-                                                                  //         borderRadius:
-                                                                  //             BorderRadius.circular(10)),
-                                                                  //     child: Icon(
-                                                                  //         Icons
-                                                                  //             .remove,
-                                                                  //         size:
-                                                                  //             15,
-                                                                  //         color:
-                                                                  //             Colors.black),
-                                                                  //     //  Icon(
-                                                                  //     //   Icons.minimize,
-                                                                  //     //   size: 8,
-                                                                  //     //   color: Colors.white,
-                                                                  //     // ),
-                                                                  //   ),
-                                                                  // ),
+//                                                               Row(
+//                                                                 children: [
+//                                                                   GestureDetector(
+//                                                                     onTap: () {
+//                                                                       addtocartController
+//                                                                           .decrementSize(
+//                                                                               0);
+//                                                                     },
+//                                                                     child:
+//                                                                         Container(
+//                                                                       width: 25,
+//                                                                       height:
+//                                                                           25,
+//                                                                       decoration: BoxDecoration(
+//                                                                           shape: BoxShape
+//                                                                               .rectangle,
+//                                                                           color: MyColors
+//                                                                               .yellow,
+//                                                                           borderRadius:
+//                                                                               BorderRadius.circular(10)),
+//                                                                       child: Icon(
+//                                                                           Icons
+//                                                                               .remove,
+//                                                                           size:
+//                                                                               15,
+//                                                                           color:
+//                                                                               Colors.black),
+//                                                                       //  Icon(
+//                                                                       //   Icons.minimize,
+//                                                                       //   size: 8,
+//                                                                       //   color: Colors.white,
+//                                                                       // ),
+//                                                                     ),
+//                                                                   ),
                                                                  
-                                                                  SizedBox(
-                                                                    width: 3,
-                                                                  ),
-                                                                  // GetBuilder<
-                                                                  //         MyCartController>(
-                                                                  //     init:
-                                                                  //         addtocartController,
-                                                                  //     builder:
-                                                                  //         (_) {
-                                                                        // return 
-                                                                        // Container(
-                                                                        //     width:
-                                                                        //         30,
-                                                                        //     height:
-                                                                        //         40,
-                                                                        //     decoration:
-                                                                        //         BoxDecoration(
-                                                                        //       borderRadius: BorderRadius.circular(50),
-                                                                        //     ),
-                                                                        //     child: Center(
-                                                                        //         child: Text(
-                                                                        //       addtocartController.sizes[index].toString(),
-                                                                        //       style: TextStyle(fontWeight: FontWeight.w500),
-                                                                        //     ))),
+//                                                                   SizedBox(
+//                                                                     width: 3,
+//                                                                   ),
+//                                                                   GetBuilder<
+//                                                                           MyCartController>(
+//                                                                       init:
+//                                                                           addtocartController,
+//                                                                       builder:
+//                                                                           (_) {
+//                                                                         return 
+//                                                                         Container(
+//                                                                             width:
+//                                                                                 30,
+//                                                                             height:
+//                                                                                 40,
+//                                                                             decoration:
+//                                                                                 BoxDecoration(
+//                                                                               borderRadius: BorderRadius.circular(50),
+//                                                                             ),
+//                                                                             child: Center(
+//                                                                                 child: Text(
+//                                                                               addtocartController.sizes[0].toString(),
+//                                                                               style: TextStyle(fontWeight: FontWeight.w500),
+//                                                                             )));
 
 // }),
-                                                                  SizedBox(
-                                                                    width: 3,
-                                                                  ),
-                                                                  // GestureDetector(
-                                                                  //   onTap: () {
-                                                                  //     addtocartController
-                                                                  //         .incrementSize(
-                                                                  //             index);
-                                                                  //   },
-                                                                  //   child:
-                                                                  //       Container(
-                                                                  //     width: 25,
-                                                                  //     height:
-                                                                  //         25,
-                                                                  //     decoration: BoxDecoration(
-                                                                  //         //shape: BoxShape.rectangle,
-                                                                  //         borderRadius: BorderRadius.circular(10),
-                                                                  //         color: MyColors.yellow),
-                                                                  //     child: Icon(
-                                                                  //         Icons
-                                                                  //             .add,
-                                                                  //         size:
-                                                                  //             15,
-                                                                  //         color:
-                                                                  //             Colors.black),
-                                                                  //   ),
-                                                                  // ),
+//                                                                   SizedBox(
+//                                                                     width: 3,
+//                                                                   ),
+//                                                                   GestureDetector(
+//                                                                     onTap: () {
+//                                                                       addtocartController
+//                                                                           .incrementSize(
+//                                                                               0);
+//                                                                     },
+//                                                                     child:
+//                                                                         Container(
+//                                                                       width: 25,
+//                                                                       height:
+//                                                                           25,
+//                                                                       decoration: BoxDecoration(
+//                                                                           //shape: BoxShape.rectangle,
+//                                                                           borderRadius: BorderRadius.circular(10),
+//                                                                           color: MyColors.yellow),
+//                                                                       child: Icon(
+//                                                                           Icons
+//                                                                               .add,
+//                                                                           size:
+//                                                                               15,
+//                                                                           color:
+//                                                                               Colors.black),
+//                                                                     ),
+//                                                                   ),
                                                               
-                                                                ],
-                                                              )
+//                                                                 ],
+//                                                               )
+                                                          
                                                             ],
                                                           )
                                                         ],
@@ -1203,11 +1206,19 @@ widget.data == null?
                         ),
                         InkWell(
                           onTap: () {
+
+                            addtocartController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
+                            widget.tax??0,
+                         widget.data!.price!,2
+                            // widget.data!.discoun
+                            
+                            );
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                             Get.to(PaymentUser(
-                              price:  (addtocartController.total +
-    addtocartController.total * 0.05 -
+                              price:  ((widget.data!.price!) +
+   (widget.tax??0) -
     double.parse(couponsController.maxAmount ?? "0.0")).toDouble()));
+    // print(price)
                                 // price: (((addtocartController.total) +
                                 //         (addtocartController.total * 0.05) -
                                 //         (double.parse(

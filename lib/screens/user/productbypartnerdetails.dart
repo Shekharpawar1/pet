@@ -448,25 +448,26 @@ class ProductByPartnerDetails extends StatelessWidget {
                                                                     SizedBox(
                                                                         width:
                                                                             1),
-                                                                    Container(
-                                                                      height:
-                                                                          20,
-                                                                      width: 47,
-                                                                      decoration: BoxDecoration(
-                                                                          color: MyColors
-                                                                              .red,
-                                                                          borderRadius: BorderRadius.circular(
-                                                                              10),
-                                                                          border:
-                                                                              Border.all(color: MyColors.red)),
-                                                                      child:
-                                                                          Center(
-                                                                        child: Text(
+                                                                    // Container(
+                                                                    //   height:
+                                                                    //       20,
+                                                                    //   width: 47,
+                                                                    //   decoration: BoxDecoration(
+                                                                    //       color: MyColors
+                                                                    //           .red,
+                                                                    //       borderRadius: BorderRadius.circular(
+                                                                    //           10),
+                                                                    //       border:
+                                                                    //           Border.all(color: MyColors.red)),
+                                                                    //   child:
+                                                                    //       Center(
+                                                                    //     child: 
+                                                                        Text(
                                                                             // item.discount.toString(),
                                                                             "Save${item.discount.toString()}%",
                                                                             style: CustomTextStyle.popinstextsmal2222),
-                                                                      ),
-                                                                    ),
+                                                                    //   ),
+                                                                    // ),
                                                                   ],
                                                                 ),
                                                                 SizedBox(

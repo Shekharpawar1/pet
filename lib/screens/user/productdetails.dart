@@ -44,6 +44,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
     productdetailscontroller.dispose();
   }
 
+ 
   List kg = [1, 2, 5];
 
   @override
@@ -54,7 +55,9 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
     return Stack(
       children: [
         Scaffold(
-           appBar:CustomAppBarback(), body: ListView(
+           appBar:CustomAppBarback(), body: 
+          
+           ListView(
             shrinkWrap: true,
             primary: true,
             children: [
@@ -63,7 +66,8 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                 GetBuilder<ProductDetailsController>(
                   init: productdetailscontroller,
                   builder: (_) {
-                      return Container(
+                      return   productdetailscontroller.productdetailmodel == null || productdetailscontroller.productdetailmodel!.data == null ?SizedBox():
+                       Container(
                           height: MediaQuery.of(context).size.height * 0.4,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
@@ -72,7 +76,20 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                   bottomRight: Radius.circular(500))),
                           child: Padding(
                             padding: EdgeInsets.only(top: 15.0),
-                            child: CachedNetworkImage(
+                            child: productdetailscontroller.productdetailmodel!.data!.images == ''||productdetailscontroller.productdetailmodel!.data!.images == null||productdetailscontroller.productdetailmodel!.data!.images!.isEmpty?
+                                CachedNetworkImage(
+                              imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${productdetailscontroller.productdetailmodel!.data!.image.toString()}",
+                              // width: 61,
+                              // height: 75,
+                            
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(),
+                              ), // Replace with your own placeholder widget
+                              errorWidget: (context, url, error) => Icon(Icons
+                                  .error), // Replace with your own error widget
+                            )
+                          :
+                             CachedNetworkImage(
                               imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${productdetailscontroller.productdetailmodel!.data!.images![productdetailscontroller.selectImages??0].toString()}",
                               // width: 61,
                               // height: 75,
@@ -86,44 +103,74 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                           ));
                     }
                   ),
-                    InkWell(
-                                                  onTap: () {
-                                                    homeusercontroller
-                                                        .addItemToWishList(
-                                                              productdetailscontroller.productdetailmodel!.data!.id!);
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Align(
-                                                        alignment: Alignment
-                                                            .centerRight,
-                                                        child: Icon(homeusercontroller
-                                                                .wishListItemsId
-                                                                .contains(
-                                                                    productdetailscontroller.productdetailmodel!.data!.id!)
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border,color:Colors.red)),
-                                                  ),
-                                                ),
+                       GetBuilder<HomeuserController>(
+                  init: homeusercontroller,
+                  builder: (_) {
+                        return InkWell(
+                                                      onTap: () {
+                                                        homeusercontroller
+                                                            .addItemToWishList(
+                                                                  productdetailscontroller.productdetailmodel!.data!.id!);
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(
+                                                                8.0),
+                                                        child: Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: Icon(homeusercontroller
+                                                                    .wishListItemsId
+                                                                    .contains(
+                                                                        productdetailscontroller.productdetailmodel!.data!.id!)
+                                                                ? Icons.favorite
+                                                                : Icons
+                                                                    .favorite_border,color:Colors.red)),
+                                                      ),
+                                                    );
+                      }
+                    ),
 
                                                  ],
               ),
               // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+               productdetailscontroller.productdetailmodel == null? SizedBox():
                GetBuilder<ProductDetailsController>(
                   init: productdetailscontroller,
                   builder: (_) {
+                        final images =
+              productdetailscontroller.productdetailmodel!.data!.images;
+
+          if (images == null || images.isEmpty) {
+            print("No images available");
+            return Text("No Images");
+          }
+
+          final imageCount = images.length;
+
+          if (imageCount < 3) {
+            print("Not enough images available (found $imageCount)");
+          }
+
+          final sublistStart = 0;
+          final sublistEnd = imageCount >= 3 ? 3 : imageCount;
+
                   return Padding(
                     padding: EdgeInsets.all(20.0),
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: productdetailscontroller.productdetailmodel!.data!.images!
-                              .sublist(0, 3)
-                              .map(
-                                (e) => Padding(
+                      productdetailscontroller.productdetailmodel!.data!.images == ''||productdetailscontroller.productdetailmodel!.data!.images == null||productdetailscontroller.productdetailmodel!.data!.images!.isEmpty?Text("No Related Image"): 
+                       Row(
+                          children: 
+                          // productdetailscontroller.productdetailmodel!.data!.images!
+                          //     .sublist(0, 3)
+                          //     .map(
+                          //       (e) =>
+                           images
+                  .sublist(sublistStart, sublistEnd)
+                  .map(
+                    (e) => 
+                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: GestureDetector(
                                     onTap: () {
@@ -243,7 +290,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                   );
                 }
               ),
-
+ productdetailscontroller.productdetailmodel == null? SizedBox():
               GetBuilder<ProductDetailsController>(
                   init: productdetailscontroller,
                   builder: (_) {
@@ -560,7 +607,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                                         0) -
                                                                 (((productdetailscontroller.productdetailmodel!.data!.price!) *
                                                                             productdetailscontroller
-                                                                                .sizecount ??
+                                                                                .sizecount! ??
                                                                         0) *
                                                                     (productdetailscontroller
                                                                         .productdetailmodel!
@@ -585,7 +632,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                                 (((productdetailscontroller.selectedvariants?.price ??
                                                                                 0) *
                                                                             productdetailscontroller
-                                                                                .sizecount ??
+                                                                                .sizecount! ??
                                                                         0) *
                                                                     (productdetailscontroller
                                                                         .productdetailmodel!
@@ -1284,7 +1331,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                                         .price!) *
                                                                     (productdetailscontroller.sizecount ??
                                                                         0) -
-                                                                (((productdetailscontroller.productdetailmodel!.data!.price!) * productdetailscontroller.sizecount ?? 0) *
+                                                                (((productdetailscontroller.productdetailmodel!.data!.price!) * productdetailscontroller.sizecount! ?? 0) *
                                                                     (productdetailscontroller
                                                                         .productdetailmodel!
                                                                         .data!
@@ -1297,7 +1344,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                 : Text(
                                                     "₹" +
                                                         ((productdetailscontroller.selectedvariants?.price ?? 0) * (productdetailscontroller.sizecount ?? 0) -
-                                                                (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount ?? 0) *
+                                                                (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount! ?? 0) *
                                                                     (productdetailscontroller
                                                                         .productdetailmodel!
                                                                         .data!
@@ -1315,7 +1362,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                         Row(
                                           children: [
                                             InkWell(
-                                              onTap: () async {
+                                              onTap: ()  {
                                                 // Navigator.push(
                                                 //     context,
                                                 //     MaterialPageRoute(
@@ -1342,9 +1389,9 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                 //                                   100))
                                                 //                           .toString(),
                                                 //                 )));
-                                                await productdetailscontroller
-                                                    .addProduct();
-                                                mycartController.init();
+                                                // await productdetailscontroller
+                                                    // .addProduct();
+                                                // mycartController.init();
                                                 MyOrder.Datum foo = MyOrder.Datum(
                                                 
                                                   userId:productdetailscontroller.userId,
@@ -1361,7 +1408,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                                                     variant: productdetailscontroller.selectedvariants!.type.toString(),
                                                                     quantity:(productdetailscontroller.sizecount),
                                                                     price: ((productdetailscontroller.selectedvariants?.price ?? 0) * (productdetailscontroller.sizecount ?? 0) -
-              (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount ?? 0) *
+              (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount! ?? 0) *
                   (productdetailscontroller.productdetailmodel!.data!.discount!) /
                   100))
     
@@ -1422,20 +1469,22 @@ tax:productdetailscontroller.productdetailmodel!.data!.tax!
 //   // (productdetailscontroller.productdetailmodel!.data!.discount??0),(productdetailscontroller.productdetailmodel!.data!.price??0)
 
 //   );
-                                                      if (productdetailscontroller
-                                                          .isProductInCartBool) {
-                                                        mycartController.init();
-                                                        Get.to(const AddToCardUser());
-                                                      } else {
-                                                        await productdetailscontroller
-                                                            .addProduct();
-                                                        await productdetailscontroller
-                                                            .isProductInCart();
-                                                      }
+                                                      // if (productdetailscontroller
+                                                      //     .isProductInCartBool) {
+                                                      //   mycartController.init();
+                                                      //   Get.to(const AddToCardUser());
+                                                      // } else {
+                                                      //   await productdetailscontroller
+                                                      //       .addProduct();
+                                                      //   await productdetailscontroller
+                                                      //       .isProductInCart();
+                                                      // }
                                                       // ?   :
-                                                      // mycartController.init();
-                                                      // Get.to(const AddToCardUser());
-
+                                                      
+                                                       await productdetailscontroller
+                                                            .addProduct();
+                                                      Get.to(const AddToCardUser());
+mycartController.init();
                                                       //     productdetailscontroller.addToCart(
 
                                                       // productdetailscontroller.productdetailmodel!.data!.name.toString(),
@@ -1479,10 +1528,11 @@ tax:productdetailscontroller.productdetailmodel!.data!.tax!
                                                             width: 10,
                                                           ),
                                                           Text(
-                                                            productdetailscontroller
-                                                                    .isProductInCartBool
-                                                                ? "Go To Cart"
-                                                                : "Add To Cart",
+                                                            // productdetailscontroller
+                                                            //         .isProductInCartBool
+                                                            //     ? "Go To Cart"
+                                                                // : 
+                                                                "Add To Cart",
                                                             style: CustomTextStyle
                                                                 .mediumtextreem,
                                                           )

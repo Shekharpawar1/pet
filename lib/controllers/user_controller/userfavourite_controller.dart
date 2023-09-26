@@ -100,6 +100,9 @@ class UserfavouriteController extends GetxController {
       wishList!.data!.removeWhere(
           (element) => element.itemId.toString() == productId.toString());
       GetStorage().write('wishListItems', wishListItemsId.toSet().toList());
+      print("WishList");
+      print(wishListItemsId);
+      
       update();
       Get.snackbar(
         'Success',

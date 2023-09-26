@@ -179,27 +179,32 @@ class UserProductAllPartner extends StatelessWidget {
                                             ),
                                             child: Column(
                                               children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    homeusercontroller
-                                                        .addItemToWishList(
-                                                            item.id!);
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Align(
-                                                        alignment: Alignment
-                                                            .centerRight,
-                                                        child: Icon(homeusercontroller
-                                                                .wishListItemsId
-                                                                .contains(
-                                                                    item.id!)
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border,color:Colors.red)),
-                                                  ),
+                                                                 GetBuilder<HomeuserController>(
+                      init: homeusercontroller,
+                      builder: (_) {
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        homeusercontroller
+                                                            .addItemToWishList(
+                                                                item.id!);
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(
+                                                                8.0),
+                                                        child: Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: Icon(homeusercontroller
+                                                                    .wishListItemsId
+                                                                    .contains(
+                                                                        item.id!)
+                                                                ? Icons.favorite
+                                                                : Icons
+                                                                    .favorite_border,color:Colors.red)),
+                                                      ),
+                                                    );
+                                                  }
                                                 ),
 
                                                 Container(

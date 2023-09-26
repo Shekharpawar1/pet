@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
+import 'package:pet/models/usersModel/ProductDetailsModel.dart';
 import 'package:pet/models/usersModel/addAddressModel.dart';
 import 'package:pet/models/usersModel/addressdeleteModel.dart';
 import 'package:pet/models/usersModel/mycartListModel.dart';
@@ -16,7 +17,8 @@ class MyCartController extends GetxController {
   final storage = GetStorage();
   CouponsController couponsController = Get.put(CouponsController());
   AddressController addressController = Get.put(AddressController());
-
+  ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
 // int? itemID;
   int? additemid;
   int? disCount;
@@ -34,6 +36,14 @@ class MyCartController extends GetxController {
   String? paymentMethodUser1;
   var tex;
   var  addressuser;
+
+     int? selectID;
+   int? selectqty ;
+   String? selectname ;
+   int? selecttex ;
+  double?  selectprice ;
+  int?  selectdis;
+
   List<Map<String, dynamic>> cartList = [];
 // void  incrementSize(){
 // sizes[]++;
@@ -44,7 +54,7 @@ class MyCartController extends GetxController {
   void additem(int id) {
     additemid = id;
     update();
-    print("ID${additemid}");
+    print("ItemID${additemid}");
   }
 
   void selectaddadress(int id) {
@@ -71,8 +81,36 @@ paymentStatus = paymentstatus;
     update();
     print("paymentMethod1: ${paymentMethodUser1},paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
+ void adddata(int id, int qty, String name,int tex,double price, int dis ) {
+  showLoading = false;
+    selectID = id;
+    selectqty = qty;
+    selectname = name;
+    selecttex = tex;
+    selectprice = price;
+    selectdis = dis;
 
-  
+cartList = [{
+     "product_id" : selectID.toString(),
+            "quantity":selectqty.toString(),
+            "variation":selectname.toString(),
+            "tax_amount":selecttex.toString(),
+            "discount_on_item":selectdis.toString(),
+            "price":selectprice.toString()
+      }];
+      
+    update();
+    print("DataBuyNowupdated ====>>>>> $selectID   $selectname $selecttex $selectprice $selectdis");
+print(cartList);
+
+  }
+
+  //  "product_id": item.itemId,
+  //           "quantity":item.quantity,
+  //           "variation":item.variant,
+  //           "tax_amount":13,
+  //           "discount_on_item":20,
+  //           "price":item.price
 
 
 
@@ -210,6 +248,60 @@ paymentStatus = paymentstatus;
     update();
   }
 
+
+
+  // productdetails
+  String getUserProductDetailsUrl = '${Constants.GET_USER_PRODUCTDETAILS}';
+  ProductDetailsModel? productdetailmodel;
+  bool productdetailLoaded = false;
+
+//   Future<void> productinit() async {
+//     showLoading = true;
+//     update();
+//     try {
+//       // productdeatils
+//       productdetailmodel = ProductDetailsModel.fromJson(
+//           await ApiHelper.getApi(getUserProductDetailsUrl + "$additemid"));
+//       print("urlapi");
+//       // variantslist = productdetailmodel!.data!.variations;
+//       // if(variantslist!.isNotEmpty)
+//       // updateVariants(variantslist![0]);
+//       List<Map<String, dynamic>> cartJsonList =
+//           productdetailmodel!.data!.map((item) => {
+//             "product_id": productdetailmodel!.data!.id,
+//             "quantity":productdeatilscontroller.sizecount,
+//             "variation":productdetailmodel!.data!.name,
+//             "tax_amount":productdetailmodel!.data!.tax,
+//             "discount_on_item":productdetailmodel!.data!.discount,
+//             "price":productdetailmodel!.data!.price
+//           }).toList();
+//       cartList = cartJsonList;
+//       // var totalprice = 0;
+// // var pricecount = productdetailmodel!.data!.price;
+// // for(var i = 0; i< pricecount; i++){
+// // totalprice +=  ;
+
+// // }
+
+// // print('Total Price: $totalprice');
+
+//       print(getUserProductDetailsUrl + "$additemid");
+//       productdetailLoaded = true;
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//       Get.snackbar(
+//         'Error',
+//         'An error occurred: $e',
+//         snackPosition: SnackPosition.BOTTOM,
+//         backgroundColor: Colors.red,
+//         colorText: Colors.white,
+//       );
+//     }
+//     showLoading = false;
+//     update();
+//   }
+  
   String getUserMyCartDeleteUrl = '${Constants.GET_USER_MYCARTLISTDELETE}';
   MyCartListDeleteModel? mycartdeletemodel;
   bool cartlistdeleteLoaded = false;
@@ -405,4 +497,115 @@ paymentStatus = paymentstatus;
     showLoading = false;
     update();
   }
+
+Future<void> buynowplaceorder() async {
+    showLoading = true;
+    update();
+    
+  MyCartController addtocartController = Get.put(MyCartController());
+    String sendingAddr = "";
+      int sendingAddrID = 0;
+    if (addtocartController.allAddresslistModel == null ||
+        addtocartController.allAddresslistModel!.data == null ||
+        addtocartController.allAddresslistModel!.data!.isEmpty) {
+      sendingAddr = "Demo address";
+    } else {
+      sendingAddr = "${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].city ??
+              ""} ${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].area ??
+              ""} ${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].houseNo ??
+              ""} ${addtocartController.allAddresslistModel!
+                  .data![addtocartController.isselected ?? 0].landmark ??
+              ""}";
+        print(sendingAddr);
+    }
+
+    if (addtocartController.allAddresslistModel == null ||
+        addtocartController.allAddresslistModel!.data == null ||
+        addtocartController.allAddresslistModel!.data!.isEmpty) {
+      sendingAddrID = 0;
+    } else {
+      sendingAddrID = isselected1??0;
+        print(sendingAddr);
+    }
+
+// print(body);
+
+    Map<String, dynamic> body = {
+      "user_id": storage.read('id').toString(),
+      "seller_id": null,
+      "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
+      "coupon_discount_title": couponsController.coupontitle ?? '',
+      "payment_status": paymentStatus.toString(),
+      "order_status": "pending",
+      "gst_bill": "0",
+      "payment_day": "0",
+       "payment_mode": paymentMethodUser1.toString(),
+      "total_tax_amount": (total * 0.05).toString(),
+      "payment_method": paymenttype.toString(),
+      "transaction_reference": "sadgash23asds",
+      "delivery_address_id": sendingAddrID.toString(),
+      //  (allAddresslistModel!
+      //                               .data![isselected ?? 0]
+      //                               .id ??
+      //                           0).toString(),
+      "coupon_code": couponsController.couponcode ?? '',
+      "order_type": "delivery",
+      "checked": 1.toString(),
+      "store_id": 1.toString(),
+      "zone_id": 2.toString(),
+      "delivered_status": "undelivered",
+      "delivery_address":  storage.read('useraddresscity').toString(),
+      // (allAddresslistModel!
+      //                               .data![isselected ?? 0]
+      //                               .area ??
+      //                           '').toString(),
+      "item_campaign_id": "",
+      "order_amount":selectprice
+          .toString(),
+      "cart":[ {
+          "product_id" : selectID.toString(),
+            "quantity":selectqty.toString(),
+            "variation":selectname.toString(),
+            "tax_amount":selecttex.toString(),
+            "discount_on_item":selectdis.toString(),
+            "price":selectprice.toString()
+      }].toList()
+      
+       
+    };
+    // String PlaceOrderUrl = Constants.PLACE_ORDER;
+    print(body);
+    try {
+      // var request = http.MultipartRequest('POST', Uri.parse(PlaceOrderUrl));
+      // request.fields.addAll(body);
+
+      // await ApiHelper.postApi(body: body, url: PlaceOrderUrl);
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Address Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      throw "error";
+    }
+
+    showLoading = false;
+    update();
+  }
+
 }

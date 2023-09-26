@@ -19,6 +19,7 @@ import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
+import 'package:pet/controllers/user_controller/userServicesAddAppointmentController.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/user/AllPageProductbybrand.dart';
 
@@ -32,6 +33,7 @@ import 'package:pet/screens/user/productdetails.dart';
 import 'package:pet/screens/user/searchScreen.dart';
 import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/service_categoryPage.dart';
+import 'package:pet/screens/user/userServicesAddAppointment.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
 
 import 'package:pet/utils/colors.dart';
@@ -56,6 +58,8 @@ class HomeUser extends StatefulWidget {
 class _HomeUserState extends State<HomeUser> {
   TextEditingController _searchcontroller = TextEditingController();
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+    GlobalKey<RefreshIndicatorState>();
   ProductDetailsController productdeatilscontroller =
       Get.put(ProductDetailsController());
   SubCategoryController subcategorycontroller =
@@ -66,7 +70,11 @@ class _HomeUserState extends State<HomeUser> {
   MyCartController mycartController = Get.put(MyCartController());
   NotificationController notificationcontroller =
       Get.put(NotificationController());
+  
 
+  final UserServicesAddAppointmentController
+      userServicesAddUserServicesAddAppointmentController =
+      Get.put(UserServicesAddAppointmentController());
   ProfileController profilecontroller = Get.put(ProfileController());
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   final List<Color> _randomColors = [
@@ -84,33 +92,39 @@ class _HomeUserState extends State<HomeUser> {
   @override
   void onInit() {
     notificationcontroller.init();
+       homeusercontroller. getWishinit();
     // super.onInit();
   }
 
   @override
   Widget build(BuildContext context) {
     homeusercontroller.getWishList();
+   homeusercontroller. getWishinit();
     homeusercontroller.fetchWishList();
     print(GetStorage().read('id').toString());
     print(GetStorage().read('userData').toString());
     return Scaffold(
       key: _drawerkey,
-      drawer: const drawer(),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
-          child: GestureDetector(
-            onTap: () {
-              _drawerkey.currentState!.openDrawer();
-            },
-            child: Image.asset(
-              "assets/image/menu2.png",
-            ),
-          ),
-        ),
-      ),
+       drawer: drawer(),
+      appBar: CustomAppBar(drawerKey: _drawerkey),
+
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.transparent,
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
+      //     child: GestureDetector(
+      //       onTap: () {
+      //         _drawerkey.currentState!.openDrawer();
+      //       },
+      //       child: Image.asset(
+      //         "assets/image/menu2.png",
+      //       ),
+      //     ),
+      //   ),
+      // ),
+
+
 //           title: Center(
 // //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 // //
@@ -223,12 +237,21 @@ class _HomeUserState extends State<HomeUser> {
         padding: const EdgeInsets.all(0),
         child: Stack(
           children: [
-            RefreshIndicator(
-              onRefresh: () async {
-                await homeusercontroller.init();
-                await Future.delayed(Duration(seconds: 2));
-              },
-              child: ListView(
+//             RefreshIndicator(
+//               color: Colors.white,
+//               backgroundColor: Colors.white,
+// edgeOffset: 0,
+// strokeWidth: 0,
+// key: _refreshIndicatorKey,
+// // displacement: -0.1,
+
+//               onRefresh: () async {
+//                 _refreshIndicatorKey.currentState?.show(atTop: false);
+//                 await homeusercontroller.init();
+//                 await Future.delayed(Duration(seconds: 2));
+//               },
+//               child: 
+              ListView(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 primary: false,
@@ -621,7 +644,7 @@ class _HomeUserState extends State<HomeUser> {
                                                 subcategorycontroller
                                                     .currentCategory(
                                                         item.name ?? "");
-                                                await subcategorycontroller
+                                                 subcategorycontroller
                                                     .productInitByCategory();
 
                                                 Get.to(() => Allcategory());
@@ -735,6 +758,7 @@ class _HomeUserState extends State<HomeUser> {
                                         horizontal: 15.0),
                                     child: Container(
                                       // height: 600,
+
                                       child: GridView.builder(
                                           primary: false,
                                           shrinkWrap: true,
@@ -776,6 +800,7 @@ class _HomeUserState extends State<HomeUser> {
                                             // print(imagePath);
                                             return InkWell(
                                               onTap: () async {
+                                                 productdeatilscontroller.dispose();
                                                 productdeatilscontroller
                                                     .viewproduct(
                                                   item.id ?? 0,
@@ -832,11 +857,16 @@ class _HomeUserState extends State<HomeUser> {
                                                 ),
                                                 child: Column(
                                                   children: [
+
+
+
                                                     InkWell(
                                                       onTap: () {
                                                         homeusercontroller
                                                             .addItemToWishList(
                                                                 item.id!);
+
+                                                            homeusercontroller.init();
                                                       },
                                                       child: Padding(
                                                         padding:
@@ -860,6 +890,10 @@ class _HomeUserState extends State<HomeUser> {
                                                         ),
                                                       ),
                                                     ),
+
+                                                
+                                                
+
 
                                                     Container(
                                                       height: 125,
@@ -1000,7 +1034,7 @@ class _HomeUserState extends State<HomeUser> {
                                                                         ),
                                                                         SizedBox(
                                                                             width:
-                                                                                Get.width * 0.073),
+                                                                                Get.width * 0.054),
                                                                         Padding(
                                                                           padding:
                                                                               const EdgeInsets.only(right: 5.0),
@@ -1034,6 +1068,7 @@ class _HomeUserState extends State<HomeUser> {
                                                   ],
                                                 ),
                                               ),
+                                           
                                             );
                                           }),
                                     ),
@@ -2463,10 +2498,10 @@ class _HomeUserState extends State<HomeUser> {
                                     physics: NeverScrollableScrollPhysics(),
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            crossAxisSpacing: 15.0,
-                                            mainAxisSpacing: 15.0,
-                                            mainAxisExtent: 250),
+                                             crossAxisCount: 2,
+                                                  crossAxisSpacing: 15.0,
+                                                  mainAxisSpacing: 15.0,
+                                                  mainAxisExtent: 280),
                                     itemCount: subcategorycontroller
                                         .usertoyModel!.data!.length
                                         .clamp(0, 4),
@@ -2483,232 +2518,505 @@ class _HomeUserState extends State<HomeUser> {
                                                       .usertoyModel!.data ==
                                                   null
                                           ? SizedBox()
-                                          : Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.7,
-                                              // width: MediaQuery.of(context).size.width * 0.46,
-                                              decoration: BoxDecoration(
-                                                 gradient: LinearGradient(
-                                                    colors: [
-                                                      _getRandomColor(),
-                                                      // _getRandomColor(),
-                                                      // _getRandomColor(),
-                                                      // _getRandomColor(),
-                                                      // MyColors.white
-                                                      //     .withOpacity(0.1),
-                                                      MyColors.white,
-                                                      MyColors.white,
-                                                      // MyColors.white,
+                                          :
+                                          InkWell(
+                                            onTap: () async{
+                                                 productdeatilscontroller
+                                                .viewproduct(
+                                              item.id ?? 0,
+                                            );
+                                             print("productippppd${item.id ?? 0}");
+                                        await productdeatilscontroller.init();
+                                        Get.to(ProductDetails(
+                                         id: item.id??0, 
+                                        ));
+                                            },
+                                            child: Container(
+                                                  width: 140,
+                                                  // height: 700,
+                                                  decoration: BoxDecoration(
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        _getRandomColor(),
+                                                        // _getRandomColor(),
+                                                        // _getRandomColor(),
+                                                        // _getRandomColor(),
+                                                        // MyColors.white
+                                                        //     .withOpacity(0.1),
+                                                        MyColors.white,
+                                                        MyColors.white,
+                                                        // MyColors.white,
+                                                      ],
+                                                      begin: Alignment.topCenter,
+                                                      end: Alignment.bottomCenter,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(25),
+                                                    // color: MyColors.white,
+                                                    boxShadow: [
+                                                      BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.3),
+                                                        spreadRadius: 3,
+                                                        blurRadius: 7,
+                                                        offset: Offset(0,
+                                                            3), // Offset of the shadow
+                                                      ),
                                                     ],
-                                                    tileMode: TileMode.clamp,
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
+                                                    // color: MyColors.white
                                                   ),
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                                // color: MyColors.white,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.3),
-                                                    spreadRadius: 3,
-                                                    blurRadius: 7,
-                                                    offset: Offset(0,
-                                                        3), // Offset of the shadow
-                                                  ),
-                                                ],
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Stack(
+                                                  child: Column(
                                                     children: [
+                                          
+                                          
+                                          
+                                                     GetBuilder<HomeuserController>(
+                                                                init: homeusercontroller,
+                                                                builder: (_) {
+                                                          return InkWell(
+                                                            onTap: () {
+                                                              homeusercontroller
+                                                                  .addItemToWishList(
+                                                                      item.id!);
+                                          
+                                                                  homeusercontroller.init();
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerRight,
+                                                                child: Icon(
+                                                                    homeusercontroller
+                                                                            .wishListItemsId
+                                                                            .contains(
+                                                                                item
+                                                                                    .id!)
+                                                                        ? Icons
+                                                                            .favorite
+                                                                        : Icons
+                                                                            .favorite_border,
+                                                                    color:
+                                                                        Colors.red),
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      ),
+                                          
+                                                  
+                                                  
+                                          
+                                          
                                                       Container(
                                                         height: 125,
-
+                                                        decoration: BoxDecoration(
+                                                            // gradient:
+                                                            //     LinearGradient(
+                                                            //   colors: [
+                                                            //     _getRandomColor(),
+                                                            //     _getRandomColor(),
+                                                            //     _getRandomColor(),
+                                                            //     _getRandomColor(),
+                                                            //   ],
+                                                            //   begin:
+                                                            //       Alignment.topLeft,
+                                                            //   end: Alignment
+                                                            //       .bottomRight,
+                                                            // ),
+                                                            ),
                                                         // decoration: BoxDecoration(
                                                         //     borderRadius: BorderRadius.circular(30),
                                                         //     color: MyColors.white),
-                                                        child: Center(
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl: imagePath,
-                                                            // width: 61,
-                                                            // height: 75,
-                                                            placeholder:
-                                                                (context,
-                                                                        url) =>
-                                                                    Center(
-                                                              child:
-                                                                  CircularProgressIndicator(),
-                                                            ), // Replace with your own placeholder widget
-                                                            errorWidget: (context,
-                                                                    url,
-                                                                    error) =>
-                                                                Icon(Icons
-                                                                    .error), // Replace with your own error widget
-                                                          ),
+                                                        child: CachedNetworkImage(
+                                                          imageUrl: imagePath,
+                                                          // width: 61,
+                                                          // height: 75,
+                                                          placeholder:
+                                                              (context, url) =>
+                                                                  Center(
+                                                            child:
+                                                                CircularProgressIndicator(),
+                                                          ), // Replace with your own placeholder widget
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              Icon(Icons
+                                                                  .error), // Replace with your own error widget
                                                         ),
                                                       ),
-                                                      InkWell(
-                                                        onTap: () {
-                                                          homeusercontroller
-                                                              .addItemToWishList(
-                                                                  item.id ?? 0);
-                                                          print("ToysID");
-                                                          print(item.id);
-                                                        },
+                                          
+                                                      // SizedBox(height: 15,),
+                                          
+                                                      Container(
+                                                        // height: 140,
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                  .all(8.0),
-                                                          child: Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topRight,
-                                                              child: Icon(
-                                                                  homeusercontroller
-                                                                          .wishListItemsId
-                                                                          .contains(item
-                                                                              .id!)
-                                                                      ? Icons
-                                                                          .favorite
-                                                                      : Icons
-                                                                          .favorite_border,
-                                                                  color: Colors
-                                                                      .red)),
+                                                                      .only(
+                                                                  left: 10.0,
+                                                                  right: 5,
+                                                                  top: 5),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(item.name!,
+                                                                  style: CustomTextStyle
+                                                                      .popinsmedium),
+                                                              Text(
+                                                                  item.description
+                                                                              .toString()
+                                                                              .length <
+                                                                          30
+                                                                      ? item
+                                                                          .description!
+                                                                      : item
+                                                                          .description!
+                                                                          .substring(
+                                                                              0,
+                                                                              19),
+                                                                  style: CustomTextStyle
+                                                                      .popinssmall0),
+                                                              SizedBox(height: 5),
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Column(
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          Text(
+                                                                              "₹" +
+                                                                                  item.price.toString(),
+                                                                              style: CustomTextStyle.discounttext),
+                                                                          SizedBox(
+                                                                              width:
+                                                                                  2),
+                                                                          // Container(
+                                                                          // height:
+                                                                          //     20,
+                                                                          // width: 48,
+                                                                          // decoration: BoxDecoration(
+                                                                          //     color: MyColors
+                                                                          //         .red,
+                                                                          //     borderRadius: BorderRadius.circular(
+                                                                          //         10),
+                                                                          //     border:
+                                                                          //         Border.all(color: MyColors.red)),
+                                                                          // child:
+                                                                          //     Center(
+                                                                          //   child:
+                                                                          Text(
+                                                                              // item.discount.toString(),
+                                                                              "Save${item.discount.toString()}%",
+                                                                              style:
+                                                                                  CustomTextStyle.popinstextsmal2222red),
+                                                                          //   ),
+                                                                          // ),
+                                                                        ],
+                                                                      ),
+                                                                      SizedBox(
+                                                                          height:
+                                                                              5),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .spaceBetween,
+                                                                        children: [
+                                                                          SizedBox(
+                                                                            width:
+                                                                                Get.width * 0.23,
+                                                                            child:
+                                                                                Text(
+                                                                              "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                          
+                                                                              // "₹" +
+                                                                              //     item.price!,
+                                                                              style:
+                                                                                  CustomTextStyle.popinsmedium,
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                              width:
+                                                                                  Get.width * 0.054),
+                                                                          Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          )
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                          
+                                                                  // Image.asset(
+                                                                  //   "assets/image/yellowbag.png",
+                                                                  //   height: 80,
+                                                                  // )
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
+                                                      )
                                                     ],
                                                   ),
+                                                ),
+                                          );
+                                           
+                      //                     : Container(
+                      //                         height: MediaQuery.of(context)
+                      //                                 .size
+                      //                                 .width *
+                      //                             0.7,
+                      //                         // width: MediaQuery.of(context).size.width * 0.46,
+                      //                         decoration: BoxDecoration(
+                      //                            gradient: LinearGradient(
+                      //                               colors: [
+                      //                                 _getRandomColor(),
+                      //                                 // _getRandomColor(),
+                      //                                 // _getRandomColor(),
+                      //                                 // _getRandomColor(),
+                      //                                 // MyColors.white
+                      //                                 //     .withOpacity(0.1),
+                      //                                 MyColors.white,
+                      //                                 MyColors.white,
+                      //                                 // MyColors.white,
+                      //                               ],
+                      //                               tileMode: TileMode.clamp,
+                      //                               begin: Alignment.topCenter,
+                      //                               end: Alignment.bottomCenter,
+                      //                             ),
+                      //                           borderRadius:
+                      //                               BorderRadius.circular(25),
+                      //                           // color: MyColors.white,
+                      //                           boxShadow: [
+                      //                             BoxShadow(
+                      //                               color: Colors.grey
+                      //                                   .withOpacity(0.3),
+                      //                               spreadRadius: 3,
+                      //                               blurRadius: 7,
+                      //                               offset: Offset(0,
+                      //                                   3), // Offset of the shadow
+                      //                             ),
+                      //                           ],
+                      //                         ),
+                      //                         child: Column(
+                      //                           children: [
+                      //                             Stack(
+                      //                               children: [
+                      //                                 Container(
+                      //                                   height: 125,
 
-                                                  // SizedBox(height: 15,),
+                      //                                   // decoration: BoxDecoration(
+                      //                                   //     borderRadius: BorderRadius.circular(30),
+                      //                                   //     color: MyColors.white),
+                      //                                   child: Center(
+                      //                                     child:
+                      //                                         CachedNetworkImage(
+                      //                                       imageUrl: imagePath,
+                      //                                       // width: 61,
+                      //                                       // height: 75,
+                      //                                       placeholder:
+                      //                                           (context,
+                      //                                                   url) =>
+                      //                                               Center(
+                      //                                         child:
+                      //                                             CircularProgressIndicator(),
+                      //                                       ), // Replace with your own placeholder widget
+                      //                                       errorWidget: (context,
+                      //                                               url,
+                      //                                               error) =>
+                      //                                           Icon(Icons
+                      //                                               .error), // Replace with your own error widget
+                      //                                     ),
+                      //                                   ),
+                      //                                 ),
+                      //                                GetBuilder<HomeuserController>(
+                      // init: homeusercontroller,
+                      // builder: (_) {
+                      //                                     return InkWell(
+                      //                                       onTap: () {
+                      //                                         homeusercontroller
+                      //                                             .addItemToWishList(
+                      //                                                 item.id ?? 0);
+                      //                                         print("ToysID");
+                      //                                         print(item.id);
+                      //                                       },
+                      //                                       child: Padding(
+                      //                                         padding:
+                      //                                             const EdgeInsets
+                      //                                                 .all(8.0),
+                      //                                         child: Align(
+                      //                                             alignment:
+                      //                                                 Alignment
+                      //                                                     .topRight,
+                      //                                             child: Icon(
+                      //                                                 homeusercontroller
+                      //                                                         .wishListItemsId
+                      //                                                         .contains(item
+                      //                                                             .id!)
+                      //                                                     ? Icons
+                      //                                                         .favorite
+                      //                                                     : Icons
+                      //                                                         .favorite_border,
+                      //                                                 color: Colors
+                      //                                                     .red)),
+                      //                                       ),
+                      //                                     );
+                      //                                   }
+                      //                                 ),
+                      //                               ],
+                      //                             ),
 
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            5.0),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(item.name ?? '',
-                                                            style: CustomTextStyle
-                                                                .popinsmedium),
-                                                        Text(
-                                                            item.description
-                                                                        .toString()
-                                                                        .length <
-                                                                    30
-                                                                ? item
-                                                                    .description!
-                                                                : item
-                                                                    .description!
-                                                                    .substring(
-                                                                        0, 19),
-                                                            style: CustomTextStyle
-                                                                .popinssmall0),
-                                                        SizedBox(height: 5),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Row(
-                                                                  children: [
-                                                                    Text(
-                                                                        "₹${item.price ?? ''}",
-                                                                        style: CustomTextStyle
-                                                                            .discounttext),
-                                                                    SizedBox(
-                                                                        width:
-                                                                            5),
-                                                                    // Container(
-                                                                    //   height: 18,
-                                                                    //   width: 40,
-                                                                    //   decoration: BoxDecoration(
-                                                                    //       color:
-                                                                    //           MyColors
-                                                                    //               .red,
-                                                                    //       borderRadius:
-                                                                    //           BorderRadius.circular(
-                                                                    //               10),
-                                                                    //       border: Border.all(
-                                                                    //           color: MyColors
-                                                                    //               .red)),
-                                                                    //   child: Center(
-                                                                    //     child:
-                                                                    Text(
-                                                                        // item.discount.toString(),
-                                                                        "Save${item.discount ?? "0"}%",
-                                                                        style: CustomTextStyle
-                                                                            .popinstextsmal2222red),
-                                                                    //   ),
-                                                                    // ),
-                                                                  ],
-                                                                ),
-                                                                SizedBox(
-                                                                    height: 5),
-                                                                Row(
-                                                                  children: [
-                                                                    SizedBox(
-                                                                      width: Get
-                                                                              .width *
-                                                                          0.23,
-                                                                      child:
-                                                                          Text(
-                                                                        "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                      //                             // SizedBox(height: 15,),
 
-                                                                        // "₹" +
-                                                                        //     item.price!,
-                                                                        style: CustomTextStyle
-                                                                            .popinsmedium,
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(
-                                                                        width: Get.width *
-                                                                            0.073),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .only(
-                                                                          right:
-                                                                              5.0),
-                                                                      child: Container(
-                                                                          width: 35,
-                                                                          height: 35,
-                                                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                          child: Padding(
-                                                                            padding:
-                                                                                EdgeInsets.all(5.0),
-                                                                            child:
-                                                                                Image.asset(
-                                                                              "assets/image/bag2.png",
-                                                                              height: 25,
-                                                                            ),
-                                                                          )),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            );
+                      //                             Padding(
+                      //                               padding:
+                      //                                   const EdgeInsets.all(
+                      //                                       5.0),
+                      //                               child: Column(
+                      //                                 mainAxisAlignment:
+                      //                                     MainAxisAlignment
+                      //                                         .start,
+                      //                                 crossAxisAlignment:
+                      //                                     CrossAxisAlignment
+                      //                                         .start,
+                      //                                 children: [
+                      //                                   Text(item.name ?? '',
+                      //                                       style: CustomTextStyle
+                      //                                           .popinsmedium),
+                      //                                   Text(
+                      //                                       item.description
+                      //                                                   .toString()
+                      //                                                   .length <
+                      //                                               30
+                      //                                           ? item
+                      //                                               .description!
+                      //                                           : item
+                      //                                               .description!
+                      //                                               .substring(
+                      //                                                   0, 19),
+                      //                                       style: CustomTextStyle
+                      //                                           .popinssmall0),
+                      //                                   SizedBox(height: 5),
+                      //                                   Row(
+                      //                                     mainAxisAlignment:
+                      //                                         MainAxisAlignment
+                      //                                             .spaceBetween,
+                      //                                     children: [
+                      //                                       Column(
+                      //                                         crossAxisAlignment:
+                      //                                             CrossAxisAlignment
+                      //                                                 .start,
+                      //                                         children: [
+                      //                                           Row(
+                      //                                             children: [
+                      //                                               Text(
+                      //                                                   "₹${item.price ?? ''}",
+                      //                                                   style: CustomTextStyle
+                      //                                                       .discounttext),
+                      //                                               SizedBox(
+                      //                                                   width:
+                      //                                                       5),
+                      //                                               // Container(
+                      //                                               //   height: 18,
+                      //                                               //   width: 40,
+                      //                                               //   decoration: BoxDecoration(
+                      //                                               //       color:
+                      //                                               //           MyColors
+                      //                                               //               .red,
+                      //                                               //       borderRadius:
+                      //                                               //           BorderRadius.circular(
+                      //                                               //               10),
+                      //                                               //       border: Border.all(
+                      //                                               //           color: MyColors
+                      //                                               //               .red)),
+                      //                                               //   child: Center(
+                      //                                               //     child:
+                      //                                               Text(
+                      //                                                   // item.discount.toString(),
+                      //                                                   "Save${item.discount ?? "0"}%",
+                      //                                                   style: CustomTextStyle
+                      //                                                       .popinstextsmal2222red),
+                      //                                               //   ),
+                      //                                               // ),
+                      //                                             ],
+                      //                                           ),
+                      //                                           SizedBox(
+                      //                                               height: 5),
+                      //                                           Row(
+                      //                                             children: [
+                      //                                               SizedBox(
+                      //                                                 width: Get
+                      //                                                         .width *
+                      //                                                     0.23,
+                      //                                                 child:
+                      //                                                     Text(
+                      //                                                   "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+
+                      //                                                   // "₹" +
+                      //                                                   //     item.price!,
+                      //                                                   style: CustomTextStyle
+                      //                                                       .popinsmedium,
+                      //                                                 ),
+                      //                                               ),
+                      //                                               SizedBox(
+                      //                                                   width: Get.width *
+                      //                                                       0.054),
+                      //                                               Padding(
+                      //                                                 padding: const EdgeInsets
+                      //                                                         .only(
+                      //                                                     right:
+                      //                                                         5.0),
+                      //                                                 child: Container(
+                      //                                                     width: 35,
+                      //                                                     height: 35,
+                      //                                                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                      //                                                     child: Padding(
+                      //                                                       padding:
+                      //                                                           EdgeInsets.all(5.0),
+                      //                                                       child:
+                      //                                                           Image.asset(
+                      //                                                         "assets/image/bag2.png",
+                      //                                                         height: 25,
+                      //                                                       ),
+                      //                                                     )),
+                      //                                               )
+                      //                                             ],
+                      //                                           ),
+                      //                                         ],
+                      //                                       ),
+                      //                                     ],
+                      //                                   )
+                      //                                 ],
+                      //                               ),
+                      //                             )
+                      //                           ],
+                      //                         ),
+                      //                       );
+                                    
                                     }),
                               );
                       })
@@ -3379,15 +3687,27 @@ class _HomeUserState extends State<HomeUser> {
 
                                           return GestureDetector(
                                             onTap: () async {
-                                              String url = Constants
-                                                      .GET_SERVICES_CATEGORIES +
-                                                  "/" +
-                                                  item.id.toString();
-                                              homeusercontroller
-                                                  .getServicesCategories(url);
+                                              // String url = Constants
+                                              //         .GET_SERVICES_CATEGORIES +
+                                              //     "/" +
+                                              //     item.id.toString();
+                                              // homeusercontroller
+                                              //     .getServicesCategories(url);
 
-                                              Get.to(
-                                                  () => ServicesCategoryPage());
+                                              // Get.to(
+                                              //     () => ServicesCategoryPage());
+
+                                               userServicesAddUserServicesAddAppointmentController
+                                      .clearFields();
+                                  userServicesAddUserServicesAddAppointmentController
+                                      .updateServiceId(item.id!);
+                                  userServicesAddUserServicesAddAppointmentController
+                                      .init();
+                                  await userServicesAddUserServicesAddAppointmentController
+                                      .fetchAppointmentSlots(item.id!);
+                                  print(item);
+                                  Get.to(
+                                      () => UserServicesAddAppointmentState());
                                             },
                                             child: Column(
                                               children: [
@@ -3511,7 +3831,7 @@ class _HomeUserState extends State<HomeUser> {
                       })
                 ],
               ),
-            ),
+            // ),
 
             GetBuilder<HomeuserController>(
                 init: homeusercontroller,

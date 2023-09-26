@@ -358,85 +358,85 @@ class AddMypet extends StatelessWidget {
                                     children: [
                                       // SizedBox(height: MediaQuery.of(context).size.height*0.05,),
 
-                                      Text(
-                                        "Avatar",
-                                        style: CustomTextStyle.popinstext,
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                      ),
-
-                                      // SingleChildScrollView(
-                                      //   scrollDirection: Axis.horizontal,
-                                      //   child: Row(
-                                      //       mainAxisAlignment:
-                                      //           MainAxisAlignment.start,
-                                      //       children: [
-                                      //         SvgPicture.asset(
-                                      //             "assets/image/dogavatar.svg"),
-                                      //         SizedBox(
-                                      //           width: 15,
-                                      //         ),
-                                      //         SvgPicture.asset(
-                                      //             "assets/image/avatardogyellow.svg"),
-                                      //         // SizedBox(width: 15,),
-                                      //         //                       SvgPicture.asset("assets/image/avatardoggreen.svg"),
-                                      //       ]),
+                                      // Text(
+                                      //   "Avatar",
+                                      //   style: CustomTextStyle.popinstext,
+                                      // ),
+                                      // SizedBox(
+                                      //   height:
+                                      //       MediaQuery.of(context).size.height *
+                                      //           0.03,
                                       // ),
 
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: GetBuilder<UserMyPetController>(
-                                          init: userMyPetController,
-                                          // initState: (_) {},
-                                          builder: (_) {
-                                            return
-                                                // userMyPetController.isDog
-                                                //     ? Image.asset(
-                                                //         "assets/image/cutedog.png",
-                                                //         height: 80,
-                                                //       )
-                                                //     : Image.asset(
-                                                //         "assets/image/cutecat.png",
-                                                //         height: 60,
-                                                //       );
-                                                userMyPetController.petImage ==
-                                                        null
-                                                    ? Center(
-                                                        child: Text(
-                                                          "No Image",
-                                                          style: TextStyle(
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : CachedNetworkImage(
-                                                        imageUrl:
-                                                            "${Constants.PETS_CATEGORY_IMAGE_PATH}${userMyPetController.petImage!}",
-                                                        width: 50,
-                                                        height: 50,
-                                                        placeholder:
-                                                            (context, url) =>
-                                                                Center(
-                                                          child: SpinKitCircle(
-                                                            color: Colors
-                                                                .grey, // Color of the progress bar
-                                                            size:
-                                                                20.0, // Size of the progress bar
-                                                          ),
-                                                        ), // Replace with your own placeholder widget
-                                                        errorWidget: (context,
-                                                                url, error) =>
-                                                            Image.asset(
-                                                          "assets/image/cutecat.png",
-                                                          height: 60,
-                                                        ), // Replace with your own error widget
-                                                      );
-                                          },
-                                        ),
-                                      ),
+                                      // // SingleChildScrollView(
+                                      // //   scrollDirection: Axis.horizontal,
+                                      // //   child: Row(
+                                      // //       mainAxisAlignment:
+                                      // //           MainAxisAlignment.start,
+                                      // //       children: [
+                                      // //         SvgPicture.asset(
+                                      // //             "assets/image/dogavatar.svg"),
+                                      // //         SizedBox(
+                                      // //           width: 15,
+                                      // //         ),
+                                      // //         SvgPicture.asset(
+                                      // //             "assets/image/avatardogyellow.svg"),
+                                      // //         // SizedBox(width: 15,),
+                                      // //         //                       SvgPicture.asset("assets/image/avatardoggreen.svg"),
+                                      // //       ]),
+                                      // // ),
+
+                                      // Align(
+                                      //   alignment: Alignment.centerLeft,
+                                      //   child: GetBuilder<UserMyPetController>(
+                                      //     init: userMyPetController,
+                                      //     // initState: (_) {},
+                                      //     builder: (_) {
+                                      //       return
+                                      //           // userMyPetController.isDog
+                                      //           //     ? Image.asset(
+                                      //           //         "assets/image/cutedog.png",
+                                      //           //         height: 80,
+                                      //           //       )
+                                      //           //     : Image.asset(
+                                      //           //         "assets/image/cutecat.png",
+                                      //           //         height: 60,
+                                      //           //       );
+                                      //           userMyPetController.petImage ==
+                                      //                   null
+                                      //               ? Center(
+                                      //                   child: Text(
+                                      //                     "No Image",
+                                      //                     style: TextStyle(
+                                      //                       color: Colors.black,
+                                      //                     ),
+                                      //                   ),
+                                      //                 )
+                                      //               : CachedNetworkImage(
+                                      //                   imageUrl:
+                                      //                       "${Constants.PETS_CATEGORY_IMAGE_PATH}${userMyPetController.petImage!}",
+                                      //                   width: 50,
+                                      //                   height: 50,
+                                      //                   placeholder:
+                                      //                       (context, url) =>
+                                      //                           Center(
+                                      //                     child: SpinKitCircle(
+                                      //                       color: Colors
+                                      //                           .grey, // Color of the progress bar
+                                      //                       size:
+                                      //                           20.0, // Size of the progress bar
+                                      //                     ),
+                                      //                   ), // Replace with your own placeholder widget
+                                      //                   errorWidget: (context,
+                                      //                           url, error) =>
+                                      //                       Image.asset(
+                                      //                     "assets/image/cutecat.png",
+                                      //                     height: 60,
+                                      //                   ), // Replace with your own error widget
+                                      //                 );
+                                      //     },
+                                      //   ),
+                                      // ),
 
                                       SizedBox(
                                         height:

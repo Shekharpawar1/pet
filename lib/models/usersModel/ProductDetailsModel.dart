@@ -839,7 +839,7 @@ class Data {
   String? subCategory;
   String? categoryIds;
   List<Variations>? variations;
-  List<Null>? addOns;
+  // List<Null>? addOns;
   List<String>? attributes;
   List<ChoiceOptions>? choiceOptions;
   int? price;
@@ -863,7 +863,7 @@ class Data {
   int? stock;
   int? unitId;
   List<String>? images;
-  List<Null>? foodVariations;
+  // List<Null>? foodVariations;
   String? brandId;
   String? lifeStageId;
   String? helthConditionId;
@@ -886,7 +886,7 @@ class Data {
       this.subCategory,
       this.categoryIds,
       this.variations,
-      this.addOns,
+      // this.addOns,
       this.attributes,
       this.choiceOptions,
       this.price,
@@ -910,7 +910,7 @@ class Data {
       this.stock,
       this.unitId,
       this.images,
-      this.foodVariations,
+      // this.foodVariations,
       this.brandId,
       this.lifeStageId,
       this.helthConditionId,
@@ -1061,13 +1061,15 @@ class Data {
 class Variations {
   String? type;
   int? price;
+  int? wholeprice;
   int? stock;
 
-  Variations({this.type, this.price, this.stock});
+  Variations({this.type, this.price, this.wholeprice, this.stock});
 
   Variations.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     price = json['price'];
+    wholeprice = json['wholeprice'];
     stock = json['stock'];
   }
 
@@ -1075,6 +1077,7 @@ class Variations {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['price'] = this.price;
+     data['wholeprice'] = this.wholeprice;
     data['stock'] = this.stock;
     return data;
   }
