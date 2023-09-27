@@ -35,14 +35,14 @@ class MyCartController extends GetxController {
   String? orderStatus;
   String? paymentMethodUser1;
   var tex;
-  var  addressuser;
+  var addressuser;
 
-     int? selectID;
-   int? selectqty ;
-   String? selectname ;
-   int? selecttex ;
-  double?  selectprice ;
-  int?  selectdis;
+  int? selectID;
+  int? selectqty;
+  String? selectname;
+  int? selecttex;
+  double? selectprice;
+  int? selectdis;
 
   List<Map<String, dynamic>> cartList = [];
 // void  incrementSize(){
@@ -68,21 +68,25 @@ class MyCartController extends GetxController {
     update();
     print("Address Id ====>>>>> $isselected1");
   }
+
 //  void productsizes(List sizedproduct) {
 //     sizes = sizedproduct;
 //     update();
 //     print("sizes${sizes}");
 //   }
-  void addpaymenttype(String type, String paymentstatus, String paymentMethodUser  ) {
+  void addpaymenttype(
+      String type, String paymentstatus, String paymentMethodUser) {
     paymenttype = type;
-paymentStatus = paymentstatus;
-    paymentMethodUser1    = paymentMethodUser;
+    paymentStatus = paymentstatus;
+    paymentMethodUser1 = paymentMethodUser;
 // orderStatus = orderstatus;
     update();
-    print("paymentMethod1: ${paymentMethodUser1},paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
+    print(
+        "paymentMethod1: ${paymentMethodUser1},paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
- void adddata(int id, int qty, String name,int tex,double price, int dis ) {
-  showLoading = false;
+
+  void adddata(int id, int qty, String name, int tex, double price, int dis) {
+    showLoading = false;
     selectID = id;
     selectqty = qty;
     selectname = name;
@@ -90,19 +94,21 @@ paymentStatus = paymentstatus;
     selectprice = price;
     selectdis = dis;
 
-cartList = [{
-     "product_id" : selectID.toString(),
-            "quantity":selectqty.toString(),
-            "variation":selectname.toString(),
-            "tax_amount":selecttex.toString(),
-            "discount_on_item":selectdis.toString(),
-            "price":selectprice.toString()
-      }];
-      
-    update();
-    print("DataBuyNowupdated ====>>>>> $selectID   $selectname $selecttex $selectprice $selectdis");
-print(cartList);
+    cartList = [
+      {
+        "product_id": selectID.toString(),
+        "quantity": selectqty.toString(),
+        "variation": selectname.toString(),
+        "tax_amount": selecttex.toString(),
+        "discount_on_item": selectdis.toString(),
+        "price": selectprice.toString()
+      }
+    ];
 
+    update();
+    print(
+        "DataBuyNowupdated ====>>>>> $selectID   $selectname $selecttex $selectprice $selectdis");
+    print(cartList);
   }
 
   //  "product_id": item.itemId,
@@ -111,8 +117,6 @@ print(cartList);
   //           "tax_amount":13,
   //           "discount_on_item":20,
   //           "price":item.price
-
-
 
   void adddiscount(int disprice, int price) {
     disCount = disprice;
@@ -128,8 +132,7 @@ print(cartList);
 
     init();
     userID = storage.read('id');
-  addressuser =   storage.read('useraddresscity');
-
+    addressuser = storage.read('useraddresscity');
   }
 
   incrementSize(int index) {
@@ -167,7 +170,6 @@ print(cartList);
   //   });
   // }
 
-
   void updateTotal() {
     total = 0;
 
@@ -195,7 +197,6 @@ print(cartList);
     print("Index updated ====>>>>> $isselected");
   }
 
- 
   String getUserMyCartUrl = '${Constants.GET_USER_MYCARTLIST}';
   MyCartListModel? mycartmodel;
   bool cartlistLoaded = false;
@@ -211,17 +212,18 @@ print(cartList);
           await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('id')}"));
       print("====?//${mycartmodel}");
       sizes = mycartmodel!.data!.map((e) => e.quantity).toList();
-      List<Map<String, dynamic>> cartJsonList =
-          mycartmodel!.data!.map((item) => {
-            "product_id": item.itemId,
-            "quantity":item.quantity,
-            "variation":item.variant,
-            "tax_amount":13,
-            "discount_on_item":20,
-            "price":item.price
-          }).toList();
+      cartList = [];
+      List<Map<String, dynamic>> cartJsonList = mycartmodel!.data!
+          .map((item) => {
+                "product_id": item.itemId,
+                "quantity": item.quantity,
+                "variation": item.variant,
+                "tax_amount": 13,
+                "discount_on_item": 20,
+                "price": item.price
+              })
+          .toList();
       cartList = cartJsonList;
-      
 
 // mycartmodel!.data!.forEach((element) async {
       //   total += (int.parse(element.price!) *
@@ -247,8 +249,6 @@ print(cartList);
     showLoading = false;
     update();
   }
-
-
 
   // productdetails
   String getUserProductDetailsUrl = '${Constants.GET_USER_PRODUCTDETAILS}';
@@ -301,7 +301,7 @@ print(cartList);
 //     showLoading = false;
 //     update();
 //   }
-  
+
   String getUserMyCartDeleteUrl = '${Constants.GET_USER_MYCARTLISTDELETE}';
   MyCartListDeleteModel? mycartdeletemodel;
   bool cartlistdeleteLoaded = false;
@@ -317,9 +317,9 @@ print(cartList);
       print("delete");
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
-      
-  final ProductDetailsController productdetailscontroller =
-      Get.put(ProductDetailsController());
+
+      final ProductDetailsController productdetailscontroller =
+          Get.put(ProductDetailsController());
       await productdetailscontroller.isProductInCart();
       update();
     } catch (e) {
@@ -399,25 +399,18 @@ print(cartList);
   Future<void> placeorder() async {
     showLoading = true;
     update();
-    
-  MyCartController addtocartController = Get.put(MyCartController());
+
+    MyCartController addtocartController = Get.put(MyCartController());
     String sendingAddr = "";
-      int sendingAddrID = 0;
+    int sendingAddrID = 0;
     if (addtocartController.allAddresslistModel == null ||
         addtocartController.allAddresslistModel!.data == null ||
         addtocartController.allAddresslistModel!.data!.isEmpty) {
       sendingAddr = "Demo address";
     } else {
-      sendingAddr = "${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].city ??
-              ""} ${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].area ??
-              ""} ${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].houseNo ??
-              ""} ${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].landmark ??
-              ""}";
-        print(sendingAddr);
+      sendingAddr =
+          "${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].city ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].area ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].houseNo ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].landmark ?? ""}";
+      print(sendingAddr);
     }
 
     if (addtocartController.allAddresslistModel == null ||
@@ -425,11 +418,9 @@ print(cartList);
         addtocartController.allAddresslistModel!.data!.isEmpty) {
       sendingAddrID = 0;
     } else {
-      sendingAddrID = isselected1??0;
-        print(sendingAddr);
+      sendingAddrID = isselected1 ?? 0;
+      print(sendingAddr);
     }
-
-
 
     Map<String, dynamic> body = {
       "user_id": storage.read('id').toString(),
@@ -440,7 +431,7 @@ print(cartList);
       "order_status": "pending",
       "gst_bill": "0",
       "payment_day": "0",
-       "payment_mode": paymentMethodUser1.toString(),
+      "payment_mode": paymentMethodUser1.toString(),
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
@@ -455,7 +446,7 @@ print(cartList);
       "store_id": 1.toString(),
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
-      "delivery_address":  storage.read('useraddresscity').toString(),
+      "delivery_address": storage.read('useraddresscity').toString(),
       // (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .area ??
@@ -467,7 +458,7 @@ print(cartList);
       "cart": cartList,
     };
     String PlaceOrderUrl = Constants.PLACE_ORDER;
-    print(body);
+    // print("====>>>> Body Place Order: ${body}");
     try {
       // var request = http.MultipartRequest('POST', Uri.parse(PlaceOrderUrl));
       // request.fields.addAll(body);
@@ -498,28 +489,21 @@ print(cartList);
     update();
   }
 
-Future<void> buynowplaceorder() async {
+  Future<void> buynowplaceorder() async {
     showLoading = true;
     update();
-    
-  MyCartController addtocartController = Get.put(MyCartController());
+
+    MyCartController addtocartController = Get.put(MyCartController());
     String sendingAddr = "";
-      int sendingAddrID = 0;
+    int sendingAddrID = 0;
     if (addtocartController.allAddresslistModel == null ||
         addtocartController.allAddresslistModel!.data == null ||
         addtocartController.allAddresslistModel!.data!.isEmpty) {
       sendingAddr = "Demo address";
     } else {
-      sendingAddr = "${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].city ??
-              ""} ${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].area ??
-              ""} ${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].houseNo ??
-              ""} ${addtocartController.allAddresslistModel!
-                  .data![addtocartController.isselected ?? 0].landmark ??
-              ""}";
-        print(sendingAddr);
+      sendingAddr =
+          "${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].city ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].area ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].houseNo ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].landmark ?? ""}";
+      print(sendingAddr);
     }
 
     if (addtocartController.allAddresslistModel == null ||
@@ -527,8 +511,8 @@ Future<void> buynowplaceorder() async {
         addtocartController.allAddresslistModel!.data!.isEmpty) {
       sendingAddrID = 0;
     } else {
-      sendingAddrID = isselected1??0;
-        print(sendingAddr);
+      sendingAddrID = isselected1 ?? 0;
+      print(sendingAddr);
     }
 
 // print(body);
@@ -542,7 +526,7 @@ Future<void> buynowplaceorder() async {
       "order_status": "pending",
       "gst_bill": "0",
       "payment_day": "0",
-       "payment_mode": paymentMethodUser1.toString(),
+      "payment_mode": paymentMethodUser1.toString(),
       "total_tax_amount": (total * 0.05).toString(),
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
@@ -557,24 +541,23 @@ Future<void> buynowplaceorder() async {
       "store_id": 1.toString(),
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
-      "delivery_address":  storage.read('useraddresscity').toString(),
+      "delivery_address": storage.read('useraddresscity').toString(),
       // (allAddresslistModel!
       //                               .data![isselected ?? 0]
       //                               .area ??
       //                           '').toString(),
       "item_campaign_id": "",
-      "order_amount":selectprice
-          .toString(),
-      "cart":[ {
-          "product_id" : selectID.toString(),
-            "quantity":selectqty.toString(),
-            "variation":selectname.toString(),
-            "tax_amount":selecttex.toString(),
-            "discount_on_item":selectdis.toString(),
-            "price":selectprice.toString()
-      }].toList()
-      
-       
+      "order_amount": selectprice.toString(),
+      "cart": [
+        {
+          "product_id": selectID.toString(),
+          "quantity": selectqty.toString(),
+          "variation": selectname.toString(),
+          "tax_amount": selecttex.toString(),
+          "discount_on_item": selectdis.toString(),
+          "price": selectprice.toString()
+        }
+      ].toList()
     };
     // String PlaceOrderUrl = Constants.PLACE_ORDER;
     print(body);
@@ -607,5 +590,4 @@ Future<void> buynowplaceorder() async {
     showLoading = false;
     update();
   }
-
 }

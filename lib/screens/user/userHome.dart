@@ -94,7 +94,7 @@ class _HomeUserState extends State<HomeUser> {
   @override
   void onInit() {
     notificationcontroller.init();
-       homeusercontroller. getWishinit();
+       homeusercontroller. getWishinit(); 
     // super.onInit();
   }
 

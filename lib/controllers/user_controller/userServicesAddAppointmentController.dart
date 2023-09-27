@@ -7,6 +7,7 @@ import 'package:pet/models/cityModel.dart';
 import 'package:pet/models/stateModel.dart';
 import 'package:pet/models/usersModel/GetPetModel.dart';
 import 'package:pet/models/usersModel/allCityModel.dart';
+import 'package:pet/models/usersModel/allServicesModel.dart';
 import 'package:pet/models/usersModel/servicesGetModel.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
@@ -17,11 +18,11 @@ import 'package:pet/models/cityModel.dart' as cityFile;
 
 class UserServicesAddAppointmentController extends GetxController {
   bool showLoading = false;
-     final storage = GetStorage();
+  final storage = GetStorage();
   TextEditingController cityController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   int? serviceId;
-   var userID;
+  var userID;
   void updateServiceId(int id) {
     serviceId = id;
     update();
@@ -211,7 +212,7 @@ class UserServicesAddAppointmentController extends GetxController {
   void onInit() {
     super.onInit();
     init();
-      userID = storage.read('id');
+    userID = storage.read('id');
     // final List<String>? selectedSlots = box.read('selectedSlots');
     // if (selectedSlots != null) {
     //   timeSlots.forEach((slot) {
@@ -302,10 +303,10 @@ class UserServicesAddAppointmentController extends GetxController {
       );
     }
     try {
-      print("====>>>> pet url: ${getPetUrl +  storage.read('id').toString()}");
+      print("====>>>> pet url: ${getPetUrl + storage.read('id').toString()}");
       // pet list
-      petListModel =
-          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl +  storage.read('id').toString()));
+      petListModel = GetPetModel.fromJson(
+          await ApiHelper.getApi(getPetUrl + storage.read('id').toString()));
       print(petListModel);
       // notificationLoaded = true;
       update();
@@ -369,16 +370,50 @@ class UserServicesAddAppointmentController extends GetxController {
   }
 
   ServicesModelDart? servicesModelDart;
+  AllServicesModel? allServicesModel;
   String getServicesUrl = Constants.GET_SERVICES_CATEGORIES;
+  String getAllBookedServicesUrl = Constants.GET_All_BOOKED_SERVICES;
+  List<int> bookedServicesIndex = [];
+
   Future<void> fetchAppointmentSlots(int serviceId) async {
     print("Fetching data...");
     showLoading = true;
     update();
     try {
-      // banners
+      // apppointment data
       servicesModelDart = ServicesModelDart.fromJson(
           await ApiHelper.getApi(getServicesUrl + "/$serviceId"));
-      print(" service data ===>>>: ${servicesModelDart}");
+      allServicesModel = AllServicesModel.fromJson(
+          await ApiHelper.getApi(getAllBookedServicesUrl));
+      servicesModelDart!.data!.forEach((element) {
+        print(
+            "==>> slots: ${allServicesModel!.data!.where((f) => element.slotTiming!.contains(f.slot))}");
+        print(
+            "==>> dates: ${allServicesModel!.data!.where((f) => element.slotDate!.toString().toLowerCase().contains(f.date!))}");
+
+        print(
+            "==>> both: ${allServicesModel!.data!.where((f) => element.slotTiming!.contains(f.slot) && element.slotDate!.toString().toLowerCase().contains(f.date!)).toList().map((e) => e.city)}");
+
+        print(
+            "==>> both: ${allServicesModel!.data!.where((f) => element.slotTiming!.contains(f.slot) && element.slotDate!.toString().toLowerCase().contains(f.date!)).toList().length}");
+        // print("element.slotTiming: ${element.slotTiming}");
+        // print("element.slotDate: ${element.slotDate}");
+        // print("");
+        // print("");
+        // if (allServicesModel!.data!.where((f) => element.slotTiming!.contains(f.slot) &&  element.slotDate!.toString().toLowerCase().contains(f.date!))) {
+        //   bookedServicesIndex.add(servicesModelDart!.data!.indexOf(element));
+        // }
+        allServicesModel!.data!
+            .where((f) =>
+                element.slotTiming!.contains(f.slot) &&
+                element.slotDate!.toString().toLowerCase().contains(f.date!))
+            .forEach((foundElement) {
+          bookedServicesIndex.add(element.slotTiming!.indexOf(foundElement.slot ?? "0"));
+        });
+      });
+      bookedServicesIndex = bookedServicesIndex.toSet().toList();
+      
+      print("Booked Slots Indexes =======>>>>>>: ${bookedServicesIndex}");
       // notificationLoaded = true;
       update();
     } catch (e) {
