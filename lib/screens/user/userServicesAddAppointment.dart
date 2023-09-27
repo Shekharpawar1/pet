@@ -71,8 +71,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
       //   //   ),
       //   // ],
       // ),
-   
-   
+
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -257,7 +256,11 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                                           return GestureDetector(
                                             onTap: () {
                                               userServicesAddAppointmentController
-                                                  .selectTimeSlot(index);
+                                                      .bookedServicesIndex
+                                                      .contains(index)
+                                                  ? null
+                                                  : userServicesAddAppointmentController
+                                                      .selectTimeSlot(index);
                                             },
                                             child: Container(
                                                 width: 62,
@@ -268,9 +271,13 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             16),
-                                                    color: timeSlot.isSelected
-                                                        ? MyColors.yellow
-                                                        : MyColors.white),
+                                                    color: userServicesAddAppointmentController
+                                                            .bookedServicesIndex
+                                                            .contains(index)
+                                                        ? Colors.grey.shade200
+                                                        : timeSlot.isSelected
+                                                            ? MyColors.yellow
+                                                            : MyColors.white),
                                                 child: Center(
                                                     child: Text(
                                                   timeSlot.time,
@@ -786,7 +793,7 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                       ),
                     );
                   })
-             
+
               // : InkWell(
               //     onTap: () {
               //       userServicesAddAppointmentController.addService();

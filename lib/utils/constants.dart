@@ -75,6 +75,8 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
       "$BASE_URL${API_V1_PATH}/customer/notifications?tergat=store";
   static const GET_SERVICES_CATEGORIES =
       "$BASE_URL${API_V1_PATH}/banners/service";
+  static const GET_All_BOOKED_SERVICES =
+      "$BASE_URL${API_V1_PATH}/banners/get_allservicebooking";
   static const PETS_CATEGORY_IMAGE_PATH =
       "$BASE_URL/storage/app/public/category/";
   static const GET_CATEGORY_BREED = "$BASE_URL${API_V1_PATH}/auth/breed";
