@@ -9,8 +9,10 @@ import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/others/Filter.dart';
+import 'package:pet/screens/user/filterScreen.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/searchScreen.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -40,80 +42,99 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
             shrinkWrap: true,
             children: [
               // SizedBox(height: MediaQuery.of(context).size.height*0.02),
- Row(
-mainAxisAlignment: MainAxisAlignment.spaceBetween,          
-          children: [
+ 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 265,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(17),
 
-          Container(
-             height:45,
-          width:265,
-                   decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.circular(17),
-          
-                        // border: Border.all(color:brandcolor ),
-          
-             color:MyColors.white,
-       
-          
-                    ),
-          
-           
-            
-            child: TextFormField(
-                                  controller: _searchcontroller,
-                                                style: TextStyle(fontSize: 14,color: MyColors.voliet, fontFamily: "SF-Pro-Display",),
-          
-                               decoration: InputDecoration(
-                                     
-                                       contentPadding: EdgeInsets.only(left: 15),
-                                      fillColor:MyColors.white,
-                                      focusColor:MyColors.white,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        // borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        //  borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                        //  borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      hintText:"Search",
-                                      prefixIcon:Padding(
-                                        padding: const EdgeInsets.all(10.0),
-                                        child: Image.asset("assets/image/searchnormal.png",width: 10,),
-                                      ),
-                                    
-                                      hintStyle:
-                                      TextStyle(color: Colors.grey, fontSize: 16,fontWeight: FontWeight.w400)
-                                      
-                                      ),
+                          // border: Border.all(color:brandcolor ),
+
+                          color: MyColors.white,
+                        ),
+                        child: TextFormField(
+                          onTap: () {
+                            homeusercontroller.clearSearchData();
+                            Get.to(SearchScreen());
+                          },
+                          readOnly: true,
+                          controller: homeusercontroller.searchcontroller,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: MyColors.voliet,
+                            fontFamily: "SF-Pro-Display",
+                          ),
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 15),
+                              fillColor: MyColors.white,
+                              focusColor: MyColors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                // borderRadius: BorderRadius.circular(50),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                //  borderRadius: BorderRadius.circular(50),
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                                //  borderRadius: BorderRadius.circular(50),
+                              ),
+                              hintText: "Search",
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Image.asset(
+                                  "assets/image/searchnormal.png",
+                                  width: 10,
                                 ),
-          ),
-     
-    //  SizedBox(width: 10,),
-     GestureDetector(
-       onTap: () {
-                   FilterController filtercontroller = Get.put(FilterController());
-filtercontroller.init();
-                        Get.to(FilterScreen());
-                    },
-       child: Container(width: 45,
-     height: 45,
-     decoration: BoxDecoration(
-     borderRadius: BorderRadius.circular(15),
-     color: Color(0xffffcc00)),
-     child: Padding(
-       padding: const EdgeInsets.all(10.0),
-       child:   Image.asset("assets/image/filter3.png",),
-     )),
-     )
+                              ),
+                              hintStyle: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400)),
+                        ),
+                      ),
 
-         ],),
-     
+                      //  SizedBox(width: 10,),
+                      // GetBuilder<FilterController>(
+                      //       // init: filtercontroller,
+                      //       builder: (_) {
+                      //  return
+                      GestureDetector(
+                        onTap: () {
+                          FilterController filtercontroller =
+                              Get.put(FilterController());
+                          // filtercontroller.init();
+                          filtercontroller.loadDefaultData();
+                          filtercontroller.clearFields();
+                          // Get.to(FilterScreen());
+                          filtercontroller.init();
+                          Get.to(FilterScreenUI());
+                          Get.to(FilterScreen());
+                        },
+                        child: Container(
+                            width: 45,
+                            height: 45,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Color(0xffffcc00)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Image.asset(
+                                "assets/image/filter3.png",
+                              ),
+                            )),
+                      )
+
+                      // )
+                    ],
+                  ),
+
      
          SizedBox(height: MediaQuery.of(context).size.height*0.04,),
               !homeusercontroller.propertyLoaded

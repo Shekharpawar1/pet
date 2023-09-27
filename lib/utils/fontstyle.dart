@@ -38,6 +38,12 @@ class CustomTextStyle {
       fontWeight: FontWeight.w500,
       fontFamily: "Poppins");
 
+      static TextStyle mediumtextwhite = const TextStyle(
+      color: Colors.white,
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Poppins");
+
   static TextStyle appbartext = const TextStyle(
       color: Color(0xff0B154D),
       letterSpacing: 1,

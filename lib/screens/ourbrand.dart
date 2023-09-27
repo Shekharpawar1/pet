@@ -212,7 +212,7 @@ mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                        
          InkWell(onTap: (){
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>OurBrandDetails()));
+                  // Navigator.push(context, MaterialPageRoute(builder: (context)=>OurBrandDetails()));
 
          },
            child: Container(

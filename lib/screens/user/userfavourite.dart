@@ -54,13 +54,20 @@ class _UserfavouriteState extends State<Userfavourite> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
                       ),
+
+                //      userfavouriteController.wishList == null ||
+                //                     userfavouriteController.wishList!.data!.isEmpty
+                // ? SizedBox(
+                //                       child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
+                //                   : 
                       GetBuilder<UserfavouriteController>(
                           init: userfavouriteController,
                           builder: (_) {
                             return userfavouriteController.wishList == null ||
                                     userfavouriteController.wishList!.data ==
                                         null
-                                ? SizedBox()
+                                ? Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))
+                                  
                                 : GridView.builder(
                                     primary: false,
                                     shrinkWrap: true,

@@ -55,14 +55,23 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
     return Stack(
       children: [
         Scaffold(
-           appBar:CustomAppBarback(), body: 
+           appBar:CustomAppBarback(),
+            body: 
           
            ListView(
             shrinkWrap: true,
             primary: true,
             children: [
+               productdetailscontroller.productdetailmodel == null ||  productdetailscontroller.productdetailmodel!.data == null
+            
+              ? Center(
+                child: SizedBox(
+                                        child:Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)),
+              )
+                                  :
               Stack(
                 children: [
+
                 GetBuilder<ProductDetailsController>(
                   init: productdetailscontroller,
                   builder: (_) {
@@ -729,6 +738,15 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                   "Product details",
                                   style: CustomTextStyle.popinstext,
                                 ),
+//  SizedBox(
+                                  //   height: MediaQuery.of(context).size.height *
+                                  //       0.01),
+                                  // Text(
+                                  //     productdetailscontroller
+                                  //         .productdetailmodel!.data!.name
+                                  //         .toString(),
+                                  //     style: CustomTextStyle.popinstext,
+                                  //   ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.01),
@@ -749,6 +767,40 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.01),
+
+                                          Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "Name",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Text(
+                                      productdetailscontroller
+                                          .productdetailmodel!.data!.name
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                     SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+
                                 Row(
                                   children: [
                                     SizedBox(
@@ -764,7 +816,7 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                     ),
                                     Text(
                                       productdetailscontroller
-                                          .productdetailmodel!.data!.name
+                                          .productdetailmodel!.data!.brandId
                                           .toString(),
                                       style: CustomTextStyle.popinstext,
                                     ),
@@ -964,6 +1016,8 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                 // ),
                                 //           SizedBox(height: MediaQuery.of(context).size.height*0.02),
                                 //  Divider(color: lightdivider,thickness: 1,height: 1,),
+
+              
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.05),
@@ -1359,6 +1413,275 @@ MyOrderController myordercontroller = Get.put(MyOrderController());
                                         SizedBox(
                                           height: 10,
                                         ),
+
+                                           productdetailscontroller.selectedvariants!.stock == 0?
+                                Row(
+                                  children: [
+                                    Container(
+                                                    width: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.25,
+                                                    
+                                                    height: MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.06,
+                                                    decoration: BoxDecoration(
+                                                        color: MyColors.red,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                25)),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.center,
+                                                      children: [
+                                                        // Image.asset(
+                                                        //   "assets/image/bagadd.png",
+                                                        //   height: 25,
+                                                        // ),
+                                                        // SizedBox(
+                                                        //   width: 10,
+                                                        // ),
+                                                        Text(
+                                                          "Sold Out",
+                                                          style: CustomTextStyle
+                                                              .mediumtextwhite,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                    GestureDetector(onTap: () async{
+                                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            scrollable: true,
+                          
+                            content: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                            
+                             Text(
+                                      productdetailscontroller
+                                          .productdetailmodel!.data!.name
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+
+ productdetailscontroller
+               .productdetailmodel!.data == null?
+               SizedBox():
+ Padding(
+   padding:
+       const EdgeInsets.all(8.0),
+   child: Container(
+     height: 50,
+     decoration: BoxDecoration(
+         border: Border.all(
+             color: MyColors.grey),
+         color: Color.fromRGBO(
+             255, 255, 255, 0.10),
+         // boxShadow: [
+         //   BoxShadow(
+         //     offset: const Offset(0.0, 0.0),
+         //     color: Color.fromRGBO(255, 255, 255, 0.10),
+         //     blurRadius: 0.0,
+         //     spreadRadius: 0.0,
+         //   ),
+         // ],
+         borderRadius:
+             BorderRadius.circular(
+                 15)),
+     child: DropdownButtonFormField<
+         variantFile.Variations>(
+       validator: (value) {
+         if (value == null ||
+             value.type!.isEmpty) {
+           return 'Please select a tpye';
+         }
+         return null;
+       },
+       // value: productdetailscontroller.dropdownsize,
+       value:
+           productdetailscontroller
+               .selectedvariants,
+       decoration: InputDecoration(
+         hintText: "Kg",
+         hintStyle: TextStyle(
+           color: MyColors.black,
+         ),
+         contentPadding:
+             EdgeInsets.symmetric(
+                 horizontal: 15,
+                 vertical: 5),
+         border: InputBorder.none,
+         enabledBorder:
+             InputBorder.none,
+         focusedBorder:
+             InputBorder.none,
+         // iconColor: MyColors.white,
+       ),
+       icon: Center(
+         child: Icon(
+           Icons.arrow_drop_down,
+           color: MyColors.black,
+         ),
+       ),
+       style: TextStyle(
+           fontSize: 16,
+           color: MyColors.black),
+       items:
+           productdetailscontroller
+               .variantslist!
+               .map((variantFile
+                       .Variations
+                   variants) {
+         return DropdownMenuItem<
+             variantFile.Variations>(
+           value: variants,
+           child: Text(
+               variants.type ?? ''),
+         );
+       }).toList(),
+//                                    items:   productdetailscontroller.productdetailmodel!.data!.variations!.map<DropdownMenuItem<String>>(
+//   (var variant) {
+//     return DropdownMenuItem<String>(
+//       value: variant.type,
+//       child: Text(variant.type.toString() ),
+//     );
+//   },
+// ).toList() ?? [],
+       // items: productdetailscontroller
+       //     .productdetailsmodel.data.variations
+       //     .map((String variant) {
+       //   return DropdownMenuItem<String>(
+       //     value: variant,
+       //     child: Text(variant),
+       //   );
+       // }).toList(),
+       onChanged:
+           (variantFile.Variations?
+               variants) async {
+         await productdetailscontroller
+             .updateVariants(
+                 variants!);
+       },
+       // onChanged: (String? value)  {
+       //   productdetailscontroller.addVariant(value);
+       //   // productdetailscontroller
+       //   //     .updateSize(value ?? "");
+       //   // Perform actions when country is changed
+       // },
+     ),
+   ),
+ ),
+
+        Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 50,
+                        //                    width: 335,
+                        // height: 45,
+                        decoration: BoxDecoration(
+                       border: Border.all(
+             color: MyColors.grey),
+                            // color: Color.fromRGBO(255, 255, 255, 0.10),
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     offset: const Offset(0.0, 0.0),
+                            //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                            //     blurRadius: 0.0,
+                            //     spreadRadius: 0.0,
+                            //   ),
+                            // ],
+                            borderRadius: BorderRadius.circular(15)),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your name';
+                            }
+                            return null;
+                          },
+                          controller:
+                              productdetailscontroller.emailController,
+                          decoration: InputDecoration(
+                            hintText: "Email",
+                            hintStyle: TextStyle(
+                              color: MyColors.black,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                          ),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color:MyColors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+              SizedBox(height: 10,),
+                              Center(
+                                child: ElevatedButton(
+                                  
+                                          onPressed:() async {
+                                            //  productdetailscontroller.clearPopUpFields();
+                                        await    productdetailscontroller.addNotify();
+                                          },
+                                          child: Text('Notify me when available'),
+                                        ),
+                              ), ],
+                            ),
+                          );
+                        },
+                      );
+
+                                    },
+                                      child: Container(
+                                                      width: MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.55,
+                                                      height: MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.06,
+                                                      decoration: BoxDecoration(
+                                                          color: MyColors.green,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  25)),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment.center,
+                                                        children: [
+                                                          // Image.asset(
+                                                          //   "assets/image/bagadd.png",
+                                                          //   height: 25,
+                                                          // ),
+                                                          // SizedBox(
+                                                          //   width: 10,
+                                                          // ),
+                                                          Text(
+                                                            "Notify me when available",
+                                                            style: CustomTextStyle
+                                                                .mediumtextwhite,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                    ),
+                                 
+                                 
+                                 
+                                  ],
+                                )
+                             :
                                         Row(
                                           children: [
                                             InkWell(

@@ -21,7 +21,8 @@ import 'package:pet/utils/constants.dart';
 
 class HomeuserController extends GetxController {
   var userId = GetStorage().read("id");
-  late VideoPlayerController videoController;
+  late VideoPlayerController videoController; 
+  TextEditingController searchcontroller = TextEditingController();
   bool showLoading = false;
 
   int? itempartnerId;

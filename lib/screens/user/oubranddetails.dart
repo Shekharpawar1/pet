@@ -5,9 +5,11 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -17,136 +19,18 @@ class OurBrandDetails extends StatelessWidget {
    OurBrandDetails({super.key});
 
   
-
+  final HomeuserController homeusercontroller = Get.put(HomeuserController());
      OurBrandDetailsController ourbranddeatilscontrroller = Get.put(OurBrandDetailsController());
 
   @override
   Widget build(BuildContext context) {
-
-    var imagePath = "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo??''}";
+ourbranddeatilscontrroller.ourproductinit();
+    // var imagePath = "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo??''}";
     return Scaffold(
 
       
-        appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-leading: Padding(
-  padding:  EdgeInsets.only(left:20.0,top: 10,bottom: 10,right: 0),
-  child:   InkWell(onTap: (){
-    Navigator.pop(context);
-  },
-    child: Icon(Icons.arrow_back_ios,color: MyColors.black,size: 20,
-    
-    ),
-  ),
-),
-             actions: [
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(const NotificationUser());
-                  },
-                  child: Center(
-                    child: Icon(Icons.notifications, color: MyColors.black),
-                  )),
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(width: 20),
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                    Get.to(const AddToCardUser());
-                  },
-                  child:
-                      Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-              Positioned(
-                  top: 10.0,
-                  right: 0,
-                  child: Stack(
-                    children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ('5').toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
-          ),
-          SizedBox(
-            width: 20,
-          )
-        ],
-
-  
-        title:Center(child:
-        
-                               CachedNetworkImage(
-  
-                                              imageUrl: imagePath,
-  
-                                              // width: 61,
-  
-                                              // height: 75,
-  
-                                              placeholder: (context, url) =>
-  
-                                                  Center(
-  
-                                                child:
-  
-                                                    CircularProgressIndicator(),
-  
-                                              ), // Replace with your own placeholder widget
-  
-                                              errorWidget: (context, url,
-  
-                                                      error) =>
-  
-                                                  Icon(Icons
-  
-                                                      .error), // Replace with your own error widget
-  
-                                            ),
-        )
-        
-        ),
-   body:Padding(
+        appBar:CustomAppBarback(),
+         body:Padding(
      padding: const EdgeInsets.all(20.0),
      child: ListView(
       shrinkWrap: true,
@@ -225,197 +109,197 @@ child: Padding(
 
 
 
-Container(
-   height: MediaQuery.of(context).size.height * 0.08,
-  child:   GetBuilder<OurBrandDetailsController>(
+// Container(
+//    height: MediaQuery.of(context).size.height * 0.08,
+//   child:   GetBuilder<OurBrandDetailsController>(
   
-                        init: ourbranddeatilscontrroller,
+//                         init: ourbranddeatilscontrroller,
   
-                        builder: (_) {
+//                         builder: (_) {
   
-                          return
+//                           return
   
   
   
-                       ListView.builder(
+//                        ListView.builder(
   
-                                  primary: false,
+//                                   primary: false,
   
-                                  scrollDirection: Axis.horizontal,
+//                                   scrollDirection: Axis.horizontal,
   
-                                  shrinkWrap: true,
+//                                   shrinkWrap: true,
   
-                                  itemCount: ourbranddeatilscontrroller
+//                                   itemCount: ourbranddeatilscontrroller
   
-                                      .usersubmodel!.data!.length,
+//                                       .usersubmodel!.data!.length,
   
-                                  itemBuilder: (context, index) {
+//                                   itemBuilder: (context, index) {
                                     
-  //  final isSelected = subcategorycontroller.selectedIndex == index;
+//   //  final isSelected = subcategorycontroller.selectedIndex == index;
 
-                                    var item = ourbranddeatilscontrroller
+//                                     var item = ourbranddeatilscontrroller
   
-                                        .usersubmodel!.data![index];
+//                                         .usersubmodel!.data![index];
   
-                                    // print(item.name!);
+//                                     // print(item.name!);
   
-                                    var imagePath =
+//                                     var imagePath =
   
-                                        "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+//                                         "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
   
-                                    print(imagePath);
+//                                     print(imagePath);
   
   
   
-                                    return
+//                                     return
                                     
-                                     !ourbranddeatilscontrroller.propertysubloaded
-                            ? SizedBox():
-                                     Padding(
+//                                      !ourbranddeatilscontrroller.propertysubloaded
+//                             ? SizedBox():
+//                                      Padding(
   
-                                      padding: const EdgeInsets.all(8.0),
+//                                       padding: const EdgeInsets.all(8.0),
   
-                                      child: InkWell(
+//                                       child: InkWell(
   
-                                        onTap: () {
-    //  subcategorycontroller.addproduct(item.id??0);
-  ourbranddeatilscontrroller.updateSelectedIndex(item.id??0); 
-  print("===>${item.id}") ; 
-ourbranddeatilscontrroller.productinit();
+//                                         onTap: () {
+//     //  subcategorycontroller.addproduct(item.id??0);
+// //   ourbranddeatilscontrroller.updateSelectedIndex(item.id??0); 
+// //   print("===>${item.id}") ; 
+// // ourbranddeatilscontrroller.ourproductinit();
                                      
-                                        },
+//                                         },
   
-                                        child: Container(
+//                                         child: Container(
   
-                        height: 40,
+//                         height: 40,
   
-                       width: 180,
+//                        width: 180,
   
-                        decoration: BoxDecoration(
+//                         decoration: BoxDecoration(
   
-                            color: (ourbranddeatilscontrroller.selectedIndex == item.id
-                             ) 
-                                                      ? MyColors.yellow
-                                                      : Colors.white, 
+//                             color: (ourbranddeatilscontrroller.selectedIndex == item.id
+//                              ) 
+//                                                       ? MyColors.yellow
+//                                                       : Colors.white, 
   
-                            borderRadius: BorderRadius.circular(10)),
+//                             borderRadius: BorderRadius.circular(10)),
   
-                        child: Padding(
+//                         child: Padding(
   
-                          padding: const EdgeInsets.all(5.0),
+//                           padding: const EdgeInsets.all(5.0),
   
-                          child: Row(
+//                           child: Row(
   
-                            mainAxisAlignment: MainAxisAlignment.start,
+//                             mainAxisAlignment: MainAxisAlignment.start,
   
-                            children: [
+//                             children: [
   
-                              // Image.asset("assets/image/dog1.png"),
-  
-  
-  
-                               CachedNetworkImage(
-  
-                                              imageUrl: imagePath,
-  
-                                              // width: 61,
-  
-                                              // height: 75,
-  
-                                              placeholder: (context, url) =>
-  
-                                                  Center(
-  
-                                                child:
-  
-                                                    CircularProgressIndicator(),
-  
-                                              ), // Replace with your own placeholder widget
-  
-                                              errorWidget: (context, url,
-  
-                                                      error) =>
-  
-                                                  Icon(Icons
-  
-                                                      .error), // Replace with your own error widget
-  
-                                            ),
-  
-                              SizedBox(
-  
-                                width: 5,
-  
-                              ),
-  
-                              Text(item.name.toString(), style: CustomTextStyle.popinssmall)
-  
-                            ],
-  
-                          ),
-  
-                        ),
-  
-                      ),
-  
-                                      ),
+//                               // Image.asset("assets/image/dog1.png"),
   
   
   
-                                      //  Stack(
+//                                CachedNetworkImage(
   
-                                      //   children: [
+//                                               imageUrl: imagePath,
   
-                                      //     Container(
+//                                               // width: 61,
   
-                                      //       width: 69,
+//                                               // height: 75,
   
-                                      //       height: 75,
+//                                               placeholder: (context, url) =>
   
-                                      //       decoration: BoxDecoration(
+//                                                   Center(
   
-                                      //         borderRadius: BorderRadius.circular(23),
+//                                                 child:
   
-                                      //         color: item,
+//                                                     CircularProgressIndicator(),
   
-                                      //         boxShadow: [
+//                                               ), // Replace with your own placeholder widget
   
-                                      //           BoxShadow(
+//                                               errorWidget: (context, url,
   
-                                      //             color: Colors.grey.withOpacity(0.3),
+//                                                       error) =>
   
-                                      //             spreadRadius: 2,
+//                                                   Icon(Icons
   
-                                      //             blurRadius: 5,
+//                                                       .error), // Replace with your own error widget
   
-                                      //             offset: Offset(
+//                                             ),
   
-                                      //                 0, 3), // Offset of the shadow
+//                               SizedBox(
   
-                                      //           ),
+//                                 width: 5,
   
-                                      //         ],
+//                               ),
   
-                                      //       ),
+//                               Text(item.name.toString(), style: CustomTextStyle.popinssmall)
   
-                                      //     ),
+//                             ],
   
-                                      //   ],
+//                           ),
   
-                                      // )
+//                         ),
   
-                                    );
+//                       ),
   
-                                  },
+//                                       ),
   
-                                );
+  
+  
+//                                       //  Stack(
+  
+//                                       //   children: [
+  
+//                                       //     Container(
+  
+//                                       //       width: 69,
+  
+//                                       //       height: 75,
+  
+//                                       //       decoration: BoxDecoration(
+  
+//                                       //         borderRadius: BorderRadius.circular(23),
+  
+//                                       //         color: item,
+  
+//                                       //         boxShadow: [
+  
+//                                       //           BoxShadow(
+  
+//                                       //             color: Colors.grey.withOpacity(0.3),
+  
+//                                       //             spreadRadius: 2,
+  
+//                                       //             blurRadius: 5,
+  
+//                                       //             offset: Offset(
+  
+//                                       //                 0, 3), // Offset of the shadow
+  
+//                                       //           ),
+  
+//                                       //         ],
+  
+//                                       //       ),
+  
+//                                       //     ),
+  
+//                                       //   ],
+  
+//                                       // )
+  
+//                                     );
+  
+//                                   },
+  
+//                                 );
   
                           
   
             
   
-                        }),
-),
+//                         }),
+// ),
           
 
 //      SingleChildScrollView(
@@ -497,7 +381,11 @@ ourbranddeatilscontrroller.productinit();
                           init: ourbranddeatilscontrroller,
      
                           builder: (_) {
-                            return   
+                            return
+
+                           ourbranddeatilscontrroller.userPropertiesourbrandModel == null|| ourbranddeatilscontrroller.userPropertiesourbrandModel!.data == null
+                              ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
+                                     
            GridView.builder(
                                     primary: false,
                                     shrinkWrap: true,
@@ -510,7 +398,7 @@ ourbranddeatilscontrroller.productinit();
                                             mainAxisSpacing: 15.0,
                                             mainAxisExtent: 280),
                                     itemCount: ourbranddeatilscontrroller
-                                        .userourbrandProductModel!.data!.length
+                                        .userPropertiesourbrandModel!.data!.length
                                       , // Set the number of cards you want to display.
                                     itemBuilder: (context, index) {
                                       // gridDelegate:
@@ -525,8 +413,9 @@ ourbranddeatilscontrroller.productinit();
                                       //     .clamp(0, 4),
                                       // itemBuilder: (BuildContext ctx, index) {
                                       var item = ourbranddeatilscontrroller
-                                        .userourbrandProductModel!.data![index];
-           print(item);
+                                        .userPropertiesourbrandModel!.data![index];
+           print(item.name);
+           print(item.brandId);
                                   var imagePath =
                                      "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
                                   print(imagePath);
@@ -539,185 +428,275 @@ ourbranddeatilscontrroller.productinit();
                       //     ),
                       //   )
                       // : 
-           ourbranddeatilscontrroller.userourbrandProductModel!.data == null
+           ourbranddeatilscontrroller.userPropertiesourbrandModel!.data == null
                               ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                    InkWell(
-                                    onTap: () async {
-                                   var url = '${ item.productUrl.toString()}';  // Replace with the URL you want to open
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+                                    onTap: ()  {
+    //                                var url = '${ item.productUrl.toString()}';  // Replace with the URL you want to open
+    // if (await canLaunch(url)) {
+    //   await launch(url);
+    // } else {
+    //   throw 'Could not launch $url';
+    // }
   },
-                                    child: Container(
-                                      width: 140,
-                                      // height: 700,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(25),
-                                        color: MyColors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.3),
-                                            spreadRadius: 3,
-                                            blurRadius: 7,
-                                            offset: Offset(
-                                                0, 3), // Offset of the shadow
-                                          ),
-                                        ],
-                                        // color: MyColors.white
-                                      ),
-                                      child: Column(
-                                        children: [
-           
-                                          
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Align(
-                                                alignment: Alignment.centerRight,
-                                                child:
-                                                    Icon(Icons.favorite_border,color:Colors.red)),
-                                          ),
-                                         
-                                              Container(
-                                                height: 125,
-           
-                                                // decoration: BoxDecoration(
-                                                //     borderRadius: BorderRadius.circular(30),
-                                                //     color: MyColors.white),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: imagePath,
-                                                  width: 61,
-                                                  height: 75,
-                                                  placeholder: (context, url) =>
-                                                      Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  ), // Replace with your own placeholder widget
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      Icon(Icons
-                                                          .error), // Replace with your own error widget
+                                    child:
+                                    Container(
+                                                width: 140,
+                                                // height: 700,
+                                                decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    colors: [
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // _getRandomColor(),
+                                                      // MyColors.white
+                                                      //     .withOpacity(0.1),
+                                                      MyColors.white,
+                                                      MyColors.white,
+                                                      // MyColors.white,
+                                                    ],
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  // color: MyColors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.grey
+                                                          .withOpacity(0.3),
+                                                      spreadRadius: 3,
+                                                      blurRadius: 7,
+                                                      offset: Offset(0,
+                                                          3), // Offset of the shadow
+                                                    ),
+                                                  ],
+                                                  // color: MyColors.white
+                                                ),
+                                                child: Column(
+                                                  children: [
+
+
+
+                                                    InkWell(
+                                                      onTap: () {
+                                                        homeusercontroller
+                                                            .addItemToWishList(
+                                                                item.id!);
+
+                                                            homeusercontroller.init();
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerRight,
+                                                          child: Icon(
+                                                              homeusercontroller
+                                                                      .wishListItemsId
+                                                                      .contains(
+                                                                          item
+                                                                              .id!)
+                                                                  ? Icons
+                                                                      .favorite
+                                                                  : Icons
+                                                                      .favorite_border,
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
+                                                      ),
+                                                    ),
+
+                                                
+                                                
+
+
+                                                    Container(
+                                                      height: 125,
+                                                      decoration: BoxDecoration(
+                                                          // gradient:
+                                                          //     LinearGradient(
+                                                          //   colors: [
+                                                          //     _getRandomColor(),
+                                                          //     _getRandomColor(),
+                                                          //     _getRandomColor(),
+                                                          //     _getRandomColor(),
+                                                          //   ],
+                                                          //   begin:
+                                                          //       Alignment.topLeft,
+                                                          //   end: Alignment
+                                                          //       .bottomRight,
+                                                          // ),
+                                                          ),
+                                                      // decoration: BoxDecoration(
+                                                      //     borderRadius: BorderRadius.circular(30),
+                                                      //     color: MyColors.white),
+                                                      child: CachedNetworkImage(
+                                                        imageUrl: imagePath,
+                                                        // width: 61,
+                                                        // height: 75,
+                                                        placeholder:
+                                                            (context, url) =>
+                                                                Center(
+                                                          child:
+                                                              CircularProgressIndicator(),
+                                                        ), // Replace with your own placeholder widget
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons
+                                                                .error), // Replace with your own error widget
+                                                      ),
+                                                    ),
+
+                                                    // SizedBox(height: 15,),
+
+                                                    Container(
+                                                      // height: 140,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 10.0,
+                                                                right: 5,
+                                                                top: 5),
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(item.name!,
+                                                                style: CustomTextStyle
+                                                                    .popinsmedium),
+                                                            Text(
+                                                                item.description
+                                                                            .toString()
+                                                                            .length <
+                                                                        30
+                                                                    ? item
+                                                                        .description!
+                                                                    : item
+                                                                        .description!
+                                                                        .substring(
+                                                                            0,
+                                                                            19),
+                                                                style: CustomTextStyle
+                                                                    .popinssmall0),
+                                                            SizedBox(height: 5),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                            "₹" +
+                                                                                item.price.toString(),
+                                                                            style: CustomTextStyle.discounttext),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                2),
+                                                                        // Container(
+                                                                        // height:
+                                                                        //     20,
+                                                                        // width: 48,
+                                                                        // decoration: BoxDecoration(
+                                                                        //     color: MyColors
+                                                                        //         .red,
+                                                                        //     borderRadius: BorderRadius.circular(
+                                                                        //         10),
+                                                                        //     border:
+                                                                        //         Border.all(color: MyColors.red)),
+                                                                        // child:
+                                                                        //     Center(
+                                                                        //   child:
+                                                                        Text(
+                                                                            // item.discount.toString(),
+                                                                            "Save${item.discount.toString()}%",
+                                                                            style:
+                                                                                CustomTextStyle.popinstextsmal2222red),
+                                                                        //   ),
+                                                                        // ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                        height:
+                                                                            5),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          width:
+                                                                              Get.width * 0.23,
+                                                                          child:
+                                                                              Text(
+                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+
+                                                                            // "₹" +
+                                                                            //     item.price!,
+                                                                            style:
+                                                                                CustomTextStyle.popinsmedium,
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                Get.width * 0.054),
+                                                                        InkWell(
+                                                                               onTap: () async{
+                                                                            //  productdeatilscontroller.viewproductHome(
+                                                                            //   item.id??0,item.name??'',"1kg",1 ,item.price??'',item.image!);
+                                                                            //   await productdeatilscontroller
+                                                            // .addProductHome();
+                                                                            },
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
+
+                                                                // Image.asset(
+                                                                //   "assets/image/yellowbag.png",
+                                                                //   height: 80,
+                                                                // )
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
                                               ),
-           
-                                              // SizedBox(height: 15,),
-           
-                                              Container(
-                                                // height: 140,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 10.0,
-                                                      right: 5,
-                                                      top: 5),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(item.title!,
-                                                          style: CustomTextStyle
-                                                              .popinsmedium),
-                                                      // Text(
-                                                      //     item.productUrl
-                                                      //         .toString(),
-                                                      //     style: CustomTextStyle
-                                                      //         .popinssmall0),
-                                                      SizedBox(height: 5),
-                                                      // Row(
-                                                      //   mainAxisAlignment:
-                                                      //       MainAxisAlignment
-                                                      //           .spaceBetween,
-                                                      //   children: [
-                                                      //     Column(
-                                                      //       crossAxisAlignment:
-                                                      //           CrossAxisAlignment
-                                                      //               .start,
-                                                      //       children: [
-                                                      //         Row(
-                                                      //           children: [
-                                                      //             Text(
-                                                      //                 "₹" +
-                                                      //                     item.price
-                                                      //                         .toString(),
-                                                      //                 style: CustomTextStyle
-                                                      //                     .discounttext),
-                                                      //             SizedBox(
-                                                      //                 width: 10),
-                                                      //             Container(
-                                                      //               height: 20,
-                                                      //               width: 40,
-                                                      //               decoration: BoxDecoration(
-                                                      //                   color: MyColors
-                                                      //                       .red,
-                                                      //                   borderRadius:
-                                                      //                       BorderRadius.circular(
-                                                      //                           10),
-                                                      //                   border: Border.all(
-                                                      //                       color:
-                                                      //                           MyColors.red)),
-                                                      //               child: Center(
-                                                      //                 child: Text(
-                                                      //                     // item.discount.toString(),
-                                                      //                     "Save${item.discount}%",
-                                                      //                     style: CustomTextStyle
-                                                      //                         .popinstextsmal2222),
-                                                      //               ),
-                                                      //             ),
-                                                      //           ],
-                                                      //         ),
-                                                      //         SizedBox(height: 5),
-                                                      //         Text(
-                                                      //           "₹" + item.price!,
-                                                      //           style: CustomTextStyle
-                                                      //               .popinsmedium,
-                                                      //         ),
-                                                      //       ],
-                                                      //     ),
-           
-                                                      //     Padding(
-                                                      //       padding:
-                                                      //           const EdgeInsets
-                                                      //                   .only(
-                                                      //               right: 5.0),
-                                                      //       child: Container(
-                                                      //           width: 35,
-                                                      //           height: 35,
-                                                      //           decoration: BoxDecoration(
-                                                      //               borderRadius:
-                                                      //                   BorderRadius
-                                                      //                       .circular(
-                                                      //                           10),
-                                                      //               color: Color(
-                                                      //                   0xffffcc00)),
-                                                      //           child: Padding(
-                                                      //             padding:
-                                                      //                 EdgeInsets
-                                                      //                     .all(
-                                                      //                         5.0),
-                                                      //             child:
-                                                      //                 Image.asset(
-                                                      //               "assets/image/bag2.png",
-                                                      //               height: 25,
-                                                      //             ),
-                                                      //           )),
-                                                      //     )
-                                                      //     // Image.asset(
-                                                      //     //   "assets/image/yellowbag.png",
-                                                      //     //   height: 80,
-                                                      //     // )
-                                                      //   ],
-                                                      // )
-                                                   
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                 
-                                      )
+                                           
+                           
                             );});
                             
                      }),

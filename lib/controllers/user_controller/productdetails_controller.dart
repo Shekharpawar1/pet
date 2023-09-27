@@ -13,10 +13,15 @@ import 'package:http/http.dart' as http;
 
 class ProductDetailsController extends GetxController {
   final storage = GetStorage();
-
+  TextEditingController emailController = TextEditingController();
   int? selecttab;
   bool isAdding = false;
   int? productID;
+  String? productname;
+  String? variants;
+  String? priceProduct;
+  String? image;
+  int? qty;
   var userId;
 double? totalAmount;
   bool showLoading = false;
@@ -90,6 +95,13 @@ imagesPath =
     update();
   }
 
+    void clearPopUpFields() {
+    selectedvariants = null;
+         emailController.clear();
+    print("Data cleared...");
+    update();
+  }
+
   //  void sizeclearFields() {
   //   sizecount = 1;
   //   print("Data cleared...");
@@ -147,6 +159,17 @@ imagesPath =
   void userproductView() {
     isAdding = false;
     update();
+  }
+
+  void viewproductHome(int id, String productName, String varianttts, int quantity, String price, String image) {
+    productID = id;
+    productname = productName;
+    variants = varianttts;
+     qty  = quantity;
+     priceProduct = price;
+     image = image;
+    update();
+    print("productID${productID}");
   }
 
   void viewproduct(int id) {
@@ -257,14 +280,14 @@ imagesPath =
   bool productdetailLoaded = false;
   void dispose() {
     clearFields();
-    //  sizecount= 1;
+   clearPopUpFields();
     // sizeclearFields();
   productdetailmodel = null;
   update();
   }
   @override
   void onClose() {
-  // sizeclearFields();
+  clearPopUpFields();
     // clearFields() ;
     // sizecount= 1;
     dispose();
@@ -365,6 +388,59 @@ imagesPath =
   }
 
 
+  Future<void> addNotify() async {
+    showLoading = true;
+    update();
+   
+    var body = {
+      "user_id": storage.read('id').toString(),
+      "item_id": productID.toString(),
+      "email": emailController.text.toString(),
+      "stock": selectedvariants!.stock.toString(),
+      "variation": selectedvariants!.type.toString(),
+    
+     
+    };
+    String AddNotify = Constants.ADD_Notify;
+    print(AddNotify);
+    print(body);
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(AddNotify));
+      request.fields.addAll({
+       "user_id": storage.read('id').toString(),
+      "item_id": productID.toString(),
+      "email": emailController.text.toString(),
+      "stock": selectedvariants!.stock.toString(),
+      "variation": selectedvariants!.type.toString(),
+    
+      });
+
+      await ApiHelper.postFormData(request: request);
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Data Successfully Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+
   Future<void> addProduct() async {
     showLoading = true;
     update();
@@ -399,6 +475,63 @@ imagesPath =
                     (productdetailmodel!.data!.discount!) /
                     100))
             .toString(),
+      });
+
+      await ApiHelper.postFormData(request: request);
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Product Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+
+
+  Future<void> addProductHome() async {
+    showLoading = true;
+    update();
+    // await Future.delayed(Duration(seconds: 4));
+    var body = {
+      "user_id": storage.read('id').toString(),
+      "item_id": productID.toString(),
+      "item_name": productname.toString(),
+      "variant": variants.toString(),
+      "quantity": qty.toString(),
+      "image": image.toString(),
+      "price": priceProduct
+          .toString(),
+      // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
+    };
+    String AddProduct = Constants.ADD_PRODUCT;
+    print(body);
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(AddProduct));
+      request.fields.addAll({
+     "user_id": storage.read('id').toString(),
+      "item_id": productID.toString(),
+      "item_name": productname.toString(),
+      "variant": variants.toString(),
+      "quantity": qty.toString(),
+      "image": image.toString(),
+      "price": priceProduct
+          .toString(),
       });
 
       await ApiHelper.postFormData(request: request);

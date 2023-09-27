@@ -68,6 +68,8 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
   static const GET_ORDER_DETAILS = "$BASE_URL${API_V1_PATH}/customer/order/detail/";
   static const GET_LIFESTAGE = "$BASE_URL${API_V1_PATH}/auth/all_life_stage/";
     static const GET_HEALTH_CONDITION = "$BASE_URL${API_V1_PATH}/auth/health_condition";
+      static const GET_USER_NOTIFy =
+      "$BASE_URL${API_V1_PATH}/items/notify_list/";
 
   static const GET_USER_NOTIFICATION =
       "$BASE_URL${API_V1_PATH}/customer/notifications?tergat=customer";
@@ -95,6 +97,8 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
       "$BASE_URL${API_V1_PATH}/customer/wish-list/add_product";
         static const ADD_ADDRESS =
       "$BASE_URL${API_V1_PATH}/customer/address/add";
+       static const ADD_Notify =
+      "$BASE_URL${API_V1_PATH}/items/notify";
         static const PURCHASE_PLAN =
       "$BASE_URL${API_V1_PATH}/auth/purchace_plan";
        static const REVIEW =

@@ -81,87 +81,115 @@ class _NotificationUserState extends State<NotificationUser> {
                                 "${Constants.BASE_URL}${Constants.NOTIFICATION_IMAGE_PATH}${item.image ?? ""}";
                             return Column(
                               children: [
-                                Container(
-                                    width: 335,
-                                    height: 71,
-                                    decoration: BoxDecoration(
-                                        color: MyColors.lightpurple,
-                                        borderRadius:
-                                            BorderRadius.circular(16.567)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              // Image.asset(item["image"],
-                                              //     height: 30),
-                                              CachedNetworkImage(
-                                                imageUrl: imagePath,
-                                                width: 50,
-                                                height: 50,
-                                                placeholder: (context, url) =>
-                                                    Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ), // Replace with your own placeholder widget
-                                                errorWidget: (context, url,
-                                                        error) =>
-                                                    Icon(Icons
-                                                        .error), // Replace with your own error widget
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  SizedBox(
-                                                    // width:
-                                                    //     MediaQuery.of(context)
-                                                    //             .size
-                                                    //             .width *
-                                                    //         0.58,
-                                                    child: Text(
-                                                      item.title!,
-                                                      style: CustomTextStyle
-                                                          .popinssmall014,
+                                InkWell(
+                                  onTap: () {
+                             notificationcontroller.notifyinit();
+                               showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GetBuilder<NotificationController>(
+                init: notificationcontroller,
+                builder: (_) {
+                  return notificationcontroller.userNotifyListModel == null
+                      ? SizedBox()
+                      : AlertDialog(
+              // title: Text("Simple Popup"),
+              content: Text(''),
+              actions: <Widget>[
+                ElevatedButton(
+                  child: Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the popup
+                  },
+                ),
+              ],
+            );
+          }
+        );
+                                  });
+                                                               }  ,
+                                  child: Container(
+                                      width: 335,
+                                      height: 71,
+                                      decoration: BoxDecoration(
+                                          color: MyColors.lightpurple,
+                                          borderRadius:
+                                              BorderRadius.circular(16.567)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                // Image.asset(item["image"],
+                                                //     height: 30),
+                                                CachedNetworkImage(
+                                                  imageUrl: imagePath,
+                                                  width: 50,
+                                                  height: 50,
+                                                  placeholder: (context, url) =>
+                                                      Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  ), // Replace with your own placeholder widget
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Icon(Icons
+                                                          .error), // Replace with your own error widget
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      // width:
+                                                      //     MediaQuery.of(context)
+                                                      //             .size
+                                                      //             .width *
+                                                      //         0.58,
+                                                      child: Text(
+                                                        item.title!,
+                                                        style: CustomTextStyle
+                                                            .popinssmall014,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    item.description!.length >
-                                                            36
-                                                        ? item.description!
-                                                            .substring(0, 35)
-                                                        : item.description!,
-                                                    textAlign: TextAlign.center,
-                                                    style: CustomTextStyle
-                                                        .popinssmall01,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          // Column(
-                                          //   // mainAxisAlignment:
-                                          //   // MainAxisAlignment.end,
-                                          //   children: [
-                                          //     Text(
-                                          //       item.description!,
-                                          //       textAlign: TextAlign.center,
-                                          //       style:
-                                          //           CustomTextStyle.popinssmall01,
-                                          //     )
-                                          //   ],
-                                          // ),
-                                        ],
-                                      ),
-                                    )),
+                                                    Text(
+                                                      item.description!.length >
+                                                              36
+                                                          ? item.description!
+                                                              .substring(0, 35)
+                                                          : item.description!,
+                                                      textAlign: TextAlign.center,
+                                                      style: CustomTextStyle
+                                                          .popinssmall01,
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            // Column(
+                                            //   // mainAxisAlignment:
+                                            //   // MainAxisAlignment.end,
+                                            //   children: [
+                                            //     Text(
+                                            //       item.description!,
+                                            //       textAlign: TextAlign.center,
+                                            //       style:
+                                            //           CustomTextStyle.popinssmall01,
+                                            //     )
+                                            //   ],
+                                            // ),
+                                          ],
+                                        ),
+                                      )),
+                                ),
                                 SizedBox(
                                   height: 15,
                                 ),

@@ -53,9 +53,9 @@ class _BuyNowAddToCardUserState extends State<BuyNowAddToCardUser> {
     return Stack(
       children: [
         Scaffold(
-        //  appBar:CustomAppBarback(), 
+         appBar:CustomAppBarTitleback(), 
          body: Padding(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.only(left:15,right:15),
             child: ListView(
               shrinkWrap: true,
               primary: true,
@@ -142,26 +142,28 @@ widget.data == null?
                                                           // SizedBox(
                                                           //   width: 10,
                                                           // ),
-                                                          InkWell(
-                                                              onTap: () async {
-                                                                //  items.removeAt(index);
-                                                                addtocartController
-                                                                    .additem(
-                                                                        widget.data!.id ??
-                                                                            0);
-                                                                print(
-                                                                    "Item${widget.data!.id}");
-                                                                await addtocartController
-                                                                    .initdelete();
-                                                                addtocartController
-                                                                    .init();
-                                                              },
-                                                              child: Icon(Icons
-                                                                  .delete_outline)),
+                                                          // InkWell(
+                                                          //     onTap: () async {
+                                                          //       //  items.removeAt(index);
+                                                          //       addtocartController
+                                                          //           .additem(
+                                                          //               widget.data!.id ??
+                                                          //                   0);
+                                                          //       print(
+                                                          //           "Item${widget.data!.id}");
+                                                          //       await addtocartController
+                                                          //           .initdelete();
+                                                          //       addtocartController
+                                                          //           .init();
+                                                          //     },
+                                                          //     child: Icon(Icons
+                                                          //         .delete_outline)),
+                                                        
                                                         ],
                                                       ),
                                                     ),
-                                                    Row(children: [
+                                                    Row(
+                                                      children: [
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -187,6 +189,7 @@ widget.data == null?
                                                                   .error), // Replace with your own error widget
                                                         ),
                                                       ),
+                                                      SizedBox(width: 15,),
                                                       Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -202,8 +205,14 @@ widget.data == null?
                                                             style: CustomTextStyle
                                                                 .popinsmedium,
                                                           ),
+                                                             Text(
+                                                              "Qty: "+(widget.data!.quantity ??
+                                                                      '')
+                                                                  .toString(),
+                                                              style: CustomTextStyle
+                                                                  .popinssmall0),
                                                           Text(
-                                                              (widget.data!.variant ??
+                                                              "variants: "+ (widget.data!.variant ??
                                                                       '')
                                                                   .toString(),
                                                               style: CustomTextStyle

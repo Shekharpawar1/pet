@@ -123,9 +123,10 @@ class MyOrderUser extends StatelessWidget {
       body: GetBuilder<MyOrderController>(
           init: myordercontroller,
           builder: (_) {
-            return myordercontroller.myorderModel == null
-                ? SizedBox()
-                : Padding(
+            return   myordercontroller.myorderModel! .data!.isEmpty||myordercontroller.myorderModel == null
+                ? SizedBox(
+                                      child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
+                                  :  Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: ListView.builder(
                         primary: true,

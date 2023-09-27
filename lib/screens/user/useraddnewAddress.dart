@@ -100,7 +100,7 @@ AddressController addressController = Get.put( AddressController());
                             decoration: InputDecoration(
                               hintText: "Dev",
                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -144,7 +144,7 @@ AddressController addressController = Get.put( AddressController());
                             decoration: InputDecoration(
                               hintText: "Soni",
                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -196,7 +196,7 @@ AddressController addressController = Get.put( AddressController());
                               hintText: "9089789878",
                               counterText: '',
                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -239,7 +239,7 @@ AddressController addressController = Get.put( AddressController());
                             decoration: InputDecoration(
                               hintText: "N7/19-R-2-A-A-98,Vivek niwas",
                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -284,7 +284,7 @@ AddressController addressController = Get.put( AddressController());
                             decoration: InputDecoration(
                               hintText: "IND Road",
                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -327,7 +327,7 @@ AddressController addressController = Get.put( AddressController());
                             decoration: InputDecoration(
                               hintText: "Behind hydel sub power station",
                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -367,7 +367,7 @@ AddressController addressController = Get.put( AddressController());
                             decoration: InputDecoration(
                               hintText: "78980",
                                hintStyle: TextStyle(
-                                color: MyColors.black,
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),

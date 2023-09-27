@@ -21,6 +21,7 @@ import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
 import 'package:pet/controllers/user_controller/userServicesAddAppointmentController.dart';
 import 'package:pet/others/Filter.dart';
+import 'package:pet/screens/oubranddetails.dart';
 import 'package:pet/screens/user/AllPageProductbybrand.dart';
 
 import 'package:pet/screens/user/allcategory.dart';
@@ -33,6 +34,7 @@ import 'package:pet/screens/user/productdetails.dart';
 import 'package:pet/screens/user/searchScreen.dart';
 import 'package:pet/screens/user/service.dart';
 import 'package:pet/screens/user/service_categoryPage.dart';
+import 'package:pet/screens/user/shopbybranddetails.dart';
 import 'package:pet/screens/user/userServicesAddAppointment.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
 
@@ -827,7 +829,7 @@ class _HomeUserState extends State<HomeUser> {
                                                 decoration: BoxDecoration(
                                                   gradient: LinearGradient(
                                                     colors: [
-                                                      _getRandomColor(),
+                                                      // _getRandomColor(),
                                                       // _getRandomColor(),
                                                       // _getRandomColor(),
                                                       // _getRandomColor(),
@@ -1035,20 +1037,28 @@ class _HomeUserState extends State<HomeUser> {
                                                                         SizedBox(
                                                                             width:
                                                                                 Get.width * 0.054),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(right: 5.0),
-                                                                          child: Container(
-                                                                              width: 35,
-                                                                              height: 35,
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(5.0),
-                                                                                child: Image.asset(
-                                                                                  "assets/image/bag2.png",
-                                                                                  height: 25,
-                                                                                ),
-                                                                              )),
+                                                                        InkWell(
+                                                                               onTap: () async{
+                                                                             productdeatilscontroller.viewproductHome(
+                                                                              item.id??0,item.name??'',"1kg",1 ,item.price??'',item.image!);
+                                                                              await productdeatilscontroller
+                                                            .addProductHome();
+                                                                            },
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     ),
@@ -1387,13 +1397,13 @@ class _HomeUserState extends State<HomeUser> {
                                             "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                         // print(imagePath);
                                         return InkWell(
-                                          onTap: () {
+                                          onTap: () async{
                                             Ourbranddetailscontroller
                                                 .addproduct(item.id ?? 0,
                                                     item.logo ?? '');
                                             //  subcategorycontroller.addproduct(item.id??0) ;
-
-                                            Get.to(OurBrandDetails());
+await Ourbranddetailscontroller.ourproductinit();
+                                            Get.to( OurBrandDetails());
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -2059,7 +2069,8 @@ class _HomeUserState extends State<HomeUser> {
                                             Ourbranddetailscontroller
                                                 .addproduct(item.id ?? 0,
                                                     item.logo ?? '');
-                                            Get.to(OurBrandDetails());
+  Ourbranddetailscontroller.productinit();
+                                            Get.to(ShopBrandDetails());
                                           },
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
@@ -2537,7 +2548,7 @@ class _HomeUserState extends State<HomeUser> {
                                                   decoration: BoxDecoration(
                                                     gradient: LinearGradient(
                                                       colors: [
-                                                        _getRandomColor(),
+                                                        // _getRandomColor(),
                                                         // _getRandomColor(),
                                                         // _getRandomColor(),
                                                         // _getRandomColor(),
@@ -2750,20 +2761,26 @@ class _HomeUserState extends State<HomeUser> {
                                                                           SizedBox(
                                                                               width:
                                                                                   Get.width * 0.054),
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.only(right: 5.0),
-                                                                            child: Container(
-                                                                                width: 35,
-                                                                                height: 35,
-                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                                child: Padding(
-                                                                                  padding: EdgeInsets.all(5.0),
-                                                                                  child: Image.asset(
-                                                                                    "assets/image/bag2.png",
-                                                                                    height: 25,
-                                                                                  ),
-                                                                                )),
+                                                                          InkWell(
+                                                                            onTap: () async{
+                                                                              await productdeatilscontroller
+                                                            .addProduct();
+                                                                            },
+                                                                            child: Padding(
+                                                                              padding:
+                                                                                  const EdgeInsets.only(right: 5.0),
+                                                                              child: Container(
+                                                                                  width: 35,
+                                                                                  height: 35,
+                                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                  child: Padding(
+                                                                                    padding: EdgeInsets.all(5.0),
+                                                                                    child: Image.asset(
+                                                                                      "assets/image/bag2.png",
+                                                                                      height: 25,
+                                                                                    ),
+                                                                                  )),
+                                                                            ),
                                                                           )
                                                                         ],
                                                                       ),
