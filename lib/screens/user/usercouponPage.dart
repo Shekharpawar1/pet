@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/screens/user/notification.dart';
@@ -12,7 +13,7 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class UsercouponPage extends StatefulWidget {
-  const UsercouponPage({super.key,required this.price});
+  const UsercouponPage({super.key, required this.price});
   final double price;
 
   @override
@@ -25,10 +26,9 @@ class _UsercouponPageState extends State<UsercouponPage> {
       Get.put(ProductDetailsController());
   @override
   Widget build(BuildContext context) {
- print(widget.price);
+    print(widget.price);
     return Scaffold(
         appBar: CustomAppBarback(),
-       
         body: ListView(
           shrinkWrap: true,
           primary: true,
@@ -39,9 +39,9 @@ class _UsercouponPageState extends State<UsercouponPage> {
                 height: 50,
                 decoration: BoxDecoration(
                   color: MyColors.blue123,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
-                      offset: const Offset(0.0, 0.0),
+                      offset: Offset(0.0, 0.0),
                       color: Color.fromRGBO(255, 255, 255, 0.10),
                       blurRadius: 0.0,
                       spreadRadius: 0.0,
@@ -60,7 +60,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                           return null;
                         },
                         controller: couponsController.couponTextController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Type coupon code here",
                           hintStyle: TextStyle(
                             color: MyColors.black,
@@ -72,7 +72,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                           focusedBorder: InputBorder.none,
                           isDense: true,
                         ),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           color: MyColors.black,
                         ),
@@ -82,7 +82,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                       onPressed: () {
                         // Handle coupon application here
                       },
-                      child: Text(
+                      child: const Text(
                         "APPLY",
                         style: TextStyle(
                           fontSize: 16,
@@ -119,13 +119,13 @@ class _UsercouponPageState extends State<UsercouponPage> {
                         //  final isExpired = couponsController.couponmodel!.data![index].expireDate.isBefore(DateTime.now());
                         return (couponsController.couponmodel == null ||
                                 couponsController.couponmodel!.data == null)
-                            ? SizedBox()
+                            ? const SizedBox()
                             : Column(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    margin: EdgeInsets.all(10),
-                                    padding: EdgeInsets.all(16),
+                                    margin: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
                                       color: isExpired
                                           ? MyColors.grey
@@ -133,7 +133,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
-                                          offset: Offset(0, 2),
+                                          offset: const Offset(0, 2),
                                           blurRadius: 4,
                                           color: Colors.black.withOpacity(0.2),
                                         ),
@@ -163,28 +163,21 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                    'Coupon Code: ' +
-                                                        item.code.toString(),
+                                                    'Coupon Code: ${item.code}',
                                                     style: CustomTextStyle
                                                         .popinsmedium),
                                                 Text(
-                                                  "Max discount: ₹" +
-                                                      item.maxDiscount
-                                                          .toString(),
+                                                  "Max discount: ₹${item.maxDiscount}",
                                                   style: CustomTextStyle
                                                       .popinsmedium,
                                                 ),
                                                 Text(
-                                                  "Minimum purchase: ₹" +
-                                                      item.minPurchase
-                                                          .toString(),
+                                                  "Minimum purchase: ₹${item.minPurchase}",
                                                   style: CustomTextStyle
                                                       .popinsmedium,
                                                 ),
                                                 Text(
-                                                  "Coupon type: " +
-                                                      item.couponType
-                                                          .toString(),
+                                                  "Coupon type: ${item.couponType}",
                                                   style: CustomTextStyle
                                                       .popinsmedium,
                                                 ),
@@ -202,7 +195,18 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                               item.maxDiscount ??
                                                                   '');
                                                     },
-                                                    child: Text(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      primary: Colors.white,
+                                                      onPrimary: MyColors.black,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                    child: const Text(
                                                       'Expired',
                                                       style: TextStyle(
                                                         fontSize: 14,
@@ -211,113 +215,112 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                             FontWeight.bold,
                                                       ),
                                                     ),
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary: Colors.white,
-                                                      onPrimary: MyColors.black,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                    ),
-                                                  ) :
-                                              (widget.price> double.parse(item.minPurchase!)) ?
-                                                ElevatedButton(
-                                                    onPressed: () {
-                                                      couponsController
-                                                          .updatecode(
+                                                  )
+                                                : (widget.price >
+                                                        double.parse(
+                                                            item.minPurchase!))
+                                                    ? ElevatedButton(
+                                                        onPressed: () {
+                                                          couponsController.updatecode(
                                                               item.code ?? '',
                                                               item.title ?? '',
                                                               item.minPurchase ??
                                                                   '',
-                                                              item.maxDiscount??''
-                                                                  );
-                                                                  
-                                                                  Get.back();
-                                                    },
-                                                    child: Text(
-                                                      'TAP TO APPLY',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary: Colors.white,
-                                                      onPrimary: MyColors.black,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                    ),
-                                                  ):ElevatedButton(
-                                                    onPressed: () {
-                                                     
-                                                      // couponsController.updatecode(item.code??'',item.title??'',item.minPurchase??'',item.maxDiscount??'');
-                                                    },
-                                                    child: Text(
-                                                      "You can't apply",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      primary: Colors.white,
-                                                      onPrimary: MyColors.black,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                    ),
-                                                  )
-                                                  //  : ElevatedButton(
-                                                  //   onPressed: () {
-                                                  //     couponsController
-                                                  //         .updatecode(
-                                                  //             item.code ?? '',
-                                                  //             item.title ?? '',
-                                                  //             item.minPurchase ??
-                                                  //                 '',
-                                                  //             item.maxDiscount??''
-                                                  //                 );
-                                                                  
-                                                  //                 Get.back(
-                                                                    
-                                                  //                 );
-                                                  //   },
-                                                  //   child: Text(
-                                                  //     'TAP TO APPLY',
-                                                  //     style: TextStyle(
-                                                  //       fontSize: 14,
-                                                  //       fontWeight:
-                                                  //           FontWeight.bold,
-                                                  //     ),
-                                                  //   ),
-                                                  //   style: ElevatedButton
-                                                  //       .styleFrom(
-                                                  //     primary: Colors.white,
-                                                  //     onPrimary: MyColors.black,
-                                                  //     shape:
-                                                  //         RoundedRectangleBorder(
-                                                  //       borderRadius:
-                                                  //           BorderRadius
-                                                  //               .circular(8),
-                                                  //     ),
-                                                  //   ),
-                                                  // ),
-                                          
-                                          
+                                                              item.maxDiscount ??
+                                                                  '');
+                                                          MyCartController
+                                                              addtocartController =
+                                                              Get.put(
+                                                                  MyCartController());
+
+                                                          addtocartController
+                                                              .updateTotal();
+
+                                                          Get.back();
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary: Colors.white,
+                                                          onPrimary:
+                                                              MyColors.black,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                        ),
+                                                        child: const Text(
+                                                          'TAP TO APPLY',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : ElevatedButton(
+                                                        onPressed: () {
+                                                          // couponsController.updatecode(item.code??'',item.title??'',item.minPurchase??'',item.maxDiscount??'');
+                                                        },
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          primary: Colors.white,
+                                                          onPrimary:
+                                                              MyColors.black,
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                        ),
+                                                        child: const Text(
+                                                          "You can't apply",
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      )
+                                            //  : ElevatedButton(
+                                            //   onPressed: () {
+                                            //     couponsController
+                                            //         .updatecode(
+                                            //             item.code ?? '',
+                                            //             item.title ?? '',
+                                            //             item.minPurchase ??
+                                            //                 '',
+                                            //             item.maxDiscount??''
+                                            //                 );
+
+                                            //                 Get.back(
+
+                                            //                 );
+                                            //   },
+                                            //   child: Text(
+                                            //     'TAP TO APPLY',
+                                            //     style: TextStyle(
+                                            //       fontSize: 14,
+                                            //       fontWeight:
+                                            //           FontWeight.bold,
+                                            //     ),
+                                            //   ),
+                                            //   style: ElevatedButton
+                                            //       .styleFrom(
+                                            //     primary: Colors.white,
+                                            //     onPrimary: MyColors.black,
+                                            //     shape:
+                                            //         RoundedRectangleBorder(
+                                            //       borderRadius:
+                                            //           BorderRadius
+                                            //               .circular(8),
+                                            //     ),
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                         Text(

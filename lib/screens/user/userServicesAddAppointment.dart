@@ -231,63 +231,67 @@ class UserServicesAddAppointmentState extends StatelessWidget {
                               init: userServicesAddAppointmentController,
                               builder: (_) {
                                 return Container(
-                                    // height: 600,
-                                    child: GridView.builder(
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        physics: NeverScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 4,
-                                                //  childAspectRatio: 4 / 4,
-                                                crossAxisSpacing: 15,
-                                                mainAxisSpacing: 15,
-                                                mainAxisExtent: 30),
-                                        itemCount:
-                                            userServicesAddAppointmentController
-                                                .timeSlots!.length,
-                                        itemBuilder: (BuildContext ctx, index) {
-                                          final TimeSlot timeSlot =
-                                              userServicesAddAppointmentController
-                                                  .timeSlots[index];
-                                          //  var   item = userServicesAddAppointmentController.
-                                          //          timeSlots[index];
-                                          return GestureDetector(
-                                            onTap: () {
-                                              userServicesAddAppointmentController
-                                                      .bookedServicesIndex
-                                                      .contains(index)
-                                                  ? null
-                                                  : userServicesAddAppointmentController
-                                                      .selectTimeSlot(index);
-                                            },
-                                            child: Container(
-                                                width: 62,
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: MyColors.grey),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                    color: userServicesAddAppointmentController
-                                                            .bookedServicesIndex
-                                                            .contains(index)
-                                                        ? Colors.grey.shade200
-                                                        : timeSlot.isSelected
-                                                            ? MyColors.yellow
-                                                            : MyColors.white),
-                                                child: Center(
-                                                    child: Text(
-                                                  timeSlot.time,
-                                                  style: TextStyle(
-                                                      color: timeSlot.isSelected
-                                                          ? MyColors.white
-                                                          : MyColors.black),
-                                                ))),
-                                          );
-                                        }));
+                                  // height: 600,
+                                  child: GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 4,
+                                            //  childAspectRatio: 4 / 4,
+                                            crossAxisSpacing: 15,
+                                            mainAxisSpacing: 15,
+                                            mainAxisExtent: 30),
+                                    itemCount:
+                                        userServicesAddAppointmentController
+                                            .timeSlots!.length,
+                                    itemBuilder: (BuildContext ctx, index) {
+                                      final TimeSlot timeSlot =
+                                          userServicesAddAppointmentController
+                                              .timeSlots[index];
+                                      //  var   item = userServicesAddAppointmentController.
+                                      //          timeSlots[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          userServicesAddAppointmentController
+                                                  .bookedServicesIndex
+                                                  .contains(index)
+                                              ? null
+                                              : userServicesAddAppointmentController
+                                                  .selectTimeSlot(index);
+                                        },
+                                        child: Container(
+                                          width: 62,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: MyColors.grey),
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                              color:
+                                                  userServicesAddAppointmentController
+                                                          .bookedServicesIndex
+                                                          .contains(index)
+                                                      ? Colors.grey.shade200
+                                                      : timeSlot.isSelected
+                                                          ? MyColors.yellow
+                                                          : MyColors.white),
+                                          child: Center(
+                                            child: Text(
+                                              timeSlot.time,
+                                              style: TextStyle(
+                                                  color: timeSlot.isSelected
+                                                      ? MyColors.white
+                                                      : MyColors.black),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
                               })
                         ],
                       ),

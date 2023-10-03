@@ -37,50 +37,51 @@ class _AddToCardUserState extends State<AddToCardUser> {
   MyCartController addtocartController = Get.put(MyCartController());
   CouponsController couponsController = Get.put(CouponsController());
   @override
+  void onInit() {
+    addtocartController. updateTotal();
+    // super.onInit();
+  }
+  @override
   Widget build(BuildContext context) {
     addtocartController.updateTotal();
+    
     return Stack(
       children: [
         Scaffold(
-        //  appBar:CustomAppBarback(),
+          //  appBar:CustomAppBarback(),
           body: Padding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: ListView(
               shrinkWrap: true,
               primary: true,
               //  physics: NeverScrollableScrollPhysics(),
               children: [
                 GetBuilder<MyCartController>(
-                    init: addtocartController,
-                    builder: (_) {
-                      return addtocartController.mycartmodel == null
-                          ? SizedBox()
-                          : addtocartController.cartlistLoaded == false
-                              ? SizedBox()
-                              //  !addtocartController.cartlistLoaded
-                              //   ? Center(
-                              //       child: SpinKitCircle(
-                              //         color: Colors.black, // Color of the progress bar
-                              //         size: 30.0, // Size of the progress bar
-                              //       ),
-                              //     )
-                              : 
-addtocartController
-                                          .mycartmodel!.data!.isEmpty?
-                                          Center(
-                                            child: ElevatedButton(
-                                                        onPressed: () {
-                                                          // Navif
-                                                       Get.to(HomeUser(
-
-                                                       ));
-                                                        },
-                                                        child: Text('Continue Shopping')
-                                                      ),
-                                          ):
-                              Container(
-                                  //  height: MediaQuery.of(context).size.height * 0.66,
-                                  child: ListView.builder(
+                  init: addtocartController,
+                  builder: (_) {
+                    return addtocartController.mycartmodel == null
+                        ? const SizedBox()
+                        : addtocartController.cartlistLoaded == false
+                            ? const SizedBox()
+                            //  !addtocartController.cartlistLoaded
+                            //   ? Center(
+                            //       child: SpinKitCircle(
+                            //         color: Colors.black, // Color of the progress bar
+                            //         size: 30.0, // Size of the progress bar
+                            //       ),
+                            //     )
+                            : addtocartController.mycartmodel!.data!.isEmpty
+                                ? Center(
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          // Navif
+                                          Get.to(HomeUser());
+                                        },
+                                        child: const Text('Continue Shopping')),
+                                  )
+                                : Container(
+                                    //  height: MediaQuery.of(context).size.height * 0.66,
+                                    child: ListView.builder(
                                       primary: false,
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
@@ -92,8 +93,7 @@ addtocartController
                                         // print(item.name!);
                                         // ${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}
                                         String imagePath =
-                                            Constants.PRODUCT_HOME_IMAGE_PATH +
-                                                "/${item.image!}";
+                                            "${Constants.PRODUCT_HOME_IMAGE_PATH}/${item.image!}";
                                         // var imagePath = "${item.image ?? ""}";
                                         print(imagePath);
 
@@ -101,10 +101,11 @@ addtocartController
                                         return (addtocartController
                                                     .mycartmodel!.data ==
                                                 null)
-                                            ? SizedBox()
+                                            ? const SizedBox()
                                             : Container(
-                                                margin: EdgeInsets.symmetric(
-                                                    vertical: 10),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .height *
@@ -146,173 +147,177 @@ addtocartController
                                                                 addtocartController
                                                                     .init();
                                                               },
-                                                              child: Icon(Icons
-                                                                  .delete_outline)),
+                                                              child: const Icon(
+                                                                  Icons
+                                                                      .delete_outline)),
                                                         ],
                                                       ),
                                                     ),
-                                                    Row(children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(15.0),
-                                                        child:
-                                                            //   Image.asset(
-                                                            //   "assets/image/fooddog.png",
-                                                            // ),
-                                                            CachedNetworkImage(
-                                                          imageUrl: imagePath,
-                                                          width: 65,
-                                                          height: 95,
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ), // Replace with your own placeholder widget
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons
-                                                                  .error), // Replace with your own error widget
-                                                        ),
-                                                      ),
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            (item.itemName ??
-                                                                    '')
-                                                                .toString(),
-                                                            style: CustomTextStyle
-                                                                .popinsmedium,
+                                                    Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(15.0),
+                                                          child:
+                                                              //   Image.asset(
+                                                              //   "assets/image/fooddog.png",
+                                                              // ),
+                                                              CachedNetworkImage(
+                                                            imageUrl: imagePath,
+                                                            width: 65,
+                                                            height: 95,
+                                                            placeholder:
+                                                                (context,
+                                                                        url) =>
+                                                                    const Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ), // Replace with your own placeholder widget
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                const Icon(Icons
+                                                                    .error), // Replace with your own error widget
                                                           ),
-                                                          Text(
-                                                              (item.variant ??
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              (item.itemName ??
                                                                       '')
                                                                   .toString(),
                                                               style: CustomTextStyle
-                                                                  .popinssmall0),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                "₹" +
-                                                                    item.price
-                                                                        .toString(),
+                                                                  .popinsmedium,
+                                                            ),
+                                                            Text(
+                                                                (item.variant ??
+                                                                        '')
+                                                                    .toString(),
                                                                 style: CustomTextStyle
-                                                                    .popinsmedium,
-                                                              ),
-                                                              SizedBox(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.1,
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      addtocartController
-                                                                          .decrementSize(
-                                                                              index);
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width: 25,
-                                                                      height:
-                                                                          25,
-                                                                      decoration: BoxDecoration(
-                                                                          shape: BoxShape
-                                                                              .rectangle,
-                                                                          color: MyColors
-                                                                              .yellow,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10)),
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .remove,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.black),
-                                                                      //  Icon(
-                                                                      //   Icons.minimize,
-                                                                      //   size: 8,
-                                                                      //   color: Colors.white,
-                                                                      // ),
+                                                                    .popinssmall0),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  "₹${item.price}",
+                                                                  style: CustomTextStyle
+                                                                      .popinsmedium,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.1,
+                                                                ),
+                                                                Row(
+                                                                  children: [
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        addtocartController
+                                                                            .decrementSize(index);
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            25,
+                                                                        height:
+                                                                            25,
+                                                                        decoration: BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.rectangle,
+                                                                            color: MyColors.yellow,
+                                                                            borderRadius: BorderRadius.circular(10)),
+                                                                        child: const Icon(
+                                                                            Icons
+                                                                                .remove,
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                Colors.black),
+                                                                        //  Icon(
+                                                                        //   Icons.minimize,
+                                                                        //   size: 8,
+                                                                        //   color: Colors.white,
+                                                                        // ),
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    width: 3,
-                                                                  ),
-                                                                  GetBuilder<
-                                                                          MyCartController>(
-                                                                      init:
-                                                                          addtocartController,
-                                                                      builder:
-                                                                          (_) {
-                                                                        return Container(
-                                                                            width:
-                                                                                30,
-                                                                            height:
-                                                                                40,
-                                                                            decoration:
-                                                                                BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(50),
-                                                                            ),
-                                                                            child: Center(
-                                                                                child: Text(
-                                                                              addtocartController.sizes[index].toString(),
-                                                                              style: TextStyle(fontWeight: FontWeight.w500),
-                                                                            )));
-                                                                      }),
-                                                                  SizedBox(
-                                                                    width: 3,
-                                                                  ),
-                                                                  GestureDetector(
-                                                                    onTap: () {
-                                                                      addtocartController
-                                                                          .incrementSize(
-                                                                              index);
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      width: 25,
-                                                                      height:
-                                                                          25,
-                                                                      decoration: BoxDecoration(
-                                                                          //shape: BoxShape.rectangle,
-                                                                          borderRadius: BorderRadius.circular(10),
-                                                                          color: MyColors.yellow),
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .add,
-                                                                          size:
-                                                                              15,
-                                                                          color:
-                                                                              Colors.black),
+                                                                    const SizedBox(
+                                                                      width: 3,
                                                                     ),
-                                                                  ),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          )
-                                                        ],
-                                                      )
-                                                    ]),
+                                                                    GetBuilder<
+                                                                            MyCartController>(
+                                                                        init:
+                                                                            addtocartController,
+                                                                        builder:
+                                                                            (_) {
+                                                                          return Container(
+                                                                              width: 30,
+                                                                              height: 40,
+                                                                              decoration: BoxDecoration(
+                                                                                borderRadius: BorderRadius.circular(50),
+                                                                              ),
+                                                                              child: Center(
+                                                                                  child: Text(
+                                                                                addtocartController.sizes[index].toString(),
+                                                                                style: const TextStyle(fontWeight: FontWeight.w500),
+                                                                              )));
+                                                                        }),
+                                                                    const SizedBox(
+                                                                      width: 3,
+                                                                    ),
+                                                                    GestureDetector(
+                                                                      onTap:
+                                                                          () {
+                                                                        addtocartController
+                                                                            .incrementSize(index);
+                                                                           
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            25,
+                                                                        height:
+                                                                            25,
+                                                                        decoration: BoxDecoration(
+                                                                            //shape: BoxShape.rectangle,
+                                                                            borderRadius: BorderRadius.circular(10),
+                                                                            color: MyColors.yellow),
+                                                                        child: const Icon(
+                                                                            Icons
+                                                                                .add,
+                                                                            size:
+                                                                                15,
+                                                                            color:
+                                                                                Colors.black),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              ],
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
                                               );
-                                      }));
-                    }),
+                                      },
+                                    ),
+                                  );
+                  },
+                ),
 
                 //          Container(
                 //                     height: MediaQuery.of(context).size.height * 0.18,
@@ -585,6 +590,7 @@ addtocartController
                       price: (addtocartController.total) +
                           (addtocartController.total * 0.05),
                     ));
+                    
                   },
                   child: Container(
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -599,15 +605,16 @@ addtocartController
                           children: [
                             Row(
                               children: [
-                                Image.asset("assets/image/applycodeimg.png",height:45),
-                                SizedBox(
+                                Image.asset("assets/image/applycodeimg.png",
+                                    height: 45),
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
                                   "Apply coupon",
                                   style: CustomTextStyle.popinslight,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
@@ -616,7 +623,7 @@ addtocartController
                                 ),
                               ],
                             ),
-                            Icon(
+                            const Icon(
                               Icons.arrow_forward_ios_outlined,
                               size: 18,
                             ),
@@ -625,7 +632,7 @@ addtocartController
                       )),
                 ),
 
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 GetBuilder<MyCartController>(
@@ -641,7 +648,7 @@ addtocartController
                       child: DottedBorder(
                         color: Colors.black26,
                         borderType: BorderType.Rect,
-                        radius: Radius.circular(25),
+                        radius: const Radius.circular(25),
                         //  strokeWidth: 1,
                         child: Container(
                           // height:MediaQuery.of(context).size.height*0.28,
@@ -659,22 +666,22 @@ addtocartController
                                   //   width:
                                   //       MediaQuery.of(context).size.width * 0.2,
                                   // ),
-                                  Spacer(),
-                                (addtocartController.total == 1)  ?
-                                  Text(
-                                    addtocartController.price.toString(),
-                                    style: CustomTextStyle.popinstext,
-                                  ):
-                                  Text(
-                                    addtocartController.total.toString(),
-                                    style: CustomTextStyle.popinstext,
-                                  ),
+                                  const Spacer(),
+                                  (addtocartController.total == 1)
+                                      ? Text(
+                                          addtocartController.price.toString(),
+                                          style: CustomTextStyle.popinstext,
+                                        )
+                                      : Text(
+                                          addtocartController.total.toString(),
+                                          style: CustomTextStyle.popinstext,
+                                        ),
                                 ],
                               ),
                               SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.02),
-                              Divider(
+                              const Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
                                 height: 1,
@@ -688,7 +695,7 @@ addtocartController
                                     "Tex(5%)",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Text(
                                     (addtocartController.total * 0.05)
                                         .toString(),
@@ -696,7 +703,7 @@ addtocartController
                                   ),
                                 ],
                               ),
-                              Divider(
+                              const Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
                                 height: 1,
@@ -710,7 +717,7 @@ addtocartController
                                     "Max discount",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                Spacer(),
+                                  const Spacer(),
                                   GetBuilder<CouponsController>(
                                       init: couponsController,
                                       // initState: (_) {},
@@ -722,7 +729,7 @@ addtocartController
                                       }),
                                 ],
                               ),
-                              Divider(
+                              const Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
                                 height: 1,
@@ -736,7 +743,7 @@ addtocartController
                                     "Rounding Adjust",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                 Spacer(),
+                                  const Spacer(),
                                   Text(
                                     "₹${(((addtocartController.total) + (addtocartController.total * 0.05)) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
                                     // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
@@ -798,7 +805,7 @@ addtocartController
                                                     .allAddresslistModel!
                                                     .data!
                                                     .isEmpty
-                                            ? SizedBox()
+                                            ? const SizedBox()
                                             : Text(
                                                 (addtocartController
                                                             .allAddresslistModel!
@@ -819,257 +826,242 @@ addtocartController
 
                               showModalBottomSheet(
                                 context: context,
-                                 isScrollControlled: true,
-  isDismissible: true,
-  shape: const RoundedRectangleBorder(
-      borderRadius:
-          BorderRadius.vertical(top: Radius.circular(16))),
-  builder: (context) => 
-  // DraggableScrollableSheet(
-  //   initialChildSize: 0.4,
-  //   minChildSize: 0.2,
-  //   maxChildSize: 0.75,
-  //   expand: true,
-  //                            builder: (_, controller) => 
-                              ListView(
-                                shrinkWrap: true,
-                                primary: false,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                          bottom: MediaQuery.of(context)
-                                              .viewInsets
-                                              .bottom,
+                                isScrollControlled: true,
+                                isDismissible: true,
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(16))),
+                                builder: (context) =>
+                                    // DraggableScrollableSheet(
+                                    //   initialChildSize: 0.4,
+                                    //   minChildSize: 0.2,
+                                    //   maxChildSize: 0.75,
+                                    //   expand: true,
+                                    //                            builder: (_, controller) =>
+                                    ListView(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom,
+                                      ),
+                                      // padding: EdgeInsets.only(
+                                      //   bottom: MediaQuery.of(context)
+                                      //       .viewInsets
+                                      //       .bottom,
+                                      // ),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(25),
+                                            topRight: Radius.circular(25),
+                                          ),
                                         ),
-                                        // padding: EdgeInsets.only(
-                                        //   bottom: MediaQuery.of(context)
-                                        //       .viewInsets
-                                        //       .bottom,
-                                        // ),
-                                        child: Container(
-                                          padding: EdgeInsets.all(16),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(25),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.cancel),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  IconButton(
-                                                    icon: Icon(Icons.cancel),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                              GetBuilder<MyCartController>(
-                                                  init: addtocartController,
-                                                  builder: (_) {
-                                                    return ListView.builder(
-                                                      primary: false,
-                                                      shrinkWrap: true,
-                                                      itemCount: addtocartController
-                                                          .allAddresslistModel!
-                                                          .data!
-                                                          .length,
-                                                      itemBuilder: (context, index) {
-                                                        var item = addtocartController
+                                            GetBuilder<MyCartController>(
+                                                init: addtocartController,
+                                                builder: (_) {
+                                                  return ListView.builder(
+                                                    primary: false,
+                                                    shrinkWrap: true,
+                                                    itemCount:
+                                                        addtocartController
                                                             .allAddresslistModel!
-                                                            .data![index];
-                                    
-                                                        return (addtocartController
-                                                                    .allAddresslistModel!
-                                                                    .data ==
-                                                                null)
-                                                            ? SizedBox()
-                                                            : InkWell(
-                                                                onTap: () {
-                                                                  addtocartController
-                                                                      .selectaddadress(
-                                                                          item.id ??
-                                                                              0);
-                                     
-                                                                },
-                                                                child: Padding(
-                                                                  padding:
-                                                                      EdgeInsets.all(
-                                                                          10),
-                                                                  child: Container(
-                                                                      margin: EdgeInsets
-                                                                          .symmetric(
-                                                                              vertical:
-                                                                                  10),
-                                                                      // height: MediaQuery.of(context).size.height*0.2,
-                                                                      width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width,
-                                                                      decoration: BoxDecoration(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(
-                                                                                  15),
-                                                                          border: Border.all(
-                                                                              color: MyColors
-                                                                                  .grey)),
-                                                                      child: Padding(
-                                                                        padding:
-                                                                            const EdgeInsets
-                                                                                    .all(
-                                                                                10.0),
-                                                                        child: Column(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment
-                                                                                  .start,
-                                                                          children: [
-                                                                            Text(
-                                                                              item!
-                                                                                  .firstName
-                                                                                  .toString(),
-                                                                              style: CustomTextStyle
-                                                                                  .popinstext,
-                                                                            ),
-                                                                            Text(
-                                                                              item!
-                                                                                  .lastName
-                                                                                  .toString(),
-                                                                              style: CustomTextStyle
-                                                                                  .popinssmallnormal,
-                                                                            ),
-                                                                            Text(
-                                                                              "${item.houseNo.toString()} ${item.area.toString()}",
-                                                                              style: CustomTextStyle
-                                                                                  .popinssmallnormal,
-                                                                            ),
-                                                                            Text(
-                                                                              "${item.landmark.toString()} ${item.state.toString()} ${item.city.toString()}",
-                                                                              style: CustomTextStyle
-                                                                                  .popinssmallnormal,
-                                                                            ),
-                                                                            Text(
-                                                                              "Mobile No: ${item.mobile.toString()}",
-                                                                              style: CustomTextStyle
-                                                                                  .popinssmallnormal,
-                                                                            ),
-                                                                            SizedBox(
-                                                                                height:
-                                                                                    10),
-                                                                            Row(
-                                                                                children: [
-                                                                                  InkWell(
-                                                                                    onTap: () async {
-                                                                                      addressController.addadressID(item.id ?? 0);
-                                                                                      addressController.updateaddress(item.id, item.firstName, item.lastName, item.mobile, item.pincode, item.area, item.houseNo, item.landmark);
-                                                                                      print("${item.lastName}");
-                                                                                      Get.to(UserAddress(
-                                                                                        isSelected: false,
-                                                                                      ));
-                                                                                      await addressController.updateaddaddress();
-                                                                                      addressController.clearFields();
-                                                                                    },
-                                                                                    child: Container(
-                                                                                        height: 25,
-                                                                                        width: 60,
-                                                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.grey)),
-                                                                                        child: Padding(
-                                                                                          padding: const EdgeInsets.all(3.0),
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            "Edit",
-                                                                                            style: CustomTextStyle.popinssmallnormal,
-                                                                                          )),
+                                                            .data!
+                                                            .length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      var item =
+                                                          addtocartController
+                                                              .allAddresslistModel!
+                                                              .data![index];
+
+                                                      return (addtocartController
+                                                                  .allAddresslistModel!
+                                                                  .data ==
+                                                              null)
+                                                          ? const SizedBox()
+                                                          : InkWell(
+                                                              onTap: () {
+                                                                addtocartController
+                                                                    .selectaddadress(
+                                                                        item.id ??
+                                                                            0);
+                                                              },
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                            10),
+                                                                child:
+                                                                    Container(
+                                                                        margin: const EdgeInsets.symmetric(
+                                                                            vertical:
+                                                                                10),
+                                                                        // height: MediaQuery.of(context).size.height*0.2,
+                                                                        width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width,
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(15),
+                                                                            border: Border.all(color: MyColors.grey)),
+                                                                        child: Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(10.0),
+                                                                          child:
+                                                                              Column(
+                                                                            crossAxisAlignment:
+                                                                                CrossAxisAlignment.start,
+                                                                            children: [
+                                                                              Text(
+                                                                                item!.firstName.toString(),
+                                                                                style: CustomTextStyle.popinstext,
+                                                                              ),
+                                                                              Text(
+                                                                                item!.lastName.toString(),
+                                                                                style: CustomTextStyle.popinssmallnormal,
+                                                                              ),
+                                                                              Text(
+                                                                                "${item.houseNo.toString()} ${item.area.toString()}",
+                                                                                style: CustomTextStyle.popinssmallnormal,
+                                                                              ),
+                                                                              Text(
+                                                                                "${item.landmark.toString()} ${item.state.toString()} ${item.city.toString()}",
+                                                                                style: CustomTextStyle.popinssmallnormal,
+                                                                              ),
+                                                                              Text(
+                                                                                "Mobile No: ${item.mobile.toString()}",
+                                                                                style: CustomTextStyle.popinssmallnormal,
+                                                                              ),
+                                                                              const SizedBox(height: 10),
+                                                                              Row(children: [
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    addressController.addadressID(item.id ?? 0);
+                                                                                    addressController.updateaddress(item.id, item.firstName, item.lastName, item.mobile, item.pincode, item.area, item.houseNo, item.landmark);
+                                                                                    print("${item.lastName}");
+                                                                                    Get.to(UserAddress(
+                                                                                      isSelected: false,
+                                                                                    ));
+                                                                                    await addressController.updateaddaddress();
+                                                                                    addressController.clearFields();
+                                                                                  },
+                                                                                  child: Container(
+                                                                                      height: 25,
+                                                                                      width: 60,
+                                                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.grey)),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.all(3.0),
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          "Edit",
+                                                                                          style: CustomTextStyle.popinssmallnormal,
                                                                                         )),
-                                                                                  ),
-                                                                                  SizedBox(width: 5),
-                                                                                  InkWell(
-                                                                                    onTap: () async {
-                                                                                      await addtocartController.addressdeleteinit();
-                                                                                      //  addressController.removeaddress(index);
-                                                                                      addtocartController.alladdressinit();
-                                                                                    },
-                                                                                    child: Container(
-                                                                                        height: 25,
-                                                                                        width: 60,
-                                                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.grey)),
-                                                                                        child: Padding(
-                                                                                          padding: const EdgeInsets.all(3.0),
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            "Delete",
-                                                                                            style: CustomTextStyle.popinssmallnormal,
-                                                                                          )),
+                                                                                      )),
+                                                                                ),
+                                                                                const SizedBox(width: 5),
+                                                                                InkWell(
+                                                                                  onTap: () async {
+                                                                                    await addtocartController.addressdeleteinit();
+                                                                                    //  addressController.removeaddress(index);
+                                                                                    addtocartController.alladdressinit();
+                                                                                  },
+                                                                                  child: Container(
+                                                                                      height: 25,
+                                                                                      width: 60,
+                                                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.grey)),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.all(3.0),
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          "Delete",
+                                                                                          style: CustomTextStyle.popinssmallnormal,
                                                                                         )),
-                                                                                  ),
-                                                                                  SizedBox(width: 5),
-                                                                                  GestureDetector(
-                                                                                    onTap: () {
-                                                                                      addtocartController.chooseaddressID(item.id??0);
-                                                                                      addtocartController.chooseaddress(index);
-                                                                                      Get.back();
-                                    
-                                                                                       final storage = GetStorage();
-                                                                              
-                                    // }
-                                               storage.write('useraddress',item.area);
-                                                  storage.write('useraddresscity',item.city);
-                                      print("Useraddress");
-                                     print(storage.read('useraddress').toString());
-                                      print(storage.read('useraddresscity').toString());
-                                                                                    },
-                                                                                    child: Container(
-                                                                                        height: 25,
-                                                                                        width: 60,
-                                                                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.grey)),
-                                                                                        child: Padding(
-                                                                                          padding: const EdgeInsets.all(3.0),
-                                                                                          child: Center(
-                                                                                              child: Text(
-                                                                                            "Choose",
-                                                                                            style: CustomTextStyle.popinssmallnormal,
-                                                                                          )),
+                                                                                      )),
+                                                                                ),
+                                                                                const SizedBox(width: 5),
+                                                                                GestureDetector(
+                                                                                  onTap: () {
+                                                                                    addtocartController.chooseaddressID(item.id ?? 0);
+                                                                                    addtocartController.chooseaddress(index);
+                                                                                    Get.back();
+
+                                                                                    final storage = GetStorage();
+
+                                                                                    // }
+                                                                                    storage.write('useraddress', item.area);
+                                                                                    storage.write('useraddresscity', item.city);
+                                                                                    print("Useraddress");
+                                                                                    print(storage.read('useraddress').toString());
+                                                                                    print(storage.read('useraddresscity').toString());
+                                                                                  },
+                                                                                  child: Container(
+                                                                                      height: 25,
+                                                                                      width: 60,
+                                                                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), border: Border.all(color: MyColors.grey)),
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.all(3.0),
+                                                                                        child: Center(
+                                                                                            child: Text(
+                                                                                          "Choose",
+                                                                                          style: CustomTextStyle.popinssmallnormal,
                                                                                         )),
-                                                                                  ),
-                                                                                ])
-                                                                          ],
-                                                                        ),
-                                                                      )),
-                                                                ),
-                                                              );
-                                                      },
-                                                    );
-                                                  }),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              // Center(
-                                              //   child: ElevatedButton(
-                                              //     style: ElevatedButton.styleFrom(
-                                              //       primary: MyColors.yellow,
-                                              //     ),
-                                              //     onPressed: () {
-                                              //       Get.to(PaymentUser());
-                                              //     },
-                                              //     child: Text(
-                                              //       'Save Address',
-                                              //       style: CustomTextStyle.popinssmall,
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                            ],
-                                          ),
+                                                                                      )),
+                                                                                ),
+                                                                              ])
+                                                                            ],
+                                                                          ),
+                                                                        )),
+                                                              ),
+                                                            );
+                                                    },
+                                                  );
+                                                }),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            // Center(
+                                            //   child: ElevatedButton(
+                                            //     style: ElevatedButton.styleFrom(
+                                            //       primary: MyColors.yellow,
+                                            //     ),
+                                            //     onPressed: () {
+                                            //       Get.to(PaymentUser());
+                                            //     },
+                                            //     child: Text(
+                                            //       'Save Address',
+                                            //       style: CustomTextStyle.popinssmall,
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                          ],
                                         ),
                                       ),
-                                ],
-                              ),
+                                    ),
+                                  ],
+                                ),
                                 // ),
                               );
                             },
@@ -1105,7 +1097,7 @@ addtocartController
                   },
                   child: Row(
                     children: [
-                      Icon(Icons.add, size: 15, color: MyColors.yellow),
+                      const Icon(Icons.add, size: 15, color: MyColors.yellow),
                       Text("Add new address",
                           style: CustomTextStyle.yellowtextnormal),
                     ],
@@ -1190,15 +1182,18 @@ addtocartController
                           onTap: () {
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                             Get.to(PaymentUser(
-                              price:  (addtocartController.total +
-    addtocartController.total * 0.05 -
-    double.parse(couponsController.maxAmount ?? "0.0")).toDouble()));
-                                // price: (((addtocartController.total) +
-                                //         (addtocartController.total * 0.05) -
-                                //         (double.parse(
-                                //             couponsController.maxAmount ??
-                                //                 "0")))).toDouble()
-                                //     .toString()));
+                                price: (addtocartController.total +
+                                        addtocartController.total * 0.05 -
+                                        double.parse(
+                                            couponsController.maxAmount ??
+                                                "0.0"))
+                                    .toDouble()));
+                            // price: (((addtocartController.total) +
+                            //         (addtocartController.total * 0.05) -
+                            //         (double.parse(
+                            //             couponsController.maxAmount ??
+                            //                 "0")))).toDouble()
+                            //     .toString()));
                             // deliveredAddress: (addtocartController
                             //             .allAddresslistModel!
                             //             .data![
@@ -1283,20 +1278,20 @@ addtocartController
                             .withOpacity(0.1), // Adjust the opacity as needed
                       ),
                     )
-                  : SizedBox();
+                  : const SizedBox();
             }),
         // Progress bar
         GetBuilder<MyCartController>(
             init: addtocartController,
             builder: (_) {
               return addtocartController.showLoading
-                  ? Center(
+                  ? const Center(
                       child: SpinKitCircle(
                         color: Colors.white, // Color of the progress bar
                         size: 50.0, // Size of the progress bar
                       ),
                     )
-                  : SizedBox();
+                  : const SizedBox();
             }),
       ],
     );
