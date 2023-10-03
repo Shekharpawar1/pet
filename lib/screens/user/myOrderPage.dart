@@ -14,7 +14,7 @@ import 'package:pet/utils/fontstyle.dart';
 class MyOrderUser extends StatelessWidget {
   MyOrderUser({super.key});
 
-  MyOrderController myordercontroller = Get.put(MyOrderController());
+  final MyOrderController myordercontroller = Get.put(MyOrderController());
   final UserReviewController userreviewcontroller =
       Get.put(UserReviewController());
   @override
@@ -29,9 +29,9 @@ class MyOrderUser extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_left, color: MyColors.black)),
+              child: const Icon(Icons.arrow_left, color: MyColors.black)),
         ),
-        title: Center(
+        title: const Center(
 //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 //
             child: Text(
@@ -123,18 +123,24 @@ class MyOrderUser extends StatelessWidget {
       body: GetBuilder<MyOrderController>(
           init: myordercontroller,
           builder: (_) {
-            return   myordercontroller.myorderModel! .data!.isEmpty||myordercontroller.myorderModel == null
+            return myordercontroller.myorderModel!.data!.isEmpty ||
+                    myordercontroller.myorderModel == null
                 ? SizedBox(
-                                      child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
-                                  :  Padding(
+                    child: Center(
+                        child: Image.asset("assets/image/nodataimg.png",
+                            height: MediaQuery.of(context).size.height * 0.4,
+                            width: MediaQuery.of(context).size.width)))
+                : Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: ListView.builder(
                         primary: true,
                         shrinkWrap: true,
                         itemCount: myordercontroller.myorderModel!.data!.length,
                         itemBuilder: (context, index) {
-                          var item =
-                              myordercontroller.myorderModel!.data![myordercontroller.myorderModel!.data!.length - 1- index ];
+                          var item = myordercontroller.myorderModel!.data![
+                              myordercontroller.myorderModel!.data!.length -
+                                  1 -
+                                  index];
 
                           print(
                               "=======>>>>>>>>>>>>  len  ${item.paymentMethod}");
@@ -144,35 +150,44 @@ class MyOrderUser extends StatelessWidget {
                           //       Constants.PRODUCT_HOME_IMAGE_PATH +
                           //           "/${item.!}";
                           return myordercontroller.myorderModel!.data == null
-                              ? SizedBox()
+                              ? const SizedBox()
                               : InkWell(
-                                  onTap: () async{
+                                  onTap: () async {
                                     myordercontroller.addorder(item.id ?? 0);
                                     print("Orderid ${item.id}");
                                     myordercontroller.orderdetailsinit();
-                                 userreviewcontroller.reviewAdd(
-                                            0,item.id??0
-                                          );
-                                await    userreviewcontroller.init();
+                                    userreviewcontroller.reviewAdd(
+                                        0, item.id ?? 0);
+                                    await userreviewcontroller.init();
                                     Get.to(OrderDetailsUser(
-                                        orderId: item.id ?? 0,
-                                        couponcode: item.couponCode ?? '',
-                                        paymentmethod: item.paymentMethod ?? '',
-                                        orderstatus: item.orderStatus ?? '',
-                                        orderAmount: item.orderAmount,
-                                        fname: item.callback![0].userProfile![0].fName??'',
-                                         lname: item.callback![0].userProfile![0].lName??'',
-                                        phone: item.callback![0].userProfile![0].phone??'',
-                                        email:item.callback![0].userProfile![0].email??'',
-                                        address: item.deliveryAddress??'',
-                                        delivered: item.delivered??'',
-                                        ));
-                                        print("Name");
-                                        print(item.callback![0].userProfile![0].fName??'');
+                                      orderId: item.id ?? 0,
+                                      couponcode: item.couponCode ?? '',
+                                      paymentmethod: item.paymentMethod ?? '',
+                                      orderstatus: item.orderStatus ?? '',
+                                      orderAmount: item.orderAmount,
+                                      fname: item.callback![0].userProfile![0]
+                                              .fName ??
+                                          '',
+                                      lname: item.callback![0].userProfile![0]
+                                              .lName ??
+                                          '',
+                                      phone: item.callback![0].userProfile![0]
+                                              .phone ??
+                                          '',
+                                      email: item.callback![0].userProfile![0]
+                                              .email ??
+                                          '',
+                                      address: item.deliveryAddress ?? '',
+                                      delivered: item.delivered ?? '',
+                                    ));
+                                    print("Name");
+                                    print(item.callback![0].userProfile![0]
+                                            .fName ??
+                                        '');
                                   },
                                   child: Container(
                                       margin:
-                                          EdgeInsets.symmetric(vertical: 10),
+                                          const EdgeInsets.symmetric(vertical: 10),
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.22,
@@ -293,7 +308,3 @@ class MyOrderUser extends StatelessWidget {
     );
   }
 }
-
-
-
-

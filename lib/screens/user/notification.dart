@@ -24,7 +24,7 @@ class _NotificationUserState extends State<NotificationUser> {
 
   List<String> filterOptions = ["Option 1", "Option 2"]; // Your filter options
 
-  Set<String> selectedBrandOptions = Set<String>(); // Store selected options
+  Set<String> selectedBrandOptions = <String>{}; // Store selected options
 
   void toggleBrandExpansion() {
     setState(() {
@@ -41,9 +41,9 @@ class _NotificationUserState extends State<NotificationUser> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: Icon(Icons.arrow_back,color:Colors.black),
-          title: Center(child: Text('Notification',style:TextStyle(color: Colors.black,fontSize: 18))),
-          bottom: TabBar(
+          leading: const Icon(Icons.arrow_back,color:Colors.black),
+          title: const Center(child: Text('Notification',style:TextStyle(color: Colors.black,fontSize: 18))),
+          bottom: const TabBar(
             tabs: [
               Tab(text: 'Public',),
                  Tab(text: 'for you'),
@@ -103,7 +103,7 @@ class _NotificationUserState extends State<NotificationUser> {
                   init: notificationcontroller,
                   builder: (_) {
                     return notificationcontroller.userNotificationModel == null
-                        ? SizedBox()
+                        ? const SizedBox()
                         : ListView.builder(
                             primary: false,
                             scrollDirection: Axis.vertical,
@@ -128,13 +128,13 @@ class _NotificationUserState extends State<NotificationUser> {
                   init: notificationcontroller,
                   builder: (_) {
                     return notificationcontroller.userNotifyListModel == null
-                        ? SizedBox()
+                        ? const SizedBox()
                         : AlertDialog(
                 // title: Text("Simple Popup"),
-                content: Text(''),
+                content: const Text(''),
                 actions: <Widget>[
                   ElevatedButton(
-                    child: Text("Close"),
+                    child: const Text("Close"),
                     onPressed: () {
                       Navigator.of(context).pop(); // Close the popup
                     },
@@ -167,16 +167,16 @@ class _NotificationUserState extends State<NotificationUser> {
                                                     width: 50,
                                                     height: 50,
                                                     placeholder: (context, url) =>
-                                                        Center(
+                                                       const  Center(
                                                       child:
                                                           CircularProgressIndicator(),
                                                     ), // Replace with your own placeholder widget
                                                     errorWidget: (context, url,
                                                             error) =>
-                                                        Icon(Icons
+                                                       const  Icon(Icons
                                                             .error), // Replace with your own error widget
                                                   ),
-                                                  SizedBox(
+                                                 const  SizedBox(
                                                     width: 10,
                                                   ),
                                                   Column(
@@ -227,7 +227,7 @@ class _NotificationUserState extends State<NotificationUser> {
                                           ),
                                         )),
                                   ),
-                                  SizedBox(
+                                const   SizedBox(
                                     height: 15,
                                   ),
                                 ],
@@ -286,10 +286,10 @@ class _NotificationUserState extends State<NotificationUser> {
                   builder: (_) {
                     return
                      notificationcontroller.notifiyLoaded == null
-                        ? SizedBox()
+                        ? const SizedBox()
                         : notificationcontroller
                                   .userNotifyListModel == null ||  notificationcontroller
-                                  .userNotifyListModel!.data == null? Text("No data Found"):
+                                  .userNotifyListModel!.data == null? const Text("No data Found"):
                          ListView.builder(
                             primary: false,
                             scrollDirection: Axis.vertical,
@@ -305,7 +305,7 @@ class _NotificationUserState extends State<NotificationUser> {
                               return
                               notificationcontroller
                                   .userNotifyListModel == null ||  notificationcontroller
-                                  .userNotifyListModel!.data == null? Text("No data Found"):
+                                  .userNotifyListModel!.data == null?const  Text("No data Found"):
                                Column(
                                 children: [
                                   InkWell(
@@ -432,7 +432,7 @@ notificationcontroller.itemView(item.id??0);
                                           ),
                                         )),
                                   ),
-                                  SizedBox(
+                                 const  SizedBox(
                                     height: 15,
                                   ),
                                 ],
