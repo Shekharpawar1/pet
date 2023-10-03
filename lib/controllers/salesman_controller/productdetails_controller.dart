@@ -17,6 +17,8 @@ import 'package:http/http.dart' as http;
 class SalesProductDetailsController extends GetxController {
 final storage = GetStorage();
 
+  TextEditingController emailController = TextEditingController();
+
   int? selectImages = 0;
 var sellerId = GetStorage().read("sellerid");
 
@@ -39,6 +41,15 @@ double? totalAmount;
        print("SellerID ==>${sellerId}");
   }
 
+selectImagesProduct(int index) {
+    selectImages = index;
+    print("Images");
+    print(selectImages);
+    print(salesproductdetailmodel!.data!.images![selectImages??0]);
+    update();
+  }
+ 
+  
 fethUserId() {
   
      wholesellerID = storage.read('wholesalerId');
@@ -66,10 +77,35 @@ fethUserId() {
   // List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
 
   void clearFields() {
-    selectedvariants = null;
+     selectedvariants = null;
+         sizecount = 1;
     print("Data cleared...");
     update();
   }
+
+   void dispose1() {
+    clearFields();
+   clearPopUpFields();
+    // sizeclearFields();
+  salesproductdetailmodel = null;
+  update();
+  }
+
+  @override
+  void onClose() {
+  clearPopUpFields();
+    // clearFields() ;
+    // sizecount= 1;
+    dispose();
+    super.onClose();
+  }
+    void clearPopUpFields() {
+    selectedvariants = null;
+         emailController.clear();
+    print("Data cleared...");
+    update();
+  }
+
   // void setSelectedVariant(String variant) {
   //   dropdownsize = variant;
   // }

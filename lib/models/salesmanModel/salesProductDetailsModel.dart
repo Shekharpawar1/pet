@@ -253,13 +253,15 @@ class Data {
 class Variations {
   String? type;
   int? price;
+   int? wholeprice;
   int? stock;
 
-  Variations({this.type, this.price, this.stock});
+  Variations({this.type, this.price,this.wholeprice, this.stock});
 
   Variations.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     price = json['price'];
+    price = json['wholeprice'];
     stock = json['stock'];
   }
 
@@ -267,6 +269,7 @@ class Variations {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['price'] = this.price;
+    data['wholeprice'] = this.wholeprice;
     data['stock'] = this.stock;
     return data;
   }

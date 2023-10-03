@@ -349,7 +349,7 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                 // itemBuilder: (BuildContext ctx, index) {
                                 var item =  subcategorycontroller
                                   .usertoyModel!.data![index];
-
+                  
                                  
                                 var imagePath =
                                        "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
@@ -377,41 +377,41 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                 width: 140,
                                                 // height: 700,
                                                 decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      // _getRandomColor(),
-                                                      // _getRandomColor(),
-                                                      // _getRandomColor(),
-                                                      // _getRandomColor(),
-                                                      // MyColors.white
-                                                      //     .withOpacity(0.1),
-                                                      MyColors.white,
-                                                      MyColors.white,
-                                                      // MyColors.white,
-                                                    ],
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                  // color: MyColors.white,
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.3),
-                                                      spreadRadius: 3,
-                                                      blurRadius: 7,
-                                                      offset: Offset(0,
-                                                          3), // Offset of the shadow
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          // _getRandomColor(),
+                                                          // _getRandomColor(),
+                                                          // _getRandomColor(),
+                                                          // _getRandomColor(),
+                                                          // MyColors.white
+                                                          //     .withOpacity(0.1),
+                                                          MyColors.white,
+                                                          MyColors.white,
+                                                          // MyColors.white,
+                                                        ],
+                                                        begin: Alignment.topCenter,
+                                                        end: Alignment.bottomCenter,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(25),
+                                                      // color: MyColors.white,
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: Colors.grey
+                                                              .withOpacity(0.3),
+                                                          spreadRadius: 3,
+                                                          blurRadius: 7,
+                                                          offset: Offset(0,
+                                                              3), // Offset of the shadow
+                                                        ),
+                                                      ],
+                                                      // color: MyColors.white
                                                     ),
-                                                  ],
-                                                  // color: MyColors.white
-                                                ),
-                                                child: Column(
+                                                   child: Column(
                                                   children: [
-
-
-
+                  
+                  
+                  
                                                    GetBuilder<HomeuserController>(
                       init: homeusercontroller,
                       builder: (_) {
@@ -420,7 +420,7 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                             homeusercontroller
                                                                 .addItemToWishList(
                                                                     item.id!);
-
+                  
                                                                 homeusercontroller.init();
                                                           },
                                                           child: Padding(
@@ -447,11 +447,11 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                         );
                                                       }
                                                     ),
-
+                  
                                                 
                                                 
-
-
+                  
+                  
                                                     Container(
                                                       height: 125,
                                                       decoration: BoxDecoration(
@@ -488,9 +488,9 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                 .error), // Replace with your own error widget
                                                       ),
                                                     ),
-
+                  
                                                     // SizedBox(height: 15,),
-
+                  
                                                     Container(
                                                       // height: 140,
                                                       child: Padding(
@@ -582,7 +582,7 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                           child:
                                                                               Text(
                                                                             "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-
+                  
                                                                             // "₹" +
                                                                             //     item.price!,
                                                                             style:
@@ -611,7 +611,7 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                     ),
                                                                   ],
                                                                 ),
-
+                  
                                                                 // Image.asset(
                                                                 //   "assets/image/yellowbag.png",
                                                                 //   height: 80,

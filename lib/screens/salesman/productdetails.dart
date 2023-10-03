@@ -10,9 +10,11 @@ import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesreview_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
+import 'package:pet/screens/salesman/buyNowAddtoCartSales.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/models/salesmanModel/salesProductDetailsModel.dart' as variantFile;
 
+import 'package:pet/models/salesmanModel/salesmycartListModel.dart'as MyOrder;
 import 'package:pet/screens/salesman/ordersummary.dart';
 // import 'package:pet/screens/salesman/ordersummary1.dart';
 import 'package:pet/screens/salesman/paymentsales.dart';
@@ -142,110 +144,329 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
             ],
           ),
           // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-          Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: kg
-                      .sublist(0, 3)
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              // var tab = e
-                              //
-                              //  e  *  ( widget.itemdetails.price) ;
-                              //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-                            },
-                            child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                        color: salesproductdetailscontroller.isAdding
-                                            ? MyColors.pink
-                                            : MyColors.grey,
-                                        borderRadius: BorderRadius.circular(15)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: CachedNetworkImage(
-                                        imageUrl: imagePath,
-                                        width: 61,
-                                        height: 75,
-                                        placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator(),
-                                        ), // Replace with your own placeholder widget
-                                        errorWidget: (context, url, error) => Icon(Icons
-                                            .error), // Replace with your own error widget
-                                      ),
+
+          salesproductdetailscontroller!.salesproductdetailmodel == null
+                  ? SizedBox()
+                  : GetBuilder<SalesProductDetailsController>(
+                      init: salesproductdetailscontroller,
+                      builder: (_) {
+                        final images =
+          salesproductdetailscontroller!.salesproductdetailmodel!.data!.images;
+
+                        if (images == null || images.isEmpty) {
+                          print("No images available");
+                          return Text("No Images");
+                        }
+
+                        final imageCount = images.length;
+
+                        if (imageCount < 3) {
+                          print(
+                              "Not enough images available (found $imageCount)");
+                        }
+
+                        final sublistStart = 0;
+                        final sublistEnd = imageCount >= 3 ? 3 : imageCount;
+
+                        return Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              
+          salesproductdetailscontroller!.salesproductdetailmodel!.data!
+                                              .images ==
+                                          '' ||
+                                     
+          salesproductdetailscontroller!.salesproductdetailmodel!
+                                              .data!
+                                              .images ==
+                                          null ||
+                                    
+          salesproductdetailscontroller!.salesproductdetailmodel!
+                                          .data!
+                                          .images!
+                                          .isEmpty
+                                  ? Text("No Related Image")
+                                  : Row(
+                                      children:
+                                          // productdetailscontroller.productdetailmodel!.data!.images!
+                                          //     .sublist(0, 3)
+                                          //     .map(
+                                          //       (e) =>
+                                          images
+                                              .sublist(sublistStart, sublistEnd)
+                                              .map(
+                                                (e) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      // print(productdetailscontroller.productdetailmodel!.data!.images!.indexOf(e));
+salesproductdetailscontroller .selectImagesProduct(
+                                                              salesproductdetailscontroller
+                                              .salesproductdetailmodel!
+                                                                  .data!
+                                                                  .images!
+                                                                  .indexOf(e));
+                                                      // var tab = e
+                                                      print("IamgeSelect");
+                                                      print(salesproductdetailscontroller
+                                              .salesproductdetailmodel!
+                                                          .data!
+                                                          .images!
+                                                          .indexOf(e));
+                                                      //  e  *  ( widget.itemdetails.price) ;
+                                                      //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+                                                    },
+                                                    child: Container(
+                                                      child: Column(
+                                                        children: [
+                                                          Container(
+                                                            height: 60,
+                                                            width: 60,
+                                                            decoration: BoxDecoration(
+                                                                color: salesproductdetailscontroller
+                                                                            .selectImages ==
+                                                                        salesproductdetailscontroller
+                                                                            .salesproductdetailmodel!
+                                                                            .data!
+                                                                            .images!
+                                                                            .indexOf(
+                                                                                e)
+                                                                    ? MyColors
+                                                                        .pink
+                                                                    : MyColors
+                                                                        .grey,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15)),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageBuilder:
+                                                                    (context,
+                                                                            imageProvider) =>
+                                                                        Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            15),
+                                                                    image: DecorationImage(
+                                                                        image:
+                                                                            imageProvider,
+                                                                        fit: BoxFit
+                                                                            .cover),
+                                                                  ),
+                                                                ),
+                                                                imageUrl:
+                                                                    "${Constants.BASE_URL}/storage/app/public/product/${e.replaceAll("\\", "")}",
+                                                                //  imagesPath.replaceAll("\\", ""),
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                // width: 61,
+                                                                // height: 75,
+                                                                placeholder:
+                                                                    (context,
+                                                                            url) =>
+                                                                        Center(
+                                                                  child:
+                                                                      CircularProgressIndicator(),
+                                                                ), // Replace with your own placeholder widget
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Icon(Icons
+                                                                        .error), // Replace with your own error widget
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          // SizedBox(
+                                                          //   height: 5,
+                                                          // ),
+                                                          // Text("$e Kg",
+                                                          //     style: CustomTextStyle.popinssmall0)
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                              .toList(),
+                                      // [
+                                      //   Container(
+                                      //     child: Column(
+                                      //       children: [
+                                      //         Container(
+                                      //           height: 60,
+                                      //           width: 60,
+                                      //           decoration: BoxDecoration(
+                                      //               color: MyColors.pink,
+                                      //               borderRadius: BorderRadius.circular(15)),
+                                      //           child: Padding(
+                                      //             padding: const EdgeInsets.all(8.0),
+                                      //             child: CachedNetworkImage(
+                                      //               imageUrl: imagePath,
+                                      //               width: 61,
+                                      //               height: 75,
+                                      //               placeholder: (context, url) => Center(
+                                      //                 child: CircularProgressIndicator(),
+                                      //               ), // Replace with your own placeholder widget
+                                      //               errorWidget: (context, url, error) => Icon(Icons
+                                      //                   .error), // Replace with your own error widget
+                                      //             ),
+                                      //           ),
+                                      //         ),
+                                      //         SizedBox(
+                                      //           height: 5,
+                                      //         ),
+                                      //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+                                      //       ],
+                                      //     ),
+                                      //   ),
+                                      //  ],
                                     ),
+                              Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.crop_square_sharp,
+                                    color: (salesproductdetailscontroller
+                                              .salesproductdetailmodel!
+                                                .data!
+                                                .veg ==
+                                            1)
+                                        ? Colors.red
+                                        : Colors.green,
+                                    size: 30,
                                   ),
-                                  // SizedBox(
-                                  //   height: 5,
-                                  // ),
-                                  // Text("$e Kg",
-                                  //     style: CustomTextStyle.popinssmall0)
+                                  Icon(Icons.circle,
+                                      color: (salesproductdetailscontroller
+                                              .salesproductdetailmodel!
+                                                  .data!
+                                                  .veg ==
+                                              1)
+                                          ? Colors.red
+                                          : Colors.green,
+                                      size: 10),
                                 ],
                               ),
-                            ),
+                            ],
                           ),
-                        ),
-                      )
-                      .toList(),
-                  // [
-                  //   Container(
-                  //     child: Column(
-                  //       children: [
-                  //         Container(
-                  //           height: 60,
-                  //           width: 60,
-                  //           decoration: BoxDecoration(
-                  //               color: MyColors.pink,
-                  //               borderRadius: BorderRadius.circular(15)),
-                  //           child: Padding(
-                  //             padding: const EdgeInsets.all(8.0),
-                  //             child: CachedNetworkImage(
-                  //               imageUrl: imagePath,
-                  //               width: 61,
-                  //               height: 75,
-                  //               placeholder: (context, url) => Center(
-                  //                 child: CircularProgressIndicator(),
-                  //               ), // Replace with your own placeholder widget
-                  //               errorWidget: (context, url, error) => Icon(Icons
-                  //                   .error), // Replace with your own error widget
-                  //             ),
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           height: 5,
-                  //         ),
-                  //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-                  //       ],
-                  //     ),
-                  //   ),
-                  //  ],
-                ),
-                Stack(
-          alignment: Alignment.center,
-          children: [
-            Icon(Icons.crop_square_sharp, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
-                                                  .veg ==
-                                              1)
-                                          ? Colors.red:Colors.green, size: 30,),
-            Icon(Icons.circle, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
-                                                  .veg ==
-                                              1)
-                                          ? Colors.red: Colors.green, size: 10),
-          ],
-        ),
+                        );
+                      }),
              
-              ],
-            ),
-          ),
+        //   Padding(
+        //     padding: EdgeInsets.all(20.0),
+        //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Row(
+        //           children: kg
+        //               .sublist(0, 3)
+        //               .map(
+        //                 (e) => Padding(
+        //                   padding: const EdgeInsets.all(8.0),
+        //                   child: GestureDetector(
+        //                     onTap: () {
+        //                       // var tab = e
+        //                       //
+        //                       //  e  *  ( widget.itemdetails.price) ;
+        //                       //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
+        //                     },
+        //                     child: Container(
+        //                       child: Column(
+        //                         children: [
+        //                           Container(
+        //                             height: 60,
+        //                             width: 60,
+        //                             decoration: BoxDecoration(
+        //                                 color: salesproductdetailscontroller.isAdding
+        //                                     ? MyColors.pink
+        //                                     : MyColors.grey,
+        //                                 borderRadius: BorderRadius.circular(15)),
+        //                             child: Padding(
+        //                               padding: const EdgeInsets.all(8.0),
+        //                               child: CachedNetworkImage(
+        //                                 imageUrl: imagePath,
+        //                                 width: 61,
+        //                                 height: 75,
+        //                                 placeholder: (context, url) => Center(
+        //                                   child: CircularProgressIndicator(),
+        //                                 ), // Replace with your own placeholder widget
+        //                                 errorWidget: (context, url, error) => Icon(Icons
+        //                                     .error), // Replace with your own error widget
+        //                               ),
+        //                             ),
+        //                           ),
+        //                           // SizedBox(
+        //                           //   height: 5,
+        //                           // ),
+        //                           // Text("$e Kg",
+        //                           //     style: CustomTextStyle.popinssmall0)
+        //                         ],
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               )
+        //               .toList(),
+        //           // [
+        //           //   Container(
+        //           //     child: Column(
+        //           //       children: [
+        //           //         Container(
+        //           //           height: 60,
+        //           //           width: 60,
+        //           //           decoration: BoxDecoration(
+        //           //               color: MyColors.pink,
+        //           //               borderRadius: BorderRadius.circular(15)),
+        //           //           child: Padding(
+        //           //             padding: const EdgeInsets.all(8.0),
+        //           //             child: CachedNetworkImage(
+        //           //               imageUrl: imagePath,
+        //           //               width: 61,
+        //           //               height: 75,
+        //           //               placeholder: (context, url) => Center(
+        //           //                 child: CircularProgressIndicator(),
+        //           //               ), // Replace with your own placeholder widget
+        //           //               errorWidget: (context, url, error) => Icon(Icons
+        //           //                   .error), // Replace with your own error widget
+        //           //             ),
+        //           //           ),
+        //           //         ),
+        //           //         SizedBox(
+        //           //           height: 5,
+        //           //         ),
+        //           //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
+        //           //       ],
+        //           //     ),
+        //           //   ),
+        //           //  ],
+        //         ),
+              
+              
+        //         Stack(
+        //   alignment: Alignment.center,
+        //   children: [
+        //     Icon(Icons.crop_square_sharp, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
+        //                                           .veg ==
+        //                                       1)
+        //                                   ? Colors.red:Colors.green, size: 30,),
+        //     Icon(Icons.circle, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
+        //                                           .veg ==
+        //                                       1)
+        //                                   ? Colors.red: Colors.green, size: 10),
+        //   ],
+        // ),
+             
+        //       ],
+        //     ),
+        //   ),
           
           GetBuilder<SalesProductDetailsController>(
               init: salesproductdetailscontroller,
@@ -485,23 +706,24 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
 
                                            style: CustomTextStyle.discounttext),
                                       SizedBox(width: 3),
-                                      Container(
-                                        height: 20,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            color: MyColors.red,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                                color: MyColors.red)),
-                                        child: Center(
-                                          child: Text(
+                                      // Container(
+                                      //   height: 20,
+                                      //   width: 40,
+                                      //   // decoration: BoxDecoration(
+                                      //   //     color: MyColors.red,
+                                      //   //     borderRadius:
+                                      //   //         BorderRadius.circular(10),
+                                      //   //     border: Border.all(
+                                      //   //         color: MyColors.red)),
+                                      //   child: Center(
+                                      //     child:
+                                           Text(
                                         
                                               "Save${salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!.toString()}%",
                                               style: CustomTextStyle
-                                                  .popinstextsmal2222),
-                                        ),
-                                      ),
+                                                  .popinstextsmal2222red),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                   SizedBox(height: 5),
@@ -605,130 +827,233 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                         "About Us",
                         style: CustomTextStyle.popinstext,
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01),
-                      Row(
-                        children: [
-                          Text(
-                            "Brand",
-                            style: CustomTextStyle.popinslight,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                          ),
-                          Text(
-                             salesproductdetailscontroller.salesproductdetailmodel!.data!.name.toString(),
-                            style: CustomTextStyle.popinstext,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      Divider(
-                        color: MyColors.lightdivider,
-                        thickness: 1,
-                        height: 1,
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
+                        SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.01),
+                                 Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "Name",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Text(
+                                         salesproductdetailscontroller.salesproductdetailmodel!.data!.name
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                       SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
 
-                      Row(
-                        children: [
-                          Text(
-                            "Flavour",
-                            style: CustomTextStyle.popinslight,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                          ),
-                          Text(
-""        ,                    style: CustomTextStyle.popinstext,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      Divider(
-                        color: MyColors.lightdivider,
-                        thickness: 1,
-                        height: 1,
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        "Brand",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Text(
+                                       salesproductdetailscontroller.salesproductdetailmodel!.data!.brandId
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+ Row(
+                                  children: [
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Petsbreeds",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Text(
+                                       salesproductdetailscontroller.salesproductdetailmodel!.data!.petsbreedsId
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
 
-                      Row(
-                        children: [
-                          Text(
-                            "Diet type",
-                            style: CustomTextStyle.popinslight,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.2,
-                          ),
-                          Text(
-                           (salesproductdetailscontroller.salesproductdetailmodel!.data!.veg == 0)?"Veg":"Nonveg",
-                            style: CustomTextStyle.popinstext,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      Divider(
-                        color: MyColors.lightdivider,
-                        thickness: 1,
-                        height: 1,
-                      ),
-                      // SizedBox(
-                      //     height: MediaQuery.of(context).size.height * 0.02),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "lifeStage",
+                                      style: CustomTextStyle.popinslight,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                    ),
+                                    Text(
+                                      salesproductdetailscontroller.salesproductdetailmodel!.data!.lifeStageId
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                // Petsbreeds
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
 
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       "Age Range",
-                      //       style: CustomTextStyle.popinslight,
-                      //     ),
-                      //     SizedBox(
-                      //       width: MediaQuery.of(context).size.width * 0.18,
-                      //     ),
-                      //     Text("",
-                      //       // productdetailscontroller.productList.agerange
-                      //       //     .toString(),
-                      //       style: CustomTextStyle.popinstext,
-                      //     ),
-                      //   ],
-                      // ),
-                      // SizedBox(
-                      //     height: MediaQuery.of(context).size.height * 0.02),
-                      // Divider(
-                      //   color: MyColors.lightdivider,
-                      //   thickness: 1,
-                      //   height: 1,
-                      // ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
+                                Row(
+                                  children: [
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Diet type",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.10,
+                                    ),
+                                    Text(
+                                      ( salesproductdetailscontroller.salesproductdetailmodel!
+                                                  .data!
+                                                  .veg ==
+                                              0)
+                                          ? "Veg"
+                                          : "Nonveg",
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                // SizedBox(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.02),
 
-                      Row(
-                        children: [
-                          Text(
-                            "Traget Species",
-                            style: CustomTextStyle.popinslight,
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.1,
-                          ),
-                          Text(
-                            salesproductdetailscontroller.salesproductdetailmodel!.data!.module!.moduleName.toString(),
-                            style: CustomTextStyle.popinstext,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      Divider(
-                        color: MyColors.lightdivider,
-                        thickness: 1,
-                        height: 1,
-                      ),
+                                // Row(
+                                //   children: [
+                                //     Text(
+                                //       "Age Range",
+                                //       style: CustomTextStyle.popinslight,
+                                //     ),
+                                //     SizedBox(
+                                //       width: MediaQuery.of(context).size.width *
+                                //           0.18,
+                                //     ),
+                                //     Text(
+                                //       "",
+                                //       // productdetailscontroller.productList.agerange
+                                //       //     .toString(),
+                                //       style: CustomTextStyle.popinstext,
+                                //     ),
+                                //   ],
+                                // ),
+                            
+                                // SizedBox(
+                                //     height: MediaQuery.of(context).size.height *
+                                //         0.02),
+                                // Divider(
+                                //   color: MyColors.lightdivider,
+                                //   thickness: 1,
+                                //   height: 1,
+                                // ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+
+                                Row(
+                                  children: [
+                                    SizedBox(width: 100,
+                                      child: Text(
+                                        "Traget Species",
+                                        style: CustomTextStyle.popinslight,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                    ),
+                                    Text(
+                                       salesproductdetailscontroller.salesproductdetailmodel!
+                                          .data!
+                                          .module!
+                                          .moduleName
+                                          .toString(),
+                                      style: CustomTextStyle.popinstext,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+                                Divider(
+                                  color: MyColors.lightdivider,
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.02),
+
                       // SizedBox(
                       //     height: MediaQuery.of(context).size.height * 0.02),
 
@@ -939,22 +1264,23 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                                       // "₹" + widget.itemdetails.price.toString(),
                                       style: CustomTextStyle.discounttext),
                                   SizedBox(width: 3),
-                                  Container(
-                                    height: 20,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        color: MyColors.red,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border:
-                                            Border.all(color: MyColors.red)),
-                                    child: Center(
-                                      child: Text(
+                                  // Container(
+                                  //   height: 20,
+                                  //   width: 40,
+                                  //   decoration: BoxDecoration(
+                                  //       color: MyColors.red,
+                                  //       borderRadius: BorderRadius.circular(10),
+                                  //       border:
+                                  //           Border.all(color: MyColors.red)),
+                                  //   child: Center(
+                                  //     child: 
+                                      Text(
                                           // item.discount.toString(),
                                          "Save${salesproductdetailscontroller.salesproductdetailmodel!.data!.discount.toString()}%",
                                           style: CustomTextStyle
-                                              .popinstextsmal2222),
-                                    ),
-                                  ),
+                                              .popinstextsmal2222red),
+                                  //   ),
+                                  // ),
                                   SizedBox(width: 10),
                                    salesproductdetailscontroller.selectedvariants?.price == null?
                                   Text(
@@ -977,14 +1303,43 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                               SizedBox(
                                 height: 10,
                               ),
+                          
+                          
                               Row(
                                 children: [
                                   InkWell(
                                     onTap: ()async {
-                                       salesproductdetailscontroller.fethUserId();
-                                   await salesproductdetailscontroller.addProduct();
-                                        mycartController.init();
-                                         Get.to(AddToCardSales());
+                                  //      salesproductdetailscontroller.fethUserId();
+                                  //  await salesproductdetailscontroller.addProduct();
+                                  //       mycartController.init();
+    MyOrder.Datum foo = MyOrder.Datum(
+                                                
+                                                  userId:salesproductdetailscontroller.wholesellerID??0,
+                                                  id:salesproductdetailscontroller.salesproductdetailmodel!
+                                                                    .data!
+                                                                    .id,
+
+                                                  image:salesproductdetailscontroller.salesproductdetailmodel!
+                                                                    .data!
+                                                                    .image,
+                                                                    itemName:salesproductdetailscontroller.salesproductdetailmodel!.data!.name ,
+                                                                    variant: salesproductdetailscontroller.selectedvariants!
+                                                            .type.toString(),
+                                                                    quantity:(salesproductdetailscontroller.sizecount),
+                                                                    price: ((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * (salesproductdetailscontroller.sizecount ?? 0) -
+              (((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * salesproductdetailscontroller.sizecount! ?? 0) *
+                  (salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!) /
+                  100))
+    
+
+                                                                     );
+
+                                         Get.to(BuyNowAddToCardSaleswhole(
+data: foo,
+   tax:salesproductdetailscontroller.salesproductdetailmodel!
+                                                        .data!
+                                                        .tax!
+                                         ));
 //                                       Navigator.push(
 //                                           context,
 //                                           MaterialPageRoute(

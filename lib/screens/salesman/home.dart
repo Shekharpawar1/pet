@@ -73,7 +73,7 @@ class HomeSales extends StatelessWidget {
     return Scaffold(
       key: _drawerkey,
       drawer: drawerSalesMan(),
-      appBar: CustomAppBarSales(drawerKey:  _drawerkey,title: "Partner Products",), 
+      appBar: CustomAppBarSales(drawerKey:  _drawerkey,title: "",), 
        body: Stack(
         children: [
           ListView(
@@ -568,6 +568,7 @@ class HomeSales extends StatelessWidget {
                                               print(imagePath);
                                               return InkWell(
                                                 onTap: () async {
+                                                    // salesProductDetailsController.dispose1();
                                                   salesProductDetailsController
                                                       .viewproduct(
                                                     item.id ?? 0,

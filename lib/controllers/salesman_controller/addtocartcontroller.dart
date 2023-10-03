@@ -37,6 +37,12 @@ var sellerId = GetStorage().read("sellerid");
     String? paymentdays1;
   String? paymentmethod1;
   bool? gst1;
+   int? selectID;
+  int? selectqty;
+  String? selectname;
+  int? selecttex;
+  double? selectprice;
+  int? selectdis;
   var tex;
   List<Map<String, dynamic>> cartList = [];
 // void  incrementSize(){
@@ -78,13 +84,45 @@ gst1 = gst;
     update();
     print("paymentdays1: ${paymentdays1},gst1: ${gst} paymentmethod: ${paymnetmethod}",);
   }
-
+void chooseaddressID(int id) {
+    isselected1 = id;
+    update();
+    print("Address Id ====>>>>> $isselected1");
+  }
   void adddiscount(int disprice, int price) {
     disCount = disprice;
     price = price;
     tex = price * 0.5;
     update();
     print("disCount${disCount}");
+  }
+
+
+
+void adddata(int id, int qty, String name, int tex, double price, int dis) {
+    showLoading = false;
+    selectID = id;
+    selectqty = qty;
+    selectname = name;
+    selecttex = tex;
+    selectprice = price;
+    selectdis = dis;
+
+    cartList = [
+      {
+        "product_id": selectID.toString(),
+        "quantity": selectqty.toString(),
+        "variation": selectname.toString(),
+        "tax_amount": selecttex.toString(),
+        "discount_on_item": selectdis.toString(),
+        "price": selectprice.toString()
+      }
+    ];
+
+    update();
+    print(
+        "DataBuyNowupdated ====>>>>> $selectID   $selectname $selecttex $selectprice $selectdis");
+    print(cartList);
   }
 
   @override
