@@ -155,8 +155,8 @@ class _LoginWholeState extends State<LoginWhole> {
                                       },
                                       controller:
                                           loginwholeController.passwordController,
-                                      decoration: InputDecoration(
-                                        suffixIcon: IconButton(
+                                     decoration: InputDecoration(
+                                                 suffixIcon: IconButton(
                                           icon: Icon(
                                             loginwholeController.passwordVisible
                                                 ? Icons.visibility
@@ -172,11 +172,35 @@ class _LoginWholeState extends State<LoginWhole> {
                                         hintStyle: TextStyle(
                                             color: MyColors.white, fontSize: 14),
                                         contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
+                                            horizontal: 20, vertical: 15),
                                         border: InputBorder.none,
                                         enabledBorder: InputBorder.none,
                                         focusedBorder: InputBorder.none,
                                       ),
+                                      
+                                      // decoration: InputDecoration(
+                                      //   suffixIcon: IconButton(
+                                      //     icon: Icon(
+                                      //       loginwholeController.passwordVisible
+                                      //           ? Icons.visibility
+                                      //           : Icons.visibility_off,
+                                      //       size: 15,
+                                      //       color: MyColors.white,
+                                      //     ),
+                                      //     onPressed: () {
+                                      //       loginwholeController.updatepass();
+                                      //     },
+                                      //   ),
+                                      //   hintText: "Password",
+                                      //   hintStyle: TextStyle(
+                                      //       color: MyColors.white, fontSize: 14),
+                                      //     contentPadding: EdgeInsets.symmetric(
+                                      //       horizontal: 20, vertical: 15),
+                                      //    border: InputBorder.none,
+                                      //   enabledBorder: InputBorder.none,
+                                      //   focusedBorder: InputBorder.none,
+                                      // ),
+                                     
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: MyColors.white,
@@ -221,7 +245,7 @@ class _LoginWholeState extends State<LoginWhole> {
                               loginwholeController.validateForm(context).then(
                               (isValid) async {
                                 if (isValid) {
-                                  print("Valid form");
+                                  // print("Valid form");
 
                                   try {
                                     await loginwholeController.loginEmail();

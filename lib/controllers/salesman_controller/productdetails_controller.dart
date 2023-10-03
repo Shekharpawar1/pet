@@ -17,6 +17,7 @@ import 'package:http/http.dart' as http;
 class SalesProductDetailsController extends GetxController {
 final storage = GetStorage();
 
+  int? selectImages = 0;
 var sellerId = GetStorage().read("sellerid");
 
 // var wholesellerID = GetStorage().read("wholesalerid");

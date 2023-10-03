@@ -578,12 +578,12 @@ class _ServicePageState extends State<ServicePage> {
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async{
                         UserServicesAddVeterinaryController
                             userServicesAddVeterinaryController =
                             Get.put(UserServicesAddVeterinaryController());
                         userServicesAddVeterinaryController.clearFields();
-                        userServicesAddVeterinaryController.init();
+                     await  userServicesAddVeterinaryController.init();
                         Get.to(UserServicesAddVeterinary());
                       },
                       child: Container(

@@ -3,54 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:pet/controllers/user_controller/home_controller.dart';
-import 'package:pet/controllers/user_controller/productdetails_controller.dart';
-import 'package:pet/controllers/user_controller/review_controller.dart';
-import 'package:pet/screens/user/productdetails.dart';
-import 'package:pet/screens/user/widgets/userAppBar.dart';
+import 'package:pet/controllers/salesman_controller/salesourbranddetailscontroller.dart';
+import 'package:pet/screens/salesman/oubranddetails.dart';
+import 'package:pet/screens/salesman/wholesalesoubranddetails.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
+
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
-import 'package:pet/screens/user/ourbrand.dart';
-import 'package:pet/models/usersModel/ourBrandModel.dart' as OurBrandModel;
 
-import '../../models/usersModel/ourBrandModel.dart';
-class AllbrandPage extends StatefulWidget {
-    AllbrandPage({super.key,required this.data});
+import 'package:pet/models/salesmanModel/ourBrandModel.dart' as OurBrandModel;
+
+class AllShopBrandPagesales extends StatefulWidget {
+    AllShopBrandPagesales({super.key,required this.data});
   List<OurBrandModel.Datum>? data;
 
   @override
-  State<AllbrandPage> createState() => _AllbrandPageState();
+  State<AllShopBrandPagesales> createState() => _AllShopBrandPagesalesState();
 }
 
-class _AllbrandPageState extends State<AllbrandPage> {
-  ProductDetailsController productdeatilscontroller =
-      Get.put(ProductDetailsController());
-  UserReviewController userreviewController = Get.put(UserReviewController());
-   final HomeuserController homeusercontroller = Get.put(HomeuserController());
+class _AllShopBrandPagesalesState extends State<AllShopBrandPagesales> {
+     SalesOurBrandDetailsController salesOurBrandDetailsController =
+      Get.put(SalesOurBrandDetailsController());
   //  UserOurBrandModel? bb;
   @override
   Widget build(BuildContext context) {
     print(widget.data );
     return Scaffold(
-      appBar:CustomAppBarback(),
-//        AppBar(
-//             elevation: 0,
-//           backgroundColor:Colors.transparent,
-// leading: Padding(
-//   padding:  EdgeInsets.only(left:5.0,top: 10,bottom: 10,right: 0),
-//   child:   InkWell(onTap: (){
-//     Navigator.pop(context);
-//   },
-//     child: Icon(Icons.arrow_back_ios,color:MyColors. black,size: 20,
-    
-//     ),
-//   ),
-// ),
-//     centerTitle: true,     
-//         title: Center(child: Text("All Our Brands",style: CustomTextStyle.appbartext,)),
-//         ),
-
+      appBar:CustomAppBarSalesWholeback(title: "All Our Brands",),
         body:
         
         Padding(
@@ -256,21 +236,11 @@ class _AllbrandPageState extends State<AllbrandPage> {
                                       var imageLogoPath =
                                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                       return InkWell(
-                        onTap: () async{
-                          productdeatilscontroller.dispose();
-                                                productdeatilscontroller
-                                                    .viewproduct(
-                                                  item.id ?? 0,
-                                                );
-
-                                                // print("productid${item.id ?? 0}");
-                                                await productdeatilscontroller
-                                                    .init();
-                                                userreviewController.reviewAdd(
-                                                    item.id ?? 0, 0);
-                                                await userreviewController
-                                                    .init();
-                                                Get.to(ProductDetails());
+                        onTap: ()async {
+                      salesOurBrandDetailsController
+                                                  .addproduct(item.id ?? 0,item.title??'',
+                                                      item.logo ?? '');
+                                              Get.to(SalesOurBrandDetails());
                         },
                         child:  Padding(
                                     padding: const EdgeInsets.all(8.0),

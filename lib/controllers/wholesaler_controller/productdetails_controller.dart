@@ -15,16 +15,55 @@ import 'package:http/http.dart' as http;
 
 class WholeProductDetailsController extends GetxController {
    final storage = GetStorage();
-
+  int? selectImages = 0;
   int? selecttab;
   bool isAdding = false;
   int? productID;
   var wholesalerID;
 double? totalAmount;
+
+  TextEditingController emailController = TextEditingController();
+  String? productname;
+  String? variants;
+  int? priceProduct;
+  String? image;
+  int? qty;
   bool showLoading = false;
 // ProductDetailsModel? productdetailsmodel;
 // var selectedVariants ;
+ var imagePath;
+     var imagesPath;
+  void  selectImageUpate( ){
 
+imagesPath =
+          "${Constants.BASE_URL}/storage/app/public/product/${productdetailwholemodel!.data!.images??''}";
+      imagePath =
+          "${Constants.BASE_URL}/storage/app/public/product/${productdetailwholemodel!.data!.images![selectImages??0].toString()}";
+    
+    print(imagePath);
+    update();
+      }
+
+
+      selectImagesProduct(int index) {
+    selectImages = index;
+    print("Images");
+    print(selectImages);
+    print(productdetailwholemodel!.data!.images![selectImages??0]);
+    update();
+  }
+ 
+          
+  void viewproductHome(int id, String productName, String varianttts, int quantity, int price, String image) {
+    productID = id;
+    productname = productName;
+    variants = varianttts;
+     qty  = quantity;
+     priceProduct = price;
+     image = image;
+    update();
+    print("productID${productID}");
+  }
   void onInit() {
     super.onInit();
     // init();
@@ -226,7 +265,7 @@ double? totalAmount;
       // productdeatils
       productdetailwholemodel = ProductDetailsWholeModel.fromJson(
           await ApiHelper.getApi(getUserProductDetailsUrl + "$productID"));
-      print("urlapi");
+      print(getUserProductDetailsUrl + "$productID");
       variantslist = productdetailwholemodel!.data!.variations;
       
       if(variantslist!.isNotEmpty)
@@ -246,6 +285,7 @@ double? totalAmount;
       update();
     } catch (e) {
       print('Error: $e');
+      
       Get.snackbar(
         'Error',
         'An error occurred: $e',
@@ -262,6 +302,113 @@ double? totalAmount;
   bool isProductInCartBool = false;
 
   
+  Future<void> addNotify() async {
+    showLoading = true;
+    update();
+   
+    var body = {
+      "user_id": storage.read('wholesalerid').toString(),
+      "item_id": productID.toString(),
+      "email": emailController.text.toString(),
+      "stock": selectedvariants!.stock.toString(),
+      "variation": selectedvariants!.type.toString(),
+    
+     
+    };
+    String AddNotify = Constants.ADD_Notify;
+    print(AddNotify);
+    print(body);
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(AddNotify));
+      request.fields.addAll({
+       "user_id":storage.read('wholesalerid').toString(),
+      "item_id": productID.toString(),
+      "email": emailController.text.toString(),
+      "stock": selectedvariants!.stock.toString(),
+      "variation": selectedvariants!.type.toString(),
+    
+      });
+
+      await ApiHelper.postFormData(request: request);
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Data Successfully Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+  Future<void> addProductHome() async {
+    showLoading = true;
+    update();
+    // await Future.delayed(Duration(seconds: 4));
+    var body = {
+      "user_id":storage.read('wholesalerid').toString(),
+      "item_id": productID.toString(),
+      "item_name": productname.toString(),
+      "variant": variants.toString(),
+      "quantity": qty.toString(),
+      "image": image.toString(),
+      "price": priceProduct
+          .toString(),
+      // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
+    };
+    String AddProduct = Constants.ADD_PRODUCT;
+    print(body);
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(AddProduct));
+      request.fields.addAll({
+     "user_id":storage.read('wholesalerid').toString(),
+      "item_id": productID.toString(),
+      "item_name": productname.toString(),
+      "variant": variants.toString(),
+      "quantity": qty.toString(),
+      "image": image.toString(),
+      "price": priceProduct
+          .toString(),
+      });
+
+      await ApiHelper.postFormData(request: request);
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Product Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
   Future<void> isProductInCart() async {
     showLoading = true;
     update();

@@ -32,14 +32,14 @@ final storage = GetStorage();
     final completer = Completer<bool>();
 
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
       completer.complete(true);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is invalid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
       completer.complete(false);
     }
 

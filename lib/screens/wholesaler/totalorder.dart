@@ -31,7 +31,7 @@ WholeTotalOrderController wholetotalordercontroller = Get.put(WholeTotalOrderCon
   Widget build(BuildContext context) {
     return Scaffold(
    appBar: CustomAppBarWholeback(
-        // drawerKey: _drawerkey,
+         title: "Total Order",
       ),
       body:
 

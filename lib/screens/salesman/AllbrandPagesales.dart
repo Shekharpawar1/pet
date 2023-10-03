@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/salesman_controller/salesourbranddetailscontroller.dart';
+import 'package:pet/screens/salesman/wholesalesoubranddetails.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -19,29 +22,14 @@ class AllbrandPagesales extends StatefulWidget {
 }
 
 class _AllbrandPagesalesState extends State<AllbrandPagesales> {
-   
+     SalesOurBrandDetailsController salesOurBrandDetailsController =
+      Get.put(SalesOurBrandDetailsController());
   //  UserOurBrandModel? bb;
   @override
   Widget build(BuildContext context) {
     print(widget.data );
     return Scaffold(
-      appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-leading: Padding(
-  padding:  EdgeInsets.only(left:5.0,top: 10,bottom: 10,right: 0),
-  child:   InkWell(onTap: (){
-    Navigator.pop(context);
-  },
-    child: Icon(Icons.arrow_back_ios,color:MyColors. black,size: 20,
-    
-    ),
-  ),
-),
-    centerTitle: true,     
-        title: Center(child: Text("All Our Brands",style: CustomTextStyle.appbartext,)),
-        ),
-
+      appBar:CustomAppBarSalesWholeback(title: "All Our Brands",),
         body:
         
         Padding(
@@ -247,8 +235,13 @@ leading: Padding(
                                       var imageLogoPath =
                                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                       return InkWell(
-                        onTap: () {
-                      
+                        onTap: ()async {
+                       salesOurBrandDetailsController
+                                                .addproduct(item.id ?? 0,item.title??'',
+                                                    item.logo ?? '');
+                                            //  subcategorycontroller.addproduct(item.id??0) ;
+await salesOurBrandDetailsController.ourproductinit();
+                                          Get.to(WholeSalesOurBrandDetails());
                         },
                         child:  Padding(
                                     padding: const EdgeInsets.all(8.0),

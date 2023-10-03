@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
 import 'package:pet/models/salesmanModel/ourbrandProductModel.dart';
 import 'package:pet/models/salesmanModel/salessubModel.dart';
 
@@ -16,21 +17,31 @@ class SalesOurBrandDetailsController extends GetxController{
   String? brandlogo;
 int? brandid;
  int? selectedIndex;
+  String? brandname;
+ bool showLoading = false;
 
 @override
   void onInit() {
     super.onInit();
 
     init();
-   
-    }
-
-  void addproduct(int id, String logo) {
-    brandid =id;
-   brandlogo = logo;
-    update();
-    print("BrandID${brandid}");
   }
+
+  void addproduct(int id, String brandName,String logo) {
+    brandid = id;
+    brandname = brandName;
+    brandlogo = logo;
+    update();
+    print("BrandID : ${brandid} Name: ${brandname}");
+  }
+
+
+  // void addproduct(int id, String logo) {
+  //   brandid =id;
+  //  brandlogo = logo;
+  //   update();
+  //   print("BrandID${brandid}");
+  // }
 void updateSelectedIndex(int id) {
     selectedIndex = id;
     update();
@@ -102,5 +113,62 @@ void productinit() async{
       );
   }
 }
+
+// properties
+  String getUserPropertiesUrl =
+      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
+  SalesPropertiesModel? salesPropertiesModel;
+  bool propertyLoaded = false;
+
+
+  Future<void> ourproductinit() async {
+    showLoading = true;
+    try {
+      // ourproducts
+      salesPropertiesModel = SalesPropertiesModel.fromJson(
+          await ApiHelper.getApi(getUserPropertiesUrl));
+      salesPropertiesModel!.data = salesPropertiesModel!.data!
+          .where((element) => element.moduleId == 1)
+          .toList();
+   print("UserDataWhole==>");
+   if (salesPropertiesModel!.data!.isNotEmpty) {
+  print(salesPropertiesModel!.data![0].name);
+} else {
+  print("wholesaller data is empty.");
+}
+  // print(userPropertiesModel!.data![0].name);
+  salesPropertiesModel!.data = salesPropertiesModel!.data!
+          .where((ele) => ele.brandId == brandname)
+          .toList();
+      // userPropertiesourbrandModel.data = [];
+      // userPropertiesourbrandModel.data = userPropertiesourbrandModel!.data!
+      //     .where((element) => userPropertiesModel!.data!.any((ele) =>
+      //         ele.brandId == element.brandId && element.brandId == brandid))
+      //     .toList();
+      print(salesPropertiesModel);
+      print("DataOur");
+      if (salesPropertiesModel!.data!.isEmpty) {
+         print("wholeuserPropertiesModel data is empty.");
+  // print(userPropertiesourbrandModel!.data![0].name);
+} else {
+      print(salesPropertiesModel!.data);
+}
+      print(salesPropertiesModel!.data![0].name);
+
+      propertyLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+    showLoading = false;
+    update();
+  }
 
 }

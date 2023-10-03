@@ -27,6 +27,12 @@ WholeProductDetailsController wholeProductDeailsCOntroller = Get.put(WholeProduc
   String? paymentdays1;
   String? paymentmethod1;
   bool? gst1;
+  int? selectID;
+  int? selectqty;
+  String? selectname;
+  int? selecttex;
+  double? selectprice;
+  int? selectdis;
 // var sizecount = 0;
   List sizes = [];
   bool showLoading = false;
@@ -52,6 +58,34 @@ WholeProductDetailsController wholeProductDeailsCOntroller = Get.put(WholeProduc
     addressid = id;
     update();
     print("ID${addressid}");
+  }
+
+
+
+void adddata(int id, int qty, String name, int tex, double price, int dis) {
+    showLoading = false;
+    selectID = id;
+    selectqty = qty;
+    selectname = name;
+    selecttex = tex;
+    selectprice = price;
+    selectdis = dis;
+
+    cartList = [
+      {
+        "product_id": selectID.toString(),
+        "quantity": selectqty.toString(),
+        "variation": selectname.toString(),
+        "tax_amount": selecttex.toString(),
+        "discount_on_item": selectdis.toString(),
+        "price": selectprice.toString()
+      }
+    ];
+
+    update();
+    print(
+        "DataBuyNowupdated ====>>>>> $selectID   $selectname $selecttex $selectprice $selectdis");
+    print(cartList);
   }
 
   void addpaymentPopup(String paymentday, bool gst, String paymnetmethod) {
@@ -112,7 +146,7 @@ WholeProductDetailsController wholeProductDeailsCOntroller = Get.put(WholeProduc
   }
  
   decrementSize(int index) {
-    if (sizes[index] > 1) {
+    if (sizes[index] >   wholemycartmodel!.data![index].minOrder) {
       sizes[index]--;
       update();
       print("SIzes--${sizes}");

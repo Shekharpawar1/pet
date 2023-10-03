@@ -226,7 +226,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar:CustomAppBarSalesWholeback(title:"Total Wholeseller" ,)
+       appBar:CustomAppBarSalesWholeback(title:"Total Wholesaller" ,)
 //         elevation: 0,
 //         backgroundColor: Colors.transparent,
 //         leading: Padding(
@@ -1641,124 +1641,128 @@ SizedBox(
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Align(
-                                                    alignment: Alignment.topRight,
-                                                    child: Container(
-                                                      //alignment: Alignment.topRight,
-                                                      height: MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.05,
-                                                      width: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.3,
-                                                      decoration: BoxDecoration(
-                                                          color: MyColors.green1,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topRight: Radius
-                                                                      .circular(25),
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          20))),
-                                                      child: Center(
-                                                          child: Text(
-                                                        "Completed",
-                                                        style: CustomTextStyle
-                                                            .popinstextsmall12,
-                                                      )),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
+                                              // Row(
+                                              //   mainAxisAlignment:
+                                              //       MainAxisAlignment.end,
+                                              //   children: [
+                                              //     Align(
+                                              //       alignment: Alignment.topRight,
+                                              //       child: Container(
+                                              //         //alignment: Alignment.topRight,
+                                              //         height: MediaQuery.of(context)
+                                              //                 .size
+                                              //                 .height *
+                                              //             0.05,
+                                              //         width: MediaQuery.of(context)
+                                              //                 .size
+                                              //                 .width *
+                                              //             0.3,
+                                              //         decoration: BoxDecoration(
+                                              //             color: MyColors.green1,
+                                              //             borderRadius:
+                                              //                 BorderRadius.only(
+                                              //                     topRight: Radius
+                                              //                         .circular(25),
+                                              //                     bottomLeft: Radius
+                                              //                         .circular(
+                                              //                             20))),
+                                              //         child: Center(
+                                              //             child: Text(
+                                              //           "Completed",
+                                              //           style: CustomTextStyle
+                                              //               .popinstextsmall12,
+                                              //         )),
+                                              //       ),
+                                              //     ),
+                                              //   ],
+                                              // ),
+                                              // SizedBox(
+                                              //   height: 10,
+                                              // ),
                                               Row(
                                                 children: [
                                                   Image.asset(
                                                     "assets/image/logocanine.png",
                                                     height: 80,
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        "${item.fName.toString()} ${item.lName.toString()}",
-                                                        style: CustomTextStyle
-                                                            .popinsmedium,
-                                                      ),
-                                                      Text(
-                                                        "${item.phone.toString()}",
-                                                        style: CustomTextStyle
-                                                            .popinsmedium,
-                                                      ),
- Text(
-                                                        "${item.email.toString()}",
-                                                        style: CustomTextStyle
-                                                            .popinsmedium,
-                                                      ),
-  Text(
-                                                        "${item.businessName.toString()}",
-                                                        style: CustomTextStyle
-                                                            .popinsmedium,
-                                                      ),
-                                                       Text(
-                                                        "${item.city.toString()} ${item.state.toString()}",
-                                                        style: CustomTextStyle
-                                                            .popinsmedium,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                              "assets/image/yellowstar.svg"),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          SvgPicture.asset(
-                                                              "assets/image/yellowstar.svg"),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          SvgPicture.asset(
-                                                              "assets/image/yellowstar.svg"),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          SvgPicture.asset(
-                                                              "assets/image/yellowstar.svg"),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          SvgPicture.asset(
-                                                              "assets/image/yellowstar.svg"),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Text("4.5")
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        "1901 Thornridge Cir. Shiloh, Hawaii 81063",
-                                                        style: CustomTextStyle
-                                                            .popinssmall0,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                    ],
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          "${item.fName.toString()} ${item.lName.toString()}",
+                                                          style: CustomTextStyle
+                                                              .popinsmedium,
+                                                        ),
+                                                        Text(
+                                                          "${item.phone.toString()}",
+                                                          style: CustomTextStyle
+                                                              .popinstextsmall123,
+                                                        ),
+                                                   Text(
+                                                          "${item.email.toString()}",
+                                                          style: CustomTextStyle
+                                                              .popinstextsmall123,
+                                                        ),
+                                                    Text(
+                                                          "${item.businessName.toString()}",
+                                                          style: CustomTextStyle
+                                                              .popinstextsmall123,
+                                                        ),
+                                                        //  Text(
+                                                        //   "${item.city.toString()} ${item.state.toString()}",
+                                                        //   style: CustomTextStyle
+                                                        //       .popinsmedium,
+                                                        // ),
+                                                        // Row(
+                                                        //   children: [
+                                                        //     SvgPicture.asset(
+                                                        //         "assets/image/yellowstar.svg"),
+                                                        //     SizedBox(
+                                                        //       width: 5,
+                                                        //     ),
+                                                        //     SvgPicture.asset(
+                                                        //         "assets/image/yellowstar.svg"),
+                                                        //     SizedBox(
+                                                        //       width: 5,
+                                                        //     ),
+                                                        //     SvgPicture.asset(
+                                                        //         "assets/image/yellowstar.svg"),
+                                                        //     SizedBox(
+                                                        //       width: 5,
+                                                        //     ),
+                                                        //     SvgPicture.asset(
+                                                        //         "assets/image/yellowstar.svg"),
+                                                        //     SizedBox(
+                                                        //       width: 5,
+                                                        //     ),
+                                                        //     SvgPicture.asset(
+                                                        //         "assets/image/yellowstar.svg"),
+                                                        //     SizedBox(
+                                                        //       width: 5,
+                                                        //     ),
+                                                        //     Text("4.5")
+                                                        //   ],
+                                                        // ),
+                                                        // SizedBox(
+                                                        //   height: 5,
+                                                        // ),
+                                                        Text(
+                                                       "${item.city}, ${item.state}",
+                                                          style: CustomTextStyle
+                                                              .popinssmall0,
+                                                        ),
+                                                        SizedBox(
+                                                          height: 5,
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -1797,7 +1801,7 @@ SizedBox(
                                                               child: Text(
                                                             "Add Product",
                                                             style: CustomTextStyle
-                                                                .popinssmall1,
+                                                                .popinsbold,
                                                           ))),
                                                     ),
                                                     SizedBox(width: 20),
@@ -1824,7 +1828,7 @@ SizedBox(
                                                               child: Text(
                                                             "Order",
                                                             style: CustomTextStyle
-                                                                .popinssmall1,
+                                                                .popinsbold,
                                                           ))),
                                                     )
                                                    ],

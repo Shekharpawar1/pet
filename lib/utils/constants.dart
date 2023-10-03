@@ -70,7 +70,8 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
     static const GET_HEALTH_CONDITION = "$BASE_URL${API_V1_PATH}/auth/health_condition";
       static const GET_USER_NOTIFy =
       "$BASE_URL${API_V1_PATH}/items/notify_list/";
-
+    static const GET_USER_NOTIFy_DELETE =
+      "$BASE_URL${API_V1_PATH}/items/notify_delete/";
   static const GET_USER_NOTIFICATION =
       "$BASE_URL${API_V1_PATH}/customer/notifications?tergat=customer";
   static const GET_STORE_NOTIFICATION =

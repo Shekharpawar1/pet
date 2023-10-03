@@ -8,6 +8,7 @@ import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/screens/wholesaler/ordersummary.dart';
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/fontstyle.dart';
 
 import '../../../controllers/user_controller/addtocartcontroller.dart';
 // import '../../../controllers/wholesaler_controller/user/ordersummary.dart';
@@ -153,6 +154,8 @@ SizedBox():
 
 class CustomAppBarWholeback extends StatelessWidget implements PreferredSizeWidget {
   // final GlobalKey<ScaffoldState> drawerKey;
+    final title;
+   CustomAppBarWholeback({required this.title});
  WholeNotificationController wholenotificationcontroller =
       Get.put(WholeNotificationController());
   // CustomAppBarback({required this.drawerKey});
@@ -162,7 +165,9 @@ class CustomAppBarWholeback extends StatelessWidget implements PreferredSizeWidg
 
   @override
   Widget build(BuildContext context) {
-    return        AppBar(
+    return       
+    
+     AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: Padding(
@@ -173,6 +178,7 @@ class CustomAppBarWholeback extends StatelessWidget implements PreferredSizeWidg
                 },
                 child: Icon(Icons.arrow_left, color: MyColors.black)),
           ),
+ title: Center(child: Text(title.toString(),   style: CustomTextStyle.appbartext,),),
 //           title: Center(
 // //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 // //

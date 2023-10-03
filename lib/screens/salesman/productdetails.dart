@@ -55,49 +55,90 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
         children: [
           Stack(
             children: [
-              Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: MyColors.lightbg,
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(500))),
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 15.0),
-                    child: CachedNetworkImage(
-                      imageUrl: imagePath,
-                      // width: 61,
-                      // height: 75,
-                      placeholder: (context, url) => Center(
-                        child: CircularProgressIndicator(),
-                      ), // Replace with your own placeholder widget
-                      errorWidget: (context, url, error) => Icon(
-                          Icons.error), // Replace with your own error widget
-                    ),
-                  )),
+                        GetBuilder<SalesProductDetailsController>(
+                  init: salesproductdetailscontroller,
+                  builder: (_) {
+                      return   salesproductdetailscontroller!.salesproductdetailmodel == null || salesproductdetailscontroller!.salesproductdetailmodel!.data == null ?SizedBox():
+                        Container(
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: MyColors.lightbg,
+                          borderRadius:
+                              BorderRadius.only(bottomRight: Radius.circular(500))),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 15.0),
+                        child: salesproductdetailscontroller!.salesproductdetailmodel!.data!.images == ''|| salesproductdetailscontroller!.salesproductdetailmodel!.data!.images == null||  salesproductdetailscontroller!.salesproductdetailmodel!.data!.images!.isEmpty?
+                              CachedNetworkImage(
+                              imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${ salesproductdetailscontroller!.salesproductdetailmodel!.data!.image.toString()}",
+                              // width: 61,
+                              // height: 75,
+                            
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(),
+                              ), // Replace with your own placeholder widget
+                              errorWidget: (context, url, error) => Icon(Icons
+                                  .error), // Replace with your own error widget
+                            )
+                          :
+                             CachedNetworkImage(
+                              imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${salesproductdetailscontroller!.salesproductdetailmodel!.data!.images![salesproductdetailscontroller.selectImages??0].toString()}",
+                              // width: 61,
+                              // height: 75,
+                            
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(),
+                              ), // Replace with your own placeholder widget
+                              errorWidget: (context, url, error) => Icon(Icons
+                                  .error), // Replace with your own error widget
+                            ),
+                                
+                        
+
+                        //  CachedNetworkImage(
+                        //   imageUrl: imagePath,
+                        //   // width: 61,
+                        //   // height: 75,
+                        //   placeholder: (context, url) => Center(
+                        //     child: CircularProgressIndicator(),
+                        //   ), // Replace with your own placeholder widget
+                        //   errorWidget: (context, url, error) => Icon(
+                        //       Icons.error), // Replace with your own error widget
+                        // ),
+                     
+                     
+                     
+                      ));
+                }
+              ),
            
-             InkWell(
-                                                  onTap: () {
-                                                    homesalecontroller
-                                                        .addItemToWishList(
-                                                            salesproductdetailscontroller!.salesproductdetailmodel!.data!.id!);
-                                                  },
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Align(
-                                                        alignment: Alignment
-                                                            .centerRight,
-                                                        child: Icon(homesalecontroller
-                                                                    .wishListItemsId
-                                                                .contains(
-                                                                   salesproductdetailscontroller!.salesproductdetailmodel!.data!.id!)
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border,color:Colors.red)),
-                                                  ),
-                                                ),
+           GetBuilder<HomeSalesController>(
+                      init: homesalecontroller,
+                      builder: (_) {
+                 return InkWell(
+                                                      onTap: () {
+                                                        homesalecontroller
+                                                            .addItemToWishList(
+                                                                salesproductdetailscontroller!.salesproductdetailmodel!.data!.id!);
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.all(
+                                                                8.0),
+                                                        child: Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: Icon(homesalecontroller
+                                                                        .wishListItemsId
+                                                                    .contains(
+                                                                       salesproductdetailscontroller!.salesproductdetailmodel!.data!.id!)
+                                                                ? Icons.favorite
+                                                                : Icons
+                                                                    .favorite_border,color:Colors.red)),
+                                                      ),
+                                                    );
+               }
+             ),
             ],
           ),
           // SizedBox(height: MediaQuery.of(context).size.height * 0.03),

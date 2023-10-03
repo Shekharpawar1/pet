@@ -39,6 +39,7 @@ class ProductDetails extends StatelessWidget {
   final UserReviewController userreviewcontroller =
       Get.put(UserReviewController());
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   void onClose() {
     productdetailscontroller.dispose();
@@ -441,6 +442,7 @@ class ProductDetails extends StatelessWidget {
                           ),
                         );
                       }),
+             
               productdetailscontroller.productdetailmodel == null
                   ? SizedBox()
                   : GetBuilder<ProductDetailsController>(
@@ -2414,7 +2416,12 @@ class ProductDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                            
+Align(alignment: Alignment.topRight,
+child:InkWell(
+  onTap: (){
+    Get.back();
+  },
+  child: Icon(Icons.cancel_rounded))),
                              Text(
                                       productdetailscontroller
                                           .productdetailmodel!.data!.name
@@ -2425,7 +2432,14 @@ class ProductDetails extends StatelessWidget {
  productdetailscontroller
                .productdetailmodel!.data == null?
                SizedBox():
- Padding(
+
+               Form( 
+                    key: productdetailscontroller.formKey,
+                child: 
+               
+                 Column(
+                      children: [
+                        Padding(
    padding:
        const EdgeInsets.all(8.0),
    child: Container(
@@ -2488,7 +2502,7 @@ class ProductDetails extends StatelessWidget {
            productdetailscontroller
                .variantslist!
                .map((variantFile
-                       .Variations
+                           .Variations
                    variants) {
          return DropdownMenuItem<
              variantFile.Variations>(
@@ -2530,59 +2544,83 @@ class ProductDetails extends StatelessWidget {
    ),
  ),
 
-        Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 50,
-                        //                    width: 335,
-                        // height: 45,
-                        decoration: BoxDecoration(
-                       border: Border.all(
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 50,
+                            //                    width: 335,
+                            // height: 45,
+                            decoration: BoxDecoration(
+                           border: Border.all(
              color: MyColors.grey),
-                            // color: Color.fromRGBO(255, 255, 255, 0.10),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     offset: const Offset(0.0, 0.0),
-                            //     color: Color.fromRGBO(255, 255, 255, 0.10),
-                            //     blurRadius: 0.0,
-                            //     spreadRadius: 0.0,
-                            //   ),
-                            // ],
-                            borderRadius: BorderRadius.circular(15)),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
-                            }
-                            return null;
-                          },
-                          controller:
-                              productdetailscontroller.emailController,
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            hintStyle: TextStyle(
-                              color: MyColors.black,
+                                // color: Color.fromRGBO(255, 255, 255, 0.10),
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     offset: const Offset(0.0, 0.0),
+                                //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                                //     blurRadius: 0.0,
+                                //     spreadRadius: 0.0,
+                                //   ),
+                                // ],
+                                borderRadius: BorderRadius.circular(15)),
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email';
+                                }
+                                return null;
+                              },
+                              controller:
+                                  productdetailscontroller.emailController,
+                              decoration: InputDecoration(
+                                hintText: "Email",
+                                hintStyle: TextStyle(
+                                  color: MyColors.black,
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                              ),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color:MyColors.black,
+                              ),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            border: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                          ),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color:MyColors.black,
                           ),
                         ),
-                      ),
-                    ),
+                      ],
+                    ),),
+                  
+          
+          
               SizedBox(height: 10,),
                               Center(
                                 child: ElevatedButton(
                                   
                                           onPressed:() async {
                                             //  productdetailscontroller.clearPopUpFields();
-                                        await    productdetailscontroller.addNotify();
+                                               productdetailscontroller.validateForm(context).then(
+                              (isValid) async {
+                                if (isValid) {
+                                  // print("Valid form");
+
+                                  try {
+                                      await    productdetailscontroller.addNotify();
+                                      Get.back();
+                                  } catch (e) {
+                                    Get.snackbar(
+                                      'Error',
+                                      'Something Went Wrong: $e',
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: Colors.red,
+                                      colorText: Colors.white,
+                                    );
+                                  }
+                                } 
+                              });
+                                    
                                           },
                                           child: Text('Notify me when available'),
                                         ),
@@ -2636,7 +2674,7 @@ class ProductDetails extends StatelessWidget {
                                         Row(
                                           children: [
                                             InkWell(
-                                              onTap: ()  {
+                                              onTap: () {
                                                 // Navigator.push(
                                                 //     context,
                                                 //     MaterialPageRoute(
@@ -2664,56 +2702,60 @@ class ProductDetails extends StatelessWidget {
                                                 //                           .toString(),
                                                 //                 )));
                                                 // await productdetailscontroller
-                                                    // .addProduct();
+                                                // .addProduct();
                                                 // mycartController.init();
                                                 MyOrder.Datum foo = MyOrder.Datum(
-                                                
-                                                  userId:productdetailscontroller.userId,
-                                                  id:productdetailscontroller
-                                                                    .productdetailmodel!
-                                                                    .data!
-                                                                    .id,
+                                                    userId: productdetailscontroller
+                                                        .userId,
+                                                    id: productdetailscontroller
+                                                        .productdetailmodel!
+                                                        .data!
+                                                        .id,
+                                                    image: productdetailscontroller
+                                                        .productdetailmodel!
+                                                        .data!
+                                                        .image,
+                                                    itemName: productdetailscontroller
+                                                        .productdetailmodel!
+                                                        .data!
+                                                        .name,
+                                                    variant: productdetailscontroller
+                                                        .selectedvariants!
+                                                        .type
+                                                        .toString(),
+                                                    quantity:
+                                                        (productdetailscontroller
+                                                            .sizecount),
+                                                    price: ((productdetailscontroller.selectedvariants?.price ?? 0) * (productdetailscontroller.sizecount ?? 0) -
+                                                        (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount! ?? 0) * (productdetailscontroller.productdetailmodel!.data!.discount!) / 100)));
 
-                                                  image:productdetailscontroller
-                                                                    .productdetailmodel!
-                                                                    .data!
-                                                                    .image,
-                                                                    itemName:productdetailscontroller.productdetailmodel!.data!.name ,
-                                                                    variant: productdetailscontroller.selectedvariants!.type.toString(),
-                                                                    quantity:(productdetailscontroller.sizecount),
-                                                                    price: ((productdetailscontroller.selectedvariants?.price ?? 0) * (productdetailscontroller.sizecount ?? 0) -
-              (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount! ?? 0) *
-                  (productdetailscontroller.productdetailmodel!.data!.discount!) /
-                  100))
-    
-
-                                                                     );
-                                                
-
-                                        
-                                                Get.to( BuyNowAddToCardUser(
-data:foo,
-tax:productdetailscontroller.productdetailmodel!.data!.tax!
-                                                )
-                                                );
+                                                Get.to(BuyNowAddToCardUser(
+                                                    data: foo,
+                                                    tax: productdetailscontroller
+                                                        .productdetailmodel!
+                                                        .data!
+                                                        .tax!));
                                               },
                                               child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.4,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.06,
+                                                width:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.4,
+                                                height:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .height *
+                                                        0.06,
                                                 decoration: BoxDecoration(
                                                     color: MyColors.yellow,
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            25)),
+                                                        BorderRadius
+                                                            .circular(25)),
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                      MainAxisAlignment
+                                                          .center,
                                                   children: [
                                                     Image.asset(
                                                       "assets/image/bagadd.png",
@@ -2731,200 +2773,93 @@ tax:productdetailscontroller.productdetailmodel!.data!.tax!
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder:
-                                                    //             (context) =>
-                                                    //                 PaymentUser(
-                                                    //                   price: productdetailscontroller
-                                                    //                               .selectedvariants
-                                                    //                               ?.price ==
-                                                    //                           null
-                                                    //                       ? ((productdetailscontroller.productdetailmodel!.data!.price!) *
-                                                    //                                   (productdetailscontroller.sizecount ??
-                                                    //                                       0) -
-                                                    //                               (((productdetailscontroller.productdetailmodel!.data!.price!) * productdetailscontroller.sizecount ?? 0) *
-                                                    //                                   (productdetailscontroller
-                                                    //                                       .productdetailmodel!.data!.discount!) /
-                                                    //                                   100))
-                                                    //                           .toString()
-                                                    //                       : ((productdetailscontroller.selectedvariants?.price ?? 0) *
-                                                    //                                   (productdetailscontroller.sizecount ??
-                                                    //                                       0) -
-                                                    //                               (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount ?? 0) *
-                                                    //                                   (productdetailscontroller.productdetailmodel!.data!.discount!) /
-                                                    //                                   100))
-                                                    //                           .toString(),
-                                                    //                 )));
-                                                    // await productdetailscontroller
-                                                    // .addProduct();
-                                                    // mycartController.init();
-                                                    MyOrder.Datum foo = MyOrder.Datum(
-                                                        userId: productdetailscontroller
-                                                            .userId,
-                                                        id: productdetailscontroller
-                                                            .productdetailmodel!
-                                                            .data!
-                                                            .id,
-                                                        image: productdetailscontroller
-                                                            .productdetailmodel!
-                                                            .data!
-                                                            .image,
-                                                        itemName: productdetailscontroller
-                                                            .productdetailmodel!
-                                                            .data!
-                                                            .name,
-                                                        variant: productdetailscontroller
-                                                            .selectedvariants!
-                                                            .type
-                                                            .toString(),
-                                                        quantity:
-                                                            (productdetailscontroller
-                                                                .sizecount),
-                                                        price: ((productdetailscontroller.selectedvariants?.price ?? 0) * (productdetailscontroller.sizecount ?? 0) -
-                                                            (((productdetailscontroller.selectedvariants?.price ?? 0) * productdetailscontroller.sizecount! ?? 0) * (productdetailscontroller.productdetailmodel!.data!.discount!) / 100)));
-
-                                                    Get.to(BuyNowAddToCardUser(
-                                                        data: foo,
-                                                        tax: productdetailscontroller
-                                                            .productdetailmodel!
-                                                            .data!
-                                                            .tax!));
-                                                  },
-                                                  child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.4,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.06,
-                                                    decoration: BoxDecoration(
-                                                        color: MyColors.yellow,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(25)),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Image.asset(
-                                                          "assets/image/bagadd.png",
-                                                          height: 25,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Text(
-                                                          "Buy Now",
-                                                          style: CustomTextStyle
-                                                              .mediumtextreem,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                                Spacer(),
-                                                GetBuilder<
-                                                        ProductDetailsController>(
-                                                    init:
-                                                        productdetailscontroller,
-                                                    builder: (_) {
-                                                      return InkWell(
-                                                        onTap: () async {
+                                            Spacer(),
+                                            GetBuilder<
+                                                    ProductDetailsController>(
+                                                init:
+                                                    productdetailscontroller,
+                                                builder: (_) {
+                                                  return InkWell(
+                                                    onTap: () async {
 // mycartController.adddiscount(
 
 //   // (productdetailscontroller.productdetailmodel!.data!.discount??0),(productdetailscontroller.productdetailmodel!.data!.price??0)
 
 //   );
-                                                          if (productdetailscontroller
-                                                              .isProductInCartBool) {
-                                                            mycartController.init();
-                                                            Get.to(const AddToCardUser());
-                                                          } else {
-                                                            await productdetailscontroller
-                                                                .addProduct();
-                                                            await productdetailscontroller
-                                                                .isProductInCart();
-                                                          }
-                                                          // ?   :
+                                                      if (productdetailscontroller
+                                                          .isProductInCartBool) {
+                                                        mycartController.init();
+                                                        Get.to(const AddToCardUser());
+                                                      } else {
+                                                        await productdetailscontroller
+                                                            .addProduct();
+                                                        await productdetailscontroller
+                                                            .isProductInCart();
+                                                      }
+                                                      // ?   :
 
-                                                          // await productdetailscontroller
-                                                          //     .addProduct();
-                                                          // Get.to(
-                                                          //     const AddToCardUser());
-                                                          // mycartController
-                                                          //     .init();
-                                                          //     productdetailscontroller.addToCart(
+                                                      // await productdetailscontroller
+                                                      //     .addProduct();
+                                                      // Get.to(
+                                                      //     const AddToCardUser());
+                                                      // mycartController
+                                                      //     .init();
+                                                      //     productdetailscontroller.addToCart(
 
-                                                          // productdetailscontroller.productdetailmodel!.data!.name.toString(),
-                                                          //              productdetailscontroller.sizecount.toString(),
-                                                          //              productdetailscontroller.selectedVariants.toString()
-                                                          //               );
-                                                          // Navigator.push(
-                                                          //     context,
-                                                          //     MaterialPageRoute(
-                                                          //         builder: (context) =>
-                                                          //             AddToCardUser()));
-                                                        },
-                                                        child: Container(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.4,
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height *
-                                                              0.06,
-                                                          decoration: BoxDecoration(
-                                                              color: MyColors
-                                                                  .yellow,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          25)),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Image.asset(
-                                                                "assets/image/bagadd.png",
-                                                                height: 25,
-                                                              ),
-                                                              SizedBox(
-                                                                width: 10,
-                                                              ),
-                                                              Text(
-                                                                productdetailscontroller
-                                                                        .isProductInCartBool
-                                                                    ? "Go To Cart"
-                                                                :
-                                                                "Add To Cart",
-                                                                style: CustomTextStyle
-                                                                    .mediumtextreem,
-                                                              )
-                                                            ],
+                                                      // productdetailscontroller.productdetailmodel!.data!.name.toString(),
+                                                      //              productdetailscontroller.sizecount.toString(),
+                                                      //              productdetailscontroller.selectedVariants.toString()
+                                                      //               );
+                                                      // Navigator.push(
+                                                      //     context,
+                                                      //     MaterialPageRoute(
+                                                      //         builder: (context) =>
+                                                      //             AddToCardUser()));
+                                                    },
+                                                    child: Container(
+                                                      width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width *
+                                                          0.4,
+                                                      height: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .height *
+                                                          0.06,
+                                                      decoration: BoxDecoration(
+                                                          color: MyColors
+                                                              .yellow,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      25)),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Image.asset(
+                                                            "assets/image/bagadd.png",
+                                                            height: 25,
                                                           ),
-                                                        ),
-                                                      );
-                                                    })
-                                              ],
-                                            )
+                                                          SizedBox(
+                                                            width: 10,
+                                                          ),
+                                                          Text(
+                                                            productdetailscontroller
+                                                                    .isProductInCartBool
+                                                                ? "Go To Cart"
+                                                            :
+                                                            "Add To Cart",
+                                                            style: CustomTextStyle
+                                                                .mediumtextreem,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                })
                                           ],
                                         ),
                                    ] ),

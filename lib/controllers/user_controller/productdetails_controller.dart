@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,6 +15,8 @@ import 'package:http/http.dart' as http;
 
 class ProductDetailsController extends GetxController {
   final storage = GetStorage();
+  
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   int? selecttab;
   bool isAdding = false;
@@ -64,6 +68,7 @@ imagesPath =
     print(productdetailmodel!.data!.images![selectImages??0]);
     update();
   }
+ 
   variantFile.Variations? selectedvariants;
 
   Future<void> updateVariants(variantFile.Variations variants) async {
@@ -164,7 +169,7 @@ imagesPath =
   void viewproductHome(int id, String productName, String varianttts, int quantity, String price, String image) {
     productID = id;
     productname = productName;
-    variants = varianttts;
+    variants = variants;
      qty  = quantity;
      priceProduct = price;
      image = image;
@@ -292,6 +297,24 @@ imagesPath =
     // sizecount= 1;
     dispose();
     super.onClose();
+  }
+
+  Future<bool> validateForm(BuildContext context) {
+    final completer = Completer<bool>();
+
+    if (formKey.currentState!.validate()) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
+      completer.complete(true);
+    } else {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
+      completer.complete(false);
+    }
+
+    return completer.future;
   }
 
 

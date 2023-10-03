@@ -489,36 +489,40 @@ class _AllcategoryState extends State<Allcategory> {
                                                   children: [
 
 
+GetBuilder<HomeuserController>(
+                    init: homeusercontroller,
+                    builder: (_) {
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            homeusercontroller
+                                                                .addItemToWishList(
+                                                                    item.id!);
 
-                                                    InkWell(
-                                                      onTap: () {
-                                                        homeusercontroller
-                                                            .addItemToWishList(
-                                                                item.id!);
-
-                                                            homeusercontroller.init();
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerRight,
-                                                          child: Icon(
-                                                              homeusercontroller
-                                                                      .wishListItemsId
-                                                                      .contains(
-                                                                          item
-                                                                              .id!)
-                                                                  ? Icons
-                                                                      .favorite
-                                                                  : Icons
-                                                                      .favorite_border,
-                                                              color:
-                                                                  Colors.red),
-                                                        ),
-                                                      ),
+                                                                homeusercontroller.init();
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerRight,
+                                                              child: Icon(
+                                                                  homeusercontroller
+                                                                          .wishListItemsId
+                                                                          .contains(
+                                                                              item
+                                                                                  .id!)
+                                                                      ? Icons
+                                                                          .favorite
+                                                                      : Icons
+                                                                          .favorite_border,
+                                                                  color:
+                                                                      Colors.red),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
                                                     ),
 
                                                 

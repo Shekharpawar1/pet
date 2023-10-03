@@ -22,7 +22,9 @@ class SalesOurBrandDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+      var imageLogoPath =
+                                              "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo ?? ""}";
+                                        
     var imagePath = "${Constants.BASE_URL}/storage/app/public/product/${ourbranddeatilscontrroller.brandlogo??''}";
     return Scaffold(
 
@@ -118,7 +120,7 @@ leading: Padding(
         
                                CachedNetworkImage(
   
-                                              imageUrl: imagePath,
+                                              imageUrl: imageLogoPath,
   
                                               // width: 61,
   

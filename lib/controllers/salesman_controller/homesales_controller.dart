@@ -5,6 +5,7 @@ import 'package:pet/models/salesmanModel/bannerModel.dart';
 import 'package:pet/models/salesmanModel/getUserCategoriesModel.dart';
 import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
 import 'package:pet/models/salesmanModel/ourBrandModel.dart';
+import 'package:pet/models/salesmanModel/salesProductByPartnerItemModel.dart';
 import 'package:pet/models/salesmanModel/salesProductByPartnerModel.dart';
 import 'package:pet/models/salesmanModel/salesWishListModel.dart';
 import 'package:pet/models/usersModel/bannerModel.dart';
@@ -15,7 +16,11 @@ import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart' as Model;
 
 class HomeSalesController extends GetxController {
   bool showLoading = false;
+    TextEditingController searchcontroller = TextEditingController();
   final storage = GetStorage();
+    int? itempartnerId;
+    
+  int? selectImages = 0;
   //  var sellerId = GetStorage().read("sellerid");
   var wholesellerID;
   List _cartList = [
@@ -37,6 +42,12 @@ class HomeSalesController extends GetxController {
     update();
   }
 
+
+void viewpartner(int id) {
+    itempartnerId = id;
+    update();
+    print("itempartnerId${itempartnerId}");
+  }
   void searchDataFilter(SalesPropertiesModel? dataModel, String keyword) {
     // const String keyword = "999";
 
@@ -105,6 +116,9 @@ class HomeSalesController extends GetxController {
       "title": "Cat",
     }
   ].obs;
+
+
+
 
   String getUserCategoriesUrl =
       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
@@ -212,11 +226,11 @@ class HomeSalesController extends GetxController {
       // our brands
       salesBrandModel =
           SalesOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
-      // userOurBrandModel = userBrandModel;
-      // userOurBrandModel!.data = [];
-      // userBrandModel!.data!.forEach((e) {
+      //salesOurBrandModel =salesBrandModel;
+      //salesOurBrandModel!.data = [];
+      //salesBrandModel!.data!.forEach((e) {
       //   if (e.canine == 1) {
-      //     userOurBrandModel!.data!.add(e);
+      //    salesOurBrandModel!.data!.add(e);
       //   }
       // });
       print(
@@ -257,6 +271,36 @@ class HomeSalesController extends GetxController {
     update();
   }
 
+
+String getPartnerItemUrl = '${Constants.GET_PRODUCT_PARTNER_ITEM}';
+SalesProductByPartnerItemModel? salesproductbypartneritemModel;
+  bool partneritemLoaded = false;
+
+  Future<void> partnerIteminit() async {
+    showLoading = true;
+     try {
+      // our services
+     salesproductbypartneritemModel =
+          SalesProductByPartnerItemModel.fromJson(await ApiHelper.getApi(getPartnerItemUrl+"${itempartnerId}"));
+      print(getPartnerItemUrl);
+      partneritemLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    
+    update();
+    }
+  
   Future<void> addItemToWishList(int productId) async {
     showLoading = true;
     update();

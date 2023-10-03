@@ -27,7 +27,7 @@ class _PendingCompleteSreenState extends State<PendingCompleteSreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarWholeback(
+      appBar: CustomAppBarWholeback(title: widget.data![0].orderStatus??'',
         // drawerKey: _drawerkey,
       ),
 //   appBar: AppBar(
@@ -62,7 +62,7 @@ class _PendingCompleteSreenState extends State<PendingCompleteSreen> {
 //         ),
       
       body:
-        widget.data!.isEmpty ? Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)):
+     widget.data == ""||  widget.data!.isEmpty ? Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)):
        ListView(
         shrinkWrap: true,
         primary: true,

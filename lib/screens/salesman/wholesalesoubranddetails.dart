@@ -5,32 +5,45 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pet/controllers/user_controller/home_controller.dart';
-import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
-import 'package:pet/controllers/user_controller/productdetails_controller.dart';
-import 'package:pet/screens/user/notification.dart';
-import 'package:pet/screens/user/ordersummary.dart';
-import 'package:pet/screens/user/productdetails.dart';
-import 'package:pet/screens/user/widgets/userAppBar.dart';
+import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
+import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
+import 'package:pet/controllers/salesman_controller/salesourbranddetailscontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
+import 'package:pet/screens/salesman/productdetails.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
+import 'package:pet/screens/wholesaler/productdetails.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
+
+// import 'package:pet/screens/user/notification.dart';
+// import 'package:pet/screens/user/ordersummary.dart';
+// import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OurBrandDetails extends StatelessWidget {
-  OurBrandDetails({super.key});
+class WholeSalesOurBrandDetails extends StatelessWidget {
+  WholeSalesOurBrandDetails({super.key});
+//  WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
+ SalesOurBrandDetailsController salesOurBrandDetailsController =
+      Get.put(SalesOurBrandDetailsController());
+      SalesProductDetailsController salesProductDetailsController =
+      Get.put(SalesProductDetailsController());
+           final HomeSalesController homesalecontroller = Get.put(HomeSalesController());
+//   WholeProductDetailsController wholeproductdetailsController =
+//       Get.put(WholeProductDetailsController());
+// OurBrandDetailsWholeController salesOurBrandDetailsController = Get.put(OurBrandDetailsWholeController());
 
-  final HomeuserController homeusercontroller = Get.put(HomeuserController());
-  OurBrandDetailsController ourbranddeatilscontrroller =
-      Get.put(OurBrandDetailsController());
-  ProductDetailsController productdeatilscontroller =
-      Get.put(ProductDetailsController());
   @override
   Widget build(BuildContext context) {
-    ourbranddeatilscontrroller.ourproductinit();
+    salesOurBrandDetailsController.ourproductinit();
     // var imagePath = "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo??''}";
     return Scaffold(
-        appBar: CustomAppBarback(),
+        appBar: CustomAppBarSalesWholeback(
+          title: "Our Brand Product",
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListView(
@@ -52,7 +65,7 @@ class OurBrandDetails extends StatelessWidget {
                       color: MyColors.white,
                     ),
                     child: TextFormField(
-                      controller: ourbranddeatilscontrroller.searchcontroller,
+                      controller: salesOurBrandDetailsController.searchcontroller,
                       style: TextStyle(
                         fontSize: 14,
                         color: MyColors.voliet,
@@ -354,8 +367,8 @@ class OurBrandDetails extends StatelessWidget {
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.9,
-                child: GetBuilder<OurBrandDetailsController>(
-                    init: ourbranddeatilscontrroller,
+                child: GetBuilder<SalesOurBrandDetailsController>(
+                    init: salesOurBrandDetailsController,
                     builder: (_) {
                       return
 
@@ -373,8 +386,8 @@ class OurBrandDetails extends StatelessWidget {
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
                                       mainAxisExtent: 280),
-                              itemCount: ourbranddeatilscontrroller
-                                  .userPropertiesModel!
+                              itemCount: salesOurBrandDetailsController
+                                  .salesPropertiesModel!
                                   .data!
                                   .length, // Set the number of cards you want to display.
                               itemBuilder: (context, index) {
@@ -389,8 +402,8 @@ class OurBrandDetails extends StatelessWidget {
                                 //     .userPropertiesModel!.data!.length
                                 //     .clamp(0, 4),
                                 // itemBuilder: (BuildContext ctx, index) {
-                                var item = ourbranddeatilscontrroller
-                                    .userPropertiesModel!.data![index];
+                                var item = salesOurBrandDetailsController
+                                    .salesPropertiesModel!.data![index];
                                 print("Name,Brand");
                                 print(item.name);
                                 print(item.brandId);
@@ -410,22 +423,15 @@ class OurBrandDetails extends StatelessWidget {
                                     //                     ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                     InkWell(
                                   onTap: ()async {
-                                    productdeatilscontroller.dispose();
-                                                productdeatilscontroller
+                                    salesProductDetailsController
                                                     .viewproduct(
                                                   item.id ?? 0,
                                                 );
-
-                                                // print("productid${item.id ?? 0}");
-                                                await productdeatilscontroller
+                                                print(
+                                                    "productid${item.id ?? 0}");
+                                                await salesProductDetailsController
                                                     .init();
-                                                // userreviewController.reviewAdd(
-                                                //     item.id ?? 0, 0);
-                                                // await userreviewController
-                                                //     .init();
-                                                Get.to(ProductDetails(
-                                                  id: item.id??0,
-                                                ));
+                                                Get.to(ProductDetailssale());
                                   },
                                   child: Container(
                                     width: 140,
@@ -461,33 +467,38 @@ class OurBrandDetails extends StatelessWidget {
                                     ),
                                     child: Column(
                                       children: [
-                                           GetBuilder<HomeuserController>(
-                  init: homeusercontroller,
-                  builder: (_) {
-                                            return InkWell(
-                                              onTap: () {
-                                                homeusercontroller
-                                                    .addItemToWishList(item.id!);
-
-                                                homeusercontroller.init();
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Icon(
-                                                      homeusercontroller
-                                                              .wishListItemsId
-                                                              .contains(item.id!)
-                                                          ? Icons.favorite
-                                                          : Icons.favorite_border,
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        ),
-
+                                          
+                                                       GetBuilder<HomeSalesController>(
+                                                                        init: homesalecontroller,
+                                                                        builder: (_) {
+                                                         return InkWell(
+                                                            onTap: () {
+                                                              homesalecontroller
+                                                                  .fethUserId();
+                                                              homesalecontroller
+                                                                  .addItemToWishList(
+                                                                      item.id!);
+                                                            },
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Align(
+                                                                  alignment: Alignment
+                                                                      .centerRight,
+                                                                  child: Icon(homesalecontroller
+                                                                          .wishListItemsId
+                                                                          .contains(
+                                                                              item
+                                                                                  .id!)
+                                                                      ? Icons.favorite
+                                                                      : Icons
+                                                                          .favorite_border,color:Colors.red)),
+                                                            ),
+                                                          );
+                                                       }
+                                                     ),
+                                                    
                                         Container(
                                           height: 125,
                                           decoration: BoxDecoration(
@@ -671,6 +682,8 @@ class OurBrandDetails extends StatelessWidget {
                                     ),
                                   ),
                                 );
+                           
+                           
                               });
                     }),
               ),

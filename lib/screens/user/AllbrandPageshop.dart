@@ -4,9 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
-import 'package:pet/controllers/user_controller/productdetails_controller.dart';
-import 'package:pet/controllers/user_controller/review_controller.dart';
-import 'package:pet/screens/user/productdetails.dart';
+import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
+import 'package:pet/screens/user/shopbybranddetails.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
@@ -15,19 +14,18 @@ import 'package:pet/screens/user/ourbrand.dart';
 import 'package:pet/models/usersModel/ourBrandModel.dart' as OurBrandModel;
 
 import '../../models/usersModel/ourBrandModel.dart';
-class AllbrandPage extends StatefulWidget {
-    AllbrandPage({super.key,required this.data});
+class AllShopbrandPage extends StatefulWidget {
+    AllShopbrandPage({super.key,required this.data});
   List<OurBrandModel.Datum>? data;
 
   @override
-  State<AllbrandPage> createState() => _AllbrandPageState();
+  State<AllShopbrandPage> createState() => _AllShopbrandPageState();
 }
 
-class _AllbrandPageState extends State<AllbrandPage> {
-  ProductDetailsController productdeatilscontroller =
-      Get.put(ProductDetailsController());
-  UserReviewController userreviewController = Get.put(UserReviewController());
+class _AllShopbrandPageState extends State<AllShopbrandPage> {
    final HomeuserController homeusercontroller = Get.put(HomeuserController());
+    OurBrandDetailsController Ourbranddetailscontroller =
+      Get.put(OurBrandDetailsController());
   //  UserOurBrandModel? bb;
   @override
   Widget build(BuildContext context) {
@@ -256,21 +254,13 @@ class _AllbrandPageState extends State<AllbrandPage> {
                                       var imageLogoPath =
                                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                       return InkWell(
-                        onTap: () async{
-                          productdeatilscontroller.dispose();
-                                                productdeatilscontroller
-                                                    .viewproduct(
-                                                  item.id ?? 0,
-                                                );
-
-                                                // print("productid${item.id ?? 0}");
-                                                await productdeatilscontroller
-                                                    .init();
-                                                userreviewController.reviewAdd(
-                                                    item.id ?? 0, 0);
-                                                await userreviewController
-                                                    .init();
-                                                Get.to(ProductDetails());
+                        onTap: () {
+                         Ourbranddetailscontroller
+                                                .addproduct(item.id ?? 0,
+                                                item.title??'',
+                                                    item.logo ?? '');
+  Ourbranddetailscontroller.productinit();
+                                            Get.to(ShopBrandDetails());
                         },
                         child:  Padding(
                                     padding: const EdgeInsets.all(8.0),

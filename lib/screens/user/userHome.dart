@@ -23,6 +23,7 @@ import 'package:pet/controllers/user_controller/userServicesAddAppointmentContro
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/oubranddetails.dart';
 import 'package:pet/screens/user/AllPageProductbybrand.dart';
+import 'package:pet/screens/user/AllbrandPageshop.dart';
 
 import 'package:pet/screens/user/allcategory.dart';
 import 'package:pet/screens/user/drawer.dart';
@@ -62,10 +63,11 @@ class _HomeUserState extends State<HomeUser> {
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
     GlobalKey<RefreshIndicatorState>();
-  ProductDetailsController productdeatilscontroller =
-      Get.put(ProductDetailsController());
+  
   SubCategoryController subcategorycontroller =
       Get.put(SubCategoryController());
+      ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
   UserReviewController userreviewController = Get.put(UserReviewController());
   OurBrandDetailsController Ourbranddetailscontroller =
       Get.put(OurBrandDetailsController());
@@ -239,20 +241,21 @@ class _HomeUserState extends State<HomeUser> {
         padding: const EdgeInsets.all(0),
         child: Stack(
           children: [
-//             RefreshIndicator(
-//               color: Colors.white,
-//               backgroundColor: Colors.white,
+            RefreshIndicator(
+              // color: Colors.white,
+              // backgroundColor: Colors.white,
 // edgeOffset: 0,
 // strokeWidth: 0,
-// key: _refreshIndicatorKey,
-// // displacement: -0.1,
+key: _refreshIndicatorKey,
+// displacement: -0.1,
 
-//               onRefresh: () async {
-//                 _refreshIndicatorKey.currentState?.show(atTop: false);
-//                 await homeusercontroller.init();
-//                 await Future.delayed(Duration(seconds: 2));
-//               },
-//               child: 
+              onRefresh: () async {
+                _refreshIndicatorKey.currentState?.show(atTop: false);
+                await homeusercontroller.init();
+                
+                await Future.delayed(Duration(seconds: 2));
+              },
+              child: 
               ListView(
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
@@ -260,7 +263,7 @@ class _HomeUserState extends State<HomeUser> {
                 // shrinkWrap: true,
 
                 children: [
-                  // SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.02,),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -268,7 +271,7 @@ class _HomeUserState extends State<HomeUser> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.6,
+                            width: MediaQuery.of(context).size.width * 0.65,
                             child: Text(
                               "Find the pet you love on around you easily",
                               style: CustomTextStyle.popinstext,
@@ -276,7 +279,7 @@ class _HomeUserState extends State<HomeUser> {
 
                         // Image.asset("assets/image/girl.png")
                         //  SvgPicture.asset("assets/image/girl.svg"),
-
+ Spacer(),
                         GetBuilder<ProfileController>(
                             init: profilecontroller,
                             builder: (_) {
@@ -1399,7 +1402,7 @@ class _HomeUserState extends State<HomeUser> {
                                         return InkWell(
                                           onTap: () async{
                                             Ourbranddetailscontroller
-                                                .addproduct(item.id ?? 0,
+                                                .addproduct(item.id ?? 0,item.title??'',
                                                     item.logo ?? '');
                                             //  subcategorycontroller.addproduct(item.id??0) ;
 await Ourbranddetailscontroller.ourproductinit();
@@ -2012,7 +2015,7 @@ await Ourbranddetailscontroller.ourproductinit();
 
                         InkWell(
                           onTap: () {
-                            Get.to(AllbrandPage(
+                            Get.to(AllShopbrandPage(
                                 data: homeusercontroller.userBrandModel!.data!
                                     .where((element) => element.canine == 0)
                                     .toList()));
@@ -2068,6 +2071,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                           onTap: () {
                                             Ourbranddetailscontroller
                                                 .addproduct(item.id ?? 0,
+                                                item.title??'',
                                                     item.logo ?? '');
   Ourbranddetailscontroller.productinit();
                                             Get.to(ShopBrandDetails());
@@ -2532,6 +2536,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                           :
                                           InkWell(
                                             onTap: () async{
+                                               productdeatilscontroller.dispose();
                                                  productdeatilscontroller
                                                 .viewproduct(
                                               item.id ?? 0,
@@ -3848,34 +3853,35 @@ await Ourbranddetailscontroller.ourproductinit();
                       })
                 ],
               ),
-            // ),
+            ),
 
-            GetBuilder<HomeuserController>(
-                init: homeusercontroller,
-                builder: (_) {
-                  return homeusercontroller.showLoading
-                      ? BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                          child: Container(
-                            color: Colors.black.withOpacity(
-                                0.1), // Adjust the opacity as needed
-                          ),
-                        )
-                      : SizedBox();
-                }),
-            // Progress bar
-            GetBuilder<HomeuserController>(
-                init: homeusercontroller,
-                builder: (_) {
-                  return homeusercontroller.showLoading
-                      ? Center(
-                          child: SpinKitCircle(
-                            color: Colors.white, // Color of the progress bar
-                            size: 50.0, // Size of the progress bar
-                          ),
-                        )
-                      : SizedBox();
-                }),
+            // GetBuilder<HomeuserController>(
+            //     init: homeusercontroller,
+            //     builder: (_) {
+            //       return homeusercontroller.showLoading
+            //           ? BackdropFilter(
+            //               filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+            //               child: Container(
+            //                 color: Colors.black.withOpacity(
+            //                     0.1), // Adjust the opacity as needed
+            //               ),
+            //             )
+            //           : SizedBox();
+            //     }),
+            // // Progress bar
+            // GetBuilder<HomeuserController>(
+                // init: homeusercontroller,
+                // builder: (_) {
+                //   return homeusercontroller.showLoading
+                //       ? Center(
+                //           child: SpinKitCircle(
+                //             color: Colors.white, // Color of the progress bar
+                //             size: 50.0, // Size of the progress bar
+                //           ),
+                //         )
+                //       : SizedBox();
+                // }),
+        
           ],
         ),
       ),

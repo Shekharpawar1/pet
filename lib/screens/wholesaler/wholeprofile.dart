@@ -24,7 +24,7 @@ class _WholeSalerProfileState extends State<WholeSalerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: CustomAppBarWholeback(),
+     appBar: CustomAppBarWholeback(title: "Profile",),
      body: ListView(
         shrinkWrap: true,
         primary: true,

@@ -5,32 +5,35 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pet/controllers/user_controller/home_controller.dart';
-import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
-import 'package:pet/controllers/user_controller/productdetails_controller.dart';
-import 'package:pet/screens/user/notification.dart';
-import 'package:pet/screens/user/ordersummary.dart';
-import 'package:pet/screens/user/productdetails.dart';
-import 'package:pet/screens/user/widgets/userAppBar.dart';
+import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
+import 'package:pet/screens/wholesaler/productdetails.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
+
+// import 'package:pet/screens/user/notification.dart';
+// import 'package:pet/screens/user/ordersummary.dart';
+// import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OurBrandDetails extends StatelessWidget {
-  OurBrandDetails({super.key});
+class WholeOurBrandDetails extends StatelessWidget {
+  WholeOurBrandDetails({super.key});
+ WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
+  WholeProductDetailsController wholeproductdetailsController =
+      Get.put(WholeProductDetailsController());
+OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandDetailsWholeController());
 
-  final HomeuserController homeusercontroller = Get.put(HomeuserController());
-  OurBrandDetailsController ourbranddeatilscontrroller =
-      Get.put(OurBrandDetailsController());
-  ProductDetailsController productdeatilscontroller =
-      Get.put(ProductDetailsController());
   @override
   Widget build(BuildContext context) {
-    ourbranddeatilscontrroller.ourproductinit();
+    oubranddetailswholeController.ourproductinit();
     // var imagePath = "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo??''}";
     return Scaffold(
-        appBar: CustomAppBarback(),
+        appBar: CustomAppBarWholeback(
+          title: "Our Brand Product",
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListView(
@@ -52,7 +55,7 @@ class OurBrandDetails extends StatelessWidget {
                       color: MyColors.white,
                     ),
                     child: TextFormField(
-                      controller: ourbranddeatilscontrroller.searchcontroller,
+                      controller: oubranddetailswholeController.searchcontroller,
                       style: TextStyle(
                         fontSize: 14,
                         color: MyColors.voliet,
@@ -354,8 +357,8 @@ class OurBrandDetails extends StatelessWidget {
               ),
               Container(
                 height: MediaQuery.of(context).size.height * 0.9,
-                child: GetBuilder<OurBrandDetailsController>(
-                    init: ourbranddeatilscontrroller,
+                child: GetBuilder<OurBrandDetailsWholeController>(
+                    init: oubranddetailswholeController,
                     builder: (_) {
                       return
 
@@ -373,7 +376,7 @@ class OurBrandDetails extends StatelessWidget {
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
                                       mainAxisExtent: 280),
-                              itemCount: ourbranddeatilscontrroller
+                              itemCount: oubranddetailswholeController
                                   .userPropertiesModel!
                                   .data!
                                   .length, // Set the number of cards you want to display.
@@ -389,7 +392,7 @@ class OurBrandDetails extends StatelessWidget {
                                 //     .userPropertiesModel!.data!.length
                                 //     .clamp(0, 4),
                                 // itemBuilder: (BuildContext ctx, index) {
-                                var item = ourbranddeatilscontrroller
+                                var item = oubranddetailswholeController
                                     .userPropertiesModel!.data![index];
                                 print("Name,Brand");
                                 print(item.name);
@@ -410,20 +413,14 @@ class OurBrandDetails extends StatelessWidget {
                                     //                     ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                     InkWell(
                                   onTap: ()async {
-                                    productdeatilscontroller.dispose();
-                                                productdeatilscontroller
+                                     wholeproductdetailsController
                                                     .viewproduct(
                                                   item.id ?? 0,
                                                 );
-
-                                                // print("productid${item.id ?? 0}");
-                                                await productdeatilscontroller
+                                                print("productid${item.id ?? 0}");
+                                                await wholeproductdetailsController
                                                     .init();
-                                                // userreviewController.reviewAdd(
-                                                //     item.id ?? 0, 0);
-                                                // await userreviewController
-                                                //     .init();
-                                                Get.to(ProductDetails(
+                                                Get.to(ProductDetailswhole(
                                                   id: item.id??0,
                                                 ));
                                   },
@@ -461,22 +458,22 @@ class OurBrandDetails extends StatelessWidget {
                                     ),
                                     child: Column(
                                       children: [
-                                           GetBuilder<HomeuserController>(
-                  init: homeusercontroller,
+                                         GetBuilder<WholeHomeController>(
+                  init: wholehomecontroller,
                   builder: (_) {
                                             return InkWell(
                                               onTap: () {
-                                                homeusercontroller
+                                                wholehomecontroller
                                                     .addItemToWishList(item.id!);
 
-                                                homeusercontroller.init();
+                                                wholehomecontroller.init();
                                               },
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Align(
                                                   alignment: Alignment.centerRight,
                                                   child: Icon(
-                                                      homeusercontroller
+                                                      wholehomecontroller
                                                               .wishListItemsId
                                                               .contains(item.id!)
                                                           ? Icons.favorite

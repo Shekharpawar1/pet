@@ -75,15 +75,15 @@
 //     return data;
 //   }
 // }
-class NotifyListModel {
+class WholeNotifyListModel {
   String? status;
   List<Data>? data;
   List<Notification>? notification;
   String? message;
 
-  NotifyListModel({this.status, this.data, this.notification, this.message});
+  WholeNotifyListModel({this.status, this.data, this.notification, this.message});
 
-  NotifyListModel.fromJson(Map<String, dynamic> json) {
+  WholeNotifyListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <Data>[];

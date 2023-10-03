@@ -100,8 +100,8 @@ class WholeUserAddress extends StatelessWidget {
                                 wholeaddressController.fullNameController,
                             decoration: InputDecoration(
                               hintText: "Dev",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
+                            hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -144,8 +144,8 @@ class WholeUserAddress extends StatelessWidget {
                                 wholeaddressController.lastNameController,
                             decoration: InputDecoration(
                               hintText: "Soni",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
+                            hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -196,8 +196,8 @@ class WholeUserAddress extends StatelessWidget {
                             decoration: InputDecoration(
                               hintText: "9089789878",
                               counterText: '',
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
+                            hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -239,8 +239,8 @@ class WholeUserAddress extends StatelessWidget {
                                 wholeaddressController.flataddressController,
                             decoration: InputDecoration(
                               hintText: "N7/19-R-2-A-A-98,Vivek niwas",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
+                            hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -284,8 +284,8 @@ class WholeUserAddress extends StatelessWidget {
                                 wholeaddressController.areaaddressController,
                             decoration: InputDecoration(
                               hintText: "IND Road",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
+                            hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -327,8 +327,8 @@ class WholeUserAddress extends StatelessWidget {
                                 wholeaddressController.landmarkController,
                             decoration: InputDecoration(
                               hintText: "Behind hydel sub power station",
-                              hintStyle: TextStyle(
-                                color: MyColors.black,
+                            hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
@@ -367,8 +367,8 @@ class WholeUserAddress extends StatelessWidget {
                                 .pincodeController,
                             decoration: InputDecoration(
                               hintText: "78980",
-                               hintStyle: TextStyle(
-                                color: MyColors.black,
+                             hintStyle: TextStyle(
+                                color: MyColors.grey,
                               ),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),

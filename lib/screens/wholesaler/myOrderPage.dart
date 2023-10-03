@@ -151,16 +151,30 @@ class MyOrderWhole extends StatelessWidget {
                                   null
                               ? SizedBox()
                               : InkWell(
-                                  onTap: () {
+                                  onTap: () async{
                                     wholemyordercontroller
                                         .addorder(item.id ?? 0);
                                     print("Orderid ${item.id}");
-                                    wholemyordercontroller.orderdetailsinit();
+                                 await   wholemyordercontroller.orderdetailsinit();
                                     Get.to(OrderDetailswhole(
                                         orderId: item.id ?? 0,
                                         couponcode: item.couponCode ?? '',
                                         paymentmethod: item.paymentMethod ?? '',
-                                        orderstatus: item.orderStatus ?? ''));
+                                        orderstatus: item.orderStatus ?? '',
+                                        
+                                           orderAmount: item.orderAmount,
+                                        fname: item.callback![0].userProfile![0].fName??'',
+                                         lname: item.callback![0].userProfile![0].lName??'',
+                                        phone: item.callback![0].userProfile![0].phone??'',
+                                        email:item.callback![0].userProfile![0].email??'',
+                                        address: item.deliveryAddress??'',
+                                        delivered: item.delivered??'',
+                                        username:( item.callback![0].userProfile![0].fName??''),
+                                        usernumber:  item.callback![0].userProfile![0].phone??'',
+                                        lastname : item.callback![0].userProfile![0].lName??''
+                                        
+                                        
+                                        ));
                                   },
                                   child: Container(
                                       margin:

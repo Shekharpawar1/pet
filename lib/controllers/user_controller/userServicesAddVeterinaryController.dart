@@ -245,7 +245,7 @@ var userId;
     try {
       // pet list
       petListModel =
-          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl + "/1"));
+          GetPetModel.fromJson(await ApiHelper.getApi(getPetUrl + "${storage.read('id')}"));
       print(petListModel);
       // notificationLoaded = true;
       update();
