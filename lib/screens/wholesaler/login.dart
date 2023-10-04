@@ -35,7 +35,7 @@ class _LoginWholeState extends State<LoginWhole> {
           child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Form(
-                  key: loginwholeController.formKey,
+                key: loginwholeController.formKey,
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -60,154 +60,157 @@ class _LoginWholeState extends State<LoginWhole> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
-              
-                         Padding(
-                          padding: const EdgeInsets.only(left: 15, right: 15),
-                          child: Text(
-                            "Email",
-                            style: CustomTextStyle.mediumtext,
-                          ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Text(
+                          "Email",
+                          style: CustomTextStyle.mediumtext,
                         ),
-              
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color: Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color:
+                                    const Color.fromRGBO(255, 255, 255, 0.10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(0.0, 0.0),
+                                    color: Color.fromRGBO(255, 255, 255, 0.10),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(40)),
+                            child: GetBuilder<LoginWholeController>(
+                                init: loginwholeController,
+                                builder: (_) {
+                                  return TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter email';
+                                      }
+                                      return null;
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    controller:
+                                        loginwholeController.emailController,
+                                    decoration: const InputDecoration(
+                                      hintText: "Email ID",
+                                      hintStyle: TextStyle(
+                                          color: MyColors.white, fontSize: 14),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
                                     ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: GetBuilder<LoginWholeController>(
-                                  init: loginwholeController,
-                                  builder: (_) {
-                                    return TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter email';
-                                        }
-                                        return null;
-                                      },
-                                      keyboardType: TextInputType.emailAddress,
-                                      controller:
-                                          loginwholeController.emailController,
-                                      decoration: InputDecoration(
-                                        hintText: "Email ID",
-                                        hintStyle: TextStyle(
-                                            color: MyColors.white, fontSize: 14),
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
-                                      ),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: MyColors.white,
-                                      ),
-                                    );
-                                  })),
-                        ),
-              
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15, right: 15),
-                          child: Text(
-                            "Password",
-                            style: CustomTextStyle.mediumtext,
-                          ),
-                        ),
-                        //  SizedBox(height: MediaQuery.of(context).size.height*0.01,),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      offset: const Offset(0.0, 0.0),
-                                      color: Color.fromRGBO(255, 255, 255, 0.10),
-                                      blurRadius: 0.0,
-                                      spreadRadius: 0.0,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: MyColors.white,
                                     ),
-                                  ],
-                                  borderRadius: BorderRadius.circular(40)),
-                              child: GetBuilder<LoginWholeController>(
-                                  init: loginwholeController,
-                                  builder: (_) {
-                                    return TextFormField(
-                                      obscureText:
-                                          !loginwholeController.passwordVisible,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Please enter password';
-                                        }
-                                        return null;
-                                      },
-                                      controller:
-                                          loginwholeController.passwordController,
-                                     decoration: InputDecoration(
-                                                 suffixIcon: IconButton(
-                                          icon: Icon(
-                                            loginwholeController.passwordVisible
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
-                                            size: 15,
-                                            color: MyColors.white,
-                                          ),
-                                          onPressed: () {
-                                            loginwholeController.updatepass();
-                                          },
+                                  );
+                                })),
+                      ),
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Text(
+                          "Password",
+                          style: CustomTextStyle.mediumtext,
+                        ),
+                      ),
+                      //  SizedBox(height: MediaQuery.of(context).size.height*0.01,),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color:
+                                    const Color.fromRGBO(255, 255, 255, 0.10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    offset: Offset(0.0, 0.0),
+                                    color: Color.fromRGBO(255, 255, 255, 0.10),
+                                    blurRadius: 0.0,
+                                    spreadRadius: 0.0,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(40)),
+                            child: GetBuilder<LoginWholeController>(
+                                init: loginwholeController,
+                                builder: (_) {
+                                  return TextFormField(
+                                    obscureText:
+                                        !loginwholeController.passwordVisible,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter password';
+                                      }
+                                      return null;
+                                    },
+                                    controller:
+                                        loginwholeController.passwordController,
+                                    decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          loginwholeController.passwordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          size: 15,
+                                          color: MyColors.white,
                                         ),
-                                        hintText: "Password",
-                                        hintStyle: TextStyle(
-                                            color: MyColors.white, fontSize: 14),
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 15),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
+                                        onPressed: () {
+                                          loginwholeController.updatepass();
+                                        },
                                       ),
-                                      
-                                      // decoration: InputDecoration(
-                                      //   suffixIcon: IconButton(
-                                      //     icon: Icon(
-                                      //       loginwholeController.passwordVisible
-                                      //           ? Icons.visibility
-                                      //           : Icons.visibility_off,
-                                      //       size: 15,
-                                      //       color: MyColors.white,
-                                      //     ),
-                                      //     onPressed: () {
-                                      //       loginwholeController.updatepass();
-                                      //     },
-                                      //   ),
-                                      //   hintText: "Password",
-                                      //   hintStyle: TextStyle(
-                                      //       color: MyColors.white, fontSize: 14),
-                                      //     contentPadding: EdgeInsets.symmetric(
-                                      //       horizontal: 20, vertical: 15),
-                                      //    border: InputBorder.none,
-                                      //   enabledBorder: InputBorder.none,
-                                      //   focusedBorder: InputBorder.none,
-                                      // ),
-                                     
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: MyColors.white,
-                                      ),
-                                    );
-                                  })),
-                        ),
+                                      hintText: "Password",
+                                      hintStyle: const TextStyle(
+                                          color: MyColors.white, fontSize: 14),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 15),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                    ),
+
+                                    // decoration: InputDecoration(
+                                    //   suffixIcon: IconButton(
+                                    //     icon: Icon(
+                                    //       loginwholeController.passwordVisible
+                                    //           ? Icons.visibility
+                                    //           : Icons.visibility_off,
+                                    //       size: 15,
+                                    //       color: MyColors.white,
+                                    //     ),
+                                    //     onPressed: () {
+                                    //       loginwholeController.updatepass();
+                                    //     },
+                                    //   ),
+                                    //   hintText: "Password",
+                                    //   hintStyle: TextStyle(
+                                    //       color: MyColors.white, fontSize: 14),
+                                    //     contentPadding: EdgeInsets.symmetric(
+                                    //       horizontal: 20, vertical: 15),
+                                    //    border: InputBorder.none,
+                                    //   enabledBorder: InputBorder.none,
+                                    //   focusedBorder: InputBorder.none,
+                                    // ),
+
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: MyColors.white,
+                                    ),
+                                  );
+                                })),
+                      ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.05,
                       ),
@@ -216,7 +219,7 @@ class _LoginWholeState extends State<LoginWhole> {
                         child: Container(
                           child: SwipeableButtonView(
                             buttonText: 'Swipe to login',
-                            buttontextstyle: TextStyle(
+                            buttontextstyle: const TextStyle(
                                 letterSpacing: 2,
                                 color: MyColors.voliet,
                                 fontSize: 18,
@@ -224,7 +227,7 @@ class _LoginWholeState extends State<LoginWhole> {
                                 fontFamily: "ReemKufi-Regular"),
                             // buttonColor: Colors.transparent,
                             // buttoncolor:MyColors.yellow,
-              
+
                             buttonWidget: CircleAvatar(
                                 backgroundColor: MyColors.bgcolor,
                                 radius: 30,
@@ -233,55 +236,56 @@ class _LoginWholeState extends State<LoginWhole> {
                             isFinished: isFinished,
                             onWaitingProcess: () {
                               //  saleslogincontroller.validateForm(context);
-              
-                              Future.delayed(Duration(seconds: 2), () {
+
+                              Future.delayed(const Duration(seconds: 2), () {
                                 setState(() {
                                   isFinished = true;
                                 });
                               });
                             },
                             onFinish: () async {
-
                               loginwholeController.validateForm(context).then(
-                              (isValid) async {
-                                if (isValid) {
-                                  // print("Valid form");
+                                (isValid) async {
+                                  if (isValid) {
+                                    // print("Valid form");
 
-                                  try {
-                                    await loginwholeController.loginEmail();
-                                    Navigator.push(
+                                    try {
+                                      await loginwholeController.loginEmail();
+                                      Navigator.push(
                                         context,
                                         PageTransition(
-                                            type: PageTransitionType.fade,
-                                            child: DashboardWhole()));
-                                  } catch (e) {
-                                    Get.snackbar(
-                                      'Error',
-                                      'Something Went Wrong: $e',
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.red,
-                                      colorText: Colors.white,
-                                    );
+                                          type: PageTransitionType.fade,
+                                          child: const DashboardWhole(),
+                                        ),
+                                      );
+                                    } catch (e) {
+                                      Get.snackbar(
+                                        'Error',
+                                        'Something Went Wrong: $e',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.red,
+                                        colorText: Colors.white,
+                                      );
+                                    }
+                                  } else {
+                                    print("InValid form");
+                                    // Code to execute when the form is not valid
+                                    // Add your logic here
                                   }
-                                } else {
-                                  print("InValid form");
-                                  // Code to execute when the form is not valid
-                                  // Add your logic here
-                                }
-                              },
-                              // await Navigator.push(
-                              //     context,
-                              //     PageTransition(
-                              //         type: PageTransitionType.fade,
-                              //         child: HomeWhole()));
-              
-                              //TODO: For reverse ripple effect animation
+                                },
+                                // await Navigator.push(
+                                //     context,
+                                //     PageTransition(
+                                //         type: PageTransitionType.fade,
+                                //         child: HomeWhole()));
+
+                                //TODO: For reverse ripple effect animation
                               );
-                            //TODO: For reverse ripple effect animation
-                            setState(() {
-                              isFinished = false;
-                            });
-                          },
+                              //TODO: For reverse ripple effect animation
+                              setState(() {
+                                isFinished = false;
+                              });
+                            },
                           ),
                         ),
                       ),
@@ -300,7 +304,7 @@ class _LoginWholeState extends State<LoginWhole> {
                           ),
                           InkWell(
                               onTap: () {
-                                Get.to(CreateAccountwhole());
+                                Get.to(const CreateAccountwhole());
                               },
                               child: Center(
                                   child: Text(

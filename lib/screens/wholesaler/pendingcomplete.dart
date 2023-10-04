@@ -27,7 +27,7 @@ class _PendingCompleteSreenState extends State<PendingCompleteSreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarWholeback(title: widget.data![0].orderStatus??'',
+      appBar: CustomAppBarWholeback(title: (widget.data == null || widget.data!.isEmpty) ? "" : widget.data![0].orderStatus??'',
         // drawerKey: _drawerkey,
       ),
 //   appBar: AppBar(

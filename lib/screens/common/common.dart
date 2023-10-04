@@ -23,8 +23,8 @@ class _CommonState extends State<Common> {
     return SafeArea(
         top: true,
         child: Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          body: ListView(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // SizedBox(
               //   height: MediaQuery.of(context).size.height * 0.01,
@@ -33,13 +33,15 @@ class _CommonState extends State<Common> {
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                   child: GridView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
                         mainAxisExtent: 180),
+                    padding: const EdgeInsets.all(5),
+                    shrinkWrap: true,
                     children: [
                       // InkWell(onTap: (){
                       //   Get.to(LoginUser());
@@ -82,13 +84,13 @@ class _CommonState extends State<Common> {
 
                       InkWell(
                         onTap: () {
-                          Get.to(LoginWhole());
+                          Get.to(const LoginWhole());
                         },
                         child: Container(
                           width: 160,
                           height: 188,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
@@ -120,13 +122,13 @@ class _CommonState extends State<Common> {
 
                       InkWell(
                         onTap: () {
-                          Get.to(LoginSales());
+                          Get.to(const LoginSales());
                         },
                         child: Container(
                           width: 160,
                           height: 188,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
@@ -159,13 +161,13 @@ class _CommonState extends State<Common> {
 
                       InkWell(
                         onTap: () {
-                          Get.to(LoginPartner());
+                          Get.to(const LoginPartner());
                         },
                         child: Container(
                           width: 160,
                           height: 188,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
@@ -196,8 +198,6 @@ class _CommonState extends State<Common> {
                         ),
                       ),
                     ],
-                    padding: EdgeInsets.all(5),
-                    shrinkWrap: true,
                   ),
                 ),
               ),

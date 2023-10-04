@@ -37,21 +37,22 @@ import 'package:pet/screens/ourbrand.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 
 class HomeWhole extends StatefulWidget {
-  HomeWhole({super.key});
+  const HomeWhole({super.key});
 
   @override
   State<HomeWhole> createState() => _HomeWholeState();
 }
 
 class _HomeWholeState extends State<HomeWhole> {
-  TextEditingController _searchcontroller = TextEditingController();
+  final TextEditingController _searchcontroller = TextEditingController();
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
-  WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
-  WholeProductDetailsController wholeproductdetailsController =
+  final WholeHomeController wholehomecontroller =
+      Get.put(WholeHomeController());
+  final WholeProductDetailsController wholeproductdetailsController =
       Get.put(WholeProductDetailsController());
-  MyCartWholeController mycartwholeController =
+  final MyCartWholeController mycartwholeController =
       Get.put(MyCartWholeController());
-  WholeSubCategoryController wholesubcategorycontroller =
+  final WholeSubCategoryController wholesubcategorycontroller =
       Get.put(WholeSubCategoryController());
        final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
     GlobalKey<RefreshIndicatorState>();
@@ -65,8 +66,8 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
     print("WholeSaler Data: ${GetStorage().read('wholesalerData').toString()}");
     return Scaffold(
       key: _drawerkey,
-      drawer: drawerWholeSaler(),
-     appBar: CustomAppBarWhole(
+      drawer: const drawerWholeSaler(),
+      appBar: CustomAppBarWhole(
         drawerKey: _drawerkey,
       ),
 //       appBar: AppBar(
@@ -688,13 +689,13 @@ key: _refreshIndicatorKey,
                                                           // height: 75,
                                                           placeholder:
                                                               (context, url) =>
-                                                                  Center(
+                                                                 const  Center(
                                                             child:
                                                                 CircularProgressIndicator(),
                                                           ), // Replace with your own placeholder widget
                                                           errorWidget: (context,
                                                                   url, error) =>
-                                                              Icon(Icons
+                                                            const   Icon(Icons
                                                                   .error), // Replace with your own error widget
                                                         ),
                                                       ),
