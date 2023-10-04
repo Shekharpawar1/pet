@@ -18,7 +18,7 @@ import 'package:pet/utils/fontstyle.dart';
 
 class WholeSalerFilterScreenUI extends StatelessWidget {
   WholeSalerFilterScreenUI({super.key});
-  FilterController filterController = Get.put(FilterController());
+  final FilterController filterController = Get.put(FilterController());
   @override
   void onInit() {
     filterController.loadDefaultData();

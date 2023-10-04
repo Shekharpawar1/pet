@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/ourbranddetailscontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/wholesaler_ourbrand_filter_controller.dart';
 import 'package:pet/screens/wholesaler/productdetails.dart';
+import 'package:pet/screens/wholesaler/whole_saler_brand_filter_ui.dart';
 import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 
 // import 'package:pet/screens/user/notification.dart';
@@ -21,91 +23,119 @@ import 'package:url_launcher/url_launcher.dart';
 
 class WholeOurBrandDetails extends StatelessWidget {
   WholeOurBrandDetails({super.key});
- WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
-  WholeProductDetailsController wholeproductdetailsController =
+  final WholeHomeController wholehomecontroller =
+      Get.put(WholeHomeController());
+  final WholeProductDetailsController wholeproductdetailsController =
       Get.put(WholeProductDetailsController());
-OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandDetailsWholeController());
+  final OurBrandDetailsWholeController oubranddetailswholeController =
+      Get.put(OurBrandDetailsWholeController());
 
   @override
   Widget build(BuildContext context) {
-    oubranddetailswholeController.ourproductinit();
+    // oubranddetailswholeController.ourproductinit();
     // var imagePath = "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${ourbranddeatilscontrroller.brandlogo??''}";
     return Scaffold(
         appBar: CustomAppBarWholeback(
           title: "Our Brand Product",
         ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(0),
           child: ListView(
             shrinkWrap: true,
             primary: true,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: 45,
-                    width: 265,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(17),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 45,
+                      width: 265,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(17),
 
-                      // border: Border.all(color:brandcolor ),
+                        // border: Border.all(color:brandcolor ),
 
-                      color: MyColors.white,
-                    ),
-                    child: TextFormField(
-                      controller: oubranddetailswholeController.searchcontroller,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: MyColors.voliet,
-                        fontFamily: "SF-Pro-Display",
+                        color: MyColors.white,
                       ),
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 15),
-                          fillColor: MyColors.white,
-                          focusColor: MyColors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            // borderRadius: BorderRadius.circular(50),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            //  borderRadius: BorderRadius.circular(50),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            //  borderRadius: BorderRadius.circular(50),
-                          ),
-                          hintText: "Search",
-                          prefixIcon: Padding(
+                      child: TextFormField(
+                        onChanged: (value) {
+                          oubranddetailswholeController.searchDataFilter(
+                              oubranddetailswholeController
+                                  .userPropertiesModelCopy,
+                              oubranddetailswholeController
+                                  .searchcontroller.text
+                                  .trim()
+                                  .toString());
+                        },
+                        controller:
+                            oubranddetailswholeController.searchcontroller,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: MyColors.voliet,
+                          fontFamily: "SF-Pro-Display",
+                        ),
+                        decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.only(left: 15),
+                            fillColor: MyColors.white,
+                            focusColor: MyColors.white,
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              // borderRadius: BorderRadius.circular(50),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              //  borderRadius: BorderRadius.circular(50),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              //  borderRadius: BorderRadius.circular(50),
+                            ),
+                            hintText: "Search",
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Image.asset(
+                                "assets/image/searchnormal.png",
+                                width: 10,
+                              ),
+                            ),
+                            hintStyle: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400)),
+                      ),
+                    ),
+
+                    //  SizedBox(width: 10,),
+                    InkWell(
+                       onTap: () {
+                          WholeSalerOurBrandFilterController filtercontroller =
+                              Get.put(WholeSalerOurBrandFilterController());
+                          // filtercontroller.init();
+                          // filtercontroller.loadDefaultData();
+                          filtercontroller.clearFields();
+                          // Get.to(FilterScreen());
+                          filtercontroller.init();
+                          Get.to(WholeSalerOurBrandFilterScreenUI());
+                          // Get.to(FilterScreen());
+                        },
+                      child: Container(
+                          width: 45,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color(0xffffcc00)),
+                          child: Padding(
                             padding: const EdgeInsets.all(10.0),
                             child: Image.asset(
-                              "assets/image/searchnormal.png",
-                              width: 10,
+                              "assets/image/filter3.png",
                             ),
-                          ),
-                          hintStyle: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400)),
-                    ),
-                  ),
-
-                  //  SizedBox(width: 10,),
-                  Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Color(0xffffcc00)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          "assets/image/filter3.png",
-                        ),
-                      ))
-                ],
+                          )),
+                    )
+                  ],
+                ),
               ),
 
               SizedBox(
@@ -356,7 +386,8 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.9,
+                // height: MediaQuery.of(context).size.height * 0.9,
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: GetBuilder<OurBrandDetailsWholeController>(
                     init: oubranddetailswholeController,
                     builder: (_) {
@@ -369,9 +400,9 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                               primary: false,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              physics: NeverScrollableScrollPhysics(),
+                              physics: const NeverScrollableScrollPhysics(),
                               gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
@@ -412,23 +443,21 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                     //  ourbranddeatilscontrroller.userPropertiesourbrandModel!.data == null
                                     //                     ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                     InkWell(
-                                  onTap: ()async {
-                                     wholeproductdetailsController
-                                                    .viewproduct(
-                                                  item.id ?? 0,
-                                                );
-                                                print("productid${item.id ?? 0}");
-                                                await wholeproductdetailsController
-                                                    .init();
-                                                Get.to(ProductDetailswhole(
-                                                  id: item.id??0,
-                                                ));
+                                  onTap: () async {
+                                    wholeproductdetailsController.viewproduct(
+                                      item.id ?? 0,
+                                    );
+                                    print("productid${item.id ?? 0}");
+                                    await wholeproductdetailsController.init();
+                                    Get.to(ProductDetailswhole(
+                                      id: item.id ?? 0,
+                                    ));
                                   },
                                   child: Container(
                                     width: 140,
                                     // height: 700,
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
+                                      gradient: const LinearGradient(
                                         colors: [
                                           // _getRandomColor(),
                                           // _getRandomColor(),
@@ -450,7 +479,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                           color: Colors.grey.withOpacity(0.3),
                                           spreadRadius: 3,
                                           blurRadius: 7,
-                                          offset: Offset(
+                                          offset: const Offset(
                                               0, 3), // Offset of the shadow
                                         ),
                                       ],
@@ -458,36 +487,40 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                     ),
                                     child: Column(
                                       children: [
-                                         GetBuilder<WholeHomeController>(
-                  init: wholehomecontroller,
-                  builder: (_) {
-                                            return InkWell(
-                                              onTap: () {
-                                                wholehomecontroller
-                                                    .addItemToWishList(item.id!);
+                                        GetBuilder<WholeHomeController>(
+                                            init: wholehomecontroller,
+                                            builder: (_) {
+                                              return InkWell(
+                                                onTap: () {
+                                                  wholehomecontroller
+                                                      .addItemToWishList(
+                                                          item.id!);
 
-                                                wholehomecontroller.init();
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(8.0),
-                                                child: Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Icon(
-                                                      wholehomecontroller
-                                                              .wishListItemsId
-                                                              .contains(item.id!)
-                                                          ? Icons.favorite
-                                                          : Icons.favorite_border,
-                                                      color: Colors.red),
+                                                  wholehomecontroller.init();
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerRight,
+                                                    child: Icon(
+                                                        wholehomecontroller
+                                                                .wishListItemsId
+                                                                .contains(
+                                                                    item.id!)
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_border,
+                                                        color: Colors.red),
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                          }
-                                        ),
+                                              );
+                                            }),
 
                                         Container(
                                           height: 125,
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                               // gradient:
                                               //     LinearGradient(
                                               //   colors: [
@@ -510,13 +543,13 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                             // width: 61,
                                             // height: 75,
                                             placeholder: (context, url) =>
-                                                Center(
+                                                const Center(
                                               child:
                                                   CircularProgressIndicator(),
                                             ), // Replace with your own placeholder widget
                                             errorWidget: (context, url,
                                                     error) =>
-                                                Icon(Icons
+                                                const Icon(Icons
                                                     .error), // Replace with your own error widget
                                           ),
                                         ),
@@ -547,7 +580,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                             .substring(0, 19),
                                                     style: CustomTextStyle
                                                         .popinssmall0),
-                                                SizedBox(height: 5),
+                                                const SizedBox(height: 5),
                                                 Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
@@ -566,7 +599,8 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                         .toString(),
                                                                 style: CustomTextStyle
                                                                     .discounttext),
-                                                            SizedBox(width: 2),
+                                                            const SizedBox(
+                                                                width: 2),
                                                             // Container(
                                                             // height:
                                                             //     20,
@@ -590,7 +624,8 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                             // ),
                                                           ],
                                                         ),
-                                                        SizedBox(height: 5),
+                                                        const SizedBox(
+                                                            height: 5),
                                                         Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -634,12 +669,12 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                         decoration: BoxDecoration(
                                                                             borderRadius: BorderRadius.circular(
                                                                                 10),
-                                                                            color: Color(
+                                                                            color: const Color(
                                                                                 0xffffcc00)),
                                                                         child:
                                                                             Padding(
                                                                           padding:
-                                                                              EdgeInsets.all(5.0),
+                                                                              const EdgeInsets.all(5.0),
                                                                           child:
                                                                               Image.asset(
                                                                             "assets/image/bag2.png",
