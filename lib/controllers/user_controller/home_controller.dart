@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/models/salesmanModel/ourBrandModel.dart';
 import 'package:pet/models/usersModel/bannerModel.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
@@ -23,6 +25,9 @@ class HomeuserController extends GetxController {
   var userId = GetStorage().read("id");
   late VideoPlayerController videoController; 
   TextEditingController searchcontroller = TextEditingController();
+   NotificationController notificationcontroller =
+      Get.put(NotificationController());
+  MyCartController mycartController = Get.put(MyCartController());
   bool showLoading = false;
 
   int? itempartnerId;
@@ -141,6 +146,8 @@ void viewpartner(int id) {
   @override
   void onInit() {
     super.onInit();
+     notificationcontroller.init();
+       mycartController.init();
 partnerIteminit();
     videoController = VideoPlayerController.asset(
         'assets/image/video1.eaf55f566741325a7b40.mp4')
