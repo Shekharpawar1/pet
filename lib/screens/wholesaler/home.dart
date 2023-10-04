@@ -168,11 +168,12 @@ class _HomeWholeState extends State<HomeWhole> {
                                         fit: BoxFit.cover,
                                         // width: 61,
                                         // height: 75,
-                                        placeholder: (context, url) => const Center(
+                                        placeholder: (context, url) =>
+                                            const Center(
                                           child: CircularProgressIndicator(),
                                         ), // Replace with your own placeholder widget
                                         errorWidget: (context, url, error) =>
-                                           const  Icon(Icons
+                                            const Icon(Icons
                                                 .error), // Replace with your own error widget
                                       ),
                                       //  Image.asset("assets/image/boyprofile3.png"),
@@ -231,11 +232,12 @@ class _HomeWholeState extends State<HomeWhole> {
                                       imageUrl: imagePath, fit: BoxFit.cover,
                                       // width: 61,
                                       // height: 75,
-                                      placeholder: (context, url) => const Center(
+                                      placeholder: (context, url) =>
+                                          const Center(
                                         child: CircularProgressIndicator(),
                                       ), // Replace with your own placeholder widget
                                       errorWidget: (context, url, error) =>
-                                         const  Icon(Icons
+                                          const Icon(Icons
                                               .error), // Replace with your own error widget
                                     ),
                                   ),
@@ -323,6 +325,7 @@ class _HomeWholeState extends State<HomeWhole> {
                         child: TextFormField(
                           onTap: () {
                             wholehomecontroller.clearSearchData();
+
                             Get.to(WholeSalerSearchScreen());
                           },
                           readOnly: true,
@@ -356,7 +359,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                   width: 10,
                                 ),
                               ),
-                              hintStyle:const  TextStyle(
+                              hintStyle: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400)),
@@ -454,11 +457,11 @@ class _HomeWholeState extends State<HomeWhole> {
                                                     ), // Replace with your own placeholder widget
                                                     errorWidget: (context, url,
                                                             error) =>
-                                                       const  Icon(Icons
+                                                        const Icon(Icons
                                                             .error), // Replace with your own error widget
                                                   ),
                                                 ),
-                                               const  SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text(item.name!,
@@ -516,7 +519,7 @@ class _HomeWholeState extends State<HomeWhole> {
                         onTap: () {
                           Get.to(() => const ProductAlllistPagewhole());
                         },
-                        child:const  Text('See All',
+                        child: const Text('See All',
                             style: TextStyle(
                                 color: MyColors.bgcolor,
                                 fontSize: 14,
@@ -598,7 +601,8 @@ class _HomeWholeState extends State<HomeWhole> {
                                                 width: 140,
                                                 // height: 700,
                                                 decoration: BoxDecoration(
-                                                  gradient: const LinearGradient(
+                                                  gradient:
+                                                      const LinearGradient(
                                                     colors: [
                                                       // _getRandomColor(),
                                                       // _getRandomColor(),
@@ -730,7 +734,8 @@ class _HomeWholeState extends State<HomeWhole> {
                                                                             19),
                                                                 style: CustomTextStyle
                                                                     .popinssmall0),
-                                                            const SizedBox(height: 5),
+                                                            const SizedBox(
+                                                                height: 5),
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -747,7 +752,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                                                             "₹" +
                                                                                 item.price.toString(),
                                                                             style: CustomTextStyle.discounttext),
-                                                                       const  SizedBox(
+                                                                        const SizedBox(
                                                                             width:
                                                                                 2),
                                                                         // Container(
@@ -773,7 +778,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                                                         // ),
                                                                       ],
                                                                     ),
-                                                                   const  SizedBox(
+                                                                    const SizedBox(
                                                                         height:
                                                                             5),
                                                                     Row(
@@ -1247,7 +1252,7 @@ class _HomeWholeState extends State<HomeWhole> {
                                         null ||
                                     wholehomecontroller
                                         .wholeOurBrandModel!.data!.isEmpty
-                                ?const  SizedBox()
+                                ? const SizedBox()
                                 : ListView.builder(
                                     primary: false,
                                     scrollDirection: Axis.horizontal,
@@ -1282,6 +1287,9 @@ class _HomeWholeState extends State<HomeWhole> {
                                           //  subcategorycontroller.addproduct(item.id??0) ;
                                           await oubranddetailswholeController
                                               .ourproductinit();
+
+                                          oubranddetailswholeController
+                                              .disposeController();
                                           Get.to(WholeOurBrandDetails());
                                         },
                                         child: Padding(
@@ -1338,8 +1346,8 @@ class _HomeWholeState extends State<HomeWhole> {
                                                                     BorderRadius
                                                                         .circular(
                                                                             30),
-                                                                gradient:const 
-                                                                    LinearGradient(
+                                                                gradient:
+                                                                    const LinearGradient(
                                                                   begin: Alignment
                                                                       .topCenter,
                                                                   end: Alignment
@@ -1361,22 +1369,21 @@ class _HomeWholeState extends State<HomeWhole> {
                                                                     imagePath,
                                                                 // width: 50,
                                                                 height: 135,
-                                                                placeholder:
-                                                                    (context,
-                                                                            url) =>
-                                                                     const    Center(
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    const Center(
                                                                   child:
                                                                       CircularProgressIndicator(),
                                                                 ), // Replace with your own placeholder widget
                                                                 errorWidget: (context,
                                                                         url,
                                                                         error) =>
-                                                                 const    Icon(Icons
+                                                                    const Icon(Icons
                                                                         .error), // Replace with your own error widget
                                                               ),
                                                             ),
                                                           ),
-                                                         const  SizedBox(
+                                                          const SizedBox(
                                                             height: 15,
                                                           ),
                                                           Text(item.title!,
@@ -1410,13 +1417,13 @@ class _HomeWholeState extends State<HomeWhole> {
                                                           height: 50,
                                                           placeholder:
                                                               (context, url) =>
-                                                                 const  Center(
+                                                                  const Center(
                                                             child:
                                                                 CircularProgressIndicator(),
                                                           ), // Replace with your own placeholder widget
                                                           errorWidget: (context,
                                                                   url, error) =>
-                                                            const   Icon(Icons
+                                                              const Icon(Icons
                                                                   .error), // Replace with your own error widget
                                                         ),
                                                       ),
