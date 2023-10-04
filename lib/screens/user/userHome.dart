@@ -3686,93 +3686,92 @@ class _HomeUserState extends State<HomeUser> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 15.0),
                                 child: Container(
-                                    // height: 600,
-                                    child: GridView.builder(
-                                        primary: false,
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        gridDelegate:
-                                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 4,
-                                                //  childAspectRatio: 4 / 4,
-                                                crossAxisSpacing: 15,
-                                                mainAxisSpacing: 15,
-                                                mainAxisExtent: 100),
-                                        itemCount: homeusercontroller
-                                            .userServicesModel!.data!.length,
-                                        itemBuilder: (BuildContext ctx, index) {
-                                          var item = homeusercontroller
-                                              .userServicesModel!.data![index];
-                                          var imagePath =
-                                              "${Constants.BASE_URL}${Constants.SERVICES_IMAGE_PATH}${item.image ?? ""}";
+                                  // height: 600,
+                                  child: GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 4,
+                                            //  childAspectRatio: 4 / 4,
+                                            crossAxisSpacing: 15,
+                                            mainAxisSpacing: 15,
+                                            mainAxisExtent: 100),
+                                    itemCount: homeusercontroller
+                                        .userServicesModel!.data!.length,
+                                    itemBuilder: (BuildContext ctx, index) {
+                                      var item = homeusercontroller
+                                          .userServicesModel!.data![index];
+                                      var imagePath =
+                                          "${Constants.BASE_URL}${Constants.SERVICES_IMAGE_PATH}${item.image ?? ""}";
 
-                                          return GestureDetector(
-                                            onTap: () async {
-                                              // String url = Constants
-                                              //         .GET_SERVICES_CATEGORIES +
-                                              //     "/" +
-                                              //     item.id.toString();
-                                              // homeusercontroller
-                                              //     .getServicesCategories(url);
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          // String url = Constants
+                                          //         .GET_SERVICES_CATEGORIES +
+                                          //     "/" +
+                                          //     item.id.toString();
+                                          // homeusercontroller
+                                          //     .getServicesCategories(url);
 
-                                              // Get.to(
-                                              //     () => ServicesCategoryPage());
+                                          // Get.to(
+                                          //     () => ServicesCategoryPage());
 
-                                              userServicesAddUserServicesAddAppointmentController
-                                                  .clearFields();
-                                              userServicesAddUserServicesAddAppointmentController
-                                                  .updateServiceId(item.id!);
-                                              userServicesAddUserServicesAddAppointmentController
-                                                  .init();
-                                              await userServicesAddUserServicesAddAppointmentController
-                                                  .fetchAppointmentSlots(
-                                                      item.id!);
-                                              print(item);
-                                              Get.to(() =>
-                                                  UserServicesAddAppointmentState());
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Container(
-                                                  height: 60,
-                                                  width: 60,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.black26,
-                                                          width: 1),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                      color: MyColors.white),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: imagePath,
-                                                    fit: BoxFit.cover,
-                                                    // width: 61,
-                                                    // height: 75,
-                                                    placeholder:
-                                                        (context, url) =>
-                                                            const Center(
-                                                      child:
-                                                          CircularProgressIndicator(),
-                                                    ), // Replace with your own placeholder widget
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Icon(Icons
-                                                            .error), // Replace with your own error widget
-                                                  ),
-                                                ),
-                                                Text(
-                                                  item.name!,
-                                                  style: CustomTextStyle
-                                                      .popinssmall0,
-                                                )
-                                              ],
+                                          userServicesAddUserServicesAddAppointmentController
+                                              .clearFields();
+                                          userServicesAddUserServicesAddAppointmentController
+                                              .updateServiceId(item.id!);
+                                          userServicesAddUserServicesAddAppointmentController
+                                              .init();
+                                          await userServicesAddUserServicesAddAppointmentController
+                                              .fetchAppointmentSlots(item.id!);
+                                          print(item);
+                                          Get.to(() =>
+                                              UserServicesAddAppointmentState());
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              height: 60,
+                                              width: 60,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.black26,
+                                                      width: 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  color: MyColors.white),
+                                              child: CachedNetworkImage(
+                                                imageUrl: imagePath,
+                                                fit: BoxFit.cover,
+                                                // width: 61,
+                                                // height: 75,
+                                                placeholder: (context, url) =>
+                                                    const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                ), // Replace with your own placeholder widget
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    const Icon(Icons
+                                                        .error), // Replace with your own error widget
+                                              ),
                                             ),
-                                          );
-                                          //
-                                        })),
+                                            Text(
+                                              item.name!,
+                                              style:
+                                                  CustomTextStyle.popinssmall0,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                      //
+                                    },
+                                  ),
+                                ),
                               );
 
                         // // GridView(

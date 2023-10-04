@@ -37,24 +37,27 @@ import 'package:pet/screens/ourbrand.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 
 class HomeWhole extends StatefulWidget {
-  HomeWhole({super.key});
+  const HomeWhole({super.key});
 
   @override
   State<HomeWhole> createState() => _HomeWholeState();
 }
 
 class _HomeWholeState extends State<HomeWhole> {
-  TextEditingController _searchcontroller = TextEditingController();
+  final TextEditingController _searchcontroller = TextEditingController();
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
-  WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
-  WholeProductDetailsController wholeproductdetailsController =
+  final WholeHomeController wholehomecontroller =
+      Get.put(WholeHomeController());
+  final WholeProductDetailsController wholeproductdetailsController =
       Get.put(WholeProductDetailsController());
-  MyCartWholeController mycartwholeController =
+  final MyCartWholeController mycartwholeController =
       Get.put(MyCartWholeController());
-  WholeSubCategoryController wholesubcategorycontroller =
+  final WholeSubCategoryController wholesubcategorycontroller =
       Get.put(WholeSubCategoryController());
-      WholeProfileController wholeProfileController = Get.put(WholeProfileController());
-OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandDetailsWholeController());
+  WholeProfileController wholeProfileController =
+      Get.put(WholeProfileController());
+  final OurBrandDetailsWholeController oubranddetailswholeController =
+      Get.put(OurBrandDetailsWholeController());
   @override
   Widget build(BuildContext context) {
     //  homeusercontroller.getWishList();
@@ -62,8 +65,8 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
     print("WholeSaler Data: ${GetStorage().read('wholesalerData').toString()}");
     return Scaffold(
       key: _drawerkey,
-      drawer: drawerWholeSaler(),
-     appBar: CustomAppBarWhole(
+      drawer: const drawerWholeSaler(),
+      appBar: CustomAppBarWhole(
         drawerKey: _drawerkey,
       ),
 //       appBar: AppBar(
@@ -116,14 +119,16 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
         child: Stack(
           children: [
             ListView(
-          physics: const BouncingScrollPhysics(
-                    parent: AlwaysScrollableScrollPhysics()),
-                primary: false,
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              primary: false,
               children: [
-               SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
 
                 Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -133,43 +138,50 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                             "Find the pet you love on around you easily",
                             style: CustomTextStyle.popinstext,
                           )),
-                // Spacer(),
-                     GetBuilder<WholeProfileController>(
-                              init: wholeProfileController,
-                              builder: (_) {
-                  return 
-                  wholeProfileController
-                                .wholemyprofilemodel == null || wholeProfileController
-                                .wholemyprofilemodel!.data == null || wholeProfileController
-                                .wholemyprofilemodel!.data!.isEmpty ? SizedBox() :
-                  Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: CircleAvatar(
-                      radius: 35,
-                      backgroundColor: Colors.transparent,
-                      child: CachedNetworkImage(
-                        imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                            wholeProfileController
-                                .wholemyprofilemodel!
-                                .data![0].image
-                                .toString(),
-                
-                        fit: BoxFit.cover,
-                        // width: 61,
-                        // height: 75,
-                        placeholder: (context, url) => Center(
-                          child: CircularProgressIndicator(),
-                        ), // Replace with your own placeholder widget
-                        errorWidget: (context, url, error) => Icon(
-                            Icons.error), // Replace with your own error widget
-                      ),
-                      //  Image.asset("assets/image/boyprofile3.png"),
-                    ),
-                  );
-                
-                  // Image.asset("assets/image/girl.png")
-                              }),
-                        
+                      // Spacer(),
+                      GetBuilder<WholeProfileController>(
+                          init: wholeProfileController,
+                          builder: (_) {
+                            return wholeProfileController
+                                            .wholemyprofilemodel ==
+                                        null ||
+                                    wholeProfileController
+                                            .wholemyprofilemodel!.data ==
+                                        null ||
+                                    wholeProfileController
+                                        .wholemyprofilemodel!.data!.isEmpty
+                                ? const SizedBox()
+                                : Padding(
+                                    padding: EdgeInsets.only(right: 20.0),
+                                    child: CircleAvatar(
+                                      radius: 35,
+                                      backgroundColor: Colors.transparent,
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                                                wholeProfileController
+                                                    .wholemyprofilemodel!
+                                                    .data![0]
+                                                    .image
+                                                    .toString(),
+
+                                        fit: BoxFit.cover,
+                                        // width: 61,
+                                        // height: 75,
+                                        placeholder: (context, url) => const Center(
+                                          child: CircularProgressIndicator(),
+                                        ), // Replace with your own placeholder widget
+                                        errorWidget: (context, url, error) =>
+                                           const  Icon(Icons
+                                                .error), // Replace with your own error widget
+                                      ),
+                                      //  Image.asset("assets/image/boyprofile3.png"),
+                                    ),
+                                  );
+
+                            // Image.asset("assets/image/girl.png")
+                          }),
+
                       //  SvgPicture.asset("assets/image/girl.svg"),
                     ],
                   ),
@@ -182,22 +194,22 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                   init: wholehomecontroller,
                   builder: (_) {
                     return wholehomecontroller.wholeBannerModel == null
-                        ? SizedBox()
+                        ? const SizedBox()
                         : CarouselSlider.builder(
                             itemCount: wholehomecontroller
                                 .wholeBannerModel!.data!.length,
                             options: CarouselOptions(
-                            aspectRatio: 16 / 9,
-                                viewportFraction: 1,
-                                initialPage: 0,
-                                enableInfiniteScroll: true,
-                                reverse: false,
-                                autoPlay: true,
-                                autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enlargeCenterPage: true,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 1,
+                              initialPage: 0,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  const Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              enlargeCenterPage: true,
                             ),
                             itemBuilder: (context, index, realIdx) {
                               var item = wholehomecontroller
@@ -205,7 +217,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
 
                               var imagePath =
                                   "${Constants.BANNER_IMAGE_PATH}${item.image ?? ""}";
-                                  print("=====>>>>>> Banners: $imagePath");
+                              print("=====>>>>>> Banners: $imagePath");
                               return Stack(
                                 children: [
                                   // Image.asset(item["image"]),
@@ -219,11 +231,11 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                       imageUrl: imagePath, fit: BoxFit.cover,
                                       // width: 61,
                                       // height: 75,
-                                      placeholder: (context, url) => Center(
+                                      placeholder: (context, url) => const Center(
                                         child: CircularProgressIndicator(),
                                       ), // Replace with your own placeholder widget
                                       errorWidget: (context, url, error) =>
-                                          Icon(Icons
+                                         const  Icon(Icons
                                               .error), // Replace with your own error widget
                                     ),
                                   ),
@@ -303,9 +315,9 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(17),
-                
+
                           // border: Border.all(color:brandcolor ),
-                
+
                           color: MyColors.white,
                         ),
                         child: TextFormField(
@@ -315,24 +327,24 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                           },
                           readOnly: true,
                           controller: _searchcontroller,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14,
                             color: MyColors.voliet,
                             fontFamily: "SF-Pro-Display",
                           ),
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.only(left: 15),
+                              contentPadding: const EdgeInsets.only(left: 15),
                               fillColor: MyColors.white,
                               focusColor: MyColors.white,
-                              enabledBorder:
-                                  OutlineInputBorder(borderSide: BorderSide.none
-                                      // borderRadius: BorderRadius.circular(50),
-                                      ),
-                              focusedBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide.none
+                                  // borderRadius: BorderRadius.circular(50),
+                                  ),
+                              focusedBorder: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 //  borderRadius: BorderRadius.circular(50),
                               ),
-                              border: OutlineInputBorder(
+                              border: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 //  borderRadius: BorderRadius.circular(50),
                               ),
@@ -344,13 +356,13 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                   width: 10,
                                 ),
                               ),
-                              hintStyle: TextStyle(
+                              hintStyle:const  TextStyle(
                                   color: Colors.grey,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400)),
                         ),
                       ),
-                
+
                       //  SizedBox(width: 10,),
                       GestureDetector(
                         onTap: () {
@@ -369,7 +381,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                             height: 45,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                color: Color(0xffffcc00)),
+                                color: const Color(0xffffcc00)),
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: Image.asset(
@@ -385,8 +397,8 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
                 Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: SizedBox(
                     height: 130,
                     width: MediaQuery.of(context).size.width,
                     child: ListView(
@@ -398,7 +410,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                             init: wholehomecontroller,
                             builder: (_) {
                               return !wholehomecontroller.categoryLoaded
-                                  ? SizedBox()
+                                  ? const SizedBox()
                                   : ListView.builder(
                                       primary: false,
                                       scrollDirection: Axis.horizontal,
@@ -412,7 +424,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                         var imagePath =
                                             "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
                                         // print(imagePath);
-                
+
                                         return Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: InkWell(
@@ -424,7 +436,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                       item.name ?? "");
                                               await wholesubcategorycontroller
                                                   .productInitByCategory();
-                
+
                                               Get.to(() => WholeAllcategory());
                                             },
                                             child: Column(
@@ -434,18 +446,19 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                     imageUrl: imagePath,
                                                     width: 61,
                                                     height: 75,
-                                                    placeholder: (context, url) =>
-                                                        Center(
+                                                    placeholder:
+                                                        (context, url) =>
+                                                            const Center(
                                                       child:
                                                           CircularProgressIndicator(),
                                                     ), // Replace with your own placeholder widget
                                                     errorWidget: (context, url,
                                                             error) =>
-                                                        Icon(Icons
+                                                       const  Icon(Icons
                                                             .error), // Replace with your own error widget
                                                   ),
                                                 ),
-                                                SizedBox(
+                                               const  SizedBox(
                                                   height: 5,
                                                 ),
                                                 Text(item.name!,
@@ -454,7 +467,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                               ],
                                             ),
                                           ),
-                
+
                                           //  Stack(
                                           //   children: [
                                           //     Container(
@@ -488,7 +501,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
                 Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -496,14 +509,14 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                         "New Arrivals",
                         style: CustomTextStyle.popinstext,
                       ),
-                
+
                       // Text("See All", style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                
+
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => ProductAlllistPagewhole());
+                          Get.to(() => const ProductAlllistPagewhole());
                         },
-                        child: Text('See All',
+                        child:const  Text('See All',
                             style: TextStyle(
                                 color: MyColors.bgcolor,
                                 fontSize: 14,
@@ -517,24 +530,25 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
 
                 Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Container(
                     child: GetBuilder<WholeHomeController>(
                         init: wholehomecontroller,
                         builder: (_) {
                           return wholehomecontroller.userPropertiesModel == null
-                              ? SizedBox()
+                              ? const SizedBox()
                               : wholehomecontroller.propertyLoaded == null
-                                  ? SizedBox()
+                                  ? const SizedBox()
                                   : Container(
                                       // height: 600,
                                       child: GridView.builder(
                                           primary: false,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
-                                          physics: NeverScrollableScrollPhysics(),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
                                           gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
                                                   crossAxisCount: 2,
                                                   crossAxisSpacing: 15.0,
                                                   mainAxisSpacing: 15.0,
@@ -555,13 +569,14 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                             //     .userPropertiesModel!.data!.length
                                             //     .clamp(0, 4),
                                             // itemBuilder: (BuildContext ctx, index) {
-                  
+
                                             var item = wholehomecontroller
-                                                .userPropertiesModel!.data![index];
-                                            String imagePath =
-                                                Constants.PRODUCT_HOME_IMAGE_PATH +
-                                                    "/${item.image!}";
-                  
+                                                .userPropertiesModel!
+                                                .data![index];
+                                            String imagePath = Constants
+                                                    .PRODUCT_HOME_IMAGE_PATH +
+                                                "/${item.image!}";
+
                                             // var imagePath =
                                             //     "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
                                             // print(imagePath);
@@ -571,19 +586,19 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                     .viewproduct(
                                                   item.id ?? 0,
                                                 );
-                                                print("productid${item.id ?? 0}");
+                                                print(
+                                                    "productid${item.id ?? 0}");
                                                 await wholeproductdetailsController
                                                     .init();
                                                 Get.to(ProductDetailswhole(
-                                                  // id: item.id??0,
-                                                ));
+                                                    // id: item.id??0,
+                                                    ));
                                               },
-                                              child: 
-                                              Container(
+                                              child: Container(
                                                 width: 140,
                                                 // height: 700,
                                                 decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
+                                                  gradient: const LinearGradient(
                                                     colors: [
                                                       // _getRandomColor(),
                                                       // _getRandomColor(),
@@ -607,7 +622,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                           .withOpacity(0.3),
                                                       spreadRadius: 3,
                                                       blurRadius: 7,
-                                                      offset: Offset(0,
+                                                      offset: const Offset(0,
                                                           3), // Offset of the shadow
                                                     ),
                                                   ],
@@ -615,9 +630,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                 ),
                                                 child: Column(
                                                   children: [
-
-
-       InkWell(
+                                                    InkWell(
                                                       onTap: () {
                                                         wholehomecontroller
                                                             .addItemToWishList(
@@ -625,28 +638,28 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                       },
                                                       child: Padding(
                                                         padding:
-                                                            const EdgeInsets.all(
-                                                                8.0),
+                                                            const EdgeInsets
+                                                                .all(8.0),
                                                         child: Align(
                                                             alignment: Alignment
                                                                 .centerRight,
-                                                            child: Icon(wholehomecontroller
-                                                                    .wishListItemsId
-                                                                    .contains(
-                                                                        item.id!)
-                                                                ? Icons.favorite
-                                                                : Icons
-                                                                    .favorite_border,color:Colors.red)),
+                                                            child: Icon(
+                                                                wholehomecontroller
+                                                                        .wishListItemsId
+                                                                        .contains(item
+                                                                            .id!)
+                                                                    ? Icons
+                                                                        .favorite
+                                                                    : Icons
+                                                                        .favorite_border,
+                                                                color: Colors
+                                                                    .red)),
                                                       ),
                                                     ),
-                  
-                                                
-                                                
-
 
                                                     Container(
                                                       height: 125,
-                                                      decoration: BoxDecoration(
+                                                      decoration: const BoxDecoration(
                                                           // gradient:
                                                           //     LinearGradient(
                                                           //   colors: [
@@ -670,7 +683,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                         // height: 75,
                                                         placeholder:
                                                             (context, url) =>
-                                                                Center(
+                                                                const Center(
                                                           child:
                                                               CircularProgressIndicator(),
                                                         ), // Replace with your own placeholder widget
@@ -717,7 +730,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                             19),
                                                                 style: CustomTextStyle
                                                                     .popinssmall0),
-                                                            SizedBox(height: 5),
+                                                            const SizedBox(height: 5),
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -734,7 +747,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                             "₹" +
                                                                                 item.price.toString(),
                                                                             style: CustomTextStyle.discounttext),
-                                                                        SizedBox(
+                                                                       const  SizedBox(
                                                                             width:
                                                                                 2),
                                                                         // Container(
@@ -760,7 +773,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                         // ),
                                                                       ],
                                                                     ),
-                                                                    SizedBox(
+                                                                   const  SizedBox(
                                                                         height:
                                                                             5),
                                                                     Row(
@@ -785,13 +798,19 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                             width:
                                                                                 Get.width * 0.054),
                                                                         InkWell(
-                                                                               onTap: () async{
-                                                                             wholeproductdetailsController.viewproductHome(
-                                                                              item.id??0,item.name??'',"1kg",1 ,item.price as int,item.image!);
-                                                                              await wholeproductdetailsController
-                                                            .addProductHome();
-                                                                            },
-                                                                          child: Padding(
+                                                                          onTap:
+                                                                              () async {
+                                                                            wholeproductdetailsController.viewproductHome(
+                                                                                item.id ?? 0,
+                                                                                item.name ?? '',
+                                                                                "1kg",
+                                                                                1,
+                                                                                item.price as int,
+                                                                                item.image!);
+                                                                            await wholeproductdetailsController.addProductHome();
+                                                                          },
+                                                                          child:
+                                                                              Padding(
                                                                             padding:
                                                                                 const EdgeInsets.only(right: 5.0),
                                                                             child: Container(
@@ -799,7 +818,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                                                 height: 35,
                                                                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
                                                                                 child: Padding(
-                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  padding: const EdgeInsets.all(5.0),
                                                                                   child: Image.asset(
                                                                                     "assets/image/bag2.png",
                                                                                     height: 25,
@@ -825,8 +844,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                                   ],
                                                 ),
                                               ),
-                                         
-                                              
+
                                               // Container(
                                               //   width: 140,
                                               //   // height: 700,
@@ -870,10 +888,10 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                               //                       .favorite_border,color:Colors.red)),
                                               //         ),
                                               //       ),
-                  
+
                                               //       Container(
                                               //         height: 125,
-                  
+
                                               //         // decoration: BoxDecoration(
                                               //         //     borderRadius: BorderRadius.circular(30),
                                               //         //     color: MyColors.white),
@@ -893,9 +911,9 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                               //                   .error), // Replace with your own error widget
                                               //         ),
                                               //       ),
-                  
+
                                               //       // SizedBox(height: 15,),
-                  
+
                                               //       Container(
                                               //         // height: 140,
                                               //         child: Padding(
@@ -975,7 +993,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                               //                           height: 5),
                                               //                       Text(
                                               //                         "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-                  
+
                                               //                         // "₹" +
                                               //                         //     item.price!,
                                               //                         style: CustomTextStyle
@@ -983,7 +1001,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                               //                       ),
                                               //                     ],
                                               //                   ),
-                  
+
                                               //                   Padding(
                                               //                     padding:
                                               //                         const EdgeInsets
@@ -1025,8 +1043,6 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                               //     ],
                                               //   ),
                                               // ),
-                                           
-                                           
                                             );
                                           }),
                                     );
@@ -1036,7 +1052,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
 
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -1044,19 +1060,19 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                         "Our Brand",
                         style: CustomTextStyle.popinstext,
                       ),
-                
+
                       // Text("See All", style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
-                
+
                       InkWell(
                         onTap: () {
-                             Get.to(() => WholeAllbrandPage(
-                                data: wholehomecontroller
-                                        .wholeOurBrandModel!.data!
-                                    .where((element) => element.canine == 1)
-                                    .toList()));
+                          Get.to(() => WholeAllbrandPage(
+                              data: wholehomecontroller
+                                  .wholeOurBrandModel!.data!
+                                  .where((element) => element.canine == 1)
+                                  .toList()));
                           // Get.to(() => WholeAllbrandPage());
                         },
-                        child: Text('See All',
+                        child: const Text('See All',
                             style: TextStyle(
                                 color: MyColors.bgcolor,
                                 fontSize: 14,
@@ -1067,7 +1083,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.0),
-                Container(
+                SizedBox(
                   height: 250,
                   width: MediaQuery.of(context).size.width,
                   child: ListView(
@@ -1231,7 +1247,7 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                         null ||
                                     wholehomecontroller
                                         .wholeOurBrandModel!.data!.isEmpty
-                                ? SizedBox()
+                                ?const  SizedBox()
                                 : ListView.builder(
                                     primary: false,
                                     scrollDirection: Axis.horizontal,
@@ -1254,15 +1270,18 @@ OurBrandDetailsWholeController oubranddetailswholeController = Get.put(OurBrandD
                                           "${Constants.BASE_URL}${Constants.BRANDLOGO_IMAGE_PATH}${item.logo ?? ""}";
                                       // print(imagePath);
                                       return InkWell(
-                                        onTap: () async{
+                                        onTap: () async {
                                           // Ourbranddetailscontroller.addproduct(
                                           //     item.id ?? 0, item.logo ?? '');
                                           //  subcategorycontroller.addproduct(item.id??0) ;
-oubranddetailswholeController
-                                                .addproduct(item.id ?? 0,item.title??'',
-                                                    item.logo ?? '');
-                                            //  subcategorycontroller.addproduct(item.id??0) ;
-await oubranddetailswholeController.ourproductinit();
+                                          oubranddetailswholeController
+                                              .addproduct(
+                                                  item.id ?? 0,
+                                                  item.title ?? '',
+                                                  item.logo ?? '');
+                                          //  subcategorycontroller.addproduct(item.id??0) ;
+                                          await oubranddetailswholeController
+                                              .ourproductinit();
                                           Get.to(WholeOurBrandDetails());
                                         },
                                         child: Padding(
@@ -1319,7 +1338,7 @@ await oubranddetailswholeController.ourproductinit();
                                                                     BorderRadius
                                                                         .circular(
                                                                             30),
-                                                                gradient:
+                                                                gradient:const 
                                                                     LinearGradient(
                                                                   begin: Alignment
                                                                       .topCenter,
@@ -1345,19 +1364,19 @@ await oubranddetailswholeController.ourproductinit();
                                                                 placeholder:
                                                                     (context,
                                                                             url) =>
-                                                                        Center(
+                                                                     const    Center(
                                                                   child:
                                                                       CircularProgressIndicator(),
                                                                 ), // Replace with your own placeholder widget
                                                                 errorWidget: (context,
                                                                         url,
                                                                         error) =>
-                                                                    Icon(Icons
+                                                                 const    Icon(Icons
                                                                         .error), // Replace with your own error widget
                                                               ),
                                                             ),
                                                           ),
-                                                          SizedBox(
+                                                         const  SizedBox(
                                                             height: 15,
                                                           ),
                                                           Text(item.title!,
@@ -1391,13 +1410,13 @@ await oubranddetailswholeController.ourproductinit();
                                                           height: 50,
                                                           placeholder:
                                                               (context, url) =>
-                                                                  Center(
+                                                                 const  Center(
                                                             child:
                                                                 CircularProgressIndicator(),
                                                           ), // Replace with your own placeholder widget
                                                           errorWidget: (context,
                                                                   url, error) =>
-                                                              Icon(Icons
+                                                            const   Icon(Icons
                                                                   .error), // Replace with your own error widget
                                                         ),
                                                       ),
@@ -1604,23 +1623,23 @@ await oubranddetailswholeController.ourproductinit();
                           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                           child: Container(
                             color: Colors.black.withOpacity(
-                                0.5), // Adjust the opacity as needed
+                                0.1), // Adjust the opacity as needed
                           ),
                         )
-                      : SizedBox();
+                      : const SizedBox();
                 }),
             // Progress bar
             GetBuilder<WholeHomeController>(
                 init: wholehomecontroller,
                 builder: (_) {
                   return wholehomecontroller.showLoading
-                      ? Center(
+                      ? const Center(
                           child: SpinKitCircle(
                             color: Colors.white, // Color of the progress bar
                             size: 50.0, // Size of the progress bar
                           ),
                         )
-                      : SizedBox();
+                      : const SizedBox();
                 }),
           ],
         ),

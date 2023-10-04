@@ -39,7 +39,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerkey,
-      drawer: drawerWholeSaler(),
+      drawer: const drawerWholeSaler(),
       appBar: CustomAppBarWhole(
         drawerKey: _drawerkey,
       ),
@@ -131,20 +131,20 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                   wholetotalordercontroller
                                           .wholetotalorderModel!.data ==
                                       null 
-                              ? SizedBox()
+                              ? const SizedBox()
                               :InkWell(
                           onTap: () {
                             wholetotalordercontroller.init();
                             int len = wholetotalordercontroller
                                 .wholetotalorderModel!.data!.length;
                             print("=========>>>>>>> totalorder $len");
-                            Get.to(TotalOrder());
+                            Get.to(const TotalOrder());
                           },
                           child: Container(
                             width: Get.width * 0.43,
                             height: 92,
                             decoration: BoxDecoration(
-                                color: Color(0xff008FFF),
+                                color: const Color(0xff008FFF),
                                 borderRadius: BorderRadius.circular(20)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,13 +194,13 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                             });
 
                             print("=========>>>>>>> Balancelen $len");
-                            Get.to(Balance());
+                            Get.to(const Balance());
                           },
                           child: Container(
                             width: Get.width * 0.43,
                             height: 92,
                             decoration: BoxDecoration(
-                              color: Color(0xffFFCC00),
+                              color: const Color(0xffFFCC00),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Column(
@@ -304,7 +304,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Current Order",
+                          const Text("Current Order",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -313,7 +313,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                   wholemyordercontroller
                                           .wholemyorderModel!.data ==
                                       null
-                              ? SizedBox()
+                              ? const SizedBox()
                               : Padding(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, top: 8, bottom: 8),
@@ -342,7 +342,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                     )),
               ),
               
-              SizedBox(
+             const  SizedBox(
                 height: 10,
               ),
               InkWell(
@@ -368,7 +368,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Pending Order",
+                          const Text("Pending Order",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
@@ -377,7 +377,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                   wholemyordercontroller
                                           .wholemyorderModel!.data ==
                                       null
-                              ? SizedBox()
+                              ? const SizedBox()
                               : Padding(
                                   padding: const EdgeInsets.only(
                                       left: 8.0, top: 8, bottom: 8),
@@ -405,12 +405,12 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                       ),
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               wholemyordercontroller.wholemyorderModel == null ||
                       wholemyordercontroller.wholemyorderModel!.data == null
-                  ? SizedBox()
+                  ? const SizedBox()
                   : InkWell(
                       onTap: () {
                         wholemyordercontroller.init();
@@ -438,7 +438,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Completed Order",
+                               const  Text("Completed Order",
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
@@ -470,7 +470,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                             ),
                           )),
                     ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               SizedBox(
@@ -483,7 +483,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                   //                           Get.find<WholeHomeController>();
                   //                       wholeuserHomeController.onInit();
 
-                  Get.to(HomeWhole());
+                  Get.to(const HomeWhole());
                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
                 },
                 child: Center(
