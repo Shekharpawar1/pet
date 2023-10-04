@@ -74,8 +74,10 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                 ? Center(
                                     child: ElevatedButton(
                                         onPressed: () {
-                                          // Navif
-                                          Get.to(HomeUser());
+                                         
+                                          // Get.to(HomeUser());
+                                          Get.back();
+                                          Get.back();
                                         },
                                         child: const Text('Continue Shopping')),
                                   )
@@ -144,8 +146,11 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                     "Item${item.id}");
                                                                 await addtocartController
                                                                     .initdelete();
-                                                                addtocartController
-                                                                    .init();
+                                                                   addtocartController.updateTotal();  
+                                                                   
+                                                                addtocartController.init();
+
+                                                                     
                                                               },
                                                               child: const Icon(
                                                                   Icons

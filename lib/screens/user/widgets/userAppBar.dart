@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   void onInit() {
 
     notificationcontroller.init();
-       
+       mycartController.init(); 
     // super.onInit();
   }
   @override

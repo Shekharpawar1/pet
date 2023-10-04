@@ -166,15 +166,15 @@ imagesPath =
     update();
   }
 
-  void viewproductHome(int id, String productName, String varianttts, int quantity, String price, String image) {
+  void viewproductHome(int id, String productName, String varianttts, int quantity, String price, String imagess) {
     productID = id;
     productname = productName;
-    variants = variants;
+    variants = varianttts;
      qty  = quantity;
      priceProduct = price;
-     image = image;
+     image = imagess;
     update();
-    print("productID${productID}");
+    print("productID${productID} Images  ${image}");
   }
 
   void viewproduct(int id) {

@@ -40,7 +40,7 @@ void itemView(int id) {
     notifydeleteinit();
   }
 
-  void init() async {
+  Future<void> init() async {
     try {
       // banners
       userNotificationModel = NotificationModel.fromJson(

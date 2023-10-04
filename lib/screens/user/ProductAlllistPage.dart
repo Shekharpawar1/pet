@@ -35,15 +35,15 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
           appBar:CustomAppBarback(),
-        body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: ListView(
-            primary: true,
-            shrinkWrap: true,
-            children: [
-              // SizedBox(height: MediaQuery.of(context).size.height*0.02),
+        body: ListView(
+          primary: true,
+          shrinkWrap: true,
+          children: [
+            // SizedBox(height: MediaQuery.of(context).size.height*0.02),
  
-                  Row(
+                Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
@@ -52,9 +52,9 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(17),
-
+                
                           // border: Border.all(color:brandcolor ),
-
+                
                           color: MyColors.white,
                         ),
                         child: TextFormField(
@@ -99,7 +99,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                   fontWeight: FontWeight.w400)),
                         ),
                       ),
-
+                
                       //  SizedBox(width: 10,),
                       // GetBuilder<FilterController>(
                       //       // init: filtercontroller,
@@ -130,16 +130,19 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                               ),
                             )),
                       )
-
+                
                       // )
                     ],
                   ),
+                ),
 
      
          SizedBox(height: MediaQuery.of(context).size.height*0.04,),
-              !homeusercontroller.propertyLoaded
-                  ? SizedBox()
-                  : Container(
+            !homeusercontroller.propertyLoaded
+                ? SizedBox()
+                : Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Container(
                           //  height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
                               primary: false,
@@ -169,7 +172,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                 // itemBuilder: (BuildContext ctx, index) {
                                 var item = homeusercontroller
                                     .userPropertiesModel!.data![index];
-
+                
                                  
                                 var imagePath =
                                        "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
@@ -183,7 +186,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                     .viewproduct(
                                                   item.id ?? 0,
                                                 );
-
+                
                                                 // print("productid${item.id ?? 0}");
                                                 await productdeatilscontroller
                                                     .init();
@@ -230,15 +233,15 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                 ),
                                                 child: Column(
                                                   children: [
-
-
-
+                
+                
+                
                                                     InkWell(
                                                       onTap: () {
                                                         homeusercontroller
                                                             .addItemToWishList(
                                                                 item.id!);
-
+                
                                                             homeusercontroller.init();
                                                       },
                                                       child: Padding(
@@ -263,11 +266,11 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                         ),
                                                       ),
                                                     ),
-
+                
                                                 
                                                 
-
-
+                
+                
                                                     Container(
                                                       height: 125,
                                                       decoration: BoxDecoration(
@@ -304,9 +307,9 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                 .error), // Replace with your own error widget
                                                       ),
                                                     ),
-
+                
                                                     // SizedBox(height: 15,),
-
+                
                                                     Container(
                                                       // height: 140,
                                                       child: Padding(
@@ -398,7 +401,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                           child:
                                                                               Text(
                                                                             "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-
+                
                                                                             // "₹" +
                                                                             //     item.price!,
                                                                             style:
@@ -427,7 +430,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                     ),
                                                                   ],
                                                                 ),
-
+                
                                                                 // Image.asset(
                                                                 //   "assets/image/yellowbag.png",
                                                                 //   height: 80,
@@ -443,9 +446,9 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                               ),
                                              );
                               }),
-                        )
-                 ],
-          ),
+                        ),
+                )
+               ],
         ));
  
  

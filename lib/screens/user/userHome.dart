@@ -96,14 +96,15 @@ class _HomeUserState extends State<HomeUser> {
   @override
   void onInit() {
     notificationcontroller.init();
+      mycartController.init();
        homeusercontroller. getWishinit(); 
     // super.onInit();
   }
 
   @override
   Widget build(BuildContext context) {
-      //  notificationcontroller.init();
-      //  mycartController.init();
+       notificationcontroller.init();
+       mycartController.init();
     homeusercontroller.getWishList();
    homeusercontroller. getWishinit();
     homeusercontroller.fetchWishList();
@@ -253,8 +254,8 @@ key: _refreshIndicatorKey,
 
               onRefresh: () async {
                 _refreshIndicatorKey.currentState?.show(atTop: false);
-                 notificationcontroller.init();
-       mycartController.init();
+            await     notificationcontroller.init();
+      await mycartController.init();
                 await homeusercontroller.init();
                  homeusercontroller.getWishList();
                   
@@ -1050,9 +1051,9 @@ key: _refreshIndicatorKey,
                                                                         InkWell(
                                                                                onTap: () async{
                                                                              productdeatilscontroller.viewproductHome(
-                                                                              item.id??0,item.name??'',"1kg",1 ,item.price??'',item.image!);
-                                                                              await productdeatilscontroller
-                                                            .addProductHome();
+                                                                              item.id??0,item.name??'',"1kg",1 ,item.price??'',item.image??'');
+                                                                              await productdeatilscontroller.addProductHome();
+                                                            mycartController.init();
                                                                             },
                                                                           child: Padding(
                                                                             padding:

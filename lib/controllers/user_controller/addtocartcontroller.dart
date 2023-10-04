@@ -323,6 +323,18 @@ class MyCartController extends GetxController {
       final ProductDetailsController productdetailscontroller =
           Get.put(ProductDetailsController());
       await productdetailscontroller.isProductInCart();
+      print("====>>>>> model: ${mycartmodel!.toJson()}");
+      mycartmodel!.data!.removeWhere((element) => element.id == additemid);
+      if (mycartmodel!.data!.isEmpty){
+        print("mycartmodelis Empty");
+        print(mycartmodel!.data!.length);
+          price = 0;
+        total =0; 
+
+        print("ToTal====?");
+      }
+
+         
       update();
     } catch (e) {
       print('Error: $e');

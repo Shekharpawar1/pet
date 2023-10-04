@@ -142,15 +142,15 @@ class _AlltoyPageState extends State<AlltoyPage> {
         
 //         ),
 
-        body:Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: ListView(
-            primary: true,
-            shrinkWrap: true,
-            children: [
+        body:ListView(
+          primary: true,
+          shrinkWrap: true,
+          children: [
 
-              
-                  Row(
+            
+                Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
@@ -159,9 +159,9 @@ class _AlltoyPageState extends State<AlltoyPage> {
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(17),
-
+                
                           // border: Border.all(color:brandcolor ),
-
+                
                           color: MyColors.white,
                         ),
                         child: TextFormField(
@@ -206,7 +206,7 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                   fontWeight: FontWeight.w400)),
                         ),
                       ),
-
+                
                       //  SizedBox(width: 10,),
                       // GetBuilder<FilterController>(
                       //       // init: filtercontroller,
@@ -237,13 +237,14 @@ class _AlltoyPageState extends State<AlltoyPage> {
                               ),
                             )),
                       )
-
+                
                       // )
                     ],
                   ),
+                ),
 
      
-              // SizedBox(height: MediaQuery.of(context).size.height*0.02),
+            // SizedBox(height: MediaQuery.of(context).size.height*0.02),
 //  Row(
 // mainAxisAlignment: MainAxisAlignment.spaceBetween,          
 //           children: [
@@ -254,22 +255,22 @@ class _AlltoyPageState extends State<AlltoyPage> {
 //                    decoration: BoxDecoration(
 //           shape: BoxShape.rectangle,
 //                         borderRadius: BorderRadius.circular(17),
-          
+        
 //                         // border: Border.all(color:brandcolor ),
-          
+        
 //              color:MyColors.white,
        
-          
+        
 //                     ),
+        
+         
           
-           
-            
 //             child: TextFormField(
 //                                   controller: _searchcontroller,
 //                                                 style: TextStyle(fontSize: 14,color: MyColors.voliet, fontFamily: "SF-Pro-Display",),
-          
+        
 //                                decoration: InputDecoration(
-                                     
+                                   
 //                                        contentPadding: EdgeInsets.only(left: 15),
 //                                       fillColor:MyColors.white,
 //                                       focusColor:MyColors.white,
@@ -290,10 +291,10 @@ class _AlltoyPageState extends State<AlltoyPage> {
 //                                         padding: const EdgeInsets.all(10.0),
 //                                         child: Image.asset("assets/image/searchnormal.png",width: 10,),
 //                                       ),
-                                    
+                                  
 //                                       hintStyle:
 //                                       TextStyle(color: Colors.grey, fontSize: 16,fontWeight: FontWeight.w400)
-                                      
+                                    
 //                                       ),
 //                                 ),
 //           ),
@@ -317,9 +318,11 @@ class _AlltoyPageState extends State<AlltoyPage> {
      
      
          SizedBox(height: MediaQuery.of(context).size.height*0.04,),
-              !subcategorycontroller.toyloaded
-                  ? SizedBox()
-                  : Container(
+            !subcategorycontroller.toyloaded
+                ? SizedBox()
+                : Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Container(
                           //  height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
                               primary: false,
@@ -627,9 +630,9 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                               )
                                             );
                               }),
-                        )
-                 ],
-          ),
+                        ),
+                )
+               ],
         )
  
     
