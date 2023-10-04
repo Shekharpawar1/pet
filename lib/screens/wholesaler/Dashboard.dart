@@ -483,7 +483,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                   //                           Get.find<WholeHomeController>();
                   //                       wholeuserHomeController.onInit();
 
-                  Get.to(const HomeWhole());
+                  Get.to( HomeWhole());
                   // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
                 },
                 child: Center(
