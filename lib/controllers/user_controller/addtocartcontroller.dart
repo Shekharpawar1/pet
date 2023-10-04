@@ -187,6 +187,7 @@ class MyCartController extends GetxController {
         print("Error parsing price: $e");
       }
     });
+    showLoading = false;
     update();
 
     print("Total: $total");

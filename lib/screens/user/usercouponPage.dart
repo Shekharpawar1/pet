@@ -228,6 +228,8 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                                   '',
                                                               item.maxDiscount ??
                                                                   '');
+                                                                  print("ItemCode"+ ( item.code??''));
+                                                                   
                                                           MyCartController
                                                               addtocartController =
                                                               Get.put(
@@ -235,14 +237,17 @@ class _UsercouponPageState extends State<UsercouponPage> {
 
                                                           addtocartController
                                                               .updateTotal();
-
-                                                          Get.back();
+ Get.back();
+ 
+                                                        
+                                                          // addtocartController.init();
                                                         },
                                                         style: ElevatedButton
                                                             .styleFrom(
                                                           primary: Colors.white,
                                                           onPrimary:
                                                               MyColors.black,
+                                                                minimumSize: Size(50, 40),
                                                           shape:
                                                               RoundedRectangleBorder(
                                                             borderRadius:
@@ -254,7 +259,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                         child: const Text(
                                                           'TAP TO APPLY',
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                            fontSize: 12,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),

@@ -26,8 +26,9 @@ import 'package:pet/screens/ordersummary.dart';
 import 'package:pet/screens/user/notification.dart';
 
 class ProductDetailssale extends StatefulWidget {
-   ProductDetailssale({super.key });
+   ProductDetailssale({super.key, this.id });
 //  dynamic itemdetails;
+int? id;
   @override
   State<ProductDetailssale> createState() => _ProductDetailssaleState();
 }
@@ -1304,7 +1305,308 @@ salesproductdetailscontroller .selectImagesProduct(
                                 height: 10,
                               ),
                           
-                          
+                                 salesproductdetailscontroller.selectedvariants!.stock == 0?
+                                  Row(
+                                    children: [
+                                      Container(
+                                                      width: MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.25,
+                                                      
+                                                      height: MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.06,
+                                                      decoration: BoxDecoration(
+                                                          color: MyColors.red,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  25)),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment.center,
+                                                        children: [
+                                                          // Image.asset(
+                                                          //   "assets/image/bagadd.png",
+                                                          //   height: 25,
+                                                          // ),
+                                                          // SizedBox(
+                                                          //   width: 10,
+                                                          // ),
+                                                          Text(
+                                                            "Sold Out",
+                                                            style: CustomTextStyle
+                                                                .mediumtextwhite,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const Spacer(),
+                                      GestureDetector(onTap: () async{
+                                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              scrollable: true,
+                            
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+           Align(alignment: Alignment.topRight,
+           child:InkWell(
+             onTap: (){
+               Get.back();
+             },
+             child: const Icon(Icons.cancel_rounded))),
+                               Text(
+                                       salesproductdetailscontroller.salesproductdetailmodel!.data!.name
+                                            .toString(),
+                                        style: CustomTextStyle.popinstext,
+                                      ),
+           
+           salesproductdetailscontroller.salesproductdetailmodel!.data == null?
+                 const SizedBox():
+           
+                 Form( 
+                      key: salesproductdetailscontroller.formKey,
+                  child: 
+                 
+                   Column(
+                        children: [
+                          Padding(
+              padding:
+                  const EdgeInsets.all(8.0),
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                    border: Border.all(
+               color: MyColors.grey),
+                    color: const Color.fromRGBO(
+               255, 255, 255, 0.10),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     offset: const Offset(0.0, 0.0),
+                    //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                    //     blurRadius: 0.0,
+                    //     spreadRadius: 0.0,
+                    //   ),
+                    // ],
+                    borderRadius:
+               BorderRadius.circular(
+                   15)),
+                child: DropdownButtonFormField<
+                    variantFile.Variations>(
+                  validator: (value) {
+                    if (value == null ||
+               value.type!.isEmpty) {
+             return 'Please select a tpye';
+                    }
+                    return null;
+                  },
+                  // value: productdetailscontroller.dropdownsize,
+                  value:
+             salesproductdetailscontroller
+                 .selectedvariants,
+                  decoration: const InputDecoration(
+                    hintText: "Kg",
+                    hintStyle: TextStyle(
+             color: MyColors.black,
+                    ),
+                    contentPadding:
+               EdgeInsets.symmetric(
+                   horizontal: 15,
+                   vertical: 5),
+                    border: InputBorder.none,
+                    enabledBorder:
+               InputBorder.none,
+                    focusedBorder:
+               InputBorder.none,
+                    // iconColor: MyColors.white,
+                  ),
+                  icon: const Center(
+                    child: Icon(
+             Icons.arrow_drop_down,
+             color: MyColors.black,
+                    ),
+                  ),
+                  style: const TextStyle(
+             fontSize: 16,
+             color: MyColors.black),
+                  items:
+             salesproductdetailscontroller
+                 .variantslist!
+                 .map((variantFile
+                             .Variations
+                     variants) {
+                    return DropdownMenuItem<
+               variantFile.Variations>(
+             value: variants,
+             child: Text(
+                 variants.type ?? ''),
+                    );
+                  }).toList(),
+           //                                    items:   productdetailscontroller.productdetailmodel!.data!.variations!.map<DropdownMenuItem<String>>(
+           //   (var variant) {
+           //     return DropdownMenuItem<String>(
+           //       value: variant.type,
+           //       child: Text(variant.type.toString() ),
+           //     );
+           //   },
+           // ).toList() ?? [],
+                  // items: productdetailscontroller
+                  //     .productdetailsmodel.data.variations
+                  //     .map((String variant) {
+                  //   return DropdownMenuItem<String>(
+                  //     value: variant,
+                  //     child: Text(variant),
+                  //   );
+                  // }).toList(),
+                  onChanged:
+             (variantFile.Variations?
+                 variants) async {
+                    await salesproductdetailscontroller
+               .updateVariants(
+                   variants!);
+                  },
+                  // onChanged: (String? value)  {
+                  //   productdetailscontroller.addVariant(value);
+                  //   // productdetailscontroller
+                  //   //     .updateSize(value ?? "");
+                  //   // Perform actions when country is changed
+                  // },
+                ),
+              ),
+            ),
+           
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 50,
+                              //                    width: 335,
+                              // height: 45,
+                              decoration: BoxDecoration(
+                             border: Border.all(
+               color: MyColors.grey),
+                                  // color: Color.fromRGBO(255, 255, 255, 0.10),
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     offset: const Offset(0.0, 0.0),
+                                  //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                                  //     blurRadius: 0.0,
+                                  //     spreadRadius: 0.0,
+                                  //   ),
+                                  // ],
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: TextFormField(
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  }
+                                  return null;
+                                },
+                                controller:
+                                   salesproductdetailscontroller.emailController,
+                                decoration: const InputDecoration(
+                                  hintText: "Email",
+                                  hintStyle: TextStyle(
+                                    color: MyColors.black,
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                ),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color:MyColors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),),
+                    
+                     
+                     
+                const SizedBox(height: 10,),
+                                Center(
+                                  child: ElevatedButton(
+                                    
+                                            onPressed:() async {
+                                              //  productdetailscontroller.clearPopUpFields();
+                                                 salesproductdetailscontroller.validateForm(context).then(
+                                (isValid) async {
+                                  if (isValid) {
+                                    // print("Valid form");
+           
+                                    try {
+                                        await    salesproductdetailscontroller.addNotify();
+                                        Get.back();
+                                    } catch (e) {
+                                      Get.snackbar(
+                                        'Error',
+                                        'Something Went Wrong: $e',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.red,
+                                        colorText: Colors.white,
+                                      );
+                                    }
+                                  } 
+                                });
+                                      
+                                            },
+                                            child: const Text('Notify me when available'),
+                                          ),
+                                ), ],
+                              ),
+                            );
+                          },
+                        );
+           
+                                      },
+                                        child: Container(
+                                                        width: MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.55,
+                                                        height: MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.06,
+                                                        decoration: BoxDecoration(
+                                                            color: MyColors.green,
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                    25)),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment.center,
+                                                          children: [
+                                                            // Image.asset(
+                                                            //   "assets/image/bagadd.png",
+                                                            //   height: 25,
+                                                            // ),
+                                                            // SizedBox(
+                                                            //   width: 10,
+                                                            // ),
+                                                            Text(
+                                                              "Notify me when available",
+                                                              style: CustomTextStyle
+                                                                  .mediumtextwhite,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                      ),
+                                   
+                                   
+                                   
+                                    ],
+                                  )
+                               :
                               Row(
                                 children: [
                                   InkWell(

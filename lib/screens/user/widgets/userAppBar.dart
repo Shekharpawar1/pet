@@ -17,10 +17,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       Get.put(NotificationController());
   MyCartController mycartController = Get.put(MyCartController());
   @override
+  void onInit() {
+
+    notificationcontroller.init();
+       
+    // super.onInit();
+  }
+  @override
   Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
 
   @override
   Widget build(BuildContext context) {
+     notificationcontroller.init();
+       mycartController.init();
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -51,7 +60,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.black),
                   )),
-                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
+
+                    notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
 SizedBox():
               Positioned(
                   top: 10.0,
@@ -59,6 +69,50 @@ SizedBox():
                   child: Stack(
                     children: <Widget>[
                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                    
+//                     FutureBuilder(
+//   future: fetchData(), // Replace with your actual future function
+//   builder: (BuildContext context, AsyncSnapshot<Data> snapshot) {
+//     if (snapshot.connectionState == ConnectionState.waiting) {
+//       // While the future is still running, show a loading indicator
+//       return CircularProgressIndicator();
+//     } else if (snapshot.hasError) {
+//       // Handle errors
+//       return Text('Error: ${snapshot.error}');
+//     } else if (!snapshot.hasData) {
+//       // Handle cases where there is no data
+//       return Text('No data available');
+//     } else {
+//       // Data is available, use GetBuilder for additional state management
+//       return GetBuilder<NotificationController>(
+//         init: NotificationController(), // Initialize the controller
+//         builder: (_) {
+//           if (notificationcontroller.userNotificationModel == null ||
+//               notificationcontroller.userNotificationModel!.state == null ||
+//               notificationcontroller.userNotificationModel!.state!.isEmpty) {
+//             return const SizedBox();
+//           } else {
+//             return Positioned(
+//               top: 3.0,
+//               right: 4.0,
+//               child: Center(
+//                 child: Text(
+//                   notificationcontroller.userNotificationModel!.state!.length.toString(),
+//                   style: TextStyle(
+//                     color: Colors.white,
+//                     fontSize: 8.0,
+//                     fontWeight: FontWeight.w500,
+//                   ),
+//                 ),
+//               ),
+//             );
+//           }
+//         },
+//       );
+//     }
+//   },
+// ))
+
                       GetBuilder<NotificationController>(
                           init: notificationcontroller,
                           builder: (_) {
@@ -82,16 +136,54 @@ SizedBox():
                               ));
                         }
                       ),
+                    
+                    
                     ],
                   )),
             ],
           ),
+//                    notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
+// SizedBox():
+//               Positioned(
+//                   top: 10.0,
+//                   right: 0,
+//                   child: Stack(
+//                     children: <Widget>[
+//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                       GetBuilder<NotificationController>(
+//                           init: notificationcontroller,
+//                           builder: (_) {
+//                             return   notificationcontroller.userNotificationModel == null ||
+//                                     notificationcontroller.userNotificationModel!.state ==
+//                                         null ||
+//                                      notificationcontroller.userNotificationModel!.state!.isEmpty
+//                                 ? const SizedBox():
+//                            Positioned(
+//                               top: 3.0,
+//                               right: 4.0,
+//                               child: Center(
+//                                 child: Text(
+//                                   ( notificationcontroller.userNotificationModel!.state!.length).toString(),
+//                                   // list.length.toString(),
+//                                   style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 8.0,
+//                                       fontWeight: FontWeight.w500),
+//                                 ),
+//                               ));
+//                         }
+//                       ),
+//                     ],
+//                   )),
+//             ],
+//           ),
           SizedBox(width: 20),
           Stack(
             children: [
               InkWell(
-                  onTap: () {
-                    mycartController.init();
+                  onTap: () async{
+                 await   mycartController.init();
+                 mycartController.updateTotal();
                     Get.to(AddToCardUser());
                     // Get.to(AddToCardUser());
                   },
@@ -159,6 +251,8 @@ class CustomAppBarGreenDrawer extends StatelessWidget implements PreferredSizeWi
 
   @override
   Widget build(BuildContext context) {
+    notificationcontroller.init();
+      mycartController.init();
     return AppBar(
       elevation: 0,
        backgroundColor: MyColors.green,
@@ -297,6 +391,8 @@ class CustomAppBarback extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    notificationcontroller.init();
+      mycartController.init();
     return        AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -437,6 +533,8 @@ class CustomAppBarTitleback extends StatelessWidget implements PreferredSizeWidg
 
   @override
   Widget build(BuildContext context) {
+    notificationcontroller.init();
+      mycartController.init();
     return        AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -574,6 +672,8 @@ class CustomAppBargreen extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    notificationcontroller.init();
+      mycartController.init();
     return        AppBar(
        elevation: 0,
         automaticallyImplyLeading: false,
@@ -711,6 +811,8 @@ class CustomAppBarwhite extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    notificationcontroller.init();
+      mycartController.init();
     return        AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

@@ -93,98 +93,104 @@ class _LoginSalesState extends State<LoginSales> {
                             child: Form(
                               child: 
                               
-                                  IntlPhoneField(
-                                        //  obscureText : false,
+                                  Column(
+                                    children: [
+                                      IntlPhoneField(
+                                            //  obscureText : false,
 // onChanged:(value){
 // userLoginController.validatePhoneNumber(
 //   value.number
 // );
 // } ,
-                                        controller: saleslogincontroller
-                                            .phoneNumberController,
-                                            // invalidNumberMessage: ,
-                                         disableLengthCheck: false,   
-                                        cursorColor: MyColors.white,
-                                        showCountryFlag: false,
-                                        // validator: (value) {
-                                        //   if (value!.number.isEmpty) {
-                                        //     return "Please Enter a Phone Number";
-                                        //   } else if (!RegExp(
-                                        //           r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
-                                        //       .hasMatch(value.number)) {
-                                        //     return "Please Enter a Valid Phone Number";
-                                        //   }
-                                        // },
-                                        dropdownIconPosition: IconPosition.trailing,
-                                        dropdownTextStyle:
-                                            TextStyle(color: MyColors.white),
-                                        showDropdownIcon: true,
-                                        
-                                        dropdownIcon: Icon(
-                                          Icons.arrow_drop_down,
-                                          color: MyColors.white,
-                                        ),
-                                        style: TextStyle(color: MyColors.white),
-                                        // flagsButtonPadding: EdgeInsets.only(left:10,right: 10,),
-                                        decoration: InputDecoration(
-                                          // labelText: 'Mobile Number',
-                                          //  hiStyle: TextStyle(color:MyColors.white,fontSize: 12),
-                                          counterText: '',
-                                          contentPadding: EdgeInsets.only(
-                                            left: 10,
-                                            right: 10,
+                                            controller: saleslogincontroller
+                                                .phoneNumberController,
+                                                // invalidNumberMessage: ,
+                                             disableLengthCheck: false,   
+                                            cursorColor: MyColors.white,
+                                            showCountryFlag: false,
+                                            // validator: (value) {
+                                            //   if (value!.number.isEmpty) {
+                                            //     return "Please Enter a Phone Number";
+                                            //   } else if (!RegExp(
+                                            //           r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$')
+                                            //       .hasMatch(value.number)) {
+                                            //     return "Please Enter a Valid Phone Number";
+                                            //   }
+                                            // },
+                                            dropdownIconPosition: IconPosition.trailing,
+                                            dropdownTextStyle:
+                                                TextStyle(color: MyColors.white),
+                                            showDropdownIcon: true,
+                                            
+                                            dropdownIcon: Icon(
+                                              Icons.arrow_drop_down,
+                                              color: MyColors.white,
+                                            ),
+                                            style: TextStyle(color: MyColors.white),
+                                            // flagsButtonPadding: EdgeInsets.only(left:10,right: 10,),
+                                            decoration: InputDecoration(
+                                              // labelText: 'Mobile Number',
+                                              //  hiStyle: TextStyle(color:MyColors.white,fontSize: 12),
+                                              counterText: '',
+                                              contentPadding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 10,
+                                              ),
+                                              suffixIcon:
+                                                  Image.asset("assets/image/call.png"),
+
+                                              // fillcolor:MyColors.white,
+                                              focusColor: MyColors.white,
+                                              //   counterText: '',
+                                              // contentPadding: EdgeInsets.all(10),
+
+                                              // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Colors.red)),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                // borderRadius: BorderRadius.circular(50),
+                                              ),
+                                              // focusedBorder: OutlineInputBorder(
+                                              //   borderSide: BorderSide.none,
+                                              //   //  borderRadius: BorderRadius.circular(50),
+                                              // ),
+                                              border: OutlineInputBorder(
+                                                borderSide: BorderSide.none,
+                                                //  borderRadius: BorderRadius.circular(50),
+                                              ),
+
+                                              // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Colors.red)),
+                                              // enabledBorder: OutlineInputBorder(
+                                              //   borderSide: BorderSide.none,
+                                              //   // borderRadius: BorderRadius.circular(50),
+                                              // ),
+                                              // focusedBorder: OutlineInputBorder(
+                                              //   borderSide: BorderSide.none,
+                                              //   //  borderRadius: BorderRadius.circular(50),
+                                              // ),
+
+                                              // border: OutlineInputBorder(
+                                              //   borderSide: BorderSide.none,
+                                              //   //  borderRadius: BorderRadius.circular(50),
+                                              // ),
+                                              hintText: "Mobile Number",
+                                              hintStyle: TextStyle(
+                                                  color: MyColors.white, fontSize: 14),
+
+                                              // border: OutlineInputBorder(
+
+                                              //   borderSide: BorderSide(),
+                                              // ),
+                                            ),
+                                            initialCountryCode:
+                                                'IN', // Set initial country code
+                                            // onChanged: (PhoneNumber phoneNumber) {
+                                            //   print(phoneNumber.completeNumber);
+                                            // },
                                           ),
-                                          suffixIcon:
-                                              Image.asset("assets/image/call.png"),
-
-                                          // fillcolor:MyColors.white,
-                                          focusColor: MyColors.white,
-                                          //   counterText: '',
-                                          // contentPadding: EdgeInsets.all(10),
-
-                                          // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Colors.red)),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                            // borderRadius: BorderRadius.circular(50),
-                                          ),
-                                          // focusedBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide.none,
-                                          //   //  borderRadius: BorderRadius.circular(50),
-                                          // ),
-                                          border: OutlineInputBorder(
-                                            borderSide: BorderSide.none,
-                                            //  borderRadius: BorderRadius.circular(50),
-                                          ),
-
-                                          // errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Colors.red)),
-                                          // enabledBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide.none,
-                                          //   // borderRadius: BorderRadius.circular(50),
-                                          // ),
-                                          // focusedBorder: OutlineInputBorder(
-                                          //   borderSide: BorderSide.none,
-                                          //   //  borderRadius: BorderRadius.circular(50),
-                                          // ),
-
-                                          // border: OutlineInputBorder(
-                                          //   borderSide: BorderSide.none,
-                                          //   //  borderRadius: BorderRadius.circular(50),
-                                          // ),
-                                          hintText: "Mobile Number",
-                                          hintStyle: TextStyle(
-                                              color: MyColors.white, fontSize: 14),
-
-                                          // border: OutlineInputBorder(
-
-                                          //   borderSide: BorderSide(),
-                                          // ),
-                                        ),
-                                        initialCountryCode:
-                                            'IN', // Set initial country code
-                                        // onChanged: (PhoneNumber phoneNumber) {
-                                        //   print(phoneNumber.completeNumber);
-                                        // },
-                                      ),
+                                 SizedBox(height: 7.0),
+                                 
+                                    ],
+                                  ),
                                    
                               // IntlPhoneField(
                               //   //  obscureText : false,

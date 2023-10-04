@@ -2797,6 +2797,7 @@ class ProductDetails extends StatelessWidget {
                                                         if (productdetailscontroller
                                                             .isProductInCartBool) {
                                                           mycartController.init();
+                                                           mycartController.updateTotal();
                                                           Get.to(const AddToCardUser());
                                                         } else {
                                                           await productdetailscontroller

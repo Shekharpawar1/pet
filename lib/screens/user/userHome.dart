@@ -102,6 +102,8 @@ class _HomeUserState extends State<HomeUser> {
 
   @override
   Widget build(BuildContext context) {
+      //  notificationcontroller.init();
+      //  mycartController.init();
     homeusercontroller.getWishList();
    homeusercontroller. getWishinit();
     homeusercontroller.fetchWishList();
@@ -251,8 +253,13 @@ key: _refreshIndicatorKey,
 
               onRefresh: () async {
                 _refreshIndicatorKey.currentState?.show(atTop: false);
+                 notificationcontroller.init();
+       mycartController.init();
                 await homeusercontroller.init();
-                
+                 homeusercontroller.getWishList();
+                  
+  //  homeusercontroller. getWishinit();
+  //   homeusercontroller.fetchWishList();
                 await Future.delayed(Duration(seconds: 2));
               },
               child: 
@@ -2522,11 +2529,11 @@ await Ourbranddetailscontroller.ourproductinit();
                                           .usertoyModel!.data!.length
                                           .clamp(0, 4),
                                       itemBuilder: (BuildContext ctx, index) {
-                                        var item = subcategorycontroller
+                                        var item1 = subcategorycontroller
                                             .usertoyModel!.data![index];
                                 
                                         var imagePath =
-                                            "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
+                                            "${Constants.BASE_URL}/storage/app/public/product/${item1.image ?? ""}";
                                         return subcategorycontroller
                                                         .usertoyModel ==
                                                     null ||
@@ -2540,12 +2547,12 @@ await Ourbranddetailscontroller.ourproductinit();
                                                  productdeatilscontroller.dispose();
                                                    productdeatilscontroller
                                                   .viewproduct(
-                                                item.id ?? 0,
+                                                item1.id ?? 0,
                                               );
-                                               print("productippppd${item.id ?? 0}");
+                                               print("productippToysppd${item1.id ?? 0}");
                                           await productdeatilscontroller.init();
                                           Get.to(ProductDetails(
-                                           id: item.id??0, 
+                                           id: item1.id??0, 
                                           ));
                                               },
                                               child: Container(
@@ -2594,7 +2601,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                                               onTap: () {
                                                                 homeusercontroller
                                                                     .addItemToWishList(
-                                                                        item.id!);
+                                                                        item1.id!);
                                             
                                                                     homeusercontroller.init();
                                                               },
@@ -2609,7 +2616,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                                                       homeusercontroller
                                                                               .wishListItemsId
                                                                               .contains(
-                                                                                  item
+                                                                                  item1
                                                                                       .id!)
                                                                           ? Icons
                                                                               .favorite
@@ -2683,17 +2690,17 @@ await Ourbranddetailscontroller.ourproductinit();
                                                                   CrossAxisAlignment
                                                                       .start,
                                                               children: [
-                                                                Text(item.name!,
+                                                                Text(item1.name!,
                                                                     style: CustomTextStyle
                                                                         .popinsmedium),
                                                                 Text(
-                                                                    item.description
+                                                                    item1.description
                                                                                 .toString()
                                                                                 .length <
                                                                             30
-                                                                        ? item
+                                                                        ? item1
                                                                             .description!
-                                                                        : item
+                                                                        : item1
                                                                             .description!
                                                                             .substring(
                                                                                 0,
@@ -2715,7 +2722,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                                                           children: [
                                                                             Text(
                                                                                 "₹" +
-                                                                                    item.price.toString(),
+                                                                                    item1.price.toString(),
                                                                                 style: CustomTextStyle.discounttext),
                                                                             SizedBox(
                                                                                 width:
@@ -2736,7 +2743,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                                                             //   child:
                                                                             Text(
                                                                                 // item.discount.toString(),
-                                                                                "Save${item.discount.toString()}%",
+                                                                                "Save${item1.discount.toString()}%",
                                                                                 style:
                                                                                     CustomTextStyle.popinstextsmal2222red),
                                                                             //   ),
@@ -2756,7 +2763,7 @@ await Ourbranddetailscontroller.ourproductinit();
                                                                                   Get.width * 0.23,
                                                                               child:
                                                                                   Text(
-                                                                                "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                                                                "₹ ${((double.parse(item1.price ?? '')) - ((double.parse(item1.price ?? "")) * (double.parse(item1.discount ?? "0")) / 100)).toDouble()}",
                                             
                                                                                 // "₹" +
                                                                                 //     item.price!,

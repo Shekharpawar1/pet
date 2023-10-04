@@ -4,8 +4,10 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/login_controller.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/others/customDialogBox.dart';
 import 'package:pet/screens/bottomnavbar.dart';
 
@@ -26,6 +28,8 @@ class OtpUser extends StatelessWidget {
   final UserLoginController userLoginController =
       Get.put(UserLoginController());
   final foo = Get.put(() => HomeuserController());
+ 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,6 +220,7 @@ class OtpUser extends StatelessWidget {
                                 (route) => false,
                               );
                               userHomeController.onInit();
+                            
                             } catch (e) {}
                             }
                            

@@ -235,7 +235,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                           :  homesalecontroller
                                             .salesproductbypartneritemModel == null || homesalecontroller.salesproductbypartneritemModel!.data == null
                              ? SizedBox(
-                                      child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
+                                      child:Center(child: Image.asset("assets/image/favorite_border,color:Colors.redimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)))
                                 
                               : Container(
                                   // height: 600,

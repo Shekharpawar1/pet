@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -22,6 +24,7 @@ final storage = GetStorage();
   int? selectImages = 0;
 var sellerId = GetStorage().read("sellerid");
 
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 // var wholesellerID = GetStorage().read("wholesalerid");
   int? selecttab;
   bool isAdding = false;
@@ -83,22 +86,25 @@ fethUserId() {
     update();
   }
 
-   void dispose1() {
-    clearFields();
-   clearPopUpFields();
-    // sizeclearFields();
-  salesproductdetailmodel = null;
-  update();
-  }
 
-  @override
-  void onClose() {
-  clearPopUpFields();
-    // clearFields() ;
-    // sizecount= 1;
-    dispose();
-    super.onClose();
+  Future<bool> validateForm(BuildContext context) {
+    final completer = Completer<bool>();
+
+    if (formKey.currentState!.validate()) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
+      completer.complete(true);
+    } else {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
+      completer.complete(false);
+    }
+
+    return completer.future;
   }
+   
     void clearPopUpFields() {
     selectedvariants = null;
          emailController.clear();
@@ -263,7 +269,22 @@ fethUserId() {
   String getUserProductDetailsUrl = '${Constants.GET_USER_PRODUCTDETAILS}';
   SalesProductDetailsModel? salesproductdetailmodel;
   bool productdetailLoaded = false;
+void dispose() {
+    clearFields();
+   clearPopUpFields();
+    // sizeclearFields();
+  salesproductdetailmodel = null;
+  update();
+  }
 
+  @override
+  void onClose() {
+  clearPopUpFields();
+    // clearFields() ;
+    // sizecount= 1;
+    dispose();
+    super.onClose();
+  }
 
 
   String getUserMyCartUrl = '${Constants.GET_USER_MYCARTLIST}';
@@ -318,6 +339,59 @@ fethUserId() {
         colorText: Colors.white,
       );
     }
+    showLoading = false;
+    update();
+  }
+
+
+  Future<void> addNotify() async {
+    showLoading = true;
+    update();
+   
+    var body = {
+      "user_id":storage.read('wholesalerId').toString(),
+      "item_id": productID.toString(),
+      "email": emailController.text.toString(),
+      "stock": selectedvariants!.stock.toString(),
+      "variation": selectedvariants!.type.toString(),
+    
+     
+    };
+    String AddNotify = Constants.ADD_Notify;
+    print(AddNotify);
+    print(body);
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(AddNotify));
+      request.fields.addAll({
+       "user_id": storage.read('wholesalerId').toString(),
+      "item_id": productID.toString(),
+      "email": emailController.text.toString(),
+      "stock": selectedvariants!.stock.toString(),
+      "variation": selectedvariants!.type.toString(),
+    
+      });
+
+      await ApiHelper.postFormData(request: request);
+      update();
+      // Get.back();
+      Get.snackbar(
+        'Success',
+        'Data Successfully Added',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
     showLoading = false;
     update();
   }

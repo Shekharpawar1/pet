@@ -961,7 +961,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                       ),
                     ),
                     pw.Text(
-                      widget.fname.toString(),
+                     ( widget.fname??'').toString(),
                       style: pw.TextStyle(
                         // color: white,
                         // fontWeight: FontWeight.w400,
@@ -984,7 +984,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                       ),
                     ),
                     pw.Text(
-                      widget.email.toString(),
+                      (widget.email??'').toString(),
                       style: pw.TextStyle(
                         // color: white,
                         // fontWeight: FontWeight.w400,
@@ -1007,7 +1007,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                       ),
                     ),
                     pw.Text(
-                      widget.phone.toString(),
+                      (widget.phone??'').toString(),
                       style: pw.TextStyle(
                         // color: white,
                         // fontWeight: FontWeight.w400,
@@ -1457,7 +1457,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  item.totalAddOnPrice ?? '',
+                                                "₹"+ (  item.totalAddOnPrice ?? ''),
                                                   style: CustomTextStyle
                                                       .popinsmedium,
                                                 ),

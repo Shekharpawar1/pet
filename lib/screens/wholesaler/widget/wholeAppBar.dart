@@ -25,6 +25,8 @@ class CustomAppBarWhole extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    wholenotificationcontroller.init();
+     mycartController.init();
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -165,6 +167,8 @@ class CustomAppBarWholeback extends StatelessWidget implements PreferredSizeWidg
 
   @override
   Widget build(BuildContext context) {
+    wholenotificationcontroller.init();
+     mycartController.init();
     return       
     
      AppBar(
@@ -307,6 +311,8 @@ class CustomAppBarwhite extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    wholenotificationcontroller.init();
+     mycartController.init();
     return        AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

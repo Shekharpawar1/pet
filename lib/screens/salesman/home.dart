@@ -568,13 +568,13 @@ class HomeSales extends StatelessWidget {
                                               print(imagePath);
                                               return InkWell(
                                                 onTap: () async {
-                                                    // salesProductDetailsController.dispose1();
+                                                    salesProductDetailsController.dispose();
                                                   salesProductDetailsController
                                                       .viewproduct(
                                                     item.id ?? 0,
                                                   );
-                                                  print(
-                                                      "productid${item.id ?? 0}");
+                                                  // print(
+                                                  //     "productid${item.id ?? 0}");
                                                   await salesProductDetailsController
                                                       .init();
                                                   Get.to(ProductDetailssale());

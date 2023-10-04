@@ -111,7 +111,7 @@ bool showLoading = false;
     wishListItemsId = GetStorage().read('wishListItems') ?? [];
     update();
   }
-  void init() async {
+  Future<void> init() async {
       showLoading = true;
     update();
     try {

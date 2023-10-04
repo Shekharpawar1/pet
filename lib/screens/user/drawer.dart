@@ -240,6 +240,8 @@ profilecontroller.myprofile();
           // ),
           ListView.builder(
             shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: AlwaysScrollableScrollPhysics(),
             itemCount: _listViewData.length,
             itemBuilder: (context, index) {
               return GestureDetector(

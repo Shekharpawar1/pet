@@ -32,7 +32,7 @@ class CouponsController extends GetxController {
     couponTextController.text == couponcode;
 
     update();
-    print("Coupon$couponcode$maxAmount");
+    print("Coupon=code===$couponcode$maxAmount");
   }
 
   String getUserCouponUrl = '${Constants.GET_USER_COUPON}';
@@ -47,7 +47,7 @@ class CouponsController extends GetxController {
           CouponModel.fromJson(await ApiHelper.getApi(getUserCouponUrl));
 
       print(getUserCouponUrl);
-      couponLoaded = true;
+      // couponLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');

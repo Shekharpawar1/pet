@@ -153,9 +153,14 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
                                                     ),
                                                     Positioned(
                                                       bottom: 10,
-                                                      child: Image.asset(
-                                                        "assets/image/drawer2.png",
-                                                        height: 25,
+                                                      child: InkWell(
+                                                         onTap: (){
+                                                        Get.to(salesProfile());
+                                                      },
+                                                        child: Image.asset(
+                                                          "assets/image/drawer2.png",
+                                                          height: 25,
+                                                        ),
                                                       ),
                                                     )
                                                   ]),

@@ -159,24 +159,27 @@ class MyOrderUser extends StatelessWidget {
                                     userreviewcontroller.reviewAdd(
                                         0, item.id ?? 0);
                                     await userreviewcontroller.init();
+                                    // print(   ""+(item.callback![0].userProfile![0]
+                                    //           .fName ??
+                                    //       ''),);
                                     Get.to(OrderDetailsUser(
                                       orderId: item.id ?? 0,
                                       couponcode: item.couponCode ?? '',
                                       paymentmethod: item.paymentMethod ?? '',
                                       orderstatus: item.orderStatus ?? '',
                                       orderAmount: item.orderAmount,
-                                      fname: item.callback![0].userProfile![0]
-                                              .fName ??
-                                          '',
-                                      lname: item.callback![0].userProfile![0]
-                                              .lName ??
-                                          '',
-                                      phone: item.callback![0].userProfile![0]
-                                              .phone ??
-                                          '',
-                                      email: item.callback![0].userProfile![0]
-                                              .email ??
-                                          '',
+                                      // fname: item.callback![0].userProfile![0]
+                                      //         .fName ??
+                                      //     '',
+                                      // lname: item.callback![0].userProfile![0]
+                                      //         .lName ??
+                                      //     '',
+                                      // phone: item.callback![0].userProfile![0]
+                                      //         .phone ??
+                                      //     '',
+                                      // email: item.callback![0].userProfile![0]
+                                      //         .email ??
+                                      //     '',
                                       address: item.deliveryAddress ?? '',
                                       delivered: item.delivered ?? '',
                                     ));

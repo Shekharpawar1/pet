@@ -43,7 +43,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
   }
   @override
   Widget build(BuildContext context) {
-    addtocartController.updateTotal();
+    // addtocartController.updateTotal();
     
     return Stack(
       children: [
@@ -617,9 +617,14 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Text(
-                                  couponsController.couponcode ?? "",
-                                  style: CustomTextStyle.popinslight,
+                                  GetBuilder<CouponsController>(
+                init: couponsController,
+                builder: (_) {
+                                    return Text(
+                                      couponsController.couponcode ?? "",
+                                      style: CustomTextStyle.popinslight,
+                                    );
+                                  }
                                 ),
                               ],
                             ),
@@ -1293,6 +1298,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                     )
                   : const SizedBox();
             }),
+      
       ],
     );
   }

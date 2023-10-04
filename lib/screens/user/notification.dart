@@ -41,12 +41,16 @@ class _NotificationUserState extends State<NotificationUser> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: const Icon(Icons.arrow_back,color:Colors.black),
+          leading: InkWell(onTap: (){
+            Get.back();
+          }
+            ,
+            child: const Icon(Icons.arrow_back,color:Colors.black)),
           title: const Center(child: Text('Notification',style:TextStyle(color: Colors.black,fontSize: 18))),
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Public',),
-                 Tab(text: 'for you'),
+              Tab(text: 'for you'),
         //       ExpansionPanelList(
         //   elevation: 1,
         //   expandedHeaderPadding: EdgeInsets.all(0),
@@ -289,7 +293,7 @@ class _NotificationUserState extends State<NotificationUser> {
                         ? const SizedBox()
                         : notificationcontroller
                                   .userNotifyListModel == null ||  notificationcontroller
-                                  .userNotifyListModel!.data == null? const Text("No data Found"):
+                                  .userNotifyListModel!.data == null?  Center(child: Image.asset("assets/image/favorite_border.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)):
                          ListView.builder(
                             primary: false,
                             scrollDirection: Axis.vertical,
