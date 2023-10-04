@@ -43,7 +43,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
   }
   @override
   Widget build(BuildContext context) {
-    addtocartController.updateTotal();
+    // addtocartController.updateTotal();
     
     return Stack(
       children: [
