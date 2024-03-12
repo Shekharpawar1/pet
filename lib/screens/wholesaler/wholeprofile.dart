@@ -32,6 +32,7 @@ class _WholeSalerProfileState extends State<WholeSalerProfile> {
          GetBuilder<WholeProfileController>(
               init: wholeprofilecontroller,
               builder: (_) {
+              
                  return 
               
       Padding(
@@ -51,31 +52,120 @@ class _WholeSalerProfileState extends State<WholeSalerProfile> {
                   children:[
                       Padding(
                     padding: EdgeInsets.only(bottom: 20),
-                 child:CircleAvatar(
-                  radius:60,
-                  backgroundColor: Colors.transparent,
-                    child:
-                  wholeprofilecontroller.profileImage != null
-                                ? CachedNetworkImage(
-                                    imageUrl:
-                                         "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
-                                            wholeprofilecontroller.profileImage.toString(),
-                                    progressIndicatorBuilder: (context, url,
-                                            downloadProgress) =>
-                                        CircularProgressIndicator(
-                                            color: Colors.grey.shade700,
-                                            value: downloadProgress.progress),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  )
-                    //  Image.asset("assets/image/boyprofile3.png"),
-                  :
-                    wholeprofilecontroller.selectedImage != null
-                                    ? Image.file(wholeprofilecontroller.selectedImage!)
-                                    : Image.asset(
-                                        "assets/image/boyprofile3.png"),
-                  
-                  ),
+                 child:
+                  CircleAvatar(
+                                          radius: 60,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              
+                                          child: ClipOval(
+                                                                              child: (
+                                                wholeprofilecontroller.selectedImage ==
+                                                    null)
+                                            ? CachedNetworkImage(
+                                                        imageUrl:
+                                                            "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                                wholeprofilecontroller
+                                                                    .wholemyprofilemodel!
+                                                                    .data![0]
+                                                                    .image
+                                                                    .toString(),
+                                                                    height: Get.height*0.15,
+                                                                    width: Get.width*0.35,
+                                                                    fit: BoxFit.cover,
+                                                        // imageUrl:
+                                                        //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                        //         wholeprofilecontroller.profileImage.toString(),
+                                                        progressIndicatorBuilder: (context,
+                                                                url,
+                                                                downloadProgress) =>
+                                                            CircularProgressIndicator(
+                                                                color: Colors.grey
+                                                                    .shade700,
+                                                                value:
+                                                                    downloadProgress
+                                                                        .progress),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      )
+                                                             
+                                            : (wholeprofilecontroller.wholemyprofilemodel!
+                                                            .data![0].upload1 ==
+                                                        null) &&
+                                                    wholeprofilecontroller
+                                                            .selectedImage ==
+                                                        null
+                                                ? Image.asset(
+                                                    "assets/image/boyprofile3.png")
+                                                : wholeprofilecontroller
+                                                            .selectedImage !=
+                                                        null
+                                                    ? Image.file(wholeprofilecontroller
+                                                        .selectedImage!)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                                wholeprofilecontroller
+                                                                    .wholemyprofilemodel!
+                                                                    .data![0]
+                                                                    .upload1
+                                                                    .toString(),
+                                                                    height: Get.height*0.15,
+                                                                    width: Get.width*0.35,
+                                                                    fit: BoxFit.cover,
+                                                        // imageUrl:
+                                                        //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                        //         wholeprofilecontroller.profileImage.toString(),
+                                                        progressIndicatorBuilder: (context,
+                                                                url,
+                                                                downloadProgress) =>
+                                                            CircularProgressIndicator(
+                                                                color: Colors.grey
+                                                                    .shade700,
+                                                                value:
+                                                                    downloadProgress
+                                                                        .progress),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                                                              //  Image.asset("assets/image/boyprofile3.png"),
+                                                                            ),
+                                        ),
+                                     
+                 
+                //  CircleAvatar(
+                //     radius:60,
+                //     backgroundColor: Colors.transparent,
+                      
+                //    child: ClipOval(
+                //   child:
+                //     wholeprofilecontroller.profileImage != null
+                //                   ? CachedNetworkImage(
+                //                       imageUrl:
+                //                            "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                //                               wholeprofilecontroller.profileImage.toString(),
+                //                       progressIndicatorBuilder: (context, url,
+                //                               downloadProgress) =>
+                //                           CircularProgressIndicator(
+                //                               color: Colors.grey.shade700,
+                //                               value: downloadProgress.progress),
+                //                       errorWidget: (context, url, error) =>
+                //                           Icon(Icons.error),
+                //                           height: 90,
+                //                           width:90
+                //                     )
+                //       //  Image.asset("assets/image/boyprofile3.png"),
+                //     :
+                //       wholeprofilecontroller.selectedImage != null
+                //                       ? Image.file(wholeprofilecontroller.selectedImage!)
+                //                       : Image.asset(
+                //                           "assets/image/boyprofile3.png"),
+                    
+                //     ),
+                //  ),
+                    
+                    
                       ),
                         
                   Positioned(

@@ -44,7 +44,7 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       key: _drawerkey,
       drawer: drawer(),
-      appBar: CustomAppBar(drawerKey: _drawerkey),
+      appBar: CustomAppBar(drawerKey: _drawerkey,context: context,),
       body:
       Stack(
         children: [
@@ -73,54 +73,60 @@ class _UserProfileState extends State<UserProfile> {
                                       Padding(
                                         padding: EdgeInsets.only(bottom: 20),
                                         child: CircleAvatar(
-                                      radius: 60,
-                                      backgroundColor: Colors.transparent,
-                                      child: (profilecontroller
-                                                      .myprofilemodel ==
-                                                  null &&
-                                              profilecontroller.selectedImage ==
-                                                  null)
-                                          ? Image.asset(
-                                              "assets/image/boyprofile3.png")
-                                          : (profilecontroller.myprofilemodel!
-                                                          .data![0].image ==
-                                                      null) &&
-                                                  profilecontroller
-                                                          .selectedImage ==
-                                                      null
-                                              ? Image.asset(
-                                                  "assets/image/boyprofile3.png")
-                                              : profilecontroller
-                                                          .selectedImage !=
-                                                      null
-                                                  ? Image.file(profilecontroller
-                                                      .selectedImage!)
-                                                  : CachedNetworkImage(
-                                                      imageUrl:
-                                                          "${Constants.USERPROFILE_IMAGEPATH_URL}" +
-                                                              profilecontroller
-                                                                  .myprofilemodel!
-                                                                  .data![0]
-                                                                  .image
-                                                                  .toString(),
-                                                      // imageUrl:
-                                                      //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
-                                                      //         profilecontroller.profileImage.toString(),
-                                                      progressIndicatorBuilder: (context,
-                                                              url,
-                                                              downloadProgress) =>
-                                                          CircularProgressIndicator(
-                                                              color: Colors.grey
-                                                                  .shade700,
-                                                              value:
-                                                                  downloadProgress
-                                                                      .progress),
-                                                      errorWidget: (context,
-                                                              url, error) =>
-                                                          Icon(Icons.error),
-                                                    ),
-                                      //  Image.asset("assets/image/boyprofile3.png"),
-                                    ),
+                                          radius: 60,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              
+                                          child: ClipOval(
+                                                                              child: (profilecontroller
+                                                        .myprofilemodel ==
+                                                    null &&
+                                                profilecontroller.selectedImage ==
+                                                    null)
+                                            ? Image.asset(
+                                                "assets/image/boyprofile3.png")
+                                            : (profilecontroller.myprofilemodel!
+                                                            .data![0].image ==
+                                                        null) &&
+                                                    profilecontroller
+                                                            .selectedImage ==
+                                                        null
+                                                ? Image.asset(
+                                                    "assets/image/boyprofile3.png")
+                                                : profilecontroller
+                                                            .selectedImage !=
+                                                        null
+                                                    ? Image.file(profilecontroller
+                                                        .selectedImage!)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                                profilecontroller
+                                                                    .myprofilemodel!
+                                                                    .data![0]
+                                                                    .image
+                                                                    .toString(),
+                                                                      height: Get.height*0.15,
+                                                                    width: Get.width*0.35,
+                                                                    fit: BoxFit.cover,
+                                                        // imageUrl:
+                                                        //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                        //         profilecontroller.profileImage.toString(),
+                                                        progressIndicatorBuilder: (context,
+                                                                url,
+                                                                downloadProgress) =>
+                                                            CircularProgressIndicator(
+                                                                color: Colors.grey
+                                                                    .shade700,
+                                                                value:
+                                                                    downloadProgress
+                                                                        .progress),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                                                              //  Image.asset("assets/image/boyprofile3.png"),
+                                                                            ),
+                                        ),
                                       ),
                                       Positioned(
                                           bottom: 0,

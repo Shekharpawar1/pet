@@ -4,8 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/user_controller/allveterinary_controller.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
+import 'package:pet/controllers/user_controller/myPetListController.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
+import 'package:pet/controllers/user_controller/transaction_controller.dart';
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/user/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
@@ -41,9 +45,13 @@ class drawer extends StatefulWidget {
 
 class _drawerState extends State<drawer> {
   MyOrderController myordercontroller = Get.put(MyOrderController());
-
+ TransactionUserController transactionuserController = Get.put(TransactionUserController());
+ UserMyPetListController userMyPetListController =
+      Get.put(UserMyPetListController());
   ProfileController profilecontroller = Get.put(ProfileController());
-
+AllVeterinaryController allveterniarycontroller = Get.put(AllVeterinaryController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
  @override
   void initState() {
     super.initState();
@@ -62,7 +70,7 @@ profilecontroller.myprofile();
     "My Pet",
     "My Services",
     "Veterniary",
-  
+  "Transaction",
    "Logout"
   ];
 
@@ -74,7 +82,7 @@ profilecontroller.myprofile();
     Icons.pets,
     Icons.cleaning_services,
     Icons.medication_liquid_outlined,
-    // Icons.payment_outlined,
+    Icons.payment_outlined,
     Icons.logout,
   ];
 
@@ -82,9 +90,8 @@ profilecontroller.myprofile();
 
   @override
   Widget build(BuildContext context) {
-    // print("ImageUser ${Constants.USERPROFILE_IMAGEPATH_URL+ 
-    //                                        profilecontroller
-    //                           .myprofilemodel!.data![0].image.toString()}");
+
+    profilecontroller. myprofile() ;
     return Drawer(
       backgroundColor: MyColors.bgcolor,
       child: ListView(
@@ -140,24 +147,28 @@ profilecontroller.myprofile();
                               .myprofilemodel!.data == null || profilecontroller
                               .myprofilemodel!.data!.isEmpty ?   Image.asset("assets/image/boyprofile3.png") :
                 
-                                                            CachedNetworkImage(
-                                                          imageUrl: "${Constants.USERPROFILE_IMAGEPATH_URL}" +
-                                            profilecontroller
-                              .myprofilemodel!.data![0].image.toString(),
-
-                                                          fit: BoxFit.cover,
-                                                          
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ), // Replace with your own placeholder widget
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons
-                                                                  .error), // Replace with your own error widget
-                                                        ),
+                                                          ClipOval (
+                                                              child: CachedNetworkImage(
+                                                                                                                      imageUrl: "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                                                                        profilecontroller
+                                                                                          .myprofilemodel!.data![0].image.toString(),
+                                                            
+                                                                                                                      fit: BoxFit.cover,
+                                                                              
+                                                                                      width: 75,
+                                                                                      height: 75,
+                                                                                                                      placeholder:
+                                                                (context, url) =>
+                                                                    Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                                                                                      ), // Replace with your own placeholder widget
+                                                                                                                      errorWidget: (context,
+                                                                    url, error) =>
+                                                                Icon(Icons
+                                                                    .error), // Replace with your own error widget
+                                                                                                                    ),
+                                                            ),
                                                         //  Image.asset("assets/image/boyprofile3.png"),
                                                       ),
                                                     ),
@@ -176,10 +187,9 @@ profilecontroller.myprofile();
                                                   ]),
                                             ),
                                             SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
+                                                width: Get
                                                         .width *
-                                                    0.05),
+                                                    0.03),
                                             Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -209,7 +219,7 @@ profilecontroller.myprofile();
                               .myprofilemodel == null || profilecontroller
                               .myprofilemodel!.data == null || profilecontroller
                               .myprofilemodel!.data!.isEmpty ? Text("Email",style: TextStyle(
-                                                        fontSize: 16,
+                                                        fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: MyColors.white),) :
@@ -221,11 +231,15 @@ profilecontroller.myprofile();
                                                         .toString(),
                                                     style: TextStyle(
                                                         color: MyColors.white,
-                                                        fontSize: 16),
+                                                        fontSize: 14),
                                                   ),
                                                 ]),
+                                        
+                                        
                                           ],
                                         ),
+                                   
+                                   
                                       ]),
                                 ]),
                           ),
@@ -241,7 +255,7 @@ profilecontroller.myprofile();
           ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
-            physics: AlwaysScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             itemCount: _listViewData.length,
             itemBuilder: (context, index) {
               return GestureDetector(
@@ -250,11 +264,7 @@ profilecontroller.myprofile();
                   _navigateToScreen(context, index);
                 },
                 child: Container(
-                  // decoration: BoxDecoration(
-                  //   color: _currentSelected == index
-                  //       ? MyColors.gradient
-                  //       : MyColors.bgcolor,
-                  // ),
+                  
                   child: ListTile(
                     title: Text(
                       _listViewData[index],
@@ -293,25 +303,28 @@ profilecontroller.myprofile();
       Get.to(MyOrderUser());
         break;
       case 2:
+notificationcontroller.notifyinit();
         Get.to(const NotificationUser());
         break;
       case 3:
         Get.to(Userfavourite());
         break;
       case 4:
-        // Get.to(MyPetDetails());
+        userMyPetListController.init();
         Get.to(AddPet());
         break;
       case 5:
         Get.to(Myservices());
         break;
       case 6:
+      allveterniarycontroller.init();
         Get.to(AllVeterniary());
         break;
-    //  case 7:
-    //   Get.to(Usertranscation());
-    //     break;
-      case 7:
+     case 7:
+      transactionuserController.init();
+      Get.to(Usertranscation());
+        break;
+      case 8:
         await GetStorage().erase();
         Get.offAll(LoginUser());
         break;

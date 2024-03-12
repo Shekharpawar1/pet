@@ -6,10 +6,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/screens/user/myOrderPage.dart';
 import 'package:pet/screens/user/orderDetails.dart';
 import 'package:pet/screens/user/payment2.dart';
+import 'package:pet/screens/user/userHome.dart';
 import 'package:pet/screens/user/userUpiScreen.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
@@ -20,13 +22,14 @@ enum Choose { upi, cash, phonepay, paytm }
 
 class PaymentUser extends StatefulWidget {
   PaymentUser(
-      {super.key, required this.price, this.orderstatus, this.paymentstatus
+      {super.key, required this.price, this.orderstatus, this.paymentstatus,required this.screenName
       //  this.deliveredstatus,
       //  this.deliveredId,this.deliveredAddress,this.cart,this.couponcode,
       //  this.ordertype,this.totaltexamount,this.coupondiscountamount,
       //  this.coupondiscounttitle,this.orderstatus, this.storeId
       });
   double price;
+  String screenName;
 
   // String? deliveredstatus;
   // int? deliveredId;
@@ -59,7 +62,7 @@ class _PaymentUserState extends State<PaymentUser> {
   @override
   Widget build(BuildContext context) {
     print("Price");
-    print(widget.price??'');
+    print(widget.price ?? '');
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -163,160 +166,103 @@ class _PaymentUserState extends State<PaymentUser> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                // Container(
-                //   width: 335,
-                //   height: 53,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(55),
-                //       gradient: LinearGradient(
-                //         begin: Alignment.centerLeft,
-                //         end: Alignment.centerRight,
-                //         colors: [Color(0xfffdcbcc), Color(0x42fdcbcc)],
-                //       )),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Radio(
-                //           value: Choose.phonepay,
-                //           groupValue: selectone,
-                //           onChanged: (Choose? value) {
-                //             setState(() {
-                //               selectone = value!;
-                //             });
-                //           }),
-                //       Image.asset("assets/image/phonepay1.png", height: 25),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                // Container(
-                //   width: 335,
-                //   height: 53,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(28),
-                //       gradient: LinearGradient(
-                //         begin: Alignment.centerLeft,
-                //         end: Alignment.centerRight,
-                //         colors: [Color(0xffffead2), Color(0x56ffead2)],
-                //       )),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Radio(
-                //           value: Choose.paytm,
-                //           groupValue: selectone,
-                //           onChanged: (Choose? value) {
-                //             setState(() {
-                //               selectone = value!;
-                //             });
-                //           }),
-                //       Image.asset("assets/image/paytm.png", height: 25),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height * 0.05,
-                // ),
+
                 InkWell(
                   onTap: () async {
-                    // print(selectone == Choose.upi);
                     if (selectone == Choose.upi) {
                       print("UPI payment");
 
                       mycartController.addpaymenttype(
-                          selectone == Choose.upi ? 'online' : "offline",
-                          selectone == Choose.cash ? "paid" : "unpaid",
-                           selectone == Choose.upi ? 'upi' : "cash",
-                          );
+                        selectone == Choose.upi ? 'online' : "offline",
+                        selectone == Choose.cash ? "paid" : "unpaid",
+                        selectone == Choose.upi ? 'upi' : "cash",
+                      );
+                      /// phone pay gateway function
+                      ///  await mycartController.initPayment();
+                      ///  then startPgTransaction()
+                      ///  await startPgTransaction()
+                      ///  
+                      Get.to(UserUpiScreen(amount: (widget.price)));
 
-                      Get.to(
-                          UserUpiScreen(amount: (widget.price)));
                     } else if (selectone == Choose.cash) {
                       print("Cash payment");
                       mycartController.addpaymenttype(
-                          selectone == Choose.cash ? 'offline' : "online",
-                          selectone == Choose.cash ? "unpaid" : "paid",
-                           selectone == Choose.cash ? 'cash' : "upi",);
-                          try {
-
-                      await mycartController.placeorder();
-
-                      await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            scrollable: true,
-                            // title:  Text("Login"),
-
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child:
-                                      Image.asset("assets/image/success.png", height: 50, width: 50,),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Order Placed Successfully"),
-                                ),
-SizedBox(height: 10)
-,
-                                InkWell(
-                                  onTap:(){
-                                       Get.off(MyOrderUser());
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text("Ok")),
-                                )
-                              ],
-                            ),
-                          );
-                        },
+                        selectone == Choose.cash ? 'offline' : "online",
+                        selectone == Choose.cash ? "unpaid" : "paid",
+                        selectone == Choose.cash ? 'cash' : "upi",
                       );
+                      try {
+                        await mycartController.placeorder();
 
-                      Get.off(MyOrderUser());
-                          } catch (e) {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              scrollable: true,
+                              // title:  Text("Login"),
 
- await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            scrollable: true,
-                            // title:  Text("Login"),
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: Image.asset(
+                                      "assets/image/success.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text("Order Placed Successfully"),
+                                  ),
+                                  SizedBox(height: 10),
+                                  InkWell(
+                                    onTap: () {
+                                      mycartController.init();
+                                      // Get.close();
+                                      Get.offAll(HomeUser());
+                                      Get.to(MyOrderUser());
+                                    },
+                                    child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Text("Ok")),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
 
-                            content: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                // Align(
-                                //   alignment: Alignment.topRight,
-                                //   child: IconButton(
-                                //     icon: Icon(Icons
-                                //         .close), // You can use any close icon you prefer
-                                //     onPressed: () {
-                                //       Get.back(); // Close the dialog
-                                //     },
-                                //   ),
-                                // ),
-                                Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child:
-                                      Image.asset("assets/image/multiply.png", height: 50, width: 50,),
-                                ),
-                                const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text("Failed"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                          }
-                      // Get.to(Payment2User());
+                        Get.offAll(MyOrderUser());
+                      } catch (e) {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              scrollable: true,
+                              content: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset(
+                                      "assets/image/multiply.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text("Failed"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      }
                     }
-                    // Get.to(Payment2User());
                   },
                   child: Center(
                     child: Container(
@@ -371,18 +317,16 @@ SizedBox(height: 10)
   }
 }
 
-  // ListTile(
-  //                               title: Text("Myself"),
-  //                               leading: Radio(
-  //                                   value:"",
-  //                                 //  activeColor: buttoncolor,
-  //                                   groupValue: select,
-  //                                   onChanged: (value) {
-  //                                     setState(() {
-  //                                       select = value.toString();
-                                        
+// ListTile(
+//                               title: Text("Myself"),
+//                               leading: Radio(
+//                                   value:"",
+//                                 //  activeColor: buttoncolor,
+//                                   groupValue: select,
+//                                   onChanged: (value) {
+//                                     setState(() {
+//                                       select = value.toString();
 
-  //                                     });
-  //                                   }),
-  //                             ),
-                 
+//                                     });
+//                                   }),
+//                             ),

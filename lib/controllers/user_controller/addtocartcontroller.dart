@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -17,6 +19,7 @@ class MyCartController extends GetxController {
   final storage = GetStorage();
   CouponsController couponsController = Get.put(CouponsController());
   AddressController addressController = Get.put(AddressController());
+  
   ProductDetailsController productdeatilscontroller =
       Get.put(ProductDetailsController());
 // int? itemID;
@@ -24,11 +27,15 @@ class MyCartController extends GetxController {
   int? disCount;
   int? addressid;
   int? price;
+  // int? sizecountt =0 ;
 // var sizecount = 0;
   List sizes = [];
   bool showLoading = false;
   var userID;
-  int total = 1;
+  double total  = 0.00;
+   int deliverycharges  = 999;
+    int deliveryprice  = 40;
+  int totalprice = 0;
   String? paymenttype;
   int? isselected1;
   String? paymentStatus;
@@ -40,15 +47,15 @@ class MyCartController extends GetxController {
   int? selectID;
   int? selectqty;
   String? selectname;
-  int? selecttex;
+  double? selecttex;
   double? selectprice;
   int? selectdis;
-
+  String? selectreturn;
+  int? selectStoreId;
+ var qty ;
+  // String user_id=storage.read("id").toString();
   List<Map<String, dynamic>> cartList = [];
-// void  incrementSize(){
-// sizes[]++;
-//     update();
-//   }
+
   int? isselected;
 
   void additem(int id) {
@@ -69,23 +76,26 @@ class MyCartController extends GetxController {
     print("Address Id ====>>>>> $isselected1");
   }
 
-//  void productsizes(List sizedproduct) {
-//     sizes = sizedproduct;
-//     update();
-//     print("sizes${sizes}");
-//   }
+
+  void totalbuyNowPrice( double totalprice) {
+    total = totalprice;
+    update();
+    print("TotalPriceBuy ====>>>>> $total");
+  }
+
   void addpaymenttype(
       String type, String paymentstatus, String paymentMethodUser) {
     paymenttype = type;
     paymentStatus = paymentstatus;
     paymentMethodUser1 = paymentMethodUser;
-// orderStatus = orderstatus;
     update();
     print(
         "paymentMethod1: ${paymentMethodUser1},paymenttype: ${paymenttype},paymentstatus: ${paymentstatus}");
   }
 
-  void adddata(int id, int qty, String name, int tex, double price, int dis) {
+  void adddata(int id, int qty, String name, double tex, double price, int dis,int store_id,
+  String returnorder
+   ) {
     showLoading = false;
     selectID = id;
     selectqty = qty;
@@ -93,15 +103,19 @@ class MyCartController extends GetxController {
     selecttex = tex;
     selectprice = price;
     selectdis = dis;
+    selectreturn = returnorder;
+    selectStoreId=store_id;
 
     cartList = [
       {
         "product_id": selectID.toString(),
         "quantity": selectqty.toString(),
+        "store_id":selectStoreId.toString(),
         "variation": selectname.toString(),
-        "tax_amount": selecttex.toString(),
+        "tax_amount":"0",
         "discount_on_item": selectdis.toString(),
-        "price": selectprice.toString()
+        "price": selectprice.toString(),
+        "return_order": selectreturn.toString()
       }
     ];
 
@@ -111,12 +125,7 @@ class MyCartController extends GetxController {
     print(cartList);
   }
 
-  //  "product_id": item.itemId,
-  //           "quantity":item.quantity,
-  //           "variation":item.variant,
-  //           "tax_amount":13,
-  //           "discount_on_item":20,
-  //           "price":item.price
+
 
   void adddiscount(int disprice, int price) {
     disCount = disprice;
@@ -134,63 +143,135 @@ class MyCartController extends GetxController {
     userID = storage.read('id');
     addressuser = storage.read('useraddresscity');
   }
-
+//Sizesssss
   incrementSize(int index) {
-    sizes[index]++;
+  
+if(mycartmodel!.data![index].totalQuantity != "0"){
+   if (sizes[index] < int.parse(mycartmodel!.data![index].totalQuantity!).toInt()) {
+    // print("SIzes++++${mycartmodel!.data![index].totalQuantity}");
+sizes[index]++;
+   mycartmodel!.data![index].quantity = sizes[index];
+
+   
+print("Sizes after increment: ${mycartmodel!.data![index].quantity}");
+
+print("Counttttprice ${mycartmodel!.data![index].price}");
     update();
 
     print("SIzes${sizes}");
-    // total = 0;
-    // mycartmodel!.data!.forEach((element) async {
-    //   total += (int.parse(element.price!) *
-    //       sizes.elementAt(mycartmodel!.data!.indexOf(element) ?? 0)) as int;
-    //   //  subtotal += total*sizes[0];
-    //   print("total${total}");
-    // });
+    storage.write('size_$index', sizes[index]);
+    print("ReadSizes${storage.read('size_$index')}");
 
     updateTotal();
+    
+    // Check if sizes[index] is equal to totalQuantity
+    if (sizes[index] == int.parse(mycartmodel!.data![index].totalQuantity!).toInt()) {
+
+      Get.snackbar(
+        'Maximum Quantity Reached',
+        'You have reached the maximum stock for this item.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  } else {
+    // If sizes[index] is already equal to totalQuantity
+    print("Maximum Quantity");
+    Get.snackbar(
+      'Maximum Quantity Reached',
+      'You have reached the maximum quantity for this item.',
+      snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+}
+
+else{
+  print("bbcbccb");
+  sizes[index]++;
+   mycartmodel!.data![index].quantity = sizes[index];
+
+  
+   
+print("Sizes after increment: ${mycartmodel!.data![index].quantity}");
+
+print("Counttttprice ${mycartmodel!.data![index].price}");
+    update();
+
+    print("SIzes${sizes}");
+    updateTotal();
+}
+
+
   }
 
+
+  
   decrementSize(int index) {
-    if (sizes[index] > 1) {
+    if (  sizes[index] > 1) {
       sizes[index]--;
+      mycartmodel!.data![index].quantity = sizes[index];
+      
+print("Sizes after decrement** : ${mycartmodel!.data![index].quantity}");
+
+print("Counttttprice--- ${mycartmodel!.data![index].price}");
       update();
       print("SIzes--${sizes}");
     }
+
+      GetStorage().write('sizes_$index', sizes[index]);
+      print("ReadSizes---${storage.read('sizes_$index')}");
+
     updateTotal();
   }
-  // void updateTotal() {
-
-  //    total ;
-  //   mycartmodel!.data!.forEach((element) async {
-  //     total += (int.parse(element.price!) *
-  //         sizes.elementAt(mycartmodel!.data!.indexOf(element) ?? 0)) as int;
-  //     //  subtotal += total*sizes[0];
-  //     print("total${total}");
-  //   });
-  // }
+  
 
   void updateTotal() {
     total = 0;
 
-    mycartmodel!.data!.forEach((element) {
+      mycartmodel!.data!.forEach((element) {
       String priceString = element.price.toString();
+      String quty = element.quantity.toString();
 
+      double price = double.parse(priceString);
+int quantity = int.parse(quty);
+
+double priceqty = price * quantity;
+print("priceqtyvv${priceqty}");
       try {
         double price = double.parse(priceString);
+        int qtyyy = int.parse(quty);
         int sizeIndex = mycartmodel!.data!.indexOf(element) ?? 0;
         int size = sizes.elementAt(sizeIndex);
+  int qty = (price / qtyyy).toInt();
 
+totalprice =  price.toInt();
         total +=
-            (price * size).toInt(); // Convert the final value to an integer
+            (priceqty ).toInt();
+           
       } catch (e) {
         print("Error parsing price: $e");
       }
+
+
+      List<Map<String, dynamic>> cartJsonList1 = mycartmodel!.data!
+          .map((item) => {
+                "product_id": item.itemId,
+                "quantity":item.quantity,
+                "variation": item.variant,
+                "tax_amount": "0",
+                "discount_on_item":storage.read('productItem'),
+                "price":( item.price! * item.quantity!.toInt()),
+                "return_order":item.returnOrder??"no",
+              })
+          .toList();
+print("carttt");
+          print(cartJsonList1);
+cartList = cartJsonList1;
+          
     });
     showLoading = false;
     update();
 
-    print("Total: $total");
+    print("total: $total");
   }
 
   void chooseaddress(int index) {
@@ -203,7 +284,7 @@ class MyCartController extends GetxController {
   MyCartListModel? mycartmodel;
   bool cartlistLoaded = false;
 
-  var subtotal;
+  // var subtotal;
 
   Future<void> init() async {
     showLoading = true;
@@ -220,89 +301,48 @@ class MyCartController extends GetxController {
                 "product_id": item.itemId,
                 "quantity": item.quantity,
                 "variation": item.variant,
-                "tax_amount": 13,
-                "discount_on_item": 20,
-                "price": item.price
+                "tax_amount": "0",
+                "discount_on_item":storage.read('productItem'),
+                "price":( item.price! *   item.quantity!.toInt()),
+                "return_order":item.returnOrder??"no" ,
               })
           .toList();
       cartList = cartJsonList;
+      
+      
 
-// mycartmodel!.data!.forEach((element) async {
-      //   total += (int.parse(element.price!) *
-      //       sizes.elementAt(mycartmodel!.data!.indexOf(element) ?? 0)) as int;
-      //   //  subtotal += total*sizes[0];
-      //   print("total${total}");
-      // });
+      print("===??????${cartJsonList}");
+
 
       print("URL====${getUserMyCartUrl + "${storage.read('id')}"}");
       print(mycartmodel);
       cartlistLoaded = true;
+       updateTotal();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+  
     }
     showLoading = false;
     update();
   }
-
+ @override
+  void onClose() {
+    print("closing...");
+  clearFields();
+    super.onClose();
+  }
+void clearFields() {
+    
+    couponsController.couponcode = '';
+     couponsController.maxAmount = "0";
+update();
+  }
   // productdetails
   String getUserProductDetailsUrl = '${Constants.GET_USER_PRODUCTDETAILS}';
   ProductDetailsModel? productdetailmodel;
   bool productdetailLoaded = false;
 
-//   Future<void> productinit() async {
-//     showLoading = true;
-//     update();
-//     try {
-//       // productdeatils
-//       productdetailmodel = ProductDetailsModel.fromJson(
-//           await ApiHelper.getApi(getUserProductDetailsUrl + "$additemid"));
-//       print("urlapi");
-//       // variantslist = productdetailmodel!.data!.variations;
-//       // if(variantslist!.isNotEmpty)
-//       // updateVariants(variantslist![0]);
-//       List<Map<String, dynamic>> cartJsonList =
-//           productdetailmodel!.data!.map((item) => {
-//             "product_id": productdetailmodel!.data!.id,
-//             "quantity":productdeatilscontroller.sizecount,
-//             "variation":productdetailmodel!.data!.name,
-//             "tax_amount":productdetailmodel!.data!.tax,
-//             "discount_on_item":productdetailmodel!.data!.discount,
-//             "price":productdetailmodel!.data!.price
-//           }).toList();
-//       cartList = cartJsonList;
-//       // var totalprice = 0;
-// // var pricecount = productdetailmodel!.data!.price;
-// // for(var i = 0; i< pricecount; i++){
-// // totalprice +=  ;
-
-// // }
-
-// // print('Total Price: $totalprice');
-
-//       print(getUserProductDetailsUrl + "$additemid");
-//       productdetailLoaded = true;
-//       update();
-//     } catch (e) {
-//       print('Error: $e');
-//       Get.snackbar(
-//         'Error',
-//         'An error occurred: $e',
-//         snackPosition: SnackPosition.BOTTOM,
-//         backgroundColor: Colors.red,
-//         colorText: Colors.white,
-//       );
-//     }
-//     showLoading = false;
-//     update();
-//   }
 
   String getUserMyCartDeleteUrl = '${Constants.GET_USER_MYCARTLISTDELETE}';
   MyCartListDeleteModel? mycartdeletemodel;
@@ -312,7 +352,6 @@ class MyCartController extends GetxController {
     showLoading = true;
     update();
     try {
-      // productdeatils
       mycartdeletemodel = MyCartListDeleteModel.fromJson(
           await ApiHelper.deleteApi(getUserMyCartDeleteUrl + "$additemid"));
       print(mycartdeletemodel);
@@ -320,36 +359,41 @@ class MyCartController extends GetxController {
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
 
-      final ProductDetailsController productdetailscontroller =
-          Get.put(ProductDetailsController());
-      await productdetailscontroller.isProductInCart();
+      // final ProductDetailsController productdetailscontroller =
+      //     Get.put(ProductDetailsController());
+      // await productdetailscontroller.isProductInCart();
       print("====>>>>> model: ${mycartmodel!.toJson()}");
       mycartmodel!.data!.removeWhere((element) => element.id == additemid);
       if (mycartmodel!.data!.isEmpty){
         print("mycartmodelis Empty");
         print(mycartmodel!.data!.length);
           price = 0;
-        total =0; 
+        total =0;
 
+       couponsController.couponcode = "null";
+        couponsController..maxAmount = "0";
+clearFields();
+
+      // await productdetailscontroller.isProductInCart();
         print("ToTal====?");
       }
 
-         
+
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
   }
-
+  RxString address=''.obs;
   String getUserAllAddressUrl = '${Constants.GET_USER_ALLADDRESSLIST}';
   AllAddressListModel? allAddresslistModel;
   bool addresslistLoaded = false;
@@ -360,7 +404,11 @@ class MyCartController extends GetxController {
     try {
       // productdeatils
       allAddresslistModel = AllAddressListModel.fromJson(
-          await ApiHelper.getApi(getUserAllAddressUrl + "$userID"));
+          await ApiHelper.getApi(getUserAllAddressUrl + "${storage.read('id')}"));
+      address.value=
+      "${allAddresslistModel!.data![0].houseNo},${allAddresslistModel!.data![0].area} ,${allAddresslistModel!.data![0].landmark} , ${allAddresslistModel!.data![0].city}, ${allAddresslistModel!.data![0].state}-${allAddresslistModel!.data![0].pincode}";
+       await storage.write("UserbillingAddress",address.value);
+      print("user billing address${address.value}");
       print(allAddresslistModel);
 
       print(getUserAllAddressUrl + "$userID");
@@ -368,13 +416,13 @@ class MyCartController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -398,13 +446,13 @@ class MyCartController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -445,15 +493,14 @@ class MyCartController extends GetxController {
       "order_status": "pending",
       "gst_bill": "0",
       "payment_day": "0",
+      //"phonepe_transactionId":phonepetransaction.toString(),
+      //"custom_transactionId":merchantTransaction.toString(),
       "payment_mode": paymentMethodUser1.toString(),
-      "total_tax_amount": (total * 0.05).toString(),
+      "total_tax_amount": "0",
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
       "delivery_address_id": sendingAddrID.toString(),
-      //  (allAddresslistModel!
-      //                               .data![isselected ?? 0]
-      //                               .id ??
-      //                           0).toString(),
+      "delivery_"
       "coupon_code": couponsController.couponcode ?? '',
       "order_type": "delivery",
       "checked": 1.toString(),
@@ -461,18 +508,21 @@ class MyCartController extends GetxController {
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
       "delivery_address": storage.read('useraddresscity').toString(),
-      // (allAddresslistModel!
-      //                               .data![isselected ?? 0]
-      //                               .area ??
-      //                           '').toString(),
+    "delivery_charge": (deliveryprice??40).toString() ,
+    "original_delivery_charge":(deliveryprice??40).toString() ,
       "item_campaign_id": "",
-      "order_amount": (((total) + (total * 0.05)) -
-              (double.parse(couponsController.maxAmount ?? "0.0")))
+      "order_amount": ((total)-num.parse(couponsController.maxAmount??'0') > deliverycharges)?
+       ((total  ) -
+              (double.parse(couponsController.maxAmount ?? "0.0"))).toInt()
+          .toString():
+      (((total + deliveryprice) ) -
+              (double.parse(couponsController.maxAmount ?? "0.0"))).toInt()
           .toString(),
       "cart": cartList,
     };
+    // String PlaceOrderUrl = Constants.PLACE_ORDER;
     String PlaceOrderUrl = Constants.PLACE_ORDER;
-    // print("====>>>> Body Place Order: ${body}");
+    print("====>>>> Body Place Order: ${body}");
     try {
       // var request = http.MultipartRequest('POST', Uri.parse(PlaceOrderUrl));
       // request.fields.addAll(body);
@@ -482,20 +532,21 @@ class MyCartController extends GetxController {
       // Get.back();
       Get.snackbar(
         'Success',
-        'Address Added',
+        'Order place successfully',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
       throw "error";
     }
 
@@ -541,14 +592,12 @@ class MyCartController extends GetxController {
       "gst_bill": "0",
       "payment_day": "0",
       "payment_mode": paymentMethodUser1.toString(),
-      "total_tax_amount": (total * 0.05).toString(),
+      "total_tax_amount":"0",
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
       "delivery_address_id": sendingAddrID.toString(),
-      //  (allAddresslistModel!
-      //                               .data![isselected ?? 0]
-      //                               .id ??
-      //                           0).toString(),
+       "delivery_charge": (deliveryprice??40).toString() ,
+    "original_delivery_charge":(deliveryprice??40).toString() ,
       "coupon_code": couponsController.couponcode ?? '',
       "order_type": "delivery",
       "checked": 1.toString(),
@@ -561,7 +610,9 @@ class MyCartController extends GetxController {
       //                               .area ??
       //                           '').toString(),
       "item_campaign_id": "",
-      "order_amount": selectprice.toString(),
+      "order_amount": 
+      
+      selectprice.toString(),
       "cart": [
         {
           "product_id": selectID.toString(),
@@ -591,17 +642,127 @@ class MyCartController extends GetxController {
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
       throw "error";
     }
 
     showLoading = false;
     update();
   }
+
+  // String INITIATE_PAYMENT = '${Constants.INITIATE_PAYMENT}';
+
+  // Future<void> placeorder2(double amount) async {
+  //   showLoading = true;
+  //   update();
+  //   final storage = GetStorage();
+  //   int store_id=storage.read('store_id');
+  //   MyCartController addtocartController = Get.put(MyCartController());
+  //   String sendingAddr = "";
+  //   int sendingAddrID = 0;
+  //   if (addtocartController.allAddresslistModel == null ||
+  //       addtocartController.allAddresslistModel!.data == null ||
+  //       addtocartController.allAddresslistModel!.data!.isEmpty) {
+  //     sendingAddr = "Demo address";
+  //   } else {
+  //     sendingAddr =
+  //     "${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].city ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].area ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].houseNo ?? ""} ${addtocartController.allAddresslistModel!.data![addtocartController.isselected ?? 0].landmark ?? ""}";
+  //     print(sendingAddr);
+  //   }
+  //
+  //   if (addtocartController.allAddresslistModel == null ||
+  //       addtocartController.allAddresslistModel!.data == null ||
+  //       addtocartController.allAddresslistModel!.data!.isEmpty) {
+  //     sendingAddrID = 0;
+  //   } else {
+  //     sendingAddrID = isselected1 ?? 0;
+  //     print(sendingAddr);
+  //   }
+  //
+  //   Map<String, dynamic> body = {
+  //     "user_id": storage.read('id').toString(),
+  //     "role":0,
+  //     "store_id": store_id,
+  //     "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
+  //     "coupon_discount_title": couponsController.coupontitle ?? '',
+  //     "payment_status": paymentStatus.toString(),
+  //     "order_status": "pending",
+  //     // "gst_bill": "0",
+  //     "payment_day": "0",
+  //     "payment_mode": paymentMethodUser1.toString(),
+  //     "total_tax_amount": "0",
+  //     "payment_method": "online",
+  //     "transaction_reference": "sadgash23asds",
+  //     "delivery_address_id": sendingAddrID.toString(),
+  //
+  //         "coupon_code": couponsController.couponcode ?? '',
+  //     "order_type": "delivery",
+  //     "checked": 1.toString(),
+  //
+  //     "zone_id": 2.toString(),
+  //     "delivered_status": "undelivered",
+  //     "delivery_address": storage.read('useraddresscity').toString(),
+  //     "delivery_charge": (deliveryprice??40).toString() ,
+  //     "original_delivery_charge":(deliveryprice??40).toString() ,
+  //     "item_campaign_id": "",
+  //     "order_amount": ((total)-num.parse(couponsController.maxAmount??'0') > deliverycharges)?
+  //     ((total  ) -
+  //         (double.parse(couponsController.maxAmount ?? "0.0"))).toInt()
+  //         .toString():
+  //     (((total + deliveryprice) ) -
+  //         (double.parse(couponsController.maxAmount ?? "0.0"))).toInt()
+  //         .toString(),
+  //     "cart": cartList,
+  //   };
+  //   // String PlaceOrderUrl = Constants.PLACE_ORDER;
+  //   String jsonBody = json.encode(body);
+  //
+  //   // Define your API endpoint
+  //   String INITIATE_PAYMENT = Constants.INITIATE_PAYMENT;
+  //
+  //   try {
+  //     // Send the POST request with JSON body
+  //     final response = await http.post(
+  //       Uri.parse(INITIATE_PAYMENT),
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: jsonBody,
+  //     );
+  //
+  //     print(response);
+  //
+  //     update();
+  //     // Get.back();
+  //     Get.snackbar(
+  //       'Success',
+  //       'Order place successfully',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.green,
+  //       colorText: Colors.white,
+  //     );
+  //   } catch (e) {
+  //     print('Error: $e');
+  //
+  //     // Get.snackbar(
+  //     //   'Error',
+  //     //   'An error occurred: $e',
+  //     //   snackPosition: SnackPosition.BOTTOM,
+  //     //   backgroundColor: Colors.red,
+  //     //   colorText: Colors.white,
+  //     // );
+  //     throw "error";
+  //   }
+  //
+  //
+  //   showLoading = false;
+  //   update();
+  // }
+
 }

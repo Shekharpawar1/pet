@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:jewellery/style/colors.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 
@@ -31,12 +30,7 @@ class _PDFScreenState extends State<PDFScreen> with WidgetsBindingObserver {
       appBar: AppBar(
         backgroundColor: Colors.grey,
         title: Text(widget.title ?? "Document"),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(Icons.share),
-        //     onPressed: () {},
-        //   ),
-        // ],
+      
       ),
       backgroundColor: Colors.grey,
       body: Stack(

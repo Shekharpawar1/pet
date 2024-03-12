@@ -9,6 +9,7 @@ import 'package:pet/utils/constants.dart';
 class WholefavouriteController extends GetxController {
   final storage = GetStorage();
   var wholesalerID;
+    List<dynamic> Wishlistt =[];
 // List wishlist = [
 //       {
 //       "image": "assets/image/food3.png",
@@ -62,20 +63,25 @@ class WholefavouriteController extends GetxController {
       wishList =
           WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${storage.read('wholesalerid')}"));
       print(getWishListUrl + "/${storage.read('wholesalerid')}");
-      // wishList!.data!.map((e) => e.itemId).toList();
+     
+ wishList!.data = wishList!.data!.where((element) => element.storeId!.isNotEmpty).toList();
+    
+    print("wishhhjj");
+   print(Wishlistt);
+      // Wishlistt  = wishList!.data!.map((element) => element.storeId!.isNotEmpty).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
       // categoryLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -122,13 +128,14 @@ class WholefavouriteController extends GetxController {
           colorText: Colors.white,
         );
       } else {
-        Get.snackbar(
-          'Error',
-          'An error occurred: $e',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        print('Error: $e');
+        // Get.snackbar(
+        //   'Error',
+        //   'An error occurred: $e',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
       }
     }
     showLoading = false;

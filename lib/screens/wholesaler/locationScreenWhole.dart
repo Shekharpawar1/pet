@@ -7,12 +7,15 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
 
 import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.dart';
-import 'package:pet/screens/user/widgets/orderCancellationDialog.dart';
-import 'package:pet/screens/user/widgets/orderReturnDialog.dart';
+// import 'package:pet/screens/user/widgets/orderCancellationDialog.dart';
+// import 'package:pet/screens/user/widgets/orderReturnDialog.dart';
 
 import 'package:pet/screens/wholesaler/notification.dart';
+import 'package:pet/screens/wholesaler/widget/orderCancellationDialog.dart';
+import 'package:pet/screens/wholesaler/widget/orderReturnDialog.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
@@ -51,6 +54,9 @@ class _LocationPickerMapWhole1State extends State<LocationPickerMapWhole1> {
   String _userAddress = ''; // To store the fetched address
   String _desiredAddress = ''; // To store the fetched address
  OrderTrackerWholeController ordertrackwholecontroller = Get.put(OrderTrackerWholeController());
+
+  WholeMyOrderController wholemyordercontroller =
+      Get.put(WholeMyOrderController());
 
   LatLng _senderLocation = LatLng(22.712622, 75.876584);
   LatLng _selectedLocation = LatLng(22.759982, 75.872925); // receiver
@@ -396,76 +402,168 @@ class _LocationPickerMapWhole1State extends State<LocationPickerMapWhole1> {
                                   ],
                                 ),
                                 SizedBox(height: 20),
-                                GetBuilder<OrderTrackerWholeController>(
-                                    init: ordertrackwholecontroller,
-                                    builder: (controller) {
-                                      return 
-                                      controller.isDelivered ?Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 100),
-                                        child: InkWell(
-                                          onTap: () {
-                                            // print(Status);
-                                            Get.dialog(OrderReturnDialog());
-                                          },
-                                          child: Container(
-                                            // width: MediaQuery.of(context).size.width * 0.3,
-                                            height:
-                                                MediaQuery.of(context).size.width *
-                                                    0.11,
-                                            decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.all(
-                                                // topRight:
-                                                Radius.circular(30),
-                                                // topLeft: Radius.circular(30),
-                                                // bottomLeft: Radius.circular(30),
-                                                // bottomRight: Radius.circular(30),
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Text("Return Order",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  )),
-                                            ),
-                                          ),
-                                        ),
-                                      ) :
+
+         (ordertrackwholecontroller.orderStatus ==  Status.delivered) ?
+                          GetBuilder<OrderTrackerWholeController>(
+                             init: ordertrackwholecontroller,
+                             builder: (controller) {
+                               
+                               return 
+                             
+                              Padding(
+                                 padding: const EdgeInsets.symmetric(
+                                     horizontal: 100),
+                                 child: InkWell(
+                                   onTap: () async {
+                                     // print(Status);
+                                
+                                     Get.dialog(OrderReturnDialogwhole());
+                                   },
+                                   child: Container(
+                                     // width: MediaQuery.of(context).size.width * 0.3,
+                                     height:
+                                         MediaQuery.of(context).size.width *
+                                             0.11,
+                                     decoration: BoxDecoration(
+                                       color:wholemyordercontroller.isButtonEnabled ? Colors.red : Colors.grey,
+                                      
+                                       borderRadius: BorderRadius.all(
+                                         // topRight:
+                                         Radius.circular(30),
+                                         // topLeft: Radius.circular(30),
+                                         // bottomLeft: Radius.circular(30),
+                                         // bottomRight: Radius.circular(30),
+                                       ),
+                                     ),
+                                     child: Center(
+                                       child: Text("Return Order",
+                                           style: TextStyle(
+                                             color: Colors.white,
+                                           )),
+                                     ),
+                                   ),
+                                 ),
+                               );
+                             
+                            }):
+
+                                Padding(
+                                 padding: const EdgeInsets.symmetric(
+                                     horizontal: 100),
+                                 child: InkWell(
+                                   onTap: () {
                                  
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 100),
-                                        child: InkWell(
-                                          onTap: () {
-                                            // print(Status.outOfDelivery);
-                                            Get.dialog(OrderCancellationDialog());
-                                          },
-                                          child: Container(
-                                            // width: MediaQuery.of(context).size.width * 0.3,
-                                            height:
-                                                MediaQuery.of(context).size.width *
-                                                    0.11,
-                                            decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius: BorderRadius.all(
-                                                // topRight:
-                                                Radius.circular(30),
-                                                // topLeft: Radius.circular(30),
-                                                // bottomLeft: Radius.circular(30),
-                                                // bottomRight: Radius.circular(30),
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Text("Cancel Order",
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                  )),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }),
+
+                          if (wholemyordercontroller.isButtonEnabled){
+                            wholemyordercontroller.disablebutton(true);
+ Get.dialog(OrderCancellationDialogwhole());
+                          }
+                          else{
+                            wholemyordercontroller.disablebutton(false);
+  print("Button is not enabled");
+                          }
+                                    
+                                   },
+                                   child: Container(
+                                     // width: MediaQuery.of(context).size.width * 0.3,
+                                     height:
+                                         MediaQuery.of(context).size.width *
+                                             0.11,
+                                     decoration: BoxDecoration(
+                                       color: wholemyordercontroller.isButtonEnabled ? Colors.red : Colors.grey,
+                                      //  GetStorage().read('cancelmessage')  ? Colors.grey:Colors.red,
+                                       borderRadius: BorderRadius.all(
+                                         // topRight:
+                                         Radius.circular(30),
+                                         // topLeft: Radius.circular(30),
+                                         // bottomLeft: Radius.circular(30),
+                                         // bottomRight: Radius.circular(30),
+                                       ),
+                                     ),
+                                     child: Center(
+                                       child: Text("Cancel Order",
+                                           style: TextStyle(
+                                             color: Colors.white,
+                                           )),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                 
+
+                                // GetBuilder<OrderTrackerWholeController>(
+                                //     init: ordertrackwholecontroller,
+                                //     builder: (controller) {
+                                //       return 
+                                //       controller.isDelivered ?Padding(
+                                //         padding: const EdgeInsets.symmetric(
+                                //             horizontal: 100),
+                                //         child: InkWell(
+                                //           onTap: () {
+                                //             // print(Status);
+                                //             Get.dialog(OrderReturnDialogwhole());
+                                //           },
+                                //           child: Container(
+                                //             // width: MediaQuery.of(context).size.width * 0.3,
+                                //             height:
+                                //                 MediaQuery.of(context).size.width *
+                                //                     0.11,
+                                //             decoration: BoxDecoration(
+                                //               color: Colors.red,
+                                //               borderRadius: BorderRadius.all(
+                                //                 // topRight:
+                                //                 Radius.circular(30),
+                                //                 // topLeft: Radius.circular(30),
+                                //                 // bottomLeft: Radius.circular(30),
+                                //                 // bottomRight: Radius.circular(30),
+                                //               ),
+                                //             ),
+                                //             child: Center(
+                                //               child: Text("Return Order",
+                                //                   style: TextStyle(
+                                //                     color: Colors.white,
+                                //                   )),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       ) :
+                                 
+                                //       Padding(
+                                //         padding: const EdgeInsets.symmetric(
+                                //             horizontal: 100),
+                                //         child: InkWell(
+                                //           onTap: () {
+                                //             // print(Status.outOfDelivery);
+                                //             Get.dialog(OrderCancellationDialogwhole());
+                                //           },
+                                //           child: Container(
+                                //             // width: MediaQuery.of(context).size.width * 0.3,
+                                //             height:
+                                //                 MediaQuery.of(context).size.width *
+                                //                     0.11,
+                                //             decoration: BoxDecoration(
+                                //               color: Colors.red,
+                                //               borderRadius: BorderRadius.all(
+                                //                 // topRight:
+                                //                 Radius.circular(30),
+                                //                 // topLeft: Radius.circular(30),
+                                //                 // bottomLeft: Radius.circular(30),
+                                //                 // bottomRight: Radius.circular(30),
+                                //               ),
+                                //             ),
+                                //             child: Center(
+                                //               child: Text("Cancel Order",
+                                //                   style: TextStyle(
+                                //                     color: Colors.white,
+                                //                   )),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       );
+                                //     }),
+                           
+                           
+                           
                               ],
                             );
                           }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/models/cityModel.dart';
+import 'package:pet/models/salesmanModel/zoneModel.dart';
 import 'package:pet/models/stateModel.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
+import 'package:pet/models/salesmanModel/zoneModel.dart' as zoneFile;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
@@ -80,15 +82,17 @@ class WholeSaleController extends GetxController {
 
   void validateForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is Invalid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is Invalid')),
+      // );
     }
   }
+
+
 
   DateTime? selectedDate;
 
@@ -132,13 +136,13 @@ bool showLoading = false;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
   // // state list
@@ -175,13 +179,13 @@ bool showLoading = false;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

@@ -13,7 +13,9 @@ class SubCategoryController extends GetxController {
   int? categoryids;
   int? subid;
   int? id;
-
+ List<dynamic>? itemlist ;
+ List<Items> combinedList = [];
+  List listOfLists = [];
   @override
   void onInit() {
     super.onInit();
@@ -66,13 +68,13 @@ class SubCategoryController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     //product
   }
@@ -86,20 +88,20 @@ class SubCategoryController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
   Future<void> productInitByCategory() async {
     try {
       userProductModel = ProductModel.fromJson(await ApiHelper.getApi(
-          "https://canine.hirectjob.in/api/v1/items/latest"));
+          "http://caninedemo.caninetest.xyz/api/v1/items/latest"));
       print('=========**${getUserproductUrl}${categoryids}/${selectedIndex}');
       print('===============>>>>>>> Category $selectedCategory');
 
@@ -113,38 +115,65 @@ class SubCategoryController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
+  List filteredItems = [];
   String getUsertoyUrl = '${Constants.GET_USER_TOY}';
   ToyModel? usertoyModel;
   // UserPropertiesModel? userPropertiesModelorignal;
   bool toyloaded = false;
-
   void producttoys() async {
     try {
       usertoyModel = ToyModel.fromJson(await ApiHelper.getApi(
-          getUsertoyUrl + "sub_category=6&category1=1&category2=2"));
-      print(
-          'TOYYYY=========>>${getUsertoyUrl + "sub_category=6&category1=1&category2=2"}');
+          getUsertoyUrl ));
+
+
+
+      //  usertoyModel!.data  =  usertoyModel!.data!.where((element) => element.items!.isNotEmpty).toList();
+      // print("Toysss**");
+
+      
+
+   filteredItems = usertoyModel!.data!
+        .where((element) => element.subCategory!.id ==  element.subCategory!.id)
+        .map((element) => element.items)
+        .toList();
+
+    // Use a Set to store distinct items
+    Set<Items> combinedSet = {};
+    
+    // Add all items from the filtered list to the set
+    for (var itemList in filteredItems) {
+      combinedSet.addAll(itemList);
+    }
+
+    // Convert the set to a list (removing duplicates)
+    combinedList = combinedSet.toList();
+
+    print(combinedList.length);
+    
+      print(usertoyModel!.data! .length);
+            print(
+          'TOYYYY=========>>${getUsertoyUrl}');
       toyloaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 }

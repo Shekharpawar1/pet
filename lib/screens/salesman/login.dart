@@ -7,6 +7,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pet/controllers/salesman_controller/createaccount_controller.dart';
 import 'package:pet/controllers/salesman_controller/login_controller.dart';
 import 'package:pet/controllers/user_controller/login_controller.dart';
+import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/salesman/Dashboard.dart';
 import 'package:pet/screens/salesman/createaccount.dart';
 import 'package:pet/utils/colors.dart';
@@ -335,7 +336,7 @@ class _LoginSalesState extends State<LoginSales> {
                                           hintStyle: TextStyle(
                                               color: MyColors.white, fontSize: 14),
                                           contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 20, vertical: 10),
+                                              horizontal: 20, vertical: 15),
                                           border: InputBorder.none,
                                           enabledBorder: InputBorder.none,
                                           focusedBorder: InputBorder.none,
@@ -390,11 +391,11 @@ class _LoginSalesState extends State<LoginSales> {
               
                                     try {
                                       await saleslogincontroller.loginsales();
-                                      Navigator.push(
-                                          context,
-                                          PageTransition(
-                                              type: PageTransitionType.fade,
-                                              child: DashboardSales()));
+                                      // Navigator.push(
+                                      //     context,
+                                      //     PageTransition(
+                                      //         type: PageTransitionType.fade,
+                                      //         child: DashboardSales()));
                                     } catch (e) {
                                       Get.snackbar(
                                         'Error',
@@ -478,6 +479,22 @@ class _LoginSalesState extends State<LoginSales> {
                               ))),
                         ],
                       ),
+
+                         SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Get.to(Common());
+                        },
+                        
+                        child: Center(
+                            child: Text(
+                          "Other Login",
+                          style: CustomTextStyle.yellowtext,
+                        ))),
+                  
+                  
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.08,
                       ),

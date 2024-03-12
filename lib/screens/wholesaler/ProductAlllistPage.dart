@@ -4,9 +4,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
 import 'package:pet/screens/wholesaler/productdetails.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -23,33 +25,18 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
    WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
   WholeProductDetailsController wholeproductdetailsController =
       Get.put(WholeProductDetailsController());
-
+ MyCartWholeController mycartwholeController =
+      Get.put(MyCartWholeController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
-            child: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: MyColors.black,
-                size: 20,
-              ),
-            ),
-          ),
-          title: Center(
-              child: Text(
-            "All Products",
-            style: CustomTextStyle.appbartext,
-          )),
-        ),
+
+        appBar: CustomAppBarWholeback(
+       title: "All Products",
+      ),
+     
+      
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: ListView(
@@ -62,17 +49,16 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                   : Container(
                       // height: 5000,
                       child: GridView.builder(
-                        primary: false,
-                        shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 150,
-                                  childAspectRatio: 3 / 2,
-                                  mainAxisExtent: 285,
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 15),
+                           primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              physics: NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 15.0,
+                                      mainAxisSpacing: 15.0,
+                                      mainAxisExtent: 285),
                           itemCount: wholehomecontroller
                               .userPropertiesModel!.data!.length,
                           itemBuilder: (BuildContext ctx, index) {
@@ -82,10 +68,10 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                            String imagePath =
                                                 Constants.PRODUCT_HOME_IMAGE_PATH +
                                                     "/${item.image!}";
-                            print(imagePath);
+                            // print(imagePath);
                             return InkWell(
                               onTap: () async{
-
+ wholeproductdetailsController.dispose() ;
                                  wholeproductdetailsController
                                                     .viewproduct(
                                                   item.id ?? 0,
@@ -170,29 +156,11 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
 
                                                     Container(
                                                       height: 125,
-                                                      decoration: BoxDecoration(
-                                                          // gradient:
-                                                          //     LinearGradient(
-                                                          //   colors: [
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //   ],
-                                                          //   begin:
-                                                          //       Alignment.topLeft,
-                                                          //   end: Alignment
-                                                          //       .bottomRight,
-                                                          // ),
-                                                          ),
-                                                      // decoration: BoxDecoration(
-                                                      //     borderRadius: BorderRadius.circular(30),
-                                                      //     color: MyColors.white),
+                                                      
+                                                      
                                                       child: CachedNetworkImage(
                                                         imageUrl: imagePath,
-                                                        // width: 61,
-                                                        // height: 75,
-                                                        placeholder:
+                                                       placeholder:
                                                             (context, url) =>
                                                                 Center(
                                                           child:
@@ -205,10 +173,9 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                       ),
                                                     ),
 
-                                                    // SizedBox(height: 15,),
-
+                                                    
                                                     Container(
-                                                      // height: 140,
+                                                     
                                                       child: Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -225,6 +192,8 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                               maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
                                                             Text(
@@ -252,38 +221,27 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                     (item.discount !="0.00" && item.discount !="0"&&item.discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
                                                                             "₹" +
-                                                                                item.price.toString(),
+                                                                                item.wholePrice.toString(),
                                                                             style: CustomTextStyle.discounttext),
                                                                         SizedBox(
                                                                             width:
                                                                                 2),
-                                                                        // Container(
-                                                                        // height:
-                                                                        //     20,
-                                                                        // width: 48,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     color: MyColors
-                                                                        //         .red,
-                                                                        //     borderRadius: BorderRadius.circular(
-                                                                        //         10),
-                                                                        //     border:
-                                                                        //         Border.all(color: MyColors.red)),
-                                                                        // child:
-                                                                        //     Center(
-                                                                        //   child:
+                                                                       
                                                                         Text(
-                                                                            // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
-                                                                        //   ),
-                                                                        // ),
+                                                                        
                                                                       ],
-                                                                    ),
+                                                                    ): const  SizedBox(),
+                                                               
+                                                                    
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -297,11 +255,8 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                                               Get.width * 0.23,
                                                                           child:
                                                                               Text(
-                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-
-                                                                            // "₹" +
-                                                                            //     item.price!,
-                                                                            style:
+                                                                            "₹ ${((double.parse(item.wholePrice ?? '')) - ((double.parse(item.wholePrice ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+  style:
                                                                                 CustomTextStyle.popinsmedium,
                                                                           ),
                                                                         ),
@@ -311,9 +266,9 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                                         InkWell(
                                                                                onTap: () async{
                                                                              wholeproductdetailsController.viewproductHome(
-                                                                              item.id??0,item.name??'',"1kg",1 ,item.price as int,item.image!);
-                                                                              await wholeproductdetailsController
-                                                            .addProductHome();
+                                                                                   item.id??0,item.name??'',"1kg",1 ,double.parse(item.wholePrice ?? ''),item.image??'',"yes");
+                                                                              await wholeproductdetailsController.addProductHome();
+                                                            mycartwholeController.init();
                                                                             },
                                                                           child: Padding(
                                                                             padding:
@@ -336,10 +291,7 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                                   ],
                                                                 ),
 
-                                                                // Image.asset(
-                                                                //   "assets/image/yellowbag.png",
-                                                                //   height: 80,
-                                                                // )
+                                                              
                                                               ],
                                                             )
                                                           ],
@@ -350,112 +302,7 @@ class _ProductAlllistPagewholeState extends State<ProductAlllistPagewhole> {
                                                 ),
                                               ),
                                          
-                                           
-                              
-                              //  Container(
-                              //   width: 140,
-                              //   // height: 700,
-                              //   decoration: BoxDecoration(
-                              //     borderRadius: BorderRadius.circular(25),
-                              //     color: MyColors.white,
-                              //     boxShadow: [
-                              //       BoxShadow(
-                              //         color: Colors.grey.withOpacity(0.3),
-                              //         spreadRadius: 3,
-                              //         blurRadius: 2,
-                              //         offset:
-                              //             Offset(0, 3), // Offset of the shadow
-                              //       ),
-                              //     ],
-                              //     // color: MyColors.white
-                              //   ),
-                              //   child: Column(
-                              //     children: [
-                              //       Container(
-                              //         height: 125,
-
-                              //         // decoration: BoxDecoration(
-                              //         //     borderRadius: BorderRadius.circular(30),
-                              //         //     color: MyColors.white),
-                              //         child: CachedNetworkImage(
-                              //           imageUrl: imagePath,
-                              //           width: 61,
-                              //           height: 75,
-                              //           placeholder: (context, url) => Center(
-                              //             child: CircularProgressIndicator(),
-                              //           ), // Replace with your own placeholder widget
-                              //           errorWidget: (context, url, error) =>
-                              //               Icon(Icons
-                              //                   .error), // Replace with your own error widget
-                              //         ),
-                              //       ),
-
-                              //       // SizedBox(height: 15,),
-
-                              //       Container(
-                              //         height: 145,
-                              //         child: Padding(
-                              //           padding: const EdgeInsets.only(
-                              //               left: 10.0, right: 5, top: 5),
-                              //           child: Column(
-                              //             mainAxisAlignment:
-                              //                 MainAxisAlignment.start,
-                              //             crossAxisAlignment:
-                              //                 CrossAxisAlignment.start,
-                              //             children: [
-                              //               Text(item.name!,
-                              //                   style: CustomTextStyle
-                              //                       .popinsmedium),
-                              //               Text(item.description.toString(),
-                              //                   style: CustomTextStyle
-                              //                       .popinssmall0),
-                              //               // SizedBox(height: 3),
-
-                              //               Row(
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment
-                              //                         .spaceBetween,
-                              //                 children: [
-                              //                   Text(
-                              //                     item.price!,
-                              //                     style: CustomTextStyle
-                              //                         .popinsmedium,
-                              //                   ),
-
-                              //                   Padding(
-                              //                     padding:
-                              //                         const EdgeInsets.only(
-                              //                             right: 5.0),
-                              //                     child: Container(
-                              //                         width: 35,
-                              //                         height: 35,
-                              //                         decoration: BoxDecoration(
-                              //                             borderRadius:
-                              //                                 BorderRadius
-                              //                                     .circular(10),
-                              //                             color: Color(
-                              //                                 0xffffcc00)),
-                              //                         child: Padding(
-                              //                           padding: EdgeInsets.all(
-                              //                               10.0),
-                              //                           child: Image.asset(
-                              //                             "assets/image/bag2.png",
-                              //                           ),
-                              //                         )),
-                              //                   )
-                              //                   // Image.asset(
-                              //                   //   "assets/image/yellowbag.png",
-                              //                   //   height: 80,
-                              //                   // )
-                              //                 ],
-                              //               )
-                              //             ],
-                              //           ),
-                              //         ),
-                              //       )
-                              //     ],
-                              //   ),
-                              // ),
+                                      
 
 );
                           }),

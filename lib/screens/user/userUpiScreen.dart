@@ -1,5 +1,7 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/screens/user/orderDetails.dart';
@@ -7,7 +9,9 @@ import 'package:pet/screens/user/paymentdone.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
+import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
 import 'package:upi_india/upi_india.dart';
+import "package:http/http.dart" as http;
 
 class UserUpiScreen extends StatefulWidget {
     UserUpiScreen({super.key,this.amount});
@@ -19,250 +23,150 @@ class UserUpiScreen extends StatefulWidget {
 class _UserUpiScreenState extends State<UserUpiScreen> {
     MyCartController mycartController = Get.put(MyCartController());
 
-  Future<UpiResponse>? _transaction;
-  UpiIndia _upiIndia = UpiIndia();
+  // Future<UpiResponse>? _transaction;
+  // UpiIndia _upiIndia = UpiIndia();
   List<UpiApp>? apps;
+    String merchantId = 'PHONEPEPGUAT8';
+    String AppId = "";
+    String ApiKey='aeed1568-1a76-4fa4-9f47-3e1c81232660';
+    String Env = 'SANDBOX';double price=0.0;
+    bool enableLogging = true;
+    String checksum = '';
+    String saltIndex = '1';
+    String callbackUrl ='https://canine.hirectjob.in/api/v1/auth/payment/callback';
+    String body = '';
+    Object? result;
+    String apiEndPoint = "/pg/v1/pay";
+    String transactionID=DateTime.now().millisecondsSinceEpoch.toString();
+    // String user_id=mycartController.user_id;
+    String getCheckSum() {
+      final requestData = {
+        "merchantId": merchantId,
+        "merchantTransactionId": transactionID,
+        "merchantUserId": mycartController.userID.toString(),
+        "amount": (widget.amount ?? 0) * 100,
+        "callbackUrl": callbackUrl,
 
-  TextStyle header = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-  );
+        "paymentInstrument": {"type": "PAY_PAGE"}
+      };
 
-  TextStyle value = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontSize: 14,
-  );
+      String base64body = base64.encode(utf8.encode(json.encode(requestData)));
+      print("transactionID${requestData}");
+      setState(() {
+        checksum =
+        '${sha256.convert(utf8.encode(base64body + apiEndPoint + ApiKey)).toString()}###$saltIndex';
 
+      });
+      return base64body;
+    }
+
+
+    void paymentInit() {
+      print("${[Env, AppId, merchantId, enableLogging]}");
+      PhonePePaymentSdk.init(Env, AppId, merchantId, enableLogging)
+          .then((val) {
+        setState(() {
+          result = 'PhonePe SDK Initialized - $val';
+          body=getCheckSum().toString();
+        });
+         print("body${body}");
+        startPgTransaction();
+      })
+          .catchError((error) {
+        handleError(error);
+        return <dynamic>{};
+      });
+    }
+
+    Future<void> checkStatus() async {
+      print("check called");
+      String url = 'https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/$merchantId/$transactionID';
+      String concatString = '/pg/v1/status/$merchantId/$transactionID$ApiKey';
+      print("concatString{$concatString");
+      var bytes = utf8.encode(concatString);
+      var digest = sha256.convert(bytes).toString();
+      String xVerify = '$digest###$saltIndex';
+
+      Map<String, String> headers = {
+        "Content-Type":"application/json",
+        "X-VERIFY":xVerify,
+        "X-MERCHANT-ID":merchantId,
+      };
+
+
+      print("check headers${headers}");
+      print("url${url}");
+      try {
+        await http.get(Uri.parse(url), headers: headers).then(
+                (value) {
+              Map<String, dynamic> res = jsonDecode(value.body);
+              print("Response: ${res}");
+              if (res['success'] && res['code'] == 'PAYMENT_SUCCESS' &&
+                  res['data']['state'] == 'COMPLETED') {
+                print("Response: ${res}");
+                Get.to(PaymentDoneScreenuser());
+                mycartController.placeorder();
+              } else {
+                print("Response: ${res}");
+              }
+            });
+        // print("Response: ${res}");
+
+
+
+      } catch (e) {
+        print('Error: $e');
+
+      }
+    }
+    void startPgTransaction() async {
+      try {
+        String base64body = getCheckSum();
+        var response = await PhonePePaymentSdk.startTransaction(
+          base64body,
+          callbackUrl,
+          checksum,
+          "",
+        );
+
+        if (response != null) {
+          String status = response['status'].toString();
+          String error = response['error'].toString();
+          print("sdk response${response}");
+          if (status == 'SUCCESS') {
+            result = "Flow Completed - Status:${response}";
+            await checkStatus();
+          } else {
+            result = "Flow Completed - Status: $status and Error: $error";
+          }
+        } else {
+          result = "Flow Incomplete";
+        }
+      } catch (err) {
+        print(err);
+      }
+    }
+    void handleError(err) {
+      setState(() {
+        result = {"error": err};
+      });
+    }
   @override
   void initState() {
-    _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
-      setState(() {
-        apps = value;
-      });
-    }).catchError((e) {
-      apps = [];
-    });
+
+
+    paymentInit();
+
+
+    print("screen is on stack");
     super.initState();
   }
 
-  Future<UpiResponse> initiateTransaction(UpiApp app) async {
-    return _upiIndia.startTransaction(
-      app: app,
-      receiverUpiId: "ruchika.nawghare@ybl",
-      receiverName: 'Ruchika',
-      transactionRefId: 'TestingUpiIndiaPlugin',
-      transactionNote: 'Not actual. Just an example.',
-      amount: (widget.amount!),
-    );
-  }
 
-  Widget displayUpiApps() {
-    if (apps == null)
-      return Center(child: CircularProgressIndicator());
-    else if (apps!.length == 0)
-      return Center(
-        child: Text(
-          "No apps found to handle transaction.",
-          style: header,
-        ),
-      );
-    else
-      return Align(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Wrap(
-            children: apps!.map<Widget>((UpiApp app) {
-              return GestureDetector(
-                onTap: () {
-                  _transaction = initiateTransaction(app);
-                  setState(() {});
-                },
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.memory(
-                        app.icon,
-                        height: 60,
-                        width: 60,
-                      ),
-                      Text(app.name),
-                    ],
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-      );
-  }
-
-  String _upiErrorHandler(error) {
-    switch (error) {
-      case UpiIndiaAppNotInstalledException:
-        return 'Requested app not installed on device';
-      case UpiIndiaUserCancelledException:
-        return 'You cancelled the transaction';
-      case UpiIndiaNullResponseException:
-        return 'Requested app didn\'t return any response';
-      case UpiIndiaInvalidParametersException:
-        return 'Requested app cannot handle the transaction';
-      default:
-        return 'An Unknown error has occurred';
-    }
-  }
-
-  void _checkTxnStatus(String status) {
-    switch (status) {
-      case UpiPaymentStatus.SUCCESS:
-Get.to(PaymentDoneScreenuser());
-   mycartController. placeorder();
-        print('Transaction Successful');
-        break;
-      case UpiPaymentStatus.SUBMITTED:
-        print('Transaction Submitted');
-        break;
-      case UpiPaymentStatus.FAILURE:
-        print('Transaction Failed');
-        break;
-      default:
-        print('Received an Unknown transaction status');
-    }
-  }
-
-  Widget displayTransactionData(title, body) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("$title: ", style: header),
-          Flexible(
-              child: Text(
-            body,
-            style: value,
-          )),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(Icons.arrow_left, color: MyColors.black)),
-        ),
-        title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child: Text(
-          "UPI Payment",
-          style: TextStyle(
-            fontSize: 16,
-            color: MyColors.black,
-            fontWeight: FontWeight.w700,
-          ),
-        )),
-        // actions: [
-        //   //  SvgPicture.asset("assets/image/girl.svg"),
+    return const Placeholder();
 
-        //   // SizedBox(width: 20),
-        //   InkWell(
-        //       onTap: () {
-        //         Get.to(NotificationWhole());
-        //       },
-        //       child: SvgPicture.asset("assets/image/notification.svg")),
-        // ],
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: displayUpiApps(),
-          ),
-          Expanded(
-            child: FutureBuilder(
-              future: _transaction,
-              builder: (BuildContext context, AsyncSnapshot<UpiResponse> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text(
-                        _upiErrorHandler(snapshot.error.runtimeType),
-                        style: header,
-                      ), // Print's text message on screen
-                    );
-                  }
-
-                  // If we have data then definitely we will have UpiResponse.
-                  // It cannot be null
-                  UpiResponse _upiResponse = snapshot.data!;
-
-                  // Data in UpiResponse can be null. Check before printing
-                  String txnId = _upiResponse.transactionId ?? 'N/A';
-                  String resCode = _upiResponse.responseCode ?? 'N/A';
-                  String txnRef = _upiResponse.transactionRefId ?? 'N/A';
-                  String status = _upiResponse.status ?? 'N/A';
-                  String approvalRef = _upiResponse.approvalRefNo ?? 'N/A';
-                  _checkTxnStatus(status);
-
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        displayTransactionData('Transaction Id', txnId),
-                        displayTransactionData('Response Code', resCode),
-                        displayTransactionData('Reference Id', txnRef),
-                        displayTransactionData('Status', status.toUpperCase()),
-                        displayTransactionData('Approval No', approvalRef),
-                      ],
-                    ),
-                  );
-                } else
-                  return Center(
-                    child: Text(''),
-                  );
-              },
-            ),
-          ),
-           InkWell(
-              onTap: () {
-                   Get.to(OrderDetailsUser(
-
-
-                   ));
-                // Get.to(Payment2User());
-              },
-              child: Center(
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.08,
-                  decoration: BoxDecoration(
-                      color: MyColors.yellow,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Center(
-                      child: Text(
-                    "Next",
-                    style: CustomTextStyle.mediumtextreem,
-                  )),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
   }
 }

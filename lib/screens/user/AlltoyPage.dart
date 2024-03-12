@@ -5,9 +5,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
+import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/controllers/user_controller/subcateogries_controller.dart';
 import 'package:pet/others/Filter.dart';
 import 'package:pet/screens/user/filterScreen.dart';
@@ -19,6 +21,7 @@ import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AlltoyPage extends StatefulWidget {
   const AlltoyPage( {super.key});
@@ -33,114 +36,11 @@ class _AlltoyPageState extends State<AlltoyPage> {
     final HomeuserController homeusercontroller = Get.put(HomeuserController());
   ProductDetailsController productdeatilscontroller =
       Get.put(ProductDetailsController());
-  
+         UserReviewController userreviewController = Get.put(UserReviewController());
+ MyCartController mycartController = Get.put(MyCartController());
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar:CustomAppBarback(),
-//       appBar: AppBar(
-//             elevation: 0,
-//           backgroundColor:Colors.transparent,
-// leading: Padding(
-//   padding:  EdgeInsets.only(left:5.0,top: 10,bottom: 10,right: 0),
-//   child:   InkWell(onTap: (){
-//     Navigator.pop(context);
-//   },
-//     child: Icon(Icons.arrow_back_ios,color: MyColors.black,size: 20,
-    
-//     ),
-//   ),
-// ),
-         
-//         title: Center(child: Text("All Toy",style: CustomTextStyle.appbartext,)),
-    
-//            actions: [
-        
-
-                  
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                      Get.to(NotificationUser());
-//                   },
-//                   child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
- 
-//  Positioned(
-//  top: 10.0,right: 0,
-//                     child:  Stack(
-//                       children: <Widget>[
-//                          Icon(
-//                             Icons.brightness_1,
-//                             size: 15.0, color: MyColors.red),
-//                          Positioned(
-//                             top: 3.0,
-//                             right: 4.0,
-//                             child:  Center(
-//                               child:  Text(('5').toString(),
-//                                 // list.length.toString(),
-//                                 style:  TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: 8.0,
-//                                     fontWeight: FontWeight.w500
-//                                 ),
-//                               ),
-//                             )),
-
-                  
-//                       ],
-//                     )),
-
-
-//             ],
-//           ),
-    
-//                 SizedBox(width: 20),
-//  Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                       Get.to(AddToCardUser());
-                   
-//                   },
-//                   child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
- 
-// // (getCardModel!.data!.isEmpty)?
-// // SizedBox():
-//  Positioned(
-//  top: 10.0,right: 0,
-//                     child:  Stack(
-//                       children: <Widget>[
-//                          Icon(
-//                             Icons.brightness_1,
-//                             size: 15.0, color: MyColors.red),
-//                          Positioned(
-//                             top: 3.0,
-//                             right: 4.0,
-//                             child:  Center(
-//                               child:  Text(('5').toString(),
-//                                 // list.length.toString(),
-//                                 style:  TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: 8.0,
-//                                     fontWeight: FontWeight.w500
-//                                 ),
-//                               ),
-//                             )),
-
-                  
-//                       ],
-//                     )),
-
-
-//             ],
-//           ),
-    
-//     SizedBox(width: 20,)
-    
-//         ], 
-       
-        
-//         ),
+    return Scaffold(appBar:CustomAppBarback(title:"All Toys"),
 
         body:ListView(
           primary: true,
@@ -160,7 +60,6 @@ class _AlltoyPageState extends State<AlltoyPage> {
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(17),
                 
-                          // border: Border.all(color:brandcolor ),
                 
                           color: MyColors.white,
                         ),
@@ -207,19 +106,13 @@ class _AlltoyPageState extends State<AlltoyPage> {
                         ),
                       ),
                 
-                      //  SizedBox(width: 10,),
-                      // GetBuilder<FilterController>(
-                      //       // init: filtercontroller,
-                      //       builder: (_) {
-                      //  return
                       GestureDetector(
                         onTap: () {
                           FilterController filtercontroller =
                               Get.put(FilterController());
-                          // filtercontroller.init();
-                          filtercontroller.loadDefaultData();
+                         filtercontroller.loadDefaultData();
                           filtercontroller.clearFields();
-                          // Get.to(FilterScreen());
+                          
                           filtercontroller.init();
                           Get.to(FilterScreenUI());
                           Get.to(FilterScreen());
@@ -238,83 +131,13 @@ class _AlltoyPageState extends State<AlltoyPage> {
                             )),
                       )
                 
-                      // )
+                     
                     ],
                   ),
                 ),
 
      
-            // SizedBox(height: MediaQuery.of(context).size.height*0.02),
-//  Row(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,          
-//           children: [
-
-//           Container(
-//              height:45,
-//           width:265,
-//                    decoration: BoxDecoration(
-//           shape: BoxShape.rectangle,
-//                         borderRadius: BorderRadius.circular(17),
-        
-//                         // border: Border.all(color:brandcolor ),
-        
-//              color:MyColors.white,
-       
-        
-//                     ),
-        
-         
-          
-//             child: TextFormField(
-//                                   controller: _searchcontroller,
-//                                                 style: TextStyle(fontSize: 14,color: MyColors.voliet, fontFamily: "SF-Pro-Display",),
-        
-//                                decoration: InputDecoration(
-                                   
-//                                        contentPadding: EdgeInsets.only(left: 15),
-//                                       fillColor:MyColors.white,
-//                                       focusColor:MyColors.white,
-//                                       enabledBorder: OutlineInputBorder(
-//                                         borderSide: BorderSide.none,
-//                                         // borderRadius: BorderRadius.circular(50),
-//                                       ),
-//                                       focusedBorder: OutlineInputBorder(
-//                                         borderSide: BorderSide.none,
-//                                         //  borderRadius: BorderRadius.circular(50),
-//                                       ),
-//                                       border: OutlineInputBorder(
-//                                         borderSide: BorderSide.none,
-//                                         //  borderRadius: BorderRadius.circular(50),
-//                                       ),
-//                                       hintText:"Search",
-//                                       prefixIcon:Padding(
-//                                         padding: const EdgeInsets.all(10.0),
-//                                         child: Image.asset("assets/image/searchnormal.png",width: 10,),
-//                                       ),
-                                  
-//                                       hintStyle:
-//                                       TextStyle(color: Colors.grey, fontSize: 16,fontWeight: FontWeight.w400)
-                                    
-//                                       ),
-//                                 ),
-//           ),
-     
-//     //  SizedBox(width: 10,),
-//      GestureDetector(
-//        onTap: () {
-//                     Get.to(FilterScreen());},
-//        child: Container(width: 45,
-//      height: 45,
-//      decoration: BoxDecoration(
-//      borderRadius: BorderRadius.circular(15),
-//      color: Color(0xffffcc00)),
-//      child: Padding(
-//        padding: const EdgeInsets.all(10.0),
-//        child:   Image.asset("assets/image/filter3.png",),
-//      )),
-//      )
-
-//          ],),
+    
      
      
          SizedBox(height: MediaQuery.of(context).size.height*0.04,),
@@ -323,58 +146,45 @@ class _AlltoyPageState extends State<AlltoyPage> {
                 : Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Container(
-                          //  height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
                               primary: false,
                               shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
+                               scrollDirection: Axis.vertical,
                               physics: NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 285),
-                              itemCount: subcategorycontroller
-                                  .usertoyModel!.data!.length
-                                 , // Set the number of cards you want to display.
-                              itemBuilder: (context, index) {
-                                // gridDelegate:
-                                //     SliverGridDelegateWithMaxCrossAxisExtent(
-                                //         maxCrossAxisExtent: 150,
-                                //      childAspectRatio: 3 / 2,
-                                //         mainAxisExtent: 300,
-                                //         crossAxisSpacing: 15,
-                                //         mainAxisSpacing: 15),
-                                // itemCount: homeusercontroller
-                                //     .userPropertiesModel!.data!.length
-                                //     .clamp(0, 4),
-                                // itemBuilder: (BuildContext ctx, index) {
-                                var item =  subcategorycontroller
-                                  .usertoyModel!.data![index];
-                  
+                                      mainAxisExtent: 290),
+                              
+                                   itemCount:subcategorycontroller. combinedList!.length
+                                          ,
+                                      itemBuilder: (BuildContext ctx, index) {
+                                           var item = subcategorycontroller
+                                      .combinedList[index];
+                                      print("nndjdjnj${subcategorycontroller
+                                      .combinedList.length}");
+                                
                                  
                                 var imagePath =
                                        "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
                                 print(imagePath);
                                 return InkWell(
-                                  // onTap: () async{
-                                      //  productdeatilscontroller.viewproduct( item.id??0,);
-                                      //      print("productid${item.id??0}");
-                                      //     await productdeatilscontroller.init();
-                                      //       productdeatilscontroller.clearFields();  
-                                      //  Get.to( ProductDetails());
-                                  // },
+                                 
                                     onTap: () async{
-                                                 productdeatilscontroller
-                                                .viewproduct(
-                                              item.id ?? 0,
-                                            );
-                                             print("productippppd${item.id ?? 0}");
-                                        await productdeatilscontroller.init();
-                                        Get.to(ProductDetails(
-                                         id: item.id??0, 
-                                        ));
+                                             productdeatilscontroller.dispose();
+                                                productdeatilscontroller
+                                                    .viewproduct(
+                                                  item.id ?? 0,
+                                                );
+                                                await productdeatilscontroller
+                                                    .init();
+                                                userreviewController.reviewAdd(
+                                                    item.id ?? 0, 0);
+                                                await userreviewController
+                                                    .init();
+                                                Get.to(ProductDetails(id:item.id??0));
                                             },
                                   child:  Container(
                                                 width: 140,
@@ -382,22 +192,16 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                 decoration: BoxDecoration(
                                                       gradient: LinearGradient(
                                                         colors: [
-                                                          // _getRandomColor(),
-                                                          // _getRandomColor(),
-                                                          // _getRandomColor(),
-                                                          // _getRandomColor(),
-                                                          // MyColors.white
-                                                          //     .withOpacity(0.1),
+                                                         
                                                           MyColors.white,
                                                           MyColors.white,
-                                                          // MyColors.white,
                                                         ],
                                                         begin: Alignment.topCenter,
                                                         end: Alignment.bottomCenter,
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(25),
-                                                      // color: MyColors.white,
+                                                      
                                                       boxShadow: [
                                                         BoxShadow(
                                                           color: Colors.grey
@@ -415,7 +219,25 @@ class _AlltoyPageState extends State<AlltoyPage> {
                   
                   
                   
-                                                   GetBuilder<HomeuserController>(
+                                              
+                                                
+                                                Row(
+  children:[
+
+  IconButton(
+  icon: Icon(Icons.share,size:20,color:MyColors.red),
+  onPressed: () {
+   shareContent(item.image.toString(), item.name.toString(),  item.price.toString());
+
+    // Share.share(itemAll.toString());
+  
+  },
+),
+
+
+Spacer(),
+
+      GetBuilder<HomeuserController>(
                       init: homeusercontroller,
                       builder: (_) {
                                                         return InkWell(
@@ -450,35 +272,19 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                         );
                                                       }
                                                     ),
-                  
-                                                
-                                                
+                                                      
+]),
+
+
                   
                   
                                                     Container(
                                                       height: 125,
-                                                      decoration: BoxDecoration(
-                                                          // gradient:
-                                                          //     LinearGradient(
-                                                          //   colors: [
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //   ],
-                                                          //   begin:
-                                                          //       Alignment.topLeft,
-                                                          //   end: Alignment
-                                                          //       .bottomRight,
-                                                          // ),
-                                                          ),
-                                                      // decoration: BoxDecoration(
-                                                      //     borderRadius: BorderRadius.circular(30),
-                                                      //     color: MyColors.white),
+                                                      
+
                                                       child: CachedNetworkImage(
                                                         imageUrl: imagePath,
-                                                        // width: 61,
-                                                        // height: 75,
+                                                        
                                                         placeholder:
                                                             (context, url) =>
                                                                 Center(
@@ -492,7 +298,6 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                       ),
                                                     ),
                   
-                                                    // SizedBox(height: 15,),
                   
                                                     Container(
                                                       // height: 140,
@@ -512,23 +317,19 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                                 maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
-                                                            Text(
-                                                                item.description
-                                                                            .toString()
-                                                                            .length <
-                                                                        30
-                                                                    ? item
-                                                                        .description!
-                                                                    : item
-                                                                        .description!
-                                                                        .substring(
-                                                                            0,
-                                                                            19),
-                                                                style: CustomTextStyle
-                                                                    .popinssmall0),
-                                                            SizedBox(height: 5),
+                                                               Text(
+  item.description!.length < 20
+      ? item.description!
+      : item.description!.substring(0, item.description!.length),
+  maxLines: 1,
+  overflow: TextOverflow.ellipsis,
+  style: CustomTextStyle.popinssmall0,
+),  SizedBox(height: 5),
+                                                             SizedBox(height: 5),
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -539,6 +340,11 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                    
+                                                                    
+
+                                                                      (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
@@ -548,29 +354,15 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                         SizedBox(
                                                                             width:
                                                                                 2),
-                                                                        // Container(
-                                                                        // height:
-                                                                        //     20,
-                                                                        // width: 48,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     color: MyColors
-                                                                        //         .red,
-                                                                        //     borderRadius: BorderRadius.circular(
-                                                                        //         10),
-                                                                        //     border:
-                                                                        //         Border.all(color: MyColors.red)),
-                                                                        // child:
-                                                                        //     Center(
-                                                                        //   child:
+                                                                       
+                                                                         SizedBox(width:3),
                                                                         Text(
-                                                                            // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
-                                                                        //   ),
-                                                                        // ),
+                                                                        
                                                                       ],
-                                                                    ),
+                                                                    ):const  SizedBox(),
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -595,30 +387,35 @@ class _AlltoyPageState extends State<AlltoyPage> {
                                                                         SizedBox(
                                                                             width:
                                                                                 Get.width * 0.054),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(right: 5.0),
-                                                                          child: Container(
-                                                                              width: 35,
-                                                                              height: 35,
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(5.0),
-                                                                                child: Image.asset(
-                                                                                  "assets/image/bag2.png",
-                                                                                  height: 25,
-                                                                                ),
-                                                                              )),
+                                                                        InkWell(
+                                                                          onTap: () async{
+                                                                         productdeatilscontroller.viewproductHome(item.id??0,item.name??'',"1kg",1,double.parse(item.price ?? ''),(item.image).toString(),"yes");
+
+                                                                              await productdeatilscontroller.addProductHome();
+                                                            mycartController.init();
+                                                                          },
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     ),
                                                                   ],
                                                                 ),
                   
-                                                                // Image.asset(
-                                                                //   "assets/image/yellowbag.png",
-                                                                //   height: 80,
-                                                                // )
+                                                              
                                                               ],
                                                             )
                                                           ],
@@ -638,4 +435,15 @@ class _AlltoyPageState extends State<AlltoyPage> {
     
     );
   }
+}
+void shareContent(String image , String name, String detials) {
+  // Replace these with your image and text
+  String imageUrl = image;
+  String text = "Product Name :"+name;
+  String description = "Product Price :"+detials;
+
+  String sharedText = '${Constants.BASE_URL}/storage/app/public/product/${imageUrl ?? ""}\n$text\n$description';
+
+  Share.share(sharedText, subject: 'Welcome Message', sharePositionOrigin: Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+
 }

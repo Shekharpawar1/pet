@@ -1,11 +1,13 @@
-import 'dart:developer';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/myPetController.dart';
+import 'package:pet/controllers/user_controller/notification_controller.dart';
 import 'package:pet/controllers/user_controller/profile_controller.dart';
 import 'package:pet/screens/Mypetdetails.dart';
 import 'package:pet/screens/user/UserAddMyPet.dart';
@@ -38,12 +40,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomeUser(),
     ServicePage(),
     AddPet(),
-    // UserMyPets(),
     UserProfile(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: pages[_currentIndex],
       bottomNavigationBar: Container(
@@ -55,6 +57,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
               ),
         ),
         child: BottomNavigationBar(
+          
+
           elevation: 0,
           backgroundColor: MyColors.bgcolor,
           type: BottomNavigationBarType.fixed,
@@ -64,7 +68,15 @@ class _BottomNavBarState extends State<BottomNavBar> {
           unselectedFontSize: 10,
           unselectedItemColor: MyColors.white,
           onTap: (value) {
+            print("bottomvalue");
             print(value);
+              if (value == 0) {
+              MyCartController mycartController = Get.put(MyCartController());
+  NotificationController notificationcontroller =
+      Get.put(NotificationController());
+               notificationcontroller.notifyinit();
+               mycartController.init();
+            }
             if (value == 2) {
               UserMyPetController userMyPetController =
                   Get.put(UserMyPetController());

@@ -3,9 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/login_controller.dart';
+import 'package:pet/screens/bottomnavbar.dart';
 import 'package:pet/screens/common/common.dart';
+import 'package:pet/screens/skip/skipuserhome.dart';
 import 'package:pet/screens/user/otp.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -25,6 +29,8 @@ class _LoginUserState extends State<LoginUser> {
   // TextEditingController _numbercontroller = TextEditingController();
   final UserLoginController userLoginController =
       Get.put(UserLoginController());
+      
+  final HomeuserController homeusercontroller = Get.put(HomeuserController());
   bool isFinished = false;
   @override
   Widget build(BuildContext context) {
@@ -236,13 +242,7 @@ class _LoginUserState extends State<LoginUser> {
 
                                   try {
                                     await userLoginController.getOtp();
-                                    Navigator.push(
-                                      context,
-                                      PageTransition(
-                                        type: PageTransitionType.fade,
-                                        child: OtpUser(),
-                                      ),
-                                    );
+                                   
                                   } catch (e) {
                                     Get.snackbar(
                                       'Error',
@@ -270,15 +270,45 @@ class _LoginUserState extends State<LoginUser> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.02,
                     ),
+
+
+                    // InkWell(
+                    //   onTap: ()async{
+                    //         //  GetStorage().write("skip", true);
+
+                    //       // print(GetStorage().read("skip"));
+                    //       if(GetStorage().read("skip") ){
+                    //         // homeusercontroller.userId == null;
+                    //          await Navigator.pushAndRemoveUntil(
+                    //             context,
+                    //             PageTransition(
+                    //               type: PageTransitionType.fade,
+                    //               child: BottomNavBar(),
+                    //             ),
+                    //             (route) => false,
+                    //           );
+                    //       }
+                            
+                    //     //  Get.to(()=>SkipUserHome());
+                    //   },
+                    //   child: Center(child: Text("Skip"))),
+                       SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.01,
+                    ),
                     InkWell(
                         onTap: () {
                           Get.to(Common());
                         },
+                        
                         child: Center(
                             child: Text(
-                          "Other Accounts",
+                          "Other Login",
                           style: CustomTextStyle.yellowtext,
                         ))),
+               
+               
+               
+               
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.08,
                     ),

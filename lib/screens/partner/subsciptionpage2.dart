@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/controllers/partner_controller/subscription_controller.dart';
@@ -113,11 +114,18 @@ Padding(
   
         children: [
   
-              Text("${widget.description}",style: CustomTextStyle.popinsboldlightsmall)
+              // Text("${widget.description}",style: CustomTextStyle.popinsboldlightsmall)
+  
+          Html(
+          data: widget.description,
+          style: {
+            // You can add custom styles if needed
+            'p': Style(fontSize: FontSize.small),
+            // Add more styles as needed
+          },
+        ),
   
           
-  
-          ,
            SizedBox(height: MediaQuery.of(context).size.height*0.02),    
   
           

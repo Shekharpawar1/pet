@@ -27,18 +27,18 @@ class AllVeterinaryController extends GetxController{
       // veterniary
       allveterniarymodel = AllVeterinaryModel.fromJson(
           await ApiHelper.getApi(getUserVeterniaryUrl));
-      print(allveterniarymodel);
+      print(getUserVeterniaryUrl);
       allveterniaryLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
   }

@@ -28,7 +28,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
   Widget build(BuildContext context) {
     print(widget.price);
     return Scaffold(
-        appBar: CustomAppBarback(),
+        appBar: CustomAppBarback(title:"Coupons"),
         body: ListView(
           shrinkWrap: true,
           primary: true,
@@ -259,7 +259,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                         child: const Text(
                                                           'TAP TO APPLY',
                                                           style: TextStyle(
-                                                            fontSize: 12,
+                                                            fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),
@@ -285,7 +285,7 @@ class _UsercouponPageState extends State<UsercouponPage> {
                                                         child: const Text(
                                                           "You can't apply",
                                                           style: TextStyle(
-                                                            fontSize: 14,
+                                                            fontSize: 10,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                           ),

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pet/controllers/partner_controller/login_controller.dart';
+import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/partner/createaccount.dart';
 import 'package:pet/screens/partner/otp.dart';
 import 'package:pet/screens/partner/subsciption.dart';
@@ -14,7 +15,7 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/salesman/otp.dart';
 import 'package:pet/screens/user/userHome.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -29,6 +30,34 @@ class _LoginPartnerState extends State<LoginPartner> {
   PartnerLoginController partnercontroller = Get.put(PartnerLoginController());
   // TextEditingController _numbercontroller = TextEditingController();
   bool isFinished = false;
+
+//   void handleApiResponse(BuildContext context, http.Response response) {
+//   
+//     print(response.body);
+//   if (response.statusCode == 200) {
+//     // Navigate to the next screen
+//     Navigator.push(
+//       context,
+//       PageTransition(
+//         type: PageTransitionType.fade,
+//         child: Subscription(),
+//       ),
+//     );
+
+//   } else {
+//     print("object======");
+//     // Handle API errors or non-200 responses
+
+
+//     Get.snackbar(
+//       'Error',
+//        'API Error: ${response.body}',
+//       snackPosition: SnackPosition.BOTTOM,
+//       backgroundColor: Colors.red,
+//       colorText: Colors.white,
+//     );
+//   }
+// }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -313,13 +342,13 @@ class _LoginPartnerState extends State<LoginPartner> {
                                   if (isValid) {
                                     print("Valid form");
                                     try {
-                                      await partnercontroller.getOtp();
-                                      await Navigator.push(
-                                          context,
-                                          PageTransition(
-                                              type: PageTransitionType.fade,
-                                              child: Subscription()));
+                                      
+                                        await partnercontroller.getOtp();
+   
+                                    
                                     } catch (e) {
+                                      print("Error :$e");
+                                     
                                       Get.snackbar(
                                         'Error',
                                         'Something Went Wrong: $e',
@@ -376,7 +405,20 @@ class _LoginPartnerState extends State<LoginPartner> {
                               ))),
                         ],
                       ),
-
+    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Get.to(Common());
+                        },
+                        
+                        child: Center(
+                            child: Text(
+                          "Other Login",
+                          style: CustomTextStyle.yellowtext,
+                        ))),
+                  
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.08,
                       ),

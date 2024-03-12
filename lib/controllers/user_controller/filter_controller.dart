@@ -31,72 +31,12 @@ class FilterController extends GetxController {
   List<String> selectLifeStageFilterList = [];
   List<String> selectVegFilterList = [];
   List<String> selectHealthConditionFilterList = [];
-// List<String> selectBrandFilterList = [];
   int? categoryId;
 
   bool isChecked = false;
   List isCheckedList = [];
   int? selectindex;
-  // ItemModel(
-  //   headerValue: 'Sort by',
-  //   expandedValue: ['Relevance', 'Title:A-Z', 'Title:Z-A','Date: New to Old','Date: Old to New','Price: Low to High','Price: Hight to Low','Discount: High to Low','Rating: Low to High','Rating: High to Low','Total reviews: Low to High','Total reviews: High to Low'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // ItemModel(
-  //   headerValue: 'Brand',
-  //   expandedValue: ['Acana', 'Aeolus', 'Andis','Bayer','Drools','Glandex'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
 
-  //  ItemModel(
-  //   headerValue: 'Product type',
-  //   expandedValue: ['Cat Toys', 'Cat Grooming', 'Dog Clothing','Dog Toys','Health Care'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // ItemModel(
-  //   headerValue: 'Price,₹',
-  //   expandedValue: ['75', '100'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  //  ItemModel(
-  //   headerValue: 'Lifestage',
-  //   expandedValue: ['Adult', 'All','Puppy','Senior'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // ItemModel(
-  //   headerValue: 'Breed Type',
-  //   expandedValue: ['Boxer', 'Beagle','All','Large','Medium','Small'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-
-  //  ItemModel(
-  //   headerValue: 'Health Condition',
-  //   expandedValue: ['Anemia', 'Eye Care','Live Care','Weaning',],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-
-  //   ItemModel(
-  //   headerValue: 'Special Diet',
-  //   expandedValue: ['Low Grain', 'Vegan',],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-
-  //   ItemModel(
-  //   headerValue: 'Veg/Non-Veg',
-  //   expandedValue: ['Non-Veg', 'Veg',],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // // Add more categories as needed
-  // ];
   void addcategoryId(int id) {
     categoryId = id;
     update();
@@ -219,7 +159,8 @@ class FilterController extends GetxController {
 
   TextEditingController maxPriceController = TextEditingController();
   void clearFields() {
-    
+    minPriceController.clear();
+    maxPriceController.clear();
       selectCategoryFilterList = [];
   selectBrandFilterList = [];
   selectBreedFilterList = [];
@@ -252,13 +193,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // our brands
@@ -279,13 +220,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -312,13 +253,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -346,13 +287,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -380,13 +321,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Category: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Category: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
 
@@ -401,13 +342,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
 
       }
       //product
@@ -442,13 +383,13 @@ class FilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
   Future<void> loadDefaultData() async {
@@ -457,17 +398,17 @@ class FilterController extends GetxController {
     FilterListModel products = FilterListModel();
     try {
       products = FilterListModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+          await ApiHelper.getApi(getUserPropertiesUrl));
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     filteredProducts = products.data!;
     update();
@@ -485,17 +426,17 @@ class FilterController extends GetxController {
     FilterListModel products = FilterListModel();
     try {
       products = FilterListModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+          await ApiHelper.getApi(getUserPropertiesUrl));
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     double max = 9999999999;
     double min = 0;

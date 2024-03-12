@@ -84,8 +84,8 @@ class StoreId {
   String? attributes;
   String? choiceOptions;
   int? price;
-  int? wholePrice;
-  int? minOrder;
+  num? wholePrice;
+  num? minOrder;
   int? tax;
   String? taxType;
   int? discount;

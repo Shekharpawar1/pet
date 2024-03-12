@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
-import 'package:pet/models/usersModel/mycartListModel.dart';
+
 import 'package:pet/models/wholesalerModel/ProductDetailsWholeModel.dart';
 import 'package:pet/models/wholesalerModel/ProductDetailsWholeModel.dart'as variantFile;
 import 'package:pet/models/wholesalerModel/mycartListModel.dart';
-
+import 'package:pet/models/wholesalerModel/orderDetailsModel.dart'as orderDetails;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:get_storage/get_storage.dart';
@@ -21,11 +21,11 @@ class WholeProductDetailsController extends GetxController {
   int? productID;
   var wholesalerID;
 double? totalAmount;
-
+String? returnorder;
   TextEditingController emailController = TextEditingController();
   String? productname;
   String? variants;
-  int? priceProduct;
+  double? priceProduct;
   String? image;
   int? qty;
   bool showLoading = false;
@@ -40,10 +40,25 @@ imagesPath =
       imagePath =
           "${Constants.BASE_URL}/storage/app/public/product/${productdetailwholemodel!.data!.images![selectImages??0].toString()}";
     
-    print(imagePath);
+    // print(imagePath);
     update();
       }
 
+void dispose() {
+    clearFields();
+   clearPopUpFields();
+    // sizeclearFields();
+  productdetailwholemodel = null;
+  update();
+  }
+  @override
+  void onClose() {
+  clearPopUpFields();
+    // clearFields() ;
+    // sizecount= 1;
+    dispose();
+    super.onClose();
+  }
 
       selectImagesProduct(int index) {
     selectImages = index;
@@ -52,15 +67,17 @@ imagesPath =
     print(productdetailwholemodel!.data!.images![selectImages??0]);
     update();
   }
- 
+     
           
-  void viewproductHome(int id, String productName, String varianttts, int quantity, int price, String image) {
+  void viewproductHome(int id, String productName, String varianttts, int quantity, 
+  double price, String images,String returnorderrr) {
     productID = id;
     productname = productName;
     variants = varianttts;
      qty  = quantity;
      priceProduct = price;
-     image = image;
+     image = images;
+        returnorder = returnorderrr;  
     update();
     print("productID${productID}");
   }
@@ -90,11 +107,6 @@ imagesPath =
   String? dropdownsize;
   // List<String> sizeDropDownList = ["1kg", "2kg","3kg","4kg","5kg"];
 
-  void clearFields() {
-    selectedvariants = null;
-    print("Data cleared...");
-    update();
-  }
   // void setSelectedVariant(String variant) {
   //   dropdownsize = variant;
   // }
@@ -103,19 +115,77 @@ imagesPath =
 //   dropdownsize = selectTab;
 //   update();
 // }
-
-  void incrementSize() {
-    sizecount++;
+void clearPopUpFields() {
+    selectedvariants = null;
+         emailController.clear();
+    print("Data cleared...");
+    update();
+  }
+  void clearFields() {
+    selectedvariants = null;
+    print("Data cleared...");
     update();
   }
 
-  decrementSize() {
-    if (sizecount > productdetailwholemodel!.data!.minOrder!.toInt()) {
-      sizecount--;
-      update();
+
+
+ void incrementSize() {
+
+ if (selectedvariants != null && selectedvariants!.stock != null) {
+    if (sizecount < selectedvariants!.stock!.toInt()) {
+    sizecount++;
+    print("Sizewhole: $sizecount");
+    update();
+  
+
+  if (sizecount == selectedvariants!.stock!.toInt()) {
+     showMaxQuantitySnackBar();
     }
+    
+   }
+  }
+   
+   else {
+    if(productdetailwholemodel != null && productdetailwholemodel!.data != null && productdetailwholemodel!.data!.stock != null){
+print("xxnxnxnnx");
+     if (sizecount < productdetailwholemodel!.data!.stock!.toInt()) {
+    sizecount++;
+    print("Size: $sizecount");
+    update();
+
+    if (sizecount ==  productdetailwholemodel!.data!.stock!.toInt()) {
+      showMaxQuantitySnackBar();
+    }
+  }}
+   
+  }
   }
 
+
+
+void showMaxQuantitySnackBar() {
+  Get.snackbar(
+    'Maximum Quantity Reached',
+    'You have reached the maximum stock for this item.',
+    snackPosition: SnackPosition.BOTTOM,
+  );
+}
+ 
+ void decrementSize() {
+  if (sizecount > productdetailwholemodel!.data!.minOrder!.toInt()) {
+    sizecount--;
+    minishowMaxQuantitySnackBar();
+    update();
+  }
+  }
+
+void minishowMaxQuantitySnackBar() {
+  Get.snackbar(
+    'Minimum Order',
+    'You have reached the minimum order for this item.',
+    snackPosition: SnackPosition.BOTTOM,
+  );
+}
   int? id;
 
 //  calculateTotalPrice() {
@@ -286,13 +356,13 @@ imagesPath =
     } catch (e) {
       print('Error: $e');
       
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -341,7 +411,96 @@ imagesPath =
       );
     } catch (e) {
       print('Error: $e');
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+
+
+orderDetails.Data? orderReOrder;
+ Future<void> updateReOrder(orderDetails.Data orderreOrder) async {
+    orderReOrder = orderreOrder;
+
+    update();
+    print("Revariants  ${orderReOrder!.variant}");
+// clearFields();
+  }
+
+Future<void> ReOrderProduct() async {
+    showLoading = true;
+    update();
+    
+    var body = {
+      "user_id": storage.read('wholesalerid').toString(),
+      "item_id": orderReOrder!.itemId.toString(),
+      "item_name": orderReOrder!.variant.toString(),
+      "variant": orderReOrder!.variation.toString(),
+      "quantity":orderReOrder!.quantity.toString(),
+      "image":orderReOrder!.itemDetails![0].image.toString(),
+      "price": orderReOrder!.price
+          .toString(),
+            "total_quantity":0.toString(), 
+           "return_order":"yes"
+          // "total_quantity":selectedvariants?.stock.toString(), 
+          //  "return_order":(productdetailmodel!.data!.returnable??'Yes').toString()
+      // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
+    };
+    String AddProduct = Constants.ADD_PRODUCT;
+    print(body);
+    try {
+      var request = http.MultipartRequest('POST', Uri.parse(AddProduct));
+      request.fields.addAll({
+        "user_id": storage.read('wholesalerid').toString(),
+      "item_id": orderReOrder!.itemId.toString(),
+      "item_name": orderReOrder!.variant.toString(),
+      "variant": orderReOrder!.variation.toString(),
+      "quantity":orderReOrder!.quantity.toString(),
+      "image": orderReOrder!.itemDetails![0].image.toString(),
+      "price": (double.parse(orderReOrder!.price!)/(orderReOrder!.quantity ??0))
+            .toString(),
+           "total_quantity":0.toString(), 
+           "return_order":'Yes',
+      });
+
+     var response =   ( await ApiHelper.postFormData(request: request));
+  String? message ;
+    
+final RegExp messageRegExp = RegExp(r'message: ([^}]*)}', caseSensitive: false);
+
+final Match? messageMatch = messageRegExp.firstMatch(response.toString());
+
+if (messageMatch != null) {
+ message = messageMatch.group(1)!;
+    print("=====message${message}");
+  print(message); 
+} else {
+  print("Message not found");
+}
+      update();
+      // Get.back();
+      print( 'Product Added  11: $message');
       Get.snackbar(
+        'Success',
+         'Product Added: $message',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+   
+         
+      
+    } catch (e) {
+      print('Error: $e');
+     Get.snackbar(
         'Error',
         'An error occurred: $e',
         snackPosition: SnackPosition.BOTTOM,
@@ -353,7 +512,7 @@ imagesPath =
     showLoading = false;
     update();
   }
-
+ 
   Future<void> addProductHome() async {
     showLoading = true;
     update();
@@ -367,6 +526,10 @@ imagesPath =
       "image": image.toString(),
       "price": priceProduct
           .toString(),
+          "total_quantity":selectedvariants!.stock.toString(), 
+ "return_order":(returnorder??'Yes').toString()
+
+
       // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
     };
     String AddProduct = Constants.ADD_PRODUCT;
@@ -382,27 +545,37 @@ imagesPath =
       "image": image.toString(),
       "price": priceProduct
           .toString(),
+          
+          "total_quantity":(selectedvariants!.stock??0).toString(), 
+           "return_order":(productdetailwholemodel!.data!.returnable??'Yes').toString()
       });
 
-      await ApiHelper.postFormData(request: request);
+    var response = await ApiHelper.postFormData(request: request);
       update();
       // Get.back();
-      Get.snackbar(
+      print("Response555");
+    print(response);
+    
+print('Product Added: $response');
+ String responseMessage = response['message'];
+ 
+Get.snackbar(
         'Success',
-        'Product Added',
+        'Product Added: $responseMessage',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
+          
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -447,13 +620,13 @@ imagesPath =
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -470,17 +643,33 @@ imagesPath =
       "user_id": storage.read('wholesalerid').toString(),
       "item_id": productID.toString(),
       "item_name": productdetailwholemodel!.data!.name.toString(),
-      "variant": selectedvariants!.type.toString(),
+      "variant":  (productdetailwholemodel!.data!.variations! .isEmpty)?"0":selectedvariants!.type.toString(),
       "quantity": (sizecount ?? 0).toString(),
       "image": productdetailwholemodel!.data!.image ?? '',
-      "price": ((selectedvariants?.price ?? 0) * (sizecount ?? 0) -
-              (((selectedvariants?.price ?? 0) * sizecount ?? 0) *
+      "price":  (selectedvariants?.wholeprice != null)? (((selectedvariants?.wholeprice ?? 0)  -
+              (((selectedvariants?.wholeprice ?? 0) ) *
                   (productdetailwholemodel!.data!.discount!) /
-                  100))
+                  100))).toString():(((productdetailwholemodel!.data!.wholePrice ?? 0)  -
+              (((productdetailwholemodel!.data!.wholePrice ?? 0)) *
+                  (productdetailwholemodel!.data!.discount!) /
+                  100)))
           .toString(),
+          
+
+          // (selectedvariants?.wholeprice != null)? (((selectedvariants?.wholeprice ?? 0) * (sizecount ?? 0) -
+          //     (((selectedvariants?.wholeprice ?? 0) * sizecount! ?? 0) *
+          //         (productdetailwholemodel!.data!.discount!) /
+          //         100))).toString():(((productdetailwholemodel!.data!.wholePrice ?? 0) * (sizecount ?? 0) -
+          //     (((productdetailwholemodel!.data!.wholePrice ?? 0) * sizecount! ?? 0) *
+          //         (productdetailwholemodel!.data!.discount!) /
+          //         100)))
+          // .toString(),
+          "total_quantity":selectedvariants?.stock.toString(), 
+           "return_order":(productdetailwholemodel!.data!.returnable??'Yes').toString()
       // ((     (productdetailmodel!.data!.price)! * (productdetailmodel!.data!.discount!)/100)*sizecount*(selectedvariants!.price??0)).toString(),
     };
     String AddProduct = Constants.ADD_PRODUCT;
+    print("Product body");
     print(body);
     try {
       var request = http.MultipartRequest('POST', Uri.parse(AddProduct));
@@ -488,35 +677,54 @@ imagesPath =
         "user_id": storage.read('wholesalerid').toString(),
         "item_id": productID.toString(),
         "item_name": productdetailwholemodel!.data!.name.toString(),
-        "variant": selectedvariants!.type.toString(),
+        "variant": (productdetailwholemodel!.data!.variations! .isEmpty)?"0":selectedvariants!.type.toString(),
         "quantity": (sizecount ?? 0).toString(),
         "image": productdetailwholemodel!.data!.image ?? '',
-        "price": ((selectedvariants?.price ?? 0) * (sizecount ?? 0) -
-                (((selectedvariants?.price ?? 0) * sizecount ?? 0) *
-                    (productdetailwholemodel!.data!.discount!) /
-                    100))
-            .toString(),
+        "price":
+        (selectedvariants?.wholeprice != null)? (((selectedvariants?.wholeprice ?? 0)  -
+              (((selectedvariants?.wholeprice ?? 0)) *
+                  (productdetailwholemodel!.data!.discount!) /
+                  100))).toString():(((productdetailwholemodel!.data!.wholePrice ?? 0)  -
+              (((productdetailwholemodel!.data!.wholePrice ?? 0) ) *
+                  (productdetailwholemodel!.data!.discount!) /
+                  100)))
+          .toString(),
+        //  ((selectedvariants?.wholeprice ?? 0) * (sizecount ?? 0) -
+        //         (((selectedvariants?.wholeprice ?? 0) * sizecount ?? 0) *
+        //             (productdetailwholemodel!.data!.discount!) /
+        //             100))
+        //     .toString(),
+            
+          "total_quantity":(productdetailwholemodel!.data!.variations! .isEmpty)?"0":selectedvariants!.stock.toString(), 
+           "return_order":(productdetailwholemodel!.data!.returnable??'Yes').toString()
       });
 
-      await ApiHelper.postFormData(request: request);
+      var response = await ApiHelper.postFormData(request: request);
       update();
       // Get.back();
-      Get.snackbar(
+      print("Response555");
+    print(response);
+    
+print('Product Added: $response');
+ String responseMessage = response['message'];
+ 
+Get.snackbar(
         'Success',
-        'Product Added',
+        'Product Added: $responseMessage',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
+      
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

@@ -385,7 +385,7 @@ class WholeSalesOurBrandDetails extends StatelessWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 280),
+                                      mainAxisExtent: 285),
                               itemCount: salesOurBrandDetailsController
                                   .salesPropertiesModel!
                                   .data!
@@ -395,7 +395,7 @@ class WholeSalesOurBrandDetails extends StatelessWidget {
                                 //     SliverGridDelegateWithMaxCrossAxisExtent(
                                 //         maxCrossAxisExtent: 150,
                                 //      childAspectRatio: 3 / 2,
-                                //         mainAxisExtent: 300,
+                                //         mainAxisExtent: 285,
                                 //         crossAxisSpacing: 15,
                                 //         mainAxisSpacing: 15),
                                 // itemCount: homeusercontroller
@@ -549,6 +549,8 @@ class WholeSalesOurBrandDetails extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(item.name!,
+                                                 maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                     style: CustomTextStyle
                                                         .popinsmedium),
                                                 Text(
@@ -576,7 +578,7 @@ class WholeSalesOurBrandDetails extends StatelessWidget {
                                                           children: [
                                                             Text(
                                                                 "₹" +
-                                                                    item.price
+                                                                   item.wholePrice
                                                                         .toString(),
                                                                 style: CustomTextStyle
                                                                     .discounttext),
@@ -597,7 +599,7 @@ class WholeSalesOurBrandDetails extends StatelessWidget {
                                                             //   child:
                                                             Text(
                                                                 // item.discount.toString(),
-                                                                "Save${item.discount.toString()}%",
+                                                                  "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                 style: CustomTextStyle
                                                                     .popinstextsmal2222red),
                                                             //   ),
@@ -617,7 +619,7 @@ class WholeSalesOurBrandDetails extends StatelessWidget {
                                                                 "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
                                                                 // "₹" +
-                                                                //     item.price!,
+                                                                //    item.wholePrice!,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium,
                                                               ),

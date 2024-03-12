@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
+import 'package:pet/screens/salesman/home.dart';
 import 'package:pet/screens/salesman/salesUpiScreen.dart';
 import 'package:pet/screens/salesman/salesmyOrderPage.dart';
 import 'package:pet/screens/user/myOrderPage.dart';
@@ -471,14 +472,33 @@ class _PaymentSalesState extends State<PaymentSales> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child:
-                                      Image.asset("assets/image/success.png"),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Order Placed Successfully"),
-                                ),
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Image.asset(
+                                      "assets/image/success.png",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text("Order Placed Successfully"),
+                                  ),
+                                
+SizedBox(height: 10)
+,
+                                InkWell(
+                                  onTap:(){
+                                     mycartController.init();
+
+                                       Get.offAll(HomeSales());
+                                       Get.to(MyOrderSales());
+                                           
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Text("Ok")),
+                                )
+                            
                               ],
                             ),
                           );
@@ -486,9 +506,8 @@ class _PaymentSalesState extends State<PaymentSales> {
                       );
 
                       Get.to(MyOrderSales());
-                      // Get.to(Payment2User());
+                     
                     }
-                    // Get.to(Payment2User());
                   },
                   child: Center(
                     child: Container(

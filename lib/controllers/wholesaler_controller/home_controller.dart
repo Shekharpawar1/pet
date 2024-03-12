@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/notification_controller.dart';
 import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/wholesalerModel/bannerModel.dart';
@@ -13,6 +15,9 @@ import '../../models/wholesalerModel/wholeWishListModel.dart';
 
 class WholeHomeController extends GetxController {
     var wholesalerId = GetStorage().read("wholesalerid");
+     WholeNotificationController wholenotificationcontroller =
+      Get.put(WholeNotificationController());
+  MyCartWholeController mycartController = Get.put(MyCartWholeController());
   // categories
   String getUserCategoriesUrl =
       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
@@ -47,7 +52,10 @@ bool showLoading = false;
   @override
   void onInit() {
     super.onInit();
+
     init();
+     wholenotificationcontroller.notifyinit();
+     mycartController.init();
   }
   
   List<Model.Datum> searchScreenData = [];
@@ -127,13 +135,13 @@ bool showLoading = false;
 
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // properties
@@ -145,13 +153,13 @@ bool showLoading = false;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+    //  Get.snackbar(
+    //     'Error',
+    //     'An error occurred: $e',
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //   );
     }
     try {
       // banners
@@ -164,13 +172,13 @@ bool showLoading = false;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
      try {
       // our brands
@@ -192,13 +200,13 @@ bool showLoading = false;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+    //  Get.snackbar(
+    //     'Error',
+    //     'An error occurred: $e',
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.red,
+    //     colorText: Colors.white,
+    //   );
     }
 
       try {
@@ -214,7 +222,7 @@ bool showLoading = false;
       print("${GetStorage().read('wishListItems')}");
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
+     Get.snackbar(
         'Error',
         'An error occurred: $e',
         snackPosition: SnackPosition.BOTTOM,
@@ -379,13 +387,13 @@ bool showLoading = false;
         update();
         GetStorage().write('wishListItems', wishListItemsId);
         removeItemFromWishList(productId);
-        // Get.snackbar(
-        //   'Exists',
-        //   'Remove it from WishList Page',
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   backgroundColor: Colors.orange,
-        //   colorText: Colors.white,
-        // );
+        Get.snackbar(
+          'Exists',
+          'Remove it from WishList Page',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white,
+        );
       } else {
         Get.snackbar(
           'Error',
@@ -437,6 +445,7 @@ bool showLoading = false;
           colorText: Colors.white,
         );
       } else {
+        print('Error: $e');
         Get.snackbar(
           'Error',
           'An error occurred: $e',

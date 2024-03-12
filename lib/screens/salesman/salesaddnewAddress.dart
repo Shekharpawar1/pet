@@ -422,8 +422,11 @@ SalesAddressController addressController = Get.put( SalesAddressController());
                                 }
                                 return null;
                               },
-                              // value: addressController
-                              //     .selectedState,
+                              onTap: (){
+                               addressController.  clearcity();
+                              },
+                              value: addressController
+                                  .selectedState,
                               decoration: InputDecoration(
                                 hintText: "State",
                                 contentPadding: EdgeInsets.symmetric(
@@ -453,7 +456,7 @@ SalesAddressController addressController = Get.put( SalesAddressController());
                         );
                 },
               ),
-
+ addressController.cityListModel == null ?SizedBox():
               GetBuilder<SalesAddressController>(
                 init: addressController,
                 // initState: (_) {},
@@ -466,7 +469,7 @@ SalesAddressController addressController = Get.put( SalesAddressController());
                           ),
                         )
                       : addressController.cityListModel ==
-                              null
+                              null && addressController.cityListModel!.state == "" && addressController.cityListModel!.state!.isEmpty
                           ? SizedBox()
                           : Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -507,8 +510,8 @@ SalesAddressController addressController = Get.put( SalesAddressController());
                                     child: Text(state.cityName!),
                                   );
                                 }).toList(),
-                                onChanged: (cityFile.State? value) {
-                                  addressController
+                                onChanged: (cityFile.State? value) async{
+                                await  addressController
                                       .updateCity(value!);
                                 },
                               ),

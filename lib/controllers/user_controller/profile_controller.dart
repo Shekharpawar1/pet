@@ -62,40 +62,15 @@ class ProfileController extends GetxController {
 
     clearFields();
 
-    //  print(addaddressall.length);
+    
   }
 
-  // void updatepofile1(
-  //   String? fName,
-  //   String? lName,
-  //   String? email,
-  //   String? phone,
-  //   String? image,
-  // ) {
-  //   fullNameController.text = fName ?? "";
-  //   lastNameController.text = lName ?? "";
-  //   numberController.text = phone ?? '';
-  //   emailController.text = email ?? '';
-  //   selectedImagePath = image ?? '';
+ 
 
-  //   update();
+  // void fetchdetails(int id) {
 
-  //   clearFields();
-
-  //   //  print(addaddressall.length);
   // }
 
-  void fetchdetails(int id) {
-// myprofilemodel(){
-
-//      fullNameController.text;
-//     lastNameController.text;
-//     numberController.text;
-//     emailController.text;
-//     addressController.text;
-//     pincodeController.text;
-// }
-  }
   void clearFields() {
     fullNameController.clear();
     lastNameController.clear();
@@ -103,24 +78,16 @@ class ProfileController extends GetxController {
     emailController.clear();
     addressController.clear();
     pincodeController.clear();
-    // pincodeController.clear();
-    // selectedState= null;
-    // selectedCity= null;
-    // stateListModel= null;
-    // cityListModel =null;
+    
   }
 
-//  @override
-//   void onInit() {
-//     super.onInit();
-//     init();
 
-//   }
 
   void onInit() {
     super.onInit();
-    // init();
+    
     userId = storage.read('id');
+    print(userId);
   }
 
   String getUserProfile = '${Constants.GET_USER_PROFILE}';
@@ -136,7 +103,7 @@ class ProfileController extends GetxController {
       // myprofilemodel!.data!.forEach((element) {
 
       //  });
-      print("USERPROFILE URL" + getUserProfile + "$userId");
+      print("USERPROFILE URL  *** " + getUserProfile + "${storage.read('id')}");
       // selectedImage = myprofilemodel!.data![0].image.toString();/
       fullNameController.text = myprofilemodel!.data![0].fName.toString();
       lastNameController.text = myprofilemodel!.data![0].lName.toString();
@@ -153,13 +120,13 @@ class ProfileController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -183,12 +150,7 @@ class ProfileController extends GetxController {
       ];
       var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
       request.fields.addAll(body);
-//       request.files.add(await http.MultipartFile.fromPath(
-// "image",selectedImagePath.toString()
-      // ));
-      // 'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
-      // var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
-      // request.fields.addAll(body);
+
       documentList.forEach((element) async {
         request.files.add(await http.MultipartFile.fromPath(
             element["key"], element["value"]));
@@ -205,13 +167,13 @@ class ProfileController extends GetxController {
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

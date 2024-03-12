@@ -6,9 +6,12 @@ import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
 class PartnerNotificationController extends GetxController {
+
+  bool showLoading = false;
+
   // notification
   String getNotificationUrl = '${Constants.GET_USER_NOTIFICATION}';
-  NotificationModel? salesNotificationModel;
+  NotificationModel? partnerNotificationModel;
   bool notificationLoaded = false;
 
   @override
@@ -17,23 +20,32 @@ class PartnerNotificationController extends GetxController {
     init();
   }
 
-  void init() async {
+
+  Future<void> init() async {
+
+ showLoading = true;
+    update();
     try {
-      // banners
-      salesNotificationModel = NotificationModel.fromJson(
+      // Public Notification
+      partnerNotificationModel = NotificationModel.fromJson(
           await ApiHelper.getApi(getNotificationUrl));
-      print(salesNotificationModel);
+      print(partnerNotificationModel);
       notificationLoaded = true;
+    
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
+     showLoading = false;
+    update();
   }
+
+
 }

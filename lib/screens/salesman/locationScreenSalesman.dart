@@ -7,20 +7,15 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:pet/controllers/salesman_controller/myOrdersales_controller.dart';
 import 'package:pet/controllers/salesman_controller/order_tracker_controller.dart';
+import 'package:pet/screens/salesman/widget/orderCancellationDialog.dart';
+import 'package:pet/screens/salesman/widget/orderReturnDialog.dart';
 
-import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.dart';
-import 'package:pet/screens/user/widgets/orderCancellationDialog.dart';
-import 'package:pet/screens/user/widgets/orderReturnDialog.dart';
-
-import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 
 import 'package:order_tracker/order_tracker.dart';
-//  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-// <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-// <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 class LocationPickerMapSalesMan extends StatefulWidget {
   @override
@@ -53,6 +48,7 @@ class _LocationPickerMapSalesManState extends State<LocationPickerMapSalesMan> {
   String _desiredAddress = ''; // To store the fetched address
     OrderTrackerSalesController ordertrackcontroller = Get.put(OrderTrackerSalesController());
 
+  SalesMyOrderController myordercontroller = Get.put(SalesMyOrderController());
   LatLng _senderLocation = LatLng(22.712622, 75.876584);
   LatLng _selectedLocation = LatLng(22.759982, 75.872925); // receiver
   List<LatLng> _routePoints = []; // List of route points for the Polyline
@@ -407,7 +403,16 @@ class _LocationPickerMapSalesManState extends State<LocationPickerMapSalesMan> {
                                         child: InkWell(
                                           onTap: () {
                                             // print(Status);
-                                            Get.dialog(OrderReturnDialog());
+                                                 if (myordercontroller.isButtonEnabled){
+                            myordercontroller.disablebutton(true);
+                            print("returnorder");
+  Get.dialog(OrderReturnDialogsales());
+                          }
+                          else{
+                            myordercontroller.disablebutton(false);
+  print("Button is not enabled");
+                          }
+                                            
                                           },
                                           child: Container(
                                             // width: MediaQuery.of(context).size.width * 0.3,
@@ -415,7 +420,10 @@ class _LocationPickerMapSalesManState extends State<LocationPickerMapSalesMan> {
                                                 MediaQuery.of(context).size.width *
                                                     0.11,
                                             decoration: BoxDecoration(
-                                              color: Colors.red,
+                                              color:
+                      
+                                             myordercontroller.isButtonEnabled ? Colors.red : Colors.grey,
+                                      
                                               borderRadius: BorderRadius.all(
                                                 // topRight:
                                                 Radius.circular(30),
@@ -439,8 +447,15 @@ class _LocationPickerMapSalesManState extends State<LocationPickerMapSalesMan> {
                                             horizontal: 100),
                                         child: InkWell(
                                           onTap: () {
-                                            // print(Status.outOfDelivery);
-                                            Get.dialog(OrderCancellationDialog());
+                                             if (myordercontroller.isButtonEnabled){
+                            myordercontroller.disablebutton(true);
+  Get.dialog(OrderCancellationDialogwholesales());
+                          }
+                          else{
+                            myordercontroller.disablebutton(false);
+  print("Button is not enabled");
+                          }
+                                           
                                           },
                                           child: Container(
                                             // width: MediaQuery.of(context).size.width * 0.3,
@@ -448,7 +463,9 @@ class _LocationPickerMapSalesManState extends State<LocationPickerMapSalesMan> {
                                                 MediaQuery.of(context).size.width *
                                                     0.11,
                                             decoration: BoxDecoration(
-                                              color: Colors.red,
+                                              color: myordercontroller.isButtonEnabled ? Colors.red : Colors.grey,
+                                      
+                                            
                                               borderRadius: BorderRadius.all(
                                                 // topRight:
                                                 Radius.circular(30),

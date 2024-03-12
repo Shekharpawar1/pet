@@ -145,12 +145,7 @@ class _Paymentwhole2State extends State<Paymentwhole2> {
                                 fontFamily: "SF-Pro-Display"),
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
-                              //   setState(() {
-                              //   _expiryDateError = null;
-                              //   });
-                              // },
-                              // onSubmitted: (value) {
-                              //   validateExpiryDate(value);
+                              
                             },
                             decoration: InputDecoration(
                               fillColor: MyColors.white,
@@ -203,12 +198,7 @@ class _Paymentwhole2State extends State<Paymentwhole2> {
                             keyboardType: TextInputType.number,
                             maxLength: 4,
                             onChanged: (value) {
-                              //     setState(() {
-                              //       _cvvError = null;
-                              //     });
-                              //   },
-                              //   onSubmitted: (value) {
-                              //  validateCVV(value);
+                             
                             },
                             decoration: InputDecoration(
                                 fillColor: MyColors.white,

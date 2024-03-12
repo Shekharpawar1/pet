@@ -25,7 +25,7 @@ class _TotalOrderpartnerState extends State<TotalOrderpartner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  appBar: CustomAppBarPartnerback(), 
+  appBar: CustomAppBarPartnerback(title: "",), 
       
       body:
   ListView(

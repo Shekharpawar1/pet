@@ -46,7 +46,8 @@ class OurBrandDetailsController extends GetxController {
 
 //ourbrandproducts
 
-  String getUserproductUrl = '${Constants.GET_USER_OURBRANDPRODUCT}';
+  // String getUserproductUrl = '${Constants.GET_USER_OURBRANDPRODUCT}';
+  String getUserproductUrl1 = '${Constants.GET_USER_OURBRANDPRODUCT1}';
   OurBrandProductModel? userourbrandProductModel;
   bool ourbrandproductLoaded = false;
 
@@ -59,13 +60,13 @@ class OurBrandDetailsController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -73,19 +74,19 @@ class OurBrandDetailsController extends GetxController {
     try {
       userourbrandProductModel = OurBrandProductModel.fromJson(
           await ApiHelper.getApi(
-              getUserproductUrl + "${brandid}/${selectedIndex}"));
-      print('=========**${getUserproductUrl}${brandid}/${selectedIndex}');
+              getUserproductUrl1 + "${brandid}"));
+      print('=========**${getUserproductUrl1}${brandid}');
       ourbrandproductLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -134,13 +135,13 @@ class OurBrandDetailsController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();

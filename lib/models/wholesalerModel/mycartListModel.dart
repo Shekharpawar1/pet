@@ -123,6 +123,8 @@ class Datum {
     String? image;
     int? quantity;
     double? price;
+    String? totalQuantity;
+      String? returnOrder;
      int? minOrder;
     DateTime? createdAt;
     DateTime? updatedAt;
@@ -137,6 +139,8 @@ class Datum {
         this.image,
         this.quantity,
         this.price,
+        this.totalQuantity,
+        this.returnOrder,
         this.minOrder,
         this.createdAt,
         this.updatedAt,
@@ -152,6 +156,8 @@ class Datum {
         image: json["image"],
         quantity: json["quantity"],
         price: json["price"].toDouble(),
+          totalQuantity : json['total_quantity'],
+          returnOrder :json['return_order'],
         minOrder : json['min_order'],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -167,6 +173,8 @@ class Datum {
         "image": image,
         "quantity": quantity,
         "price": price,
+          "total_quantity":totalQuantity,
+            'return_order':returnOrder,
         'min_order':minOrder,
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),

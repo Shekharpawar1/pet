@@ -22,62 +22,63 @@ class UserServicesAddAppointmentController extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   int? serviceId;
+  RxString Description=''.obs;
   var userID;
   void updateServiceId(int id) {
     serviceId = id;
     update();
   }
 
-  // var demoResponse = {
-  //   "data": [
-  //     {
-  //       "slot-date": "2023-08-01 00:00:00.000",
-  //       "slots": [
-  //         "8:00",
-  //         "9:00",
-  //         "8:00",
-  //         "9:00",
-  //         "8:00",
-  //         "9:00",
-  //         "12:00",
-  //         "1:00",
-  //         "12:00",
-  //         "1:00"
-  //       ],
-  //     },
-  //     {
-  //       "slot-date": "2023-07-30 00:00:00.000",
-  //       "slots": [
-  //         "8:00",
-  //         "9:00",
-  //         "8:00",
-  //         "9:00",
-  //         "8:00",
-  //         "9:00",
-  //         "12:00",
-  //         "1:00"
-  //       ],
-  //     },
-  //     {
-  //       "slot-date": "2023-08-02 00:00:00.000",
-  //       "slots": [
-  //         "10:00",
-  //         "12:00",
-  //         "1:00",
-  //         "12:00",
-  //         "1:00",
-  //         "12:00",
-  //         "1:00",
-  //         "12:00",
-  //         "1:00",
-  //         "12:00",
-  //         "1:00",
-  //         "12:00",
-  //         "1:00"
-  //       ],
-  //     },
-  //   ],
-  // };
+  var demoResponse = {
+    "data": [
+      {
+        "slot-date": "2023-08-01 00:00:00.000",
+        "slots": [
+          "8:00",
+          "9:00",
+          "8:00",
+          "9:00",
+          "8:00",
+          "9:00",
+          "12:00",
+          "1:00",
+          "12:00",
+          "1:00"
+        ],
+      },
+      {
+        "slot-date": "2023-07-30 00:00:00.000",
+        "slots": [
+          "8:00",
+          "9:00",
+          "8:00",
+          "9:00",
+          "8:00",
+          "9:00",
+          "12:00",
+          "1:00"
+        ],
+      },
+      {
+        "slot-date": "2023-08-02 00:00:00.000",
+        "slots": [
+          "10:00",
+          "12:00",
+          "1:00",
+          "12:00",
+          "1:00",
+          "12:00",
+          "1:00",
+          "12:00",
+          "1:00",
+          "12:00",
+          "1:00",
+          "12:00",
+          "1:00"
+        ],
+      },
+    ],
+  };
 
   List<String> demoPetsList = [];
   // petFile.State? selectedPet = null.obs();
@@ -107,8 +108,9 @@ class UserServicesAddAppointmentController extends GetxController {
   int currentWeekIndex = 0;
   TimeSlot? selectedSlot;
 
+ 
   List<List<DateTime>> listOfWeeks = [];
-
+  
   // String? selectedcity;
 
   void setSelectedDate(var date) {
@@ -127,6 +129,13 @@ class UserServicesAddAppointmentController extends GetxController {
         return;
       }
     });
+
+    //  List<List<DateTime>> listOfWeeks = [];
+
+  void setListOfWeeks(List<DateTime> week) {
+    listOfWeeks.add(week);
+  }
+
     if (!foundedMatch) {
       updateTimeSlotList([]);
     }
@@ -156,6 +165,26 @@ class UserServicesAddAppointmentController extends GetxController {
   //   selectedcity = city;
   //   update();
   // }
+
+  List<String> createTimeSlots(selectedDate,String startTime, String endTime, int interval) {
+     List<String> timeSlots = [];
+    DateTime start = DateTime.parse(selectedDate + startTime);
+    DateTime end = DateTime.parse(selectedDate + endTime);
+
+    while (start.isBefore(end)) {
+      timeSlots.add('${start.hour.toString().padLeft(2, '0')}:${start.minute.toString().padLeft(2, '0')}:${start.second.toString().padLeft(2, '0')}');
+      start = start.add(Duration(minutes: interval));
+    }
+    print("timeslort ${timeSlots}");
+    return timeSlots;
+  }
+
+
+  // while (starttime != endtime) {
+  //
+  // starttime = addMinutes(starttime, interval);
+  // timeslots.push(starttime);
+
 
   List<TimeSlot> timeSlots = [
     // TimeSlot(time: '11:00'),
@@ -201,27 +230,40 @@ class UserServicesAddAppointmentController extends GetxController {
     numberController.clear();
 
     selectedCity = null;
-    cityListModel = null;
+    cityListModel = CityListModel();
     stateListModel = null;
     selectedState = null;
     print("Data cleared...");
     update();
   }
 
+  // void clearFieldsstate() {
+  // selectedState= null;
+   
+  //   stateListModel= null;
+  
+
+  // }
+
+
+  void clearcity() {
+    
+        
+    selectedCity= null;
+   
+    cityListModel= CityListModel();
+  
+
+  }
   @override
   void onInit() {
     super.onInit();
+    
     init();
+
+    stateinit();
     userID = storage.read('id');
-    // final List<String>? selectedSlots = box.read('selectedSlots');
-    // if (selectedSlots != null) {
-    //   timeSlots.forEach((slot) {
-    //     if (selectedSlots.contains(slot.time)) {
-    //       slot.isSelected = true;
-    //        update();
-    //     }
-    //   });
-    // }
+   
   }
 
   GetPetModel? petListModel;
@@ -234,11 +276,38 @@ class UserServicesAddAppointmentController extends GetxController {
   StateListModel? stateListModel;
   bool stateLoaded = false;
   // bool showLoading = false;
+
+
+  Future<void> stateinit() async {
+    showLoading = true;
+    update();
+    try {
+      // sate list
+      stateListModel =
+          StateListModel.fromJson(await ApiHelper.getApi(getUserStateUrl));
+      print(stateListModel);
+      stateLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to get State: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
+    }
+
+    showLoading = false;
+    update();
+  }
   statesFile.State? selectedState;
   Future<void> updateState(statesFile.State state) async {
     selectedState = state;
     showLoading = true;
     update();
+       print("stateiD==${selectedState}");
     await fetchCity(state.id.toString());
     showLoading = false;
     update();
@@ -246,35 +315,44 @@ class UserServicesAddAppointmentController extends GetxController {
 
   // city list
   String getCityUrl = Constants.GET_CITY_LIST;
-  CityListModel? cityListModel;
+  CityListModel? cityListModel = CityListModel();
   // cityListModel!.state = [];
   bool cityLoaded = false;
 
-  cityFile.State? selectedCity;
-  void updateCity(cityFile.State? city) {
+  cityFile.State? selectedCity ;
+   Future<void> updateCity(cityFile.State? city) async{
     selectedCity = city;
     update();
+       print("statecityuserapp ==${selectedCity!.cityName}");
   }
-
+  
   fetchCity(String stateId) async {
     showLoading = true;
     update();
-    try {
-      // city list
-      cityListModel =
-          CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
-      print(cityListModel);
+   
+     try {
+     
+      var request = http.MultipartRequest('POST', Uri.parse(getCityUrl));
+      request.fields.addAll({
+        "state":stateId.toString()
+      });
+      
+   cityListModel  = CityListModel.fromJson(await ApiHelper.postFormData(request: request));
+   
+      // update();
+      print("Cityyy ${cityListModel!.state!.length}");
       cityLoaded = true;
       update();
-    } catch (e) {
+    }
+     catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to City: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to City: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -284,7 +362,7 @@ class UserServicesAddAppointmentController extends GetxController {
   Future<void> init() async {
     showLoading = true;
     update();
-
+    
     try {
       // sate list
       stateListModel =
@@ -294,13 +372,13 @@ class UserServicesAddAppointmentController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to get State: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to get State: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       print("====>>>> pet url: ${getPetUrl + storage.read('id').toString()}");
@@ -312,13 +390,13 @@ class UserServicesAddAppointmentController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Pets: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Pets: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     if (petListModel != null && petListModel!.data != null) {
@@ -385,7 +463,11 @@ class UserServicesAddAppointmentController extends GetxController {
           await ApiHelper.getApi(getServicesUrl + "/$serviceId"));
       allServicesModel = AllServicesModel.fromJson(
           await ApiHelper.getApi(getAllBookedServicesUrl));
+      createTimeSlots(selectedDate, servicesModelDart!.data![0].startTime.toString(),  servicesModelDart!.data![0].endTime.toString(),  int.parse(servicesModelDart!.data![0].timeIntervel.toString()));
+      Description.value=servicesModelDart!.data![0].description.toString();
+      print("description saved${Description.value}");
       servicesModelDart!.data!.forEach((element) {
+
         print(
             "==>> slots: ${allServicesModel!.data!.where((f) => element.slotTiming!.contains(f.slot))}");
         print(
@@ -418,13 +500,13 @@ class UserServicesAddAppointmentController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -496,16 +578,18 @@ class UserServicesAddAppointmentController extends GetxController {
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
     update();
   }
+
+  void setListOfWeeks(List<List<DateTime>> list) {}
 }

@@ -77,6 +77,23 @@ class CreateAccountwholeControllers extends GetxController {
     '\€ POUND',
   ];
 
+void clearstate() {
+    
+    selectedState= null;
+   
+    stateListModel= null;
+  
+
+  }
+
+  void clearcity() {
+    
+    selectedCity= null;
+   
+    cityListModel= null;
+  
+
+  }
   String? selectedCurrency;
 
   void updateCurrency(String currency) {
@@ -99,14 +116,14 @@ class CreateAccountwholeControllers extends GetxController {
     final completer = Completer<bool>();
 
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
       completer.complete(true);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is invalid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
       completer.complete(false);
     }
 
@@ -155,13 +172,13 @@ class CreateAccountwholeControllers extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
   // // state list
@@ -189,22 +206,38 @@ class CreateAccountwholeControllers extends GetxController {
   }
 
   fetchCity(String stateId) async {
+    // try {
+    //   // city list
+    //   cityListModel =
+    //       CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+    //   print(cityListModel);
+    //   cityLoaded = true;
+    //   update();
+    // } 
+
     try {
-      // city list
-      cityListModel =
-          CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+     
+      var request = http.MultipartRequest('POST', Uri.parse(getCityUrl));
+      request.fields.addAll({
+        "state":stateId.toString()
+      });
+      
+   cityListModel  = CityListModel.fromJson(await ApiHelper.postFormData(request: request));
+   
+      // update();
       print(cityListModel);
       cityLoaded = true;
       update();
-    } catch (e) {
+    }
+    catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -232,13 +265,13 @@ class CreateAccountwholeControllers extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

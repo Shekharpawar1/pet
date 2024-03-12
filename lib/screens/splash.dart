@@ -59,6 +59,8 @@ class _SplashState extends State<Splash> {
 
          print("partnerid  : ===>>> ${partnerid.toString()}");
         print("partnerData  : ===>>> ${partnerdata.toString()}");
+
+        print(partnerid);
         id == null && wholesalerid == null && sellerid == null && partnerid == null
             ? Navigator.pushReplacement(
                 context,

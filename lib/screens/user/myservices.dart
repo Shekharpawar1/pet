@@ -18,9 +18,9 @@ MyServicesController myservicescontroller = Get.put(MyServicesController());
 
   @override
   Widget build(BuildContext context) {
-
+myservicescontroller.init();
     return Scaffold(
-   appBar:CustomAppBarback(),
+   appBar:CustomAppBarback(title:"My Services"),
 body: Padding(
   padding: const EdgeInsets.all(15.0),
   child:   GetBuilder<MyServicesController>(
@@ -51,29 +51,76 @@ body: Padding(
         ));
       },
       child: Container(
-        margin: EdgeInsets.all(10),
-        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.only(left:10,right: 10,bottom:10),
+        padding: EdgeInsets.only(left:10,bottom:10),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
-        ),
+                                            borderRadius: BorderRadius.circular(15),
+                                            gradient: LinearGradient(
+
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Color(0xFFEEEEFF),
+                                                Color.fromRGBO(238, 238, 255, 0.00),
+                                              ],
+                                              stops: [0.0, 1.0],
+                                            ),
+                                          ),
+                                         
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+                  Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Align(
+                                                    alignment: Alignment.topRight,
+                                                    child: Container(
+                                                      //alignment: Alignment.topRight,
+                                                      height: MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.05,
+                                                      width: MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.3,
+                                                      decoration: BoxDecoration(
+                                                          color:(item.status == "pending")?
+                   MyColors.orange: MyColors.green,
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topRight: Radius
+                                                                      .circular(25),
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          20))),
+                                                      child: Center(
+                                                          child: Text(
+                                                           "${item.status.toString()}",
+                                                        style: CustomTextStyle
+                                                            .popinstextsmall12,
+                                                      )),
+                                                    ),
+                                                  ),
+                                                ],
+               
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Column(
                   children: [
+
                     Text(
                       "${item.date.toString()}",
                       style: CustomTextStyle.popinsmedium,
                     ),
-                     Text(
-                  "${item.status.toString()}",
-                  style:(item.status == "pending")?
-                   CustomTextStyle.popinsmediumorange:CustomTextStyle.popinsmediumgreen,
-                ),
+                
                   ],
                 ),
               ],

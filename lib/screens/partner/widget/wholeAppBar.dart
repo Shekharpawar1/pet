@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/partner_controller/notification_controller.dart';
 import 'package:pet/screens/partner/notification.dart';
 
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/fontstyle.dart';
 // import '../../../controllers/wholesaler_controller/user/ordersummary.dart';
 
 class CustomAppBarPartner extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> drawerKey;
-
+PartnerNotificationController partnerNotificationController = Get.put(PartnerNotificationController());
   CustomAppBarPartner({required this.drawerKey});
   // MyCartWholeController mycartController = Get.put(MyCartWholeController());
   @override
   Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
 
   @override
+  void onInit() {
+  
+    partnerNotificationController.init();   
+  }
+  @override
   Widget build(BuildContext context) {
+    partnerNotificationController.init();
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -37,6 +46,7 @@ class CustomAppBarPartner extends StatelessWidget implements PreferredSizeWidget
 //           ),
 
         actions: [
+
           Stack(
             children: [
               InkWell(
@@ -52,24 +62,99 @@ class CustomAppBarPartner extends StatelessWidget implements PreferredSizeWidget
                   child: Stack(
                     children: <Widget>[
                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ("5").toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
+                      
+                  
+                      GetBuilder<PartnerNotificationController>(
+                          init: partnerNotificationController,
+                          builder: (_) {
+                            return   
+                             partnerNotificationController .partnerNotificationModel == null ||
+                                    partnerNotificationController.partnerNotificationModel!.state! .isEmpty
+                                       
+                                         //||
+                                    //  notificationcontroller.partnerNotificationModel!.state!.isEmpty
+                                ? Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
+                           Positioned(
+                              top: 3.0,
+                              right: 4.0,
+                              child: Center(
+                                child:     partnerNotificationController.partnerNotificationModel!.state == null?
+                           const   SizedBox():
+                                 Text(
+                                       partnerNotificationController.partnerNotificationModel!.state!.length.toString(),
+                            
+                                  // list.length.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ));
+                        }
+                      ),
                     ],
                   )),
             ],
           ),
           SizedBox(width: 20),
+          // Stack(
+          //   children: [
+          //     InkWell(
+          //         onTap: () {
+          //           Get.to(NotificationPartner());
+          //         },
+          //         child: Center(
+          //           child: Icon(Icons.notifications, color: MyColors.black),
+          //         )),
+          //          GetBuilder<PartnerNotificationController>(
+          //                 init:  partnerNotificationController,
+          //                 builder: (_) {
+          //                   return     
+          //                       partnerNotificationController .partnerNotificationModel == null ||
+          //                           partnerNotificationController.partnerNotificationModel!.state! .isEmpty
+                                       
+          //                                //||
+          //                           //  notificationcontroller.partnerNotificationModel!.state!.isEmpty
+          //                       ? Center(
+          //                                 child: SpinKitCircle(
+          //                                   color: Colors
+          //                                       .grey, // Color of the progress bar
+          //                                   size:
+          //                                       20.0, // Size of the progress bar
+          //                                 ),
+          //                               ):
+          //                  Positioned(
+          //                     top: 3.0,
+          //                     right: 4.0,
+          //                     child:partnerNotificationController.partnerNotificationModel!.state == null?SizedBox()
+          //                     :
+          //                      Center(
+          //                       child:
+                                
+          //                               Text(
+          //        (             (partnerNotificationController.partnerNotificationModel!.state!.length??0)).toString(),
+                                  
+          //                         // list.length.toString(),
+          //                         style: TextStyle(
+          //                             color: Colors.white,
+          //                             fontSize: 8.0,
+          //                             fontWeight: FontWeight.w500),
+          //                       ),
+          //                     ));
+          //               }
+          //             ),
+                  
+           
+          //   ],
+          // ),
+          // SizedBox(width: 20),
         
         ],
        
@@ -82,7 +167,9 @@ class CustomAppBarPartner extends StatelessWidget implements PreferredSizeWidget
 
 class CustomAppBarPartnerback extends StatelessWidget implements PreferredSizeWidget {
   // final GlobalKey<ScaffoldState> drawerKey;
-
+final title;
+  CustomAppBarPartnerback({required this.title});
+PartnerNotificationController partnerNotificationController = Get.put(PartnerNotificationController());
   // CustomAppBarback({required this.drawerKey});
   // MyCartController mycartController = Get.put(MyCartController());
   @override
@@ -106,7 +193,7 @@ class CustomAppBarPartnerback extends StatelessWidget implements PreferredSizeWi
 // //
 //             child:Text("")
 //           ),
-
+  title: Center(child: Text(title.toString(),   style: CustomTextStyle.appbartext,),),
         actions: [
           Stack(
             children: [
@@ -123,19 +210,50 @@ class CustomAppBarPartnerback extends StatelessWidget implements PreferredSizeWi
                   child: Stack(
                     children: <Widget>[
                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                      Positioned(
-                          top: 3.0,
-                          right: 4.0,
-                          child: Center(
-                            child: Text(
-                              ("5").toString(),
-                              // list.length.toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8.0,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )),
+                      
+                  
+                      GetBuilder<PartnerNotificationController>(
+                          init: partnerNotificationController,
+                          builder: (_) {
+                            return   
+                             partnerNotificationController .partnerNotificationModel == null ||
+                                    partnerNotificationController.partnerNotificationModel!.state! .isEmpty
+                                       
+                                         //||
+                                    //  notificationcontroller.partnerNotificationModel!.state!.isEmpty
+                                ? Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
+                           Positioned(
+                              top: 3.0,
+                              right: 4.0,
+                              child: Center(
+                                child:     partnerNotificationController.partnerNotificationModel!.state == null?
+                                 Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
+                                 Text(
+                                       partnerNotificationController.partnerNotificationModel!.state!.length.toString(),
+                            
+                                  // list.length.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ));
+                        }
+                      ),
                     ],
                   )),
             ],

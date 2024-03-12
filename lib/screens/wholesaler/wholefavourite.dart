@@ -80,19 +80,27 @@ class _wholefavouriteState extends State<wholefavourite> {
                                             crossAxisSpacing: 15.0,
                                             mainAxisSpacing: 15.0,
                                               mainAxisExtent: 285),
-                                    itemCount: wholefavouriteController
-                                        .wishList!
-                                        .data!
+                                    itemCount:wholefavouriteController.wishList!.data!
                                         .length, // Set the number of cards you want to display.
                                     itemBuilder: (context, index) {
-                                      var item = wholefavouriteController
-                                          .wishList!.data![index];
+                                     var item = wholefavouriteController.wishList!.data![index]
+                                        ;
+                                         
                                       String imagePath =
                                           Constants.PRODUCT_HOME_IMAGE_PATH +
                                               "/${item.storeId![0].image!}";
-                                      return 
-                                      wholefavouriteController
-                                          .wishList!.data![index] == null? SizedBox():
+//  var storeInfo = wholefavouriteController.wishList!.data![index].storeId![0];
+//     // Access the name of the store
+//     String storeName = storeInfo.name.toString();
+//       print(storeName);
+//        print("storeName");
+
+
+                                      return
+                                   
+                                     ( wholefavouriteController
+                                          .wishList!.data![index].storeId == []||wholefavouriteController
+                                          .wishList!.data![index].storeId!.length == 0)? const SizedBox():
                                       InkWell(
                                          onTap: () async {
                                             wholeproductdetailsController
@@ -227,6 +235,8 @@ class _wholefavouriteState extends State<wholefavourite> {
                                                                   .start,
                                                           children: [
                                                             Text(item.storeId![0].name??'',
+                                                               maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
                                                             Text(
@@ -254,11 +264,14 @@ class _wholefavouriteState extends State<wholefavourite> {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                            //  "Save${item.storeId![0].discount.toString()}%",
+                                                                           (item.storeId![0].discount !="0.00" && item.storeId![0].discount !="0" && item.storeId![0].discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
                                                                             "₹" +
-                                                                                item.storeId![0].price.toString(),
+                                                                                item.storeId![0].wholePrice.toString(),
                                                                             style: CustomTextStyle.discounttext),
                                                                         SizedBox(
                                                                             width:
@@ -279,13 +292,47 @@ class _wholefavouriteState extends State<wholefavourite> {
                                                                         //   child:
                                                                         Text(
                                                                             // item.discount.toString(),
-                                                                            "Save${item.storeId![0].discount.toString()}%",
+                                                                             "Save${item.storeId![0].discount.toString()}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
                                                                         //   ),
                                                                         // ),
                                                                       ],
-                                                                    ),
+                                                                    ): const  SizedBox(),
+                                                                   
+                                                                   
+                                                                    // Row(
+                                                                    //   children: [
+                                                                    //     Text(
+                                                                    //         "₹" +
+                                                                    //             item.storeId![0].price.toString(),
+                                                                    //         style: CustomTextStyle.discounttext),
+                                                                    //     SizedBox(
+                                                                    //         width:
+                                                                    //             2),
+                                                                    //     // Container(
+                                                                    //     // height:
+                                                                    //     //     20,
+                                                                    //     // width: 48,
+                                                                    //     // decoration: BoxDecoration(
+                                                                    //     //     color: MyColors
+                                                                    //     //         .red,
+                                                                    //     //     borderRadius: BorderRadius.circular(
+                                                                    //     //         10),
+                                                                    //     //     border:
+                                                                    //     //         Border.all(color: MyColors.red)),
+                                                                    //     // child:
+                                                                    //     //     Center(
+                                                                    //     //   child:
+                                                                    //     Text(
+                                                                    //         // item.discount.toString(),
+                                                                    //         "Save${item.storeId![0].discount.toString()}%",
+                                                                    //         style:
+                                                                    //             CustomTextStyle.popinstextsmal2222red),
+                                                                    //     //   ),
+                                                                    //     // ),
+                                                                    //   ],
+                                                                    // ),
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -312,7 +359,7 @@ class _wholefavouriteState extends State<wholefavourite> {
                                                                         InkWell(
                                                                                onTap: () async{
                                                                              wholeproductdetailsController.viewproductHome(
-                                                                              item.id??0,item.storeId![0].name??'',"1kg",1 ,item.storeId![0].price??0,item.storeId![0].image!);
+                                                                              item.id??0,item.storeId![0].name??'',"1kg",1 ,item.storeId![0].price as double,item.storeId![0].image??'',"yes");
                                                                               await wholeproductdetailsController
                                                             .addProductHome();
                                                                             },

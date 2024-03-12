@@ -4,7 +4,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/notification_controller.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
@@ -20,6 +22,10 @@ class OtpWhole extends StatefulWidget {
 
 class _OtpWholeState extends State<OtpWhole> {
    bool isFinished = false;
+
+      WholeNotificationController wholenotificationcontroller =
+      Get.put(WholeNotificationController());
+  MyCartWholeController mycartController = Get.put(MyCartWholeController());
   @override
   Widget build(BuildContext context) {
        
@@ -128,6 +134,8 @@ class _OtpWholeState extends State<OtpWhole> {
                               PageTransition(
                                   type: PageTransitionType.fade,
                                   child: DashboardWhole() ));
+                                  
+       wholenotificationcontroller.notifyinit();
              
                           //TODO: For reverse ripple effect animation
                           setState(() {

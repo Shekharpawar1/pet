@@ -125,66 +125,7 @@ child: Padding(
      
      
           
-      //      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            
-      //       children: [
-      
-      //       Expanded(
-      //         child: Container(
-      //            height: MediaQuery.of(context).size.height*0.07,
-      //          //      width: MediaQuery.of(context).size.width*0.7,
-                      
-                
-                
-      //                   decoration: BoxDecoration(
-              
-      //                       borderRadius: BorderRadius.circular(15),
-              
-      //                       // border: Border.all(color:brandcolor ),
-              
-      //            color:MyColors.white
-              
-      //                   ),
-              
-               
-                
-      //           child: TextFormField(
-      //                                 controller: _searchcontroller,
-      //                                               style: TextStyle(fontSize: 14,color: voliet, fontFamily: "SF-Pro-Display",),
-            
-      //                              decoration: InputDecoration(
-                                         
-      //                                     // contentPadding: EdgeInsets.only(left: 15),
-      //                                     fillcolor:MyColors.white,
-      //                                     focuscolor:MyColors.white,
-      //                                     enabledBorder: OutlineInputBorder(
-      //                                       borderSide: BorderSide.none,
-      //                                       // borderRadius: BorderRadius.circular(50),
-      //                                     ),
-      //                                     focusedBorder: OutlineInputBorder(
-      //                                       borderSide: BorderSide.none,
-      //                                       //  borderRadius: BorderRadius.circular(50),
-      //                                     ),
-      //                                     border: OutlineInputBorder(
-      //                                       borderSide: BorderSide.none,
-      //                                       //  borderRadius: BorderRadius.circular(50),
-      //                                     ),
-      //                                     hintText:"Search",
-      //                                     prefixIcon:Image.asset("assets/image/search.png",width: 10,),
-                                        
-      //                                     hintStyle:
-      //                                     TextStyle(color: Colors.grey, fontSize: 16,fontWeight: FontWeight.w400)
-                                          
-      //                                     ),
-      //                               ),
-      //         ),
-      //       ),
-          
-      //       //  Image.asset("assets/image/filter.png",)
-      // Positioned(right:0,child: SvgPicture.asset("assets/image/filter.svg"))
-      
-      //      ],),
-
+     
 
     SizedBox(height: MediaQuery.of(context).size.height*0.02,),
           

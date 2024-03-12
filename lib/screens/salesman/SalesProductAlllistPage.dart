@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
@@ -31,6 +32,8 @@ class _SalesProductAlllistPageState extends State<SalesProductAlllistPage> {
     TextEditingController _searchcontroller = TextEditingController();
    SalesProductDetailsController salesProductDetailsController =
       Get.put(SalesProductDetailsController());
+        SalesMyCartController mycartController = Get.put(SalesMyCartController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -247,7 +250,7 @@ filtercontroller.init();
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 280),
+                                      mainAxisExtent: 285),
                               itemCount: homesalecontroller
                                   .salesPropertiesModel!.data!.length
                                  , // Set the number of cards you want to display.
@@ -256,7 +259,7 @@ filtercontroller.init();
                                 //     SliverGridDelegateWithMaxCrossAxisExtent(
                                 //         maxCrossAxisExtent: 150,
                                 //      childAspectRatio: 3 / 2,
-                                //         mainAxisExtent: 300,
+                                //         mainAxisExtent: 285,
                                 //         crossAxisSpacing: 15,
                                 //         mainAxisSpacing: 15),
                                 // itemCount: homesalecontroller
@@ -269,7 +272,7 @@ filtercontroller.init();
                                  
                                 var imagePath =
                                        "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
-                                print(imagePath);
+                                
                                 return InkWell(
                                   onTap: () async{
                                       salesProductDetailsController
@@ -353,63 +356,23 @@ filtercontroller.init();
    }
  ),
 
-      //  InkWell(
-      //                                                 onTap: () {
-      //                                                   wholehomecontroller
-      //                                                       .addItemToWishList(
-      //                                                           item.id!);
-      //                                                 },
-      //                                                 child: Padding(
-      //                                                   padding:
-      //                                                       const EdgeInsets.all(
-      //                                                           8.0),
-      //                                                   child: Align(
-      //                                                       alignment: Alignment
-      //                                                           .centerRight,
-      //                                                       child: Icon(wholehomecontroller
-      //                                                               .wishListItemsId
-      //                                                               .contains(
-      //                                                                   item.id!)
-      //                                                           ? Icons.favorite
-      //                                                           : Icons
-      //                                                               .favorite_border,color:Colors.red)),
-      //                                                 ),
-      //                                               ),
-                  
-                                                
-                                                
+                    
 
 
                                                     Container(
                                                       height: 125,
                                                       decoration: BoxDecoration(
-                                                          // gradient:
-                                                          //     LinearGradient(
-                                                          //   colors: [
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //     _getRandomColor(),
-                                                          //   ],
-                                                          //   begin:
-                                                          //       Alignment.topLeft,
-                                                          //   end: Alignment
-                                                          //       .bottomRight,
-                                                          // ),
+                                                         
                                                           ),
-                                                      // decoration: BoxDecoration(
-                                                      //     borderRadius: BorderRadius.circular(30),
-                                                      //     color: MyColors.white),
                                                       child: CachedNetworkImage(
                                                         imageUrl: imagePath,
-                                                        // width: 61,
-                                                        // height: 75,
+                                                      
                                                         placeholder:
                                                             (context, url) =>
                                                                 Center(
                                                           child:
                                                               CircularProgressIndicator(),
-                                                        ), // Replace with your own placeholder widget
+                                                        ), 
                                                         errorWidget: (context,
                                                                 url, error) =>
                                                             Icon(Icons
@@ -437,22 +400,18 @@ filtercontroller.init();
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                                 maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
-                                                            Text(
-                                                                item.description
-                                                                            .toString()
-                                                                            .length <
-                                                                        30
-                                                                    ? item
-                                                                        .description!
-                                                                    : item
-                                                                        .description!
-                                                                        .substring(
-                                                                            0,
-                                                                            19),
-                                                                style: CustomTextStyle
-                                                                    .popinssmall0),
+                                                                                                                Text(
+  item.description!.length < 20
+      ? item.description!
+      : item.description!.substring(0, item.description!.length),
+  maxLines: 1,
+  overflow: TextOverflow.ellipsis,
+  style: CustomTextStyle.popinssmall0,
+),
                                                             SizedBox(height: 5),
                                                             Row(
                                                               mainAxisAlignment:
@@ -464,38 +423,30 @@ filtercontroller.init();
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                    
+  (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
                                                                             "₹" +
-                                                                                item.price.toString(),
+                                                                                item.wholePrice.toString(),
                                                                             style: CustomTextStyle.discounttext),
                                                                         SizedBox(
                                                                             width:
                                                                                 2),
-                                                                        // Container(
-                                                                        // height:
-                                                                        //     20,
-                                                                        // width: 48,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     color: MyColors
-                                                                        //         .red,
-                                                                        //     borderRadius: BorderRadius.circular(
-                                                                        //         10),
-                                                                        //     border:
-                                                                        //         Border.all(color: MyColors.red)),
-                                                                        // child:
-                                                                        //     Center(
-                                                                        //   child:
+                                                                       
                                                                         Text(
                                                                             // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
                                                                         //   ),
                                                                         // ),
                                                                       ],
-                                                                    ),
+                                                                    ): const  SizedBox(),
+                                                               
+                                                                   
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -509,10 +460,10 @@ filtercontroller.init();
                                                                               Get.width * 0.23,
                                                                           child:
                                                                               Text(
-                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                                                            "₹ ${((double.parse(item.wholePrice ?? '')) - ((double.parse(item.wholePrice ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
                                                                             // "₹" +
-                                                                            //     item.price!,
+                                                                            //     item.wholePrice!,
                                                                             style:
                                                                                 CustomTextStyle.popinsmedium,
                                                                           ),
@@ -521,11 +472,12 @@ filtercontroller.init();
                                                                             width:
                                                                                 Get.width * 0.054),
                                                                         InkWell(
-                                                                               onTap: () {
-                                                            //                  wholeproductdetailsController.viewproductHome(
-                                                            //                   item.id??0,item.name??'',"1kg",1 ,item.price as int,item.image!);
-                                                            //                   await wholeproductdetailsController
-                                                            // .addProductHome();
+                                                                               onTap: () async{
+                                                                salesProductDetailsController.viewproductHome(item.id??0,item.name??'',"1kg",1,double.parse(item.wholePrice ?? ''),(item.image??'').toString(),"yes");
+                                                                              
+                                                                                        await salesProductDetailsController.addProductHome();
+                                                                                     mycartController.init();
+                                                                             
                                                                             },
                                                                           child: Padding(
                                                                             padding:
@@ -653,7 +605,7 @@ filtercontroller.init();
                                   //                         children: [
                                   //                           Text(
                                   //                               "₹" +
-                                  //                                   item.price
+                                  //                                   item.wholePrice
                                   //                                       .toString(),
                                   //                               style: CustomTextStyle
                                   //                                   .discounttext),
@@ -683,7 +635,7 @@ filtercontroller.init();
                                   //                         ],
                                   //                       ),
                                   //                       SizedBox(height: 5),
-                                  //                       Text("₹ ${((double.parse(item.price ?? '')) - ( (double.parse(item.price ?? ""))*(double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                  //                       Text("₹ ${((double.parse(item.wholePrice ?? '')) - ( (double.parse(item.wholePrice ?? ""))*(double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
                                   //                         style: CustomTextStyle
                                   //                             .popinsmedium,

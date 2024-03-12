@@ -56,6 +56,7 @@ final box = GetStorage();
   void onClose() {
     print("closing...");
   clearFields();
+   dispose();
     super.onClose();
   }
   
@@ -82,8 +83,21 @@ void clearFields() {
     selectedCity= null;
     stateListModel= null;
     cityListModel =null;
+    
 
   }
+
+  void dispose() {
+    clearFields();
+   
+  update();
+  }
+
+void clearcity() {
+
+ selectedCity= null;
+cityListModel =null;
+}
 //   void chooseaddress(int index){
 // isselected = index;
 //  update();
@@ -118,13 +132,13 @@ fethUserId() {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to get State: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to get State: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -143,11 +157,13 @@ fethUserId() {
     await fetchCity(state.id.toString());
     showLoading = false;
     update();
+    //  clearFields();
   }
 void addadressID(int id) {
     addressid = id;
     update();
      print("statecity==${addressid}");
+
   }
   // city list
   String getCityUrl = Constants.GET_CITY_LIST;
@@ -155,32 +171,49 @@ void addadressID(int id) {
   // cityListModel!.state = [];
   bool cityLoaded = false;
 
+  
   cityFile.State? selectedCity;
-  void updateCity(cityFile.State? city) {
+  Future<void> updateCity(cityFile.State? city) async {
     selectedCity = city;
+    
+    // showLoading = true;
     update();
      print("statecity==${selectedCity}");
+    //  clearFields();
   }
-
+ 
   fetchCity(String stateId) async {
     showLoading = true;
     update();
-    try {
+    
+    // try {
       // city list
-      cityListModel =
-          CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+      // cityListModel =
+      //     CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+
+      //  print(body);
+    try {
+     
+      var request = http.MultipartRequest('POST', Uri.parse(getCityUrl));
+      request.fields.addAll({
+        "state":stateId.toString()
+      });
+      
+   cityListModel  = CityListModel.fromJson(await ApiHelper.postFormData(request: request));
+   
+      // update();
       print(cityListModel);
       cityLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to City: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to City: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -259,13 +292,13 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -310,13 +343,13 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

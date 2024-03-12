@@ -3,10 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/userLocationController.dart';
 
 class OrderReturnOtherDialog extends StatelessWidget {
   final UserLocationController controller = Get.find<UserLocationController>();
+  MyOrderController myordercontroller = Get.put(MyOrderController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,7 @@ class OrderReturnOtherDialog extends StatelessWidget {
                         onPressed: () {
                           // Close the text input dialog
                           Get.back();
+                          
                           // Reset the selected reason if the user cancels the custom input
                           controller.updateOtherReason(null);
                           controller
@@ -72,7 +76,7 @@ class OrderReturnOtherDialog extends StatelessWidget {
                       ),
                       SizedBox(width: 16.0),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           String? cancellationReason =
                               controller.selectedValue == 'Other'
                                   ? controller.otherReason
@@ -82,7 +86,11 @@ controller
                                   .updateSelectedReason(cancellationReason);
 
                               // Close the dialog
-                              Get.back();
+                            await  myordercontroller.reorderinit();
+                           
+                               Get.back();
+                            Get.back();
+                            
                               Get.snackbar(
                                 'Request Accepted',
                                 'Selected Reason: ${controller.selectedReason}',

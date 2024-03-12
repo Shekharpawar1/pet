@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
@@ -287,14 +288,16 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: MyColors.bgcolor,
         body: GetBuilder<CreateAccountPartnerController>(
             init: createAccountpartnercontroller,
             builder: (_) {
               return Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 15),
+                padding: const EdgeInsets.only(left: 15.0, right: 15,bottom:25),
                 child: ListView(
+                  shrinkWrap: true,
+                  primary: true,
                   children: [
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     Text(
@@ -463,6 +466,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                       child: ListView(
                         primary: false,
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         children: [
                           Text("Partners Information",
                               style: CustomTextStyle.popinstextsmall),
@@ -502,7 +506,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 decoration: InputDecoration(
                                   hintText: "Shop Name",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -548,7 +552,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 decoration: InputDecoration(
                                   hintText: "GST",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -659,7 +663,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 decoration: InputDecoration(
                                   hintText: "Partners Address",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -868,7 +872,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                       decoration: InputDecoration(
                                         hintText: "Zone",
                                         hintStyle: TextStyle(
-                                          color: MyColors.white,
+                                          color: MyColors.grey,
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 5),
@@ -883,9 +887,8 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                       ),
                                       style: TextStyle(
                                           fontSize: 16, color: MyColors.black),
-                                      items:       createAccountpartnercontroller
-
-                                          .zoneListModel!.data!
+                                      items: createAccountpartnercontroller
+                                            .zoneListModel!.data!
                                           .map((zone) {
                                         return DropdownMenuItem<zoneFile.Zone>(
                                           value: zone,
@@ -936,7 +939,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                       decoration: InputDecoration(
                                         hintText: "Latitude",
                                         hintStyle: TextStyle(
-                                          color: MyColors.white,
+                                          color: MyColors.grey,
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 10),
@@ -983,7 +986,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                     decoration: InputDecoration(
                                       hintText: "Longitude",
                                       hintStyle: TextStyle(
-                                        color: MyColors.white,
+                                        color: MyColors.grey,
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
                                           horizontal: 20, vertical: 10),
@@ -1534,7 +1537,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 decoration: InputDecoration(
                                   hintText: "First Name",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -1580,7 +1583,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 decoration: InputDecoration(
                                   hintText: "Last Name",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -1615,6 +1618,8 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                               child: TextFormField(
                                 controller: createAccountpartnercontroller
                                     .mobileNumberController,
+                                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  maxLength: 10,
                                 keyboardType: TextInputType.phone,
                                 // maxLength: 10,
                                 validator: (value) {
@@ -1628,8 +1633,9 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 },
                                 decoration: InputDecoration(
                                   hintText: "Mobile No",
+                                  counterText: '',
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -1683,7 +1689,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 decoration: InputDecoration(
                                   hintText: "Email ID",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -1716,6 +1722,8 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                   ],
                                   borderRadius: BorderRadius.circular(40)),
                               child: TextFormField(
+                                  obscureText: createAccountpartnercontroller
+                                    .passwordVisible,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter password';
@@ -1726,24 +1734,20 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                     .passwordController,
                                 decoration: InputDecoration(
                                   suffixIcon: IconButton(
-                                    icon: Icon(
-                                      createAccountpartnercontroller
-                                              .passwordVisible
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: MyColors.white,
-                                    ),
-                                    onPressed: () {
-                                      //  setState(
-                                      //    () {
-                                      //      createAccountpartnercontroller.passwordVisible = createAccountpartnercontroller.passwordVisible;
-                                      //    },
-                                      //  );
-                                    },
-                                  ),
+                                        icon: Icon(
+                                          createAccountpartnercontroller.passwordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          size: 15,
+                                          color: MyColors.white,
+                                        ),
+                                        onPressed: () {
+                                          createAccountpartnercontroller.updatepass();
+                                        },
+                                      ),
                                   hintText: "Password",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -1777,7 +1781,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                   borderRadius: BorderRadius.circular(40)),
                               child: TextFormField(
                                 obscureText: createAccountpartnercontroller
-                                    .passwordVisible,
+                                    .passwordconVisible,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter confirm password';
@@ -1787,25 +1791,21 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                                 controller: createAccountpartnercontroller
                                     .confirmPasswordController,
                                 decoration: InputDecoration(
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      createAccountpartnercontroller
-                                              .passwordVisible
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: MyColors.white,
-                                    ),
-                                    onPressed: () {
-                                      //  setState(
-                                      //    () {
-                                      //      createAccountpartnercontroller.passwordVisible = createAccountpartnercontroller.passwordVisible;
-                                      //    },
-                                      //  );
-                                    },
-                                  ),
+                                 suffixIcon: IconButton(
+                                        icon: Icon(
+                                          createAccountpartnercontroller.passwordconVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          size: 15,
+                                          color: MyColors.white,
+                                        ),
+                                        onPressed: () {
+                                          createAccountpartnercontroller.updateconpass();
+                                        },
+                                      ),
                                   hintText: "Confirm Password",
                                   hintStyle: TextStyle(
-                                    color: MyColors.white,
+                                    color: MyColors.grey,
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 10),
@@ -2011,7 +2011,7 @@ class _CreateAccountpartnerState extends State<CreateAccountpartner> {
                     //     Icon(Icons.arrow_forward_outlined,color: black,size: 18,)
                     //   ],
                     // )),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   ],
                 ),
               );

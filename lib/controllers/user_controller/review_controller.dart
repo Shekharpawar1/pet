@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 
 import 'package:pet/models/usersModel/reviewuserModel.dart';
 import 'package:pet/utils/api_helper.dart';
@@ -14,12 +17,13 @@ class UserReviewController extends GetxController {
   int? orderId1;
   var userId = GetStorage().read("id");
 
+final MyOrderController myordercontroller = Get.put(MyOrderController());
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 bool showLoading = false;
 final storage = GetStorage();
   TextEditingController commentController = TextEditingController();
   TextEditingController ratingController = TextEditingController();
-  // TextEditingController numberController = TextEditingController();
-// Review
+ 
   String getReviewUrl = '${Constants.GET_USERREVIEW}';
  UserReviewModel? userReviewModel;
   bool reviewLoaded = false;
@@ -34,6 +38,40 @@ final storage = GetStorage();
   }
 
 
+    void clearFields() {
+    commentController.clear();
+      ratingController.clear() ; 
+    print("Data cleared...");
+    update();
+  }
+
+
+  @override
+  void onClose() {
+    print("closing...");
+  clearFields();
+    super.onClose();
+  }
+
+
+  
+  Future<bool> validateForm(BuildContext context) {
+    final completer = Completer<bool>();
+
+    if (formKey.currentState!.validate()) {
+      
+      completer.complete(true);
+    } else {
+      
+      completer.complete(false);
+    }
+
+    return completer.future;
+
+  }
+
+
+  
   void reviewAdd(int itemid,int orderId) {
     itemid1 = itemid;
     orderId1 = orderId;
@@ -56,13 +94,13 @@ final storage = GetStorage();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   showLoading = false;
     update();
@@ -71,12 +109,12 @@ final storage = GetStorage();
   
 
   
-Future<void> reviewinit() async {
+Future<void> commentreviewinit() async {
     showLoading = true;
     update();
    
      Map<String, String> body = {
-        "item_id":itemid1.toString(),
+        "item_id":myordercontroller.orderdetailsModel!.data![0].itemId.toString(),
       "user_id": userId.toString(),
       "order_id":orderId1.toString(),
       "comment":commentController.text.toString(),
@@ -92,25 +130,18 @@ Future<void> reviewinit() async {
       request.fields.addAll(body);
       
       await ApiHelper.postFormData(request: request);
-      // print("PurchasePlanURL"+PurchasePlanURl);
-      update();
-      Get.back();
+     update();
+      
       Get.snackbar(
         'Success',
-        'Purchaes Plan',
+        'Review Added',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+   
     }
 
     showLoading = false;

@@ -163,7 +163,8 @@ class WholeSalerOurBrandFilterController extends GetxController {
 
   TextEditingController maxPriceController = TextEditingController();
   void clearFields() {
-    
+     minPriceController.clear();
+    maxPriceController.clear();
       selectCategoryFilterList = [];
   selectBrandFilterList = [];
   selectBreedFilterList = [];
@@ -199,21 +200,22 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // our brands
       userBrandModel =
           UserOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
-
-      print(
-          "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
+userBrandModel!.data = userBrandModel!.data!.where((element) => element.canine == 1).toList();
+ print("CAnine products1111 ===>>>> ${userBrandModel!.data!.length}");
+      // print(
+      //     "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
       // List demo = userBrandModel!.data!
       //     .where((element) => element.canine == 1)
@@ -226,19 +228,21 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
       // categories
       userCategoriesModel = UserCategoriesModel.fromJson(
           await ApiHelper.getApi(getUserCategoriesUrl));
+          userCategoriesModel!.data = userCategoriesModel!.data!.where((element) => element.moduleId == 1).toList();
+ print("CAnine productCat11 ===>>>> ${userCategoriesModel!.data!.length}");
       print(userCategoriesModel);
       List<String> categorylist =
           userCategoriesModel!.data!.map((e) => e.name.toString()).toList();
@@ -254,25 +258,26 @@ class WholeSalerOurBrandFilterController extends GetxController {
       //   isChecked: isCheckList,
       // ),
       //   );
+       print("=====>>>>>>>>> itemscat : $categorylist");
       print("-------${categoryId}");
       categoryLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
       //
       userlifestageModel = LifeStageModel.fromJson(
           await ApiHelper.getApi(getlifestageUrl));
-
+    // userlifestageModel!.data = userlifestageModel!.data!.where((element) => element.moduleId == 1).toList();
       print(getlifestageUrl + "${categoryId}");
       lifestageLoaded = true;
       // List demo = userlifestageModel!.data!.where((element) => element.name.toString()).toList();
@@ -280,7 +285,7 @@ class WholeSalerOurBrandFilterController extends GetxController {
           userlifestageModel!.data!.map((e) => e.name.toString()).toList();
       //  List<bool> isCheckList = userlifestageModel!.data/!.map((e) => false).toList();
 
-      print("=====>>>>>>>>> items : $lifestage");
+      print("=====>>>>>>>>> lifeitems : $lifestage");
       lifestageitem = lifestage;
       //   items.add(
       //      ItemModel(
@@ -293,13 +298,13 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -327,13 +332,13 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Category: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Category: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
 
@@ -348,13 +353,13 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
 
       }
       //product
@@ -389,13 +394,13 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -467,13 +472,13 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -488,7 +493,7 @@ class WholeSalerOurBrandFilterController extends GetxController {
     UserPropertiesModel products = UserPropertiesModel();
     // try {
     //   products = FilterListModel.fromJson(
-    //       await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+    //       await ApiHelper.getApi("http://caninedemo.caninetest.xyz/api/v1/items/latest"));
      
     //   products.data = products.data!.where((element) => element.moduleId == 1).toList();
       
@@ -512,6 +517,8 @@ class WholeSalerOurBrandFilterController extends GetxController {
           .where((element) => element.moduleId == 1)
           .toList();
       print("UserDataWhole==>");
+     
+           print("UserData@nnn  ==>${products.data}");
       if (products!.data!.isNotEmpty) {
         print(products!.data![0].name);
       } else {
@@ -542,13 +549,13 @@ class WholeSalerOurBrandFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();
@@ -579,6 +586,7 @@ class WholeSalerOurBrandFilterController extends GetxController {
     print("All Data: ${products.data!.map((e) => e.brandId).toList()}");
     print("Filtered Products:");
     print("Data: $filteredProducts");
+     print("selecedpice: $max");
     print("seleced selectBrandFilterList: $selectBrandFilterList");
     print("seleced selectProducttypeFilterList: $selectProductTypeFilterList");
     print("seleced selectVegFilterList: ${selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList()}");
@@ -628,7 +636,7 @@ class WholeSalerOurBrandFilterController extends GetxController {
           selectedBrands == null  || selectedBrands.contains(product.brandId);
       bool vegFilter = selectedVegOptions == null  ||
           selectedVegOptions.contains(product.veg);
-      bool maxPriceFilter = maxPrice == null || double.parse(product.price ?? "0") < maxPrice;
+      bool maxPriceFilter = maxPrice == null || double.parse(product.price ?? "0") <= maxPrice;
       bool minPriceFilter = minPrice == null || double.parse(product.price ?? "0") > minPrice;
       bool lifeStageFilter =
           lifeStage == null  || lifeStage.contains(product.lifeStageId);

@@ -5,27 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
-import 'package:pet/controllers/user_controller/home_controller.dart';
-import 'package:pet/controllers/user_controller/productdetails_controller.dart';
-import 'package:pet/controllers/user_controller/review_controller.dart';
+
 import 'package:pet/screens/salesman/productAllPartnersales.dart';
 import 'package:pet/screens/salesman/productdetails.dart';
-import 'package:pet/screens/user/productAllPartner.dart';
-// import 'package:pet/screens/user/productAllPartner.dart';
-import 'package:pet/screens/user/productdetails.dart';
-import 'package:pet/screens/user/widgets/userAppBar.dart';
+import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
+
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 import '../../utils/constants.dart';
 
 class SalesProductByPartnerDetails extends StatelessWidget {
-   SalesProductByPartnerDetails({super.key});
+   SalesProductByPartnerDetails({super.key, this.address,this.email,this.name, this.mobileno});
+   String? name;
+   String? email;
+   String? address;
+   String? mobileno;
   final HomeSalesController homesalecontroller = Get.put(HomeSalesController());
          SalesProductDetailsController salesProductDetailsController =
       Get.put(SalesProductDetailsController());
+      
+  SalesMyCartController mycartController = Get.put(SalesMyCartController());
 
   // final HomeuserController homeusercontroller = Get.put(HomeuserController());
   //   ProductDetailsController productdeatilscontroller =
@@ -39,7 +42,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
     //  "${Constants.USERPROFILE_IMAGEPATH_URL}" +
     //                                         .toString();
     return  Scaffold(
-       appBar: CustomAppBarback(),
+       appBar: CustomAppBarSalesWholeback(title : "Product Details"),
        body: ListView(shrinkWrap: true,
        primary: true,
        children: [
@@ -89,8 +92,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                       ),
                                       Spacer(),
                                       Text(
-                                        homesalecontroller
-                                            .salesProductPartnerModel!.data![0].name
+                                       name
                                             .toString(),
                                         style: CustomTextStyle.popinstext,
                                       ),
@@ -115,8 +117,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                       ),
                                     Spacer(),
                                       Text(
-                                                                            homesalecontroller
-                                            .salesProductPartnerModel!.data![0].address
+                                                                           address
                                             .toString(),
         
                                         style: CustomTextStyle.popinstext,
@@ -144,8 +145,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                       ),
                                      Spacer(),
                                       Text(
-                                       homesalecontroller
-                                            .salesProductPartnerModel!.data![0].phone
+                                     mobileno
                                             .toString(),
                                         style: CustomTextStyle.popinstext,
                                       ),
@@ -172,8 +172,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                       ),
                                      Spacer(),
                                       Text(
-                                                                            homesalecontroller
-                                            .salesProductPartnerModel!.data![0].email
+                                                                            email
                                             .toString(),
         
                                         style: CustomTextStyle.popinstext,
@@ -201,7 +200,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
 
                     InkWell(
                       onTap: () {
-                         ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
+                         SalesProductDetailsController productdeatilscontroller = Get.put(SalesProductDetailsController());
 
                         Get.to(() => SalesProductAllPartner());
                       },
@@ -255,17 +254,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                           .clamp(0,
                                               4), // Set the number of cards you want to display.
                                       itemBuilder: (context, index) {
-                                        // gridDelegate:
-                                        //     SliverGridDelegateWithMaxCrossAxisExtent(
-                                        //         maxCrossAxisExtent: 150,
-                                        //      childAspectRatio: 3 / 2,
-                                        //         mainAxisExtent: 300,
-                                        //         crossAxisSpacing: 15,
-                                        //         mainAxisSpacing: 15),
-                                        // itemCount: homeusercontroller
-                                        //     .userPropertiesModel!.data!.length
-                                        //     .clamp(0, 4),
-                                        // itemBuilder: (BuildContext ctx, index) {
+                                     
 
                                         var item =  homesalecontroller
                                             .salesproductbypartneritemModel!.data![index];
@@ -426,13 +415,15 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                             maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
                                                             Text(
                                                                 item.description
                                                                             .toString()
                                                                             .length <
-                                                                        30
+                                                                        10
                                                                     ? item
                                                                         .description!
                                                                     : item
@@ -440,6 +431,8 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                                                         .substring(
                                                                             0,
                                                                             19),
+                                                                             maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinssmall0),
                                                             SizedBox(height: 5),
@@ -453,38 +446,62 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                    // Row(
+                                                                    //   children: [
+                                                                    //     Text(
+                                                                    //         "₹" +
+                                                                    //             item.price.toString(),
+                                                                    //         style: CustomTextStyle.discounttext),
+                                                                    //     SizedBox(
+                                                                    //         width:
+                                                                    //             2),
+                                                                    //     // Container(
+                                                                    //     // height:
+                                                                    //     //     20,
+                                                                    //     // width: 48,
+                                                                    //     // decoration: BoxDecoration(
+                                                                    //     //     color: MyColors
+                                                                    //     //         .red,
+                                                                    //     //     borderRadius: BorderRadius.circular(
+                                                                    //     //         10),
+                                                                    //     //     border:
+                                                                    //     //         Border.all(color: MyColors.red)),
+                                                                    //     // child:
+                                                                    //     //     Center(
+                                                                    //     //   child:
+                                                                    //     Text(
+                                                                    //         // item.discount.toString(),
+                                                                    //           "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                    //         style:
+                                                                    //             CustomTextStyle.popinstextsmal2222red),
+                                                                    //     //   ),
+                                                                    //     // ),
+                                                                    //   ],
+                                                                    // ),
+                                                               (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
                                                                             "₹" +
-                                                                                item.price.toString(),
+                                                                                item.wholePrice.toString(),
                                                                             style: CustomTextStyle.discounttext),
                                                                         SizedBox(
                                                                             width:
                                                                                 2),
-                                                                        // Container(
-                                                                        // height:
-                                                                        //     20,
-                                                                        // width: 48,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     color: MyColors
-                                                                        //         .red,
-                                                                        //     borderRadius: BorderRadius.circular(
-                                                                        //         10),
-                                                                        //     border:
-                                                                        //         Border.all(color: MyColors.red)),
-                                                                        // child:
-                                                                        //     Center(
-                                                                        //   child:
+                                                                        
                                                                         Text(
                                                                             // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
                                                                         //   ),
                                                                         // ),
                                                                       ],
-                                                                    ),
+                                                                    ): const  SizedBox(),
+                                                               
+                              
+                                                               
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -509,20 +526,30 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                                                         SizedBox(
                                                                             width:
                                                                                 Get.width * 0.054),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(right: 5.0),
-                                                                          child: Container(
-                                                                              width: 35,
-                                                                              height: 35,
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(5.0),
-                                                                                child: Image.asset(
-                                                                                  "assets/image/bag2.png",
-                                                                                  height: 25,
-                                                                                ),
-                                                                              )),
+                                                                        InkWell(
+              onTap: () async{
+                                                                             
+                                                                                  salesProductDetailsController.viewproductHome(item.id??0,item.name??'',"1kg",1,double.parse(item.wholePrice ?? ''),(item.image??'').toString(),"yes");
+                                                                              
+                                                                              await salesProductDetailsController.addProductHome();
+                                                            mycartController.init();
+                                                                                },
+
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     ),
@@ -684,7 +711,7 @@ class SalesProductByPartnerDetails extends StatelessWidget {
                                           //                           //     child: 
                                           //                               Text(
                                           //                                   // item.discount.toString(),
-                                          //                                   "Save${item.discount.toString()}%",
+                                          //                                     "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                           //                                   style: CustomTextStyle.popinstextsmal2222),
                                           //                           //   ),
                                           //                           // ),

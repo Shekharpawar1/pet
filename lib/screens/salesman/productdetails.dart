@@ -4,12 +4,14 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesreview_controller.dart';
-import 'package:pet/controllers/user_controller/review_controller.dart';
+// import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/screens/salesman/buyNowAddtoCartSales.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/models/salesmanModel/salesProductDetailsModel.dart' as variantFile;
@@ -26,9 +28,10 @@ import 'package:pet/screens/ordersummary.dart';
 import 'package:pet/screens/user/notification.dart';
 
 class ProductDetailssale extends StatefulWidget {
-   ProductDetailssale({super.key, this.id });
+   ProductDetailssale({super.key, this.id,});
 //  dynamic itemdetails;
 int? id;
+//  String? image;
   @override
   State<ProductDetailssale> createState() => _ProductDetailssaleState();
 }
@@ -39,26 +42,43 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
  SalesReviewController salesReviewController = Get.put(SalesReviewController());
  final HomeSalesController homesalecontroller = Get.put(HomeSalesController());
  SalesMyCartController mycartController = Get.put(SalesMyCartController());
-  final UserReviewController userreviewcontroller =
-      Get.put(UserReviewController());
+  final SalesReviewController userreviewcontroller =
+      Get.put(SalesReviewController());
  bool isProductInCartBool = false;
   List kg = [1, 2, 5];
- 
+ void onClose() {
+    salesproductdetailscontroller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     
-    var imagePath =
-    // "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
-        "${Constants.BASE_URL}/storage/app/public/product/${salesproductdetailscontroller!.salesproductdetailmodel!.data!.image??''}";
+    // var imagePath =
+    // // "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
+    //     "${Constants.BASE_URL}/storage/app/public/product/${salesproductdetailscontroller!.salesproductdetailmodel!.data!.image??''}";
     return Scaffold(
       appBar:CustomAppBarSalesWholeback(title : "Product Details"),
-        body: ListView(
+        body:
+        
+         ListView(
+          physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
         shrinkWrap: true,
         primary: true,
         children: [
+
+
+               ( salesproductdetailscontroller!.salesproductdetailmodel == null)
+              
+                ? Center(
+                  child: SizedBox(
+                                          child:Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)),
+                )
+                                    :
           Stack(
             children: [
-                        GetBuilder<SalesProductDetailsController>(
+               salesproductdetailscontroller!.salesproductdetailmodel == null ||  salesproductdetailscontroller!.salesproductdetailmodel!.data == null ? const SizedBox():
+                                  GetBuilder<SalesProductDetailsController>(
                   init: salesproductdetailscontroller,
                   builder: (_) {
                       return   salesproductdetailscontroller!.salesproductdetailmodel == null || salesproductdetailscontroller!.salesproductdetailmodel!.data == null ?SizedBox():
@@ -72,44 +92,41 @@ class _ProductDetailssaleState extends State<ProductDetailssale> {
                       child: Padding(
                         padding: EdgeInsets.only(top: 15.0),
                         child: salesproductdetailscontroller!.salesproductdetailmodel!.data!.images == ''|| salesproductdetailscontroller!.salesproductdetailmodel!.data!.images == null||  salesproductdetailscontroller!.salesproductdetailmodel!.data!.images!.isEmpty?
-                              CachedNetworkImage(
-                              imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${ salesproductdetailscontroller!.salesproductdetailmodel!.data!.image.toString()}",
-                              // width: 61,
-                              // height: 75,
-                            
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(),
-                              ), // Replace with your own placeholder widget
-                              errorWidget: (context, url, error) => Icon(Icons
-                                  .error), // Replace with your own error widget
-                            )
+                             FullScreenWidget(
+                                                  disposeLevel:
+                                                      DisposeLevel.High,
+                                child: CachedNetworkImage(
+                                imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${ salesproductdetailscontroller.salesproductdetailmodel!.data!.image.toString()}",
+                                // width: 61,
+                                // height: 75,
+                                                          
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(),
+                                ), // Replace with your own placeholder widget
+                                errorWidget: (context, url, error) => Icon(Icons
+                                    .error), // Replace with your own error widget
+                                                          ),
+                              )
                           :
-                             CachedNetworkImage(
-                              imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${salesproductdetailscontroller!.salesproductdetailmodel!.data!.images![salesproductdetailscontroller.selectImages??0].toString()}",
-                              // width: 61,
-                              // height: 75,
-                            
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(),
-                              ), // Replace with your own placeholder widget
-                              errorWidget: (context, url, error) => Icon(Icons
-                                  .error), // Replace with your own error widget
-                            ),
+                             FullScreenWidget(
+                                                  disposeLevel:
+                                                      DisposeLevel.High,
+                               child: CachedNetworkImage(
+                                imageUrl: "${Constants.BASE_URL}/storage/app/public/product/${salesproductdetailscontroller!.salesproductdetailmodel!.data!.images![salesproductdetailscontroller.selectImages??0].toString()}",
+                                // width: 61,
+                                // height: 75,
+                                                         
+                                placeholder: (context, url) => Center(
+                                  child: CircularProgressIndicator(),
+                                ), // Replace with your own placeholder widget
+                                errorWidget: (context, url, error) => Icon(Icons
+                                    .error), // Replace with your own error widget
+                                                         ),
+                             ),
                                 
                         
 
-                        //  CachedNetworkImage(
-                        //   imageUrl: imagePath,
-                        //   // width: 61,
-                        //   // height: 75,
-                        //   placeholder: (context, url) => Center(
-                        //     child: CircularProgressIndicator(),
-                        //   ), // Replace with your own placeholder widget
-                        //   errorWidget: (context, url, error) => Icon(
-                        //       Icons.error), // Replace with your own error widget
-                        // ),
-                     
-                     
+                      
                      
                       ));
                 }
@@ -299,38 +316,7 @@ salesproductdetailscontroller .selectImagesProduct(
                                                 ),
                                               )
                                               .toList(),
-                                      // [
-                                      //   Container(
-                                      //     child: Column(
-                                      //       children: [
-                                      //         Container(
-                                      //           height: 60,
-                                      //           width: 60,
-                                      //           decoration: BoxDecoration(
-                                      //               color: MyColors.pink,
-                                      //               borderRadius: BorderRadius.circular(15)),
-                                      //           child: Padding(
-                                      //             padding: const EdgeInsets.all(8.0),
-                                      //             child: CachedNetworkImage(
-                                      //               imageUrl: imagePath,
-                                      //               width: 61,
-                                      //               height: 75,
-                                      //               placeholder: (context, url) => Center(
-                                      //                 child: CircularProgressIndicator(),
-                                      //               ), // Replace with your own placeholder widget
-                                      //               errorWidget: (context, url, error) => Icon(Icons
-                                      //                   .error), // Replace with your own error widget
-                                      //             ),
-                                      //           ),
-                                      //         ),
-                                      //         SizedBox(
-                                      //           height: 5,
-                                      //         ),
-                                      //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-                                      //       ],
-                                      //     ),
-                                      //   ),
-                                      //  ],
+                                    
                                     ),
                               Stack(
                                 alignment: Alignment.center,
@@ -362,119 +348,14 @@ salesproductdetailscontroller .selectImagesProduct(
                         );
                       }),
              
-        //   Padding(
-        //     padding: EdgeInsets.all(20.0),
-        //     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Row(
-        //           children: kg
-        //               .sublist(0, 3)
-        //               .map(
-        //                 (e) => Padding(
-        //                   padding: const EdgeInsets.all(8.0),
-        //                   child: GestureDetector(
-        //                     onTap: () {
-        //                       // var tab = e
-        //                       //
-        //                       //  e  *  ( widget.itemdetails.price) ;
-        //                       //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-        //                     },
-        //                     child: Container(
-        //                       child: Column(
-        //                         children: [
-        //                           Container(
-        //                             height: 60,
-        //                             width: 60,
-        //                             decoration: BoxDecoration(
-        //                                 color: salesproductdetailscontroller.isAdding
-        //                                     ? MyColors.pink
-        //                                     : MyColors.grey,
-        //                                 borderRadius: BorderRadius.circular(15)),
-        //                             child: Padding(
-        //                               padding: const EdgeInsets.all(8.0),
-        //                               child: CachedNetworkImage(
-        //                                 imageUrl: imagePath,
-        //                                 width: 61,
-        //                                 height: 75,
-        //                                 placeholder: (context, url) => Center(
-        //                                   child: CircularProgressIndicator(),
-        //                                 ), // Replace with your own placeholder widget
-        //                                 errorWidget: (context, url, error) => Icon(Icons
-        //                                     .error), // Replace with your own error widget
-        //                               ),
-        //                             ),
-        //                           ),
-        //                           // SizedBox(
-        //                           //   height: 5,
-        //                           // ),
-        //                           // Text("$e Kg",
-        //                           //     style: CustomTextStyle.popinssmall0)
-        //                         ],
-        //                       ),
-        //                     ),
-        //                   ),
-        //                 ),
-        //               )
-        //               .toList(),
-        //           // [
-        //           //   Container(
-        //           //     child: Column(
-        //           //       children: [
-        //           //         Container(
-        //           //           height: 60,
-        //           //           width: 60,
-        //           //           decoration: BoxDecoration(
-        //           //               color: MyColors.pink,
-        //           //               borderRadius: BorderRadius.circular(15)),
-        //           //           child: Padding(
-        //           //             padding: const EdgeInsets.all(8.0),
-        //           //             child: CachedNetworkImage(
-        //           //               imageUrl: imagePath,
-        //           //               width: 61,
-        //           //               height: 75,
-        //           //               placeholder: (context, url) => Center(
-        //           //                 child: CircularProgressIndicator(),
-        //           //               ), // Replace with your own placeholder widget
-        //           //               errorWidget: (context, url, error) => Icon(Icons
-        //           //                   .error), // Replace with your own error widget
-        //           //             ),
-        //           //           ),
-        //           //         ),
-        //           //         SizedBox(
-        //           //           height: 5,
-        //           //         ),
-        //           //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-        //           //       ],
-        //           //     ),
-        //           //   ),
-        //           //  ],
-        //         ),
-              
-              
-        //         Stack(
-        //   alignment: Alignment.center,
-        //   children: [
-        //     Icon(Icons.crop_square_sharp, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
-        //                                           .veg ==
-        //                                       1)
-        //                                   ? Colors.red:Colors.green, size: 30,),
-        //     Icon(Icons.circle, color:(salesproductdetailscontroller!.salesproductdetailmodel!.data!
-        //                                           .veg ==
-        //                                       1)
-        //                                   ? Colors.red: Colors.green, size: 10),
-        //   ],
-        // ),
-             
-        //       ],
-        //     ),
-        //   ),
+        
           
           GetBuilder<SalesProductDetailsController>(
               init: salesproductdetailscontroller,
               builder: (_) {
                  final variations = salesproductdetailscontroller.salesproductdetailmodel!.data!.variations!.length;
-                // var product = productdetailscontro
-                // printller.productList.length;
+               
+                print("variations ${variations}");
                 return 
              (salesproductdetailscontroller!.salesproductdetailmodel!.data == null )?SizedBox(
 
@@ -491,196 +372,123 @@ salesproductdetailscontroller .selectImagesProduct(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Row(
-                          //   children: kg
-                          //       .sublist(0, 3)
-                          //       .map(
-                          //         (e) => Padding(
-                          //           padding: const EdgeInsets.all(8.0),
-                          //           child: GestureDetector(
-                          //             onTap: () {
-                          //               // var tab = e
-                          //               //
-                          //               //  e  *  ( widget.itemdetails.price) ;
-                          //               //  productdetailscontroller. updateSelectTab(e *( widget.itemdetails.price) )  ;
-                          //             },
-                          //             child: Container(
-                          //               child: Column(
-                          //                 children: [
-                          //                   Container(
-                          //                     height: 60,
-                          //                     width: 60,
-                          //                     decoration: BoxDecoration(
-                          //                         color: productdetailscontroller
-                          //                                 .isAdding
-                          //                             ? MyColors.pink
-                          //                             : MyColors.grey,
-                          //                         borderRadius:
-                          //                             BorderRadius.circular(15)),
-                          //                     child: Padding(
-                          //                       padding: const EdgeInsets.all(8.0),
-                          //                       child: CachedNetworkImage(
-                          //                         imageUrl: imagePath,
-                          //                         width: 61,
-                          //                         height: 75,
-                          //                         placeholder: (context, url) =>
-                          //                             Center(
-                          //                           child:
-                          //                               CircularProgressIndicator(),
-                          //                         ), // Replace with your own placeholder widget
-                          //                         errorWidget: (context, url,
-                          //                                 error) =>
-                          //                             Icon(Icons
-                          //                                 .error), // Replace with your own error widget
-                          //                       ),
-                          //                     ),
-                          //                   ),
-                          //                   SizedBox(
-                          //                     height: 5,
-                          //                   ),
-                          //                   Text("$e Kg",
-                          //                       style: CustomTextStyle.popinssmall0)
-                          //                 ],
-                          //               ),
-                          //             ),
-                          //           ),
-                          //         ),
-                          //       )
-                          //       .toList(),
-                          //   // [
-                          //   //   Container(
-                          //   //     child: Column(
-                          //   //       children: [
-                          //   //         Container(
-                          //   //           height: 60,
-                          //   //           width: 60,
-                          //   //           decoration: BoxDecoration(
-                          //   //               color: MyColors.pink,
-                          //   //               borderRadius: BorderRadius.circular(15)),
-                          //   //           child: Padding(
-                          //   //             padding: const EdgeInsets.all(8.0),
-                          //   //             child: CachedNetworkImage(
-                          //   //               imageUrl: imagePath,
-                          //   //               width: 61,
-                          //   //               height: 75,
-                          //   //               placeholder: (context, url) => Center(
-                          //   //                 child: CircularProgressIndicator(),
-                          //   //               ), // Replace with your own placeholder widget
-                          //   //               errorWidget: (context, url, error) => Icon(Icons
-                          //   //                   .error), // Replace with your own error widget
-                          //   //             ),
-                          //   //           ),
-                          //   //         ),
-                          //   //         SizedBox(
-                          //   //           height: 5,
-                          //   //         ),
-                          //   //         Text("2 Kg", style: CustomTextStyle.popinssmall0)
-                          //   //       ],
-                          //   //     ),
-                          //   //   ),
-                          //   //  ],
-                          // ),
-   salesproductdetailscontroller.salesproductdetailmodel!.data!.variations ==
-                                null
-                                 &&  salesproductdetailscontroller.salesproductdetailmodel!.data!.variations ==
-                                ""
-                                // && productdetailscontroller.productdetailmodel!.data!.variations!.isEmpty
-                            // ? Center(
-                            //     child: SpinKitCircle(
-                            //       color:
-                            //           Colors.white, // Color of the progress bar
-                            //       size: 50.0, // Size of the progress bar
-                            //     ),
-                            //   )
-                            ? SizedBox()
-                            :
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 50,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: MyColors.grey),
-                                    color: Color.fromRGBO(255, 255, 255, 0.10),
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     offset: const Offset(0.0, 0.0),
-                                    //     color: Color.fromRGBO(255, 255, 255, 0.10),
-                                    //     blurRadius: 0.0,
-                                    //     spreadRadius: 0.0,
-                                    //   ),
-                                    // ],
-                                    borderRadius: BorderRadius.circular(40)),
-                                child: DropdownButtonFormField<variantFile.Variations>(
-                                  validator: (value) {
-                                     if (value == null || value.type!.isEmpty) {
-                                      return 'Please select a tpye';
-                                    }
-                                    return null;
-                                  },
-                                  // value: productdetailscontroller.dropdownsize,
-                                  value:  salesproductdetailscontroller
-                                          .selectedvariants,
-                                  decoration: InputDecoration(
-                                    hintText: "Kg",
-                                    hintStyle: TextStyle(
-                                      color: MyColors.black,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 5),
-                                    border: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    // iconColor: MyColors.white,
-                                  ),
-                                  icon: Center(
-                                    child: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: MyColors.black,
-                                    ),
-                                  ),
-                                  style: TextStyle(
-                                      fontSize: 16, color: MyColors.black),
-                                   items:   salesproductdetailscontroller
-                                            .variantslist!
-                                            .map((variantFile.Variations variants) {
-                                          return DropdownMenuItem<
-                                            variantFile.Variations>(
-                                            value: variants,
-                                            child: Text(variants.type??''),
-                                          );
-                                        }).toList(),
-//                                    items:   productdetailscontroller.productdetailmodel!.data!.variations!.map<DropdownMenuItem<String>>(
-//   (var variant) {
-//     return DropdownMenuItem<String>(
-//       value: variant.type, 
-//       child: Text(variant.type.toString() ),
-//     );
-//   },
-// ).toList() ?? [],
-                                  // items: productdetailscontroller
-                                  //     .productdetailsmodel.data.variations
-                                  //     .map((String variant) {
-                                  //   return DropdownMenuItem<String>(
-                                  //     value: variant,
-                                  //     child: Text(variant),
-                                  //   );
-                                  // }).toList(),
-                                     onChanged:
-                                            (variantFile.Variations? variants) async {
-                                          await salesproductdetailscontroller
-                                              .updateVariants(variants!);
-                                        },
-                                  // onChanged: (String? value)  {
-                                  //   productdetailscontroller.addVariant(value);
-                                  //   // productdetailscontroller
-                                  //   //     .updateSize(value ?? "");
-                                  //   // Perform actions when country is changed
-                                  // },
-                                ),
-                              ),
-                            ),
-                          ),
+                         
+
+
+(
+                                          salesproductdetailscontroller.salesproductdetailmodel!
+                                                          .data!
+                                                          .variations ==
+                                                      [] || salesproductdetailscontroller.salesproductdetailmodel!
+                                                          .data!
+                                                          .variations!.isEmpty
+                                                  )
+                                             
+                                              ? Text("No Variants"):
+                      
+                                              Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(8.0),
+                                                    child: Container(
+                                                      height: 50,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  MyColors.grey),
+                                                          color: const Color.fromRGBO(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              0.10),
+                                                          // boxShadow: [
+                                                          //   BoxShadow(
+                                                          //     offset: const Offset(0.0, 0.0),
+                                                          //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                                                          //     blurRadius: 0.0,
+                                                          //     spreadRadius: 0.0,
+                                                          //   ),
+                                                          // ],
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(40)),
+                                                      child:
+                                                          DropdownButtonFormField<
+                                                              variantFile
+                                                                  .Variations>(
+                                                        validator: (value) {
+                                                          if (value == null ||
+                                                              value.type!
+                                                                  .isEmpty) {
+                                                            return 'Please select a tpye';
+                                                          }
+                                                          return null;
+                                                        },
+                                                        // value: productdetailscontroller.dropdownsize,
+                                                        value:
+                                                            salesproductdetailscontroller
+                                                                .selectedvariants,
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          hintText: "Kg",
+                                                          hintStyle: TextStyle(
+                                                            color: MyColors.black,
+                                                          ),
+                                                          contentPadding:
+                                                              EdgeInsets
+                                                                  .symmetric(
+                                                                      horizontal:
+                                                                          15,
+                                                                      vertical:
+                                                                          5),
+                                                          border:
+                                                              InputBorder.none,
+                                                          enabledBorder:
+                                                              InputBorder.none,
+                                                          focusedBorder:
+                                                              InputBorder.none,
+                                                          // iconColor: MyColors.white,
+                                                        ),
+                                                        icon: const Center(
+                                                          child: Icon(
+                                                            Icons.arrow_drop_down,
+                                                            color: MyColors.black,
+                                                          ),
+                                                        ),
+                                                        style: const TextStyle(
+                                                            fontSize: 16,
+                                                            color:
+                                                                MyColors.black),
+                                                        items:
+                                                            salesproductdetailscontroller
+                                                                .variantslist!
+                                                                .map((variantFile
+                                                                        .Variations
+                                                                    variants) {
+                                                          return DropdownMenuItem<
+                                                              variantFile
+                                                                  .Variations>(
+                                                            value: variants,
+                                                            child: Text(
+                                                                variants.type ??
+                                                                    ''),
+                                                          );
+
+                                                        }).toList(),
+                                        
+                                                        onChanged: (variantFile
+                                                                .Variations?
+                                                            variants) async {
+                                                          await salesproductdetailscontroller
+                                                              .updateVariants(
+                                                                  variants!);
+                                                        },
+                                                        
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+
 
                           SizedBox(
                             width: 20,
@@ -692,32 +500,40 @@ salesproductdetailscontroller .selectImagesProduct(
                                 children: [
                                   Row(
                                     children: [
-                                       salesproductdetailscontroller.selectedvariants?.price == null?
-                                  Text(
-                                       
-                                          "₹"+ ( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)).toString(),
-                            
-                            //  (     (productdetailscontroller.productList.price)! * (productdetailscontroller.productList.discount!)/100).toString()
 
-                                           style: CustomTextStyle.discounttext):    Text(
-                                       
-                                          "₹"+ ( (salesproductdetailscontroller.selectedvariants?.price??0)*(salesproductdetailscontroller.sizecount??0)).toString(),
-                            
-                            //  (     (productdetailscontroller.productList.price)! * (productdetailscontroller.productList.discount!)/100).toString()
 
+                                       (salesproductdetailscontroller
+                                                            .selectedvariants
+                                                            ?.wholeprice ==
+                                                        null)?
+                                                           Text(
+                                       
+                                         ((salesproductdetailscontroller
+                                                                            .salesproductdetailmodel!
+                                                                            .data!.wholePrice ??
+                                                                        0) *
+                                                                    (salesproductdetailscontroller
+                                                                            .sizecount ??
+                                                                        0))
+                                                                .toStringAsFixed(2),
+                            
+                                           style: CustomTextStyle.discounttext):
+                                   
+                                     Text(
+                                       
+                                      ((salesproductdetailscontroller
+                                                                            .selectedvariants
+                                                                            ?.wholeprice ??
+                                                                        0) *
+                                                                    (salesproductdetailscontroller
+                                                                            .sizecount ??
+                                                                        0))
+                                                                .toStringAsFixed(2),
+                        
                                            style: CustomTextStyle.discounttext),
                                       SizedBox(width: 3),
-                                      // Container(
-                                      //   height: 20,
-                                      //   width: 40,
-                                      //   // decoration: BoxDecoration(
-                                      //   //     color: MyColors.red,
-                                      //   //     borderRadius:
-                                      //   //         BorderRadius.circular(10),
-                                      //   //     border: Border.all(
-                                      //   //         color: MyColors.red)),
-                                      //   child: Center(
-                                      //     child:
+                                    
+                                       SizedBox(width:3),
                                            Text(
                                         
                                               "Save${salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!.toString()}%",
@@ -728,14 +544,55 @@ salesproductdetailscontroller .selectImagesProduct(
                                     ],
                                   ),
                                   SizedBox(height: 5),
-                                    salesproductdetailscontroller.selectedvariants?.price == null?
-                                 Text(
-                                    "₹"+((salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)-(  ( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)).toString(),
-                                  //  "₹"+(  (     (productdetailscontroller.productdetailmodel!.data!.price)! * (productdetailscontroller.productdetailmodel!.data!.discount!)/100)* productdetailscontroller.sizecount).toString(),
-                                    //  "₹${productdetailscontroller.productdetailmodel!.data!.price.toString()}",
-                                    style: CustomTextStyle.popinstext,
-                                  ): Text(
-                                    "₹"+((salesproductdetailscontroller.selectedvariants?.price??0)*(salesproductdetailscontroller.sizecount??0)-(  ( (salesproductdetailscontroller.selectedvariants?.price??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)).toString(),
+                         
+
+                            salesproductdetailscontroller
+                                                        .selectedvariants
+                                                        ?.wholeprice ==
+                                                    null
+                                                ? Text(
+                                                    "₹" +
+                                                        ((salesproductdetailscontroller.salesproductdetailmodel!.data!
+                                                                        .wholePrice!) *
+                                                                    (salesproductdetailscontroller
+                                                                            .sizecount ??
+                                                                        0) -
+                                                                (((salesproductdetailscontroller.salesproductdetailmodel!.data!.wholePrice!) *
+                                                                            salesproductdetailscontroller
+                                                                                .sizecount ??
+                                                                        0) *
+                                                                    (salesproductdetailscontroller.salesproductdetailmodel!.data!
+                                                                        .discount!) /
+                                                                    100))
+                                                            .toStringAsFixed(2),
+                                                    //  "₹"+(  (     (wholeproductdetailscontroller.productdetailwholemodel!.data!.price)! * (wholeproductdetailscontroller.productdetailwholemodel!.data!.discount!)/100)* wholeproductdetailscontroller.sizecount).toString(),
+                                                    //  "₹${wholeproductdetailscontroller.productdetailwholemodel!.data!.price.toString()}",
+                                                    style: CustomTextStyle
+                                                        .popinstext,
+                                                  )
+                                                : 
+                                   Text(
+                                    
+                                   "₹" +
+                                                        ((salesproductdetailscontroller
+                                                                            .selectedvariants
+                                                                            ?.wholeprice ??
+                                                                        0) *
+                                                                    (salesproductdetailscontroller
+                                                                            .sizecount ??
+                                                                        0) -
+                                                                (((salesproductdetailscontroller.selectedvariants?.wholeprice ??
+                                                                                0) *
+                                                                            salesproductdetailscontroller
+                                                                                .sizecount ??
+                                                                        0) *
+                                                                    (salesproductdetailscontroller
+                                                                      .salesproductdetailmodel!.data!
+                                                                        .discount!) /
+                                                                    100))
+                                                            .toStringAsFixed(2),
+                                  
+                                  
                                   //  "₹"+(  (     (productdetailscontroller.productdetailmodel!.data!.price)! * (productdetailscontroller.productdetailmodel!.data!.discount!)/100)* productdetailscontroller.sizecount).toString(),
                                     //  "₹${productdetailscontroller.productdetailmodel!.data!.price.toString()}",
                                     style: CustomTextStyle.popinstext,
@@ -844,11 +701,17 @@ salesproductdetailscontroller .selectImagesProduct(
                                       width: MediaQuery.of(context).size.width *
                                           0.1,
                                     ),
-                                    Text(
-                                         salesproductdetailscontroller.salesproductdetailmodel!.data!.name
-                                          .toString(),
-                                      style: CustomTextStyle.popinstext,
-                                    ),
+                                    Expanded(
+                                  
+                                      child: Text(
+                                                                             salesproductdetailscontroller.salesproductdetailmodel!.data!.name
+                                                                              .toString(),
+                                                                              maxLines: 1,
+                                                                           overflow: TextOverflow.ellipsis,    
+                                                                          style: CustomTextStyle.popinstext,
+                                                                        ),
+                                    )
+                                    ,
                                   ],
                                 ),
                                 SizedBox(
@@ -891,66 +754,7 @@ salesproductdetailscontroller .selectImagesProduct(
                                   thickness: 1,
                                   height: 1,
                                 ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
- Row(
-                                  children: [
-                                    SizedBox(width: 100,
-                                      child: Text(
-                                        "Petsbreeds",
-                                        style: CustomTextStyle.popinslight,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                    ),
-                                    Text(
-                                       salesproductdetailscontroller.salesproductdetailmodel!.data!.petsbreedsId
-                                          .toString(),
-                                      style: CustomTextStyle.popinstext,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Divider(
-                                  color: MyColors.lightdivider,
-                                  thickness: 1,
-                                  height: 1,
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-
-                                Row(
-                                  children: [
-                                    Text(
-                                      "lifeStage",
-                                      style: CustomTextStyle.popinslight,
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.2,
-                                    ),
-                                    Text(
-                                      salesproductdetailscontroller.salesproductdetailmodel!.data!.lifeStageId
-                                          .toString(),
-                                      style: CustomTextStyle.popinstext,
-                                    ),
-                                  ],
-                                ),
-                                // Petsbreeds
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.02),
-                                Divider(
-                                  color: MyColors.lightdivider,
-                                  thickness: 1,
-                                  height: 1,
-                                ),
+                               
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.02),
@@ -1097,7 +901,8 @@ salesproductdetailscontroller .selectImagesProduct(
                       ),
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
-
+   salesReviewController
+                            .salesReviewModel==null?const SizedBox():
                      GetBuilder<SalesReviewController>(
                                     init: salesReviewController,
                                     builder: (_) {
@@ -1283,21 +1088,45 @@ salesproductdetailscontroller .selectImagesProduct(
                                   //   ),
                                   // ),
                                   SizedBox(width: 10),
-                                   salesproductdetailscontroller.selectedvariants?.price == null?
-                                  Text(
+                                  //  salesproductdetailscontroller.selectedvariants?.price == null?
+                                  // Text(
+                                  //   "₹"+
+                                  //   (
+                                  //     (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)-
+                                  //   (( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
+                                  //   ).toString(),
+                                  // // (widget.itemdetails.price),
+                                  //     style: CustomTextStyle.appbartext):
+                                   salesproductdetailscontroller
+                                                        .selectedvariants
+                                                        ?.wholeprice ==
+                                                    null
+                                                ? Text(
+                                                    "₹" +
+                                                        ((salesproductdetailscontroller.salesproductdetailmodel!.data!
+                                                                        .wholePrice!) *
+                                                                    (salesproductdetailscontroller
+                                                                            .sizecount ??
+                                                                        0) -
+                                                                (((salesproductdetailscontroller.salesproductdetailmodel!.data!.wholePrice!) *
+                                                                            salesproductdetailscontroller
+                                                                                .sizecount ??
+                                                                        0) *
+                                                                    (salesproductdetailscontroller.salesproductdetailmodel!.data!
+                                                                        .discount!) /
+                                                                    100))
+                                                            .toStringAsFixed(2),
+                                                    style: CustomTextStyle
+                                                        .popinstext,
+                                                  )
+                                                :
+                                       Text(
                                     "₹"+
                                     (
-                                      (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)-
-                                    (( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
-                                    ).toString(),
-                                  // (widget.itemdetails.price),
-                                      style: CustomTextStyle.appbartext): Text(
-                                    "₹"+
-                                    (
-                                      (salesproductdetailscontroller.selectedvariants?.price??0)*(salesproductdetailscontroller.sizecount??0)-
-                                    (( (salesproductdetailscontroller.selectedvariants?.price??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
-                                    ).toString(),
-                                  // (widget.itemdetails.price),
+                                      (salesproductdetailscontroller.selectedvariants?.wholeprice??0)*(salesproductdetailscontroller.sizecount??0)-
+                                    (( (salesproductdetailscontroller.selectedvariants?.wholeprice??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
+                                    ).toStringAsFixed(2),
+                                  // (widget.itemdetails.wholeprice),
                                       style: CustomTextStyle.appbartext),
                                 ],
                               ),
@@ -1305,46 +1134,252 @@ salesproductdetailscontroller .selectImagesProduct(
                                 height: 10,
                               ),
                           
-                                 salesproductdetailscontroller.selectedvariants!.stock == 0?
-                                  Row(
-                                    children: [
-                                      Container(
-                                                      width: MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.25,
-                                                      
-                                                      height: MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.06,
-                                                      decoration: BoxDecoration(
-                                                          color: MyColors.red,
-                                                          borderRadius:
-                                                              BorderRadius.circular(
-                                                                  25)),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment.center,
-                                                        children: [
-                                                          // Image.asset(
-                                                          //   "assets/image/bagadd.png",
-                                                          //   height: 25,
-                                                          // ),
-                                                          // SizedBox(
-                                                          //   width: 10,
-                                                          // ),
-                                                          Text(
-                                                            "Sold Out",
-                                                            style: CustomTextStyle
-                                                                .mediumtextwhite,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const Spacer(),
-                                      GestureDetector(onTap: () async{
-                                        await showDialog(
+
+
+                          
+(salesproductdetailscontroller.salesproductdetailmodel!.data!.variations!.isEmpty)?
+
+Row(
+                                children: [
+                                      InkWell(
+                                        onTap: ()async {
+                                          mycartController. clearFields();
+                                      //      salesproductdetailscontroller.fethUserId();
+                                      //  await salesproductdetailscontroller.addProduct();
+                                      //       mycartController.init();
+    MyOrder.Datum foo = MyOrder.Datum(
+                                                    
+                                                      userId:salesproductdetailscontroller.wholesellerID??0,
+                                                      id:salesproductdetailscontroller.salesproductdetailmodel!
+                                                                        .data!
+                                                                        .id,
+
+                                                      image:salesproductdetailscontroller.salesproductdetailmodel!
+                                                                        .data!
+                                                                        .image,
+                                                                        itemName:salesproductdetailscontroller.salesproductdetailmodel!.data!.name ,
+                                                                        variant:
+                                                                        (salesproductdetailscontroller.salesproductdetailmodel!.data!.variations!.isEmpty)?"0": (salesproductdetailscontroller
+                                                              .selectedvariants!.type != null)?salesproductdetailscontroller
+                                                              .selectedvariants!
+                                                              .type
+                                                              .toString():"",
+                                                                //         (salesproductdetailscontroller
+                                                                //   .selectedvariants!.type != null)? salesproductdetailscontroller.selectedvariants!
+                                                                // .type.toString():"",
+                                                                //          salesproductdetailscontroller.selectedvariants!
+                                                                // .type.toString(),
+                                                                        quantity:(salesproductdetailscontroller.sizecount),
+                                                                        price: 
+                                                                        
+              //                                                           ((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * (salesproductdetailscontroller.sizecount ?? 0) -
+              // (((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * salesproductdetailscontroller.sizecount! ?? 0) *
+              //     (salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!) /
+              //     100)).toDouble()
+
+
+              (salesproductdetailscontroller.selectedvariants?.wholeprice != null)?
+                                                                        ((salesproductdetailscontroller.selectedvariants?.wholeprice ?? 0) * (salesproductdetailscontroller.sizecount ?? 0) -
+              (((salesproductdetailscontroller.selectedvariants?.wholeprice ?? 0) * salesproductdetailscontroller.sizecount! ?? 0) *
+                  (salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!) /
+                  100)):(((salesproductdetailscontroller.salesproductdetailmodel!.data!.wholePrice ?? 0) * (salesproductdetailscontroller.sizecount ?? 0) -
+              (((salesproductdetailscontroller.salesproductdetailmodel!.data!.wholePrice ?? 0) * salesproductdetailscontroller.sizecount! ?? 0) *
+                  (salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!) /
+                  100)))
+          .toDouble()
+    
+
+                                                                         );
+
+                                             Get.to(BuyNowAddToCardSaleswhole(
+data: foo,
+   tax:salesproductdetailscontroller.salesproductdetailmodel!
+                                                            .data!
+                                                            .tax!
+                                             ));
+//                                       Navigator.push(
+//                                           context,
+//                                           MaterialPageRoute(
+//                                               builder: (context) =>
+//                                                   PaymentSales(
+
+//                                                     price:
+// salesproductdetailscontroller.selectedvariants?.price == null?
+//    (
+//                                       (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*(salesproductdetailscontroller.sizecount??0)-
+//                                     (( (salesproductdetailscontroller.salesproductdetailmodel!.data!.price!)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
+//                                     ).toString()
+//                                                         :(
+//                                       (salesproductdetailscontroller.selectedvariants?.price??0)*(salesproductdetailscontroller.sizecount??0)-
+//                                     (( (salesproductdetailscontroller.selectedvariants?.price??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
+//                                     ).toString(),
+//                                                   )));
+                                       
+                                       
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.4,
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.06,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/image/bagadd.png",
+                                                height: 25,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                "Buy Now",
+                                                style:
+                                                    CustomTextStyle.mediumtextreem,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                       
+                                      Spacer(),
+
+                                     GetBuilder<SalesProductDetailsController>(
+                  init: salesproductdetailscontroller,
+                  builder: (_) {   
+                            return      InkWell(
+                                        onTap: () async {
+// mycartController.adddiscount( 
+      
+//   // (productdetailscontroller.productdetailmodel!.data!.discount??0),(productdetailscontroller.productdetailmodel!.data!.price??0)
+  
+  
+//   );
+// salesproductdetailscontroller.clearFields();
+  salesproductdetailscontroller.fethUserId();
+   final storage = GetStorage();
+           //   // (productdetailscontroller.productdetailmodel!.data!.discount??0),(productdetailscontroller.productdetailmodel!.data!.price??0)
+        
+           //   );
+           storage.write('productItemsales', salesproductdetailscontroller.salesproductdetailmodel!.data!.discount??0);
+      print("ProductDiscount");
+      print(storage.read('productItemsales').toString());
+  mycartController.updateTotal();
+                                       await salesproductdetailscontroller.addProduct();
+                                       mycartController.updateTotal();
+                                            mycartController.init();
+                                            Get.to(AddToCardSales());
+
+                                          // if ( salesproductdetailscontroller
+                                          //                     .isProductInCartBool) {
+                                          //                   mycartController.init();
+                                          //                  Get.to(AddToCardSales());
+                                          //                 } else {
+                                          //                   await salesproductdetailscontroller
+                                          //                       .addProduct();
+                                          //                   await salesproductdetailscontroller
+                                          //                       .salesisProductInCart();
+                                          //                 }
+                                        
+                               
+                                      //     productdetailscontroller.addToCart(
+                                                    
+                                      // productdetailscontroller.productdetailmodel!.data!.name.toString(),
+                                      //              productdetailscontroller.sizecount.toString(),
+                                      //              productdetailscontroller.selectedVariants.toString()
+                                      //               );
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             AddToCardUser()));
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.4,
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.06,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/image/bagadd.png",
+                                                height: 25,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                //  salesproductdetailscontroller
+                                                                        // .isProductInCartBool
+                                                                    // ? "Go To Cart"
+                                                                    // :
+                                                                    "Add To Cart",
+                                                style:
+                                                    CustomTextStyle.mediumtextreem,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                  })
+                               
+                                ],
+                              ):
+                                 Column(
+                                   children: [
+                                     salesproductdetailscontroller.selectedvariants!.stock == 0?
+                                      Row(
+                                        children: [
+                                          Container(
+                                                          width: MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.25,
+                                                          
+                                                          height: MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.06,
+                                                          decoration: BoxDecoration(
+                                                              color: MyColors.red,
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      25)),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment.center,
+                                                            children: [
+                                                              // Image.asset(
+                                                              //   "assets/image/bagadd.png",
+                                                              //   height: 25,
+                                                              // ),
+                                                              // SizedBox(
+                                                              //   width: 10,
+                                                              // ),
+                                                              Text(
+                                                                "Sold Out",
+                                                                style: CustomTextStyle
+                                                                    .mediumtextwhite,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        const Spacer(),
+                                          GestureDetector(onTap: () async{
+                                            await showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
@@ -1361,10 +1396,10 @@ salesproductdetailscontroller .selectImagesProduct(
              },
              child: const Icon(Icons.cancel_rounded))),
                                Text(
-                                       salesproductdetailscontroller.salesproductdetailmodel!.data!.name
-                                            .toString(),
-                                        style: CustomTextStyle.popinstext,
-                                      ),
+                                           salesproductdetailscontroller.salesproductdetailmodel!.data!.name
+                                                .toString(),
+                                            style: CustomTextStyle.popinstext,
+                                          ),
            
            salesproductdetailscontroller.salesproductdetailmodel!.data == null?
                  const SizedBox():
@@ -1489,39 +1524,39 @@ salesproductdetailscontroller .selectImagesProduct(
                               decoration: BoxDecoration(
                              border: Border.all(
                color: MyColors.grey),
-                                  // color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     offset: const Offset(0.0, 0.0),
-                                  //     color: Color.fromRGBO(255, 255, 255, 0.10),
-                                  //     blurRadius: 0.0,
-                                  //     spreadRadius: 0.0,
-                                  //   ),
-                                  // ],
-                                  borderRadius: BorderRadius.circular(15)),
+                                      // color: Color.fromRGBO(255, 255, 255, 0.10),
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //     offset: const Offset(0.0, 0.0),
+                                      //     color: Color.fromRGBO(255, 255, 255, 0.10),
+                                      //     blurRadius: 0.0,
+                                      //     spreadRadius: 0.0,
+                                      //   ),
+                                      // ],
+                                      borderRadius: BorderRadius.circular(15)),
                               child: TextFormField(
                                 validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  return null;
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your email';
+                                      }
+                                      return null;
                                 },
                                 controller:
-                                   salesproductdetailscontroller.emailController,
+                                       salesproductdetailscontroller.emailController,
                                 decoration: const InputDecoration(
-                                  hintText: "Email",
-                                  hintStyle: TextStyle(
-                                    color: MyColors.black,
-                                  ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
+                                      hintText: "Email",
+                                      hintStyle: TextStyle(
+                                        color: MyColors.black,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 10),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
                                 ),
                                 style: const TextStyle(
-                                  fontSize: 16,
-                                  color:MyColors.black,
+                                      fontSize: 16,
+                                      color:MyColors.black,
                                 ),
                               ),
                             ),
@@ -1533,115 +1568,122 @@ salesproductdetailscontroller .selectImagesProduct(
                      
                 const SizedBox(height: 10,),
                                 Center(
-                                  child: ElevatedButton(
-                                    
-                                            onPressed:() async {
-                                              //  productdetailscontroller.clearPopUpFields();
-                                                 salesproductdetailscontroller.validateForm(context).then(
+                                      child: ElevatedButton(
+                                        
+                                                onPressed:() async {
+                                                  //  productdetailscontroller.clearPopUpFields();
+                                                     salesproductdetailscontroller.validateForm(context).then(
                                 (isValid) async {
-                                  if (isValid) {
-                                    // print("Valid form");
+                                      if (isValid) {
+                                        // print("Valid form");
            
-                                    try {
-                                        await    salesproductdetailscontroller.addNotify();
-                                        Get.back();
-                                    } catch (e) {
-                                      Get.snackbar(
-                                        'Error',
-                                        'Something Went Wrong: $e',
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: Colors.red,
-                                        colorText: Colors.white,
-                                      );
-                                    }
-                                  } 
+                                        try {
+                                            await    salesproductdetailscontroller.addNotify();
+                                            Get.back();
+                                        } catch (e) {
+                                          Get.snackbar(
+                                            'Error',
+                                            'Something Went Wrong: $e',
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            backgroundColor: Colors.red,
+                                            colorText: Colors.white,
+                                          );
+                                        }
+                                      } 
                                 });
-                                      
-                                            },
-                                            child: const Text('Notify me when available'),
-                                          ),
+                                          
+                                                },
+                                                child: const Text('Notify me when available'),
+                                              ),
                                 ), ],
                               ),
                             );
                           },
                         );
            
-                                      },
-                                        child: Container(
-                                                        width: MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.55,
-                                                        height: MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.06,
-                                                        decoration: BoxDecoration(
-                                                            color: MyColors.green,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    25)),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment.center,
-                                                          children: [
-                                                            // Image.asset(
-                                                            //   "assets/image/bagadd.png",
-                                                            //   height: 25,
-                                                            // ),
-                                                            // SizedBox(
-                                                            //   width: 10,
-                                                            // ),
-                                                            Text(
-                                                              "Notify me when available",
-                                                              style: CustomTextStyle
-                                                                  .mediumtextwhite,
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                      ),
-                                   
-                                   
-                                   
-                                    ],
-                                  )
+                                          },
+                                            child: Container(
+                                                            width: MediaQuery.of(context)
+                                                                    .size
+                                                                    .width *
+                                                                0.55,
+                                                            height: MediaQuery.of(context)
+                                                                    .size
+                                                                    .height *
+                                                                0.06,
+                                                            decoration: BoxDecoration(
+                                                                color: MyColors.green,
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        25)),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment.center,
+                                                              children: [
+                                                                // Image.asset(
+                                                                //   "assets/image/bagadd.png",
+                                                                //   height: 25,
+                                                                // ),
+                                                                // SizedBox(
+                                                                //   width: 10,
+                                                                // ),
+                                                                Text(
+                                                                  "Notify me when available",
+                                                                  style: CustomTextStyle
+                                                                      .mediumtextwhite,
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                          ),
+                                       
+                                       
+                                       
+                                        ],
+                                      )
                                :
                               Row(
                                 children: [
-                                  InkWell(
-                                    onTap: ()async {
-                                  //      salesproductdetailscontroller.fethUserId();
-                                  //  await salesproductdetailscontroller.addProduct();
-                                  //       mycartController.init();
+                                      InkWell(
+                                        onTap: ()async {
+                                          mycartController. clearFields();
+                                      //      salesproductdetailscontroller.fethUserId();
+                                      //  await salesproductdetailscontroller.addProduct();
+                                      //       mycartController.init();
     MyOrder.Datum foo = MyOrder.Datum(
-                                                
-                                                  userId:salesproductdetailscontroller.wholesellerID??0,
-                                                  id:salesproductdetailscontroller.salesproductdetailmodel!
-                                                                    .data!
-                                                                    .id,
+                                                    
+                                                      userId:salesproductdetailscontroller.wholesellerID??0,
+                                                      id:salesproductdetailscontroller.salesproductdetailmodel!
+                                                                        .data!
+                                                                        .id,
 
-                                                  image:salesproductdetailscontroller.salesproductdetailmodel!
-                                                                    .data!
-                                                                    .image,
-                                                                    itemName:salesproductdetailscontroller.salesproductdetailmodel!.data!.name ,
-                                                                    variant: salesproductdetailscontroller.selectedvariants!
-                                                            .type.toString(),
-                                                                    quantity:(salesproductdetailscontroller.sizecount),
-                                                                    price: ((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * (salesproductdetailscontroller.sizecount ?? 0) -
+                                                      image:salesproductdetailscontroller.salesproductdetailmodel!
+                                                                        .data!
+                                                                        .image,
+                                                                        itemName:salesproductdetailscontroller.salesproductdetailmodel!.data!.name ,
+                                                                        variant:
+                                                                        (salesproductdetailscontroller.salesproductdetailmodel!.data!.variations!.isEmpty)?"0": (salesproductdetailscontroller
+                                                              .selectedvariants!.type != null)?salesproductdetailscontroller
+                                                              .selectedvariants!
+                                                              .type
+                                                              .toString():"",
+                                                                //          salesproductdetailscontroller.selectedvariants!
+                                                                // .type.toString(),
+                                                                        quantity:(salesproductdetailscontroller.sizecount),
+                                                                        price: ((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * (salesproductdetailscontroller.sizecount ?? 0) -
               (((salesproductdetailscontroller.selectedvariants!.wholeprice ?? 0) * salesproductdetailscontroller.sizecount! ?? 0) *
                   (salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!) /
-                  100))
+                  100)).toDouble()
     
 
-                                                                     );
+                                                                         );
 
-                                         Get.to(BuyNowAddToCardSaleswhole(
+                                             Get.to(BuyNowAddToCardSaleswhole(
 data: foo,
    tax:salesproductdetailscontroller.salesproductdetailmodel!
-                                                        .data!
-                                                        .tax!
-                                         ));
+                                                            .data!
+                                                            .tax!
+                                             ));
 //                                       Navigator.push(
 //                                           context,
 //                                           MaterialPageRoute(
@@ -1659,120 +1701,138 @@ data: foo,
 //                                     (( (salesproductdetailscontroller.selectedvariants?.price??0)*salesproductdetailscontroller.sizecount??0)*(salesproductdetailscontroller.salesproductdetailmodel!.data!.discount!)/100)
 //                                     ).toString(),
 //                                                   )));
-                                   
-                                   
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      decoration: BoxDecoration(
-                                          color: MyColors.yellow,
-                                          borderRadius:
-                                              BorderRadius.circular(25)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            "assets/image/bagadd.png",
-                                            height: 25,
+                                       
+                                       
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.4,
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.06,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/image/bagadd.png",
+                                                height: 25,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                "Buy Now",
+                                                style:
+                                                    CustomTextStyle.mediumtextreem,
+                                              )
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "Buy Now",
-                                            style:
-                                                CustomTextStyle.mediumtextreem,
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
                        
-                                  Spacer(),
+                                      Spacer(),
 
-                                 GetBuilder<SalesProductDetailsController>(
+                                     GetBuilder<SalesProductDetailsController>(
                   init: salesproductdetailscontroller,
                   builder: (_) {   
                             return      InkWell(
-                                    onTap: () async {
+                                        onTap: () async {
 // mycartController.adddiscount( 
       
 //   // (productdetailscontroller.productdetailmodel!.data!.discount??0),(productdetailscontroller.productdetailmodel!.data!.price??0)
   
   
 //   );
+// salesproductdetailscontroller.clearFields();
   salesproductdetailscontroller.fethUserId();
-                                   await salesproductdetailscontroller.addProduct();
-                                        mycartController.init();
-                                        Get.to(AddToCardSales());
+   final storage = GetStorage();
+           //   // (productdetailscontroller.productdetailmodel!.data!.discount??0),(productdetailscontroller.productdetailmodel!.data!.price??0)
+        
+           //   );
+           storage.write('productItemsales', salesproductdetailscontroller.salesproductdetailmodel!.data!.discount??0);
+      print("ProductDiscount");
+      print(storage.read('productItemsales').toString());
+  mycartController.updateTotal();
+                                       await salesproductdetailscontroller.addProduct();
+                                       mycartController.updateTotal();
+                                            mycartController.init();
+                                            Get.to(AddToCardSales());
 
-                                      // if ( salesproductdetailscontroller
-                                      //                     .isProductInCartBool) {
-                                      //                   mycartController.init();
-                                      //                  Get.to(AddToCardSales());
-                                      //                 } else {
-                                      //                   await salesproductdetailscontroller
-                                      //                       .addProduct();
-                                      //                   await salesproductdetailscontroller
-                                      //                       .salesisProductInCart();
-                                      //                 }
-                                    
+                                          // if ( salesproductdetailscontroller
+                                          //                     .isProductInCartBool) {
+                                          //                   mycartController.init();
+                                          //                  Get.to(AddToCardSales());
+                                          //                 } else {
+                                          //                   await salesproductdetailscontroller
+                                          //                       .addProduct();
+                                          //                   await salesproductdetailscontroller
+                                          //                       .salesisProductInCart();
+                                          //                 }
+                                        
                                
-                                  //     productdetailscontroller.addToCart(
-                                                
-                                  // productdetailscontroller.productdetailmodel!.data!.name.toString(),
-                                  //              productdetailscontroller.sizecount.toString(),
-                                  //              productdetailscontroller.selectedVariants.toString()
-                                  //               );
-                                      // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             AddToCardUser()));
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.4,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.06,
-                                      decoration: BoxDecoration(
-                                          color: MyColors.yellow,
-                                          borderRadius:
-                                              BorderRadius.circular(25)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            "assets/image/bagadd.png",
-                                            height: 25,
+                                      //     productdetailscontroller.addToCart(
+                                                    
+                                      // productdetailscontroller.productdetailmodel!.data!.name.toString(),
+                                      //              productdetailscontroller.sizecount.toString(),
+                                      //              productdetailscontroller.selectedVariants.toString()
+                                      //               );
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             AddToCardUser()));
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width *
+                                              0.4,
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.06,
+                                          decoration: BoxDecoration(
+                                              color: MyColors.yellow,
+                                              borderRadius:
+                                                  BorderRadius.circular(25)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Image.asset(
+                                                "assets/image/bagadd.png",
+                                                height: 25,
+                                              ),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(
+                                                //  salesproductdetailscontroller
+                                                                        // .isProductInCartBool
+                                                                    // ? "Go To Cart"
+                                                                    // :
+                                                                    "Add To Cart",
+                                                style:
+                                                    CustomTextStyle.mediumtextreem,
+                                              )
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                             salesproductdetailscontroller
-                                                                    .isProductInCartBool
-                                                                ? "Go To Cart"
-                                                                : "Add To Cart",
-                                            style:
-                                                CustomTextStyle.mediumtextreem,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  );
+                                        ),
+                                      );
                   })
                                
                                 ],
-                              )
-                            ],
+                              ),
+                                   ],
+                                 )
+
+
+
+
+
+],
                           ),
                         ),
                       )

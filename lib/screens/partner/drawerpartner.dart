@@ -4,10 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/partner_controller/notification_controller.dart';
 import 'package:pet/controllers/partner_controller/partnerprofile_controller.dart';
 
 import 'package:pet/screens/intro2.dart';
 import 'package:pet/screens/partner/Dashboard.dart';
+import 'package:pet/screens/partner/myplan.dart';
 import 'package:pet/screens/partner/notification.dart';
 import 'package:pet/screens/partner/partnerprofile.dart';
 import 'package:pet/screens/partner/profilepart.dart';
@@ -28,32 +30,30 @@ class drawerpartner extends StatefulWidget {
 
 class _drawerpartnerState extends State<drawerpartner> {
   // MyOrderController myordercontroller = Get.put(MyOrderController());
+PartnerNotificationController partnerNotificationController = Get.put(PartnerNotificationController());
 
 PartnerProfileController profilecontroller = Get.put(PartnerProfileController());
   static final List<String> _listViewData = [
     "Profile",
     "DashBoard",
-  
+    "My Plan",
     "Notifications",
-    
     "Logout"
   ];
 
   static final List<IconData> _listViewIcons = [
       Icons.person, 
     Icons.dashboard,
-    // Icons.shopping_bag_outlined,
+    Icons.subscriptions_outlined,
     Icons.notifications,
-    // Icons.favorite,
     Icons.logout,
- 
-   
   ];
 
   int _currentSelected = 0;
 
   @override
   Widget build(BuildContext context) {
+    profilecontroller.partnerprofile();
     return Drawer(
       backgroundColor: MyColors.bgcolor,
       child: ListView(
@@ -85,7 +85,8 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Row(
+                            
+                                Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
@@ -105,20 +106,19 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
                                                         profilecontroller
                               .partnerprofilemodel == null || profilecontroller
                               .partnerprofilemodel!.data == null || profilecontroller
-                              .partnerprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .partnerprofilemodel!.data!.isEmpty ?   Image.asset("assets/image/boyprofile3.png") :
                 
                                                             CachedNetworkImage(
-                                                          imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                                                              profilecontroller
-                              .partnerprofilemodel!
+                                                          imageUrl: "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                            profilecontroller
+                         .partnerprofilemodel!
                                                                   
                                                                   .data![0]
                                                                   .vendorId![0].image
                                                                   .toString(),
 
                                                           fit: BoxFit.cover,
-                                                          // width: 61,
-                                                          // height: 75,
+                                                          
                                                           placeholder:
                                                               (context, url) =>
                                                                   Center(
@@ -135,9 +135,14 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
                                                     ),
                                                     Positioned(
                                                       bottom: 10,
-                                                      child: Image.asset(
-                                                        "assets/image/drawer2.png",
-                                                        height: 25,
+                                                      child: InkWell(
+                                                        onTap:(){
+                                                          Get.to(PartnerProfile());
+                                                        },
+                                                        child: Image.asset(
+                                                          "assets/image/drawer2.png",
+                                                          height: 25,
+                                                        ),
                                                       ),
                                                     )
                                                   ]),
@@ -155,9 +160,13 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
                                                         profilecontroller
                               .partnerprofilemodel == null || profilecontroller
                               .partnerprofilemodel!.data == null || profilecontroller
-                              .partnerprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .partnerprofilemodel!.data!.isEmpty ?  Text("Username",style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),) :
                                                   Text(
-                                                    "${profilecontroller
+                                                      "${profilecontroller
                               .partnerprofilemodel!.data![0].vendorId![0].fName.toString()} ${profilecontroller
                               .partnerprofilemodel!.data![0].vendorId![0].lName.toString()}",
                                                     style: TextStyle(
@@ -169,26 +178,35 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  
+                                         
                                                         profilecontroller
-                              .partnerprofilemodel
-      == null ||  profilecontroller
-                              .partnerprofilemodel!.data == null ||  profilecontroller
-                              .partnerprofilemodel!.data!.isEmpty ? const SizedBox() :
+                              .partnerprofilemodel == null || profilecontroller
+                              .partnerprofilemodel!.data == null || profilecontroller
+                              .partnerprofilemodel!.data!.isEmpty ? Text("Email",style: TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: MyColors.white),) :
                                                   Text(
-                                                     profilecontroller
+                                                    profilecontroller
                               .partnerprofilemodel!
                                                         .data![0]
                                                         .email
                                                         .toString(),
                                                     style: TextStyle(
                                                         color: MyColors.white,
-                                                        fontSize: 16),
+                                                        fontSize: 14),
                                                   ),
                                                 ]),
+                                        
+                                        
                                           ],
                                         ),
-                                      ]),
+                                   
+                            
+                                     ]),
+
+
                                 ]),
                           ),
                         ),
@@ -250,14 +268,20 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
           case 1:
      Get.to(DashboardPartner());
         break;
-
-      case 2:
+       case 2:
+      //  partnerNotificationController.init();
+                              
+        Get.to(MyPlan());
+        break; 
+      case 3:
+       partnerNotificationController.init();
+                              
         Get.to(NotificationPartner());
         break;
       // case 3:
       //   Get.to(Userfavourite());
       //   break;
-      case 3:
+      case 4:
         await GetStorage().erase();
         Get.offAll(LoginUser());
         break;

@@ -1,16 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/screens/user/productdetails.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({super.key});
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
+    
+ MyCartController mycartController = Get.put(MyCartController());
   TextEditingController textController = TextEditingController();
   ProductDetailsController productdeatilscontroller =
       Get.put(ProductDetailsController());
@@ -29,7 +33,6 @@ class SearchScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 13.0, top: 15, bottom: 15),
           child: GestureDetector(
             onTap: () {
-              // _drawerkey.currentState!.openDrawer();
               Get.back();
             },
             child: Icon(
@@ -38,36 +41,7 @@ class SearchScreen extends StatelessWidget {
             ),
           ),
         ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
-        // actions: [
-        //   GestureDetector(
-        //                 onTap: () {
-        //                   FilterController filtercontroller =
-        //                       Get.put(FilterController());
-        //                   filtercontroller.init();
-        //                   Get.to(FilterScreen());
-        //                 },
-        //                 child: Padding(
-        //                   padding: const EdgeInsets.all(8.0),
-        //                   child: Container(
-        //                       width: 45,
-        //                       height: 25,
-        //                       decoration: BoxDecoration(
-        //                           borderRadius: BorderRadius.circular(15),
-        //                           color: Color(0xffffcc00)),
-        //                       child: Padding(
-        //                         padding: const EdgeInsets.all(10.0),
-        //                         child: Image.asset(
-        //                           "assets/image/filter3.png",
-        //                         ),
-        //                       )),
-        //                 ),
-        //               )
-        // ],
+
       ),
       body: GetBuilder<HomeuserController>(
         init: homeusercontroller,
@@ -77,12 +51,10 @@ class SearchScreen extends StatelessWidget {
             primary: true,
             shrinkWrap: false,
             children: [
-              // SizedBox(height: Get.height * 0.01),
               Padding(
                 padding:
                     const EdgeInsets.only(right: 20.0, left: 20, top: 15.0),
                 child: Container(
-                  // height: 45,
                   width: Get.width,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
@@ -142,17 +114,12 @@ class SearchScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // SizedBox(height: Get.height * 0.01),
-              // TextField(
-              //   onChanged: (value) {
-              //     homeusercontroller.searchDataFilter(
-              //         homeusercontroller.userPropertiesModel,
-              //         value.trim().toString());
-              //   },
-              // ),
+              SizedBox(height: Get.height * 0.01),
+              
               homeusercontroller.searchScreenData.isEmpty
-                  ? SizedBox()
-                  : Padding(
+                  ?    Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)):
+                    
+                   Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: GridView.builder(
                           primary: false,
@@ -168,17 +135,7 @@ class SearchScreen extends StatelessWidget {
                           itemCount: homeusercontroller.searchScreenData
                               .length, // Set the number of cards you want to display.
                           itemBuilder: (context, index) {
-                            // gridDelegate:
-                            //     SliverGridDelegateWithMaxCrossAxisExtent(
-                            //         maxCrossAxisExtent: 150,
-                            //      childAspectRatio: 3 / 2,
-                            //         mainAxisExtent: 300,
-                            //         crossAxisSpacing: 15,
-                            //         mainAxisSpacing: 15),
-                            // itemCount: homeusercontroller
-                            //     .userPropertiesModel!.data!.length
-                            //     .clamp(0, 4),
-                            // itemBuilder: (BuildContext ctx, index) {
+                           
 
                             var item =
                                 homeusercontroller.searchScreenData![index];
@@ -186,42 +143,32 @@ class SearchScreen extends StatelessWidget {
                                 Constants.PRODUCT_HOME_IMAGE_PATH +
                                     "/${item.image!}";
 
-                            // var imagePath =
-                            //     "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
                             print(imagePath);
                             return InkWell(
                               onTap: () async {
+                                
                                 ProductDetailsController
                                     productdeatilscontroller =
                                     Get.put(ProductDetailsController());
+                                   productdeatilscontroller.dispose();
                                 productdeatilscontroller.viewproduct(
                                   item.id ?? 0,
                                 );
-                                // print("productid${item.id ?? 0}");
+                               
                                 await productdeatilscontroller.init();
                                 Get.to(ProductDetails());
-                                // Get.to( ProductDetails());
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) =>
-                                //           ));
+                               
                               },
                               child: Container(
                                              width: 140,
-                                             // height: 700,
+                                             
                                              decoration: BoxDecoration(
                                                gradient: LinearGradient(
                                                  colors: [
-                                                   // _getRandomColor(),
-                                                   // _getRandomColor(),
-                                                   // _getRandomColor(),
-                                                   // _getRandomColor(),
-                                                   // MyColors.white
-                                                   //     .withOpacity(0.1),
+                                                   
                                                    MyColors.white,
                                                    MyColors.white,
-                                                   // MyColors.white,
+                                                   
                                                  ],
                                                  begin: Alignment.topCenter,
                                                  end: Alignment.bottomCenter,
@@ -239,13 +186,35 @@ class SearchScreen extends StatelessWidget {
                                                        3), // Offset of the shadow
                                                  ),
                                                ],
-                                               // color: MyColors.white
-                                             ),
+                                            ),
                                              child: Column(
                                                children: [
 
 
+                                                
 
+                                             
+                                             
+                                               
+                                                Row(
+  children:[
+
+  IconButton(
+  icon: Icon(Icons.share,size:20,color:MyColors.red),
+  onPressed: () {
+   shareContent(item.image.toString(), item.name.toString(),  item.price.toString());
+
+  
+  },
+),
+
+
+Spacer(),
+
+      GetBuilder<HomeuserController>(
+                      init: homeusercontroller,
+                      builder: (_) {
+                                                        return
                                                  InkWell(
                                                    onTap: () {
                                                      homeusercontroller
@@ -275,36 +244,23 @@ class SearchScreen extends StatelessWidget {
                                                                Colors.red),
                                                      ),
                                                    ),
-                                                 ),
+                                                 );
 
                                              
-                                             
+                                              }
+                                                    ),
+                                                      
+]),
+
 
 
                                                  Container(
                                                    height: 125,
-                                                   decoration: BoxDecoration(
-                                                       // gradient:
-                                                       //     LinearGradient(
-                                                       //   colors: [
-                                                       //     _getRandomColor(),
-                                                       //     _getRandomColor(),
-                                                       //     _getRandomColor(),
-                                                       //     _getRandomColor(),
-                                                       //   ],
-                                                       //   begin:
-                                                       //       Alignment.topLeft,
-                                                       //   end: Alignment
-                                                       //       .bottomRight,
-                                                       // ),
-                                                       ),
-                                                   // decoration: BoxDecoration(
-                                                   //     borderRadius: BorderRadius.circular(30),
-                                                   //     color: MyColors.white),
+                                                  
+                                                   
                                                    child: CachedNetworkImage(
                                                      imageUrl: imagePath,
-                                                     // width: 61,
-                                                     // height: 75,
+                                                    
                                                      placeholder:
                                                          (context, url) =>
                                                              Center(
@@ -317,8 +273,6 @@ class SearchScreen extends StatelessWidget {
                                                              .error), // Replace with your own error widget
                                                    ),
                                                  ),
-
-                                                 // SizedBox(height: 15,),
 
                                                  Container(
                                                    // height: 140,
@@ -338,23 +292,19 @@ class SearchScreen extends StatelessWidget {
                                                                .start,
                                                        children: [
                                                          Text(item.name!,
+                                                              maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                              style: CustomTextStyle
                                                                  .popinsmedium),
-                                                         Text(
-                                                             item.description
-                                                                         .toString()
-                                                                         .length <
-                                                                     30
-                                                                 ? item
-                                                                     .description!
-                                                                 : item
-                                                                     .description!
-                                                                     .substring(
-                                                                         0,
-                                                                         19),
-                                                             style: CustomTextStyle
-                                                                 .popinssmall0),
-                                                         SizedBox(height: 5),
+                                                           Text(
+  item.description!.length < 20
+      ? item.description!
+      : item.description!.substring(0, item.description!.length),
+  maxLines: 1,
+  overflow: TextOverflow.ellipsis,
+  style: CustomTextStyle.popinssmall0,
+),  SizedBox(height: 5),
+                                                             SizedBox(height: 5),
                                                          Row(
                                                            mainAxisAlignment:
                                                                MainAxisAlignment
@@ -365,38 +315,28 @@ class SearchScreen extends StatelessWidget {
                                                                    CrossAxisAlignment
                                                                        .start,
                                                                children: [
-                                                                 Row(
-                                                                   children: [
-                                                                     Text(
-                                                                         "₹" +
-                                                                             item.price.toString(),
-                                                                         style: CustomTextStyle.discounttext),
-                                                                     SizedBox(
-                                                                         width:
-                                                                             2),
-                                                                     // Container(
-                                                                     // height:
-                                                                     //     20,
-                                                                     // width: 48,
-                                                                     // decoration: BoxDecoration(
-                                                                     //     color: MyColors
-                                                                     //         .red,
-                                                                     //     borderRadius: BorderRadius.circular(
-                                                                     //         10),
-                                                                     //     border:
-                                                                     //         Border.all(color: MyColors.red)),
-                                                                     // child:
-                                                                     //     Center(
-                                                                     //   child:
-                                                                     Text(
-                                                                         // item.discount.toString(),
-                                                                         "Save${item.discount.toString()}%",
-                                                                         style:
-                                                                             CustomTextStyle.popinstextsmal2222red),
-                                                                     //   ),
-                                                                     // ),
-                                                                   ],
-                                                                 ),
+                                                                 (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                            "₹" +
+                                                                                item.price.toString(),
+                                                                            style: CustomTextStyle.discounttext),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                2),
+                                                                      
+                                                                         SizedBox(width:3),
+                                                                        Text(
+                                                                             "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                            style:
+                                                                                CustomTextStyle.popinstextsmal2222red),
+                                                                       
+                                                                      ],
+                                                                    ):const  SizedBox(),
+                                                                
+                                                                 
                                                                  SizedBox(
                                                                      height:
                                                                          5),
@@ -412,8 +352,7 @@ class SearchScreen extends StatelessWidget {
                                                                            Text(
                                                                          "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
-                                                                         // "₹" +
-                                                                         //     item.price!,
+                                                                         
                                                                          style:
                                                                              CustomTextStyle.popinsmedium,
                                                                        ),
@@ -423,10 +362,10 @@ class SearchScreen extends StatelessWidget {
                                                                              Get.width * 0.054),
                                                                      InkWell(
                                                                             onTap: () async{
-                                                                          productdeatilscontroller.viewproductHome(
-                                                                           item.id??0,item.name??'',"1 kg",1 ,item.price??'',item.image!);
-                                                                           await productdeatilscontroller
-                                                         .addProductHome();
+                                                                     productdeatilscontroller.viewproductHome(
+                                                                              item.id??0,item.name??'',"1kg",1 ,double.parse(item.price ?? ''),item.image??'','yes');
+                                                                              await productdeatilscontroller.addProductHome();
+                                                            mycartController.init();
                                                                          },
                                                                        child: Padding(
                                                                          padding:
@@ -449,10 +388,7 @@ class SearchScreen extends StatelessWidget {
                                                                ],
                                                              ),
 
-                                                             // Image.asset(
-                                                             //   "assets/image/yellowbag.png",
-                                                             //   height: 80,
-                                                             // )
+                                                             
                                                            ],
                                                          )
                                                        ],
@@ -471,4 +407,14 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
+}
+void shareContent(String image , String name, String detials) {
+  String imageUrl = image;
+  String text = "Product Name :"+name;
+  String description = "Product Price :"+detials;
+
+  String sharedText = '${Constants.BASE_URL}/storage/app/public/product/${imageUrl ?? ""}\n$text\n$description';
+
+  Share.share(sharedText, subject: 'Welcome Message', sharePositionOrigin: Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+
 }

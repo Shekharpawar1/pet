@@ -17,7 +17,7 @@ AllVeterinaryController allveterniarycontroller = Get.put(AllVeterinaryControlle
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:CustomAppBarback(),
+      appBar:CustomAppBarback(title:"Veterniary"),
         body:Padding(
   padding: const EdgeInsets.all(15.0),
   child:   GetBuilder<AllVeterinaryController>(
@@ -53,20 +53,19 @@ AllVeterinaryController allveterniarycontroller = Get.put(AllVeterinaryControlle
       child: Container(
         margin: EdgeInsets.all(10),
         padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
-           boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.3),
-                                          spreadRadius: 3,
-                                          blurRadius: 7,
-                                          offset: Offset(
-                                              0, 3), // Offset of the shadow
-                                        ),
-                                      ],
-       
-        ),
+           decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15),
+                                            gradient: LinearGradient(
+
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Color(0xFFEEEEFF),
+                                                Color.fromRGBO(238, 238, 255, 0.00),
+                                              ],
+                                              stops: [0.0, 1.0],
+                                            ),
+                                          ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

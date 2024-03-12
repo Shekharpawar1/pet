@@ -1,5 +1,8 @@
 class Constants {
-  static const BASE_URL = "https://canine.hirectjob.in";
+  static const BASE_URL = "http://canine.hirectjob.in";
+  // "http://canine.hirectjob.in";
+  
+  // "http://caninedemo.caninetest.xyz";
   static const API_V1_PATH = "/api/v1";
  
   static const GET_USER_SERVICES =
@@ -17,7 +20,7 @@ static const GET_USER_MYCARTLISTDELETE = "$BASE_URL${API_V1_PATH}/customer/wish-
 static const GET_USER_ALLADDRESSLIST = "$BASE_URL${API_V1_PATH}/customer/address/list/";
 static const GET_USER_ADDRESS_DELETE = "$BASE_URL${API_V1_PATH}/customer/address/delete/";
 static const GET_USER_COUPON = "$BASE_URL${API_V1_PATH}/coupon/list";
-static const GET_USER_TOY = "$BASE_URL${API_V1_PATH}/items/subcty_product?";
+static const GET_USER_TOY = "$BASE_URL${API_V1_PATH}/items/subcty_product";
 static const GET_USER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/my_profile/";
 static const GET_WHOLESELLER_PROFILE = "$BASE_URL${API_V1_PATH}/auth/wholesaler_profile/";
 static const GET_WHOLESELLER_UPDATE_PROFILE = "$BASE_URL${API_V1_PATH}/auth/wholesaler_update";
@@ -29,6 +32,7 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
    static const GET_USER_SUBPRODUCT = "$BASE_URL${API_V1_PATH}/items/product/";
    static const GET_ORDER_TRACKER = "$BASE_URL${API_V1_PATH}/customer/order/tracking/";
    static const GET_USER_OURBRANDPRODUCT = "$BASE_URL${API_V1_PATH}/banners/brand_product_filter/";
+   static const GET_USER_OURBRANDPRODUCT1 = "$BASE_URL${API_V1_PATH}/banners/brand_product/";
    static const GET_USER_SUBCATEGORY = "/categories/subcategories";
   static const SERVICES_IMAGE_PATH = "/storage/app/public/service/";
   static const CATEGORIES_IMAGE_PATH = "/storage/app/public/category/";
@@ -36,13 +40,14 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
    static const BRANDLOGO_IMAGE_PATH ="/storage/app/public/brand_logo/";
   static const NOTIFICATION_IMAGE_PATH = "/storage/app/public/notification/";
   static const PRODUCT_IMAGE_PATH = "/storage/app/";
-  // static const PRODUCT_IMAGE_PATH = "/storage/app/public/banner/";
+  
+  static const  BRAND_PRODUCT_IMAGE_PATH = "/storage/app/public/brand_product/";
   static const BANNER_IMAGE_PATH = "$BASE_URL/storage/app/";
   static const GET_STATE_LIST = "$BASE_URL${API_V1_PATH}/auth/state";
   static const GET_ZONE_LIST = "$BASE_URL${API_V1_PATH}/zone/list";
   static const GET_MODULE_LIST = "$BASE_URL${API_V1_PATH}/module";
   static const GET_PET_CATEGORY_LIST = "$BASE_URL${API_V1_PATH}/categories";
-  static const GET_CITY_LIST = "$BASE_URL${API_V1_PATH}/auth/city?state=";
+  static const GET_CITY_LIST = "$BASE_URL${API_V1_PATH}/auth/city";
   static const USER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/customer";
   static const PARTNER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/login";
     static const SALESMAN_LOGIN = "$BASE_URL${API_V1_PATH}/auth/delivery-man/login";
@@ -52,17 +57,18 @@ static const GET_SALES_PROFILE = "$BASE_URL${API_V1_PATH}/auth/delivery-man/deli
    static const WHOLESALER_REGISTER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_register";
   static const USER_LOGIN_OTP = "$BASE_URL${API_V1_PATH}/auth/otp_verify";
   static const WHOLESALER_LOGIN = "$BASE_URL${API_V1_PATH}/auth/wholesaler_login";
-  static const GET_USER_BANNER = "$BASE_URL${API_V1_PATH}/banners";
+  static const GET_USER_BANNER = "$BASE_URL${API_V1_PATH}/categories/banner";
    static const GET_WHOLE_TOTALORDER = "$BASE_URL${API_V1_PATH}/auth/wholesaler_orders/";
    static const GET_WHOLESELLER_TOTAL = "$BASE_URL${API_V1_PATH}/auth/wholesaler_list/";
   static const GET_PRODUCTBYPARTNER = "$BASE_URL${API_V1_PATH}/vendor/all_vendor";
   static const GET_USERREVIEW = "$BASE_URL${API_V1_PATH}/items/get_reviewitem/";
   static const GET_TOTALPRODUCT_PARTNER = "$BASE_URL${API_V1_PATH}/auth/get_vendorproduct/";
 static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items-list/";
+static const GET_PRODUCT_PARTNER_BANNER= "$BASE_URL${API_V1_PATH}/auth/get_add/";
   static const GET_TOTALORDER_PARTNER = "$BASE_URL${API_V1_PATH}/auth/get_vendororder/";
-
+ static const GET_TRANSACTIONSALES = "$BASE_URL${API_V1_PATH}/auth/phistory_selesman/";
      static const GET_TOTALSELLER_ORDER = "$BASE_URL${API_V1_PATH}/auth/seller_orders/";
-
+ static const GET_TRANSACTIONS = "$BASE_URL${API_V1_PATH}/auth/phistory_customer/";
   static const GET_OUR_BRAND = "$BASE_URL${API_V1_PATH}/auth/brand";
   static const GET_MY_ORDER = "$BASE_URL${API_V1_PATH}/customer/order/list?id=";
   static const GET_ORDER_DETAILS = "$BASE_URL${API_V1_PATH}/customer/order/detail/";
@@ -70,6 +76,8 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
     static const GET_HEALTH_CONDITION = "$BASE_URL${API_V1_PATH}/auth/health_condition";
       static const GET_USER_NOTIFy =
       "$BASE_URL${API_V1_PATH}/items/notify_list/";
+      static const GET_USER_NOTIFY_VIEW =
+      "$BASE_URL${API_V1_PATH}/items/notify_view/";
     static const GET_USER_NOTIFy_DELETE =
       "$BASE_URL${API_V1_PATH}/items/notify_delete/";
   static const GET_USER_NOTIFICATION =
@@ -98,6 +106,10 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
       "$BASE_URL${API_V1_PATH}/banners/veterinary_booking";
   static const ADD_PRODUCT =
       "$BASE_URL${API_V1_PATH}/customer/wish-list/add_product";
+    static const ADD_COMBO_PRODUCT =
+      "$BASE_URL${API_V1_PATH}/customer/wish-list/add_comboproduct";
+
+
         static const ADD_ADDRESS =
       "$BASE_URL${API_V1_PATH}/customer/address/add";
        static const ADD_Notify =
@@ -108,6 +120,14 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
       "$BASE_URL${API_V1_PATH}/items/reviews/submit";
        static const REFUND_URL  =
       "$BASE_URL${API_V1_PATH}/customer/order/refund-request";
+      static const CANCELORDER_URL  =
+      "$BASE_URL${API_V1_PATH}/customer/order/cancel/";
+        static const WALLET_URL  =
+      "$BASE_URL${API_V1_PATH}/auth/pay_amount";
+       static const SALES_WALLET_URL  =
+      "$BASE_URL${API_V1_PATH}/auth/selesman_pay_amount";
+       static const ADDBALANCEWALLET_URL  =
+      "$BASE_URL${API_V1_PATH}/auth/add_amount";
          static const PLACE_ORDER =
       "$BASE_URL${API_V1_PATH}/customer/order/place";
         static const ADD_UPDATE_ADDRESS =
@@ -125,5 +145,11 @@ static const GET_PRODUCT_PARTNER_ITEM= "$BASE_URL${API_V1_PATH}/vendor/get-items
       "$BASE_URL/public";
       static const SUBSCRIPTION_IMAGE_PATH =
       "$BASE_URL/uploads/subscription/";
+
+
+      ///updated by cs
+
+     static const GET_DELIVERY_ADDRESS="$BASE_URL${API_V1_PATH}/customer/address/add/";
+     static const INITIATE_PAYMENT="$BASE_URL${API_V1_PATH}/auth/payment/initiate";
 }
 // https://canine.hirectjob.in/storage/app/public/product/

@@ -80,7 +80,7 @@ Padding(
                   SizedBox(width: 20),
                   Padding(
                     padding:  EdgeInsets.only(right:0.0),
-                    child: SvgPicture.asset("assets/image/bag.svg",color:MyColors.white,),
+                    child: SvgPicture.asset( "assets/image/bag.svg",color:MyColors.white,),
                   ),
        ],
      ),

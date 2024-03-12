@@ -35,7 +35,6 @@ class _UserAllReviewState extends State<UserAllReview> {
                 child: Icon(Icons.arrow_left, color: MyColors.black)),
           ),
           title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
 //
               child: Text(
             "All Review",
@@ -46,9 +45,7 @@ class _UserAllReviewState extends State<UserAllReview> {
             ),
           )),
           actions: [
-            //  SvgPicture.asset("assets/image/girl.svg"),
-
-            //
+          
             InkWell(
                 onTap: () {
                   Get.to(const NotificationUser());
@@ -101,24 +98,13 @@ class _UserAllReviewState extends State<UserAllReview> {
                                   ),
                                   starCount: 5,
                                   starSize: 20,
-                                  // valueLabelColor: const Color(0xff9b9b9b),
-                                  // valueLabelTextStyle: const TextStyle(
-                                  //     color: Colors.white,
-                                  //     fontWeight: FontWeight.w400,
-                                  //     fontStyle: FontStyle.normal,
-                                  //     fontSize: 12.0),
-                                  // valueLabelRadius: 10,
+                                  
                                   maxValue: 5,
                                   starSpacing: 0.5,
                                   maxValueVisibility: true,
                                   valueLabelVisibility: false,
                                   animationDuration:
                                       Duration(milliseconds: 5000),
-                                  // valueLabelPadding:
-                                  //     const EdgeInsets.symmetric(
-                                  //         vertical: 1, horizontal: 8),
-                                  // valueLabelMargin:
-                                  //     const EdgeInsets.only(right: 8),
                                   starOffColor: const Color(0xffe7e8ea),
                                   starColor: MyColors.yellow,
                                 ),

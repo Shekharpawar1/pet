@@ -64,8 +64,9 @@ void updateSelectedIndex(int id) {
       '${Constants.GET_USER_OURBRANDPRODUCT}';
   SalesOurBrandProductModel? salesourbrandProductModel;
    bool ourbrandproductLoaded = false;
-  
 
+
+   String getUserProductUrl1='${Constants.GET_USER_OURBRANDPRODUCT1}';
   void init() async {
 
 
@@ -78,13 +79,13 @@ void updateSelectedIndex(int id) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
 
       }
       
@@ -104,13 +105,13 @@ void productinit() async{
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
   }
 }
 
@@ -136,15 +137,10 @@ void productinit() async{
 } else {
   print("wholesaller data is empty.");
 }
-  // print(userPropertiesModel!.data![0].name);
   salesPropertiesModel!.data = salesPropertiesModel!.data!
           .where((ele) => ele.brandId == brandname)
           .toList();
-      // userPropertiesourbrandModel.data = [];
-      // userPropertiesourbrandModel.data = userPropertiesourbrandModel!.data!
-      //     .where((element) => userPropertiesModel!.data!.any((ele) =>
-      //         ele.brandId == element.brandId && element.brandId == brandid))
-      //     .toList();
+     
       print(salesPropertiesModel);
       print("DataOur");
       if (salesPropertiesModel!.data!.isEmpty) {
@@ -159,13 +155,13 @@ void productinit() async{
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();

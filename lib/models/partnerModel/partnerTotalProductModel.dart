@@ -59,7 +59,7 @@ class Data {
   String? rating;
   int? moduleId;
   int? stock;
-  String? unitId;
+  int? unitId;
   String? images;
   String? foodVariations;
   String? brandId;

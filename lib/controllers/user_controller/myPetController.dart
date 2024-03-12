@@ -5,10 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:pet/models/cityModel.dart';
 import 'package:pet/models/stateModel.dart';
-import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
 import 'package:pet/models/usersModel/petCategoryBreedModel.dart';
 import 'package:pet/models/usersModel/petCategoryModel.dart';
@@ -71,13 +69,13 @@ class UserMyPetController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Category: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Category: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -129,19 +127,15 @@ class UserMyPetController extends GetxController {
     update();
   }
 
+
   Future<void> postUserData(List documentList, var body, String url) async {
     showLoading = true;
     update();
     try {
-      // List documentList = [
-      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45 (1).png', 'key': "logo"},
-      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45.png', 'key': "profile"},
-      // ];
-      // var body = {'id': 'value', 'name': 'dhruv'};
+   
       var request = http.MultipartRequest('POST', Uri.parse(url));
       request.fields.addAll(body);
-      // request.files.add(await http.MultipartFile.fromPath(
-      //     'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
+      
       documentList.forEach((element) async {
         request.files.add(await http.MultipartFile.fromPath(
             element["key"], element["value"]));
@@ -150,13 +144,13 @@ class UserMyPetController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -176,13 +170,13 @@ class UserMyPetController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Category: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Category: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -218,6 +212,7 @@ class UserMyPetController extends GetxController {
     yearController.clear();
     monthController.clear();
     petImage = null;
+    dropdownvalue = null;
     petType = null;
     items = [];
     update();

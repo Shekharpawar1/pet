@@ -21,26 +21,13 @@ enum Choose { upi, cash, phonepay, paytm }
 class PaymentUserBuyNow extends StatefulWidget {
   PaymentUserBuyNow(
       {super.key, required this.price, this.orderstatus, this.paymentstatus
-      //  this.deliveredstatus,
-      //  this.deliveredId,this.deliveredAddress,this.cart,this.couponcode,
-      //  this.ordertype,this.totaltexamount,this.coupondiscountamount,
-      //  this.coupondiscounttitle,this.orderstatus, this.storeId
-      });
+       });
   double price;
 
-  // String? deliveredstatus;
-  // int? deliveredId;
-  // String? deliveredAddress;
-  // List<dynamic>? cart;
-  // String? ordertype;
-  // String? couponcode;
-  // String? totaltexamount;
-  // String? coupondiscountamount;
-  // String? coupondiscounttitle;
+  
   String? orderstatus;
   String? paymentstatus;
-  // int? storeId;
-
+  
   @override
   State<PaymentUserBuyNow> createState() => _PaymentUserBuyNowState();
 }
@@ -48,7 +35,6 @@ class PaymentUserBuyNow extends StatefulWidget {
 class _PaymentUserBuyNowState extends State<PaymentUserBuyNow> {
   MyCartController mycartController = Get.put(MyCartController());
 
-  // String? selectedGender;
   String? selectupi;
   String? selectcredit;
   String? selectphoepay;
@@ -83,19 +69,7 @@ class _PaymentUserBuyNowState extends State<PaymentUserBuyNow> {
             fontWeight: FontWeight.w700,
           ),
         )),
-        // actions: [
-        //   //  SvgPicture.asset("assets/image/girl.svg"),
-
-        //   // SizedBox(width: 20),
-        //   InkWell(
-        //       onTap: () {
-        //         Get.to(NotificationWhole());
-        //       },
-        //       child: Padding(
-        //         padding: const EdgeInsets.only(right:20.0),
-        //         child: SvgPicture.asset("assets/image/notification.svg"),
-        //       )),
-        // ],
+        
       ),
       body: Stack(
         children: [
@@ -105,7 +79,6 @@ class _PaymentUserBuyNowState extends State<PaymentUserBuyNow> {
               shrinkWrap: true,
               primary: true,
               children: [
-                // Image.asset("assets/image/creditcard.png"),
                 Container(
                   width: 335,
                   height: 54,
@@ -163,63 +136,10 @@ class _PaymentUserBuyNowState extends State<PaymentUserBuyNow> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                // Container(
-                //   width: 335,
-                //   height: 53,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(55),
-                //       gradient: LinearGradient(
-                //         begin: Alignment.centerLeft,
-                //         end: Alignment.centerRight,
-                //         colors: [Color(0xfffdcbcc), Color(0x42fdcbcc)],
-                //       )),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Radio(
-                //           value: Choose.phonepay,
-                //           groupValue: selectone,
-                //           onChanged: (Choose? value) {
-                //             setState(() {
-                //               selectone = value!;
-                //             });
-                //           }),
-                //       Image.asset("assets/image/phonepay1.png", height: 25),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                // Container(
-                //   width: 335,
-                //   height: 53,
-                //   decoration: BoxDecoration(
-                //       borderRadius: BorderRadius.circular(28),
-                //       gradient: LinearGradient(
-                //         begin: Alignment.centerLeft,
-                //         end: Alignment.centerRight,
-                //         colors: [Color(0xffffead2), Color(0x56ffead2)],
-                //       )),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Radio(
-                //           value: Choose.paytm,
-                //           groupValue: selectone,
-                //           onChanged: (Choose? value) {
-                //             setState(() {
-                //               selectone = value!;
-                //             });
-                //           }),
-                //       Image.asset("assets/image/paytm.png", height: 25),
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height * 0.05,
-                // ),
+                
                 InkWell(
                   onTap: () async {
-                    // print(selectone == Choose.upi);
+                   
                     if (selectone == Choose.upi) {
                       print("UPI payment");
 
@@ -228,7 +148,10 @@ class _PaymentUserBuyNowState extends State<PaymentUserBuyNow> {
                           selectone == Choose.cash ? "paid" : "unpaid",
                            selectone == Choose.upi ? 'upi' : "cash",
                           );
-
+                      // await mycartController.p/laceorder();
+///
+                      /// yha pr place order online ka function call hoga
+                      /// await mycartController.placeOrder2(widget.price,delivery_address_id,store_id);
                       Get.to(
                           UserUpiScreen(amount: (widget.price)));
                     } else if (selectone == Choose.cash) {
@@ -284,21 +207,11 @@ SizedBox(height: 10)
                         builder: (BuildContext context) {
                           return AlertDialog(
                             scrollable: true,
-                            // title:  Text("Login"),
-
+                           
                             content: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                // Align(
-                                //   alignment: Alignment.topRight,
-                                //   child: IconButton(
-                                //     icon: Icon(Icons
-                                //         .close), // You can use any close icon you prefer
-                                //     onPressed: () {
-                                //       Get.back(); // Close the dialog
-                                //     },
-                                //   ),
-                                // ),
+                                
                                 Padding(
                                   padding: const EdgeInsets.all(10.0),
                                   child:
@@ -314,9 +227,8 @@ SizedBox(height: 10)
                         },
                       );
                           }
-                      // Get.to(Payment2User());
+                      
                     }
-                    // Get.to(Payment2User());
                   },
                   child: Center(
                     child: Container(

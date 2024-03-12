@@ -141,8 +141,8 @@ print("initialDate: $initialDate"); // Debugging statement
                                             BoxShadow(
                                               color:
                                                   Colors.grey.withOpacity(0.3),
-                                              spreadRadius: 3,
-                                              blurRadius: 7,
+                                              // spreadRadius: 2,
+                                              // blurRadius: 7,
                                               offset: Offset(
                                                   0, 3), // Offset of the shadow
                                             ),

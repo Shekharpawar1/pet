@@ -45,7 +45,7 @@ class CreateAccountPartnerController extends GetxController {
 
   bool passwordVisible = false;
   bool isLoading = false;
-
+  bool passwordconVisible = false;
   String? dropdowntype;
   List<String> typeDropDownList = ["0", "0.1", "0.2", "0.3", "0.4"];
 
@@ -97,7 +97,10 @@ void updatepass() {
     passwordVisible = !passwordVisible;
     update();
   }
-
+void updateconpass() {
+    passwordconVisible = !passwordconVisible;
+    update();
+  }
   List<String> currency = [
     '\$ USD',
     '\₤ EURO',
@@ -127,14 +130,14 @@ void updatepass() {
     final completer = Completer<bool>();
 
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
       completer.complete(true);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is invalid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
       completer.complete(false);
     }
 
@@ -198,6 +201,7 @@ void updatepass() {
   Future<void> updateZone(zoneFile.Zone zone) async {
     selectedZone = zone;
     update();
+    print('Zone${selectedZone}');
   }
 
 
@@ -237,13 +241,13 @@ void updatepass() {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Zone: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Zone: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // sate list
@@ -297,13 +301,13 @@ void updatepass() {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to City: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to City: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -327,13 +331,13 @@ void updatepass() {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

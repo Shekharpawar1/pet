@@ -6,23 +6,19 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/salesman_controller/addresscontroller.dart';
 import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salescoupons_controller.dart';
-import 'package:pet/controllers/user_controller/addresscontroller.dart';
-import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
-import 'package:pet/controllers/user_controller/coupons_controller.dart';
+
 import 'package:pet/screens/partner/partneraddress.dart';
 import 'package:pet/screens/salesman/paymentsales.dart';
 import 'package:pet/screens/salesman/salesaddnewAddress.dart';
+import 'package:pet/screens/salesman/usercouponPage.dart';
 import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 
 import 'package:pet/screens/swepcard.dart';
-import 'package:pet/screens/user/notification.dart';
-import 'package:pet/screens/user/payment.dart';
-import 'package:pet/screens/user/useraddnewAddress.dart';
-import 'package:pet/screens/user/usercouponPage.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -42,102 +38,15 @@ class _AddToCardSalesState extends State<AddToCardSales> {
       Get.put(SalesProductDetailsController());
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: CustomAppBarSalesWholeback( title: "My Cart",),
-//         elevation: 0,
-//         backgroundColor: Colors.transparent,
-//         leading: Padding(
-//           padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
-//           child: InkWell(
-//               onTap: () {
-//                 Get.back();
-//               },
-//               child: Icon(Icons.arrow_left, color: MyColors.black)),
-//         ),
-//         title: Center(
-//             child: Text(
-//           "My Cart",
-//           style: CustomTextStyle.appbartext,
-//         )),
-//         actions: [
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(NotificationUser());
-//                   },
-//                   child: Center(
-//                     child: Icon(Icons.notifications, color: MyColors.black),
-//                   )),
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       Positioned(
-//                           top: 3.0,
-//                           right: 4.0,
-//                           child: Center(
-//                             child: Text(
-//                               ('5').toString(),
-//                               // list.length.toString(),
-//                               style: TextStyle(
-//                                   color: Colors.white,
-//                                   fontSize: 8.0,
-//                                   fontWeight: FontWeight.w500),
-//                             ),
-//                           )),
-//                     ],
-//                   )),
-//             ],
-//           ),
-//           SizedBox(width: 20),
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(AddToCardSales());
-//                   },
-//                   child:
-//                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// // (getCardModel!.data!.isEmpty)?
-// // SizedBox():
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       Positioned(
-//                           top: 3.0,
-//                           right: 4.0,
-//                           child: Center(
-//                             child: Text(
-//                               ('5').toString(),
-//                               // list.length.toString(),
-//                               style: TextStyle(
-//                                   color: Colors.white,
-//                                   fontSize: 8.0,
-//                                   fontWeight: FontWeight.w500),
-//                             ),
-//                           )),
-//                     ],
-//                   )),
-//             ],
-//           ),
-//           SizedBox(
-//             width: 20,
-//           )
-//         ],
-//       ),
       body: Padding(
         padding: EdgeInsets.all(15),
         child: ListView(
           shrinkWrap: true,
           primary: true,
-          //  physics: NeverScrollableScrollPhysics(),
+          
           children: [
             GetBuilder<SalesMyCartController>(
                 init: addtocartController,
@@ -146,15 +55,8 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                       ? SizedBox()
                       : addtocartController.cartlistLoaded == false
                           ? SizedBox()
-                          //  !addtocartController.cartlistLoaded
-                          //   ? Center(
-                          //       child: SpinKitCircle(
-                          //         color: Colors.black, // Color of the progress bar
-                          //         size: 30.0, // Size of the progress bar
-                          //       ),
-                          //     )
+                         
                           : Container(
-                              //  height: MediaQuery.of(context).size.height * 0.66,
                               child: ListView.builder(
                                   primary: false,
                                   scrollDirection: Axis.vertical,
@@ -164,16 +66,10 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                   itemBuilder: (context, index) {
                                     var item = addtocartController
                                         .mycartmodel!.data![index];
-                                    // print(item.name!);
-                                    // ${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}
-                                    String imagePath =
+                                      String imagePath =
                                         Constants.PRODUCT_HOME_IMAGE_PATH +
                                             "/${item.image!}";
-                                    // var imagePath = "${item.image ?? ""}";
-                                    // print(imagePath);
-
-                                    //  addtocartController.sizes = addtocartController.mycartmodel!.data!.map((e) => 1).toList();
-                                    return (addtocartController
+                                      return (addtocartController
                                                 .mycartmodel!.data ==
                                             null)
                                         ? SizedBox()
@@ -256,12 +152,21 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                                         MainAxisAlignment
                                                             .center,
                                                     children: [
-                                                      Text(
-                                                        (item.itemName ?? '')
-                                                            .toString(),
-                                                        style: CustomTextStyle
-                                                            .popinsmedium,
-                                                      ),
+                                                       SizedBox(
+                                                              width: Get.width *
+                                                                  0.5,
+                                                              child: Text(
+                                                                (item.itemName ??
+                                                                        '')
+                                                                    .toString(),
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: CustomTextStyle
+                                                                    .popinsmedium,
+                                                              ),
+                                                            ),
                                                       Text(
                                                           (item.variant ?? '')
                                                               .toString(),
@@ -274,8 +179,9 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                                         children: [
                                                           Text(
                                                             "₹" +
-                                                                item.price
-                                                                    .toString(),
+                                                                      ((item.price! *
+                                                                              (item.quantity!.toInt())))
+                                                                          .toStringAsFixed(2),
                                                             style: CustomTextStyle
                                                                 .popinsmedium,
                                                           ),
@@ -650,55 +556,62 @@ class _AddToCardSalesState extends State<AddToCardSales> {
             //   height: 20,
             // ),
 
-            GestureDetector(
-              onTap: () async {
-                await couponsController.init();
-                Get.to(UsercouponPage(
-                  price:(addtocartController.total) + (addtocartController.total * 0.05),
-                ));
-              },
-              child: Container(
-                  height: MediaQuery.of(context).size.height * 0.06,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: MyColors.blue123,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset("assets/image/applycodeimg.png"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Apply coupon",
-                              style: CustomTextStyle.popinslight,
-                            ),
+            // GestureDetector(
+            //   onTap: () async {
+               
+            //     await couponsController.init();
+            //     Get.to(SalescouponPage(
+            //       price:(addtocartController.total) + (addtocartController.total * 0.05),
+            //     ));
+            //   },
+            //   child: Container(
+            //       height: MediaQuery.of(context).size.height * 0.06,
+            //       width: MediaQuery.of(context).size.width,
+            //       decoration: BoxDecoration(
+            //           color: MyColors.blue123,
+            //           borderRadius: BorderRadius.circular(20)),
+            //       child: Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Row(
+            //               children: [
+            //                 Image.asset("assets/image/applycodeimg.png"),
+            //                 SizedBox(
+            //                   width: 10,
+            //                 ),
+            //                 Text(
+            //                   "Apply coupon",
+            //                   style: CustomTextStyle.popinslight,
+            //                 ),
 
-                              SizedBox(
-                              width: 10,
-                            ),
-                             Text(
-                              couponsController.couponcode??"",
-                              style: CustomTextStyle.popinslight,
-                            ),
-                          ],
-                        ),
-                        Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          size: 18,
-                        ),
-                      ],
-                    ),
-                  )),
-            ),
+            //                   SizedBox(
+            //                   width: 10,
+            //                 ),
+            //                 GetBuilder<SalesCouponsController>(
+            //   init: couponsController,
+            //   // initState: (_) {},
+            //   builder: (_) {
+            //                      return Text(
+            //                       couponsController.couponcode??"",
+            //                       style: CustomTextStyle.popinslight,
+            //                 );
+            //                    }
+            //                  ),
+            //               ],
+            //             ),
+            //             Icon(
+            //               Icons.arrow_forward_ios_outlined,
+            //               size: 18,
+            //             ),
+            //           ],
+            //         ),
+            //       )),
+            // ),
 
             SizedBox(
-              height: 20,
+              height: 10,
             ),
             GetBuilder<SalesMyCartController>(
               init: addtocartController,
@@ -727,11 +640,9 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                 "Sub Total",
                                 style: CustomTextStyle.popinslight,
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                              ),
+                              Spacer(),
                               Text(
-                                addtocartController.total.toString(),
+                              "₹"+  addtocartController.total.toStringAsFixed(2),
                                 style: CustomTextStyle.popinstext,
                               ),
                             ],
@@ -750,14 +661,12 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                           Row(
                             children: [
                               Text(
-                                "Tex(5%)",
+                                "Tax(5%)",
                                 style: CustomTextStyle.popinslight,
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                              ),
+                              Spacer(),
                               Text(
-                                (addtocartController.total * 0.05).toString(),
+                               "+ ₹"+ (addtocartController.total * 0.05).toStringAsFixed(2),
                                 style: CustomTextStyle.popinstext,
                               ),
                             ],
@@ -771,49 +680,25 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                               height:
                                   MediaQuery.of(context).size.height * 0.02),
 
-                              Row(
-                            children: [
-                              Text(
-                                "Max discount",
-                                style: CustomTextStyle.popinslight,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.1,
-                              ),
-            GetBuilder<SalesCouponsController>(
-              init: couponsController,
-              // initState: (_) {},
-              builder: (_) {
-                                  return Text(
-                                  "${(couponsController.maxAmount ?? 0.0).toString()}",
-                                    style: CustomTextStyle.popinstext,
-                                  );
-                                }
-                              ),
-                            ],
-                          ),
+                            
                         
-                          Divider(
-                            color: MyColors.lightdivider,
-                            thickness: 1,
-                            height: 1,
-                          ),
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.02),
                           Row(
                             children: [
                               Text(
                                 "Rounding Adjust",
                                 style: CustomTextStyle.popinslight,
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.1,
-                              ),
-                              Text(
-                                "₹${(((addtocartController.total) + (addtocartController.total * 0.05))-(double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
-                                // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
-                                style: CustomTextStyle.popinstext,
+                             Spacer(),
+                              GetBuilder<SalesCouponsController>(
+              init: couponsController,
+              // initState: (_) {},
+              builder: (_) {
+                                  return Text(
+                                    "₹${((addtocartController.total) + (addtocartController.total * 0.05)).toDouble().toStringAsFixed(2)}",
+                                    // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
+                                    style: CustomTextStyle.popinstext,
+                                  );
+                                }
                               ),
                             ],
                           ),
@@ -1081,6 +966,16 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                                                                             // addressController.areaaddressController.toString();
                                                                             addtocartController.chooseaddress(index);
                                                                             Get.back();
+
+
+                                                                                    final storage = GetStorage();
+
+                                                                                    // }
+                                                                                    storage.write('salesaddress', item.area);
+                                                                                    storage.write('salesaddresscity', item.city);
+                                                                                    
+                                                                                    print(storage.read('salesaddress').toString());
+                                                                                    print(storage.read('salesaddresscity').toString());
                                                                           },
                                                                           child: Container(
                                                                               height: 25,
@@ -1151,7 +1046,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
 
             InkWell(
               onTap: () async {
-                addressController.clearFields();
+                addressController.dispose();
                 await addressController.init();
                 Get.to(SalesAddress(
                   isSelected: true,
@@ -1214,7 +1109,7 @@ class _AddToCardSalesState extends State<AddToCardSales> {
               init: addtocartController,
               // initState: (_) {},
               builder: (_) {
-                     return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0")))).toString()}",
+                     return   Text( "₹${(((addtocartController.total) + (addtocartController.total * 0.05))).toStringAsFixed(2)}",
                            style: CustomTextStyle.appbartext);
               })
                         // Row(
@@ -1242,36 +1137,41 @@ class _AddToCardSalesState extends State<AddToCardSales> {
                     InkWell(
                       onTap: () {
                         // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
-                        Get.to(PaymentSales(
-                         price:(((addtocartController.total) + (addtocartController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()
+                       
+                          
+                            if (addtocartController.isselected != null &&
+                                addtocartController.allAddresslistModel !=
+                                    null &&
+                                addtocartController.allAddresslistModel!.data !=
+                                    null &&
+                                addtocartController
+                                    .allAddresslistModel!.data!.isNotEmpty) {
+                              if (addtocartController
+                                  .mycartmodel!.data!.isEmpty) {
+                                Get.snackbar(
+                                  "Error",
+                                  "Please add any items",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.red,
+                                );
+                              } else {
+                                // Proceed to the payment screen
+                              Get.to(PaymentSales(
+                         price:(((addtocartController.total) + (addtocartController.total * 0.05))).toString()
                         // paymentstatus: ,
                         ));
-                          // deliveredAddress: (addtocartController
-                          //             .allAddresslistModel!
-                          //             .data![
-                          //                 addtocartController.isselected ?? 0]
-                          //             .area ??
-                          //         "")
-                          //     .toString(),
-                          // deliveredstatus: "",
-                          // deliveredId: (addtocartController
-                          //         .allAddresslistModel!
-                          //         .data![addtocartController.isselected ?? 0]
-                          //         .id ??
-                          //     0),
-                          // cart: [addtocartController.mycartmodel!.data!.length]
-                          //     .toList(),
-                          // couponcode: couponsController.couponcode ?? '',
-                          // ordertype: "delivery",
-                          // orderstatus: "pending",
-                          // storeId: 1 ?? 0,
-                          // totaltexamount: ((addtocartController.total) +
-                          //         (addtocartController.total * 0.05))
-                          //     .toString(),
-                          // coupondiscounttitle:
-                          //     couponsController.coupontitle ?? '',
-                          // coupondiscountamount: "200",
-                         
+                              }
+                            } else {
+                              // Show a validation message indicating that no address is selected
+                              Get.snackbar(
+                                "Error",
+                                "Please select an address before proceeding.",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                              );
+                            }
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 0.4,

@@ -18,7 +18,7 @@ class OrderTrackerSalesController extends GetxController {
   var orderList;
   var shippedList;
   final List<String> cancellationReasons = [
-    'Damaged Product',
+  
     'Late Delivery',
     'Changed My Mind',
     'Other',
@@ -26,7 +26,7 @@ class OrderTrackerSalesController extends GetxController {
   final List<String> returnReasons = [
     'low Quality',
     'Wrong Product',
-    'Damaged',
+  
     'Other',
   ];
   String? selectedValue;
@@ -117,23 +117,29 @@ class OrderTrackerSalesController extends GetxController {
       ordertrackermodel = salesOrderTrackerModel.fromJson(
           await ApiHelper.getApi(getOrderTrackerUrl + "${orderId}"));
       // orderList = ordertrackermodel!.data![0].pending;
-      if(ordertrackermodel!.data![0].pending != null){
-        
-      orderStatus = Status.order;
-      update();
-      }   else if(ordertrackermodel!.data![0].confirmed != null){
-        
-      orderStatus = Status.shipped;
-      update();
-      } else if(ordertrackermodel!.data![0].handover != null){
-        
-      orderStatus = Status.outOfDelivery;
-      update();
-      } else if(ordertrackermodel!.data![0].delivered != null){
-        
-      orderStatus = Status.delivered;
-      update();
-      }
+    
+      if (ordertrackermodel!.data![0].pending != null) {
+  print("Pending=====${ordertrackermodel!.data![0].pending}");
+  orderStatus = Status.order;
+  update();
+}
+
+if (ordertrackermodel!.data![0].confirmed != null) {
+  print("Shipped=====${ordertrackermodel!.data![0].confirmed}");
+  orderStatus = Status.shipped;
+  update();
+}
+
+if (ordertrackermodel!.data![0].handover != null) {
+  orderStatus = Status.outOfDelivery;
+  update();
+}
+
+if (ordertrackermodel!.data![0].delivered != null) {
+  orderStatus = Status.delivered;
+  update();
+}
+
       // shippedList = ordertrackermodel!.data![0].handover;
       print(ordertrackermodel);
       print(getOrderTrackerUrl + "${orderId}");
@@ -141,13 +147,13 @@ class OrderTrackerSalesController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     showLoading = false;
     update();

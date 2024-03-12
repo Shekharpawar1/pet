@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,8 @@ import 'package:pet/controllers/user_controller/userServicesAddVeterinaryControl
 import 'package:pet/models/TimeslotModel.dart';
 import 'package:pet/others/calender.dart';
 import 'package:pet/screens/Mypetdetails.dart';
+import 'package:pet/screens/user/UserAddMyPet.dart';
+import 'package:pet/screens/user/addPet.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -85,12 +88,7 @@ class UserServicesAddVeterinary extends StatelessWidget {
 
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        //  SizedBox(height: MediaQuery.of(context).size.height*0.03,),
-
-                        // Image.asset("assets/image/service1.png"),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.02,
-                        // ),
+                        
 
                         Container(
                             height: 110,
@@ -188,187 +186,12 @@ class UserServicesAddVeterinary extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  // SizedBox(
-                                  //   height: MediaQuery.of(context).size.height * 0.03,
-                                  // ),
-                                  // InkWell(
-                                  //   onTap: () {
-                                  //     UserServicesAddVeterinaryController
-                                  //         userServicesAddVeterinaryController =
-                                  //         Get.put(UserServicesAddVeterinaryController());
-                                  //     userServicesAddVeterinaryController.clearFields();
-                                  //     Get.to(UserServicesAddVeterinary());
-                                  //   },
-                                  //   child: Container(
-                                  //     width: MediaQuery.of(context).size.width * 0.6,
-                                  //     height: MediaQuery.of(context).size.height * 0.06,
-                                  //     decoration: BoxDecoration(
-                                  //         color: MyColors.yellow,
-                                  //         borderRadius: BorderRadius.circular(15)),
-                                  //     child: Center(
-                                  //         child: Text(
-                                  //       "Appointment",
-                                  //       style: CustomTextStyle.mediumtextreem,
-                                  //     )),
-                                  //   ),
-                                  // ),
+                                 
                                 ],
                               ),
                             )),
 
-                        //       Container(
-                        //         height: MediaQuery.of(context).size.height*0.3,
-                        //  width: MediaQuery.of(context).size.height*0.5 ,
-
-                        //       padding: EdgeInsets.all(12.0),
-                        //       child: GridView.builder(
-                        //         itemCount: 6,
-                        //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        //             crossAxisCount: 4,
-                        //             // mainAxisExtent: 5,
-                        //             crossAxisSpacing: 15.0,
-                        //             mainAxisSpacing: 10.0  ,
-                        //             mainAxisExtent: 100
-                        //         ),
-                        //         itemBuilder: (BuildContext context, int index){
-                        //           return  Column(
-                        //             children: [
-                        //               Container(
-                        //                 height: 60,width:60,
-                        //                 decoration:BoxDecoration(
-                        //                 borderRadius: BorderRadius.circular(15),
-                        //                 border: Border.all(color: Colors.black26)
-                        //               )
-                        //                              ,),
-
-                        //                              SizedBox(height: 3,),
-                        //            Text("Brush")
-
-                        //             ],
-                        //           );
-                        //         },
-                        //       )),
-
-                        // Text(
-                        //   "Best prices Find your best pet Brush Services",
-                        //   style: CustomTextStyle.popinstext,
-                        // ),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.02,
-                        // ),
-                        // Card(
-                        //   elevation: 1.5,
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(21.0),
-                        //   ),
-                        //   child: Container(
-                        //       width: 335,
-                        //       height: 193,
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(20),
-                        //           border: Border.all(color: MyColors.grey),
-                        //           color: Colors.white),
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.all(15.0),
-                        //         child: ListView(
-                        //           children: [
-                        //             Text(
-                        //               "Date",
-                        //               style: CustomTextStyle.popinstext,
-                        //             ),
-                        //             SizedBox(
-                        //               height: MediaQuery.of(context).size.height * 0.05,
-                        //             ),
-                        //             // HorizontalWeekCalendar()
-                        //           ],
-                        //         ),
-                        //       )),
-                        // ),
-
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.02,
-                        // ),
-                        // Card(
-                        //   elevation: 1.5,
-                        //   shape: RoundedRectangleBorder(
-                        //     borderRadius: BorderRadius.circular(21.0),
-                        //   ),
-                        //   child: Container(
-                        //       width: 335,
-                        //       height: 193,
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(20),
-                        //           border: Border.all(color: MyColors.grey),
-                        //           color: Colors.white),
-                        //       child: Padding(
-                        //         padding: const EdgeInsets.all(15.0),
-                        //         child: ListView(
-                        //           children: [
-                        //             Text(
-                        //               "Time",
-                        //               style: CustomTextStyle.popinstext,
-                        //             ),
-                        //             SizedBox(
-                        //               height: MediaQuery.of(context).size.height * 0.02,
-                        //             ),
-                        //             GetBuilder<UserServicesAddVeterinaryController>(
-                        //                 init: userServicesAddVeterinaryController,
-                        //                 builder: (_) {
-                        //                   return Container(
-                        //                       // height: 600,
-                        //                       child: GridView.builder(
-                        //                           primary: false,
-                        //                           shrinkWrap: true,
-                        //                           scrollDirection: Axis.vertical,
-                        //                           physics: NeverScrollableScrollPhysics(),
-                        //                           gridDelegate:
-                        //                               SliverGridDelegateWithFixedCrossAxisCount(
-                        //                                   crossAxisCount: 4,
-                        //                                   //  childAspectRatio: 4 / 4,
-                        //                                   crossAxisSpacing: 15,
-                        //                                   mainAxisSpacing: 15,
-                        //                                   mainAxisExtent: 30),
-                        //                           itemCount:
-                        //                               userServicesAddVeterinaryController
-                        //                                   .timeSlots!.length,
-                        //                           itemBuilder: (BuildContext ctx, index) {
-                        //                             final TimeSlot timeSlot =
-                        //                                 userServicesAddVeterinaryController
-                        //                                     .timeSlots[index];
-                        //                             //  var   item = userServicesAddVeterinaryController.
-                        //                             //          timeSlots[index];
-                        //                             return GestureDetector(
-                        //                               onTap: () {
-                        //                                 userServicesAddVeterinaryController
-                        //                                     .selectTimeSlot(index);
-                        //                               },
-                        //                               child: Container(
-                        //                                   width: 62,
-                        //                                   height: 30,
-                        //                                   decoration: BoxDecoration(
-                        //                                       border: Border.all(
-                        //                                           color: MyColors.grey),
-                        //                                       borderRadius:
-                        //                                           BorderRadius.circular(
-                        //                                               16),
-                        //                                       color: timeSlot.isSelected
-                        //                                           ? MyColors.yellow
-                        //                                           : MyColors.white),
-                        //                                   child: Center(
-                        //                                       child: Text(
-                        //                                     timeSlot.time,
-                        //                                     style: TextStyle(
-                        //                                         color: timeSlot.isSelected
-                        //                                             ? MyColors.white
-                        //                                             : MyColors.black),
-                        //                                   ))),
-                        //                             );
-                        //                           }));
-                        //                 })
-                        //           ],
-                        //         ),
-                        //       )),
-                        // ),
+                       
 
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
@@ -462,13 +285,7 @@ class UserServicesAddVeterinary extends StatelessWidget {
                           ),
                         ),
 
-                        // Text(
-                        //   "DOB",
-                        //   style: CustomTextStyle.popinstext,
-                        // ),
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.01,
-                        // ),
+                       
 
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -597,61 +414,16 @@ class UserServicesAddVeterinary extends StatelessWidget {
                                 ),
                               )
 
-                            //   child: Container(
-                            //     height: 50,
-                            //     width: 335,
-                            //     decoration: BoxDecoration(
-                            //         border: Border.all(
-                            //             width: 0.5, color: MyColors.grey),
-                            //         borderRadius: BorderRadius.circular(16),
-                            //         color: Colors.white),
-                            //     child: DropdownButtonFormField<String>(
-                            //       validator: (value) {
-                            //         if (value == null || value.isEmpty) {
-                            //           return 'Please select a pet';
-                            //         }
-                            //         return null;
-                            //       },
-                            //       value: userServicesAddAppointmentController
-                            //           .selectedPet, // S
-                            //       decoration: InputDecoration(
-                            //         hintText: "Select Pet",
-                            //         contentPadding: EdgeInsets.symmetric(
-                            //             horizontal: 20, vertical: 5),
-                            //         border: InputBorder.none,
-                            //         enabledBorder: InputBorder.none,
-                            //         focusedBorder: InputBorder.none,
-                            //       ),
-                            //       style: TextStyle(
-                            //         fontSize: 16,
-                            //         color: MyColors.black,
-                            //       ),
-                            //       items: userServicesAddAppointmentController
-                            //           .demoPetsList
-                            //           .map((String pet) {
-                            //         return DropdownMenuItem<String>(
-                            //           value: pet,
-                            //           child: Text(pet),
-                            //         );
-                            //       }).toList(),
-                            //       onChanged: (String? value) {
-                            //         userServicesAddAppointmentController
-                            //             .updatePet(value ?? "");
-                            //         // Perform actions when country is changed
-                            //       },
-                            //     ),
-                            //   ),
-                            // )
+                            
                             : InkWell(
                                 onTap: () {
-                                  // Get.to(MyPetDetails());
+                                  Get.to(AddMypet());
                                   print(userServicesAddVeterinaryController
                                       .petListModel!.data!);
                                 },
                                 child: Center(
                                   child: Container(
-                                    // width: MediaQuery.of(context).size.width*0.8,
-
+                                   
                                     height: MediaQuery.of(context).size.height *
                                         0.08,
 
@@ -669,81 +441,11 @@ class UserServicesAddVeterinary extends StatelessWidget {
                                 ),
                               ),
 
-                        // SizedBox(
-                        //   height: MediaQuery.of(context).size.height * 0.02,
-                        // ),
-                        //                 // :
-                        //                 Expanded(
-                        //                     child: Padding(
-                        //                       padding: const EdgeInsets.all(8.0),
-                        //                       child: Container(
-                        //                         height: 50,
-                        //                           decoration: BoxDecoration(
-                        // color: Color.fromRGBO(255, 255, 255, 0.10),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     offset: const Offset(0.0, 0.0),
-                        //     color: Color.fromRGBO(255, 255, 255, 0.10),
-                        //     blurRadius: 0.0,
-                        //     spreadRadius: 0.0,
-                        //   ),
-                        // ],
-                        // borderRadius: BorderRadius.circular(40)),
-                        //                         child: DropdownButtonFormField<
-                        //                             cityFile.State>(
-                        //                           validator: (value) {
-                        //                             if (value == null ||
-                        //                                 value.cityName!.isEmpty) {
-                        //                               return 'Please select a city';
-                        //                             }
-                        //                             return null;
-                        //                           },
-                        //                           value: selectedCity,
-                        //                           decoration: InputDecoration(
-                        //                             hintText: "City",
-                        //                             contentPadding:
-                        //                                 EdgeInsets.symmetric(
-                        //                                     horizontal: 20,
-                        //                                     vertical: 5),
-                        //                             border: InputBorder.none,
-                        //                             enabledBorder: InputBorder.none,
-                        //                             focusedBorder: InputBorder.none,
-                        //                           ),
-                        //                           style: TextStyle(
-                        //                             fontSize: 16,
-                        //                             color: MyColors.black,
-                        //                           ),
-                        //                           items: v
-                        //                               .cityListModel!.state!
-                        //                               .map((state) {
-                        //                             return DropdownMenuItem<
-                        //                                 cityFile.State>(
-                        //                               value: state,
-                        //                               child: Text(state.cityName!),
-                        //                             );
-                        //                           }).toList(),
-                        //                           onChanged:
-                        //                               (cityFile.State? value) {
-                        //                             createAccountcontroller
-                        //                                 .updateCity(value!);
-                        //                           },
-                        //                         ),
-                        //                       ),
-                        //                     ),
-                        //                   ),
-
-                        // !createAccountcontroller.cityLoaded
-                        //                           ? SizedBox()
+                       
 
                         userServicesAddVeterinaryController.stateListModel ==
                                 null
-                            // ? Center(
-                            //     child: SpinKitCircle(
-                            //       color:
-                            //           Colors.white, // Color of the progress bar
-                            //       size: 50.0, // Size of the progress bar
-                            //     ),
-                            //   )
+                          
                             ? SizedBox()
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -773,8 +475,12 @@ class UserServicesAddVeterinary extends StatelessWidget {
                                       }
                                       return null;
                                     },
+                                       onTap: (){
+                              userServicesAddVeterinaryController.clearcity() ;
+                              },
                                     value: userServicesAddVeterinaryController
                                         .selectedState,
+                                     
                                     decoration: InputDecoration(
                                       hintText: "State",
                                       contentPadding: EdgeInsets.symmetric(
@@ -805,122 +511,68 @@ class UserServicesAddVeterinary extends StatelessWidget {
                         userServicesAddVeterinaryController.cityListModel ==
                                 null
                             ? SizedBox()
-                            : Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 0.5, color: MyColors.grey),
-                                        // color: Color.fromRGBO(255, 255, 255, 0.10),
-                                        // boxShadow: [
-                                        //   BoxShadow(
-                                        //     offset: const Offset(0.0, 0.0),
-                                        //     color: Color.fromRGBO(255, 255, 255, 0.10),
-                                        //     blurRadius: 0.0,
-                                        //     spreadRadius: 0.0,
-                                        //   ),
-                                        // ],
-                                        // borderRadius: BorderRadius.circular(16),
+                            : Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 0.5, color: MyColors.grey),
+                                    
 
-                                        color:
-                                            Color.fromRGBO(255, 255, 255, 0.10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            offset: const Offset(0.0, 0.0),
-                                            color: Color.fromRGBO(
-                                                255, 255, 255, 0.10),
-                                            blurRadius: 0.0,
-                                            spreadRadius: 0.0,
-                                          ),
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(40)),
-                                    child:
-                                        DropdownButtonFormField<cityFile.State>(
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.cityName!.isEmpty) {
-                                          return 'Please select a city';
-                                        }
-                                        return null;
-                                      },
-                                      value: userServicesAddVeterinaryController
-                                          .selectedCity,
-                                      decoration: InputDecoration(
-                                        hintText: "City",
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 5),
-                                        border: InputBorder.none,
-                                        enabledBorder: InputBorder.none,
-                                        focusedBorder: InputBorder.none,
+                                    color:
+                                        Color.fromRGBO(255, 255, 255, 0.10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        offset: const Offset(0.0, 0.0),
+                                        color: Color.fromRGBO(
+                                            255, 255, 255, 0.10),
+                                        blurRadius: 0.0,
+                                        spreadRadius: 0.0,
                                       ),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: MyColors.black,
-                                      ),
-                                      items: userServicesAddVeterinaryController
-                                          .cityListModel!.state!
-                                          .map((state) {
-                                        return DropdownMenuItem<cityFile.State>(
-                                          value: state,
-                                          child: Text(state.cityName!),
-                                        );
-                                      }).toList(),
-                                      onChanged: (cityFile.State? value) {
-                                        userServicesAddVeterinaryController
-                                            .updateCity(value!);
-                                      },
-                                    ),
+                                    ],
+                                    borderRadius:
+                                        BorderRadius.circular(40)),
+                                child:
+                                    DropdownButtonFormField<cityFile.State>(
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.cityName!.isEmpty) {
+                                      return 'Please select a city';
+                                    }
+                                    return null;
+                                  },
+                                  value: userServicesAddVeterinaryController
+                                      .selectedCity,
+                                  decoration: InputDecoration(
+                                    hintText: "City",
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 5),
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
                                   ),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: MyColors.black,
+                                  ),
+                                  items: userServicesAddVeterinaryController
+                                      .cityListModel!.state!
+                                      .map((state) {
+                                    return DropdownMenuItem<cityFile.State>(
+                                      value: state,
+                                      child: Text(state.cityName!),
+                                    );
+                                  }).toList(),
+                                  onChanged: (cityFile.State? value) {
+                                    userServicesAddVeterinaryController
+                                        .updateCity(value!);
+                                  },
                                 ),
                               ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Container(
-                        //     height: 50,
-                        //     width: 335,
-                        //     decoration: BoxDecoration(
-                        //         border: Border.all(width: 0.5, color: MyColors.grey),
-                        //         borderRadius: BorderRadius.circular(16),
-                        //         color: Colors.white),
-                        //     child: DropdownButtonFormField<String>(
-                        //       validator: (value) {
-                        //         if (value == null || value.isEmpty) {
-                        //           return 'Please select a city';
-                        //         }
-                        //         return null;
-                        //       },
-                        //       value:
-                        //           userServicesAddVeterinaryController.selectedcity, // S
-                        //       decoration: InputDecoration(
-                        //         hintText: "City",
-                        //         contentPadding:
-                        //             EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                        //         border: InputBorder.none,
-                        //         enabledBorder: InputBorder.none,
-                        //         focusedBorder: InputBorder.none,
-                        //       ),
-                        //       style: TextStyle(
-                        //         fontSize: 16,
-                        //         color: MyColors.black,
-                        //       ),
-                        //       items: userServicesAddVeterinaryController.city
-                        //           .map((String city) {
-                        //         return DropdownMenuItem<String>(
-                        //           value: city,
-                        //           child: Text(city),
-                        //         );
-                        //       }).toList(),
-                        //       onChanged: (String? value) {
-                        //         userServicesAddVeterinaryController
-                        //             .updateCity(value ?? "");
-                        //         // Perform actions when country is changed
-                        //       },
-                        //     ),
-                        //   ),
-                        // ),
+                            ),
+                 
+                 
 
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -942,7 +594,10 @@ class UserServicesAddVeterinary extends StatelessWidget {
                             child: TextFormField(
                               controller: userServicesAddVeterinaryController
                                   .numberController,
-                              keyboardType: TextInputType.phone,
+                               inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    maxLength: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Please Enter a Phone Number";
@@ -954,6 +609,7 @@ class UserServicesAddVeterinary extends StatelessWidget {
                               },
                               decoration: InputDecoration(
                                 hintText: "Mobile No",
+                                counterText: '',
                                 // hintStyle: TextStyle(color: MyColors.white,),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 10),
@@ -1062,7 +718,6 @@ class UserServicesAddVeterinary extends StatelessWidget {
                           onTap: () {
                             userServicesAddVeterinaryController.addVeterinary();
 
-                            //      Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
                           },
                           child: Center(
                             child: Container(

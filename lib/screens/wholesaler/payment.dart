@@ -7,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
+import 'package:pet/screens/wholesaler/home.dart';
 import 'package:pet/screens/wholesaler/myOrderPage.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/screens/wholesaler/wholeUpiScreen.dart';
@@ -19,9 +20,9 @@ enum Choose { upi, cash, phonepay, paytm }
 class Paymentwhole extends StatefulWidget {
   Paymentwhole({
     super.key,
-    this.price,
+    required this.price,
   });
-  String? price;
+ double price;
   Choose? selectone;
   @override
   State<Paymentwhole> createState() => _PaymentwholeState();
@@ -235,7 +236,7 @@ class _PaymentwholeState extends State<Paymentwhole> {
 
   @override
   Widget build(BuildContext context) {
-    
+    print("Priceee${widget.price}");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -343,6 +344,8 @@ class _PaymentwholeState extends State<Paymentwhole> {
                     ],
                   ),
                 ),
+              
+              
                 // SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 // Container(
                 //   width: 335,
@@ -461,6 +464,21 @@ mycartwholeController.addpaymentPopup(
                                     padding: EdgeInsets.all(8.0),
                                     child: Text("Order Placed Successfully"),
                                   ),
+                               
+SizedBox(height: 10),
+     InkWell(
+                                  onTap:(){
+                                     mycartwholeController.init() ;
+                                       Get.offAll(HomeWhole());
+                                       Get.to(MyOrderWhole());
+                                           
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Text("Ok")),
+                                )
+                               
+                               
                                 ],
                               ),
                             );

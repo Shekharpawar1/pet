@@ -19,7 +19,6 @@ import 'package:pet/screens/user/userServicesAddAppointment.dart';
 import 'package:pet/screens/user/userServicesAddVeterinary.dart';
 
 import 'package:pet/screens/user/ordersummary.dart';
-// import 'package:pet/screens/user/services2.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -44,116 +43,19 @@ class _ServicePageState extends State<ServicePage> {
   NotificationController notificationcontroller =
       Get.put(NotificationController());
 
-  @override
-  void onInit() {
-    notificationcontroller.init();
-    // super.onInit();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _drawerkey,
       drawer: drawer(),
-       appBar:CustomAppBar(drawerKey: _drawerkey),
-//       appBar: AppBar(
-//         elevation: 0,
-//         backgroundColor: Colors.transparent,
-//         leading: Padding(
-//           padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-//           child: GestureDetector(
-//             onTap: () {
-//               _drawerkey.currentState!.openDrawer();
-//             },
-//             child: Image.asset(
-//               "assets/image/menu2.png",
-//             ),
-//           ),
-//         ),
-//         title: Center(
-//             child: Text(
-//           "Services",
-//           style: CustomTextStyle.appbartext,
-//         )),
-//         actions: [
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(NotificationUser());
-//                   },
-//                   child: Center(
-//                     child: Icon(Icons.notifications, color: MyColors.black),
-//                   )),
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       Positioned(
-//                           top: 3.0,
-//                           right: 4.0,
-//                           child: Center(
-//                             child: Text(
-//                               ('5').toString(),
-//                               // list.length.toString(),
-//                               style: TextStyle(
-//                                   color: Colors.white,
-//                                   fontSize: 8.0,
-//                                   fontWeight: FontWeight.w500),
-//                             ),
-//                           )),
-//                     ],
-//                   )),
-//             ],
-//           ),
-//           SizedBox(width: 20),
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(AddToCardUser());
-//                   },
-//                   child:
-//                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// // (getCardModel!.data!.isEmpty)?
-// // SizedBox():
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       Positioned(
-//                           top: 3.0,
-//                           right: 4.0,
-//                           child: Center(
-//                             child: Text(
-//                               ('5').toString(),
-//                               // list.length.toString(),
-//                               style: TextStyle(
-//                                   color: Colors.white,
-//                                   fontSize: 8.0,
-//                                   fontWeight: FontWeight.w500),
-//                             ),
-//                           )),
-//                     ],
-//                   )),
-//             ],
-//           ),
-//           SizedBox(
-//             width: 20,
-//           )
-//         ],
-//       ),
+       appBar:CustomAppBar(drawerKey: _drawerkey, context: context,),
       
       body: SingleChildScrollView(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          //  SizedBox(height: MediaQuery.of(context).size.height*0.03,),
 
           Image.asset("assets/image/bgimg1.png"),
           SizedBox(
@@ -166,7 +68,6 @@ class _ServicePageState extends State<ServicePage> {
                 return homeusercontroller.userServicesModel == null
                     ? SizedBox()
                     : Container(
-                        // height: 600,
                         child: GridView.builder(
                             primary: false,
                             shrinkWrap: true,
@@ -182,8 +83,10 @@ class _ServicePageState extends State<ServicePage> {
                             itemCount: homeusercontroller
                                 .userServicesModel!.data!.length,
                             itemBuilder: (BuildContext ctx, index) {
+                             
                               var item = homeusercontroller
-                                  .userServicesModel!.data![index];
+                                  .userServicesModel!.data![ homeusercontroller
+                                .userServicesModel!.data!.length-1-index];
                               var imagePath =
                                   "${Constants.BASE_URL}${Constants.SERVICES_IMAGE_PATH}${item.image ?? ""}";
 
@@ -195,6 +98,8 @@ class _ServicePageState extends State<ServicePage> {
                                   //         item.id.toString();
                                   // homeusercontroller.getServicesCategories(url);
 
+
+
                                   userServicesAddUserServicesAddAppointmentController
                                       .clearFields();
                                   userServicesAddUserServicesAddAppointmentController
@@ -204,6 +109,7 @@ class _ServicePageState extends State<ServicePage> {
                                   await userServicesAddUserServicesAddAppointmentController
                                       .fetchAppointmentSlots(item.id!);
                                   print(item);
+                                  
                                   Get.to(
                                       () => UserServicesAddAppointmentState());
                                 },
@@ -238,7 +144,8 @@ class _ServicePageState extends State<ServicePage> {
                                       ),
                                     ),
                                     Text(
-                                      item.name!,
+                                      item.name!,textAlign: TextAlign.center
+                                      ,
                                       style: CustomTextStyle.popinssmall0,
                                     )
                                   ],
@@ -247,242 +154,10 @@ class _ServicePageState extends State<ServicePage> {
                               //
                             }));
 
-                // // GridView(
-                //             physics: NeverScrollableScrollPhysics(),
-                //             scrollDirection: Axis.vertical,
-                //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //                 crossAxisCount: 4,
-                //                 crossAxisSpacing: 15,
-                //                 mainAxisSpacing: 15,
-                //                 mainAxisExtent: 100),
-                //             children: [
-                //               Column(
-                //                 children: [
-                //                   Container(
-                //                     height: 60,
-                //                     width: 60,
-                //                     decoration: BoxDecoration(
-                //                         border: Border.all(color: Colors.black26, width: 1),
-                //                         borderRadius: BorderRadius.circular(25),
-                //                         color: MyColors.white),
-                //                   ),
-                //                   Text(
-                //                     "Brush",
-                //                     style: CustomTextStyle.popinssmall0,
-                //                   )
-                //                 ],
-                //               ),
-                //               Column(
-                //                 children: [
-                //                   Container(
-                //                     height: 60,
-                //                     width: 60,
-                //                     decoration: BoxDecoration(
-                //                         border: Border.all(color: Colors.black26, width: 1),
-                //                         borderRadius: BorderRadius.circular(25),
-                //                         color: MyColors.white),
-                //                   ),
-                //                   Text(
-                //                     "Nail Cutter",
-                //                     style: CustomTextStyle.popinssmall0,
-                //                   )
-                //                 ],
-                //               ),
-                //               Column(
-                //                 children: [
-                //                   Container(
-                //                     height: 60,
-                //                     width: 60,
-                //                     decoration: BoxDecoration(
-                //                         border: Border.all(color: Colors.black26, width: 1),
-                //                         borderRadius: BorderRadius.circular(25),
-                //                         color: MyColors.white),
-                //                   ),
-                //                   Text(
-                //                     "Comb",
-                //                     style: CustomTextStyle.popinssmall0,
-                //                   )
-                //                 ],
-                //               ),
-                //               Column(
-                //                 children: [
-                //                   Container(
-                //                     height: 60,
-                //                     width: 60,
-                //                     decoration: BoxDecoration(
-                //                         border: Border.all(color: Colors.black26, width: 1),
-                //                         borderRadius: BorderRadius.circular(25),
-                //                         color: MyColors.white),
-                //                   ),
-                //                   Text(
-                //                     "Slicker",
-                //                     style: CustomTextStyle.popinssmall0,
-                //                   )
-                //                 ],
-                //               ),
-                //             ],
-                //             padding: EdgeInsets.all(5),
-                //             shrinkWrap: true,
-                //           );
+              
               })
 
-//  GetBuilder<ServiceController>(
-//                       init: servicecontroller,
-//                       builder: (_) {
-// return  Container(
-//                         // height: 600,
-//                         child: GridView.builder(
-//                             primary: false,
-//                             shrinkWrap: true,
-//                             scrollDirection: Axis.vertical,
-//                             physics: NeverScrollableScrollPhysics(),
-//                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                                 crossAxisCount: 4,
-//                                 //  childAspectRatio: 4 / 4,
-//                                 crossAxisSpacing: 15,
-
-//                   mainAxisSpacing: 15,
-//                   mainAxisExtent: 100),
-//                             itemCount: servicecontroller
-//                                 .getServiceList!.length
-
-//                                 ,
-//                             itemBuilder: (BuildContext ctx, index) {
-//       var item = servicecontroller.
-//                                    getServiceList[index];
-//                               return
-//                                 Column(
-//                   children: [
-//                     Container(
-//                       height: 60,
-//                       width: 60,
-//                       decoration: BoxDecoration(
-//                           border: Border.all(color: Colors.black26, width: 1),
-//                           borderRadius: BorderRadius.circular(25),
-//                           color: MyColors.white),
-//                     ),
-//                     SizedBox(height: 5,),
-//                     Text(
-//                      item["title"],
-//                       style: CustomTextStyle.popinssmall0,
-//                     )
-//                   ],
-//                 );
-//   //
-//                             }));
-
-//   // // GridView(
-//   //             physics: NeverScrollableScrollPhysics(),
-//   //             scrollDirection: Axis.vertical,
-//   //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//   //                 crossAxisCount: 4,
-//   //                 crossAxisSpacing: 15,
-//   //                 mainAxisSpacing: 15,
-//   //                 mainAxisExtent: 100),
-//   //             children: [
-//   //               Column(
-//   //                 children: [
-//   //                   Container(
-//   //                     height: 60,
-//   //                     width: 60,
-//   //                     decoration: BoxDecoration(
-//   //                         border: Border.all(color: Colors.black26, width: 1),
-//   //                         borderRadius: BorderRadius.circular(25),
-//   //                         color: MyColors.white),
-//   //                   ),
-//   //                   Text(
-//   //                     "Brush",
-//   //                     style: CustomTextStyle.popinssmall0,
-//   //                   )
-//   //                 ],
-//   //               ),
-//   //               Column(
-//   //                 children: [
-//   //                   Container(
-//   //                     height: 60,
-//   //                     width: 60,
-//   //                     decoration: BoxDecoration(
-//   //                         border: Border.all(color: Colors.black26, width: 1),
-//   //                         borderRadius: BorderRadius.circular(25),
-//   //                         color: MyColors.white),
-//   //                   ),
-//   //                   Text(
-//   //                     "Nail Cutter",
-//   //                     style: CustomTextStyle.popinssmall0,
-//   //                   )
-//   //                 ],
-//   //               ),
-//   //               Column(
-//   //                 children: [
-//   //                   Container(
-//   //                     height: 60,
-//   //                     width: 60,
-//   //                     decoration: BoxDecoration(
-//   //                         border: Border.all(color: Colors.black26, width: 1),
-//   //                         borderRadius: BorderRadius.circular(25),
-//   //                         color: MyColors.white),
-//   //                   ),
-//   //                   Text(
-//   //                     "Comb",
-//   //                     style: CustomTextStyle.popinssmall0,
-//   //                   )
-//   //                 ],
-//   //               ),
-//   //               Column(
-//   //                 children: [
-//   //                   Container(
-//   //                     height: 60,
-//   //                     width: 60,
-//   //                     decoration: BoxDecoration(
-//   //                         border: Border.all(color: Colors.black26, width: 1),
-//   //                         borderRadius: BorderRadius.circular(25),
-//   //                         color: MyColors.white),
-//   //                   ),
-//   //                   Text(
-//   //                     "Slicker",
-//   //                     style: CustomTextStyle.popinssmall0,
-//   //                   )
-//   //                 ],
-//   //               ),
-//   //             ],
-//   //             padding: EdgeInsets.all(5),
-//   //             shrinkWrap: true,
-//   //           );
-
-//                       })
-
-          //       Container(
-          //         height: MediaQuery.of(context).size.height*0.3,
-          //  width: MediaQuery.of(context).size.height*0.5 ,
-
-          //       padding: EdgeInsets.all(12.0),
-          //       child: GridView.builder(
-          //         itemCount: 6,
-          //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //             crossAxisCount: 4,
-          //             // mainAxisExtent: 5,
-          //             crossAxisSpacing: 15.0,
-          //             mainAxisSpacing: 10.0  ,
-          //             mainAxisExtent: 100
-          //         ),
-          //         itemBuilder: (BuildContext context, int index){
-          //           return  Column(
-          //             children: [
-          //               Container(
-          //                 height: 60,width:60,
-          //                 decoration:BoxDecoration(
-          //                 borderRadius: BorderRadius.circular(15),
-          //                 border: Border.all(color: Colors.black26)
-          //               )
-          //                              ,),
-
-          //                              SizedBox(height: 3,),
-          //            Text("Brush")
-
-          //             ],
-          //           );
-          //         },
-          //       )),
+         
           ,
 
           Text(
@@ -493,7 +168,7 @@ class _ServicePageState extends State<ServicePage> {
             height: MediaQuery.of(context).size.height * 0.02,
           ),
           Container(
-              height: MediaQuery.of(context).size.height * 0.26,
+              height: MediaQuery.of(context).size.height * 0.22,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black26, width: 0.3),
@@ -508,9 +183,11 @@ class _ServicePageState extends State<ServicePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Image.asset("assets/image/doctorgirl.png"),
+                            Image.asset("assets/image/vetneryimg.jpg",width: Get.width*0.3 ,
+                            fit: BoxFit.fitHeight,
+                         ),
                           ],
                         ),
                         SizedBox(
@@ -521,55 +198,18 @@ class _ServicePageState extends State<ServicePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Cameron Williamson",
+                              "You can book an \nappointment for your pet",
                               style: CustomTextStyle.popinsbold,
                             ),
                             SizedBox(
                               height: 5,
                             ),
-                            Row(
-                              children: [
-                                Image.asset("assets/image/footprint.png"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "Pharmacology",
-                                  style: CustomTextStyle.popinssmall0,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              "Pharmacology",
-                              style: CustomTextStyle.popinssmall0,
-                            ),
+                           
                             SizedBox(
                               height: 5,
                             ),
-                            Row(
-                              children: [
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SvgPicture.asset("assets/image/yellowstar.svg"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SvgPicture.asset("assets/image/whitestar.svg"),
-                              ],
-                            )
+                            
+                          
                           ],
                         ),
                       ],
@@ -583,6 +223,7 @@ class _ServicePageState extends State<ServicePage> {
                             userServicesAddVeterinaryController =
                             Get.put(UserServicesAddVeterinaryController());
                         userServicesAddVeterinaryController.clearFields();
+                        
                      await  userServicesAddVeterinaryController.init();
                         Get.to(UserServicesAddVeterinary());
                       },

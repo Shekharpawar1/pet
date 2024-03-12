@@ -16,18 +16,15 @@ import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/user/userHome.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 
-// class OtpUser extends StatefulWidget {
-//   const OtpUser({super.key});
-
-//   @override
-//   State<OtpUser> createState() => _OtpUserState();
-// }
-
 class OtpUser extends StatelessWidget {
   OtpUser({super.key});
   final UserLoginController userLoginController =
       Get.put(UserLoginController());
+        NotificationController notificationcontroller =
+      Get.put(NotificationController());
+  MyCartController mycartController = Get.put(MyCartController());
   final foo = Get.put(() => HomeuserController());
+
  
   
   @override
@@ -107,20 +104,9 @@ class OtpUser extends StatelessWidget {
                           //runs when every textfield is filled
                           onSubmit: (String verificationCode) {
                             userLoginController.updateOtp(verificationCode);
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return AlertDialog(
-                            //         title: Text("Verification Code"),
-                            //         content: Text(
-                            //             'Code entered is $verificationCode'),
-                            //       );
-                            //     });
+                           
                             Get.dialog(
-                              // barrierDismissible:
-                              //     false, // To prevent dismissing on outside tap
-                              // title: '',
-                              // content:
+                              
                               CustomDialog(isSuccess: true),
                             );
                           }, // end onSubmit
@@ -211,6 +197,7 @@ class OtpUser extends StatelessWidget {
 
                             try {
                               await userLoginController.sendOtp();
+                              
                               await Navigator.pushAndRemoveUntil(
                                 context,
                                 PageTransition(
@@ -219,6 +206,8 @@ class OtpUser extends StatelessWidget {
                                 ),
                                 (route) => false,
                               );
+      //                           notificationcontroller.init();
+      //  mycartController.init(); 
                               userHomeController.onInit();
                             
                             } catch (e) {}

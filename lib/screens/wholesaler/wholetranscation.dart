@@ -83,7 +83,7 @@ fontWeight: FontWeight.w700,),)
             children: [
               InkWell(
                   onTap: () {
-                      Get.to(const AddToCardUser());
+                      // Get.to(const AddToCardUser());
                    
                   },
                   child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),

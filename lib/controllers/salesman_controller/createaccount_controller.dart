@@ -95,7 +95,37 @@ class CreateAccountControllersales extends GetxController {
     update();
   }
 
- 
+
+@override
+  void onClose() {
+    print("closing...");
+  clearFields();
+  clearzonefield();
+    super.onClose();
+  }
+void clearFields() {
+    fullNameController.clear();
+    lastNameController.clear();
+    phonenumberController.clear();
+    
+    emailController.clear();
+    passcodeController.clear();
+    dobController.clear();
+   selectedZone = null;
+    selectedState= null;
+    selectedCity= null;
+    stateListModel= null;
+    cityListModel =null;
+    profileFilePath = '';
+    logoFilePath = '';
+
+
+  }
+
+  void clearzonefield() {
+zoneListModel = null;
+       selectedZone = null;
+  }
    Future<bool> validateForm(BuildContext context) {
     final completer = Completer<bool>();
 
@@ -235,13 +265,13 @@ Future getImageGalleryProfile() async {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
      try {
       // zone list
@@ -251,13 +281,13 @@ Future getImageGalleryProfile() async {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Zone: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Zone: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
   // // state list
@@ -294,13 +324,13 @@ Future getImageGalleryProfile() async {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -327,13 +357,13 @@ Future getImageGalleryProfile() async {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

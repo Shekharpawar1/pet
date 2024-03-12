@@ -10,8 +10,10 @@ import 'package:pet/controllers/salesman_controller/dashboard_controller.dart';
 import 'package:pet/controllers/salesman_controller/myOrdersales_controller.dart';
 
 import 'package:pet/controllers/salesman_controller/wholesaler_controller.dart';
+import 'package:pet/models/salesmanModel/orderTrackerSalesModel.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
+import 'package:pet/models/salesmanModel/zoneModel.dart' as zoneFile;
 import 'package:pet/screens/salesman/home.dart';
 import 'package:pet/screens/salesman/notification.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
@@ -225,6 +227,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
        appBar:CustomAppBarSalesWholeback(title:"Total Wholesaller" ,)
 //         elevation: 0,
@@ -266,12 +269,16 @@ class SalesWholeSalerScreen extends StatelessWidget {
 //       ),
      
  ,    
-      body: GetBuilder<SalesAddwholeControllers>(
+      body:
+      
+      GetBuilder<SalesAddwholeControllers>(
           init: addwholesellerController,
           builder: (_) {
             return ListView(
               primary: true,
+              shrinkWrap: true,
               children: [
+              
                 Row(
                   children: [
                     Padding(
@@ -351,7 +358,8 @@ class SalesWholeSalerScreen extends StatelessWidget {
                 addwholesellerController.isAdding
                     ?  Form(
                 key: addwholesellerController.formKey,
-                child: ListView(
+                child:  addwholesellerController.showLoading? SizedBox():
+                ListView(
                   primary: false,
                   shrinkWrap: true,
                   children: [
@@ -771,6 +779,7 @@ class SalesWholeSalerScreen extends StatelessWidget {
                     //   ),
                     // ),
 
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -909,6 +918,61 @@ class SalesWholeSalerScreen extends StatelessWidget {
                       ),
                     ),
 
+                 Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.grey.shade200,
+                                ),
+                                child: DropdownButtonFormField<zoneFile.Zone>(
+                                  validator: (value) {
+                                    if (value == null || value.name!.isEmpty) {
+                                      return 'Please select a zone';
+                                    }
+                                    return null;
+                                  },
+
+                                  // onTap: (){
+                                  //   addwholesellerController.clearzonefield();
+                                  // },
+                                  value: addwholesellerController
+                                      .selectedZone, // Set the selected country value
+                                  decoration: InputDecoration(
+                                    hintText: "Zone",
+                                    hintStyle: TextStyle(
+                                      color: MyColors.black,
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 5),
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    // iconColor: MyColors.white,
+                                  ),
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: MyColors.black,
+                                  ),
+                                  style: TextStyle(
+                                      fontSize: 16, color: MyColors.black),
+                                  items: addwholesellerController
+                                      .zoneListModel!.data!
+                                      .map((zoneFile.Zone? zone) {
+                                    return DropdownMenuItem<zoneFile.Zone>(
+                                      value: zone,
+                                      child: Text(zone?.name ?? ""),
+                                    );
+                                  }).toList(),
+                                  onChanged: (zoneFile.Zone? value) {
+                                    addwholesellerController.updateZone(value!);
+                                    // Perform actions when country is changed
+                                  },
+                                ),
+                              ),
+                            ),
+
    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -946,137 +1010,467 @@ class SalesWholeSalerScreen extends StatelessWidget {
                  
 
 
-    GetBuilder<SalesAddwholeControllers>(
-                init: addwholesellerController,
-                // initState: (_) {},
-                builder: (_) {
-                  return 
-                  addwholesellerController.stateListModel ==
-                          null
-                      // ? Center(
-                      //     child: SpinKitCircle(
-                      //       color:
-                      //           Colors.white, // Color of the progress bar
-                      //       size: 50.0, // Size of the progress bar
-                      //     ),
-                      //   )
-                      ? SizedBox()
-                      : 
-                      Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: 50,
-                        decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),                        
-                            child: DropdownButtonFormField<statesFile.State>(
-                              validator: (value) {
-                                if (value == null || value.stateName!.isEmpty) {
-                                  return 'Please select a state';
-                                }
-                                return null;
-                              },
-                              // value: addressController
-                              //     .selectedState,
-                              decoration: InputDecoration(
-                                hintText: "State",
-                                 hintStyle: TextStyle(
-                           color: MyColors.black,
-                            ),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 5),
-                                border: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                              ),
-                              style: TextStyle(
-                                fontSize: 16,
-                                 color: MyColors.black,
-                              ),
-                              items: addwholesellerController
-                                  .stateListModel!.state!
-                                  .map((statesFile.State state) {
-                                return DropdownMenuItem<statesFile.State>(
-                                  value: state,
-                                  child: Text(state.stateName!),
-                                );
-                              }).toList(),
-                              onChanged: (statesFile.State? value) async {
-                                await addwholesellerController
-                                    .updateState(value!);
-                              },
-                            ),
-                          ),
-                        );
-                },
-              ),
+//     GetBuilder<SalesAddwholeControllers>(
+//                 init: addwholesellerController,
+//                 // initState: (_) {},
+//                 builder: (_) {
+//                   return 
+//                   addwholesellerController.stateListModel ==
+//                           null
+//                       // ? Center(
+//                       //     child: SpinKitCircle(
+//                       //       color:
+//                       //           Colors.white, // Color of the progress bar
+//                       //       size: 50.0, // Size of the progress bar
+//                       //     ),
+//                       //   )
+//                       ?  Center(
+//                                           child: SpinKitCircle(
+//                                             color: Colors
+//                                                 .grey, // Color of the progress bar
+//                                             size:
+//                                                 20.0, // Size of the progress bar
+//                                           ),
+//                                         )
+//                       : 
+//                       Padding(
+//                           padding: const EdgeInsets.all(8.0),
+//                           child: Container(
+//                             height: 50,
+//                         decoration: BoxDecoration(
+//                                   borderRadius: BorderRadius.circular(50),
+//                                   color: Colors.grey.shade200,
+//                                 ),                        
+//                             child: DropdownButtonFormField<statesFile.State>(
+//                               validator: (value) {
+//                                 if (value == null || value.stateName!.isEmpty) {
+//                                   return 'Please select a state';
+//                                 }
+//                                 return null;
+//                               },
+// onTap: (){
+//   addwholesellerController.clearcity();
 
-              GetBuilder<SalesAddwholeControllers>(
-                init: addwholesellerController,
-                // initState: (_) {},
-                builder: (_) {
-                  return addwholesellerController.showLoading
-                      ? Center(
-                          child: SpinKitCircle(
-                            color: Colors.black, // Color of the progress bar
-                            size: 30.0, // Size of the progress bar
-                          ),
-                        )
-                      : addwholesellerController.cityListModel ==
-                              null
-                          ? SizedBox()
-                          : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 50,
-                        decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.grey.shade200,
-                                ),                        
-                              child:
-                                  DropdownButtonFormField<cityFile.State>(
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.cityName!.isEmpty) {
-                                    return 'Please select a city';
-                                  }
-                                  return null;
-                                },
-                                value: addwholesellerController
-                                    .selectedCity,
-                                decoration: InputDecoration(
-                                  hintText: "City",
-                                   hintStyle: TextStyle(
-                               color: MyColors.black,
+// },
+//                               value: addwholesellerController
+//                                   .selectedState,
+//                               decoration: InputDecoration(
+//                                 hintText: "State",
+//                                  hintStyle: TextStyle(
+//                            color: MyColors.black,
+//                             ),
+//                                 contentPadding: EdgeInsets.symmetric(
+//                                     horizontal: 20, vertical: 5),
+//                                 border: InputBorder.none,
+//                                 enabledBorder: InputBorder.none,
+//                                 focusedBorder: InputBorder.none,
+//                               ),
+//                               style: TextStyle(
+//                                 fontSize: 16,
+//                                  color: MyColors.black,
+//                               ),
+//                               items: addwholesellerController
+//                                   .stateListModel!.state!
+//                                   .map((statesFile.State state) {
+//                                 return DropdownMenuItem<statesFile.State>(
+//                                   value: state,
+//                                   child: Text(state.stateName!),
+//                                 );
+//                               }).toList(),
+//                               onChanged: (statesFile.State? value) async {
+//                                 await addwholesellerController
+//                                     .updateState(value!);
+//                               },
+//                             ),
+//                           ),
+//                         );
+//                 },
+//               ),
+
+
+                            GetBuilder<SalesAddwholeControllers>(
+                              init: addwholesellerController,
+                              // initState: (_) {},
+                              builder: (_) {
+                                return addwholesellerController
+                                            .stateListModel ==
+                                        null
+                                    // ? Center(
+                                    //     child: SpinKitCircle(
+                                    //       color:
+                                    //           Colors.white, // Color of the progress bar
+                                    //       size: 50.0, // Size of the progress bar
+                                    //     ),
+                                    //   )
+                                    ? Center(
+                                        child: SpinKitCircle(
+                                          color: Colors
+                                              .grey, // Color of the progress bar
+                                          size:
+                                              20.0, // Size of the progress bar
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            color: Colors.grey.shade200,
+                                          ),
+                                          child: DropdownButtonFormField<
+                                              statesFile.State>(
+                                            validator: (value) {
+                                              if (value == null ||
+                                                  value.stateName!.isEmpty) {
+                                                return 'Please select a state';
+                                              }
+                                              return null;
+                                            },
+                                            onTap: () {
+                                              addwholesellerController
+                                                  .clearcity();
+                                            },
+                                            value: addwholesellerController
+                                                .selectedState,
+                                            decoration: InputDecoration(
+                                              hintText: "State",
+                                              hintStyle: TextStyle(
+                                                color: MyColors.black,
+                                              ),
+                                              contentPadding:
+                                                  EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 5),
+                                              border: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                            ),
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: MyColors.black,
+                                            ),
+                                            items: addwholesellerController
+                                                .stateListModel!.state!
+                                                .map((statesFile.State state) {
+                                              return DropdownMenuItem<
+                                                  statesFile.State>(
+                                                value: state,
+                                                child: Text(state.stateName!),
+                                              );
+                                            }).toList(),
+                                            onChanged: (statesFile.State?
+                                                value) async {
+                                              await addwholesellerController
+                                                  .updateState(value!);
+                                            },
+                                          ),
+                                        ),
+                                      );
+                              },
                             ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 5),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                ),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: MyColors.black,
-                                ),
-                                items: addwholesellerController
-                                    .cityListModel!.state!
-                                    .map((state) {
-                                  return DropdownMenuItem<cityFile.State>(
-                                    value: state,
-                                    child: Text(state.cityName!),
-                                  );
-                                }).toList(),
-                                onChanged: (cityFile.State? value) {
-                                  addwholesellerController
-                                      .updateCity(value!);
-                                },
-                              ),
+
+                            GetBuilder<SalesAddwholeControllers>(
+                              init: addwholesellerController,
+                              // initState: (_) {},
+                              builder: (_) {
+                                return addwholesellerController.showLoading
+                                    ? Center(
+                                        child: SpinKitCircle(
+                                          color: Colors
+                                              .black, // Color of the progress bar
+                                          size:
+                                              30.0, // Size of the progress bar
+                                        ),
+                                      )
+                                    : addwholesellerController.citieslist ==
+                                            null
+                                        ? SizedBox()
+                                        : Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                color: Colors.grey.shade200,
+                                              ),
+                                              child: DropdownButtonFormField(
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value
+                                                          .toString()
+                                                          .isEmpty) {
+                                                    return 'Please select a city';
+                                                  }
+                                                  return null;
+                                                },
+                                                value: addwholesellerController
+                                                    .selectedCity,
+                                                decoration: InputDecoration(
+                                                  hintText: "City",
+                                                  hintStyle: TextStyle(
+                                                    color: MyColors.black,
+                                                  ),
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 5),
+                                                  border: InputBorder.none,
+                                                  enabledBorder:
+                                                      InputBorder.none,
+                                                  focusedBorder:
+                                                      InputBorder.none,
+                                                ),
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: MyColors.black,
+                                                ),
+                                                items: addwholesellerController
+                                                    .citieslist
+                                                    .map((items) {
+                                                  return DropdownMenuItem(
+                                                    value: items["city_name"]
+                                                        .toString(),
+                                                    child: Text(
+                                                        items["city_name"]
+                                                            .toString()),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (value) {
+                                                  addwholesellerController
+                                                      .updateCity(value!);
+                                                },
+                                              ),
+                                            ),
+                                          );
+                              },
                             ),
-                          );
-                },
-              ),
+
+
+
+//  addwholesellerController.cityListModel == null ?SizedBox():
+//               GetBuilder<SalesAddwholeControllers>(
+//                 init: addwholesellerController,
+//                 // initState: (_) {},
+//                 builder: (_) {
+//                   return addwholesellerController.showLoading
+//                       ? Center(
+//                           child: SpinKitCircle(
+//                             color: Colors.black, // Color of the progress bar
+//                             size: 30.0, // Size of the progress bar
+//                           ),
+//                         )
+//                       : addwholesellerController.cityListModel ==
+//                               null && addwholesellerController.cityListModel!.state == "" && addwholesellerController.cityListModel!.state!.isEmpty
+//                           ? SizedBox()
+//                           : Padding(
+//                             padding: const EdgeInsets.all(8.0),
+//                             child: Container(
+//                               height: 50,
+//                           decoration: BoxDecoration(
+//                             borderRadius: BorderRadius.circular(50),
+//                             color: Colors.grey.shade200,
+//                           ),
+//                               child:
+//                                   DropdownButtonFormField<cityFile.State>(
+//                                 validator: (value) {
+//                                   if (value == null ||
+//                                       value.cityName!.isEmpty) {
+//                                     return 'Please select a city';
+//                                   }
+//                                   return null;
+//                                 },
+//                                 value: addwholesellerController
+//                                     .selectedCity,
+//                                 decoration: InputDecoration(
+//                                   hintText: "City",
+//                                   contentPadding: EdgeInsets.symmetric(
+//                                       horizontal: 20, vertical: 5),
+//                                   border: InputBorder.none,
+//                                   enabledBorder: InputBorder.none,
+//                                   focusedBorder: InputBorder.none,
+//                                 ),
+//                                 style: TextStyle(
+//                                   fontSize: 16,
+//                                   color: MyColors.black,
+//                                 ),
+//                                 items: addwholesellerController
+//                                     .cityListModel!.state!
+//                                     .map((state) {
+//                                   return DropdownMenuItem<cityFile.State>(
+//                                     value: state,
+//                                     child: Text(state.cityName!),
+//                                   );
+//                                 }).toList(),
+//                                 onChanged: (cityFile.State? value) async{
+//                                   addwholesellerController
+//                                       .updateCity(value!);
+//                                 },
+//                               ),
+//                             ),
+//                           );
+//                 },
+//               ),
+
+//               GetBuilder<SalesAddwholeControllers>(
+//                 init: addwholesellerController,
+//                 // initState: (_) {},
+//                 builder: (_) {
+//                   return addwholesellerController.showLoading
+//                       ? Center(
+//                           child: SpinKitCircle(
+//                             color: Colors.black, // Color of the progress bar
+//                             size: 30.0, // Size of the progress bar
+//                           ),
+//                         )
+//                       : addwholesellerController.cityListModel ==
+//                               null
+//                           ? SizedBox()
+//                           : Padding(
+//                             padding: const EdgeInsets.all(8.0),
+//                             child: Container(
+//                               height: 50,
+//                         decoration: BoxDecoration(
+//                                   borderRadius: BorderRadius.circular(50),
+//                                   color: Colors.grey.shade200,
+//                                 ),                        
+//                               child:
+//                                   DropdownButtonFormField<cityFile.State>(
+//                                 validator: (value) {
+//                                   if (value == null ||
+//                                       value.cityName!.isEmpty) {
+//                                     return 'Please select a city';
+//                                   }
+//                                   return null;
+//                                 },
+//                                onTap: (){
+//   addwholesellerController.clearcity();
+
+// },
+//                                 value: addwholesellerController
+//                                     .selectedCity,
+//                                 decoration: InputDecoration(
+//                                   hintText: "City",
+//                                    hintStyle: TextStyle(
+//                                color: MyColors.black,
+//                             ),
+//                                   contentPadding: EdgeInsets.symmetric(
+//                                       horizontal: 20, vertical: 5),
+//                                   border: InputBorder.none,
+//                                   enabledBorder: InputBorder.none,
+//                                   focusedBorder: InputBorder.none,
+//                                 ),
+//                                 style: TextStyle(
+//                                   fontSize: 16,
+//                                   color: MyColors.black,
+//                                 ),
+//                                 items: addwholesellerController
+//                                     .cityListModel!.state!
+//                                     .map((state) {
+//                                   return DropdownMenuItem<cityFile.State>(
+//                                     value: state,
+//                                     child: Text(state.cityName!),
+//                                   );
+//                                 }).toList(),
+//                                 onChanged: (cityFile.State? value) {
+//                                   addwholesellerController
+//                                       .updateCity(value!);
+//                                 },
+//                               ),
+//                             ),
+//                           );
+//                 },
+//               ),
+
+
+// addwholesellerController.zoneListModel ==
+//                               null
+//                           ? SizedBox(): 
+//      GetBuilder<SalesAddwholeControllers>(
+//                 init: addwholesellerController,
+//                 // initState: (_) {},
+//                 builder: (_) {
+//                   return addwholesellerController.zoneListModel!.data ==
+//                               ""
+//                           ? SizedBox(): Padding(
+//                                     padding: const EdgeInsets.all(8.0),
+//                       child: Container(
+//                         height: 50,
+//                                          decoration: BoxDecoration(
+//                                       borderRadius: BorderRadius.circular(50),
+//                                       color: Colors.grey.shade200,
+//                                     ),                 
+//                                         child:
+//                                             DropdownButtonFormField<zoneFile.Zone>(
+//                                           //      onTap: (){
+//                                           // },
+//                                           validator: (value) {
+//                                             if (value == null ||
+//                                                 value.name!.isEmpty) {
+//                                               return 'Please select a zone';
+//                                             }
+//                                             return null;
+//                                           },
+                                          
+                                         
+//                                           value: addwholesellerController
+//                                               .selectedZone, // Set the selected country value
+//                                           decoration: InputDecoration(
+//                                             hintText: "Zone",
+//                                             hintStyle: TextStyle(
+//                                               color: MyColors.black,
+//                                             ),
+//                                             contentPadding: EdgeInsets.symmetric(
+//                                                 horizontal: 20, vertical: 5),
+//                                             border: InputBorder.none,
+//                                             enabledBorder: InputBorder.none,
+//                                             focusedBorder: InputBorder.none,
+//                                             // iconColor: MyColors.white,
+//                                           ),
+//                                           icon: Icon(
+//                                             Icons.arrow_drop_down,
+//                                             color: MyColors.black,
+//                                           ),
+//                                           style: TextStyle(
+//                                               fontSize: 16, color: MyColors.black),
+//                                           items: addwholesellerController
+//                                               .zoneListModel!.data!
+//                                               .map((zoneFile.Zone? zone) {
+                                                 
+//                                             return DropdownMenuItem<zoneFile.Zone>(
+//                                               value: zone,
+//                                               child: Text(zone?.name??""),
+//                                             );
+//                                           }).toList(),
+//                                           onChanged: (zoneFile.Zone? value) {
+//                                             addwholesellerController
+//                                                 .updateZone(value!);
+//                                             // Perform actions when country is changed
+//                                           },
+//                                         ),
+//                                       ),
+//                                     );
+//                                  }
+//                                ),
+         
+         
+
+
+
+
+// addwholesellerController.zoneListModel == null || addwholesellerController.zoneListModel!.data == null
+//                               ?  Center(
+//                                           child: SpinKitCircle(
+//                                             color: Colors
+//                                                 .grey, // Color of the progress bar
+//                                             size:
+//                                                 20.0, // Size of the progress bar
+//                                           ),
+//                                         )
+//                               :
+                          
 
 
                     //          Padding(
@@ -1364,12 +1758,131 @@ class SalesWholeSalerScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                          addwholesellerController
-                                  .validateForm(context)
-                                  .then((isValid) {
-                                if (isValid) {
-                                  print("Valid form");
-                                  List<Map<String, String>> documentList = [];
+                  //       print("bbbbbb");
+                  //            List<Map<String, String>> documentList = [];
+                  //                 documentList.add({
+                  //                   'value': addwholesellerController
+                  //                       .profileFilePath,
+                  //                   'key': 'upload_1'
+                  //                 });
+                  //                 documentList.add({
+                  //                   'value': addwholesellerController
+                  //                       .logoFilePath,
+                  //                   'key': 'upload_2'
+                  //                 });
+
+                  //         addwholesellerController
+                  //                 .validateForm(context)
+                        
+                        
+                        
+                  //                 .then((isValid) {
+                  //               if (isValid) {
+                  //                 print("Valid form");
+                             
+                  //                 Map<String, String> body = {
+                                  
+                                 
+                  //                   "f_name": addwholesellerController
+                  //                       .fullNameController.text
+                  //                       .trim()
+                  //                       .toString(),
+                  //                   "l_name": addwholesellerController
+                  //                       .lastNameController.text
+                  //                       .trim()
+                  //                       .toString(),
+                  //                  "dateofbirth": addwholesellerController
+                  //                       .dobController.text
+                  //                       .trim()
+                  //                       .toString(),
+                  //                   'email':  addwholesellerController
+                  //                       .emailController.text
+                  //                       .trim()
+                  //                       .toString(),
+                  //                   "phone": addwholesellerController
+                  //                       .numberController.text
+                  //                       .trim()
+                  //                       .toString(),
+                  //                   "state": addwholesellerController
+                  //                       .selectedState!.stateName.toString(),
+                  //                    "city": addwholesellerController
+                  //                       .selectedCity!.cityName.toString(),
+                  //                   "business_name":
+                  //                       addwholesellerController
+                  //                           .businessNameController.text
+                  //                           .trim()
+                  //                           .toString(),
+                  //                    "aadhar_number":
+                  //                       addwholesellerController
+                  //                           .aadharController.text
+                  //                           .trim()
+                  //                           .toString(),
+                  //                    "zone_id":addwholesellerController.selectedZone!.id.toString(),
+
+                  //                    "gst_number":
+                  //                       addwholesellerController
+                  //                           .gstController.text
+                  //                           .trim()
+                  //                           .toString(),
+                  //                    "pincode":
+                  //                       addwholesellerController
+                  //                           .pincodeController.text
+                  //                           .trim()
+                  //                           .toString(),
+                                   
+                  //                   "password":addwholesellerController.passcodeController.text
+                  //                       .trim()
+                  //                       .toString(),
+                  //                     "role":1.toString(),
+                  //  "seller_id": addwholesellerController.sellerId.toString(),
+                                      
+                  //                       // "upload_1": addwholesellerController
+                  //                       //                     .profileFile!,
+                  //                       // "upload_2":addwholesellerController
+                  //                       //                   .logoFile!
+                                    
+                  //                 };
+                  //                 // documentList.forEach((element) async {
+                  //                 //   print(element["key"]! +
+                  //                 //       "  >   " +
+                  //                 //       element["value"]!);
+                  //                 // });
+                  //                 try {
+                  //                   print(body);
+                  //                   addwholesellerController.postWholeData(
+                  //                       documentList,
+                  //                       body,
+                  //                       Constants.WHOLESALER_REGISTER);
+                                         
+                  //                   Get.back();
+                  //                   Get.snackbar(
+                  //                     'Success',
+                  //                     'WholeSaller Succesfully Added',
+                  //                     snackPosition: SnackPosition.BOTTOM,
+                  //                     backgroundColor: Colors.green,
+                  //                     colorText: Colors.white,
+                  //                   );
+                  //                 } catch (e) {
+                  //                   Get.snackbar(
+                  //                     'Error',
+                  //                     'An error occurred: $e',
+                  //                     snackPosition: SnackPosition.BOTTOM,
+                  //                     backgroundColor: Colors.red,
+                  //                     colorText: Colors.white,
+                  //                   );
+                  //                 }
+
+                  //                 // Code to execute when the form is valid
+                  //                 // Add your logic here
+                  //               } else {
+                  //                 print("InValid form");
+                  //                 // Code to execute when the form is not valid
+                  //                 // Add your logic here
+                  //               }
+                  //             });
+                           
+
+    List<Map<String, String>> documentList = [];
                                   documentList.add({
                                     'value': addwholesellerController
                                         .profileFilePath,
@@ -1380,11 +1893,69 @@ class SalesWholeSalerScreen extends StatelessWidget {
                                         .logoFilePath,
                                     'key': 'upload_2'
                                   });
+                              addwholesellerController
+                                  .validateForm(context)
+                                  .then((isValid) {
+                                if (isValid) {
+                                  print("Valid form");
+                              
 
                                   Map<String, String> body = {
                                   
                                  
-                                    "f_name": addwholesellerController
+//                                     "f_name": addwholesellerController
+//                                         .fullNameController.text
+//                                         .trim()
+//                                         .toString(),
+//                                     "l_name": addwholesellerController
+//                                         .lastNameController.text
+//                                         .trim()
+//                                         .toString(),
+//                                     "phone": addwholesellerController
+//                                         .numberController.text
+//                                         .trim()
+//                                         .toString(),
+//                                         "dateofbirth": addwholesellerController
+//                                         .dobController.text
+//                                         .trim()
+//                                         .toString(),
+//                                     'email':  addwholesellerController
+//                                         .emailController.text
+//                                         .trim()
+//                                         .toString(),
+//                                     "state": addwholesellerController
+//                                         .selectedState!.stateName.toString(),
+//                                          "city": addwholesellerController
+//                                         .selectedState!.stateName.toString(),
+//                                     "business_name":
+//                                         addwholesellerController
+//                                             .businessNameController.text
+//                                             .trim()
+//                                             .toString(),
+//                                      "aadhar_number":
+//                                         addwholesellerController
+//                                             .aadharController.text
+//                                             .trim()
+//                                             .toString(),
+//                                      "gst_number":
+//                                         addwholesellerController
+//                                             .gstController.text
+//                                             .trim()
+//                                             .toString(),
+//                                      "pincode":
+//                                         addwholesellerController
+//                                             .pincodeController.text
+//                                             .trim()
+//                                             .toString(),
+//                                       "zone_id":1.toString(),
+//                                     "password":addwholesellerController.passcodeController.text
+//                                         .trim()
+//                                         .toString(),
+// "seller_id": 17.toString(),
+//                                         "role":1.toString(),
+
+  
+                                      "f_name": addwholesellerController
                                         .fullNameController.text
                                         .trim()
                                         .toString(),
@@ -1428,19 +1999,14 @@ class SalesWholeSalerScreen extends StatelessWidget {
                                             .pincodeController.text
                                             .trim()
                                             .toString(),
-                                    // "dob": createAccountpartnercontroller
-                                    //     .dobController.text
-                                    //     .trim()
-                                    //     .toString(),
-                                    "password":   addwholesellerController.passcodeController.text
+                                            "zone":addwholesellerController.selectedZone!.id.toString(),
+
+                                    "password":addwholesellerController.passcodeController.text
                                         .trim()
                                         .toString(),
-"seller_id": addwholesellerController.sellerId.toString(),
+  "seller_id": addwholesellerController.sellerId.toString(),
                                         "role":1.toString(),
-                                        // "upload_1": addwholesellerController
-                                        //                     .profileFile!,
-                                        // "upload_2":addwholesellerController
-                                        //                   .logoFile!
+                                      
                                     
                                   };
                                   // documentList.forEach((element) async {
@@ -1449,11 +2015,14 @@ class SalesWholeSalerScreen extends StatelessWidget {
                                   //       element["value"]!);
                                   // });
                                   try {
+                                    print(documentList);
+                                    print(body);
+                                    print(Constants.WHOLESALER_REGISTER);
                                     addwholesellerController.postWholeData(
                                         documentList,
                                         body,
                                         Constants.WHOLESALER_REGISTER);
-                                    Get.back();
+                                    // Get.back();
                                     Get.snackbar(
                                       'Success',
                                       'Registered Succesfully',
@@ -1479,6 +2048,8 @@ class SalesWholeSalerScreen extends StatelessWidget {
                                   // Add your logic here
                                 }
                               });
+                           
+                           
                             },
                             child: addwholesellerController.isLoading
                                 ? Center(child: CircularProgressIndicator())
@@ -1507,77 +2078,78 @@ class SalesWholeSalerScreen extends StatelessWidget {
                 ),
               )
                     : 
+                  
                     Column(children: [
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                          height: 45,
-                          width: 265,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(17),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(15.0),
+                        //   child: Row(
+                        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //                 children: [
+                        //                   Container(
+                        //   height: 45,
+                        //   width: 265,
+                        //   decoration: BoxDecoration(
+                        //     shape: BoxShape.rectangle,
+                        //     borderRadius: BorderRadius.circular(17),
                         
-                            // border: Border.all(color:brandcolor ),
+                        //     // border: Border.all(color:brandcolor ),
                         
-                            color: MyColors.white,
-                          ),
-                          child: TextFormField(
-                            controller: _searchcontroller,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: MyColors.voliet,
-                              fontFamily: "SF-Pro-Display",
-                            ),
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.only(left: 15),
-                                fillColor: MyColors.white,
-                                focusColor: MyColors.white,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  // borderRadius: BorderRadius.circular(50),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  //  borderRadius: BorderRadius.circular(50),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  //  borderRadius: BorderRadius.circular(50),
-                                ),
-                                hintText: "Search",
-                                prefixIcon: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Image.asset(
-                                    "assets/image/searchnormal.png",
-                                    width: 10,
-                                  ),
-                                ),
-                                hintStyle: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400)),
-                          ),
-                                          ),
+                        //     color: MyColors.white,
+                        //   ),
+                        //   child: TextFormField(
+                        //     controller: _searchcontroller,
+                        //     style: TextStyle(
+                        //       fontSize: 14,
+                        //       color: MyColors.voliet,
+                        //       fontFamily: "SF-Pro-Display",
+                        //     ),
+                        //     decoration: InputDecoration(
+                        //         contentPadding: EdgeInsets.only(left: 15),
+                        //         fillColor: MyColors.white,
+                        //         focusColor: MyColors.white,
+                        //         enabledBorder: OutlineInputBorder(
+                        //           borderSide: BorderSide.none,
+                        //           // borderRadius: BorderRadius.circular(50),
+                        //         ),
+                        //         focusedBorder: OutlineInputBorder(
+                        //           borderSide: BorderSide.none,
+                        //           //  borderRadius: BorderRadius.circular(50),
+                        //         ),
+                        //         border: OutlineInputBorder(
+                        //           borderSide: BorderSide.none,
+                        //           //  borderRadius: BorderRadius.circular(50),
+                        //         ),
+                        //         hintText: "Search",
+                        //         prefixIcon: Padding(
+                        //           padding: const EdgeInsets.all(10.0),
+                        //           child: Image.asset(
+                        //             "assets/image/searchnormal.png",
+                        //             width: 10,
+                        //           ),
+                        //         ),
+                        //         hintStyle: TextStyle(
+                        //             color: Colors.grey,
+                        //             fontSize: 16,
+                        //             fontWeight: FontWeight.w400)),
+                        //   ),
+                        //                   ),
                         
-                                          //  SizedBox(width: 10,),
-                                          Container(
-                            width: 45,
-                            height: 45,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Color(0xffffcc00)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Image.asset(
-                                "assets/image/filter3.png",
-                              ),
-                            ))
-                                        ],
-                                      ),
-                        ),
+                        //                   //  SizedBox(width: 10,),
+                        //                   Container(
+                        //     width: 45,
+                        //     height: 45,
+                        //     decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(15),
+                        //         color: Color(0xffffcc00)),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(10.0),
+                        //       child: Image.asset(
+                        //         "assets/image/filter3.png",
+                        //       ),
+                        //     ))
+                        //                 ],
+                        //               ),
+                        // ),
 SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height * 0.02,
@@ -1609,7 +2181,7 @@ SizedBox(
                                     InkWell(
                                       onTap: () {
                                         
-                                         print("iTem  ${item.id}");
+//                                          print("iTem  ${item.id}");
 
 // }
                                          storage.write('wholesalerId', item.id);
@@ -1774,17 +2346,13 @@ SizedBox(
                                                     GestureDetector(
                                                       onTap: (){
 
-                                                       
-                                                    
-       
-      // // var id = userLoginModel.data![0].id;
-      // print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData} Role: ${wholesalerroleid}");
-      
+        storage.write('wholesalerId', item.id);
+  print("IDDDD");
+ print(storage.read('wholesalerId').toString());
+      print("IDItem ${item.id}");
                                                          Get.to(HomeSales(
                                                         wholeseller: item.id??0
-//                                                       var whole =      storage.write('wholesalerId', item.id);
-//   print("IDDDD");
-//  print(storage.read('wholesalerId').toString());
+                    
                                                          ));
 
                                                       },
@@ -1810,9 +2378,15 @@ SizedBox(
                                                           
       myordercontroller.fethUserId();
         await myordercontroller.init();
+             print("IDItem ${item.id}");
+
+                          storage.write('wholesalerId', item.id);
+  print("IDDDD");
+ print(storage.read('wholesalerId').toString());
                                                          Get.to(MyOrderSales(
                                                           wholesellerID: item.id??0,
                                                          ));
+                                                         print(item.id??0);
                                                         //  Get.to(OrderHistorysales());
                                                       },
                                                       child: Container(

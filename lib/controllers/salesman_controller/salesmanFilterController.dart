@@ -220,7 +220,8 @@ class SalesManFilterController extends GetxController {
 
   TextEditingController maxPriceController = TextEditingController();
   void clearFields() {
-    
+         minPriceController.clear();
+    maxPriceController.clear();
       selectCategoryFilterList = [];
   selectBrandFilterList = [];
   selectBreedFilterList = [];
@@ -256,19 +257,21 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // our brands
       userBrandModel =
           UserOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
-
+ userBrandModel!.data = userBrandModel!.data!.where((element) => element.canine == 1).toList();
+  print(
+          "CAnine products229292  ===>>>> ${userBrandModel!.data!.length}");
       print(
           "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
@@ -283,19 +286,20 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
       // categories
       userCategoriesModel = UserCategoriesModel.fromJson(
           await ApiHelper.getApi(getUserCategoriesUrl));
+      //  userCategoriesModel!.data =   userCategoriesModel!.data!.where((element) => element.module == 1).toList();
       print(userCategoriesModel);
       List<String> categorylist =
           userCategoriesModel!.data!.map((e) => e.name.toString()).toList();
@@ -316,13 +320,13 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -350,13 +354,13 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -384,13 +388,13 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Category: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Category: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
 
@@ -405,13 +409,13 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
 
       }
       //product
@@ -446,13 +450,13 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
   Future<void> loadDefaultData() async {
@@ -461,7 +465,7 @@ class SalesManFilterController extends GetxController {
     FilterListModel products = FilterListModel();
     try {
       products = FilterListModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+          await ApiHelper.getApi(getUserPropertiesUrl));
 
            
       products.data = products.data!.where((element) => element.moduleId == 1).toList();
@@ -469,13 +473,13 @@ class SalesManFilterController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     filteredProducts = products.data!;
     update();
@@ -484,6 +488,8 @@ class SalesManFilterController extends GetxController {
     update();
   }
 
+//  String getUserPropertiesUrl =
+//       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
   // get getAfilterList => items;
 
   Future<void> filter() async {
@@ -493,20 +499,23 @@ class SalesManFilterController extends GetxController {
     FilterListModel products = FilterListModel();
     try {
       products = FilterListModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+        
+                  await ApiHelper.getApi(getUserPropertiesUrl));
+
+          // await ApiHelper.getApi("http://canine.hirectjob.in/api/v1/items/latest"));
           
       products.data = products.data!.where((element) => element.moduleId == 1).toList();
       
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     double max = 9999999999;
     double min = 0;

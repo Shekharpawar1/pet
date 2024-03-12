@@ -26,54 +26,54 @@ var userId;
   String getPetUrl = Constants.GET_PET_USER;
 
   var demoResponse = {
-    "data": [
-      {
-        "slot-date": "2023-08-01 00:00:00.000",
-        "slots": [
-          "8:00",
-          "9:00",
-          "8:00",
-          "9:00",
-          "8:00",
-          "9:00",
-          "12:00",
-          "1:00",
-          "12:00",
-          "1:00"
-        ],
-      },
-      {
-        "slot-date": "2023-07-30 00:00:00.000",
-        "slots": [
-          "8:00",
-          "9:00",
-          "8:00",
-          "9:00",
-          "8:00",
-          "9:00",
-          "12:00",
-          "1:00"
-        ],
-      },
-      {
-        "slot-date": "2023-08-02 00:00:00.000",
-        "slots": [
-          "10:00",
-          "12:00",
-          "1:00",
-          "12:00",
-          "1:00",
-          "12:00",
-          "1:00",
-          "12:00",
-          "1:00",
-          "12:00",
-          "1:00",
-          "12:00",
-          "1:00"
-        ],
-      },
-    ],
+    // "data": [
+    //   {
+    //     "slot-date": "2023-08-01 00:00:00.000",
+    //     "slots": [
+    //       "8:00",
+    //       "9:00",
+    //       "8:00",
+    //       "9:00",
+    //       "8:00",
+    //       "9:00",
+    //       "12:00",
+    //       "1:00",
+    //       "12:00",
+    //       "1:00"
+    //     ],
+    //   },
+    //   {
+    //     "slot-date": "2023-07-30 00:00:00.000",
+    //     "slots": [
+    //       "8:00",
+    //       "9:00",
+    //       "8:00",
+    //       "9:00",
+    //       "8:00",
+    //       "9:00",
+    //       "12:00",
+    //       "1:00"
+    //     ],
+    //   },
+    //   {
+    //     "slot-date": "2023-08-02 00:00:00.000",
+    //     "slots": [
+    //       "10:00",
+    //       "12:00",
+    //       "1:00",
+    //       "12:00",
+    //       "1:00",
+    //       "12:00",
+    //       "1:00",
+    //       "12:00",
+    //       "1:00",
+    //       "12:00",
+    //       "1:00",
+    //       "12:00",
+    //       "1:00"
+    //     ],
+    //   },
+    // ],
   };
 
   List<String> demoPetsList = [];
@@ -194,9 +194,12 @@ var userId;
     stateListModel = null;
     selectedCity = null;
     selectedState = null;
+    selectedPet =  null;
     pickedDate = null;
     cityController.clear();
     numberController.clear();
+    dobController.clear();
+
     nameController.clear();
     emailController.clear();
     addressController.clear();
@@ -206,6 +209,24 @@ var userId;
     update();
   }
 
+
+  // void clearFieldsstate() {
+  // selectedState= null;
+   
+  //   stateListModel= null;
+  
+
+  // }
+
+
+  void clearcity() {
+    
+    selectedCity= null;
+     cityController.clear();
+    cityListModel= null;
+  
+
+  }
   @override
   void onInit() {
     super.onInit();
@@ -234,13 +255,13 @@ var userId;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to load State',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to load State',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // pet list
@@ -251,13 +272,13 @@ var userId;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Pets',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to Load Pets',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     if (petListModel != null && petListModel!.data != null) {
@@ -311,9 +332,10 @@ var userId;
   bool showLoading = false;
   statesFile.State? selectedState;
   Future<void> updateState(statesFile.State state) async {
-    selectedState = state;
+     selectedState = state;
     showLoading = true;
     update();
+  
     await fetchCity(state.id.toString());
     showLoading = false;
     update();
@@ -334,22 +356,38 @@ var userId;
   fetchCity(String stateId) async {
     showLoading = true;
     update();
-    try {
-      // city list
-      cityListModel =
-          CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+    // try {
+    //   // city list
+    //   cityListModel =
+    //       CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+    //   print(cityListModel);
+    //   cityLoaded = true;
+    //   update();
+    // }
+
+       try {
+     
+      var request = http.MultipartRequest('POST', Uri.parse(getCityUrl));
+      request.fields.addAll({
+        "state":stateId.toString()
+      });
+      
+   cityListModel  = CityListModel.fromJson(await ApiHelper.postFormData(request: request));
+   
+      // update();
       print(cityListModel);
       cityLoaded = true;
       update();
-    } catch (e) {
+    }
+     catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to City: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to City: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -401,7 +439,7 @@ var userId;
       "pet_problem": petProblemController.text.trim().toString(),
       "phone": numberController.text.trim(),
       // "service_id": serviceId.toString(),
-      "user_id": userId.toString(),
+      "user_id": storage.read('id').toString(),
       "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
     };
     String veterinaryBooking = Constants.VETERINARY_BOOKING;
@@ -434,13 +472,13 @@ var userId;
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

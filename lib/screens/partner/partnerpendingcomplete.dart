@@ -5,6 +5,7 @@ import 'package:pet/controllers/partner_controller/dashBoard_controller.dart';
 
 import 'package:pet/models/partnerModel/partnerTotalOrderModel.dart' as TotalOrder;
 import 'package:pet/models/partnerModel/partnerTotalProductModel.dart' as TotalProduct;
+import 'package:pet/screens/partner/widget/wholeAppBar.dart';
 import 'package:pet/screens/salesman/orderDetails.dart';
 // import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
 // import 'package:pet/models/wholesalerModel/myOrderModel.dart' as OrderModel;
@@ -33,37 +34,7 @@ PartnerDashBoardController partnerdashBoardController = Get.put(PartnerDashBoard
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left:15.0,top: 15,bottom: 15),
-            child: GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },child:Icon(Icons.arrow_left,color:MyColors.black)
-            ),
-          ),
-          title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child:Text("",style: TextStyle(fontSize: 16,color: MyColors.black,
-fontWeight: FontWeight.w700,),)
-          ),
-          actions: [
-          //  SvgPicture.asset("assets/image/girl.svg"),
-           
-            // SizedBox(width: 20),
-            Padding(
-              padding:  EdgeInsets.only(right:20.0),
-              child: SvgPicture.asset("assets/image/notification.svg"),
-              //  Image.asset("assets/image/girl.png"),
-            ),
-           
-          ],
-         
-        ),
-      
+  appBar:CustomAppBarPartnerback(title: (widget.data == null || widget.data!.isEmpty)?'':widget.data![0].orderStatus .toString() ,),
       body:
         widget.data!.isEmpty ? Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)):
        ListView(

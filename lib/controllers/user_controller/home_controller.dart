@@ -9,36 +9,36 @@ import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
 import 'package:pet/models/usersModel/getUserPropertiesModel.dart' as Model;
 import 'package:pet/models/usersModel/ourBrandModel.dart';
+import 'package:pet/models/usersModel/partnerModel.dart';
 import 'package:pet/models/usersModel/servicesCategoriesModel.dart';
 import 'package:pet/models/usersModel/userProductByPartnerItemModel.dart';
 import 'package:pet/models/usersModel/userProductByPartnerModel.dart';
 import 'package:pet/models/usersModel/userWishListModel.dart';
 import 'package:pet/screens/user/allcategory.dart';
 
+import 'package:pet/models/usersModel/bannerModel.dart' as Banner;
 import 'package:video_player/video_player.dart';
 import 'package:pet/models/usersModel/servicesModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 
+
 class HomeuserController extends GetxController {
   var userId = GetStorage().read("id");
-  late VideoPlayerController videoController; 
+  // late VideoPlayerController videoController; 
+    // VideoPlayerController? videoPlayerController;
+    late  VideoPlayerController videoController;
   TextEditingController searchcontroller = TextEditingController();
    NotificationController notificationcontroller =
       Get.put(NotificationController());
   MyCartController mycartController = Get.put(MyCartController());
   bool showLoading = false;
-
+var videourl;
   int? itempartnerId;
-  //videoplayer
-  updatevideo() {
-    videoController = VideoPlayerController.networkUrl(Uri.parse(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
-      ..initialize();
-    update();
-  }
-
+  int? vendorId;
+  
+RxString ServiceDescription=''.obs;
   List<Model.Datum> searchScreenData = [];
   void clearSearchData() {
     searchScreenData = [];
@@ -46,7 +46,7 @@ class HomeuserController extends GetxController {
   }
 
   void searchDataFilter(UserPropertiesModel? dataModel, String keyword) {
-    // const String keyword = "999";
+    
 
     List<Model.Datum> filteredData = filter(keyword, dataModel!.data!);
     searchScreenData = filteredData;
@@ -96,10 +96,11 @@ class HomeuserController extends GetxController {
   }
 
 
-void viewpartner(int id) {
+void viewpartner(int id,) {
     itempartnerId = id;
+   
     update();
-    print("itempartnerId${itempartnerId}");
+    print("itempartnerId${itempartnerId} ");
   }
   // categories
   String getUserCategoriesUrl =
@@ -141,23 +142,60 @@ void viewpartner(int id) {
   String getWishListUrl = Constants.USER_GET_WISHLIST;
   List wishListItemsId = GetStorage().read('wishListItems') ?? [];
 
-  // List wishListItemsId = GetStorage().read('wishListItems') ?? [];
+ 
+  
+  
+
+
 
   @override
-  void onInit() {
+void onInit()  {
     super.onInit();
-     notificationcontroller.init();
-       mycartController.init();
+
+  var videopath = GetStorage().read('videobanner');
+
+
+  print("bbmmmmm");
+  print(videourl);
+
+ try {
+  
+// var videourl = "https://canine.hirectjob.in/storage/app/654224036ea93.mp4";
+// "${Constants.BASE_URL}/storage/app/${videopath}";
+// https://canine.hirectjob.in/storage/app/654224036ea93.mp4
+ print("bbmmmmm99  ${videourl}");
+  videoController = VideoPlayerController.networkUrl(Uri.parse
+   ( "https://canine.hirectjob.in/storage/app/${videopath}")
+  )
+  ..initialize().then((_) {
+    videoController.play();
+    update();
+      videoController.setLooping(true);
+  });
+} catch (error) {
+  print("Error initializing the video: $error");
+} 
 partnerIteminit();
-    videoController = VideoPlayerController.asset(
-        'assets/image/video1.eaf55f566741325a7b40.mp4')
-      ..initialize().then((_) {
-        // Video is initialized
-        videoController.play();
-        update();
-      });
-    init();
+  init();
+     bannerListinit();
+    notificationcontroller.notifyinit();
+       mycartController.init();
+
   }
+  
+//   Future<void>uploadVideoPlayer() async {
+//    try {
+//   videoController = VideoPlayerController.networkUrl(Uri.parse
+//    ( videourl)
+//   )..initialize().then((_) {
+//     videoController.play();
+//     update();
+//       videoController.setLooping(true);
+//   });
+// } catch (error) {
+//   print("Error initializing the video: $error");
+// } ;
+//   }
 
   void getWishList() {
     wishListItemsId = GetStorage().read('wishListItems') ?? [];
@@ -166,6 +204,8 @@ partnerIteminit();
     update();
   }
 
+
+   
   Future<void> init() async {
     showLoading = true;
     update();
@@ -178,13 +218,7 @@ partnerIteminit();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     
     }
     try {
       // pets
@@ -195,55 +229,33 @@ partnerIteminit();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
-    try {
-      // banners
-      userBannerModel =
-          UserBannerModel.fromJson(await ApiHelper.getApi(getBannerUrl));
-      print(userBannerModel);
-      bannerLoaded = true;
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+   
     try {
       // our brands
       userBrandModel =
           UserOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
-      // userOurBrandModel = userBrandModel;
-      // userOurBrandModel!.data = [];
-      // userBrandModel!.data!.forEach((e) {
-      //   if (e.canine == 1) {
-      //     userOurBrandModel!.data!.add(e);
-      //   }
-      // });
+     
       print(
           "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
       brandLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // our services
@@ -254,13 +266,13 @@ partnerIteminit();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // ProductByPartner
@@ -272,13 +284,13 @@ partnerIteminit();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // wishlist
@@ -303,6 +315,32 @@ partnerIteminit();
     }
 
     showLoading = false;
+    update();
+  }
+
+ Future<void> bannerListinit() async {
+    
+    showLoading = true;
+    update();
+   try {
+      // banners
+      userBannerModel =
+          UserBannerModel.fromJson(await ApiHelper.getApi(getBannerUrl));
+      print(userBannerModel);
+      bannerLoaded = true;
+      update();
+    } catch (e) {
+      print('Error: $e');
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
+    }
+
+       showLoading = false;
     update();
   }
   Future<void> fetchWishList() async {
@@ -314,10 +352,9 @@ partnerIteminit();
       wishList =
           WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
       // print(wishList);
-      // wishList!.data!.map((e) => e.itemId).toList();
+      print("wishhhlist${wishList}");
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
-      // categoryLoaded = true;
       update();
       print("${GetStorage().read('wishListItems')}");
     } catch (e) {
@@ -336,6 +373,9 @@ partnerIteminit();
   }
 
 
+
+
+
 Future<void> getWishinit() async{
  showLoading = true;
     update();
@@ -344,12 +384,13 @@ Future<void> getWishinit() async{
       // wishlist
       wishList =
           WishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
-      // print(wishList);
+      print("WhishGetbbb${wishList}");
       // wishList!.data!.map((e) => e.itemId).toList();
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
       // categoryLoaded = true;
       update();
+      print("GetWishData");
       print("${GetStorage().read('wishListItems')}");
     } catch (e) {
       print('Error: $e');
@@ -380,13 +421,13 @@ ProductByPartnerItemModel?  userproductbypartneritemModel;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -394,29 +435,29 @@ ProductByPartnerItemModel?  userproductbypartneritemModel;
     update();
     }
   // our services
-  // String getServicesUrl = '${Constants.GET_USER_SERVICES}';
+  String getServicesUrl1 = '${Constants.GET_USER_SERVICES}';
   ServicesCategoryModel? servicesCategoryModel;
   bool servicesCategoryLoaded = false;
 
-  Future<void> getServicesCategories(String url) async {
+  Future<void> getServicesCategories() async {
     showLoading = true;
     update();
     try {
       // our services
       servicesCategoryModel =
-          ServicesCategoryModel.fromJson(await ApiHelper.getApi(url));
+          ServicesCategoryModel.fromJson(await ApiHelper.getApi(getServicesUrl1));
       print(servicesCategoryModel);
       servicesCategoryLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -511,45 +552,36 @@ ProductByPartnerItemModel?  userproductbypartneritemModel;
   Future<void> addItemToWishList(int productId) async {
     showLoading = true;
     update();
-    // await Future.delayed(Duration(seconds: 4));
     Map<String, String> body = {
-      // "dates": DateFormat('dd-MM-yyyy').format(selectedDate).toString(),
-      // "slot": timeSlots.map((e) => e.time).toList(),
-      // "slot": selectedSlot!.time.toString(),
-      // "name": nameController.text.trim().toString(),
-      // "email": emailController.text.trim().toString(),
-      // "pet": selectedPet.toString(),
-      // "pet": petId.toString(),
-      // "state": selectedState!.stateName.toString(),
-      // "city": selectedCity!.cityName.toString(),
-      // "address": addressController.text.trim().toString(),
-      // "pet_problem": petProblemController.text.trim().toString(),
-      // "phone": numberController.text.trim(),
-      // "service_id": serviceId.toString(),
+     
       "user_id": storage.read('id').toString(),
       "item_id": productId.toString(),
-      // "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
+     
     };
     String addToWishList = Constants.USER_ADD_TO_FAV;
     print(body);
     try {
-      // List documentList = [
-      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45 (1).png', 'key': "logo"},
-      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45.png', 'key': "profile"},
-      // ];
-      // var body = {'id': 'value', 'name': 'dhruv'};
+     
       var request = http.MultipartRequest('POST', Uri.parse(addToWishList));
       request.fields.addAll(body);
-      // request.files.add(await http.MultipartFile.fromPath(
-      //     'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
-      // documentList.forEach((element) async {
-      //   request.files.add(await http.MultipartFile.fromPath(
-      //       element["key"], element["value"]));
-      // });
-      await ApiHelper.postFormData(request: request);
+     
+     var response = await ApiHelper.postFormData(request: request);
       wishListItemsId.add(productId);
+      print(response);
       print("product");
       print(productId);
+        String? message ;
+    final RegExp messageRegExp = RegExp(r'message:\s*(.+?),', caseSensitive: false);
+
+final Match? messageMatch = messageRegExp.firstMatch(response.toString());
+
+if (messageMatch != null) {
+ message = messageMatch.group(1)!;
+    print("=====message${message}");
+  print(message); 
+} else {
+  print("Message not found");
+}
       update();
       GetStorage().write('wishListItems', wishListItemsId);
 
@@ -558,7 +590,7 @@ ProductByPartnerItemModel?  userproductbypartneritemModel;
       // Get.back();
       Get.snackbar(
         'Success',
-        'Item Added',
+        'Item ${message??'Already Added in list'}',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
@@ -567,17 +599,19 @@ ProductByPartnerItemModel?  userproductbypartneritemModel;
       print('Error: $e');
       if (e.toString() == "Error: Already in List") {
         wishListItemsId.remove(productId);
+        
         update();
         GetStorage().write('wishListItems', wishListItemsId);
         removeItemFromWishList(productId);
-        // Get.snackbar(
-        //   'Exists',
-        //   'Remove it from WishList Page',
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   backgroundColor: Colors.orange,
-        //   colorText: Colors.white,
-        // );
+        Get.snackbar(
+          'Exists',
+          'Remove it from WishList Page',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.orange,
+          colorText: Colors.white,
+        );
       } else {
+         print('Error: $e');
         Get.snackbar(
           'Error',
           'An error occurred: $e',
@@ -630,17 +664,24 @@ ProductByPartnerItemModel?  userproductbypartneritemModel;
           colorText: Colors.white,
         );
       } else {
-        Get.snackbar(
-          'Error',
-          'An error occurred: $e',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        print('Error: $e');
+        // Get.snackbar(
+        //   'Error',
+        //   'An error occurred: $e',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
       }
     }
 
     showLoading = false;
     update();
+  }
+
+    @override
+  void onClose() {
+    videoController?.dispose();
+    super.onClose();
   }
 }

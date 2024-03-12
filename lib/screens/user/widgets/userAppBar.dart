@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/notification_controller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
 import 'package:pet/utils/colors.dart';
+import 'package:pet/utils/fontstyle.dart';
 
 import '../../../controllers/user_controller/addtocartcontroller.dart';
-// import '../../../controllers/wholesaler_controller/user/ordersummary.dart';
+import '../../bottomnavbar.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final GlobalKey<ScaffoldState> drawerKey;
-
-  CustomAppBar({required this.drawerKey});
+ final BuildContext context;
+  CustomAppBar({required this.drawerKey, required this.context});
     NotificationController notificationcontroller =
       Get.put(NotificationController());
+            ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
   MyCartController mycartController = Get.put(MyCartController());
+
   @override
   void onInit() {
 
-    notificationcontroller.init();
+   //   notificationcontroller.init();
        mycartController.init(); 
     // super.onInit();
   }
@@ -28,8 +35,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-     notificationcontroller.init();
-       mycartController.init();
+ 
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.transparent,
@@ -44,11 +50,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
+
 
         actions: [
           Stack(
@@ -61,154 +63,97 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: Icon(Icons.notifications, color: MyColors.black),
                   )),
 
-                    notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-SizedBox():
+                    notificationcontroller.userNotificationModel == ""?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                     
-//                     FutureBuilder(
-//   future: fetchData(), // Replace with your actual future function
-//   builder: (BuildContext context, AsyncSnapshot<Data> snapshot) {
-//     if (snapshot.connectionState == ConnectionState.waiting) {
-//       // While the future is still running, show a loading indicator
-//       return CircularProgressIndicator();
-//     } else if (snapshot.hasError) {
-//       // Handle errors
-//       return Text('Error: ${snapshot.error}');
-//     } else if (!snapshot.hasData) {
-//       // Handle cases where there is no data
-//       return Text('No data available');
-//     } else {
-//       // Data is available, use GetBuilder for additional state management
-//       return GetBuilder<NotificationController>(
-//         init: NotificationController(), // Initialize the controller
-//         builder: (_) {
-//           if (notificationcontroller.userNotificationModel == null ||
-//               notificationcontroller.userNotificationModel!.state == null ||
-//               notificationcontroller.userNotificationModel!.state!.isEmpty) {
-//             return const SizedBox();
-//           } else {
-//             return Positioned(
-//               top: 3.0,
-//               right: 4.0,
-//               child: Center(
-//                 child: Text(
-//                   notificationcontroller.userNotificationModel!.state!.length.toString(),
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 8.0,
-//                     fontWeight: FontWeight.w500,
-//                   ),
-//                 ),
-//               ),
-//             );
-//           }
-//         },
-//       );
-//     }
-//   },
-// ))
-
+ 
                       GetBuilder<NotificationController>(
                           init: notificationcontroller,
                           builder: (_) {
-                            return   notificationcontroller.userNotificationModel == null ||
-                                    notificationcontroller.userNotificationModel!.state ==
-                                        null ||
-                                     notificationcontroller.userNotificationModel!.state!.isEmpty
+                            return   
+                             notificationcontroller.userNotifyListModel == null 
                                 ? const SizedBox():
                            Positioned(
-                              top: 3.0,
+                              top: 4.0,
                               right: 4.0,
                               child: Center(
-                                child: Text(
-                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-                                  // list.length.toString(),
+                                child:  notificationcontroller.userNotifyListModel == null?
+                                Text("0"):Text(
+                (notificationcontroller.totalNotify??0).toString(),
+                                
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8.0,
+                                      fontSize: 10.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ));
                         }
                       ),
                     
+
                     
                     ],
                   )),
             ],
           ),
-//                    notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-// SizedBox():
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       GetBuilder<NotificationController>(
-//                           init: notificationcontroller,
-//                           builder: (_) {
-//                             return   notificationcontroller.userNotificationModel == null ||
-//                                     notificationcontroller.userNotificationModel!.state ==
-//                                         null ||
-//                                      notificationcontroller.userNotificationModel!.state!.isEmpty
-//                                 ? const SizedBox():
-//                            Positioned(
-//                               top: 3.0,
-//                               right: 4.0,
-//                               child: Center(
-//                                 child: Text(
-//                                   ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-//                                   // list.length.toString(),
-//                                   style: TextStyle(
-//                                       color: Colors.white,
-//                                       fontSize: 8.0,
-//                                       fontWeight: FontWeight.w500),
-//                                 ),
-//                               ));
-//                         }
-//                       ),
-//                     ],
-//                   )),
-//             ],
-//           ),
-          SizedBox(width: 20),
-          Stack(
+
+
+
+   SizedBox(width: 20),
+
+
+
+
+       
+       
+           Stack(
             children: [
               InkWell(
-                  onTap: () async{
-                 await   mycartController.init();
-                 mycartController.updateTotal();
+                  onTap: () {
+                    mycartController.init();
                     Get.to(AddToCardUser());
-                    // Get.to(AddToCardUser());
+                    
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-mycartController.mycartmodel == null || mycartController.mycartmodel!.data!.isEmpty?
-SizedBox():
+                    mycartController.mycartmodel == ""?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<MyCartController>(
                           init: mycartController,
                           builder: (_) {
-                            return mycartController.mycartmodel == null ||
-                                    mycartController.mycartmodel!.data ==
-                                        null ||
-                                    mycartController.mycartmodel!.data!.isEmpty
-                                ? const SizedBox()
-                                : Positioned(
+                            return
+                            
+                            mycartController.mycartmodel == null 
+                            ? const SizedBox():
+                                  
+                                 Positioned(
                                     top: 3.0,
                                     right: 4.0,
                                     child: Center(
@@ -216,10 +161,9 @@ SizedBox():
                                         (mycartController
                                                 .mycartmodel!.data!.length)
                                             .toString(),
-                                        // list.length.toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 8.0,
+                                            fontSize: 10.0,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ));
@@ -228,6 +172,7 @@ SizedBox():
                   )),
             ],
           ),
+         
           SizedBox(
             width: 20,
           )
@@ -251,8 +196,6 @@ class CustomAppBarGreenDrawer extends StatelessWidget implements PreferredSizeWi
 
   @override
   Widget build(BuildContext context) {
-    notificationcontroller.init();
-      mycartController.init();
     return AppBar(
       elevation: 0,
        backgroundColor: MyColors.green,
@@ -267,11 +210,6 @@ class CustomAppBarGreenDrawer extends StatelessWidget implements PreferredSizeWi
             ),
           ),
         ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
 
         actions: [
           Stack(
@@ -283,32 +221,42 @@ class CustomAppBarGreenDrawer extends StatelessWidget implements PreferredSizeWi
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.white),
                   )),
-                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-SizedBox():
+                        notificationcontroller.userNotifyListModel == "" ?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                              Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<NotificationController>(
                           init: notificationcontroller,
                           builder: (_) {
-                            return   notificationcontroller.userNotificationModel == null ||
-                                    notificationcontroller.userNotificationModel!.state ==
-                                        null ||
-                                     notificationcontroller.userNotificationModel!.state!.isEmpty
+                            return     notificationcontroller.userNotifyListModel == null 
                                 ? const SizedBox():
                            Positioned(
                               top: 3.0,
                               right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-                                  // list.length.toString(),
+                              child:
+                            
+                             
+                               Center(
+                                child: 
+ notificationcontroller.userNotifyListModel == null?
+                                Text("0"):Text(
+                (notificationcontroller.totalNotify??0).toString(),
+                                
+                                      
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8.0,
+                                      fontSize: 10.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ));
@@ -325,15 +273,21 @@ SizedBox():
                   onTap: () {
                     mycartController.init();
                     Get.to(AddToCardUser());
-                    // Get.to(AddToCardUser());
+                    
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg",color:Colors.white))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-mycartController.mycartmodel == null || mycartController.mycartmodel!.data!.isEmpty?
-SizedBox():
+
+                    mycartController.mycartmodel == ""?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
@@ -343,11 +297,10 @@ SizedBox():
                       GetBuilder<MyCartController>(
                           init: mycartController,
                           builder: (_) {
-                            return mycartController.mycartmodel == null ||
-                                    mycartController.mycartmodel!.data ==
-                                        null ||
-                                    mycartController.mycartmodel!.data!.isEmpty
-                                ? const SizedBox()
+                            return 
+                            mycartController.mycartmodel == null 
+                            ? const SizedBox()
+                                  
                                 : Positioned(
                                     top: 3.0,
                                     right: 4.0,
@@ -356,10 +309,9 @@ SizedBox():
                                         (mycartController
                                                 .mycartmodel!.data!.length)
                                             .toString(),
-                                        // list.length.toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 8.0,
+                                            fontSize: 10.0,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ));
@@ -381,35 +333,35 @@ SizedBox():
 
 
 class CustomAppBarback extends StatelessWidget implements PreferredSizeWidget {
-  // final GlobalKey<ScaffoldState> drawerKey;
+  
+  final title;
+  
+   CustomAppBarback({required this.title});
   NotificationController notificationcontroller =
       Get.put(NotificationController());
-  // CustomAppBarback({required this.drawerKey});
+  
+  
   MyCartController mycartController = Get.put(MyCartController());
   @override
   Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
 
   @override
   Widget build(BuildContext context) {
-    notificationcontroller.init();
-      mycartController.init();
-    return        AppBar(
+    return  AppBar( 
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: Padding(
             padding: const EdgeInsets.only(left: 5.0, top: 15, bottom: 15),
             child: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                  Get.back();
+                  // Get.off(()=>BottomNavBar());
                 },
                 child: Icon(Icons.arrow_left, color: MyColors.black)),
           ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
 
+ title: Center(child: Text(title.toString(),   style: CustomTextStyle.appbartext,),),
         actions: [
         Stack(
             children: [
@@ -420,32 +372,37 @@ class CustomAppBarback extends StatelessWidget implements PreferredSizeWidget {
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.black),
                   )),
-                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-SizedBox():
+                         notificationcontroller.userNotificationModel == ""?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                            Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<NotificationController>(
                           init: notificationcontroller,
                           builder: (_) {
-                            return   notificationcontroller.userNotificationModel == null ||
-                                    notificationcontroller.userNotificationModel!.state ==
-                                        null ||
-                                     notificationcontroller.userNotificationModel!.state!.isEmpty
-                                ? const SizedBox():
+                            return   
                            Positioned(
                               top: 3.0,
                               right: 4.0,
                               child: Center(
-                                child: Text(
-                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-                                  // list.length.toString(),
+                                child:
+ notificationcontroller.userNotifyListModel == null?
+                                Text("0"):Text(
+                (notificationcontroller.totalNotify??0).toString(),
+                                      
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8.0,
+                                     fontSize: 10.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ));
@@ -470,20 +427,28 @@ SizedBox():
 
 // (getCardModel!.data!.isEmpty)?
 // SizedBox():
-mycartController.mycartmodel == null|| mycartController.mycartmodel!.data!.isEmpty?
-SizedBox():
+
+    mycartController.mycartmodel  == ""?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
+                       mycartController.mycartmodel == null? SizedBox():
                       GetBuilder<MyCartController>(
                           init: mycartController,
                           builder: (_) {
-                            return mycartController.mycartmodel == null ||
-                                    mycartController.mycartmodel!.data ==
-                                        null ||
+                            return 
+                                  
                                     mycartController.mycartmodel!.data!.isEmpty
                                 ? const SizedBox()
                                 : Positioned(
@@ -497,7 +462,7 @@ SizedBox():
                                         // list.length.toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 8.0,
+                                            fontSize: 10.0,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ));
@@ -510,11 +475,7 @@ SizedBox():
             width: 20,
           )
         ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
+       
       );
   }
 }
@@ -523,18 +484,15 @@ SizedBox():
 
 
 class CustomAppBarTitleback extends StatelessWidget implements PreferredSizeWidget {
-  // final GlobalKey<ScaffoldState> drawerKey;
+ 
   NotificationController notificationcontroller =
       Get.put(NotificationController());
-  // CustomAppBarback({required this.drawerKey});
   MyCartController mycartController = Get.put(MyCartController());
   @override
   Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
 
   @override
   Widget build(BuildContext context) {
-    notificationcontroller.init();
-      mycartController.init();
     return        AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -546,117 +504,7 @@ class CustomAppBarTitleback extends StatelessWidget implements PreferredSizeWidg
                 },
                 child: Icon(Icons.arrow_left, color: MyColors.black)),
           ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
-
-//         actions: [
-//         Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(NotificationUser());
-//                   },
-//                   child: Center(
-//                     child: Icon(Icons.notifications, color: MyColors.black),
-//                   )),
-//                    notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-// SizedBox():
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       GetBuilder<NotificationController>(
-//                           init: notificationcontroller,
-//                           builder: (_) {
-//                             return   notificationcontroller.userNotificationModel == null ||
-//                                     notificationcontroller.userNotificationModel!.state ==
-//                                         null ||
-//                                      notificationcontroller.userNotificationModel!.state!.isEmpty
-//                                 ? const SizedBox():
-//                            Positioned(
-//                               top: 3.0,
-//                               right: 4.0,
-//                               child: Center(
-//                                 child: Text(
-//                                   ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-//                                   // list.length.toString(),
-//                                   style: TextStyle(
-//                                       color: Colors.white,
-//                                       fontSize: 8.0,
-//                                       fontWeight: FontWeight.w500),
-//                                 ),
-//                               ));
-//                         }
-//                       ),
-//                     ],
-//                   )),
-//             ],
-//           ),
-        
-//           SizedBox(width: 20),
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     mycartController.init();
-//                     Get.to(AddToCardUser());
-//                     // Get.to(AddToCardUser());
-//                   },
-//                   child:
-//                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
-
-// // (getCardModel!.data!.isEmpty)?
-// // SizedBox():
-// mycartController.mycartmodel == null|| mycartController.mycartmodel!.data!.isEmpty?
-// SizedBox():
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       GetBuilder<MyCartController>(
-//                           init: mycartController,
-//                           builder: (_) {
-//                             return mycartController.mycartmodel == null ||
-//                                     mycartController.mycartmodel!.data ==
-//                                         null ||
-//                                     mycartController.mycartmodel!.data!.isEmpty
-//                                 ? const SizedBox()
-//                                 : Positioned(
-//                                     top: 3.0,
-//                                     right: 4.0,
-//                                     child: Center(
-//                                       child: Text(
-//                                         (mycartController
-//                                                 .mycartmodel!.data!.length)
-//                                             .toString(),
-//                                         // list.length.toString(),
-//                                         style: TextStyle(
-//                                             color: Colors.white,
-//                                             fontSize: 8.0,
-//                                             fontWeight: FontWeight.w500),
-//                                       ),
-//                                     ));
-//                           }),
-//                     ],
-//                   )),
-//             ],
-//           ),
-//           SizedBox(
-//             width: 20,
-//           )
-//         ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
+  
       );
   }
 }
@@ -672,8 +520,8 @@ class CustomAppBargreen extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    notificationcontroller.init();
-      mycartController.init();
+   //   notificationcontroller.init();
+      // mycartController.init();
     return        AppBar(
        elevation: 0,
         automaticallyImplyLeading: false,
@@ -686,11 +534,6 @@ class CustomAppBargreen extends StatelessWidget implements PreferredSizeWidget {
                 },
                 child: Icon(Icons.arrow_left, color: MyColors.white)),
           ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
 
         actions: [
         Stack(
@@ -702,32 +545,37 @@ class CustomAppBargreen extends StatelessWidget implements PreferredSizeWidget {
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.white),
                   )),
-                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-SizedBox():
+ notificationcontroller.userNotificationModel == ""?
+ Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                          Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<NotificationController>(
                           init: notificationcontroller,
                           builder: (_) {
-                            return   notificationcontroller.userNotificationModel == null ||
-                                    notificationcontroller.userNotificationModel!.state ==
-                                        null ||
-                                     notificationcontroller.userNotificationModel!.state!.isEmpty
-                                ? const SizedBox():
+                            return   notificationcontroller .userNotificationModel == null
+                            ? const SizedBox():
                            Positioned(
                               top: 3.0,
                               right: 4.0,
                               child: Center(
-                                child: Text(
-                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-                                  // list.length.toString(),
+                                child:
+ notificationcontroller.userNotifyListModel == null?
+                                Text("0"):Text(
+                (notificationcontroller.totalNotify??0).toString(),
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8.0,
+                                     fontSize: 10.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ));
@@ -744,21 +592,16 @@ SizedBox():
                   onTap: () {
                     mycartController.init();
                     Get.to(AddToCardUser());
-                    // Get.to(AddToCardUser());
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg",color:Colors.white))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
- mycartController.mycartmodel!.data!.isEmpty?
-SizedBox():
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<MyCartController>(
                           init: mycartController,
                           builder: (_) {
@@ -775,10 +618,10 @@ SizedBox():
                                         (mycartController
                                                 .mycartmodel!.data!.length)
                                             .toString(),
-                                        // list.length.toString(),
+                                       
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 8.0,
+                                            fontSize: 10.0,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ));
@@ -791,11 +634,7 @@ SizedBox():
             width: 20,
           )
         ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
+      
       );
   }
 }
@@ -804,15 +643,12 @@ SizedBox():
 class CustomAppBarwhite extends StatelessWidget implements PreferredSizeWidget {
     NotificationController notificationcontroller =
       Get.put(NotificationController());
-  // CustomAppBarwhite({});
   MyCartController mycartController = Get.put(MyCartController());
   @override
   Size get preferredSize => Size.fromHeight(56.0); // Adjust the height as needed.
 
   @override
   Widget build(BuildContext context) {
-    notificationcontroller.init();
-      mycartController.init();
     return        AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -824,11 +660,7 @@ class CustomAppBarwhite extends StatelessWidget implements PreferredSizeWidget {
                 },
                 child: Icon(Icons.arrow_left, color: MyColors.black)),
           ),
-//           title: Center(
-// //SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-// //
-//             child:Text("")
-//           ),
+
 
         actions: [
         Stack(
@@ -840,32 +672,38 @@ class CustomAppBarwhite extends StatelessWidget implements PreferredSizeWidget {
                   child: Center(
                     child: Icon(Icons.notifications, color: MyColors.black),
                   )),
-                   notificationcontroller.userNotificationModel == null|| notificationcontroller.userNotificationModel!.state!.isEmpty?
-SizedBox():
+//             
               Positioned(
                   top: 10.0,
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<NotificationController>(
                           init: notificationcontroller,
                           builder: (_) {
-                            return   notificationcontroller.userNotificationModel == null ||
-                                    notificationcontroller.userNotificationModel!.state ==
-                                        null ||
-                                     notificationcontroller.userNotificationModel!.state!.isEmpty
-                                ? const SizedBox():
+                            
+                            return    notificationcontroller .userNotificationModel == null 
+                           
+                                ? Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        ):
                            Positioned(
                               top: 3.0,
                               right: 4.0,
                               child: Center(
-                                child: Text(
-                                  ( notificationcontroller.userNotificationModel!.state!.length).toString(),
-                                  // list.length.toString(),
+                                child: 
+ notificationcontroller.userNotifyListModel == null?
+                                Text("0"):Text(
+                (notificationcontroller.totalNotify??0).toString(),
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8.0,
+                                   fontSize: 10.0,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ));
@@ -882,13 +720,10 @@ SizedBox():
                   onTap: () {
                     mycartController.init();
                     Get.to(AddToCardUser());
-                    // Get.to(AddToCardUser());
                   },
                   child:
                       Center(child: SvgPicture.asset("assets/image/bag.svg"))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
  mycartController.mycartmodel!.data!.isEmpty?
 SizedBox():
               Positioned(
@@ -896,7 +731,7 @@ SizedBox():
                   right: 0,
                   child: Stack(
                     children: <Widget>[
-                      Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+                      Icon(Icons.brightness_1, size: 18.0, color: MyColors.red),
                       GetBuilder<MyCartController>(
                           init: mycartController,
                           builder: (_) {
@@ -916,7 +751,7 @@ SizedBox():
                                         // list.length.toString(),
                                         style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 8.0,
+                                            fontSize: 10.0,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ));
@@ -929,11 +764,7 @@ SizedBox():
             width: 20,
           )
         ],
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(20),
-        //   ),
-        // ),
+       
       );
   }
 }

@@ -122,128 +122,6 @@ class AddMypet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//       appBar: AppBar(
-//         elevation: 0,
-//         automaticallyImplyLeading: false,
-//         backgroundColor: MyColors.green,
-//         // leading: Padding(
-//         //   padding:  EdgeInsets.only(left:20.0,top: 10,bottom: 10,right: 0),
-//         //   child:   InkWell(onTap: (){
-//         //     Navigator.pop(context);
-//         //   },
-//         //     child: Icon(Icons.arrow_back_ios,color: black,size: 20,
-
-//         //     ),
-//         //   ),
-//         // ),
-
-//         actions: [
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                     Get.to(NotificationUser());
-//                   },
-//                   child: Center(
-//                     child: Icon(
-//                       Icons.notifications,
-//                       color: MyColors.white,
-//                     ),
-//                   )),
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       Positioned(
-//                           top: 3.0,
-//                           right: 4.0,
-//                           child: Center(
-//                             child: Text(
-//                               ('5').toString(),
-//                               // list.length.toString(),
-//                               style: TextStyle(
-//                                   color: MyColors.white,
-//                                   fontSize: 8.0,
-//                                   fontWeight: FontWeight.w500),
-//                             ),
-//                           )),
-//                     ],
-//                   )),
-//             ],
-//           ),
-
-//           SizedBox(width: 20),
-
-          // Stack(
-          //   children: [
-          //     InkWell(
-          //         onTap: () {
-          //           Get.to(const AddToCardUser());
-          //         },
-          //         child: Center(
-          //             child: SvgPicture.asset(
-          //           "assets/image/bag.svg",
-          //           color: Colors.white,
-          //         ))),
-
-// // (getCardModel!.data!.isEmpty)?
-// // SizedBox():
-//               Positioned(
-//                   top: 10.0,
-//                   right: 0,
-//                   child: Stack(
-//                     children: <Widget>[
-//                       Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-//                       Positioned(
-//                           top: 3.0,
-//                           right: 4.0,
-//                           child: Center(
-//                             child: Text(
-//                               ('5').toString(),
-//                               // list.length.toString(),
-//                               style: TextStyle(
-//                                   color: Colors.white,
-//                                   fontSize: 8.0,
-//                                   fontWeight: FontWeight.w500),
-//                             ),
-//                           )),
-//                     ],
-//                   )),
-//             ],
-//           ),
-
-//           SizedBox(
-//             width: 20,
-//           )
-
-          // ],
-          //   InkWell(
-          //       onTap: () {
-          //         Get.to(const NotificationUser());
-          //       },
-          //       child: SvgPicture.asset(
-          //         "assets/image/notification.svg",
-          //         color: MyColors.white,
-          //       )),
-          //   // Image.asset("assets/image/cartimg.png"),
-          //   SizedBox(width: 20),
-          //   Padding(
-          //     padding: EdgeInsets.only(right: 20.0),
-          //     child: SvgPicture.asset(
-          //       "assets/image/bag.svg",
-          //       color: MyColors.white,
-          //     ),
-          //   ),
-        // ],
-
-//         // title: Text(
-//         //   "My Pet",
-//         //   style: CustomTextStyle.appbartextwhite,
-//         // ),
-//       ),
-        
         appBar:CustomAppBargreen(),
       body: GetBuilder<UserMyPetController>(
           init: userMyPetController,
@@ -256,26 +134,11 @@ class AddMypet extends StatelessWidget {
                   shrinkWrap: false,
                   physics: const BouncingScrollPhysics(),
                   children: [
-                    // InkWell(
-                    //   onTap: () {
-                    //     print("HEloo");
-                    //   },
-                    //   child: Container(
-                    //     height: MediaQuery.of(context).size.height * 0.3,
-                    //     width: MediaQuery.of(context).size.width,
-                    //     child: Image.asset(
-                    //       "assets/image/frame.png",
-                    //       fit: BoxFit.cover,
-                    //     ),
-                    //   ),
-                    // ),
+                   
                     InkWell(
-                      // onTap: () => openCameraPopupProfile(
-                      //   context,
-                      // ),
+                     
                       child:
-                          //  userMyPetController.profileFilePath == ""
-                          //     ?
+                          
                           Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -319,14 +182,9 @@ class AddMypet extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // : Center(
-                      //     child: Image.file(
-                      //         fit: BoxFit.fill,
-                      //         userMyPetController.profileFile!),
-                      //   ),
+                     
                     ),
                     Container(
-                      // height: MediaQuery.of(context).size.height,
                       color: MyColors.green,
                       child: ListView(
                         primary: false,
@@ -336,7 +194,6 @@ class AddMypet extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 0.0),
                             child: Container(
-                              // height: MediaQuery.of(context).size.height,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 color: MyColors.white,
@@ -354,89 +211,8 @@ class AddMypet extends StatelessWidget {
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
-                                    // crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      // SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-
-                                      // Text(
-                                      //   "Avatar",
-                                      //   style: CustomTextStyle.popinstext,
-                                      // ),
-                                      // SizedBox(
-                                      //   height:
-                                      //       MediaQuery.of(context).size.height *
-                                      //           0.03,
-                                      // ),
-
-                                      // // SingleChildScrollView(
-                                      // //   scrollDirection: Axis.horizontal,
-                                      // //   child: Row(
-                                      // //       mainAxisAlignment:
-                                      // //           MainAxisAlignment.start,
-                                      // //       children: [
-                                      // //         SvgPicture.asset(
-                                      // //             "assets/image/dogavatar.svg"),
-                                      // //         SizedBox(
-                                      // //           width: 15,
-                                      // //         ),
-                                      // //         SvgPicture.asset(
-                                      // //             "assets/image/avatardogyellow.svg"),
-                                      // //         // SizedBox(width: 15,),
-                                      // //         //                       SvgPicture.asset("assets/image/avatardoggreen.svg"),
-                                      // //       ]),
-                                      // // ),
-
-                                      // Align(
-                                      //   alignment: Alignment.centerLeft,
-                                      //   child: GetBuilder<UserMyPetController>(
-                                      //     init: userMyPetController,
-                                      //     // initState: (_) {},
-                                      //     builder: (_) {
-                                      //       return
-                                      //           // userMyPetController.isDog
-                                      //           //     ? Image.asset(
-                                      //           //         "assets/image/cutedog.png",
-                                      //           //         height: 80,
-                                      //           //       )
-                                      //           //     : Image.asset(
-                                      //           //         "assets/image/cutecat.png",
-                                      //           //         height: 60,
-                                      //           //       );
-                                      //           userMyPetController.petImage ==
-                                      //                   null
-                                      //               ? Center(
-                                      //                   child: Text(
-                                      //                     "No Image",
-                                      //                     style: TextStyle(
-                                      //                       color: Colors.black,
-                                      //                     ),
-                                      //                   ),
-                                      //                 )
-                                      //               : CachedNetworkImage(
-                                      //                   imageUrl:
-                                      //                       "${Constants.PETS_CATEGORY_IMAGE_PATH}${userMyPetController.petImage!}",
-                                      //                   width: 50,
-                                      //                   height: 50,
-                                      //                   placeholder:
-                                      //                       (context, url) =>
-                                      //                           Center(
-                                      //                     child: SpinKitCircle(
-                                      //                       color: Colors
-                                      //                           .grey, // Color of the progress bar
-                                      //                       size:
-                                      //                           20.0, // Size of the progress bar
-                                      //                     ),
-                                      //                   ), // Replace with your own placeholder widget
-                                      //                   errorWidget: (context,
-                                      //                           url, error) =>
-                                      //                       Image.asset(
-                                      //                     "assets/image/cutecat.png",
-                                      //                     height: 60,
-                                      //                   ), // Replace with your own error widget
-                                      //                 );
-                                      //     },
-                                      //   ),
-                                      // ),
+                                      
 
                                       SizedBox(
                                         height:
@@ -484,6 +260,8 @@ class AddMypet extends StatelessWidget {
                                                               child: InkWell(
                                                                 onTap:
                                                                     () async {
+                                                                    userMyPetController.clearFields();
+                                                                    print("bbbe");
                                                                   await userMyPetController
                                                                       .changePetType(
                                                                           e.name!,
@@ -547,112 +325,7 @@ class AddMypet extends StatelessWidget {
                                                             ),
                                                           )
                                                           .toList(),
-                                                  // [
-                                                  //   InkWell(
-                                                  //     onTap: () {
-                                                  //       userMyPetController
-                                                  //           .changePetType('Dog');
-                                                  //       userMyPetController
-                                                  //           .isDogMaker(true);
-                                                  //       print(
-                                                  //           "values: ${userMyPetController.petType} ${userMyPetController.isDog}");
-                                                  //     },
-                                                  //     child: Container(
-                                                  //       height: 40,
-                                                  //       width: 90,
-                                                  //       decoration: BoxDecoration(
-                                                  //         color: userMyPetController
-                                                  //                 .isDog
-                                                  //             ? MyColors.greenlight
-                                                  //             : Colors.white,
-                                                  //         border: Border.all(
-                                                  //           color: userMyPetController
-                                                  //                   .isDog
-                                                  //               ? MyColors.greenlight
-                                                  //               : Colors.black26,
-                                                  //         ),
-                                                  //         borderRadius:
-                                                  //             BorderRadius.circular(
-                                                  //                 10),
-                                                  //       ),
-                                                  //       child: Padding(
-                                                  //         padding:
-                                                  //             const EdgeInsets.all(
-                                                  //                 5.0),
-                                                  //         child: Center(
-                                                  //           child: Text(
-                                                  //             "Dog",
-                                                  //             style:
-                                                  //                 userMyPetController
-                                                  //                         .isDog
-                                                  //                     ? CustomTextStyle
-                                                  //                         .popinssmall
-                                                  //                     : TextStyle(
-                                                  //                         color: Colors
-                                                  //                             .black26,
-                                                  //                         fontWeight:
-                                                  //                             FontWeight
-                                                  //                                 .w500,
-                                                  //                       ),
-                                                  //           ),
-                                                  //         ),
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
-                                                  //   SizedBox(width: 15),
-                                                  //   InkWell(
-                                                  //     onTap: () {
-                                                  //       userMyPetController
-                                                  //           .changePetType('Cat');
-                                                  //       userMyPetController
-                                                  //           .isDogMaker(false);
-                                                  //       print(
-                                                  //           "values: ${userMyPetController.petType} ${userMyPetController.isDog}");
-                                                  //     },
-                                                  //     child: Container(
-                                                  //       height: 40,
-                                                  //       width: 90,
-                                                  //       decoration: BoxDecoration(
-                                                  //         color: userMyPetController
-                                                  //                 .isDog
-                                                  //             ? Colors.white
-                                                  //             : MyColors.greenlight,
-                                                  //         border: Border.all(
-                                                  //           color: userMyPetController
-                                                  //                   .isDog
-                                                  //               ? Colors.black26
-                                                  //               : MyColors.greenlight,
-                                                  //           width: 0.5,
-                                                  //         ),
-                                                  //         borderRadius:
-                                                  //             BorderRadius.circular(
-                                                  //                 10),
-                                                  //       ),
-                                                  //       child: Padding(
-                                                  //         padding:
-                                                  //             const EdgeInsets.all(
-                                                  //                 5.0),
-                                                  //         child: Center(
-                                                  //           child: Text(
-                                                  //             "Cat",
-                                                  //             style: userMyPetController
-                                                  //                     .isDog
-                                                  //                 ? TextStyle(
-                                                  //                     color: Colors
-                                                  //                         .black26,
-                                                  //                     fontWeight:
-                                                  //                         FontWeight
-                                                  //                             .w500,
-                                                  //                   )
-                                                  //                 : CustomTextStyle
-                                                  //                     .popinssmall,
-                                                  //           ),
-                                                  //         ),
-                                                  //       ),
-                                                  //     ),
-                                                  //   ),
-                                                  //   SizedBox(width: 15),
-                                                  // ],
+                                                  
                                                 );
                                         },
                                       ),
@@ -830,7 +503,9 @@ class AddMypet extends StatelessWidget {
                                                   child: Text(
                                                     item,
                                                     style: TextStyle(
-                                                      color: Colors.black,
+                                                      color: Colors.black, 
+                                                      
+                                        overflow: TextOverflow.ellipsis,
                                                       fontFamily:
                                                           "SF-Pro-Display",
                                                       fontSize: 14,
@@ -952,11 +627,7 @@ class AddMypet extends StatelessWidget {
                                             child: Container(
                                               height: 50,
                                               width: 90,
-                                              // decoration: BoxDecoration(
-                                              //   color: MyColors.greenlight,
-                                              //   borderRadius:
-                                              //       BorderRadius.circular(10),
-                                              // ),
+                                             
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.black26,
@@ -969,39 +640,7 @@ class AddMypet extends StatelessWidget {
                                                     const EdgeInsets.all(5.0),
                                                 child: Center(
                                                   child:
-                                                      // TextFormField(
-                                                      //   controller: userMyPetController
-                                                      //       .yearController,
-                                                      //   keyboardType:
-                                                      //       TextInputType.number,
-                                                      //   validator: (value) {
-                                                      //     if (value == null ||
-                                                      //         value.isEmpty) {
-                                                      //       return 'Please enter a value';
-                                                      //     }
-                                                      //     // Add more validation rules if needed
-                                                      //     return null; // Return null for no validation errors
-                                                      //   },
-                                                      //   style: TextStyle(
-                                                      //     fontSize: 14,
-                                                      //     color: Colors.black,
-                                                      //     fontFamily: "SF-Pro-Display",
-                                                      //   ),
-                                                      //   decoration: InputDecoration(
-                                                      //     contentPadding:
-                                                      //         EdgeInsets.symmetric(
-                                                      //             horizontal:
-                                                      //                 8), // Add padding here
-                                                      //     border: InputBorder.none,
-
-                                                      //     hintText: 'Year',
-                                                      //     hintStyle: TextStyle(
-                                                      //       color: Colors.black,
-                                                      //       fontFamily: "SF-Pro-Display",
-                                                      //       fontSize: 14,
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
+                                                     
                                                       Text(
                                                     userMyPetController
                                                             .yearController
@@ -1029,39 +668,7 @@ class AddMypet extends StatelessWidget {
                                                     const EdgeInsets.all(5.0),
                                                 child: Center(
                                                   child:
-                                                      // TextFormField(
-                                                      //   controller: userMyPetController
-                                                      //       .monthController,
-                                                      //   keyboardType:
-                                                      //       TextInputType.number,
-                                                      //   validator: (value) {
-                                                      //     if (value == null ||
-                                                      //         value.isEmpty) {
-                                                      //       return 'Please enter a value';
-                                                      //     }
-                                                      //     // Add more validation rules if needed
-                                                      //     return null; // Return null for no validation errors
-                                                      //   },
-                                                      //   style: TextStyle(
-                                                      //     fontSize: 14,
-                                                      //     color: Colors.black26,
-                                                      //     fontFamily: "SF-Pro-Display",
-                                                      //   ),
-                                                      //   decoration: InputDecoration(
-                                                      //     contentPadding:
-                                                      //         EdgeInsets.symmetric(
-                                                      //             horizontal:
-                                                      //                 8), // Add padding here
-                                                      //     border: InputBorder.none,
-
-                                                      //     hintText: 'Month',
-                                                      //     hintStyle: TextStyle(
-                                                      //       color: Colors.black,
-                                                      //       fontFamily: "SF-Pro-Display",
-                                                      //       fontSize: 14,
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
+                                                     
                                                       Text(
                                                     userMyPetController
                                                             .monthController
@@ -1216,6 +823,20 @@ class AddMypet extends StatelessWidget {
                                             print(body);
                                             print(documentList);
                                             try {
+                                            if ( userMyPetController.profileFilePath ==
+                                            null || userMyPetController.profileFilePath == ''){
+   Get.snackbar(
+                                                'Error',
+                                                'Please select image',
+                                                duration: Duration(seconds: 3),
+                                                backgroundColor: Colors.red,
+                                                colorText: Colors.white,
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM,
+                                                borderRadius: 8,
+                                              );
+                                           
+                                            }else{
                                               await userMyPetController
                                                   .postUserData(
                                                       documentList,
@@ -1232,6 +853,7 @@ class AddMypet extends StatelessWidget {
                                                     SnackPosition.BOTTOM,
                                                 borderRadius: 8,
                                               );
+                                            }
                                             } catch (e) {}
 
                                             // Form is valid, do something here
@@ -1240,7 +862,7 @@ class AddMypet extends StatelessWidget {
                                             Get.snackbar(
                                               'Form Status',
                                               'Form is invalid',
-                                              duration: Duration(seconds: 3),
+                                              duration: const Duration(seconds: 3),
                                               backgroundColor: Colors.red,
                                               colorText: Colors.white,
                                               snackPosition:
@@ -1304,15 +926,15 @@ class AddMypet extends StatelessWidget {
                               .withOpacity(0.5), // Adjust the opacity as needed
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 userMyPetController.showLoading
-                    ? Center(
+                    ? const Center(
                         child: SpinKitCircle(
                           color: Colors.white, // Color of the progress bar
                           size: 50.0, // Size of the progress bar
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
               ],
             );
           }),

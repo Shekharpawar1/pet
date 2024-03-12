@@ -42,8 +42,9 @@ class Data {
   String? variant;
   String? createdAt;
   String? updatedAt;
-  String? itemCampaignId;
+  int? itemCampaignId;
   String? totalAddOnPrice;
+  String? gst;
 
   Data(
       {this.id,
@@ -61,7 +62,8 @@ class Data {
       this.createdAt,
       this.updatedAt,
       this.itemCampaignId,
-      this.totalAddOnPrice});
+      this.totalAddOnPrice,
+      this.gst});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -85,6 +87,7 @@ class Data {
     updatedAt = json['updated_at'];
     itemCampaignId = json['item_campaign_id'];
     totalAddOnPrice = json['total_add_on_price'];
+    gst = json['gst'];
   }
 
   Map<String, dynamic> toJson() {
@@ -107,6 +110,7 @@ class Data {
     data['updated_at'] = this.updatedAt;
     data['item_campaign_id'] = this.itemCampaignId;
     data['total_add_on_price'] = this.totalAddOnPrice;
+    data['gst'] = this.gst;
     return data;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/filter_controller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
@@ -18,6 +19,7 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:pet/screens/user/productdetails.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProductAlllistPage extends StatefulWidget {
   const ProductAlllistPage({super.key});
@@ -29,12 +31,15 @@ class ProductAlllistPage extends StatefulWidget {
 class _ProductAlllistPageState extends State<ProductAlllistPage> {
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
     TextEditingController _searchcontroller = TextEditingController();
+    
+ MyCartController mycartController = Get.put(MyCartController());
     ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
      UserReviewController userreviewController = Get.put(UserReviewController());
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
-          appBar:CustomAppBarback(),
+          appBar:CustomAppBarback(title: "All Products",),
         body: ListView(
           primary: true,
           shrinkWrap: true,
@@ -141,7 +146,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
             !homeusercontroller.propertyLoaded
                 ? SizedBox()
                 : Padding(
-                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                 padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                   child: Container(
                           //  height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
@@ -154,7 +159,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 290),
+                                      mainAxisExtent: 285),
                               itemCount: homeusercontroller
                                   .userPropertiesModel!.data!.length
                                  , // Set the number of cards you want to display.
@@ -163,7 +168,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                 //     SliverGridDelegateWithMaxCrossAxisExtent(
                                 //         maxCrossAxisExtent: 150,
                                 //      childAspectRatio: 3 / 2,
-                                //         mainAxisExtent: 300,
+                                //         mainAxisExtent: 285,
                                 //         crossAxisSpacing: 15,
                                 //         mainAxisSpacing: 15),
                                 // itemCount: homeusercontroller
@@ -176,17 +181,16 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                  
                                 var imagePath =
                                        "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
-                                print(imagePath);
+                               
                                 return
-                                 InkWell(
+                                 GestureDetector(
                                   onTap: () async{
-                                      //  productdeatilscontroller.viewproduct( item.id??0,);
-                                      //      print("productid${item.id??0}");
-                                          productdeatilscontroller
+                                   productdeatilscontroller.dispose();
+                                                productdeatilscontroller
                                                     .viewproduct(
                                                   item.id ?? 0,
                                                 );
-                
+
                                                 // print("productid${item.id ?? 0}");
                                                 await productdeatilscontroller
                                                     .init();
@@ -194,8 +198,7 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                     item.id ?? 0, 0);
                                                 await userreviewController
                                                     .init();
-                                            productdeatilscontroller.clearFields();  
-                                       Get.to( ProductDetails());
+                                                Get.to(ProductDetails(id:item.id??0));
                                   },
                                   child:  Container(
                                                 width: 140,
@@ -235,39 +238,65 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                   children: [
                 
                 
+                                              Row(
+  children:[
+
+  IconButton(
+  icon: Icon(Icons.share,size:20,color:MyColors.red),
+  onPressed: () {
+   shareContent(item.image.toString(), item.name.toString(),  item.price.toString());
+
+    // Share.share(itemAll.toString());
+  
+  },
+),
+
+
+Spacer(),
+   
+
+   
                 
-                                                    InkWell(
-                                                      onTap: () {
-                                                        homeusercontroller
-                                                            .addItemToWishList(
-                                                                item.id!);
+                                                       GetBuilder<HomeuserController>(
+                                                                  init: homeusercontroller,
+                                                                  builder: (_) {
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            homeusercontroller
+                                                                .addItemToWishList(
+                                                                    item.id!);
                 
-                                                            homeusercontroller.init();
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerRight,
-                                                          child: Icon(
-                                                              homeusercontroller
-                                                                      .wishListItemsId
-                                                                      .contains(
-                                                                          item
-                                                                              .id!)
-                                                                  ? Icons
-                                                                      .favorite
-                                                                  : Icons
-                                                                      .favorite_border,
-                                                              color:
-                                                                  Colors.red),
-                                                        ),
-                                                      ),
+                                                                homeusercontroller.init();
+                                                          },
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerRight,
+                                                              child: Icon(
+                                                                  homeusercontroller
+                                                                          .wishListItemsId
+                                                                          .contains(
+                                                                              item
+                                                                                  .id!)
+                                                                      ? Icons
+                                                                          .favorite
+                                                                      : Icons
+                                                                          .favorite_border,
+                                                                  color:
+                                                                      Colors.red),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
                                                     ),
                 
-                                                
+
+                                       
+]),  
+
                                                 
                 
                 
@@ -328,33 +357,34 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                                         
+                                                                                    maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
                                                             Text(
-                                                                item.description
-                                                                            .toString()
-                                                                            .length <
-                                                                        30
-                                                                    ? item
-                                                                        .description!
-                                                                    : item
-                                                                        .description!
-                                                                        .substring(
-                                                                            0,
-                                                                            19),
-                                                                style: CustomTextStyle
-                                                                    .popinssmall0),
-                                                            SizedBox(height: 5),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
+  item.description!.length < 20
+      ? item.description!
+      : item.description!.substring(0, item.description!.length),
+  maxLines: 1,
+  overflow: TextOverflow.ellipsis,
+  style: CustomTextStyle.popinssmall0,
+),  SizedBox(height: 5),
+                                                            // Row(
+                                                            //   mainAxisAlignment:
+                                                            //       MainAxisAlignment
+                                                            //           .spaceBetween,
+                                                            //   children: [
                                                                 Column(
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .start,
+                                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                   children: [
+
+
+
+                                                                        (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
                                                                     Row(
                                                                       children: [
                                                                         Text(
@@ -378,15 +408,50 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                         // child:
                                                                         //     Center(
                                                                         //   child:
+                                                                         SizedBox(width:3),
                                                                         Text(
                                                                             // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
                                                                         //   ),
                                                                         // ),
                                                                       ],
-                                                                    ),
+                                                                    ):const  SizedBox(),
+                                                                   
+                                                                    // Row(
+                                                                    //   children: [
+                                                                    //     Text(
+                                                                    //         "₹" +
+                                                                    //             item.price.toString(),
+                                                                    //         style: CustomTextStyle.discounttext),
+                                                                    //     SizedBox(
+                                                                    //         width:
+                                                                    //             2),
+                                                                    //     // Container(
+                                                                    //     // height:
+                                                                    //     //     20,
+                                                                    //     // width: 48,
+                                                                    //     // decoration: BoxDecoration(
+                                                                    //     //     color: MyColors
+                                                                    //     //         .red,
+                                                                    //     //     borderRadius: BorderRadius.circular(
+                                                                    //     //         10),
+                                                                    //     //     border:
+                                                                    //     //         Border.all(color: MyColors.red)),
+                                                                    //     // child:
+                                                                    //     //     Center(
+                                                                    //     //   child:
+                                                                    //     Text(
+                                                                    //         // item.discount.toString(),
+                                                                    //           "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                    //         style:
+                                                                    //             CustomTextStyle.popinstextsmal2222red),
+                                                                    //     //   ),
+                                                                    //     // ),
+                                                                    //   ],
+                                                                    // ),
+                                                                 
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -411,23 +476,33 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                         SizedBox(
                                                                             width:
                                                                                 Get.width * 0.054),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(right: 5.0),
-                                                                          child: Container(
-                                                                              width: 35,
-                                                                              height: 35,
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(5.0),
-                                                                                child: Image.asset(
-                                                                                  "assets/image/bag2.png",
-                                                                                  height: 25,
-                                                                                ),
-                                                                              )),
+                                                                        InkWell(
+                                                                          onTap: ()
+                                                                             async{
+                                                                             productdeatilscontroller.viewproductHome(
+                                                                              item.id??0,item.name??'',"1kg",1 ,double.parse(item.price ?? ''),item.image??'','yes');
+                                                                              await productdeatilscontroller.addProductHome();
+                                                            mycartController.init();
+                                                                          },
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     ),
+                                                               
                                                                   ],
                                                                 ),
                 
@@ -435,8 +510,8 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
                                                                 //   "assets/image/yellowbag.png",
                                                                 //   height: 80,
                                                                 // )
-                                                              ],
-                                                            )
+                                                            //   ],
+                                                            // )
                                                           ],
                                                         ),
                                                       ),
@@ -453,4 +528,16 @@ class _ProductAlllistPageState extends State<ProductAlllistPage> {
  
  
   }
+}
+
+void shareContent(String image , String name, String detials) {
+  // Replace these with your image and text
+  String imageUrl = image;
+  String text = "Product Name :"+name;
+  String description = "Product Price :"+detials;
+
+  String sharedText = '${Constants.BASE_URL}/storage/app/public/product/${imageUrl ?? ""}\n$text\n$description';
+
+  Share.share(sharedText, subject: 'Welcome Message', sharePositionOrigin: Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+
 }

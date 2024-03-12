@@ -4,11 +4,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/userLocationController.dart';
 import 'package:pet/screens/user/widgets/orderCancellationOtherDialog.dart';
 
 class OrderCancellationReasonsDialog extends StatelessWidget {
   // List of cancellation reasons
+  
+  MyOrderController myordercontroller = Get.put(MyOrderController());
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,7 @@ class OrderCancellationReasonsDialog extends StatelessWidget {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.red),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
 //                           // Perform the order cancellation with the selected reason
 //                           // Handle the cancellation logic here
 //                           String selectedReason = 'Get the selected reason from the user input';
@@ -103,6 +106,11 @@ class OrderCancellationReasonsDialog extends StatelessWidget {
                                   .updateSelectedReason(cancellationReason);
 
                               // Close the dialog
+                            
+                               await  myordercontroller.cancelorderinit();
+                              myordercontroller.  isButtonEnabled = false;
+
+      print(myordercontroller.isButtonEnabled);
                               Get.back();
                               Get.snackbar(
                                 'Order Cancelled',

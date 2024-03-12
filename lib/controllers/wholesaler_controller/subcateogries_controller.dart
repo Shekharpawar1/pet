@@ -64,13 +64,13 @@ class WholeSubCategoryController extends GetxController {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     //product
   }
@@ -82,7 +82,7 @@ Future<void> productInitByCategory() async{
      try {
 
          wholeProductModel = WholeProductModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+          await ApiHelper.getApi("http://caninedemo.caninetest.xyz/api/v1/items/latest"));
       print('=========**${getUserproductUrl}${categoryids}/${selectedIndex}');
       print('===============>>>>>>> Category $selectedCategory');
       
@@ -96,13 +96,13 @@ Future<void> productInitByCategory() async{
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
   }
 }
   void productinit() async {
@@ -114,13 +114,13 @@ Future<void> productInitByCategory() async{
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

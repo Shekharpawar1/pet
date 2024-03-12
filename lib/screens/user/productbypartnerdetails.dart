@@ -5,34 +5,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/home_controller.dart';
 import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
+import 'package:pet/controllers/user_controller/videocontoller.dart';
 import 'package:pet/screens/user/productAllPartner.dart';
 // import 'package:pet/screens/user/productAllPartner.dart';
 import 'package:pet/screens/user/productdetails.dart';
 import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../utils/constants.dart';
 
 class ProductByPartnerDetails extends StatelessWidget {
-   ProductByPartnerDetails({super.key});
+   ProductByPartnerDetails({super.key, this.address,this.email,this.name, this.mobileno});
+   String? name;
+   String? email;
+   String? address;
+   String? mobileno;
+
   final HomeuserController homeusercontroller = Get.put(HomeuserController());
     ProductDetailsController productdeatilscontroller =
       Get.put(ProductDetailsController());
+      
+  VideoBannerController videobannercontroller  = Get.put(VideoBannerController());
+  MyCartController mycartController = Get.put(MyCartController());
       UserReviewController userreviewController = Get.put(UserReviewController());
   @override
   Widget build(BuildContext context) {
-    var imagePath =  "${Constants.BASE_URL}/storage/app/public/store/cover/${homeusercontroller
-                                            .userProductPartnerModel!.data![0].coverPhoto ?? ""}";
-    
-    //  "${Constants.USERPROFILE_IMAGEPATH_URL}" +
-    //                                         .toString();
+   
     return  Scaffold(
-       appBar: CustomAppBarback(),
-       body: ListView(shrinkWrap: true,
+       appBar: CustomAppBarback(title:"Partner Details"),
+       body: ListView(
+        shrinkWrap: true,
        primary: true,
        children: [
 
@@ -41,7 +49,8 @@ class ProductByPartnerDetails extends StatelessWidget {
                 
                 child: CachedNetworkImage(
                                                                   imageUrl:
-                                                                      imagePath,
+                                                                      "${Constants.BASE_URL}/storage/app/public/store/cover/${homeusercontroller
+                                            .userProductPartnerModel!.data![0].coverPhoto ?? ""}",
                                                                   // width: 50,
                                                                   height: 150,
                                                                   fit: BoxFit.fill,
@@ -81,8 +90,7 @@ class ProductByPartnerDetails extends StatelessWidget {
                                       ),
                                       Spacer(),
                                       Text(
-                                        homeusercontroller
-                                            .userProductPartnerModel!.data![0].name
+                                      name
                                             .toString(),
                                         style: CustomTextStyle.popinstext,
                                       ),
@@ -107,8 +115,7 @@ class ProductByPartnerDetails extends StatelessWidget {
                                       ),
                                     Spacer(),
                                       Text(
-                                                                             homeusercontroller
-                                            .userProductPartnerModel!.data![0].address
+                                                                             address
                                             .toString(),
         
                                         style: CustomTextStyle.popinstext,
@@ -136,8 +143,7 @@ class ProductByPartnerDetails extends StatelessWidget {
                                       ),
                                      Spacer(),
                                       Text(
-                                        homeusercontroller
-                                            .userProductPartnerModel!.data![0].phone
+                                       mobileno
                                             .toString(),
                                         style: CustomTextStyle.popinstext,
                                       ),
@@ -164,8 +170,7 @@ class ProductByPartnerDetails extends StatelessWidget {
                                       ),
                                      Spacer(),
                                       Text(
-                                                                             homeusercontroller
-                                            .userProductPartnerModel!.data![0].email
+                                                                            email
                                             .toString(),
         
                                         style: CustomTextStyle.popinstext,
@@ -192,10 +197,10 @@ class ProductByPartnerDetails extends StatelessWidget {
                     // Text("See All", style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
 
                     InkWell(
-                      onTap: () {
-                         ProductDetailsController productdeatilscontroller = Get.put(ProductDetailsController());
+                      onTap: ()async {
 
-                        Get.to(() => UserProductAllPartner());
+                         await videobannercontroller.partnerBannerinit();
+                        Get.to(UserProductAllPartner());
                       },
                       child: Text('See All',
                           style: TextStyle(
@@ -238,7 +243,7 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                               crossAxisCount: 2,
                                               crossAxisSpacing: 8.0,
                                               mainAxisSpacing: 15.0,
-                                              mainAxisExtent: 280),
+                                              mainAxisExtent: 285),
                                       itemCount: homeusercontroller
                                           .userproductbypartneritemModel!.data!.length
                                           .clamp(0,
@@ -248,7 +253,7 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                         //     SliverGridDelegateWithMaxCrossAxisExtent(
                                         //         maxCrossAxisExtent: 150,
                                         //      childAspectRatio: 3 / 2,
-                                        //         mainAxisExtent: 300,
+                                        //         mainAxisExtent: 285,
                                         //         crossAxisSpacing: 15,
                                         //         mainAxisSpacing: 15),
                                         // itemCount: homeusercontroller
@@ -269,6 +274,7 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                         
                                          InkWell(
                                           onTap: () async {
+                                             productdeatilscontroller.dispose();
                                             productdeatilscontroller
                                                 .viewproduct(
                                               item.id ?? 0,
@@ -328,7 +334,24 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                 child: Column(
                                                   children: [
 
+                                 
+                                                                   Row(
+  children:[
 
+  IconButton(
+  icon: Icon(Icons.share,size:20,color:MyColors.red),
+  onPressed: () {
+   shareContent(item.image.toString(), item.name.toString(),  item.price.toString());
+
+    // Share.share(itemAll.toString());
+  
+  },
+),
+
+
+Spacer(),
+
+           
  GetBuilder<HomeuserController>(
                             init: homeusercontroller,
                             builder: (_) {
@@ -365,8 +388,9 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                       }
                                                     ),
 
-                                                
-                                                
+                                                       
+]),
+                          
 
 
                                                     Container(
@@ -426,13 +450,15 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                                 maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
                                                             Text(
                                                                 item.description
                                                                             .toString()
                                                                             .length <
-                                                                        30
+                                                                        20
                                                                     ? item
                                                                         .description!
                                                                     : item
@@ -453,6 +479,8 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                      (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
@@ -476,15 +504,48 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                                         // child:
                                                                         //     Center(
                                                                         //   child:
+                                                                         SizedBox(width:3),
                                                                         Text(
                                                                             // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
                                                                         //   ),
                                                                         // ),
                                                                       ],
-                                                                    ),
+                                                                    ):const  SizedBox(),
+                                                                    // Row(
+                                                                    //   children: [
+                                                                    //     Text(
+                                                                    //         "₹" +
+                                                                    //             item.price.toString(),
+                                                                    //         style: CustomTextStyle.discounttext),
+                                                                    //     SizedBox(
+                                                                    //         width:
+                                                                    //             2),
+                                                                    //     // Container(
+                                                                    //     // height:
+                                                                    //     //     20,
+                                                                    //     // width: 48,
+                                                                    //     // decoration: BoxDecoration(
+                                                                    //     //     color: MyColors
+                                                                    //     //         .red,
+                                                                    //     //     borderRadius: BorderRadius.circular(
+                                                                    //     //         10),
+                                                                    //     //     border:
+                                                                    //     //         Border.all(color: MyColors.red)),
+                                                                    //     // child:
+                                                                    //     //     Center(
+                                                                    //     //   child:
+                                                                    //     Text(
+                                                                    //         // item.discount.toString(),
+                                                                    //         "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                    //         style:
+                                                                    //             CustomTextStyle.popinstextsmal2222red),
+                                                                    //     //   ),
+                                                                    //     // ),
+                                                                    //   ],
+                                                                    // ),
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -498,7 +559,7 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                                               Get.width * 0.23,
                                                                           child:
                                                                               Text(
-                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toInt().toDouble()}",
 
                                                                             // "₹" +
                                                                             //     item.price!,
@@ -509,20 +570,29 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                                                         SizedBox(
                                                                             width:
                                                                                 Get.width * 0.054),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(right: 5.0),
-                                                                          child: Container(
-                                                                              width: 35,
-                                                                              height: 35,
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(5.0),
-                                                                                child: Image.asset(
-                                                                                  "assets/image/bag2.png",
-                                                                                  height: 25,
-                                                                                ),
-                                                                              )),
+                                                                        InkWell(
+onTap: ()async{
+
+   productdeatilscontroller.viewproductHome(
+                                                                              item.id??0,item.name??'',"1kg",1 ,double.parse(item.price ?? ''),item.image??'','yes');
+                                                                              await productdeatilscontroller.addProductHome();
+                                                            mycartController.init();
+},
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     ),
@@ -684,7 +754,7 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
                                           //                           //     child: 
                                           //                               Text(
                                           //                                   // item.discount.toString(),
-                                          //                                   "Save${item.discount.toString()}%",
+                                          //                                     "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                           //                                   style: CustomTextStyle.popinstextsmal2222),
                                           //                           //   ),
                                           //                           // ),
@@ -758,4 +828,15 @@ homeusercontroller.userproductbypartneritemModel == null || homeusercontroller.u
        ],)
     );
   }
+}
+void shareContent(String image , String name, String detials) {
+  // Replace these with your image and text
+  String imageUrl = image;
+  String text = "Product Name :"+name;
+  String description = "Product Price :"+detials;
+
+  String sharedText = '${Constants.BASE_URL}/storage/app/public/product/${imageUrl ?? ""}\n$text\n$description';
+
+  Share.share(sharedText, subject: 'Welcome Message', sharePositionOrigin: Rect.fromCenter(center: Offset(0, 0), width: 100, height: 100));
+
 }

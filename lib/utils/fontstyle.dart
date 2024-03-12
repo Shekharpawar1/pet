@@ -134,6 +134,13 @@ class CustomTextStyle {
       fontSize: 14,
       fontWeight: FontWeight.bold,
       fontFamily: "Poppins");
+            static TextStyle popinsmediumred = const TextStyle(
+      //color:Color(0xff011624),
+      color: MyColors.red,
+      // color: black,
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+      fontFamily: "Poppins");
 
   static TextStyle discounttext = const TextStyle(
       //color:Color(0xff011624),
@@ -175,7 +182,7 @@ class CustomTextStyle {
   static TextStyle popinssmall0 = const TextStyle(
       color: Color(0xff011624),
       fontSize: 10,
-       
+       overflow: TextOverflow.fade,
        
       fontWeight: FontWeight.w400,
       fontFamily: "Poppins");

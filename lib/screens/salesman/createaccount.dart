@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -251,7 +252,7 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: MyColors.bgcolor,
         body: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15),
@@ -453,9 +454,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                               salescreateAccountcontroller.fullNameController,
                           decoration: InputDecoration(
                             hintText: "First Name",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -550,9 +551,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                               salescreateAccountcontroller.lastNameController,
                           decoration: InputDecoration(
                             hintText: "Last Name",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -593,9 +594,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                           controller: salescreateAccountcontroller.emailController,
                           decoration: InputDecoration(
                             hintText: "Email ID",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -641,9 +642,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                           },
                           decoration: InputDecoration(
                             hintText: "Mobile No",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             counterText: "",
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
@@ -686,9 +687,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                               .identitynumberController,
                           decoration: InputDecoration(
                             hintText: "Identity Number",
-                              hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),  contentPadding: EdgeInsets.symmetric(
+                               hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),  contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
@@ -727,9 +728,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                               .dropdownIdentityType, // Set the selected country value
                           decoration: InputDecoration(
                             hintText: "Identity Type",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 5),
                             border: InputBorder.none,
@@ -785,9 +786,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                               .dropdowntype, // Set the selected country value
                           decoration: InputDecoration(
                             hintText: "SalesManType",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 5),
                             border: InputBorder.none,
@@ -817,8 +818,16 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
 
                 
   salescreateAccountcontroller.zoneListModel == null
-                              ? SizedBox()
-                              : Padding(
+                              ?  Center(
+                                          child: SpinKitCircle(
+                                            color: Colors
+                                                .grey, // Color of the progress bar
+                                            size:
+                                                20.0, // Size of the progress bar
+                                          ),
+                                        )
+                              :
+                               Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                     height: 50,
@@ -850,7 +859,7 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                                       decoration: InputDecoration(
                                         hintText: "Zone",
                                         hintStyle: TextStyle(
-                                          color: MyColors.white,
+                                          color: MyColors.grey,
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 5),
@@ -870,7 +879,7 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                                           .map((zone) {
                                         return DropdownMenuItem<zoneFile.Zone>(
                                           value: zone,
-                                          child: Text(zone.name!),
+                                          child: Text(zone.name??''),
                                         );
                                       }).toList(),
                                       onChanged: (zoneFile.Zone? value) {
@@ -1139,9 +1148,9 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                               salescreateAccountcontroller.passcodeController,
                           decoration: InputDecoration(
                             hintText: "Password",
-                            hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                             hintStyle: TextStyle(
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -1327,7 +1336,7 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                                         .identitytypeController.text
                                         .trim()
                                         .toString(),
-                                       
+                                      "zone_id": salescreateAccountcontroller.selectedZone!.id.toString(),
                                     "earning":
                                       (  (salescreateAccountcontroller
                                             .dropdowntype.toString() == "seller") ? 1 : 0).toString(),
@@ -1354,6 +1363,7 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
                                   //       element["value"]!);
                                   // });
                                   try {
+                                    print(body);
                                     salescreateAccountcontroller.postWholeData(
                                         documentList,
                                         body,
@@ -1450,6 +1460,8 @@ class _CreateAccountsalesState extends State<CreateAccountsales> {
             ],
           ),
         ));
+  
+  
   }
 
 // void validateForm(BuildContext context) {

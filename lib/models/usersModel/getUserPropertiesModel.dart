@@ -285,6 +285,9 @@ class Datum {
     String? lifeStageId;
     String? helthConditionId;
     String? petsbreedsId;
+     String? returnable;
+  String? gst;
+  String? suggestionProduct;
 
     Datum({
         this.id,
@@ -325,6 +328,9 @@ class Datum {
         this.lifeStageId,
         this.helthConditionId,
         this.petsbreedsId,
+         this.returnable,
+      this.gst,
+      this.suggestionProduct
     });
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -364,8 +370,11 @@ class Datum {
         foodVariations: json["food_variations"],
         brandId: json["brand_id"],
         lifeStageId: json["lifeStage_id"],
-        helthConditionId: json["helthCondition_id"],
-        petsbreedsId: json["Petsbreeds_id"],
+        helthConditionId: json["helthCondition_id"], 
+         petsbreedsId : json['Petsbreeds_id'],
+    returnable :json['returnable'],
+    gst : json['gst'],
+    suggestionProduct : json['suggestion_product']
     );
 
     Map<String, dynamic> toJson() => {
@@ -407,6 +416,9 @@ class Datum {
         "lifeStage_id": lifeStageId,
         "helthCondition_id": helthConditionId,
         "Petsbreeds_id": petsbreedsId,
+       'returnable':returnable,
+    'gst':gst,
+    'suggestion_product':suggestionProduct,
     };
 }
 

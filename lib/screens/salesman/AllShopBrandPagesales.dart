@@ -30,7 +30,7 @@ class _AllShopBrandPagesalesState extends State<AllShopBrandPagesales> {
   Widget build(BuildContext context) {
     print(widget.data );
     return Scaffold(
-      appBar:CustomAppBarSalesWholeback(title: "All Our Brands",),
+      appBar:CustomAppBarSalesWholeback(title: "All Shop Brand",),
         body:
         
         Padding(
@@ -226,7 +226,7 @@ class _AllShopBrandPagesalesState extends State<AllShopBrandPagesales> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 15.0,
                                 mainAxisSpacing: 15.0,
-                                mainAxisExtent: 250),
+                                mainAxisExtent: 240),
                    itemCount:widget.data!.length,
                                 itemBuilder: (context, index) {
                                   var item = widget.data![index];
@@ -250,7 +250,7 @@ class _AllShopBrandPagesalesState extends State<AllShopBrandPagesales> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.63,
+                                              0.61,
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *

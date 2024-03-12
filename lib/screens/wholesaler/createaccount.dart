@@ -280,7 +280,7 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         backgroundColor: MyColors.bgcolor,
         body: Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15),
@@ -335,8 +335,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "First Name",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -379,8 +379,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "Last Name",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -422,8 +422,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "Email ID",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -497,7 +497,7 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                                 color: MyColors.white,
                               ),
                               hintStyle: TextStyle(
-                                  color: MyColors.white,
+                                  color: MyColors.grey,
                                   fontFamily: "SF-Pro-Display",
                                   fontSize: 14)),
                         ),
@@ -538,8 +538,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                             hintText: "Mobile No",
                             counterText: '',
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -785,8 +785,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "Aadhar Number",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -827,8 +827,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "GST Number",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -870,8 +870,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "Business Name",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -913,8 +913,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "Pincode",
                              hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -956,8 +956,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                           decoration: InputDecoration(
                             hintText: "Password",
                             hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 10),
                             border: InputBorder.none,
@@ -1013,13 +1013,16 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                                 }
                                 return null;
                               },
-                              // value: addressController
-                              //     .selectedState,
+                              onTap: (){
+                           createAccountcontroller.clearcity();
+                              },
+                              value: createAccountcontroller
+                                  .selectedState,
                               decoration: InputDecoration(
                                 hintText: "State",
                                  hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                                 contentPadding: EdgeInsets.symmetric(
                                     horizontal: 20, vertical: 5),
                                 border: InputBorder.none,
@@ -1092,8 +1095,8 @@ class _CreateAccountwholeState extends State<CreateAccountwhole> {
                                 decoration: InputDecoration(
                                   hintText: "City",
                                    hintStyle: TextStyle(
-                              color: MyColors.white,
-                            ),
+                                    color: MyColors.grey,
+                                  ),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 5),
                                   border: InputBorder.none,

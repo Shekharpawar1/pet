@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,9 +21,6 @@ import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:order_tracker/order_tracker.dart';
 
 import '../../controllers/user_controller/userorder_tracker_controller.dart';
-//  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-// <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-// <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
 class LocationPickerMapUser extends StatefulWidget {
   @override
@@ -31,6 +29,7 @@ class LocationPickerMapUser extends StatefulWidget {
 
 class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
    OrderTrackerUserController ordertrackusercontroller = Get.put(OrderTrackerUserController());
+   
   MyOrderController myordercontroller = Get.put(MyOrderController());
   List<TextDto> orderList = [
     TextDto("Your order has been placed", "Fri, 25th Mar '22 - 10:47pm"),
@@ -60,22 +59,13 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
   LatLng _selectedLocation = LatLng(22.759982, 75.872925); // receiver
   List<LatLng> _routePoints = []; // List of route points for the Polyline
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // _fetchAddressFromLatLng(_selectedLocation);
-  //   // _fetchRoutePoints();
-  //   // getCurrentLocation();
-  //   // _fetchUserAddressFromLatLng(_senderLocation);
-  // }
-
+  //
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   title: Text('Location Picker'),
-      // ),
+     
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -99,16 +89,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
             ),
           ),
         ),
-        // actions: [
-        //   //  SvgPicture.asset("assets/image/girl.svg"),
-
-        //   // SizedBox(width: 20),
-        //   InkWell(
-        //       onTap: () {
-        //         Get.to(NotificationWhole());
-        //       },
-        //       child: SvgPicture.asset("assets/image/notification.svg")),
-        // ],
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -116,120 +97,19 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
           primary: true,
           shrinkWrap: false,
           children: [
-            // Container(
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(20),
-            //     color: Colors.white,
-            //   ),
-            //   child: TextField(
-            //     onChanged: (value) {
-            //       // Handle user input changes in the TextField
-            //       searchLocation(value);
-            //     },
-            //     decoration: InputDecoration(
-            //       border: InputBorder.none, // Remove underline
-            //       hintText: 'Search for a location...',
-            //       contentPadding:
-            //           EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 10,
-            // ),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height * 0.4,
-            //   child: FlutterMap(
-            //     options: MapOptions(
-            //       center: _senderLocation,
-            //       zoom: 13.2,
-            //       maxZoom: 18.2,
-            //       onTap: _handleMapTap,
-            //     ),
-            //     children: [
-            //       TileLayer(
-            //         urlTemplate:
-            //             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            //         subdomains: [
-            //           'a',
-            //           'b',
-            //           'c'
-            //         ], // Subdomains if your tile provider uses them
-            //         // tileProvider:
-            //         //     CachedNetworkTileProvider(), // Optional: Use CachedNetworkTileProvider for caching
-            //       ),
-            //       PolylineLayer(
-            //         polylines: [
-            //           Polyline(
-            //             points: _routePoints, // List of route points
-            //             color: Colors.blue, // Polyline color
-            //             strokeWidth: 3.0, // Polyline width
-            //           ),
-            //         ],
-            //       ),
-            //       MarkerLayer(
-            //         markers: [
-            //           Marker(
-            //             width: 40.0,
-            //             height: 40.0,
-            //             point: _senderLocation,
-            //             builder: (ctx) => Container(
-            //               child: Icon(
-            //                 Icons.location_on,
-            //                 color: Colors.red,
-            //               ),
-            //             ),
-            //           ),
-            //           // Marker(
-            //           //   width: 40.0,
-            //           //   height: 40.0,
-            //           //   point: _selectedLocation,
-            //           //   builder: (ctx) => Container(
-            //           //     child: Icon(
-            //           //       Icons.location_on,
-            //           //       color: Colors.green,
-            //           //     ),
-            //           //   ),
-            //           // ),
-            //           Marker(
-            //             width: 40.0,
-            //             height: 40.0,
-            //             point: _selectedLocation,
-            //             builder: (ctx) {
-            //               return TweenAnimationBuilder<double>(
-            //                 tween: Tween<double>(begin: 0.0, end: 1.0),
-            //                 duration: Duration(milliseconds: 800),
-            //                 builder: (context, value, child) {
-            //                   return Transform.scale(
-            //                     scale: value,
-            //                     child: Icon(
-            //                       Icons.location_on,
-            //                       color: Colors.green,
-            //                     ),
-            //                   );
-            //                 },
-            //               );
-            //             },
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
+            
             // ),
             SizedBox(
               height: 20,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              // height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
                 color: Colors.blue,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
-                  // bottomLeft: Radius.circular(30),
-                  // bottomRight: Radius.circular(30),
-                ),
+                  ),
               ),
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -271,12 +151,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                                   ),
                                   RatingStars(
                                     value: 3.5,
-                                    // onValueChanged: (v) {
-                                    //   //
-                                    //   setState(() {
-                                    //     value = v;
-                                    //   });
-                                    // },
+                                   
                                     starBuilder: (index, color) => Icon(
                                       Icons.star,
                                       color: color,
@@ -284,25 +159,14 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                                     ),
                                     starCount: 5,
                                     starSize: 20,
-                                    // valueLabelColor: const Color(0xff9b9b9b),
-                                    // valueLabelTextStyle: const TextStyle(
-                                    //     color: Colors.white,
-                                    //     fontWeight: FontWeight.w400,
-                                    //     fontStyle: FontStyle.normal,
-                                    //     fontSize: 12.0),
-
-                                    // valueLabelRadius: 10,
+                                   
                                     maxValue: 5,
                                     starSpacing: 0.5,
                                     maxValueVisibility: true,
                                     valueLabelVisibility: false,
                                     animationDuration:
                                         Duration(milliseconds: 1000),
-                                    // valueLabelPadding:
-                                    //     const EdgeInsets.symmetric(
-                                    //         vertical: 1, horizontal: 8),
-                                    // valueLabelMargin:
-                                    //     const EdgeInsets.only(right: 8),
+                                   
                                     starOffColor: const Color(0xffe7e8ea),
                                     starColor: MyColors.yellow,
                                   ),
@@ -344,6 +208,7 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                           physics: NeverScrollableScrollPhysics(),
                           children: [
                             OrderTracker(
+                             
                               status:ordertrackusercontroller.orderStatus,
                               activeColor: MyColors.yellow,
                               inActiveColor: Colors.grey[300],
@@ -395,77 +260,100 @@ class _LocationPickerMapUserState extends State<LocationPickerMapUser> {
                               ],
                             ),
                             SizedBox(height: 20),
-                            GetBuilder<UserLocationController>(
-                                init: UserLocationController(),
-                                builder: (controller) {
-                                  return 
-                                  controller.isDelivered ?Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 100),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // print(Status);
-                                       myordercontroller.Reorderinit();
-                                        Get.dialog(OrderReturnDialog());
-                                      },
-                                      child: Container(
-                                        // width: MediaQuery.of(context).size.width * 0.3,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.11,
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.all(
-                                            // topRight:
-                                            Radius.circular(30),
-                                            // topLeft: Radius.circular(30),
-                                            // bottomLeft: Radius.circular(30),
-                                            // bottomRight: Radius.circular(30),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text("Return Order",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                      ),
-                                    ),
-                                  ) :
+                  //  (ordertrackusercontroller.orderStatus ==  Status.delivered)?         
+                         (ordertrackusercontroller.orderStatus ==  Status.delivered) ?
+                          GetBuilder<UserLocationController>(
+                             init: UserLocationController(),
+                             builder: (controller) {
+                               
+                               return 
                              
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 100),
-                                    child: InkWell(
-                                      onTap: () {
-                                        // print(Status.outOfDelivery);
-                                        Get.dialog(OrderCancellationDialog());
-                                      },
-                                      child: Container(
-                                        // width: MediaQuery.of(context).size.width * 0.3,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.11,
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.all(
-                                            // topRight:
-                                            Radius.circular(30),
-                                            // topLeft: Radius.circular(30),
-                                            // bottomLeft: Radius.circular(30),
-                                            // bottomRight: Radius.circular(30),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text("Cancel Order",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              )),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }),
+                              Padding(
+                                 padding: const EdgeInsets.symmetric(
+                                     horizontal: 100),
+                                 child: InkWell(
+                                   onTap: () async {
+                                     // print(Status);
+                                  if (myordercontroller.isButtonEnabled){
+                            myordercontroller.disablebutton(true);
+                            print("returnorder");
+   Get.dialog(OrderReturnDialog());
+                          }
+                          else{
+                            myordercontroller.disablebutton(false);
+  print("Button is not enabled");
+                          }
+                                   
+                                   },
+                                   child: Container(
+                                     height:
+                                         MediaQuery.of(context).size.width *
+                                             0.11,
+                                     decoration: BoxDecoration(
+                                       color: myordercontroller.isButtonEnabled ? Colors.red : Colors.grey,
+                                       borderRadius: BorderRadius.all(
+                                         // topRight:
+                                         Radius.circular(30),
+                                         // topLeft: Radius.circular(30),
+                                         // bottomLeft: Radius.circular(30),
+                                         // bottomRight: Radius.circular(30),
+                                       ),
+                                     ),
+                                     child: Center(
+                                       child: Text("Return Order",
+                                           style: TextStyle(
+                                             color: Colors.white,
+                                           )),
+                                     ),
+                                   ),
+                                 ),
+                               );
+                             
+                            }):
+
+                                Padding(
+                                 padding: const EdgeInsets.symmetric(
+                                     horizontal: 100),
+                                 child: InkWell(
+                                   onTap: () {
+                                   
+
+                          if (myordercontroller.isButtonEnabled){
+                            myordercontroller.disablebutton(true);
+ Get.dialog(OrderCancellationDialog());
+                          }
+                          else{
+                            myordercontroller.disablebutton(false);
+  print("Button is not enabled");
+                          }
+                                    
+                                   },
+                                   child: Container(
+                                     height:
+                                         MediaQuery.of(context).size.width *
+                                             0.11,
+                                     decoration: BoxDecoration(
+                                       color: myordercontroller.isButtonEnabled ? Colors.red : Colors.grey,
+                                      //  GetStorage().read('cancelmessage')  ? Colors.grey:Colors.red,
+                                       borderRadius: BorderRadius.all(
+                                         // topRight:
+                                         Radius.circular(30),
+                                         // topLeft: Radius.circular(30),
+                                         // bottomLeft: Radius.circular(30),
+                                         // bottomRight: Radius.circular(30),
+                                       ),
+                                     ),
+                                     child: Center(
+                                       child: Text("Cancel Order",
+                                           style: TextStyle(
+                                             color: Colors.white,
+                                           )),
+                                     ),
+                                   ),
+                                 ),
+                               ),
+                        
+                        
                           ],
                         ),
                       ),

@@ -12,8 +12,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/user_controller/addresscontroller.dart';
 import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/coupons_controller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/screens/partner/partneraddress.dart';
-
+import 'package:pet/models/usersModel/mycartListModel.dart' as MyOrder;
 import 'package:pet/screens/swepcard.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/payment.dart';
@@ -26,7 +27,10 @@ import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class AddToCardUser extends StatefulWidget {
-  const AddToCardUser({super.key});
+  AddToCardUser({
+    super.key,
+    
+  });
 
   @override
   State<AddToCardUser> createState() => _AddToCardUserState();
@@ -36,25 +40,28 @@ class _AddToCardUserState extends State<AddToCardUser> {
   AddressController addressController = Get.put(AddressController());
   MyCartController addtocartController = Get.put(MyCartController());
   CouponsController couponsController = Get.put(CouponsController());
+
+  ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
   @override
   void onInit() {
-    addtocartController. updateTotal();
-    // super.onInit();
+    addtocartController.updateTotal();
+    addtocartController.init();
+   
+    
   }
+
   @override
   Widget build(BuildContext context) {
-    // addtocartController.updateTotal();
-    
+  
     return Stack(
       children: [
         Scaffold(
-          //  appBar:CustomAppBarback(),
           body: Padding(
             padding: const EdgeInsets.all(15),
             child: ListView(
               shrinkWrap: true,
               primary: true,
-              //  physics: NeverScrollableScrollPhysics(),
               children: [
                 GetBuilder<MyCartController>(
                   init: addtocartController,
@@ -63,18 +70,11 @@ class _AddToCardUserState extends State<AddToCardUser> {
                         ? const SizedBox()
                         : addtocartController.cartlistLoaded == false
                             ? const SizedBox()
-                            //  !addtocartController.cartlistLoaded
-                            //   ? Center(
-                            //       child: SpinKitCircle(
-                            //         color: Colors.black, // Color of the progress bar
-                            //         size: 30.0, // Size of the progress bar
-                            //       ),
-                            //     )
+                           
                             : addtocartController.mycartmodel!.data!.isEmpty
                                 ? Center(
                                     child: ElevatedButton(
                                         onPressed: () {
-                                         
                                           // Get.to(HomeUser());
                                           Get.back();
                                           Get.back();
@@ -82,7 +82,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                         child: const Text('Continue Shopping')),
                                   )
                                 : Container(
-                                    //  height: MediaQuery.of(context).size.height * 0.66,
+
                                     child: ListView.builder(
                                       primary: false,
                                       scrollDirection: Axis.vertical,
@@ -95,7 +95,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                         // print(item.name!);
                                         // ${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}
                                         String imagePath =
-                                            "${Constants.PRODUCT_HOME_IMAGE_PATH}/${item.image!}";
+                                            "${Constants.PRODUCT_HOME_IMAGE_PATH}/${item.image ?? ""}";
                                         // var imagePath = "${item.image ?? ""}";
                                         print(imagePath);
 
@@ -146,11 +146,11 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                     "Item${item.id}");
                                                                 await addtocartController
                                                                     .initdelete();
-                                                                   addtocartController.updateTotal();  
-                                                                   
-                                                                addtocartController.init();
+                                                                addtocartController
+                                                                    .updateTotal();
 
-                                                                     
+                                                                addtocartController
+                                                                    .init();
                                                               },
                                                               child: const Icon(
                                                                   Icons
@@ -165,9 +165,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                               const EdgeInsets
                                                                   .all(15.0),
                                                           child:
-                                                              //   Image.asset(
-                                                              //   "assets/image/fooddog.png",
-                                                              // ),
+                                                            
                                                               CachedNetworkImage(
                                                             imageUrl: imagePath,
                                                             width: 65,
@@ -194,12 +192,20 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            Text(
-                                                              (item.itemName ??
-                                                                      '')
-                                                                  .toString(),
-                                                              style: CustomTextStyle
-                                                                  .popinsmedium,
+                                                            SizedBox(
+                                                              width: Get.width *
+                                                                  0.5,
+                                                              child: Text(
+                                                                (item.itemName ??
+                                                                        '')
+                                                                    .toString(),
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style: CustomTextStyle
+                                                                    .popinsmedium,
+                                                              ),
                                                             ),
                                                             Text(
                                                                 (item.variant ??
@@ -212,11 +218,16 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
-                                                                  "₹${item.price}",
+                                                              Text(
+                                                                  "₹" +
+                                                                      ((item.price! *
+                                                                              (item.quantity!.toInt())))
+                                                                          .toInt().toString(),
+                                                                 
                                                                   style: CustomTextStyle
                                                                       .popinsmedium,
                                                                 ),
+                                                               
                                                                 SizedBox(
                                                                   width: MediaQuery.of(
                                                                               context)
@@ -250,11 +261,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                                 15,
                                                                             color:
                                                                                 Colors.black),
-                                                                        //  Icon(
-                                                                        //   Icons.minimize,
-                                                                        //   size: 8,
-                                                                        //   color: Colors.white,
-                                                                        // ),
+                                                                        
                                                                       ),
                                                                     ),
                                                                     const SizedBox(
@@ -286,7 +293,6 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                           () {
                                                                         addtocartController
                                                                             .incrementSize(index);
-                                                                           
                                                                       },
                                                                       child:
                                                                           Container(
@@ -324,278 +330,15 @@ class _AddToCardUserState extends State<AddToCardUser> {
                   },
                 ),
 
-                //          Container(
-                //                     height: MediaQuery.of(context).size.height * 0.18,
-                //                     width: MediaQuery.of(context).size.width,
-                //                     decoration: BoxDecoration(
-                //                         borderRadius: BorderRadius.circular(25),
-                //                         color: MyColors.boxbgcolor),
-                //                     child: Stack(
-                //                       children: [
-                //                         Padding(
-                //                           padding: const EdgeInsets.all(8.0),
-                //                           child: Row(
-                //                             mainAxisAlignment: MainAxisAlignment.end,
-                //                             children: [
-                //                               // Icon(Icons.edit_outlined),
-                //                               // SizedBox(
-                //                               //   width: 10,
-                //                               // ),
-                //                               InkWell(
-                //                                   onTap: () {
-
-                //                                   },
-                //                                   child: Icon(Icons.delete_outline)),
-                //                             ],
-                //                           ),
-                //                         ),
-                //                         Row(children: [
-                //                           Padding(
-                //                             padding: const EdgeInsets.all(15.0),
-                //                             child: Image.asset(
-                //                               "assets/image/fooddog.png",
-                //                             ),
-                //                           ),
-                //                           Column(
-                //                             crossAxisAlignment: CrossAxisAlignment.start,
-                //                             mainAxisAlignment: MainAxisAlignment.center,
-                //                             children: [
-                //                               Text(
-                //                                 "Mars Petcare Inc",
-                //                                 style: CustomTextStyle.popinsmedium,
-                //                               ),
-                //                               Text("with paneer or cottage cheese",
-                //                                   style: CustomTextStyle.popinssmall0),
-                //                               Row(
-                //                                 mainAxisAlignment:
-                //                                     MainAxisAlignment.spaceBetween,
-                //                                 children: [
-                //                                   Text(
-                //                                     "₹ 620.00",
-                //                                     style: CustomTextStyle.popinsmedium,
-                //                                   ),
-                //                                   SizedBox(
-                //                                     width: MediaQuery.of(context).size.width *
-                //                                         0.1,
-                //                                   ),
-                //                                   Row(
-                //                                     children: [
-                //                                         GestureDetector(
-                //                                   onTap: (){
-                //                                     addtocartController.decrementSize();
-                //                                   },
-                //                                   child: Container(
-                //                                     width: 25,
-                //                                     height: 25,
-                //                                     decoration: BoxDecoration(
-                //                                         shape: BoxShape.rectangle,
-                //                                         color: MyColors.yellow,
-                //                                         borderRadius:
-                //                                             BorderRadius.circular(10)),
-                //                                     child:  Icon(Icons.remove,
-                //                                         size: 15, color: Colors.black),
-                //                                         //  Icon(
-                //                                         //   Icons.minimize,
-                //                                         //   size: 8,
-                //                                         //   color: Colors.white,
-                //                                         // ),
-
-                //                                   ),
-                //                                 ),
-                //                                 SizedBox(
-                //                                   width: 3,
-                //                                 ),
-
-                // GetBuilder<MyCartController>(
-                //                 init: addtocartController,
-                //                 builder: (_) {
-                //                   return
-                //                                 Container(
-                //                                     width: 30,
-                //                                     height: 40,
-                //                                     decoration: BoxDecoration(
-                //                                       borderRadius: BorderRadius.circular(50),
-                //                                     ),
-                //                                     child: Center(
-                //                                         child: Text(
-                //                                       addtocartController.sizecount.toString(),
-                //                                       style: TextStyle(
-                //                                           fontWeight: FontWeight.w500),
-                //                                     )));
-                //                 }),
-
-                //                                 SizedBox(
-                //                                   width: 3,
-                //                                 ),
-                //                                 GestureDetector(
-                //                                    onTap: (){
-                //                                     addtocartController.incrementSize();
-                //                                   },
-                //                                   child: Container(
-                //                                     width: 25,
-                //                                     height: 25,
-                //                                     decoration: BoxDecoration(
-                //                                         //shape: BoxShape.rectangle,
-                //                                         borderRadius: BorderRadius.circular(10),
-                //                                         color: MyColors.yellow),
-                //                                     child: Icon(Icons.add,
-                //                                         size: 15, color: Colors.black),
-                //                                   ),
-                //                                 ),
-                //                               ],
-                //                                   )
-                //                                 ],
-                //                               )
-                //                             ],
-                //                           )
-                //                         ]),
-                //                       ],
-                //                     ),
-                //                   ),
-
-                //                   SizedBox(
-                //                     height: 20,
-                //                   ),
-                //                   Container(
-                //                     height: MediaQuery.of(context).size.height * 0.18,
-                //                     width: MediaQuery.of(context).size.width,
-                //                     decoration: BoxDecoration(
-                //                         borderRadius: BorderRadius.circular(25),
-                //                         color: MyColors.boxbgcolor),
-                //                     child: Stack(
-                //                       children: [
-                //                         Padding(
-                //                           padding: const EdgeInsets.all(8.0),
-                //                           child: Row(
-                //                             mainAxisAlignment: MainAxisAlignment.end,
-                //                             children: [
-                //                               // Icon(Icons.edit_outlined),
-                //                               // SizedBox(
-                //                               //   width: 10,
-                //                               // ),
-                //                               InkWell(
-                //                                   onTap: () {
-                //                                       // items.removeAt(index);
-                //                                   },
-                //                                   child: Icon(Icons.delete_outline)),
-                //                             ],
-                //                           ),
-                //                         ),
-                //                         Row(children: [
-                //                           Padding(
-                //                             padding: const EdgeInsets.all(15.0),
-                //                             child: Image.asset(
-                //                               "assets/image/fooddog.png",
-                //                             ),
-                //                           ),
-                //                           Column(
-                //                             crossAxisAlignment: CrossAxisAlignment.start,
-                //                             mainAxisAlignment: MainAxisAlignment.center,
-                //                             children: [
-                //                               Text(
-                //                                 "Mars Petcare Inc",
-                //                                 style: CustomTextStyle.popinsmedium,
-                //                               ),
-                //                               Text("with paneer or cottage cheese",
-                //                                   style: CustomTextStyle.popinssmall0),
-                //                               Row(
-                //                                 mainAxisAlignment:
-                //                                     MainAxisAlignment.spaceBetween,
-                //                                 children: [
-                //                                   Text(
-                //                                     "₹ 620.00",
-                //                                     style: CustomTextStyle.popinsmedium,
-                //                                   ),
-                //                                   SizedBox(
-                //                                     width: MediaQuery.of(context).size.width *
-                //                                         0.1,
-                //                                   ),
-                //                                   Row(
-                //                                     children: [
-                //                                         GestureDetector(
-                //                                   onTap: (){
-                //                                     addtocartController.decrementSize();
-                //                                   },
-                //                                   child: Container(
-                //                                     width: 25,
-                //                                     height: 25,
-                //                                     decoration: BoxDecoration(
-                //                                         shape: BoxShape.rectangle,
-                //                                         color: MyColors.yellow,
-                //                                         borderRadius:
-                //                                             BorderRadius.circular(10)),
-                //                                     child:  Icon(Icons.remove,
-                //                                         size: 15, color: Colors.black),
-                //                                         //  Icon(
-                //                                         //   Icons.minimize,
-                //                                         //   size: 8,
-                //                                         //   color: Colors.white,
-                //                                         // ),
-
-                //                                   ),
-                //                                 ),
-                //                                 SizedBox(
-                //                                   width: 3,
-                //                                 ),
-
-                // GetBuilder<MyCartController>(
-                //                 init: addtocartController,
-                //                 builder: (_) {
-                //                   return
-                //                                 Container(
-                //                                     width: 30,
-                //                                     height: 40,
-                //                                     decoration: BoxDecoration(
-                //                                       borderRadius: BorderRadius.circular(50),
-                //                                     ),
-                //                                     child: Center(
-                //                                         child: Text(
-                //                                       addtocartController.sizecount.toString(),
-                //                                       style: TextStyle(
-                //                                           fontWeight: FontWeight.w500),
-                //                                     )));
-                //                 }),
-
-                //                                 SizedBox(
-                //                                   width: 3,
-                //                                 ),
-                //                                 GestureDetector(
-                //                                    onTap: (){
-                //                                     addtocartController.incrementSize();
-                //                                   },
-                //                                   child: Container(
-                //                                     width: 25,
-                //                                     height: 25,
-                //                                     decoration: BoxDecoration(
-                //                                         //shape: BoxShape.rectangle,
-                //                                         borderRadius: BorderRadius.circular(10),
-                //                                         color: MyColors.yellow),
-                //                                     child: Icon(Icons.add,
-                //                                         size: 15, color: Colors.black),
-                //                                   ),
-                //                                 ),
-                //                               ],
-                //                                   )
-                //                                 ],
-                //                               )
-                //                             ],
-                //                           )
-                //                         ]),
-                //                       ],
-                //                     ),
-                //                   ),
-                //         SizedBox(
-                //   height: 20,
-                // ),
+             
 
                 GestureDetector(
                   onTap: () async {
                     await couponsController.init();
                     Get.to(UsercouponPage(
-                      price: (addtocartController.total) +
-                          (addtocartController.total * 0.05),
+                      price: (addtocartController.total)
+                      
                     ));
-                    
                   },
                   child: Container(
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -622,15 +365,14 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                  GetBuilder<CouponsController>(
-                init: couponsController,
-                builder: (_) {
-                                    return Text(
-                                      couponsController.couponcode ?? "",
-                                      style: CustomTextStyle.popinslight,
-                                    );
-                                  }
-                                ),
+                                GetBuilder<CouponsController>(
+                                    init: couponsController,
+                                    builder: (_) {
+                                      return Text(
+                                        couponsController.couponcode ?? "",
+                                        style: CustomTextStyle.popinslight,
+                                      );
+                                    }),
                               ],
                             ),
                             const Icon(
@@ -647,10 +389,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                 ),
                 GetBuilder<MyCartController>(
                   init: addtocartController,
-                  // initState: (_) {},
                   builder: (_) {
                     return Container(
-                      // height: MediaQuery.of(context).size.height * 0.24,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
@@ -659,9 +399,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                         color: Colors.black26,
                         borderType: BorderType.Rect,
                         radius: const Radius.circular(25),
-                        //  strokeWidth: 1,
                         child: Container(
-                          // height:MediaQuery.of(context).size.height*0.28,
 
                           child: Padding(
                             padding: const EdgeInsets.all(15.0),
@@ -672,18 +410,19 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     "Sub Total",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                  // SizedBox(
-                                  //   width:
-                                  //       MediaQuery.of(context).size.width * 0.2,
-                                  // ),
+                                 
                                   const Spacer(),
                                   (addtocartController.total == 1)
                                       ? Text(
-                                          addtocartController.price.toString(),
+                                          "₹" +
+                                              addtocartController.price!
+                                                  .toString(),
                                           style: CustomTextStyle.popinstext,
                                         )
                                       : Text(
-                                          addtocartController.total.toString(),
+                                          "₹" +
+                                              (addtocartController.total)
+                                                 .toInt()  .toString(),
                                           style: CustomTextStyle.popinstext,
                                         ),
                                 ],
@@ -699,20 +438,62 @@ class _AddToCardUserState extends State<AddToCardUser> {
                               SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.02),
-                              Row(
+                                       
+(couponsController.maxAmount == null || couponsController.maxAmount == "0.0" || couponsController.maxAmount == "0")?
+                                  Row(
                                 children: [
                                   Text(
-                                    "Tex(5%)",
+                                    "Delivery charges",
                                     style: CustomTextStyle.popinslight,
                                   ),
                                   const Spacer(),
+                                  (((addtocartController.total)) <   addtocartController.deliverycharges)?
                                   Text(
-                                    (addtocartController.total * 0.05)
-                                        .toString(),
+                                    "+ ₹" +
+                                        (addtocartController.deliveryprice)
+                                            .toInt().toString(),
+                                    style: CustomTextStyle.popinstext,
+                                  ):
+                                  Text(
+                                    "+ ₹" +
+                                        (0)
+                                            .toInt().toString(),
+                                    style: CustomTextStyle.popinstext,
+                                  ),
+                                ],
+                              )
+                          
+                          
+                              :Row(
+                                children: [
+                                  Text(
+                                    "Delivery charges",
+                                    style: CustomTextStyle.popinslight,
+                                  ),
+                                  const Spacer(),
+                                  (((addtocartController.total)-num.parse(couponsController.maxAmount??"")) <   addtocartController.deliverycharges)?
+                                  Text(
+                                    "+ ₹" +
+                                        (addtocartController.deliveryprice)
+                                            .toInt().toString(),
+                                    style: CustomTextStyle.popinstext,
+                                  ):
+                                  Text(
+                                    "+ ₹" +
+                                        (0)
+                                            .toInt().toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
                                 ],
                               ),
+                          
+                          
+                          
+                          
+                          
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               const Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
@@ -733,12 +514,15 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                       // initState: (_) {},
                                       builder: (_) {
                                         return Text(
-                                          "${(couponsController.maxAmount ?? 0.0).toString()}",
+                                          "- ₹${((couponsController.maxAmount ?? 0.0)).toString()}",
                                           style: CustomTextStyle.popinstext,
                                         );
                                       }),
                                 ],
                               ),
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.02),
                               const Divider(
                                 color: MyColors.lightdivider,
                                 thickness: 1,
@@ -747,6 +531,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                               SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.02),
+                        
+                        (couponsController.maxAmount == null || couponsController.maxAmount == "0.0" || couponsController.maxAmount == "0")?
                               Row(
                                 children: [
                                   Text(
@@ -754,13 +540,40 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     style: CustomTextStyle.popinslight,
                                   ),
                                   const Spacer(),
+
+
+                                  (((addtocartController.total)) <   addtocartController.deliverycharges)?
                                   Text(
-                                    "₹${(((addtocartController.total) + (addtocartController.total * 0.05)) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                    "₹${(double.parse(addtocartController.total.toString())+(addtocartController.deliveryprice)  .toDouble()).toInt().toString()}",
+                                    style: CustomTextStyle.popinstext,
+                                  ):Text(
+                                    "₹${(double.parse(addtocartController.total.toString())  .toDouble()).toInt().toString()}",
+                                    style: CustomTextStyle.popinstext,
+                                  ),
+                                ],
+                              )
+                          : Row(
+                                children: [
+                                  Text(
+                                    "Rounding Adjust",
+                                    style: CustomTextStyle.popinslight,
+                                  ),
+                                  const Spacer(),
+
+
+                                  (((addtocartController.total)-num.parse(couponsController.maxAmount??"0.0")) <   addtocartController.deliverycharges)?
+                                  Text(
+                                    "₹${(double.parse(addtocartController.total.toString())+(addtocartController.deliveryprice)  - (double.parse(couponsController.maxAmount ?? "0.0").toInt()).toDouble()).toInt().toString()}",
+                                    // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
+                                    style: CustomTextStyle.popinstext,
+                                  ):Text(
+                                    "₹${(double.parse(addtocartController.total.toString())  - (double.parse(couponsController.maxAmount ?? "0.0").toInt()).toDouble()).toInt().toString()}",
                                     // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
                                 ],
                               ),
+                          
                             ]),
                           ),
                         ),
@@ -782,7 +595,6 @@ class _AddToCardUserState extends State<AddToCardUser> {
                 ),
 
                 Container(
-                  // height:  MediaQuery.of(context).size.height*0.15,
                   width: MediaQuery.of(context).size.width,
 
                   decoration: BoxDecoration(
@@ -842,12 +654,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(16))),
                                 builder: (context) =>
-                                    // DraggableScrollableSheet(
-                                    //   initialChildSize: 0.4,
-                                    //   minChildSize: 0.2,
-                                    //   maxChildSize: 0.75,
-                                    //   expand: true,
-                                    //                            builder: (_, controller) =>
+                                  
                                     ListView(
                                   shrinkWrap: true,
                                   primary: false,
@@ -858,11 +665,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                             .viewInsets
                                             .bottom,
                                       ),
-                                      // padding: EdgeInsets.only(
-                                      //   bottom: MediaQuery.of(context)
-                                      //       .viewInsets
-                                      //       .bottom,
-                                      // ),
+                                      
                                       child: Container(
                                         padding: const EdgeInsets.all(16),
                                         decoration: const BoxDecoration(
@@ -882,7 +685,8 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                   MainAxisAlignment.end,
                                               children: [
                                                 IconButton(
-                                                  icon: const Icon(Icons.cancel),
+                                                  icon:
+                                                      const Icon(Icons.cancel),
                                                   onPressed: () {
                                                     Navigator.pop(context);
                                                   },
@@ -922,8 +726,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
-                                                                        .all(
-                                                                            10),
+                                                                        .all(10),
                                                                 child:
                                                                     Container(
                                                                         margin: const EdgeInsets.symmetric(
@@ -994,6 +797,11 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                                                                 const SizedBox(width: 5),
                                                                                 InkWell(
                                                                                   onTap: () async {
+                                                                                    print("deleteee");
+                                                                                     addtocartController
+                                                                    .selectaddadress(
+                                                                        item.id ??
+                                                                            0);
                                                                                     await addtocartController.addressdeleteinit();
                                                                                     //  addressController.removeaddress(index);
                                                                                     addtocartController.alladdressinit();
@@ -1052,20 +860,7 @@ class _AddToCardUserState extends State<AddToCardUser> {
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            // Center(
-                                            //   child: ElevatedButton(
-                                            //     style: ElevatedButton.styleFrom(
-                                            //       primary: MyColors.yellow,
-                                            //     ),
-                                            //     onPressed: () {
-                                            //       Get.to(PaymentUser());
-                                            //     },
-                                            //     child: Text(
-                                            //       'Save Address',
-                                            //       style: CustomTextStyle.popinssmall,
-                                            //     ),
-                                            //   ),
-                                            // ),
+                                         
                                           ],
                                         ),
                                       ),
@@ -1115,7 +910,6 @@ class _AddToCardUserState extends State<AddToCardUser> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 Container(
-                  // height: MediaQuery.of(context).size.height * 0.09,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
@@ -1129,106 +923,115 @@ class _AddToCardUserState extends State<AddToCardUser> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            //  Row(
-                            //         children: [
-                            //           Text(
-                            //               "₹ 620",
-                            //               style: CustomTextStyle.discounttext),
-                            //           SizedBox(width: 3),
-                            //           Container(
-                            //             height: 20,
-                            //             width: 40,
-                            //             decoration: BoxDecoration(
-                            //                 color: MyColors.red,
-                            //                 borderRadius: BorderRadius.circular(10),
-                            //                 border:
-                            //                     Border.all(color: MyColors.red)),
-                            //             child: Center(
-                            //               child: Text(
-                            //                   // item.discount.toString(),
-                            //                   "Save20%",
-                            //                   style: CustomTextStyle
-                            //                       .popinstextsmal2222),
-                            //             ),
-                            //           ),
-                            //             SizedBox(width: 10),
-                            //   Text( "₹ 520", style: CustomTextStyle.appbartext),
-
-                            //         ],
-                            //       ),
+                           
+                           
                             Text("Total", style: CustomTextStyle.popinstext),
 
-                            GetBuilder<MyCartController>(
-                                init: addtocartController,
-                                // initState: (_) {},
-                                builder: (_) {
-                                  return Text(
-                                      "₹${(((addtocartController.total) + (addtocartController.total * 0.05) - (double.parse(couponsController.maxAmount ?? "0.0")))).toString()}",
-                                      style: CustomTextStyle.appbartext);
-                                })
-                            // Row(
-                            //   children: [
-                            //     Text("₹ 620", style: CustomTextStyle.discounttext),
-                            //     SizedBox(width: 3),
-                            //     Container(
-                            //       height: 20,
-                            //       width: 40,
-                            //       decoration: BoxDecoration(
-                            //           color: MyColors.red,
-                            //           borderRadius: BorderRadius.circular(10),
-                            //           border: Border.all(color: MyColors.red)),
-                            //       child: Center(
-                            //         child: Text(
-                            //             // item.discount.toString(),
-                            //             "Save20%",
-                            //             style: CustomTextStyle.popinstextsmal2222),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+
+                               
+                       GetBuilder<MyCartController>(
+                  init: addtocartController,
+                  builder: (_) {
+                            return Column(
+                              children: [
+                                (couponsController.maxAmount == null || couponsController.maxAmount == "0.0" || couponsController.maxAmount == "0")?
+                                       GetBuilder<CouponsController>(
+                                              init: couponsController,
+                                              builder: (_) {
+                                          return Row(
+                                            children: [
+                                              
+
+                                              (((addtocartController.total)) <   addtocartController.deliverycharges)?
+                                              Text(
+                                                "₹${(double.parse(addtocartController.total.toString())+(addtocartController.deliveryprice)  .toDouble()).toInt().toString()}",
+                                                style: CustomTextStyle.popinstext,
+                                              ):Text(
+                                                "₹${(double.parse(addtocartController.total.toString())  .toDouble()).toInt().toString()}",
+                                                 style: CustomTextStyle.popinstext,
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                      )
+                                  :   GetBuilder<CouponsController>(
+                                              init: couponsController,
+                                              builder: (_) {
+                                      return Row(
+                                            children: [
+                                              
+
+
+                                              (((addtocartController.total)-num.parse(couponsController.maxAmount??"0.0")) <   addtocartController.deliverycharges)?
+                                              Text(
+                                                "₹${(double.parse(addtocartController.total.toString())+(addtocartController.deliveryprice)  - (double.parse(couponsController.maxAmount ?? "0.0").toInt()).toDouble()).toInt().toString()}",
+                                                // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
+                                                style: CustomTextStyle.popinstext,
+                                              ):Text(
+                                                "₹${(double.parse(addtocartController.total.toString())  - (double.parse(couponsController.maxAmount ?? "0.0").toInt()).toDouble()).toInt().toString()}",
+                                                // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
+                                                style: CustomTextStyle.popinstext,
+                                              ),
+                                            ],
+                                          );
+                                    }
+                                  ),
+                              ],
+                            );
+                          }
+                        ),
+                          
                           ],
                         ),
                         InkWell(
                           onTap: () {
-                            // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
-                            Get.to(PaymentUser(
-                                price: (addtocartController.total +
-                                        addtocartController.total * 0.05 -
-                                        double.parse(
-                                            couponsController.maxAmount ??
-                                                "0.0"))
-                                    .toDouble()));
-                            // price: (((addtocartController.total) +
-                            //         (addtocartController.total * 0.05) -
-                            //         (double.parse(
-                            //             couponsController.maxAmount ??
-                            //                 "0")))).toDouble()
-                            //     .toString()));
-                            // deliveredAddress: (addtocartController
-                            //             .allAddresslistModel!
-                            //             .data![
-                            //                 addtocartController.isselected ?? 0]
-                            //             .area ??
-                            //         "")
-                            //     .toString(),
-                            // deliveredstatus: "",
-                            // deliveredId: (addtocartController
-                            //         .allAddresslistModel!
-                            //         .data![addtocartController.isselected ?? 0]
-                            //         .id ??
-                            //     0),
-                            // cart: [addtocartController.mycartmodel!.data!.length]
-                            //     .toList(),
-                            // couponcode: couponsController.couponcode ?? '',
-                            // ordertype: "delivery",
-                            // orderstatus: "pending",
-                            // storeId: 1 ?? 0,
-                            // totaltexamount: ((addtocartController.total) +
-                            //         (addtocartController.total * 0.05))
-                            //     .toString(),
-                            // coupondiscounttitle:
-                            //     couponsController.coupontitle ?? '',
-                            // coupondiscountamount: "200",
+                          
+                            final storage = GetStorage();
+
+                            storage.write(
+                                'usercoupondis', couponsController.maxAmount);
+                            print("couponstore");
+                            print(storage.read('usercoupondis'));
+
+                            
+
+                            if (addtocartController.isselected != null &&
+                                addtocartController.allAddresslistModel !=
+                                    null &&
+                                addtocartController.allAddresslistModel!.data !=
+                                    null &&
+                                addtocartController
+                                    .allAddresslistModel!.data!.isNotEmpty) {
+                              if (addtocartController
+                                  .mycartmodel!.data!.isEmpty) {
+                                Get.snackbar(
+                                  "Error",
+                                  "Please add any items",
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  colorText: Colors.white,
+                                  backgroundColor: Colors.red,
+                                );
+                              } else {
+                                // Proceed to the payment screen
+                                Get.to(PaymentUser(
+                                  price: (addtocartController.total + addtocartController.deliveryprice
+                                           -
+                                          double.parse(
+                                              couponsController.maxAmount ??
+                                                  "0"))
+                                      .toDouble(), screenName: 'AddToCardUser',
+                                ));
+                              }
+                            } else {
+                              // Show a validation message indicating that no address is selected
+                              Get.snackbar(
+                                "Error",
+                                "Please select an address before proceeding.",
+                                snackPosition: SnackPosition.BOTTOM,
+                                colorText: Colors.white,
+                                backgroundColor: Colors.red,
+                              );
+                            }
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.4,
@@ -1249,61 +1052,12 @@ class _AddToCardUserState extends State<AddToCardUser> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
-                //           Container(height:   MediaQuery.of(context).size.height*0.2,
-                //      width:MediaQuery.of(context).size.width ,
-                //      decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: boxbgcolor),
-                //      child: Row(children: [
-
-                //              Padding(
-                //                padding: const EdgeInsets.all(0.0),
-                //                child: Image.asset("assets/image/fooddog.png",),
-                //              ),
-
-                //              Column(crossAxisAlignment: CrossAxisAlignment.start,
-
-                //               children: [
-
-                // Text("Mars Petcare Inc",style: CustomTextStyle.popinsmedium,),
-
-                // Text(" with paneer or cottage cheese",style: CustomTextStyle.popinsmedium)
-
-                //              ],)
-
-                //      ]),
-
-                //      )
               ],
             ),
           ),
         ),
 
-        GetBuilder<MyCartController>(
-            init: addtocartController,
-            builder: (_) {
-              return addtocartController.showLoading
-                  ? BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                      child: Container(
-                        color: Colors.black
-                            .withOpacity(0.1), // Adjust the opacity as needed
-                      ),
-                    )
-                  : const SizedBox();
-            }),
-        // Progress bar
-        GetBuilder<MyCartController>(
-            init: addtocartController,
-            builder: (_) {
-              return addtocartController.showLoading
-                  ? const Center(
-                      child: SpinKitCircle(
-                        color: Colors.white, // Color of the progress bar
-                        size: 50.0, // Size of the progress bar
-                      ),
-                    )
-                  : const SizedBox();
-            }),
-      
+        
       ],
     );
   }

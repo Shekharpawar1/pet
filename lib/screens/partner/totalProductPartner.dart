@@ -26,7 +26,7 @@ class _ProductWholesellerpartnerState extends State<ProductWholesellerpartner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-   appBar: CustomAppBarPartnerback(
+   appBar: CustomAppBarPartnerback(title:"Product"
         
       ),   
       body:

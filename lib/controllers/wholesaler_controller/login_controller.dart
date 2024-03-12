@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/screens/wholesaler/Dashboard.dart';
 import 'package:pet/utils/constants.dart';
 
 import '../../utils/api_helper.dart';
@@ -54,31 +55,63 @@ void updatepass() {
       var wholesalerid;
         var wholesalerroleid;
       var wholesalerData;
+      var wholewalletbalance;
+      var wholesalerDataStatus;
 
       print(response["data"]);
       try {
         wholesalerid = response["data"][0]["id"];
         wholesalerroleid = response["data"][0]["role"];
         wholesalerData = response["data"];
+        wholewalletbalance = response["data"][0]["wallet_balance"];
+        wholesalerDataStatus = response["data"][0]["status"];
+
       } catch (e) {
         wholesalerid = response["data"]![0]["id"];
-                wholesalerroleid = response["data"]![0]["role"];
+        wholesalerroleid = response["data"]![0]["role"];
         wholesalerData = response["data"][0];
+         wholewalletbalance = response["data"][0]["wallet_balance"];
+         wholesalerDataStatus = response["data"][0]["status"];
       }
-      print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData} Role: ${wholesalerroleid}");
+      print("=====>>>> Id ${wholesalerid} Data: ${wholesalerData} Role: ${wholesalerroleid} Status ${wholesalerDataStatus}");
       storage.write('wholesalerData', wholesalerData);
       storage.write('wholesalerid', wholesalerid);
        storage.write('wholesalerroleid', wholesalerroleid);
+       storage.write('wholewalletBalance', wholewalletbalance);
      
       print(storage.read('wholesalerid').toString());
       print(storage.read('wholesalerData').toString());
       print(storage.read('wholesalerroleid').toString());
-      // print(stateListModel);
-      // stateLoaded = true;
+      print(storage.read('wholewalletBalance').toString());
+       print("wholebbn");
+          try{
+//  var userData = response["data"][0];
+  if (wholesalerDataStatus == 1) {
+
+    Get.to(DashboardWhole());
+       
+      }
+      else{
+
+         Get.snackbar(
+          'Inactive Account',
+          'Your account is not active. Please contact support.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      }
+      catch(e){ 
+      
+  print("Exception occurred: $e");
+       
+      }
+ 
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
+     Get.snackbar(
         'Error',
         'An error occurred: $e',
         snackPosition: SnackPosition.BOTTOM,

@@ -8,6 +8,7 @@ import 'package:pet/models/cityModel.dart';
 import 'package:pet/models/stateModel.dart';
 import 'package:pet/models/stateModel.dart' as statesFile;
 import 'package:pet/models/cityModel.dart' as cityFile;
+import 'package:pet/screens/salesman/Dashboard.dart';
 import 'package:pet/utils/api_helper.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:http/http.dart' as http;
@@ -58,36 +59,102 @@ final storage = GetStorage();
         var sellerid;
         var sellertoken;
       var sellerData;
+      var sellerzoneID;
+      var sellerwallet;
+      var sellerDataStatus;
+
 
       print(response["data"]);
       try {
         sellerid = response["data"][0]["id"];
         sellertoken = response["data"][0]["auth_token"];
+        sellerzoneID = response["data"][0]["zone_id"];
         sellerData = response["data"];
-      } catch (e) {
+        sellerwallet = response["data"][0]["wallet_balance"];
+sellerDataStatus =  response["data"][0]["status"];
+      
+      }catch(e){
         sellerid = response["data"]![0]["id"];
+         sellerzoneID = response["data"][0]["zone_id"];
                 sellertoken = response["data"]![0]["auth_token"];
         sellerData = response["data"][0];
+        sellerwallet = response["data"][0]["wallet_balance"];
+        
+sellerDataStatus =  response["data"][0]["status"];
       }
       // // var id = userLoginModel.data![0].id;
-      print("=====>>>> Id ${sellerid} token: ${sellertoken} data: ${sellerData}");
+      
+      print("=====>>>> Id ${sellerid} ZOneID: ${sellerzoneID} data: ${sellerData} Status ${sellerDataStatus}");
       storage.write('sellerData', sellerData);
       storage.write('sellerid', sellerid);
-       storage.write('sellertoken', sellertoken);
-     
+       storage.write('sellerZoneId', sellerzoneID);
+        storage.write('sellertoken', sellertoken);
+        storage.write('sellerwallet', sellerwallet);
       print(storage.read('sellerid').toString());
       print(storage.read('sellerData').toString());
       print(storage.read('sellertoken').toString());
+        print(storage.read('sellerZoneId').toString());
+        print(storage.read('sellerwallet').toString());
+
+      //    if (response["data"] != null && response["data"].isNotEmpty) {
+      // var userData = response["data"][0];
+
+      // if (userData["verified"] == 0) {
+      //   Get.snackbar(
+      //     'Inactive Account',
+      //     'Your account is not active. Please contact support.',
+      //     snackPosition: SnackPosition.BOTTOM,
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white,
+      //   );
+
+      // }
+
+      try{
+        
+  if (sellerDataStatus == 1) {
+    Get.to(DashboardSales());
+       
+
+    
+      }
+       else{
+
+         Get.snackbar(
+          'Inactive Account',
+          'Your account is not active. Please contact support.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+
+
+
+
+      }catch(e){ 
+ print("Exception occurred: $e");
+
+       
+      
+      }
+ 
+
       update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
+    
+      
+      
+    }  catch (e) {
+      print('Error: ${storage.read("showmessage")}');
+     Get.snackbar(
         'Error',
-        'An error occurred: $e',
+        'An error occurred: ${ storage.read("showmessage")}',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
+     
+      throw "Invalid Field";
     }
   }
 
@@ -111,13 +178,13 @@ final storage = GetStorage();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

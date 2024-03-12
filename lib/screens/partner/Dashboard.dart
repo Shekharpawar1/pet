@@ -21,7 +21,6 @@ import 'package:pet/screens/partner/widget/wholeAppBar.dart';
 import 'package:pet/screens/salesman/balance.dart';
 import 'package:pet/screens/salesman/complete.dart';
 import 'package:pet/screens/salesman/home.dart';
-import 'package:pet/screens/salesman/pending.dart';
 import 'package:pet/screens/salesman/totalorder.dart';
 import 'package:pet/screens/salesman/wholesaler_view.dart';
 
@@ -43,10 +42,12 @@ class _DashboardPartnerState extends State<DashboardPartner> {
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   int len = 0;
   
-PartnerProfileController profilecontroller = Get.put(PartnerProfileController());
+// PartnerProfileController profilecontroller = Get.put(PartnerProfileController());
   PartnerDashBoardController partnerDashBoardController = Get.put(PartnerDashBoardController());
   @override
   Widget build(BuildContext context) {
+    partnerDashBoardController.TotalOrderinit() ;
+    partnerDashBoardController.init();
     return Scaffold(
       key: _drawerkey,
       drawer: drawerpartner(),
@@ -363,29 +364,29 @@ PartnerProfileController profilecontroller = Get.put(PartnerProfileController())
                       SizedBox(
                         height: 10,
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.08,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          // Get.to(SalesWholeSalerScreen());
-                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
-                        },
-                        child: Center(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.08,
-                            decoration: BoxDecoration(
-                                color: MyColors.yellow,
-                                borderRadius: BorderRadius.circular(25)),
-                            child: Center(
-                                child: Text(
-                              "Create Order",
-                              style: CustomTextStyle.mediumtextreem,
-                            )),
-                          ),
-                        ),
-                      ),
+                      // SizedBox(
+                      //   height: MediaQuery.of(context).size.height * 0.08,
+                      // ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     // Get.to(SalesWholeSalerScreen());
+                      //     // Navigator.push(context, MaterialPageRoute(builder: (context)=>MyPetDetails()));
+                      //   },
+                      //   child: Center(
+                      //     child: Container(
+                      //       width: MediaQuery.of(context).size.width,
+                      //       height: MediaQuery.of(context).size.height * 0.08,
+                      //       decoration: BoxDecoration(
+                      //           color: MyColors.yellow,
+                      //           borderRadius: BorderRadius.circular(25)),
+                      //       child: Center(
+                      //           child: Text(
+                      //         "Create Order",
+                      //         style: CustomTextStyle.mediumtextreem,
+                      //       )),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   );
                 }),

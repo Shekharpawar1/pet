@@ -267,7 +267,8 @@ class _SalescouponPageState extends State<SalescouponPage> {
                                                     child: Text(
                                                       'TAP TO APPLY',
                                                       style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 10
+                                                        ,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -291,7 +292,7 @@ class _SalescouponPageState extends State<SalescouponPage> {
                                                     child: Text(
                                                       "You can't apply",
                                                       style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 10,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),

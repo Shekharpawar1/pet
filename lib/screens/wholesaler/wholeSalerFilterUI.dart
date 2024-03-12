@@ -4,21 +4,30 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
-import 'package:pet/controllers/user_controller/filter_controller.dart';
-import 'package:pet/controllers/user_controller/productdetails_controller.dart';
+
+
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
+
+import 'package:pet/controllers/wholesaler_controller/wholesaler_ourbrand_filter_controller.dart';
 import 'package:pet/others/Filter.dart';
-import 'package:pet/screens/salesman/productdetails.dart';
-import 'package:pet/screens/user/productdetails.dart';
+
+
 import 'package:pet/screens/wholesaler/productdetails.dart';
+import 'package:pet/screens/wholesaler/widget/Filter.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 
 class WholeSalerFilterScreenUI extends StatelessWidget {
   WholeSalerFilterScreenUI({super.key});
-  final FilterController filterController = Get.put(FilterController());
+  final WholeSalerOurBrandFilterController filterController = Get.put(WholeSalerOurBrandFilterController());
+   WholeHomeController wholehomecontroller = Get.put(WholeHomeController());
+  WholeProductDetailsController wholeproductdetailsController =
+      Get.put(WholeProductDetailsController());
+  MyCartWholeController mycartwholeController =
+      Get.put(MyCartWholeController());
   @override
   void onInit() {
     filterController.loadDefaultData();
@@ -52,9 +61,10 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
         actions: [
           GestureDetector(
             onTap: () {
-              FilterController filtercontroller = Get.put(FilterController());
+              
+              WholeSalerOurBrandFilterController filtercontroller = Get.put(WholeSalerOurBrandFilterController());
               filtercontroller.init();
-              Get.to(FilterScreen());
+              Get.to(FilterScreenWhole());
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -74,11 +84,14 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
           )
         ],
       ),
-      body: GetBuilder<FilterController>(
+      body: GetBuilder<WholeSalerOurBrandFilterController>(
           init: filterController,
           builder: (_) {
             return Stack(
               children: [
+                   filterController.filteredProducts.isEmpty
+                    ?  Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width)):
+                    
                 filterController.filteredProducts.isEmpty
                     ? SizedBox()
                     : Padding(
@@ -94,7 +107,7 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
                                     crossAxisCount: 2,
                                     crossAxisSpacing: 15.0,
                                     mainAxisSpacing: 15.0,
-                                    mainAxisExtent: 280),
+                                    mainAxisExtent: 285),
                             itemCount: filterController.filteredProducts
                                 .length, // Set the number of cards you want to display.
                             itemBuilder: (context, index) {
@@ -102,7 +115,7 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
                               //     SliverGridDelegateWithMaxCrossAxisExtent(
                               //         maxCrossAxisExtent: 150,
                               //      childAspectRatio: 3 / 2,
-                              //         mainAxisExtent: 300,
+                              //         mainAxisExtent: 285,
                               //         crossAxisSpacing: 15,
                               //         mainAxisSpacing: 15),
                               // itemCount: homeusercontroller
@@ -118,7 +131,7 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
 
                               // var imagePath =
                               //     "${Constants.BASE_URL}${Constants.PRODUCT_IMAGE_PATH}${item.image ?? ""}";
-                              print(imagePath);
+                             
                               return InkWell(
                                 onTap: () async {
                                 WholeProductDetailsController
@@ -133,7 +146,7 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
                              
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(0.0),
                                   child: Container(
                                     width: 140,
                                     // height: 700,
@@ -212,6 +225,8 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(item.name!,
+                                                   maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                     style: CustomTextStyle
                                                         .popinsmedium),
                                                 Text(
@@ -225,7 +240,7 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
                                                     style: CustomTextStyle
                                                         .popinssmall0),
                                                 SizedBox(height: 5),
-                                                Row(
+                                             Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
@@ -235,82 +250,143 @@ class WholeSalerFilterScreenUI extends StatelessWidget {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
+                                                               (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                            "₹" +
+                                                                                item.wholePrice.toString(),
+                                                                            style: CustomTextStyle.discounttext),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                2),
+                                                                        // Container(
+                                                                        // height:
+                                                                        //     20,
+                                                                        // width: 48,
+                                                                        // decoration: BoxDecoration(
+                                                                        //     color: MyColors
+                                                                        //         .red,
+                                                                        //     borderRadius: BorderRadius.circular(
+                                                                        //         10),
+                                                                        //     border:
+                                                                        //         Border.all(color: MyColors.red)),
+                                                                        // child:
+                                                                        //     Center(
+                                                                        //   child:
+                                                                        Text(
+                                                                            // item.discount.toString(),
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                            style:
+                                                                                CustomTextStyle.popinstextsmal2222red),
+                                                                        //   ),
+                                                                        // ),
+                                                                      ],
+                                                                    ): const  SizedBox(),
+                                                                   
+                                                                   
+                                                        // Row(
+                                                        //   children: [
+                                                        //     Text(
+                                                        //         "₹${item.wholePrice}",
+                                                        //         style: CustomTextStyle
+                                                        //             .discounttext),
+                                                        //     const SizedBox(width: 2),
+                                                        //     // Container(
+                                                        //     // height:
+                                                        //     //     20,
+                                                        //     // width: 48,
+                                                        //     // decoration: BoxDecoration(
+                                                        //     //     color: MyColors
+                                                        //     //         .red,
+                                                        //     //     borderRadius: BorderRadius.circular(
+                                                        //     //         10),
+                                                        //     //     border:
+                                                        //     //         Border.all(color: MyColors.red)),
+                                                        //     // child:
+                                                        //     //     Center(
+                                                        //     //   child:
+                                                        //     Text(
+                                                        //         // item.discount.toString(),
+                                                        //           "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                        //         style: CustomTextStyle
+                                                        //             .popinstextsmal2222red),
+                                                        //     //   ),
+                                                        //     // ),
+                                                        //   ],
+                                                        // ),
+                                                       
+                                                       
+                                                        const SizedBox(height: 5),
                                                         Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
-                                                            Text(
-                                                                "₹" +
-                                                                    item.price
-                                                                        .toString(),
+                                                            SizedBox(
+                                                              width: Get.width *
+                                                                  0.23,
+                                                              child: Text(
+                                                                "₹ ${((double.parse(item.wholePrice ?? '')) - ((double.parse(item.wholePrice ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                         
+                                                                // "₹" +
+                                                                //     item.wholePrice!,
                                                                 style: CustomTextStyle
-                                                                    .discounttext),
-                                                            SizedBox(width: 10),
-                                                            Container(
-                                                              height: 20,
-                                                              width: 40,
-                                                              decoration: BoxDecoration(
-                                                                  color:
-                                                                      MyColors
-                                                                          .red,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10),
-                                                                  border: Border.all(
-                                                                      color: MyColors
-                                                                          .red)),
-                                                              child: Center(
-                                                                child: Text(
-                                                                    // item.discount.toString(),
-                                                                    "Save${item.discount.toString()}%",
-                                                                    style: CustomTextStyle
-                                                                        .popinstextsmal2222),
+                                                                    .popinsmedium,
                                                               ),
                                                             ),
+                                                            SizedBox(
+                                                                width: Get.width *
+                                                                    0.054),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                //                  productdeatilscontroller.viewproductHome(
+                                                                //                   item.id??0,item.name??'',"1kg",1 ,item.wholePrice??'',item.image!);
+                                                                //                   await productdeatilscontroller
+                                                                // .addProductHome();
+                                                              },
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        right:
+                                                                            5.0),
+                                                                child: Container(
+                                                                    width: 35,
+                                                                    height: 35,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                10),
+                                                                        color: const Color(
+                                                                            0xffffcc00)),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              5.0),
+                                                                      child: Image
+                                                                          .asset(
+                                                                        "assets/image/bag2.png",
+                                                                        height:
+                                                                            25,
+                                                                      ),
+                                                                    )),
+                                                              ),
+                                                            )
                                                           ],
-                                                        ),
-                                                        SizedBox(height: 5),
-                                                        Text(
-                                                          "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
-
-                                                          // "₹" +
-                                                          //     item.price!,
-                                                          style: CustomTextStyle
-                                                              .popinsmedium,
                                                         ),
                                                       ],
                                                     ),
-
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 5.0),
-                                                      child: Container(
-                                                          width: 35,
-                                                          height: 35,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                              color: Color(
-                                                                  0xffffcc00)),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    5.0),
-                                                            child: Image.asset(
-                                                              "assets/image/bag2.png",
-                                                              height: 25,
-                                                            ),
-                                                          )),
-                                                    )
+                         
                                                     // Image.asset(
                                                     //   "assets/image/yellowbag.png",
                                                     //   height: 80,
                                                     // )
                                                   ],
                                                 )
-                                              ],
+                                               ],
                                             ),
                                           ),
                                         )

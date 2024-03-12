@@ -100,34 +100,97 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
     super.initState();
   }
 
+
+
+
+
+
   DateTime getDate(DateTime d) => DateTime(d.year, d.month, d.day);
+/*  initCalender() {
+    final date = DateTime.now();
+
+    DateTime startOfCurrentWeek = widget.weekStartFrom == WeekStartFrom.Monday
+        ? getDate(date.subtract(Duration(days: date.weekday - 1)))
+        : getDate(date.subtract(Duration(days: date.weekday % 7)));
+        userServicesAddAppointmentController.addToCurrentWeek(startOfCurrentWeek);
+      //  userServicesAddAppointmentController.clearData(); // Clear any previous data
+    for (int index = 0; index < 7; index++) {
+      DateTime addDate = startOfCurrentWeek.add(Duration(days: index));
+      userServicesAddAppointmentController.addToCurrentWeek(addDate);
+    }
+  }*/
+
+  onDateSelect(DateTime date) {
+    if (date.isAfter(DateTime.now())) {
+      userServicesAddAppointmentController.setSelectedDate(date);
+      widget.onDateChange?.call(userServicesAddAppointmentController.selectedDate);
+    }
+  }
+
 
   initCalender() {
-    // List<DateTime> minus3Days = [];
-    // List<DateTime> add3Days = [];
-    // for (int index = 0; index < 3; index++) {
-    //   DateTime minusDate = today.add(Duration(days: -(index + 1)));
-    //   minus3Days.add(minusDate);
-    //   DateTime addDate = today.add(Duration(days: (index + 1)));
-    //   add3Days.add(addDate);
-    // }
-    // currentWeek.addAll(minus3Days.reversed.toList());
-    // currentWeek.add(today);
-    // currentWeek.addAll(add3Days);
-    // listOfWeeks.add(currentWeek);
-
     final date = DateTime.now();
 
     DateTime startOfCurrentWeek = widget.weekStartFrom == WeekStartFrom.Monday
         ? getDate(date.subtract(Duration(days: date.weekday - 1)))
         : getDate(date.subtract(Duration(days: date.weekday % 7)));
 
+    // Calculate the start of the next week
+    DateTime startOfNextWeek = startOfCurrentWeek.add(Duration(days: 1));
+
+    userServicesAddAppointmentController.addToCurrentWeek(startOfCurrentWeek);
+
+    for (int index = 1; index < 7; index++) {
+      DateTime addDate = startOfCurrentWeek.add(Duration(days: index));
+      userServicesAddAppointmentController.addToCurrentWeek(addDate);
+    }
+
+    userServicesAddAppointmentController.addToListOfWeek(userServicesAddAppointmentController.currentWeek);
+
+    getMorePreviousWeeks();
+  }
+
+
+  /* onBackClick() {
+    // Calculate the start of the previous week
+    DateTime startOfPreviousWeek = userServicesAddAppointmentController
+        .listOfWeeks[userServicesAddAppointmentController.currentWeekIndex][0]
+        .subtract(Duration(days: 7));
+
+    if (startOfPreviousWeek.day < 23) {
+      // Ensure that the previous week starts from the 23rd day
+      startOfPreviousWeek = startOfPreviousWeek.add(Duration(days: 23 - startOfPreviousWeek.day));
+    }
+
+    userServicesAddAppointmentController.addToCurrentWeek(startOfPreviousWeek);
+
+    carouselController.previousPage();
+  }*/
+
+  /*onNextClick() {
+    // Calculate the start of the next week
+    DateTime startOfNextWeek = userServicesAddAppointmentController
+        .listOfWeeks[userServicesAddAppointmentController.currentWeekIndex][6]
+        .add(Duration(days: 1));
+
+    userServicesAddAppointmentController.addToCurrentWeek(startOfNextWeek);
+    carouselController.nextPage();
+  }*/
+
+  /*initCalender() {
+    final date = DateTime.now();
+    DateTime startOfCurrentWeek = widget.weekStartFrom == WeekStartFrom.Monday
+        ? getDate(date.subtract(Duration(days: date.weekday - 1)))
+        : getDate(date.subtract(Duration(days: date.weekday % 7)));
+
     // currentWeek.add(startOfCurrentWeek);
     userServicesAddAppointmentController.addToCurrentWeek(startOfCurrentWeek);
-    for (int index = 0; index < 6; index++) {
-      DateTime addDate = startOfCurrentWeek.add(Duration(days: (index + 1)));
-      // currentWeek.add(addDate);
+    for (int index = 0; index <7 ; index++) {
+      DateTime addDate = startOfCurrentWeek.add(Duration(days: index));
       userServicesAddAppointmentController.addToCurrentWeek(addDate);
+     // DateTime addDate = startOfCurrentWeek.add(Duration(days: (index + 1)));
+      // currentWeek.add(addDate);
+      //userServicesAddAppointmentController.addToCurrentWeek(addDate);
     }
 
     // listOfWeeks.add(currentWeek);
@@ -135,9 +198,53 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
         .addToListOfWeek(userServicesAddAppointmentController.currentWeek);
 
     getMorePreviousWeeks();
+    
+  
+  }*/
+/*  getMorePreviousWeeks() {
+    List<DateTime> previousWeek = [];
+    DateTime currentDate = userServicesAddAppointmentController.listOfWeeks.isEmpty
+        ? DateTime.now()
+        : userServicesAddAppointmentController
+        .listOfWeeks[userServicesAddAppointmentController.currentWeekIndex]
+        .isEmpty
+        ? DateTime.now()
+        : userServicesAddAppointmentController.listOfWeeks[
+    userServicesAddAppointmentController.currentWeekIndex][0];
+
+    // Calculate the start of the previous week
+    DateTime startOfPreviousWeek = currentDate.subtract(Duration(days: currentDate.day - 23));
+
+    for (int index = 0; index < 7; index++) {
+      DateTime previousDate = startOfPreviousWeek.add(Duration(days: index));
+      previousWeek.add(previousDate);
+    }
+
+    userServicesAddAppointmentController.addToListOfWeek(previousWeek);
+  }*/
+  getMorePreviousWeeks() {
+    List<DateTime> nextWeek = [];
+    DateTime currentDate = userServicesAddAppointmentController.listOfWeeks.isEmpty
+        ? DateTime.now()
+        : userServicesAddAppointmentController
+        .listOfWeeks[userServicesAddAppointmentController.currentWeekIndex]
+        .isEmpty
+        ? DateTime.now()
+        : userServicesAddAppointmentController.listOfWeeks[
+    userServicesAddAppointmentController.currentWeekIndex][6];
+
+    // Calculate the start of the next week
+    DateTime startOfNextWeek = currentDate.add(Duration(days: 1));
+
+    for (int index = 0; index < 7; index++) {
+      DateTime nextDate = startOfNextWeek.add(Duration(days: index));
+      nextWeek.add(nextDate);
+    }
+
+    userServicesAddAppointmentController.addToListOfWeek(nextWeek);
   }
 
-  getMorePreviousWeeks() {
+/*  getMorePreviousWeeks() {
     List<DateTime> minus7Days = [];
     DateTime startFrom =
         userServicesAddAppointmentController.listOfWeeks.isEmpty
@@ -158,25 +265,26 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
     userServicesAddAppointmentController
         .addToListOfWeek(minus7Days.reversed.toList());
     // setState(() {});
-  }
+  }*/
 
-  onDateSelect(DateTime date) {
-    // setState(() {
-    //   selectedDate = date;
-    // });
+
+  
+ /* onDateSelect(DateTime date) {
+
     userServicesAddAppointmentController.setSelectedDate(date);
     // print(
     //     "Selected Date: ${userServicesAddAppointmentController.selectedDate}");
     widget.onDateChange
         ?.call(userServicesAddAppointmentController.selectedDate);
+  }*/
+
+ onBackClick() {
+   carouselController.previousPage();
   }
 
-  onBackClick() {
-    carouselController.nextPage();
-  }
-
-  onNextClick() {
-    carouselController.previousPage();
+ onNextClick() {
+   carouselController.nextPage();
+   // carouselController.previousPage();
   }
 
   onWeekChange(index) {
@@ -193,10 +301,34 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
       getMorePreviousWeeks();
     }
 
+
+    if (userServicesAddAppointmentController.currentWeekIndex + 1 ==
+      userServicesAddAppointmentController.listOfWeeks.length) {
+    getMoreFutureWeeks(userServicesAddAppointmentController.currentWeek);
+  }
+
     widget.onWeekChange?.call(userServicesAddAppointmentController.currentWeek);
     setState(() {});
   }
 
+// Function to get more future weeks
+getMoreFutureWeeks( currentWeek) {
+  List<DateTime> future7Days = [];
+
+  // Calculate the start date for the next week
+  DateTime startFrom = currentWeek.add(Duration(days: 1));
+
+  for (int index = 0; index < 7; index++) {
+    DateTime futureDate = startFrom.add(Duration(days: index));
+    future7Days.add(futureDate);
+  }
+
+  // Add the list of future dates to your list of weeks
+  userServicesAddAppointmentController.addToListOfWeek(future7Days);
+
+  // Update the UI
+  setState(() {});
+}
   // =================
 
   isNextDisabled() {
@@ -231,6 +363,7 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          print("backk ======");
                           onBackClick();
                         },
                         child: Row(
@@ -239,20 +372,14 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                             Icon(
                               Icons.arrow_back_ios_new,
                               size: 15,
-                              color: widget.activeNavigatorColor ??
+                              color:
+                              widget.activeNavigatorColor ??
                                   theme.primaryColor,
                             ),
                             const SizedBox(
                               width: 4,
                             ),
-                            // Text(
-                            //   "Back",
-                            //   style: theme.textTheme.bodyLarge!.copyWith(
-                            //     color: widget.activeNavigatorColor ??
-                            //         theme.primaryColor,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),
-                            // ),
+
                           ],
                         ),
                       ),
@@ -272,23 +399,14 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: isNextDisabled()
-                            ? () {
-                                onNextClick();
-                              }
-                            : null,
+                        onTap: () {
+                          print("ffffff ======");
+                          onNextClick();
+                        },
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Text(
-                            //   "Next",
-                            //   style: theme.textTheme.bodyLarge!.copyWith(
-                            //     color: isNextDisabled()
-                            //         ? theme.primaryColor
-                            //         : widget.inactiveNavigatorColor ?? Colors.grey,
-                            //     fontWeight: FontWeight.bold,
-                            //   ),
-                            // ),
+
                             const SizedBox(
                               width: 4,
                             ),
@@ -296,9 +414,10 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                               Icons.arrow_forward_ios,
                               size: 15,
                               color: isNextDisabled()
-                                  ? theme.primaryColor
+                                  ?   Colors.grey
+
                                   : widget.inactiveNavigatorColor ??
-                                      Colors.grey,
+                                  theme.primaryColor,
                             ),
                           ],
                         ),
@@ -308,6 +427,7 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                   const SizedBox(
                     height: 12,
                   ),
+
                   CarouselSlider(
                     carouselController: carouselController,
                     items: [
@@ -334,15 +454,21 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                                       onTap:
                                           userServicesAddAppointmentController
                                                   .listOfWeeks[ind][weekIndex]
-                                                  .isBefore(DateTime.now())
+                                                  .isAfter(DateTime.now())
                                               ? () {
                                                   onDateSelect(
                                                     userServicesAddAppointmentController
                                                             .listOfWeeks[ind]
                                                         [weekIndex],
                                                   );
+print("Dates");
+                                                    print( userServicesAddAppointmentController
+                                                            .listOfWeeks[ind]
+                                                        [weekIndex],);
                                                 }
                                               : null,
+
+                                            
                                       child: Container(
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
@@ -461,8 +587,10 @@ class _HorizontalWeekCalendarState extends State<HorizontalWeekCalendar> {
                       },
                     ),
                   ),
+                
                 ],
               );
             });
   }
 }
+

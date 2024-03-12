@@ -30,6 +30,7 @@ class UserOrderTrackerModel {
 class Data {
   int? id;
   int? userId;
+  int? sellerId;
   String? orderAmount;
   String? couponDiscountAmount;
   String? couponDiscountTitle;
@@ -37,6 +38,9 @@ class Data {
   String? orderStatus;
   String? totalTaxAmount;
   String? paymentMethod;
+  String? paymentDay;
+  String? gstBill;
+  String? paymentMode;
   String? transactionReference;
   int? deliveryAddressId;
   int? deliveryManId;
@@ -72,7 +76,7 @@ class Data {
   int? zoneId;
   int? moduleId;
   String? orderAttachment;
-  int? parcelCategoryId;
+  String? parcelCategoryId;
   String? receiverDetails;
   String? chargePayer;
   int? distance;
@@ -85,6 +89,7 @@ class Data {
   Data(
       {this.id,
       this.userId,
+      this.sellerId,
       this.orderAmount,
       this.couponDiscountAmount,
       this.couponDiscountTitle,
@@ -92,6 +97,9 @@ class Data {
       this.orderStatus,
       this.totalTaxAmount,
       this.paymentMethod,
+      this.paymentDay,
+      this.gstBill,
+      this.paymentMode,
       this.transactionReference,
       this.deliveryAddressId,
       this.deliveryManId,
@@ -140,6 +148,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
+    sellerId = json['seller_id'];
     orderAmount = json['order_amount'];
     couponDiscountAmount = json['coupon_discount_amount'];
     couponDiscountTitle = json['coupon_discount_title'];
@@ -147,6 +156,9 @@ class Data {
     orderStatus = json['order_status'];
     totalTaxAmount = json['total_tax_amount'];
     paymentMethod = json['payment_method'];
+    paymentDay = json['payment_day'];
+    gstBill = json['gst_bill'];
+    paymentMode = json['payment_mode'];
     transactionReference = json['transaction_reference'];
     deliveryAddressId = json['delivery_address_id'];
     deliveryManId = json['delivery_man_id'];
@@ -197,6 +209,7 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['user_id'] = this.userId;
+    data['seller_id'] = this.sellerId;
     data['order_amount'] = this.orderAmount;
     data['coupon_discount_amount'] = this.couponDiscountAmount;
     data['coupon_discount_title'] = this.couponDiscountTitle;
@@ -204,6 +217,9 @@ class Data {
     data['order_status'] = this.orderStatus;
     data['total_tax_amount'] = this.totalTaxAmount;
     data['payment_method'] = this.paymentMethod;
+    data['payment_day'] = this.paymentDay;
+    data['gst_bill'] = this.gstBill;
+    data['payment_mode'] = this.paymentMode;
     data['transaction_reference'] = this.transactionReference;
     data['delivery_address_id'] = this.deliveryAddressId;
     data['delivery_man_id'] = this.deliveryManId;

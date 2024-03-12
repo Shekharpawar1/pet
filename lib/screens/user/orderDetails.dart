@@ -18,12 +18,15 @@ import 'package:pet/controllers/user_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/orderdetails_controller.dart';
 import 'package:pet/controllers/user_controller/ourbranddetailscontroller.dart';
+import 'package:pet/controllers/user_controller/productdetails_controller.dart';
 import 'package:pet/controllers/user_controller/review_controller.dart';
 import 'package:pet/controllers/user_controller/userorder_tracker_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/order_tracker_controller.dart';
+import 'package:pet/models/usersModel/orderDetailsModel.dart' as orderDetails;
 import 'package:pet/screens/user/locationScreenUser.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/productdetails.dart';
 import 'package:pet/screens/user/widgets/pdfView.dart';
 import 'package:pet/screens/wholesaler/locationScreenWholesaler.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
@@ -43,11 +46,15 @@ import 'package:pdf/pdf.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../controllers/user_controller/coupons_controller.dart';
+
 class OrderDetailsUser extends StatefulWidget {
   OrderDetailsUser(
       {super.key,
+        this.storeId,
       this.orderId,
       this.couponcode,
+      this.coupondisAmount,
       this.paymentmethod,
       this.orderstatus,
       this.orderAmount,
@@ -56,10 +63,14 @@ class OrderDetailsUser extends StatefulWidget {
       this.email,
       this.address,
       this.phone,
-      this.delivered});
+
+      this.delivered,this.deliverycharge});
+
 
   String? address;
   String? couponcode;
+  int? storeId;
+  String? coupondisAmount;
   String? delivered;
   String? email;
   String? fname;
@@ -69,6 +80,7 @@ class OrderDetailsUser extends StatefulWidget {
   String? orderstatus;
   String? paymentmethod;
   String? phone;
+  String? deliverycharge;
 
   @override
   State<OrderDetailsUser> createState() => _OrderDetailsUserState();
@@ -76,6 +88,11 @@ class OrderDetailsUser extends StatefulWidget {
 
 class _OrderDetailsUserState extends State<OrderDetailsUser> {
   MyCartController addtocartController = Get.put(MyCartController());
+
+  
+  CouponsController couponsController = Get.put(CouponsController());
+      ProductDetailsController productdeatilscontroller =
+      Get.put(ProductDetailsController());
   MyOrderController myordercontroller = Get.put(MyOrderController());
   OrderDetailsController orderdetailscontroller =
       Get.put(OrderDetailsController());
@@ -83,6 +100,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
   final storage = GetStorage();
   final UserReviewController userreviewcontroller =
       Get.put(UserReviewController());
+String formattedTotal = "";
 
   // void generateAndSharePDF(BuildContext context) async {
   //   final pdf = pw.Document();
@@ -165,206 +183,61 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
   //                 padding: pw.EdgeInsets.symmetric(vertical: 15.0),
   //                 child: pw.Image(dividerImage),
   //               ),
-  //               pw.ListView(
-  //                 // physics: NeverScrollableScrollPhysics(),
-  //                 // shrinkWrap: true,
-  //                 children: orderModel!.data!
-  //                     .map((e) => pw.Container(
-  //                           child: pw.Column(
-  //                             children: [
-  //                               pw.Row(
-  //                                 mainAxisAlignment:
-  //                                     pw.MainAxisAlignment.spaceBetween,
-  //                                 children: [
-  //                                   pw.Text(
-  //                                     "Product Name",
-  //                                     style: pw.TextStyle(
-  //                                       fontSize: 14,
-  //                                       // fontWeight: pw.FontWeight.w400,
-  //                                     ),
-  //                                   ),
-  //                                   pw.Text(
-  //                                       e.productName!.length < 36
-  //                                           ? e.productName!
-  //                                           : "${e.productName!.substring(0, 35)}...",
-  //                                       style: pw.TextStyle(
-  //                                         fontSize: 14,
-  //                                         // fontWeight: pw.FontWeight.w500,
-  //                                       ))
-  //                                 ],
-  //                               ),
-  //                               pw.Divider(),
-  //                               pw.Row(
-  //                                 mainAxisAlignment:
-  //                                     pw.MainAxisAlignment.spaceBetween,
-  //                                 children: [
-  //                                   pw.Text(
-  //                                     "Variant",
-  //                                     style: pw.TextStyle(
-  //                                       fontSize: 14,
-  //                                       // fontWeight: pw.FontWeight.w400,
-  //                                     ),
-  //                                   ),
-  //                                   pw.Text(
-  //                                       "${e.variation.toString().replaceAll('"', "")}",
-  //                                       style: pw.TextStyle(
-  //                                         fontSize: 14,
-  //                                         // fontWeight: pw.FontWeight.w500,
-  //                                       ))
-  //                                 ],
-  //                               ),
-  //                               pw.Divider(),
-  //                               pw.Row(
-  //                                 mainAxisAlignment:
-  //                                     pw.MainAxisAlignment.spaceBetween,
-  //                                 children: [
-  //                                   pw.Text(
-  //                                     "Quantity",
-  //                                     style: pw.TextStyle(
-  //                                       fontSize: 14,
-  //                                       // fontWeight: pw.FontWeight.w400,
-  //                                     ),
-  //                                   ),
-  //                                   pw.Text("${e.quantity.toString()} Pcs ",
-  //                                       style: pw.TextStyle(
-  //                                         fontSize: 14,
-  //                                         // fontWeight: pw.FontWeight.w500,
-  //                                       ))
-  //                                 ],
-  //                               ),
-  //                               pw.Padding(
-  //                                 padding:
-  //                                     pw.EdgeInsets.symmetric(vertical: 15.0),
-  //                                 child: pw.Image(dividerImage),
-  //                               ),
-  //                             ],
-  //                           ),
-  //                         ))
-  //                     .toList(),
-  //               ),
-  //               pw.Row(
-  //                 mainAxisAlignment: pw.MainAxisAlignment.start,
-  //                 children: [
-  //                   pw.Text(
-  //                     "Name: ",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                   pw.Text(
-  //                     "$fname $lname",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               pw.Row(
-  //                 mainAxisAlignment: pw.MainAxisAlignment.start,
-  //                 children: [
-  //                   pw.Text(
-  //                     "Email: ",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                   pw.Text(
-  //                     "$email",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               pw.Row(
-  //                 mainAxisAlignment: pw.MainAxisAlignment.start,
-  //                 children: [
-  //                   pw.Text(
-  //                     "Phone: ",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                   pw.Text(
-  //                     "$number",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               pw.Row(
-  //                 mainAxisAlignment: pw.MainAxisAlignment.start,
-  //                 children: [
-  //                   pw.Text(
-  //                     "Address: ",
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                   pw.Text(
-  //                     widget.address,
-  //                     style: pw.TextStyle(
-  //                       // color: white,
-  //                       // fontWeight: FontWeight.w400,
-  //                       fontSize: 14.0,
-  //                       // fontFamily: "Alhadara-DEMO",
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-
-  //   final pdfBytes = await pdf.save();
-  //   final fileName = 'invoice.pdf';
-
-  //   // Save the PDF file locally
-  //   final file = await savePDFToDeviceLocal(fileName, pdfBytes);
-
-  //   // Open the PDF file using the default PDF viewer
-  //   // openPDF(file.path);
-  //   // print("sharing....");
-  //   Share.shareXFiles([XFile(file.path)], text: 'Share Invoice');
-
-  //   final snack = SnackBar(content: Text("Please select an app."));
-  //   ScaffoldMessenger.of(context).showSnackBar(snack);
-  // }
+                // pw.ListView(
+                //   // physics: NeverScrollableScrollPhysics(),
+                //   // shrinkWrap: true,
+                //   children: myordercontroller!.orderdetailsModel.data!
+                //       .map((e) => pw.Container(
+                //             child: pw.Column(
+                //               children: [
+                //                 pw.Row(
+                //                   mainAxisAlignment:
+                //                       pw.MainAxisAlignment.spaceBetween,
+                //                   children: [
+                //                     pw.Text(
+                //                       "Product Name",
+                //                       style: pw.TextStyle(
+                //                         fontSize: 14,
+                //                         // fontWeight: pw.FontWeight.w400,
+                //                       ),
+                //                     ),
+                //                     pw.Text(
+                //                         e.productName!.length < 36
+                //                             ? e.productName!
+                //                             : "${e.productName!.substring(0, 35)}...",
+                //                         style: pw.TextStyle(
+                //                           fontSize: 14,
+                //                           // fontWeight: pw.FontWeight.w500,
+                //                         ))
+                //                   ],
+                //                 ),
+                //                 pw.Divider(),
+                //                 pw.Row(
+                //                   mainAxisAlignment:
+                //                       pw.MainAxisAlignment.spaceBetween,
+                //                   children: [
+                //                     pw.Text(
+                //                       "Variant",
+                //                       style: pw.TextStyle(
+                //                         fontSize: 14,
+                //                         // fontWeight: pw.FontWeight.w400,
+                //                       ),
+                //                     ),
+                //                     pw.Text(
+                //                         "${e.variation.toString().replaceAll('"', "")}",
+                //                         style: pw.TextStyle(
+                //                           fontSize: 14,
+                //                           // fontWeight: pw.FontWeight.w500,
+                //                         ))
+                //                   ],
+                //                 ),
+                //                 pw.Divider(),
+                
+ 
 
   void generateAndOpenPDF(BuildContext context) async {
     final pdf = pw.Document();
-    // final image = await imageFromAssetBundle('assets/image.png');
-    // final dividerImageData = (await rootBundle.load("assets/image/divider.png"))
-    //     .buffer
-    //     .asUint8List();
-    // final dividerImage = pw.MemoryImage(
-    //   dividerImageData,
-    // );
+   
     final logoImageData =
         (await rootBundle.load("assets/logo/logo.png")).buffer.asUint8List();
     final logoImage = pw.MemoryImage(
@@ -376,7 +249,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
         build: (pw.Context context) => pw.Container(
           decoration: pw.BoxDecoration(
             borderRadius: pw.BorderRadius.circular(25),
-            // color: Colors.white.withOpacity(0.38),
+            
           ),
           child: pw.Padding(
             padding: const pw.EdgeInsets.all(15.0),
@@ -459,110 +332,139 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                 pw.Padding(
                   padding: pw.EdgeInsets.symmetric(vertical: 15.0),
                   // child: pw.Image(dividerImage),
-                  child: pw.Divider(
-                    indent: 1,
-                    thickness: 1,
-                  ),
+                  child: 
+                 pw.Text("************************************************************************************"),
+                           
                 ),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      "Name: ",
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                    pw.Text(
-                      widget.fname.toString(),
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                  ],
-                ),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      "Email: ",
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                    pw.Text(
-                      widget.email.toString(),
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                  ],
-                ),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      "Phone: ",
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                    pw.Text(
-                      widget.phone.toString(),
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                  ],
-                ),
-                pw.Row(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  children: [
-                    pw.Text(
-                      "Address: ",
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                    pw.Text(
-                      storage.read('useraddress').toString() +
-                          ", " +
-                          storage.read('useraddresscity').toString(),
-                      style: pw.TextStyle(
-                        // color: white,
-                        // fontWeight: FontWeight.w400,
-                        fontSize: 14.0,
-                        // fontFamily: "Alhadara-DEMO",
-                      ),
-                    ),
-                  ],
-                ),
-           
-           pw.
-                              Container(   decoration: pw.BoxDecoration(
+          //       pw.Row(
+          //         mainAxisAlignment: pw.MainAxisAlignment.start,
+          //         children: [
+          //           pw.Text(
+          //             "Name: ",
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //           pw.Text(
+          //             widget.fname.toString(),
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //       pw.Row(
+          //         mainAxisAlignment: pw.MainAxisAlignment.start,
+          //         children: [
+          //           pw.Text(
+          //             "Email: ",
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //           pw.Text(
+          //             widget.email.toString(),
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //       pw.Row(
+          //         mainAxisAlignment: pw.MainAxisAlignment.start,
+          //         children: [
+          //           pw.Text(
+          //             "Phone: ",
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //           pw.Text(
+          //             widget.phone.toString(),
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //       pw.Row(
+          //         mainAxisAlignment: pw.MainAxisAlignment.start,
+          //         children: [
+          //           pw.Text(
+          //             "Address: ",
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+          //             ),
+          //           ),
+          //           pw.Text(
+          //             storage.read('useraddress').toString() +
+          //                 ", " +
+          //                 storage.read('useraddresscity').toString(),
+          //             style: pw.TextStyle(
+          //               // color: white,
+          //               // fontWeight: FontWeight.w400,
+          //               fontSize: 14.0,
+          //               // fontFamily: "Alhadara-DEMO",
+           pw.Table(
+  // border: pw.TableBorder.all(),
+  columnWidths: {
+    0: pw.FixedColumnWidth(100), // Product Name
+    1: pw.FixedColumnWidth(100), // Variant
+    2: pw.FixedColumnWidth(50),  // Quantity
+    3: pw.FixedColumnWidth(50),  // Gst
+    4: pw.FixedColumnWidth(100), // Price
+  },
+  children: [
+    pw.TableRow(
+      children: [
+        pw.Text("Product Name",textAlign: pw.TextAlign.center),
+        pw.Text("Variant",textAlign: pw.TextAlign.center),
+        pw.Text("Quantity",textAlign: pw.TextAlign.center),
+        pw.Text("Gst",textAlign: pw.TextAlign.center),
+        pw.Text("Price",textAlign: pw.TextAlign.center),
+      ],
+    ),
+    for (var e in myordercontroller!.orderdetailsModel!.data!)
+      pw.TableRow(
+        
+        children: [
+          pw.Text(
+            e.variant!.length < 10
+                ? e.variant!
+                : "${e.variant!.substring(0, 10)}...",
+            textAlign: pw.TextAlign.center,
+          ),
+          pw.Text("${e.variation.toString().replaceAll('"', "")}",textAlign: pw.TextAlign.center),
+          pw.Text("${e.quantity.toString()}",textAlign: pw.TextAlign.center),
+          pw.Text("${e.gst.toString()}",textAlign: pw.TextAlign.center),
+          pw.Text("${e.price.toString()}",textAlign: pw.TextAlign.center),
+        ],
+      ),
+  ],
+),
+                              pw. Container(   decoration: pw.BoxDecoration(
                                     borderRadius: pw.BorderRadius.circular(15),
-                                    // border: pw.Border.all(color: MyColors.grey)
                                     ),
                                 child:  pw.Padding(
                                   padding:  pw. EdgeInsets.all(8.0),
@@ -577,15 +479,17 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                             // style: pw. CustomTextStyle.popinssmall014,
                                           ),
                                          pw.  Text(
-                                           myordercontroller.orderdetailsModel!.data![0].price??'',
+                                         myordercontroller.total1.toString(),
                                             // style: CustomTextStyle.popinssmall014,
                                           ),
                                         ],
                                       ),
                                        pw.Divider(
-                                        indent: 1,
-                                        thickness: 1,
+                                        // indent: 1,
+                                        // thickness: 1,
                                       ),
+
+
                                      pw.  Row(
                                         mainAxisAlignment:
                                             pw. MainAxisAlignment.spaceBetween,
@@ -595,7 +499,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                               pw.   CrossAxisAlignment.start,
                                             children: [
                                              pw.  Text(
-                                                "Tax Amount",
+                                                  "Delivery Charge",
                                                 // style: CustomTextStyle.popinssmall014,
                                               ),
                                               // Text(
@@ -606,8 +510,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                             ],
                                           ),
                                            pw.Text(
-                                           myordercontroller.orderdetailsModel!.data![0].taxAmount??'',
-                                            // style: CustomTextStyle.popinssmall014,
+"+ "+ (widget.deliverycharge??'40').toString(),   
                                           ),
                                         ],
                                       ),
@@ -636,17 +539,49 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                             ],
                                           ),
                                          pw.  Text(
-                                            myordercontroller.orderdetailsModel!
-                                                    .data![0].discountOnItem ??
-                                                '',
+                                        "- ${widget.coupondisAmount.toString()}",
+                                            // myordercontroller.orderdetailsModel!
+                                            //         .data![0].discountOnItem ??
+                                            //     '',
                                             // style: CustomTextStyle.popinssmall014,
                                           ),
                                         ],
                                       ),
                                    pw.    Divider(
-                                        indent: 1,
-                                        thickness: 1,
+                                        
                                       ),
+                                  
+                                        pw.  Row(
+                                        mainAxisAlignment:
+                                            pw. MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          pw. Column(
+                                            crossAxisAlignment:
+                                              pw.   CrossAxisAlignment.start,
+                                            children: [
+                                             pw.  Text(
+                                                "Delivery Charge",
+                                                // style: CustomTextStyle.popinssmall014,
+                                              ),
+                                              // Text(
+                                              //  myordercontroller.orderdetailsModel!.data![0].taxAmount??'',
+                                              //   style:
+                                              //       CustomTextStyle.popinssmallnormal,
+                                              // ),
+                                            ],
+                                          ),
+                                           pw.Text(
+                                             widget.deliverycharge.toString()
+                                          //  myordercontroller.orderdetailsModel!.data![0].taxAmount??'',
+                                            // style: CustomTextStyle.popinssmall014,
+                                          ),
+                                        ],
+                                      ),
+                                   pw.    Divider(
+                                        // indent: 1,
+                                        // thickness: 1,
+                                      ),
+                                 
                                      pw.   Row(
                                   mainAxisAlignment:
                                        pw.MainAxisAlignment.spaceBetween,
@@ -657,12 +592,12 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                     ),
                                      pw.Text(
                                       (widget.orderAmount ?? '0.0').toString(),
-                                      // style: CustomTextStyle.popinssmall014,
+                                      // style: CustomTextStyle.popinssmall
                                     ),
                                   ],
                                                               ),
-                                   pw. Divider(
-                                          thickness: 1, ),
+                                  //  pw. Divider(
+                                  //          ),
                                       // pw. GestureDetector(
                                       //   onTap: () {
                                       //     // generate pdf file
@@ -720,7 +655,13 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                   ),
                                 ),
                               ),
-                              
+                               pw.Padding(
+                  padding: pw.EdgeInsets.symmetric(vertical: 15.0),
+                  // child: pw.Image(dividerImage),
+                  child: 
+                 pw.Text("************************************************************************************"),
+                           
+                ),
            
            
               ],
@@ -737,7 +678,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
     //   final fileName = 'invoice.pdf';
 
     final pdfBytes = await pdf.save();
-    final fileName = 'invoice.pdf';
+    final fileName = 'invoice${widget.orderId}.pdf';
 
     // Save the PDF file locally
     // final file = await savePDFToDevice(fileName, pdfBytes);
@@ -766,7 +707,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
   // final file = io.File(filePath);
      final file = io.File('/storage/emulated/0/Download/$fileName');
     // final file = io.File('${dir.path}/$fileName');
-    
+
   print("Saving file.... ${file}");
     await file.writeAsBytes(pdfBytes);
     return file;
@@ -1030,9 +971,10 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                       ),
                     ),
                     pw.Text(
-                      storage.read('useraddress').toString() +
-                          ", " +
-                          storage.read('useraddresscity').toString(),
+                    storage.read("UserbillingAddress"),
+                      // storage.read('useraddress').toString() +
+                      //     ", " +
+                      //     storage.read('useraddresscity').toString(),
                       style: pw.TextStyle(
                         // color: white,
                         // fontWeight: FontWeight.w400,
@@ -1076,9 +1018,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                         // style: CustomTextStyle.popinsboldlight,
                                       ),
                                      pw.  Text(
-                                        (myordercontroller.orderdetailsModel!
-                                                    .data![0].variant ??
-                                                0)
+                                        (myordercontroller.variantsname)
                                             .toString(),
                                         // style: CustomTextStyle
                                         //     .popinsboldlightsmall,
@@ -1158,7 +1098,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
     //   final fileName = 'invoice.pdf';
 
     final pdfBytessummary = await summarypdf.save();
-    final fileNamesummary = 'ordersummary.pdf';
+    final fileNamesummary = 'ordersummary${widget.orderId}.pdf';
 
     // Save the PDF file locally
     // final file = await savePDFToDevice(fileName, pdfBytes);
@@ -1261,8 +1201,14 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
     // }
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
+    // addtocartController.alladdressinit();
+  // userreviewcontroller.reviewAdd(
+  //                                       item.id ?? 0,
+  //                                       widget.orderId??0);
     return Stack(
       children: [
         Scaffold(
@@ -1361,6 +1307,7 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
 //               )
 //             ],
           ),
+         
           body: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15, bottom: 10),
               child: GetBuilder<MyOrderController>(
@@ -1392,16 +1339,18 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                     String imagePath = Constants
                                             .PRODUCT_HOME_IMAGE_PATH +
                                         "/${item.itemDetails![0].image ?? ''}";
-                                    userreviewcontroller.reviewAdd(
-                                        item.id ?? 0,
-                                        (myordercontroller.orderdetailsModel!
-                                                .data![0].orderId ??
-                                            0));
+                                  
                                     print("====>>>>imagepath ${imagePath}");
+
+
+
+  
+
                                     return myordercontroller
                                         .orderdetailsModel == null || myordercontroller
                                         .orderdetailsModel!.data == null || myordercontroller
-                                        .orderdetailsModel!.data![index] == null? SizedBox():
+                                        .orderdetailsModel!.data![index] == null ||myordercontroller
+                                        .orderdetailsModel!.data![index].itemDetails!.isEmpty? SizedBox():
                                     Container(
                                       margin:
                                           EdgeInsets.symmetric(vertical: 10),
@@ -1415,9 +1364,10 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                           borderRadius:
                                               BorderRadius.circular(25),
                                           color: MyColors.white),
-                                      child: Row(children: [
+                                      child: Row(
+                                        children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(15.0),
+                                          padding: const EdgeInsets.only(left:10.0,right: 5,bottom: 15,top:15),
                                           child: CachedNetworkImage(
                                             imageUrl: imagePath,
                                             fit: BoxFit.cover,
@@ -1443,70 +1393,77 @@ class _OrderDetailsUserState extends State<OrderDetailsUser> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              item.variant ?? '',
-                                              style:
-                                                  CustomTextStyle.popinsmedium,
+                                            SizedBox(width: Get.width*0.5,
+                                              child: Text(
+                                                item.variant ?? '',
+                                                maxLines: 1,
+                                                  overflow: TextOverflow.ellipsis,
+                                                style:
+                                                    CustomTextStyle.popinsmedium,
+                                              ),
                                             ),
                                             Text("Quantity : "+(item.quantity ?? 0).toString(),
                                                 style: CustomTextStyle
                                                     .popinssmall0),
+                                                //     Text("Gst : "+(item.gst ?? 0).toString(),
+                                                // style: CustomTextStyle
+                                                //     .popinssmall0),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                "₹"+ (  item.totalAddOnPrice ?? ''),
+                                                "₹"+ (  item.price ?? '').toString(),
                                                   style: CustomTextStyle
                                                       .popinsmedium,
                                                 ),
                                               ],
-                                            )
+                                            ),
+SizedBox(height: 3,),
+                                             InkWell(
+                                      onTap: () async {
+  
+
+orderDetails.Data itemReOrder = orderDetails.Data(
+  id: item.id,
+  itemId: item.itemId,
+  orderId: item.orderId,
+variant: item.variant,
+variation: item.variation,
+quantity: item.quantity,
+price: item.price,
+itemDetails: item.itemDetails,
+);
+
+print("Price   ${item.price}");
+print("OrderReItem${itemReOrder}");
+productdeatilscontroller.updateReOrder(itemReOrder);
+productdeatilscontroller.ReOrderProduct();
+print("OrderItemID*** ${item.id}");
+ await addtocartController.init();
+   Get.to( AddToCardUser());
+                   
+                                      },
+                                      child: Container(
+                                        width: 85,
+  height: 30, 
+  decoration: BoxDecoration(
+    color: MyColors.yellow, 
+    borderRadius: BorderRadius.circular(8.0), 
+  ),
+                                        child: Center(child: Text("Buy it again"))))
+                                     
                                           ],
                                         )
-                                      ]),
+                                    , 
+                                    
+                                    // Spacer(),
+                                    ]),
                                     );
                                   }),
 
-                              //  Container(
-                              //    height: MediaQuery.of(context).size.height * 0.18,
-                              //    width: MediaQuery.of(context).size.width,
-                              //    decoration: BoxDecoration(
-                              //        border: Border.all(color: MyColors.grey, width: 0.5),
-                              //        borderRadius: BorderRadius.circular(25),
-                              //        color: MyColors.white),
-                              //    child: Row(children: [
-                              //      Padding(
-                              //        padding: const EdgeInsets.all(15.0),
-                              //        child: Image.asset(
-                              //          "assets/image/fooddog.png",
-                              //        ),
-                              //      ),
-                              //      Column(
-                              //        crossAxisAlignment: CrossAxisAlignment.start,
-                              //        mainAxisAlignment: MainAxisAlignment.center,
-                              //        children: [
-                              //          Text(
-                              //            "Mars Petcare Inc",
-                              //            style: CustomTextStyle.popinsmedium,
-                              //          ),
-                              //          Text("with paneer or cottage cheese",
-                              //              style: CustomTextStyle.popinssmall0),
-                              //          Row(
-                              //            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //            children: [
-                              //              Text(
-                              //                "₹ 620.00",
-                              //                style: CustomTextStyle.popinsmedium,
-                              //              ),
-                              //            ],
-                              //          )
-                              //        ],
-                              //      )
-                              //    ]),
-                              //  ),
-                              //  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                             
 SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.03),
@@ -1532,45 +1489,50 @@ SizedBox(
                                             "Sub Total",
                                             style: CustomTextStyle.popinssmall014,
                                           ),
-                                          Text(
-                                           "₹"+(myordercontroller.orderdetailsModel!.data![0].totalAddOnPrice??''),
-                                            style: CustomTextStyle.popinssmall014,
-                                          ),
+
+                                           Text(
+                                         "₹"+ (myordercontroller.total1).toInt().toString(),
+                                          style: CustomTextStyle.popinstext,
+                                        ),
+                                        
                                         ],
                                       ),
                                       Divider(
-                                        indent: 1,
-                                        thickness: 1,
+                                        // indent: 1,
+                                        // thickness: 1,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Tax Amount",
-                                                style: CustomTextStyle.popinssmall014,
-                                              ),
-                                              // Text(
-                                              //  myordercontroller.orderdetailsModel!.data![0].taxAmount??'',
-                                              //   style:
-                                              //       CustomTextStyle.popinssmallnormal,
-                                              // ),
-                                            ],
-                                          ),
-                                          Text(
-                                          "+ ₹"+ (myordercontroller.orderdetailsModel!.data![0].taxAmount??''),
-                                            style: CustomTextStyle.popinssmall014,
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(
-                                        indent: 1,
-                                        thickness: 1,
-                                      ),
+  //                                     Row(
+  //                                       mainAxisAlignment:
+  //                                           MainAxisAlignment.spaceBetween,
+  //                                       children: [
+  //                                         Column(
+  //                                           crossAxisAlignment:
+  //                                               CrossAxisAlignment.start,
+  //                                           children: [
+  //                                             Text(
+  //                                               "Tax Amount",
+  //                                               style: CustomTextStyle.popinssmall014,
+  //                                             ),
+  //                                             // Text(
+  //                                             //  myordercontroller.orderdetailsModel!.data![0].taxAmount??'',
+  //                                             //   style:
+  //                                             //       CustomTextStyle.popinssmallnormal,
+  //                                             // ),
+  //                                           ],
+  //                                         ),
+  //                                         Text(
+  //  "+"+(myordercontroller.orderdetailsModel!.data![0].gst).toString(),
+  //                                         //  "+ ₹"+myordercontroller.tax .toString(),
+  //                                         // "+ ₹"+ (myordercontroller.orderdetailsModel!.data![0].taxAmount??''),
+  //                                           style: CustomTextStyle.popinssmall014,
+  //                                         ),
+  //                                       ],
+  //                                     ),
+  //                                     Divider(
+  //                                       indent: 1,
+  //                                       thickness: 1,
+  //                                     ),
+                                     
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -1591,10 +1553,42 @@ SizedBox(
                                               ),
                                             ],
                                           ),
+                                         Text(
+ "- ₹${widget.coupondisAmount!.toString()}",
+                                                   // "- ₹"+myordercontroller.discount .toString(),
+                                           // "- ₹"+(myordercontroller.orderdetailsModel!
+                                           //         .data![0].discountOnItem ??
+                                           //     ''),
+                                           style: CustomTextStyle.popinssmall014,
+                                         ),
+                                        ],
+                                      ),
+                                        
+                                      Divider(
+                                        indent: 1,
+                                        thickness: 1,
+                                      ),
+                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Delivery Charge",
+                                                style: CustomTextStyle.popinssmall014,
+                                              ),
+                                              // Text(
+                                              //  myordercontroller.orderdetailsModel!.data![0].taxAmount??'',
+                                              //   style:
+                                              //       CustomTextStyle.popinssmallnormal,
+                                              // ),
+                                            ],
+                                          ),
                                           Text(
-                                            "- ₹"+(myordercontroller.orderdetailsModel!
-                                                    .data![0].discountOnItem ??
-                                                ''),
+                                          "+ ₹"+ (widget.deliverycharge??'0').toString(),
                                             style: CustomTextStyle.popinssmall014,
                                           ),
                                         ],
@@ -1603,6 +1597,7 @@ SizedBox(
                                         indent: 1,
                                         thickness: 1,
                                       ),
+                                     
                                        Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -1611,9 +1606,11 @@ SizedBox(
                                       "Total",
                                       style: CustomTextStyle.popinssmall014,
                                     ),
+
+
                                     Text(
-                                     ( (double.parse(myordercontroller.orderdetailsModel!.data![0].totalAddOnPrice!)+ double.parse(myordercontroller.orderdetailsModel!.data![0].taxAmount!)) - double.parse(myordercontroller.orderdetailsModel!.data![0].discountOnItem!)).toString(),
-                                      // "₹"+(widget.orderAmount ?? '0.0').toString(),
+                                " ₹"+ (
+                                calculateTotal()),
                                       style: CustomTextStyle.popinssmall014,
                                     ),
                                   ],
@@ -1720,9 +1717,7 @@ SizedBox(
                                         style: CustomTextStyle.popinsboldlight,
                                       ),
                                       Text(
-                                        (myordercontroller.orderdetailsModel!
-                                                    .data![0].variant ??
-                                                0)
+                                        (myordercontroller.variantsname)
                                             .toString(),
                                         style: CustomTextStyle
                                             .popinsboldlightsmall,
@@ -1751,14 +1746,14 @@ SizedBox(
                                         "Date",
                                         style: CustomTextStyle.popinsboldlight,
                                       ),
-                                      Text(
-                                        (myordercontroller.orderdetailsModel!
-                                                    .data![0].createdAt ??
-                                                '')
-                                            .toString(),
-                                        style: CustomTextStyle
-                                            .popinsboldlightsmall,
-                                      ),
+                                      // Text(
+                                      //   (myordercontroller.orderdetailsModel!
+                                      //               .data![0].createdAt ??
+                                      //           '')
+                                      //       .toString(),
+                                      //   style: CustomTextStyle
+                                      //       .popinsboldlightsmall,
+                                      // ),
                                       SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size
@@ -1871,11 +1866,8 @@ SizedBox(
                                           //   builder: (_) {
                                           //     return
                                           Text(
-                                        storage.read('useraddress').toString() +
-                                            ", " +
-                                            storage
-                                                .read('useraddresscity')
-                                                .toString(),
+
+                                            storage.read("UserbillingAddress"),
                                         style: CustomTextStyle
                                             .popinsboldlightsmall,
                                       )
@@ -1901,7 +1893,7 @@ SizedBox(
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Text(
-                                      widget.address.toString(),
+                                     widget.address.toString(),
                                       style:
                                           CustomTextStyle.popinsboldlightsmall,
                                     ),
@@ -1910,41 +1902,49 @@ SizedBox(
                               SizedBox(
                                 height: 15,
                               ),
-                              Text(
-                                "Product Review",
-                                style: CustomTextStyle.popinstext,
-                              ),
 
+                                if(widget.orderstatus == "delivered")
+                              Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Product Review",
+                                    style: CustomTextStyle.popinstext,
+                                  ),
+
+                                  
                               GetBuilder<UserReviewController>(
                                   init: userreviewcontroller,
                                   builder: (_) {
-                                    return userreviewcontroller
-                                                    .userReviewModel ==
-                                                null &&
-                                            userreviewcontroller
-                                                    .userReviewModel!.data ==
-                                                null
-                                        // userreviewcontroller.userReviewModel!.data!.isEmpty
-                                        ? SizedBox()
-                                        : ListView.builder(
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            itemCount: userreviewcontroller
-                                                    .userReviewModel!
-                                                    .data!
-                                                    .length ??
-                                                0,
-                                            itemBuilder: (context, index) {
-                                              var item = userreviewcontroller
-                                                  .userReviewModel!
-                                                  .data![index];
+                                    return 
+                                    // userreviewcontroller
+                                    //                 .userReviewModel ==
+                                    //             null &&
+                                    //         userreviewcontroller
+                                    //                 .userReviewModel!.data ==
+                                    //             null
+                                    //     // userreviewcontroller.userReviewModel!.data!.isEmpty
+                                    //     ? SizedBox():
+                                        // : ListView.builder(
+                                        //     primary: false,
+                                        //     shrinkWrap: true,
+                                        //     itemCount: userreviewcontroller
+                                        //             .userReviewModel!
+                                        //             .data!
+                                        //             .length ??
+                                        //         0,
+                                        //     itemBuilder: (context, index) {
+                                        //       var item = userreviewcontroller
+                                        //           .userReviewModel!
+                                        //           .data![index];
 
-                                              return Column(
+                                              // return 
+                                              Column(
                                                 children: [
-                                                  ...item.userId!.map((e) {
-                                                    print(
-                                                        "NameReviewer ${e.fName}");
-                                                    return Container(
+                                                  // ...item.userId!.map((e) {
+                                                  //   print(
+                                                  //       "NameReviewer ${e.fName}");
+                                                    // return
+                                                     Container(
                                                         margin: EdgeInsets
                                                             .symmetric(
                                                                 vertical: 10),
@@ -1979,72 +1979,144 @@ SizedBox(
                                                                 MainAxisAlignment
                                                                     .center,
                                                             children: [
-                                                              Text(
-                                                                "${e.fName} ${e.lName}",
-                                                                style: CustomTextStyle
-                                                                    .popinsmedium,
-                                                              ),
-                                                              Text(
-                                                                item.comment ??
-                                                                    '',
-                                                                style: CustomTextStyle
-                                                                    .popinsmedium,
-                                                              ),
+                                                              // Text(
+                                                              //   "${e.fName} ${e.lName}",
+                                                              //   style: CustomTextStyle
+                                                              //       .popinsmedium,
+                                                              // ),
+                                                              // Text(
+                                                              //   item.comment ??
+                                                              //       '',
+                                                              //   style: CustomTextStyle
+                                                              //       .popinsboldlightsmall,
+                                                              // ),
                                                               InkWell(
                                                                 onTap: () {
+                                                                      userreviewcontroller. clearFields();
                                                                   showDialog(
                                                                     context:
                                                                         context,
                                                                     builder:
                                                                         (BuildContext
                                                                             context) {
-                                                                      return AlertDialog(
-                                                                        // title:
-                                                                        content:
-                                                                            Column(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.min,
-                                                                          children: [
-                                                                            // Align(
-                                                                            //   alignment:
-                                                                            //       Alignment.topRight,
-                                                                            //   child: IconButton(
-                                                                            //     icon: Icon(Icons
-                                                                            //         .close), // You can use any close icon you prefer
-                                                                            //     onPressed: () {
-                                                                            //       Get.back(); // Close the dialog
-                                                                            //     },
-                                                                            //   ),
+                                                                      return   BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+    
+                                                                        child: AlertDialog(
+                                                                          // title:
+                                                                          content:
+                                                                        
+                                                                              Form(
+                                                                                key: userreviewcontroller.formKey,
+                                                                                child: Column(
+                                                                                                                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                      mainAxisSize: MainAxisSize.min,
+                                                                                      children: [
+                                                                                        Text(
+                                                                                          'Rating and Review',
+                                                                                          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                                                                                        ),
+                                                                                        SizedBox(height: 18.0),
+                                                                                        // Text('Are you sure you want to delete this notification?'),
+                                                                                // Align(
+                                                                                //   alignment:
+                                                                                //       Alignment.topRight,
+                                                                                //   child: IconButton(
+                                                                                //     icon: Icon(Icons
+                                                                                //         .close), // You can use any close icon you prefer
+                                                                                //     onPressed: () {
+                                                                                //       Get.back(); // Close the dialog
+                                                                                //     },
+                                                                                //   ),
+                                                                                // ),
+                                                                                                                                                           Padding(
+                                                                                            padding: const EdgeInsets.all(8.0),
+                                                                                            child: TextField(
+                                                                                              controller: userreviewcontroller.commentController,
+                                                                                              decoration: InputDecoration(
+                                                                                                hintText: 'Description',
+                                                                                                      
+                                                                                                border: OutlineInputBorder(
+                                                                                                  borderRadius: BorderRadius.circular(10.0),
+                                                                                                ),
+                                                                                              ),
+                                                                                              maxLines: 3,
+                                                                                            ),
+                                                                                          ),
+                                                                              
+                                                                                           // Rating TextField
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.all(8.0),
+                                                                                            child: TextField(
+                                                                                              controller: userreviewcontroller.ratingController,
+                                                                                              decoration: InputDecoration(
+                                                                                                hintText: 'Rating',
+                                                                                                border: OutlineInputBorder(
+                                                                                                  borderRadius: BorderRadius.circular(10.0),
+                                                                                                ),
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        
+                                                                                      
+                                                                                // TextField(
+                                                                                //   controller: userreviewcontroller.ratingController,
+                                                                                //   decoration: InputDecoration(
+                                                                                //     hintText: 'Rating',
+                                                                                //   ),
+                                                                                // ),
+                                                                                                                                                          ],
+                                                                                                                                                        ),
+                                                                              ),
+                                                                          actions: <
+                                                                              Widget>[
+
+
+                                                                            ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.red),
+                ),
+                onPressed: () async {
+
+                   userreviewcontroller.validateForm(context).then(
+                                (isValid)  {
+                                  if (isValid) {
+                                    // print("Valid form");
+           
+                                    try {
+                                           userreviewcontroller.commentreviewinit();
+                                                                             
+                              Get.back();
+                                    } catch (e) {
+                                      Get.snackbar(
+                                        'Error',
+                                        'Something Went Wrong: $e',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: Colors.red,
+                                        colorText: Colors.white,
+                                      );
+                                    }
+                                  } 
+                                });
+                    
+                },
+                child: Text('Submit'),
+              ),      
+                                                                            // TextButton(
+                                                                            //   child:
+                                                                            //       Text('Submit'),
+                                                                            //   onPressed:
+                                                                            //       () async {
+                                                                            //     //   userreviewcontroller.reviewAdd( i(myordercontroller.orderdetailsModel!
+                                                                            //     //     .data![0].orderId ??
+                                                                            //     // 0));
+                                                                           
+                                                                            //     await userreviewcontroller.commentreviewinit();
+                                                                            //     Navigator.of(context).pop();
+                                                                            //   },
                                                                             // ),
-                                                                            TextField(
-                                                                              controller: userreviewcontroller.commentController,
-                                                                              decoration: InputDecoration(
-                                                                                hintText: 'description',
-                                                                              ),
-                                                                            ),
-                                                                            TextField(
-                                                                              controller: userreviewcontroller.ratingController,
-                                                                              decoration: InputDecoration(
-                                                                                hintText: 'Rating',
-                                                                              ),
-                                                                            ),
                                                                           ],
                                                                         ),
-                                                                        actions: <
-                                                                            Widget>[
-                                                                          TextButton(
-                                                                            child:
-                                                                                Text('Submit'),
-                                                                            onPressed:
-                                                                                () async {
-                                                                              //   userreviewcontroller.reviewAdd(orderdetailscontroller, (myordercontroller.orderdetailsModel!
-                                                                              //     .data![0].orderId ??
-                                                                              // 0));
-                                                                              await userreviewcontroller.reviewinit();
-                                                                              Navigator.of(context).pop();
-                                                                            },
-                                                                          ),
-                                                                        ],
                                                                       );
                                                                     },
                                                                   );
@@ -2062,9 +2134,7 @@ SizedBox(
                                                                     //                              return      userreviewcontroller
                                                                     //                                     .userReviewModel!.data == null? SizedBox():
                                                                     RatingStars(
-                                                                  value: (item.rating ??
-                                                                          0)
-                                                                      .toDouble(),
+                                                                  value: 0,
                                                                   // onValueChanged: (v) {
                                                                   //   //
                                                                   //   setState(() {
@@ -2115,11 +2185,11 @@ SizedBox(
                                                               )
                                                             ],
                                                           ),
-                                                        ));
-                                                  })
+                                                        ))
+                                                  // })
                                                 ],
                                               );
-                                            });
+                                            // });
 
                                     //  InkWell(
                                     //   onTap: () {
@@ -2222,6 +2292,10 @@ SizedBox(
                                     // );
                                   }),
 
+                                ],
+                              ),
+
+
                               SizedBox(
                                   height: MediaQuery.of(context).size.height *
                                       0.05),
@@ -2291,5 +2365,15 @@ SizedBox(
             }),
       ],
     );
+  }
+  String calculateTotal() {
+    double total = double.parse(myordercontroller.total1.toString());
+    double deliveryCharge = double.parse(widget.deliverycharge?.toString() ?? '0');
+    double couponDiscount = double.parse(widget.coupondisAmount?.toString() ?? '0.0');
+
+    double finalTotal = (total + deliveryCharge) - couponDiscount;
+
+    // Convert the final total to integer and then back to string
+    return finalTotal.toInt().toString();
   }
 }

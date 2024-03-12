@@ -4,9 +4,11 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/wholesaler_controller/couponswhole_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/productdetails_controller.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
+import 'package:pet/screens/wholesaler/widget/wholeAppBar.dart';
 
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -27,36 +29,41 @@ class _WholecouponPageState extends State<WholecouponPage> {
   Widget build(BuildContext context) {
  print(widget.price);
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: InkWell(
-            onTap: () {
-              Get.back();
-            },
-            child: Padding(
-                padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
-                child: Icon(Icons.arrow_back_ios_new_outlined,
-                    color: MyColors.black)),
-          ),
-          title: Center(
-              child: Text(
-            "Coupons",
-            style: CustomTextStyle.appbartext,
-          )),
-          actions: [
-            InkWell(
-                onTap: () {
-                  Get.to(NotificationWhole());
-                },
-                child: SvgPicture.asset("assets/image/notification.svg")),
-            SizedBox(width: 20),
-            Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: SvgPicture.asset("assets/image/bag.svg"),
-            ),
-          ],
-        ),
+
+      appBar: CustomAppBarWholeback(
+       title: "Coupons",
+      ),
+        // appBar: AppBar(
+        //   elevation: 0,
+        //   backgroundColor: Colors.transparent,
+        //   leading: InkWell(
+        //     onTap: () {
+        //       Get.back();
+        //     },
+        //     child: Padding(
+        //         padding: const EdgeInsets.only(left: 20.0, top: 15, bottom: 15),
+        //         child: Icon(Icons.arrow_back_ios_new_outlined,
+        //             color: MyColors.black)),
+        //   ),
+        //   title: Center(
+        //       child: Text(
+        //     "Coupons",
+        //     style: CustomTextStyle.appbartext,
+        //   )),
+        //   actions: [
+        //     InkWell(
+        //         onTap: () {
+        //           Get.to(NotificationWhole());
+        //         },
+        //         child: SvgPicture.asset("assets/image/notification.svg")),
+        //     SizedBox(width: 20),
+        //     Padding(
+        //       padding: EdgeInsets.only(right: 20.0),
+        //       child: SvgPicture.asset("assets/image/bag.svg"),
+        //     ),
+        //   ],
+        // ),
+      
         body: ListView(
           shrinkWrap: true,
           primary: true,
@@ -233,7 +240,7 @@ class _WholecouponPageState extends State<WholecouponPage> {
                                                     child: Text(
                                                       'Expired',
                                                       style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 12,
                                                         color: MyColors.red,
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -261,13 +268,17 @@ class _WholecouponPageState extends State<WholecouponPage> {
                                                                   '',
                                                               item.maxDiscount??''
                                                                   );
-                                                                  
-                                                                  Get.back();
+                                                                 MyCartWholeController mycartwholeController = Get.put(MyCartWholeController());   
+                                                             
+
+                                                          mycartwholeController
+                                                              .updateTotal();
+                                               Get.back();
                                                     },
                                                     child: Text(
                                                       'TAP TO APPLY',
                                                       style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 10,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),
@@ -291,7 +302,7 @@ class _WholecouponPageState extends State<WholecouponPage> {
                                                     child: Text(
                                                       "You can't apply",
                                                       style: TextStyle(
-                                                        fontSize: 14,
+                                                        fontSize: 10,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                       ),

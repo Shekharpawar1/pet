@@ -26,7 +26,7 @@ class _PartnerProfileState extends State<PartnerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     appBar: CustomAppBarPartnerback(),
+     appBar: CustomAppBarPartnerback(title:"Profile"),
       body: ListView(
         shrinkWrap: true,
         primary: true,

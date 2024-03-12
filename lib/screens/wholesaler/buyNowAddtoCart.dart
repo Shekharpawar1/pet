@@ -40,100 +40,101 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
   // MyCartWholeController addtocartController = Get.put(MyCartWholeController());
   @override
   Widget build(BuildContext context) {
-    mycartwholeController.updateTotal();
+    // mycartwholeController.updateTotal();
     return Stack(
       children: [
         Scaffold(
 
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: Padding(
-              padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
-              child: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Icon(Icons.arrow_left, color: MyColors.black)),
-            ),
-            title: Center(
-                child: Text(
-              "My Cart",
-              style: CustomTextStyle.appbartext,
-            )),
-            actions: [
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Get.to(NotificationWhole());
-                      },
-                      child: Center(
-                        child: Icon(Icons.notifications, color: MyColors.black),
-                      )),
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(width: 20),
-              Stack(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        // Get.to(AddToCardwhole());
-                      },
-                      child:
-                          Center(child: SvgPicture.asset("assets/image/bag.svg"))),
+//           appBar: AppBar(
+//             elevation: 0,
+//             backgroundColor: Colors.transparent,
+//             leading: Padding(
+//               padding: EdgeInsets.only(left: 5.0, top: 10, bottom: 10, right: 0),
+//               child: InkWell(
+//                   onTap: () {
+//                     Get.back();
+//                   },
+//                   child: Icon(Icons.arrow_left, color: MyColors.black)),
+//             ),
+//             title: Center(
+//                 child: Text(
+//               "My Cart",
+//               style: CustomTextStyle.appbartext,
+//             )),
+//             actions: [
+//               Stack(
+//                 children: [
+//                   InkWell(
+//                       onTap: () {
+//                         Get.to(NotificationWhole());
+//                       },
+//                       child: Center(
+//                         child: Icon(Icons.notifications, color: MyColors.black),
+//                       )),
+//                   Positioned(
+//                       top: 10.0,
+//                       right: 0,
+//                       child: Stack(
+//                         children: <Widget>[
+//                           Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                           Positioned(
+//                               top: 3.0,
+//                               right: 4.0,
+//                               child: Center(
+//                                 child: Text(
+//                                   ('5').toString(),
+//                                   // list.length.toString(),
+//                                   style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 8.0,
+//                                       fontWeight: FontWeight.w500),
+//                                 ),
+//                               )),
+//                         ],
+//                       )),
+//                 ],
+//               ),
+//               SizedBox(width: 20),
+//               Stack(
+//                 children: [
+//                   InkWell(
+//                       onTap: () {
+//                         // Get.to(AddToCardwhole());
+//                       },
+//                       child:
+//                           Center(child: SvgPicture.asset("assets/image/bag.svg"))),
 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
-                  Positioned(
-                      top: 10.0,
-                      right: 0,
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
-                          Positioned(
-                              top: 3.0,
-                              right: 4.0,
-                              child: Center(
-                                child: Text(
-                                  ('5').toString(),
-                                  // list.length.toString(),
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 8.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              )),
-                        ],
-                      )),
-                ],
-              ),
-              SizedBox(
-                width: 20,
-              )
-            ],
-          ),
+// // (getCardModel!.data!.isEmpty)?
+// // SizedBox():
+//                   Positioned(
+//                       top: 10.0,
+//                       right: 0,
+//                       child: Stack(
+//                         children: <Widget>[
+//                           Icon(Icons.brightness_1, size: 15.0, color: MyColors.red),
+//                           Positioned(
+//                               top: 3.0,
+//                               right: 4.0,
+//                               child: Center(
+//                                 child: Text(
+//                                   ('5').toString(),
+//                                   // list.length.toString(),
+//                                   style: TextStyle(
+//                                       color: Colors.white,
+//                                       fontSize: 8.0,
+//                                       fontWeight: FontWeight.w500),
+//                                 ),
+//                               )),
+//                         ],
+//                       )),
+//                 ],
+//               ),
+//               SizedBox(
+//                 width: 20,
+//               )
+//             ],
+//           ),
+        
           body: Padding(
             padding: EdgeInsets.all(15),
             child: ListView(
@@ -237,12 +238,16 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            Text(
+                                                            SizedBox(width: Get.width*0.5,
+                                                              child: Text(
                                                               (widget.data!.itemName ??
-                                                                      '')
-                                                                  .toString(),
-                                                              style: CustomTextStyle
-                                                                  .popinsmedium,
+                                                                    '')
+                                                                    .toString(),
+                                                                    maxLines: 1,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                style: CustomTextStyle
+                                                                    .popinsmedium,
+                                                              ),
                                                             ),
                                                                Text(
                                                                 "Qty: "+(widget.data!.quantity ??
@@ -882,8 +887,8 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                   onTap: () async {
                     await couponsController.init();
                     Get.to(WholecouponPage(
-                      price:(mycartwholeController.total) + (mycartwholeController.total * 0.05),
-                    ));
+                        price: (   widget.data!.price!) 
+                     ));
                   },
                   child: Container(
                       height: MediaQuery.of(context).size.height * 0.06,
@@ -907,12 +912,18 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                                   style: CustomTextStyle.popinslight,
                                 ),
 
-                                  SizedBox(
-                                  width: 10,
+                                          SizedBox(
+                                      width: 10,
                                 ),
-                                 Text(
-                                  couponsController.couponcode??"",
-                                  style: CustomTextStyle.popinslight,
+                                   
+                                               GetBuilder<CouponsWholeController>(
+                init: couponsController,
+                builder: (_) {
+                                    return Text(
+                                      couponsController.couponcode ?? "",
+                                      style: CustomTextStyle.popinslight,
+                                    );
+                                  }
                                 ),
                               ],
                             ),
@@ -955,11 +966,9 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                                     "Sub Total",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
-                                  ),
+                                  Spacer(),
                                   Text(
-                                      widget.data!.price.toString(),
+                                     "₹"+ widget.data!.price.toString(),
                                     style: CustomTextStyle.popinstext,
                                   ),
                                 ],
@@ -975,29 +984,27 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                               SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.02),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Tex(5%)",
-                                    style: CustomTextStyle.popinslight,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
-                                  ),
-                                  Text(
-                                    (widget.tax).toString(),
-                                    style: CustomTextStyle.popinstext,
-                                  ),
-                                ],
-                              ),
-                                Divider(
-                                color: MyColors.lightdivider,
-                                thickness: 1,
-                                height: 1,
-                              ),
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
+                              // Row(
+                              //   children: [
+                              //     Text(
+                              //       "Tex(5%)",
+                              //       style: CustomTextStyle.popinslight,
+                              //     ),
+                              //    Spacer(),
+                              //     Text(
+                              //       "+ ₹"+( widget.data!.price!*0.05).toString(),
+                              //       style: CustomTextStyle.popinstext,
+                              //     ),
+                              //   ],
+                              // ),
+                              //   Divider(
+                              //   color: MyColors.lightdivider,
+                              //   thickness: 1,
+                              //   height: 1,
+                              // ),
+                              // SizedBox(
+                              //     height:
+                              //         MediaQuery.of(context).size.height * 0.02),
 
                                   Row(
                                 children: [
@@ -1005,15 +1012,13 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                                     "Max discount",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.1,
-                                  ),
+                                   Spacer(),
                 GetBuilder<CouponsWholeController>(
                   init: couponsController,
                   // initState: (_) {},
                   builder: (_) {
                                       return Text(
-                                      "${(couponsController.maxAmount ?? 0.0).toString()}",
+                                      "- ₹${(couponsController.maxAmount ?? 0.0).toString()}",
                                         style: CustomTextStyle.popinstext,
                                       );
                                     }
@@ -1035,18 +1040,26 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                                     "Rounding Adjust",
                                     style: CustomTextStyle.popinslight,
                                   ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.1,
-                                  ),
-                                  Text(
-                                    "₹${(((widget.data!.price!) + ((widget.tax??0))) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
-                                    // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
-                                    style: CustomTextStyle.popinstext,
+                                   Spacer(),
+
+                                                  GetBuilder<CouponsWholeController>(
+                  init: couponsController,
+                  // initState: (_) {},
+                  builder: (_) {
+                                      return Text(
+                                        "₹${((widget.data!.price!) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                        // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
+                                        style: CustomTextStyle.popinstext,
+                                      );
+                                    }
                                   ),
                                 ],
                               ),
 
 ]),
+                         
+                         
+                         
                           ),
                         ),
                       ),
@@ -1443,10 +1456,16 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                   // builder: (_) {
                   //        return  
                   // 
-                         Text( 
-                            "₹${(((widget.data!.price!) + ((widget.tax??0))) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
-                                    
-                               style: CustomTextStyle.appbartext),
+                            GetBuilder<CouponsWholeController>(
+                  init: couponsController,
+                  // initState: (_) {},
+                  builder: (_) {
+                             return Text( 
+                                "₹${((widget.data!.price!)  - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                        
+                                   style: CustomTextStyle.appbartext);
+                           }
+                         ),
                   // })
                             // Row(
                             //   children: [
@@ -1472,18 +1491,29 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
                         ),
                         InkWell(
                           onTap: () {
-                                mycartwholeController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
-                            widget.tax??0,
+
+                            
+mycartwholeController.totalbuyNowPrice(
+   (widget.data!.price??0).toDouble()
+);
+                            mycartwholeController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
+                              0,
                          widget.data!.price!,2
                             // widget.data!.discoun
                             
                             );
+                        //         mycartwholeController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
+                        //     widget.tax??0,
+                        //  widget.data!.price!,2
+                        //     // widget.data!.discoun
+                            
+                        //     );
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                             Get.to(Paymentwhole(
                                price:
                                ((widget.data!.price!) +
    (widget.tax??0) -
-    double.parse(couponsController.maxAmount ?? "0.0")).toString()));
+    double.parse(couponsController.maxAmount ?? "0.0")). toDouble()));
                               //  (((mycartwholeController.total) + (mycartwholeController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()
                             // ));
                               // deliveredAddress: (addtocartController
@@ -1562,32 +1592,32 @@ class _BuyNowAddToCardwholeState extends State<BuyNowAddToCardwhole> {
    
    
      
-        GetBuilder<MyCartWholeController>(
-            init: mycartwholeController,
-            builder: (_) {
-              return mycartwholeController.showLoading
-                  ? BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                      child: Container(
-                        color: Colors.black
-                            .withOpacity(0.1), // Adjust the opacity as needed
-                      ),
-                    )
-                  : SizedBox();
-            }),
-        // Progress bar
-        GetBuilder<MyCartWholeController>(
-            init: mycartwholeController,
-            builder: (_) {
-              return mycartwholeController.showLoading
-                  ? Center(
-                      child: SpinKitCircle(
-                        color: Colors.white, // Color of the progress bar
-                        size: 50.0, // Size of the progress bar
-                      ),
-                    )
-                  : SizedBox();
-            }), 
+        // GetBuilder<MyCartWholeController>(
+        //     init: mycartwholeController,
+        //     builder: (_) {
+        //       return mycartwholeController.showLoading
+        //           ? BackdropFilter(
+        //               filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+        //               child: Container(
+        //                 color: Colors.black
+        //                     .withOpacity(0.1), // Adjust the opacity as needed
+        //               ),
+        //             )
+        //           : SizedBox();
+        //     }),
+        // // Progress bar
+        // GetBuilder<MyCartWholeController>(
+        //     init: mycartwholeController,
+        //     builder: (_) {
+        //       return mycartwholeController.showLoading
+        //           ? Center(
+        //               child: SpinKitCircle(
+        //                 color: Colors.white, // Color of the progress bar
+        //                 size: 50.0, // Size of the progress bar
+        //               ),
+        //             )
+        //           : SizedBox();
+        //     }), 
    
       ],
     );

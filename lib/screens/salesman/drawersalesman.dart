@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/salesman_controller/myOrdersales_controller.dart';
+import 'package:pet/controllers/salesman_controller/notification_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesfavourite_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesprofile_controller.dart';
 import 'package:pet/controllers/user_controller/myOrder_controller.dart';
@@ -50,7 +51,10 @@ class _drawerSalesManState extends State<drawerSalesMan> {
   SalesMyOrderController myordercontroller = Get.put(SalesMyOrderController());
   SalesProfileController salesprofilecontroller =
       Get.put(SalesProfileController());
-SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteController());
+  NotificationsalesController notificationsalescontroller =
+      Get.put(NotificationsalesController());
+  SalesfavouriteController salesfavouriteController =
+      Get.put(SalesfavouriteController());
   static final List<String> _listViewData = [
     "Profile",
     "DashBoard",
@@ -61,7 +65,7 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
   ];
 
   static final List<IconData> _listViewIcons = [
-    Icons.person, 
+    Icons.person,
     Icons.dashboard,
     Icons.shopping_bag_outlined,
     Icons.notifications,
@@ -70,6 +74,14 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
   ];
 
   int _currentSelected = 0;
+
+  
+ @override
+  void initState() {
+    super.initState();
+    salesprofilecontroller.salesMyProfile();
+ }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,43 +132,58 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
                                                         radius: 35,
                                                         backgroundColor:
                                                             Colors.transparent,
-                                                        child:
-                                                        salesprofilecontroller
-                              .salesprofilemodel == null || salesprofilecontroller
-                              .salesprofilemodel!.data == null || salesprofilecontroller
-                              .salesprofilemodel!.data!.isEmpty ?   Image.asset("assets/image/boyprofile3.png")  :
-                
-                                                            CachedNetworkImage(
-                                                          imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                                                              salesprofilecontroller
-                                                                  .salesprofilemodel!
-                                                                  .data![0]
-                                                                  .image
-                                                                  .toString(),
+                                                        child: salesprofilecontroller.salesprofilemodel == null ||
+                                                                salesprofilecontroller
+                                                                        .salesprofilemodel!
+                                                                        .data ==
+                                                                    null ||
+                                                                salesprofilecontroller
+                                                                    .salesprofilemodel!
+                                                                    .data!
+                                                                    .isEmpty
+                                                            ? Image.asset(
+                                                                "assets/image/boyprofile3.png")
+                                                            : ClipOval(
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                                                                      salesprofilecontroller
+                                                                          .salesprofilemodel!
+                                                                          .data![
+                                                                              0]
+                                                                          .image
+                                                                          .toString(),
 
-                                                          fit: BoxFit.cover,
-                                                          // width: 61,
-                                                          // height: 75,
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ), // Replace with your own placeholder widget
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons
-                                                                  .error), // Replace with your own error widget
-                                                        ),
+                                                                  fit: BoxFit
+                                                                      .cover,
+
+                                                                  width: 75,
+                                                                  height:
+                                                                      75, 
+                                                                  placeholder:
+                                                                      (context,
+                                                                              url) =>
+                                                                          Center(
+                                                                    child:
+                                                                        CircularProgressIndicator(),
+                                                                  ), // Replace with your own placeholder widget
+                                                                  errorWidget: (context,
+                                                                          url,
+                                                                          error) =>
+                                                                      Icon(Icons
+                                                                          .error), // Replace with your own error widget
+                                                                ),
+                                                              ),
                                                         //  Image.asset("assets/image/boyprofile3.png"),
                                                       ),
                                                     ),
                                                     Positioned(
                                                       bottom: 10,
                                                       child: InkWell(
-                                                         onTap: (){
-                                                        Get.to(salesProfile());
-                                                      },
+                                                        onTap: () {
+                                                          Get.to(
+                                                              salesProfile());
+                                                        },
                                                         child: Image.asset(
                                                           "assets/image/drawer2.png",
                                                           height: 25,
@@ -174,37 +201,54 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: <Widget>[
-                                                  
-                                                        salesprofilecontroller
-                              .salesprofilemodel == null || salesprofilecontroller
-                              .salesprofilemodel!.data == null || salesprofilecontroller
-                              .salesprofilemodel!.data!.isEmpty ? const SizedBox() :
-                                                  Text(
-                                                    "${salesprofilecontroller.salesprofilemodel!.data![0].fName.toString()} ${salesprofilecontroller.salesprofilemodel!.data![0].lName.toString()}",
-                                                    style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: MyColors.white),
-                                                  ),
+                                                  salesprofilecontroller
+                                                                  .salesprofilemodel ==
+                                                              null ||
+                                                          salesprofilecontroller
+                                                                  .salesprofilemodel!
+                                                                  .data ==
+                                                              null ||
+                                                          salesprofilecontroller
+                                                              .salesprofilemodel!
+                                                              .data!
+                                                              .isEmpty
+                                                      ? const SizedBox()
+                                                      : Text(
+                                                          "${salesprofilecontroller.salesprofilemodel!.data![0].fName.toString()} ${salesprofilecontroller.salesprofilemodel!.data![0].lName.toString()}",
+                                                          style: TextStyle(
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: MyColors
+                                                                  .white),
+                                                        ),
                                                   SizedBox(
                                                     height: 5,
                                                   ),
-                                                  
-                                                        salesprofilecontroller
-                              .salesprofilemodel == null || salesprofilecontroller
-                              .salesprofilemodel!.data == null || salesprofilecontroller
-                              .salesprofilemodel!.data!.isEmpty ? const SizedBox() :
-                                                  Text(
-                                                    salesprofilecontroller
-                                                        .salesprofilemodel!
-                                                        .data![0]
-                                                        .email
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        color: MyColors.white,
-                                                        fontSize: 16),
-                                                  ),
+                                                  salesprofilecontroller
+                                                                  .salesprofilemodel ==
+                                                              null ||
+                                                          salesprofilecontroller
+                                                                  .salesprofilemodel!
+                                                                  .data ==
+                                                              null ||
+                                                          salesprofilecontroller
+                                                              .salesprofilemodel!
+                                                              .data!
+                                                              .isEmpty
+                                                      ? const SizedBox()
+                                                      : Text(
+                                                          salesprofilecontroller
+                                                              .salesprofilemodel!
+                                                              .data![0]
+                                                              .email
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              color: MyColors
+                                                                  .white,
+                                                              fontSize: 16),
+                                                        ),
                                                 ]),
                                           ],
                                         ),
@@ -263,22 +307,24 @@ SalesfavouriteController salesfavouriteController = Get.put(SalesfavouriteContro
   Future<void> _navigateToScreen(BuildContext context, int index) async {
     switch (index) {
       case 0:
+
         Get.to(salesProfile());
         break;
-          case 1:
+      case 1:
         Get.to(DashboardSales());
         break;
-     
+
       case 2:
-      myordercontroller.fethUserId();
-         myordercontroller.init();
+        myordercontroller.fethUserId();
+        myordercontroller.init();
         Get.to(MyOrderSales());
         break;
       case 3:
+        notificationsalescontroller.notifyinit();
         Get.to(NotificationSales());
         break;
       case 4:
-       salesfavouriteController.fethUserId();
+        salesfavouriteController.fethUserId();
         Get.to(Salesfavourite());
         break;
 

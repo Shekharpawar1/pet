@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesmanFilterController.dart';
@@ -40,7 +41,7 @@ class _SalesAlltoyPageState extends State<SalesAlltoyPage> {
   TextEditingController _searchcontroller = TextEditingController();
   //   final HomeuserController homeusercontroller = Get.put(HomeuserController());
   // ProductDetailsController productdeatilscontroller =
-  //     Get.put(ProductDetailsController());
+  SalesMyCartController addtocartController = Get.put(SalesMyCartController());
    SalesProductDetailsController salesProductDetailsController =
       Get.put(SalesProductDetailsController());
       final SalesSubCategoryController salessubcategorycontroller =
@@ -50,110 +51,7 @@ class _SalesAlltoyPageState extends State<SalesAlltoyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar:CustomAppBarSalesWholeback(title:"All Toys"),
-//       appBar: AppBar(
-//             elevation: 0,
-//           backgroundColor:Colors.transparent,
-// leading: Padding(
-//   padding:  EdgeInsets.only(left:5.0,top: 10,bottom: 10,right: 0),
-//   child:   InkWell(onTap: (){
-//     Navigator.pop(context);
-//   },
-//     child: Icon(Icons.arrow_back_ios,color: MyColors.black,size: 20,
-    
-//     ),
-//   ),
-// ),
-         
-//         title: Center(child: Text("All Toy",style: CustomTextStyle.appbartext,)),
-    
-//            actions: [
-        
 
-                  
-//           Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                      Get.to(NotificationUser());
-//                   },
-//                   child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
- 
-//  Positioned(
-//  top: 10.0,right: 0,
-//                     child:  Stack(
-//                       children: <Widget>[
-//                          Icon(
-//                             Icons.brightness_1,
-//                             size: 15.0, color: MyColors.red),
-//                          Positioned(
-//                             top: 3.0,
-//                             right: 4.0,
-//                             child:  Center(
-//                               child:  Text(('5').toString(),
-//                                 // list.length.toString(),
-//                                 style:  TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: 8.0,
-//                                     fontWeight: FontWeight.w500
-//                                 ),
-//                               ),
-//                             )),
-
-                  
-//                       ],
-//                     )),
-
-
-//             ],
-//           ),
-    
-//                 SizedBox(width: 20),
-//  Stack(
-//             children: [
-//               InkWell(
-//                   onTap: () {
-//                       Get.to(AddToCardUser());
-                   
-//                   },
-//                   child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
- 
-// // (getCardModel!.data!.isEmpty)?
-// // SizedBox():
-//  Positioned(
-//  top: 10.0,right: 0,
-//                     child:  Stack(
-//                       children: <Widget>[
-//                          Icon(
-//                             Icons.brightness_1,
-//                             size: 15.0, color: MyColors.red),
-//                          Positioned(
-//                             top: 3.0,
-//                             right: 4.0,
-//                             child:  Center(
-//                               child:  Text(('5').toString(),
-//                                 // list.length.toString(),
-//                                 style:  TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: 8.0,
-//                                     fontWeight: FontWeight.w500
-//                                 ),
-//                               ),
-//                             )),
-
-                  
-//                       ],
-//                     )),
-
-
-//             ],
-//           ),
-    
-//     SizedBox(width: 20,)
-    
-//         ], 
-       
-        
-//         ),
 
         body:Padding(
           padding: const EdgeInsets.all(15.0),
@@ -253,7 +151,16 @@ class _SalesAlltoyPageState extends State<SalesAlltoyPage> {
                     GetBuilder<SalesSubCategoryController>(
                         init: salessubcategorycontroller,
                         builder: (_) {
-                          return GridView.builder(
+                          return
+                            salessubcategorycontroller.salestoyModel == null ||
+                                salessubcategorycontroller.salestoyModel!.data ==
+                                    null ||
+                                salessubcategorycontroller
+                                    .salestoyModel!.data!.isEmpty
+                            ? SizedBox()
+                            :
+                          
+                           GridView.builder(
                               primary: false,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
@@ -265,11 +172,11 @@ class _SalesAlltoyPageState extends State<SalesAlltoyPage> {
                                       mainAxisSpacing: 15.0,
                                       mainAxisExtent: 285),
                               itemCount: salessubcategorycontroller
-                                  .salestoyModel!.data!.length,
+                                      .combinedList.length,
                                   // .clamp(0, 4),
                               itemBuilder: (BuildContext ctx, index) {
                                 var item = salessubcategorycontroller
-                                    .salestoyModel!.data![index];
+                                      .combinedList![index];
 
                                 var imagePath =
                                     "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
@@ -278,8 +185,7 @@ class _SalesAlltoyPageState extends State<SalesAlltoyPage> {
                                             null ||
                                         salessubcategorycontroller
                                                 .salestoyModel!.data ==
-                                            null  || salessubcategorycontroller
-                                          .salestoyModel!.data![index] == null
+                                            null  
                                     ? SizedBox()
                                     : 
                                     
@@ -448,23 +354,18 @@ onTap: ()async{
                                                                     .start,
                                                             children: [
                                                               Text(item.name!,
+                                                                   maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                   style: CustomTextStyle
                                                                       .popinsmedium),
-                                                              Text(
-                                                                  item.description
-                                                                              .toString()
-                                                                              .length <
-                                                                          30
-                                                                      ? item
-                                                                          .description!
-                                                                      : item
-                                                                          .description!
-                                                                          .substring(
-                                                                              0,
-                                                                              19),
-                                                                  style: CustomTextStyle
-                                                                      .popinssmall0),
-                                                              SizedBox(height: 5),
+                                                                                                                   Text(
+  item.description!.length < 20
+      ? item.description!
+      : item.description!.substring(0, item.description!.length),
+  maxLines: 1,
+  overflow: TextOverflow.ellipsis,
+  style: CustomTextStyle.popinssmall0,
+),  SizedBox(height: 5),
                                                               Row(
                                                                 mainAxisAlignment:
                                                                     MainAxisAlignment
@@ -475,38 +376,28 @@ onTap: ()async{
                                                                         CrossAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      Row(
-                                                                        children: [
-                                                                          Text(
-                                                                              "₹" +
-                                                                                  item.price.toString(),
-                                                                              style: CustomTextStyle.discounttext),
-                                                                          SizedBox(
-                                                                              width:
-                                                                                  2),
-                                                                          // Container(
-                                                                          // height:
-                                                                          //     20,
-                                                                          // width: 48,
-                                                                          // decoration: BoxDecoration(
-                                                                          //     color: MyColors
-                                                                          //         .red,
-                                                                          //     borderRadius: BorderRadius.circular(
-                                                                          //         10),
-                                                                          //     border:
-                                                                          //         Border.all(color: MyColors.red)),
-                                                                          // child:
-                                                                          //     Center(
-                                                                          //   child:
-                                                                          Text(
-                                                                              // item.discount.toString(),
-                                                                              "Save${item.discount.toString()}%",
-                                                                              style:
-                                                                                  CustomTextStyle.popinstextsmal2222red),
-                                                                          //   ),
-                                                                          // ),
-                                                                        ],
-                                                                      ),
+                                                                     (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                            "₹" +
+                                                                                item.wholePrice.toString(),
+                                                                            style: CustomTextStyle.discounttext),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                2),
+                                                                        
+                                                                        Text(
+                                                                            // item.discount.toString(),
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                            style:
+                                                                                CustomTextStyle.popinstextsmal2222red),
+                                                                        //   ),
+                                                                        // ),
+                                                                      ],
+                                                                    ): const  SizedBox(),
+                                                               
                                                                       SizedBox(
                                                                           height:
                                                                               5),
@@ -520,10 +411,10 @@ onTap: ()async{
                                                                                 Get.width * 0.23,
                                                                             child:
                                                                                 Text(
-                                                                              "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                                                              "₹ ${((double.parse( item.wholePrice ?? '')) - ((double.parse( item.wholePrice ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
                                                     
                                                                               // "₹" +
-                                                                              //     item.price!,
+                                                                              //      item.wholePrice!,
                                                                               style:
                                                                                   CustomTextStyle.popinsmedium,
                                                                             ),
@@ -532,11 +423,11 @@ onTap: ()async{
                                                                               width:
                                                                                   Get.width * 0.054),
                                                                           InkWell(
-                                                                                 onTap: () {
-                                                              //                  wholeproductdetailsController.viewproductHome(
-                                                              //                   item.id??0,item.name??'',"1kg",1 ,item.price as int,item.image!);
-                                                              //                   await wholeproductdetailsController
-                                                              // .addProductHome();
+                                                                                 onTap: () async{
+                                                                salesProductDetailsController.viewproductHome(item.id??0,item.name??'',"1kg",1,double.parse(item.wholePrice ?? ''),(item.image??'').toString(),"yes");
+                                                                              
+                                                                                        await salesProductDetailsController.addProductHome();
+                                                                                     addtocartController.init();
                                                                               },
                                                                             child: Padding(
                                                                               padding:
@@ -686,7 +577,7 @@ onTap: ()async{
                                     //                       Row(
                                     //                         children: [
                                     //                           Text(
-                                    //                               item.price ??
+                                    //                                item.wholePrice ??
                                     //                                   '',
                                     //                               style: CustomTextStyle
                                     //                                   .discounttext),
@@ -717,10 +608,10 @@ onTap: ()async{
                                     //                       ),
                                     //                       SizedBox(height: 5),
                                     //                       Text(
-                                    //                         "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "")) / 100)).toDouble()}",
+                                    //                         "₹ ${((double.parse( item.wholePrice ?? '')) - ((double.parse( item.wholePrice ?? "")) * (double.parse(item.discount ?? "")) / 100)).toDouble()}",
 
-                                    //                         // "₹ ${((int.parse(item.price ?? '0')) - ( (int.parse(item.price ?? "0"))*(int.parse(item.discount ?? "0")) / 100)).toString()}",
-                                    //                         // "₹ ${((item.price!) -((item.price!)*(item.discount!))/100).toString()}",
+                                    //                         // "₹ ${((int.parse( item.wholePrice ?? '0')) - ( (int.parse( item.wholePrice ?? "0"))*(int.parse(item.discount ?? "0")) / 100)).toString()}",
+                                    //                         // "₹ ${(( item.wholePrice!) -(( item.wholePrice!)*(item.discount!))/100).toString()}",
                                     //                         style: CustomTextStyle
                                     //                             .popinsmedium,
                                     //                       ),

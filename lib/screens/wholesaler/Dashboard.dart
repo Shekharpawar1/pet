@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/wholesaler_controller/home_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/notification_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/profilewhole_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/totalorderwhole_controller.dart';
 import 'package:pet/screens/wholesaler/wholesalerdrawer.dart';
@@ -35,6 +36,17 @@ class _DashboardWholeState extends State<DashboardWhole> {
   int len = 0;
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 WholeProfileController wholeProfileController = Get.put(WholeProfileController());
+WholeNotificationController wholenotificationcontroller =
+      Get.put(WholeNotificationController());
+
+  @override
+  void onInit() {
+  
+    wholenotificationcontroller.notifyinit();
+      wholemyordercontroller.init();
+      
+       
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,27 +186,34 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                       init: wholetotalordercontroller,
                       builder: (_) {
                         return InkWell(
-                          onTap: () {
-                            wholetotalordercontroller.init();
+                          onTap: () async {
+                            print("Balll");
+                           await  wholetotalordercontroller.init();
+                           print("Allll");
 //             int len = wholetotalordercontroller.wholetotalorderModel!.data!.reduce((prev, now) {
 // if(now.orderStatus == "pending"  ){
 //   return int.parse(now.orderAmount ?? "0") + int.parse(now.orderAmount ?? "0");
 // }
 // return 0;
 //             });
-                            int len = 0;
-                            wholetotalordercontroller
-                                .wholetotalorderModel!.data!
-                                .forEach((e) {
-                              if (e.orderStatus == "pending" &&
-                                  e.paymentMethod == "paid") {
-                                len += int.parse(e.orderAmount ?? "0") +
-                                    int.parse(e.orderAmount ?? "0");
-                              }
-                            });
+                            // int len = 0;
+                            // wholetotalordercontroller
+                            //     .wholetotalorderModel!.data!
+                            //     .forEach((e) {
+                            //   if (
+                            //     // e.orderStatus == "pending" &&
+                            //       e.paymentStatus == "unpaid") {
+                            //     len += int.parse(e.orderAmount ?? " ").toInt();
+                            //     //  +
+                            //     //     int.parse(e.orderAmount ?? "0");
+                            //     print(len);
+                            //   }
+                            //  print("=========>>>>>>> ReBalancelen $len");
+                            // Get.to(const Balance());
+                            // });
 
-                            print("=========>>>>>>> Balancelen $len");
-                            Get.to(const Balance());
+                            // print("=========>>>>>>> ReBalancelen $len");
+                            // Get.to( Balance());
                           },
                           child: Container(
                             width: Get.width * 0.43,
@@ -207,10 +226,14 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(len.toString(),
+                                Text(
+                                  
+                            "₹"+  (  wholetotalordercontroller.totalAmount
+                              )
+                                              .toString(),
                                     style: CustomTextStyle.boldStyle1),
                                 Center(
-                                  child: Text("Balance",
+                                  child: Text("Unpaid Amount",
                                       textAlign: TextAlign.center,
                                       style: CustomTextStyle.popinstextsmall12),
                                 ),
@@ -280,196 +303,219 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              InkWell(
-                onTap: () {
-                  wholemyordercontroller.init();
-                  int len = wholemyordercontroller.wholemyorderModel!.data!
-                      .where((element) => element.orderStatus == "confirmed")
-                      .toList()
-                      .length;
-                  print("=========>>>>>>> com $len");
-                  Get.to(PendingCompleteSreen(
-                      data: wholemyordercontroller.wholemyorderModel!.data!
-                          .where(
-                              (element) => element.orderStatus == "confirmed")
-                          .toList()));
-                },
-                child: Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: MyColors.white,
-                        borderRadius: BorderRadius.circular(37)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Current Order",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              )),
-                          wholemyordercontroller.wholemyorderModel == null ||
-                                  wholemyordercontroller
-                                          .wholemyorderModel!.data ==
-                                      null
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, top: 8, bottom: 8),
-                                  child: Container(
-                                      height: 100,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: MyColors.yellowcir,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      child: Center(
-                                          child: Text((wholemyordercontroller
-                                                  .wholemyorderModel!.data!
-                                                  .where((element) =>
-                                                      element.orderStatus ==
-                                                      "confirmed")
-                                                  .toList()
-                                                  .length)
-                                              .toString()))),
-                                )
-                        ],
-                      ),
-                    )),
+             GetBuilder<WholeMyOrderController>(
+            init: wholemyordercontroller,
+            
+            builder: (_) {
+                  return InkWell(
+                    onTap: () async{
+                    await   wholemyordercontroller.init();
+                      print("AllWhole");
+                      int len = wholemyordercontroller.wholemyorderModel!.data!
+                          .where((element) => element.orderStatus == "confirmed")
+                          .toList()
+                          .length;
+                      print("=========>>>>>>> com $len");
+                      Get.to(PendingCompleteSreen(
+                          data: wholemyordercontroller.wholemyorderModel!.data!
+            .where((element) => element.orderStatus == "confirmed")
+            .toList()));
+                          // data: wholemyordercontroller.wholemyorderModel!.data!
+                          //     .where(
+                          //         (element) => element.orderStatus == "confirmed")
+                          //     .toList()));
+                    },
+                    child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: MyColors.white,
+                            borderRadius: BorderRadius.circular(37)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Current Order",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                              wholemyordercontroller.wholemyorderModel == null ||
+                                      wholemyordercontroller
+                                              .wholemyorderModel!.data!.isEmpty
+                                  ? const SizedBox()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, top: 8, bottom: 8),
+                                      child: Container(
+                                          height: 100,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: MyColors.yellowcir,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          child: Center(
+                                              child: Text((wholemyordercontroller
+                                                      .wholemyorderModel!.data!
+                                                      .where((element) =>
+                                                          element.orderStatus ==
+                                                          "confirmed")
+                                                      .toList()
+                                                      .length)
+                                                  .toString()))),
+                                    )
+                            ],
+                          ),
+                        )),
+                  );
+                }
               ),
               
              const  SizedBox(
                 height: 10,
               ),
-              InkWell(
-                onTap: () {
-                  wholemyordercontroller.init();
-                  int len = wholemyordercontroller.wholemyorderModel!.data!
-                      .where((element) => element.orderStatus == "pending")
-                      .toList()
-                      .length;
-                  print("=========>>>>>>> $len");
-                  Get.to(PendingCompleteSreen(
-                      data: wholemyordercontroller.wholemyorderModel!.data!
+             GetBuilder<WholeMyOrderController>(
+            init: wholemyordercontroller,
+            
+            builder: (_) {
+                  return InkWell(
+                    onTap: ()async {
+                     await wholemyordercontroller.init();
+                      int len = wholemyordercontroller.wholemyorderModel!.data!
                           .where((element) => element.orderStatus == "pending")
-                          .toList()));
-                },
-                child: Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: MyColors.white,
-                        borderRadius: BorderRadius.circular(37)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text("Pending Order",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              )),
-                          wholemyordercontroller.wholemyorderModel == null ||
-                                  wholemyordercontroller
-                                          .wholemyorderModel!.data ==
-                                      null
-                              ? const SizedBox()
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, top: 8, bottom: 8),
-                                  child: Container(
-                                    height: 100,
-                                    width: 100,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: MyColors.yellowcir,
-                                        width: 1.0,
-                                      ),
-                                    ),
-                                    child: Center(
-                                        child: Text((wholemyordercontroller
-                                                .wholemyorderModel!.data!
-                                                .where((element) =>
-                                                    element.orderStatus ==
-                                                    "pending")
-                                                .toList()
-                                                .length)
-                                            .toString())),
-                                  ))
-                        ],
-                      ),
-                    )),
+                          .toList()
+                          .length;
+                      print("=========>>>>>>> $len");
+                      Get.to(PendingCompleteSreen(
+                          data: wholemyordercontroller.wholemyorderModel!.data!
+                              .where((element) => element.orderStatus == "pending")
+                              .toList()));
+                    },
+                    child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: MyColors.white,
+                            borderRadius: BorderRadius.circular(37)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("Pending Order",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  )),
+                              wholemyordercontroller.wholemyorderModel == null ||
+                                      wholemyordercontroller
+                                              .wholemyorderModel!.data ==
+                                          null
+                                  ? const SizedBox()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, top: 8, bottom: 8),
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: MyColors.yellowcir,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                        child: Center(
+                                            child: Text((wholemyordercontroller
+                                                    .wholemyorderModel!.data!
+                                                    .where((element) =>
+                                                        element.orderStatus ==
+                                                        "pending")
+                                                    .toList()
+                                                    .length)
+                                                .toString())),
+                                      ))
+                            ],
+                          ),
+                        )),
+                  );
+                }
               ),
               const SizedBox(
                 height: 10,
               ),
-              wholemyordercontroller.wholemyorderModel == null ||
-                      wholemyordercontroller.wholemyorderModel!.data == null
-                  ? const SizedBox()
-                  : InkWell(
-                      onTap: () {
-                        wholemyordercontroller.init();
-                        int len = wholemyordercontroller
-                            .wholemyorderModel!.data!
-                            .where(
-                                (element) => element.orderStatus == "delivered")
-                            .toList()
-                            .length;
-                        print("=========>>>>>>> com $len");
-                        Get.to(PendingCompleteSreen(
-                            data: wholemyordercontroller
+            GetBuilder<WholeMyOrderController>(
+            init: wholemyordercontroller,
+            
+            builder: (_) {
+               return InkWell(
+                          onTap: () async{
+                          await  wholemyordercontroller.init();
+                            int len = wholemyordercontroller
                                 .wholemyorderModel!.data!
-                                .where((element) =>
-                                    element.orderStatus == "delivered")
-                                .toList()));
-                      },
-                      child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                              color: MyColors.white,
-                              borderRadius: BorderRadius.circular(37)),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                               const  Text("Completed Order",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 8.0, top: 8, bottom: 8),
-                                  child: Container(
-                                      height: 100,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: MyColors.yellowcir,
-                                          width: 1.0,
-                                        ),
-                                      ),
-                                      child: Center(
-                                          child: Text((wholemyordercontroller
-                                                  .wholemyorderModel!.data!
-                                                  .where((element) =>
-                                                      element.orderStatus ==
-                                                      "delivered")
-                                                  .toList()
-                                                  .length)
-                                              .toString()))),
-                                )
-                              ],
-                            ),
-                          )),
-                    ),
+                                .where(
+                                    (element) => element.orderStatus == "delivered")
+                                .toList()
+                                .length;
+                            print("=========>>>>>>> com44444 $len");
+                            Get.to(PendingCompleteSreen(
+                                data: wholemyordercontroller
+                                    .wholemyorderModel!.data!
+                                    .where((element) =>
+                                        element.orderStatus == "delivered")
+                                    .toList()));
+                          },
+                          child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  color: MyColors.white,
+                                  borderRadius: BorderRadius.circular(37)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 15, right: 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                   const  Text("Completed Order",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                        )),
+                                         wholemyordercontroller.wholemyorderModel == null ||
+                                          wholemyordercontroller
+                                                  .wholemyorderModel!.data ==
+                                              null
+                                      ? const SizedBox():
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 8.0, top: 8, bottom: 8),
+                                      child: Container(
+                                          height: 100,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color: MyColors.yellowcir,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          child: Center(
+                                              child: Text((wholemyordercontroller
+                                                      .wholemyorderModel!.data!
+                                                      .where((element) =>
+                                                          element.orderStatus ==
+                                                          "delivered")
+                                                      .toList()
+                                                      .length)
+                                                  .toString()))),
+                                    )
+                                  ],
+                                ),
+                              )),
+                        );
+             }
+           ),
               const SizedBox(
                 height: 10,
               ),

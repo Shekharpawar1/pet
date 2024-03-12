@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pet/controllers/wholesaler_controller/login_controller.dart';
+import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/wholesaler/Dashboard.dart';
 import 'package:pet/screens/wholesaler/createaccount.dart';
 import 'package:pet/screens/wholesaler/home.dart';
@@ -251,13 +252,13 @@ class _LoginWholeState extends State<LoginWhole> {
 
                                     try {
                                       await loginwholeController.loginEmail();
-                                      Navigator.push(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          child: const DashboardWhole(),
-                                        ),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   PageTransition(
+                                      //     type: PageTransitionType.fade,
+                                      //     child: const DashboardWhole(),
+                                      //   ),
+                                      // );
                                     } catch (e) {
                                       Get.snackbar(
                                         'Error',
@@ -309,10 +310,31 @@ class _LoginWholeState extends State<LoginWhole> {
                               child: Center(
                                   child: Text(
                                 "Create  a New Account",
-                                style: CustomTextStyle.yellowtext,
+                                 style: TextStyle(
+                                    color: MyColors.yellow,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               ))),
                         ],
                       ),
+
+
+
+                        SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                    InkWell(
+                        onTap: () {
+                          Get.to(Common());
+                        },
+                        
+                        child: Center(
+                            child: Text(
+                          "Other Login",
+                          style: CustomTextStyle.yellowtext,
+                        ))),
+               
+               
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.08,
                       ),

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:pet/controllers/wholesaler_controller/myOrder_controller.dart';
+import 'package:pet/controllers/wholesaler_controller/notification_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/profilewhole_controller.dart';
 import 'package:pet/screens/common/common.dart';
 import 'package:pet/screens/intro2.dart';
@@ -37,7 +38,11 @@ class drawerWholeSaler extends StatefulWidget {
 
 class _drawerWholeSalerState extends State<drawerWholeSaler> {
   WholeMyOrderController wholemyordercontroller = Get.put(WholeMyOrderController());
-
+WholeNotificationController wholenotificationcontroller =
+      Get.put(WholeNotificationController());
+      
+WholeProfileController wholeprofilecontroller = Get.put(WholeProfileController());
+      
  @override
   void initState() {
     super.initState();
@@ -73,6 +78,7 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
 
   @override
   Widget build(BuildContext context) {
+    wholeProfileController.myprofile();
     return Drawer(
       backgroundColor: MyColors.bgcolor,
       child: ListView(
@@ -117,38 +123,69 @@ WholeProfileController wholeProfileController = Get.put(WholeProfileController()
                                                           bottom: 20),
                                                       child: CircleAvatar(
                                                         radius: 35,
-                                                        backgroundColor:
-                                                            Colors.transparent,
-                                                        child:
-                                                        wholeProfileController
-                              .wholemyprofilemodel == null || wholeProfileController
-                              .wholemyprofilemodel!.data == null || wholeProfileController
-                              .wholemyprofilemodel!.data!.isEmpty ?  Image.asset("assets/image/boyprofile3.png") :
-                
-                                                            CachedNetworkImage(
-                                                          imageUrl: "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                                                              wholeProfileController
-                              .wholemyprofilemodel!
-                                                                  
-                                                                  .data![0]
-                                                                  .image
-                                                                  .toString(),
-
-                                                          fit: BoxFit.cover,
-                                                          // width: 61,
-                                                          // height: 75,
-                                                          placeholder:
-                                                              (context, url) =>
-                                                                  Center(
-                                                            child:
-                                                                CircularProgressIndicator(),
-                                                          ), // Replace with your own placeholder widget
-                                                          errorWidget: (context,
-                                                                  url, error) =>
-                                                              Icon(Icons
-                                                                  .error), // Replace with your own error widget
+                                                         backgroundColor:
+                                                              Colors.transparent,
+                                                        child: ClipOval(
+                                                          child:
+                                                          wholeProfileController
+                                                                                    .wholemyprofilemodel == null || wholeProfileController
+                                                                                    .wholemyprofilemodel!.data == null || wholeProfileController
+                                                                                    .wholemyprofilemodel!.data!.isEmpty ?  Image.asset("assets/image/boyprofile3.png") :
+                                                                      (wholeProfileController
+                                                                                    .wholemyprofilemodel!.data![0].image == null)?
+                                                              CachedNetworkImage(
+                                                            imageUrl:  "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                                wholeProfileController
+                                                                                    .wholemyprofilemodel!
+                                                                    
+                                                                    .data![0]
+                                                                    .upload1
+                                                                    .toString(),
+                                                      
+                                                            fit: BoxFit.cover,
+                                                            width: 75,
+                                                            height: 75,
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                    Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ), // Replace with your own placeholder widget
+                                                            errorWidget: (context,
+                                                                    url, error) =>
+                                                                Icon(Icons
+                                                                    .error), // Replace with your own error widget
+                                                          )
+:
+       CachedNetworkImage(
+                                                            imageUrl:  "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                                                                wholeProfileController
+                                                                                    .wholemyprofilemodel!
+                                                                    
+                                                                    .data![0]
+                                                                    .image
+                                                                    .toString(),
+                                                      
+                                                            fit: BoxFit.cover,
+                                                            width: 75,
+                                                            height: 75,
+                                                            placeholder:
+                                                                (context, url) =>
+                                                                    Center(
+                                                              child:
+                                                                  CircularProgressIndicator(),
+                                                            ), // Replace with your own placeholder widget
+                                                            errorWidget: (context,
+                                                                    url, error) =>
+                                                                Icon(Icons
+                                                                    .error), // Replace with your own error widget
+                                                          ),
+                                                         
+                                                         
+                                                         
+                                                         
+                                                          //  Image.asset("assets/image/boyprofile3.png"),
                                                         ),
-                                                        //  Image.asset("assets/image/boyprofile3.png"),
                                                       ),
                                                     ),
                                                    Positioned(
@@ -169,7 +206,7 @@ Get.to(WholeSalerProfile());
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
-                                                    0.05),
+                                                    0.03),
                                             Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -202,7 +239,7 @@ Get.to(WholeSalerProfile());
       == null || wholeProfileController
                               .wholemyprofilemodel!.data == null || wholeProfileController
                               .wholemyprofilemodel!.data!.isEmpty ? Text("Email",style: TextStyle(
-                                                        fontSize: 16,
+                                                        fontSize: 14,
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: MyColors.white),) :
@@ -214,7 +251,7 @@ Get.to(WholeSalerProfile());
                                                         .toString(),
                                                     style: TextStyle(
                                                         color: MyColors.white,
-                                                        fontSize: 16),
+                                                        fontSize: 14),
                                                   ),
                                                 ]),
                                           ],
@@ -278,6 +315,7 @@ Get.to(WholeSalerProfile());
         Get.to(DashboardWhole());
         break;
       case 1:
+      wholeprofilecontroller.myprofile();
         Get.to(WholeSalerProfile());
         break;
       case 2:
@@ -285,6 +323,8 @@ Get.to(WholeSalerProfile());
       Get.to(MyOrderWhole());
         break;
       case 3:
+// wholenotificationcontroller.init();
+ wholenotificationcontroller.notifyinit();
         Get.to(NotificationWhole());
         break;
       case 4:

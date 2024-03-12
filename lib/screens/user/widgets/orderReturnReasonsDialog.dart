@@ -4,12 +4,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/user_controller/myOrder_controller.dart';
 import 'package:pet/controllers/user_controller/userLocationController.dart';
 import 'package:pet/screens/user/widgets/orderCancellationOtherDialog.dart';
 import 'package:pet/screens/user/widgets/orderRturnOtherDialog.dart';
 
 class OrderReturnReasonsDialog extends StatelessWidget {
   // List of cancellation reasons
+  MyOrderController myordercontroller = Get.put(MyOrderController());
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +75,7 @@ class OrderReturnReasonsDialog extends StatelessWidget {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.red),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
 //                           // Perform the order cancellation with the selected reason
 //                           // Handle the cancellation logic here
 //                           String selectedReason = 'Get the selected reason from the user input';
@@ -89,7 +91,7 @@ class OrderReturnReasonsDialog extends StatelessWidget {
                             if (controller.selectedValue != null) {
                               if (controller.selectedValue == 'Other') {
                                 print("Inside");
-                                Get.back();
+                                // Get.back();
                                 // showTextInputDialog(context);
                                 Get.dialog(OrderReturnOtherDialog());
                                 return;
@@ -104,7 +106,9 @@ class OrderReturnReasonsDialog extends StatelessWidget {
                                   .updateSelectedReason(cancellationReason);
 
                               // Close the dialog
-                              Get.back();
+                               await  myordercontroller.reorderinit();
+                           
+                               Get.back();
                               Get.snackbar(
                                 'Request Accepted',
                                 'Selected Reason: ${controller.selectedReason}',

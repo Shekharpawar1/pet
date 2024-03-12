@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
+import 'package:pet/controllers/salesman_controller/notification_controller.dart';
 import 'package:pet/models/salesmanModel/bannerModel.dart';
 import 'package:pet/models/salesmanModel/getUserCategoriesModel.dart';
 import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
@@ -19,7 +21,8 @@ class HomeSalesController extends GetxController {
     TextEditingController searchcontroller = TextEditingController();
   final storage = GetStorage();
     int? itempartnerId;
-    
+     NotificationsalesController notificationsalescontroller = Get.put(NotificationsalesController()) ;
+  SalesMyCartController mycartController = Get.put(SalesMyCartController());
   int? selectImages = 0;
   //  var sellerId = GetStorage().read("sellerid");
   var wholesellerID;
@@ -156,6 +159,7 @@ void viewpartner(int id) {
   void onInit() {
     super.onInit();
     init();
+    mycartController.init(); 
   }
 
   fethUserId() {
@@ -164,7 +168,7 @@ void viewpartner(int id) {
     //  print("SellerID ==>${sellerId}");
   }
 
-  void init() async {
+  Future<void> init() async {
     showLoading = true;
     update();
     try {
@@ -176,13 +180,13 @@ void viewpartner(int id) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // pets
@@ -197,13 +201,13 @@ void viewpartner(int id) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // banners
@@ -214,13 +218,13 @@ void viewpartner(int id) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
     try {
       // our brands
@@ -239,13 +243,13 @@ void viewpartner(int id) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     try {
@@ -258,13 +262,13 @@ void viewpartner(int id) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -282,18 +286,20 @@ SalesProductByPartnerItemModel? salesproductbypartneritemModel;
       // our services
      salesproductbypartneritemModel =
           SalesProductByPartnerItemModel.fromJson(await ApiHelper.getApi(getPartnerItemUrl+"${itempartnerId}"));
+     salesproductbypartneritemModel!.data = salesproductbypartneritemModel!.data!.where((element) => element.moduleId == 1).toList();
+    
       print(getPartnerItemUrl);
       partneritemLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -306,39 +312,18 @@ SalesProductByPartnerItemModel? salesproductbypartneritemModel;
     update();
     // await Future.delayed(Duration(seconds: 4));
     Map<String, String> body = {
-      // "dates": DateFormat('dd-MM-yyyy').format(selectedDate).toString(),
-      // "slot": timeSlots.map((e) => e.time).toList(),
-      // "slot": selectedSlot!.time.toString(),
-      // "name": nameController.text.trim().toString(),
-      // "email": emailController.text.trim().toString(),
-      // "pet": selectedPet.toString(),
-      // "pet": petId.toString(),
-      // "state": selectedState!.stateName.toString(),
-      // "city": selectedCity!.cityName.toString(),
-      // "address": addressController.text.trim().toString(),
-      // "pet_problem": petProblemController.text.trim().toString(),
-      // "phone": numberController.text.trim(),
-      // "service_id": serviceId.toString(),
+      
       "user_id": wholesellerID.toString(),
       "item_id": productId.toString(),
-      // "dates": DateFormat('dd-MM-yyy').format(pickedDate!).toString(),
+   
     };
     String addToWishList = Constants.USER_ADD_TO_FAV;
     print(body);
     try {
-      // List documentList = [
-      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45 (1).png', 'key': "logo"},
-      //   {'value': '/C:/Users/PC/Downloads/Rectangle 45.png', 'key': "profile"},
-      // ];
-      // var body = {'id': 'value', 'name': 'dhruv'};
+      
       var request = http.MultipartRequest('POST', Uri.parse(addToWishList));
       request.fields.addAll(body);
-      // request.files.add(await http.MultipartFile.fromPath(
-      //     'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
-      // documentList.forEach((element) async {
-      //   request.files.add(await http.MultipartFile.fromPath(
-      //       element["key"], element["value"]));
-      // });
+      
       await ApiHelper.postFormData(request: request);
       wishListItemsId.add(productId);
       update();
@@ -383,17 +368,73 @@ SalesProductByPartnerItemModel? salesproductbypartneritemModel;
     update();
   }
 
+
+ Future<void> fetchWishList() async {
+    
+    showLoading = true;
+    update();
+    try {
+      // wishlist
+      saleswishList =
+          SalesWishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
+     
+      GetStorage().write('wishListItems',
+          saleswishList!.data!.map((e) => e.itemId).toList().toSet().toList());
+      // categoryLoaded = true;
+      update();
+      print("${GetStorage().read('wishListItems')}");
+    } catch (e) {
+      print('Error: $e');
+     Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+
+    showLoading = false;
+    update();
+  }
+
+
+Future<void> getWishinit() async{
+ showLoading = true;
+    update();
+
+ try {
+      // wishlist
+      saleswishList =
+          SalesWishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${GetStorage().read('id')}"));
+      // print(wishList);
+      // wishList!.data!.map((e) => e.itemId).toList();
+      GetStorage().write('wishListItems',
+          saleswishList!.data!.map((e) => e.itemId).toList().toSet().toList());
+      // categoryLoaded = true;
+      update();
+      print("${GetStorage().read('wishListItems')}");
+    } catch (e) {
+      print('Error: $e');
+     Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+    showLoading = false;
+    update();
+}
+   
   Future<void> removeItemFromWishList(int productId) async {
     // var data = await GetStorage().read("userData");
     showLoading = true;
     update();
     print("Removing item");
     try {
-      // remove from wishlist
-      // servicesCategoryModel =
-      //     ServicesCategoryModel.fromJson(await ApiHelper.getApi(url));
-      // print(servicesCategoryModel);
-      // servicesCategoryLoaded = true;
+      
       String url = Constants.USER_REMOVE_FROM_FAV;
       await ApiHelper.deleteByUrl(url: url + "/$productId" + "/$wholesellerID");
       wishListItemsId.removeWhere((e) => e.toString() == productId.toString());
@@ -419,6 +460,7 @@ SalesProductByPartnerItemModel? salesproductbypartneritemModel;
           colorText: Colors.white,
         );
       } else {
+   print('Error: $e');
         Get.snackbar(
           'Error',
           'An error occurred: $e',
@@ -474,50 +516,7 @@ SalesProductByPartnerItemModel? salesproductbypartneritemModel;
       "title": "Slicker",
     },
   ].obs;
-  // List _productList = [
-  //   {
-  //     "image": "assets/image/food3.png",
-  //     "title": "Mars Petcare Inc",
-  //     "subtitle": "Lorem Ipsum is simply dummy",
-  //     "price": "₹ 260.00",
-  //   },
-  //   {
-  //     "image": "assets/image/dog2.png",
-  //     "title": "Foam Pet Dog Bed",
-  //     "subtitle": "Lorem Ipsum is simply dummy",
-  //     "price": "₹ 260.00",
-  //   },
-  //   {
-  //     "image": "assets/image/food3.png",
-  //     "title": "Mars Petcare Inc",
-  //     "subtitle": "Lorem Ipsum is simply dummy",
-  //     "price": "₹ 260.00",
-  //   },
-  //   {
-  //     "image": "assets/image/food5.png",
-  //     "title": "Mars Petcare Inc",
-  //     "subtitle": "Lorem Ipsum is simply dummy",
-  //     "price": "₹ 260.00",
-  //   }
-  // ].obs;
-
-  // List _bannerList = [
-  //   {
-  //     "image": "assets/image/dogiimg1.png",
-  //     "title": "Dog cat food",
-  //     "subtitle": "Up to 25 % OFF all Products"
-  //   },
-  //   {
-  //     "image": "assets/image/dogiimg1.png",
-  //     "title": "Dog cat food",
-  //     "subtitle": "Up to 25 % OFF all Products"
-  //   },
-  //   {
-  //     "image": "assets/image/dogiimg1.png",
-  //     "title": "Dog cat food",
-  //     "subtitle": "Up to 25 % OFF all Products"
-  //   },
-  // ].obs;
+ 
   get getOurBrandList => _ourbandList;
   get getServiceList => _serviceList;
   // get getbannerList => _bannerList;

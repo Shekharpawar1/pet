@@ -57,13 +57,13 @@ final box = GetStorage();
   
   void validateForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is Invalid')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is Invalid')),
+      // );
     }
   }
 void clearFields() {
@@ -106,13 +106,13 @@ void clearFields() {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to get State: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to get State: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -153,22 +153,38 @@ void addadressID(int id) {
   fetchCity(String stateId) async {
     showLoading = true;
     update();
-    try {
-      // city list
-      cityListModel =
-          CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+    // try {
+    //   // city list
+    //   cityListModel =
+    //       CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+    //   print(cityListModel);
+    //   cityLoaded = true;
+    //   update();
+    // }
+
+     try {
+     
+      var request = http.MultipartRequest('POST', Uri.parse(getCityUrl));
+      request.fields.addAll({
+        "state":stateId.toString()
+      });
+      
+   cityListModel  = CityListModel.fromJson(await ApiHelper.postFormData(request: request));
+   
+      // update();
       print(cityListModel);
       cityLoaded = true;
       update();
-    } catch (e) {
+    }
+     catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to City: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to City: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -247,13 +263,13 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -298,13 +314,13 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

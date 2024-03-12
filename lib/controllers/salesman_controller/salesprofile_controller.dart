@@ -137,36 +137,8 @@ var sellerId = GetStorage().read("sellerid");
     //  print(addaddressall.length);
   }
 
-  // void updatepofile1(
-  //   String? fName,
-  //   String? lName,
-  //   String? email,
-  //   String? phone,
-  //   String? image,
-  // ) {
-  //   fullNameController.text = fName ?? "";
-  //   lastNameController.text = lName ?? "";
-  //   numberController.text = phone ?? '';
-  //   emailController.text = email ?? '';
-  //   selectedImagePath = image ?? '';
-
-  //   update();
-
-  //   clearFields();
-
-  //   //  print(addaddressall.length);
-  // }
-
   void fetchdetails(int id) {
-// myprofilemodel(){
 
-//      fullNameController.text;
-//     lastNameController.text;
-//     numberController.text;
-//     emailController.text;
-//     addressController.text;
-//     pincodeController.text;
-// }
   }
   void clearFields() {
     fullNameController.clear();
@@ -175,25 +147,16 @@ var sellerId = GetStorage().read("sellerid");
     emailController.clear();
     addressController.clear();
     pincodeController.clear();
-    // pincodeController.clear();
-    // selectedState= null;
-    // selectedCity= null;
-    // stateListModel= null;
-    // cityListModel =null;
+   
   }
 
-//  @override
-//   void onInit() {
-//     super.onInit();
-//     init();
 
-//   }
 
   void onInit() {
     super.onInit();
     // init();
     salesMyProfile();
-    // userId = storage.read('id');
+   
   }
 
   String getSalesProfile = '${Constants.GET_SALES_PROFILE}';
@@ -220,28 +183,17 @@ var sellerId = GetStorage().read("sellerid");
 
       myprofileLoaded = true;
 
-      //  var sellerid;
-      
-      // }
-      // // // var id = userLoginModel.data![0].id;
-      // print("=====>>>> Id ${sellerid} FName: ${sellerfname} lName: ${sellerlastname} Email: ${selleremail}");
-      // storage.write('sellerlastname', sellerlastname);
-      // storage.write('sellerfname', sellerfname);
-      //  storage.write('selleremail', selleremail);
-     
-      // print(storage.read('sellerfname').toString());
-      // print(storage.read('sellerlastname').toString());
-      // print(storage.read('selleremail').toString());
+    
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -265,12 +217,7 @@ var sellerId = GetStorage().read("sellerid");
       ];
       var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
       request.fields.addAll(body);
-//       request.files.add(await http.MultipartFile.fromPath(
-// "image",selectedImagePath.toString()
-      // ));
-      // 'image', '/C:/Users/PC/Downloads/Rectangle 45 (1).png'));
-      // var request = http.MultipartRequest('POST', Uri.parse(UpdateProfile));
-      // request.fields.addAll(body);
+
       documentList.forEach((element) async {
         request.files.add(await http.MultipartFile.fromPath(
             element["key"], element["value"]));
@@ -287,13 +234,13 @@ var sellerId = GetStorage().read("sellerid");
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

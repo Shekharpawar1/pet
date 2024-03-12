@@ -1,617 +1,621 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
-import 'package:pet/models/usersModel/filterListModel.dart';
-import 'package:pet/models/usersModel/filterListModel.dart' as filterMod;
-import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
-import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
-import 'package:pet/models/usersModel/lifestageModel.dart';
-import 'package:pet/models/usersModel/ourBrandModel.dart';
-import 'package:pet/models/usersModel/petCategoryBreedModel.dart';
-import 'package:pet/models/usersModel/subModel.dart';
-import 'package:pet/models/usersModel/userhealthconditionModel.dart';
-import 'package:pet/others/Filter.dart';
-import 'package:pet/utils/api_helper.dart';
-import 'package:pet/utils/constants.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:pet/models/salesmanModel/getUserPropertiesModel.dart';
+// import 'package:pet/models/usersModel/filterListModel.dart';
+// import 'package:pet/models/usersModel/filterListModel.dart' as filterMod;
+// import 'package:pet/models/usersModel/getUserCategoriesModel.dart';
+// import 'package:pet/models/usersModel/getUserPropertiesModel.dart';
+// import 'package:pet/models/usersModel/lifestageModel.dart';
+// import 'package:pet/models/usersModel/ourBrandModel.dart';
+// import 'package:pet/models/usersModel/petCategoryBreedModel.dart';
+// import 'package:pet/models/usersModel/subModel.dart';
+// import 'package:pet/models/usersModel/userhealthconditionModel.dart';
+// import 'package:pet/others/Filter.dart';
+// import 'package:pet/utils/api_helper.dart';
+// import 'package:pet/utils/constants.dart';
 
-class WholeSalerFilterController extends GetxController {
-  bool showLoading = false;
-  List<filterMod.Datum> filteredProducts = [];
-  List<String> branditems = [];
-  List<String> categoryitems = [];
-    List<String> producttypeitems = [];
-  List<String> breeditem = [];
-  List<String> lifestageitem = [];
-  List<String> vegitem = [];
-  List<String> productitem = [];
-  List<String> healthconditionitem = [];
-  List<String> selectCategoryFilterList = [];
-  List<String> selectProductTypeFilterList = [];
-  List<String> selectBrandFilterList = [];
-  List<String> selectBreedFilterList = [];
-  List<String> selectLifeStageFilterList = [];
-  List<String> selectVegFilterList = [];
-  List<String> selectHealthConditionFilterList = [];
-// List<String> selectBrandFilterList = [];
-  int? categoryId;
+// class WholeSalerFilterController extends GetxController {
+//   bool showLoading = false;
+//   List<filterMod.Datum> filteredProducts = [];
+//   List<String> branditems = [];
+//   List<String> categoryitems = [];
+//     List<String> producttypeitems = [];
+//   List<String> breeditem = [];
+//   List<String> lifestageitem = [];
+//   List<String> vegitem = [];
+//   List<String> productitem = [];
+//   List<String> healthconditionitem = [];
+//   List<String> selectCategoryFilterList = [];
+//   List<String> selectProductTypeFilterList = [];
+//   List<String> selectBrandFilterList = [];
+//   List<String> selectBreedFilterList = [];
+//   List<String> selectLifeStageFilterList = [];
+//   List<String> selectVegFilterList = [];
+//   List<String> selectHealthConditionFilterList = [];
+// // List<String> selectBrandFilterList = [];
+//   int? categoryId;
 
-  bool isChecked = false;
-  List isCheckedList = [];
-  int? selectindex;
-  // ItemModel(
-  //   headerValue: 'Sort by',
-  //   expandedValue: ['Relevance', 'Title:A-Z', 'Title:Z-A','Date: New to Old','Date: Old to New','Price: Low to High','Price: Hight to Low','Discount: High to Low','Rating: Low to High','Rating: High to Low','Total reviews: Low to High','Total reviews: High to Low'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // ItemModel(
-  //   headerValue: 'Brand',
-  //   expandedValue: ['Acana', 'Aeolus', 'Andis','Bayer','Drools','Glandex'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
+//   bool isChecked = false;
+//   List isCheckedList = [];
+//   int? selectindex;
+//   // ItemModel(
+//   //   headerValue: 'Sort by',
+//   //   expandedValue: ['Relevance', 'Title:A-Z', 'Title:Z-A','Date: New to Old','Date: Old to New','Price: Low to High','Price: Hight to Low','Discount: High to Low','Rating: Low to High','Rating: High to Low','Total reviews: Low to High','Total reviews: High to Low'],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
+//   // ItemModel(
+//   //   headerValue: 'Brand',
+//   //   expandedValue: ['Acana', 'Aeolus', 'Andis','Bayer','Drools','Glandex'],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
 
-  //  ItemModel(
-  //   headerValue: 'Product type',
-  //   expandedValue: ['Cat Toys', 'Cat Grooming', 'Dog Clothing','Dog Toys','Health Care'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // ItemModel(
-  //   headerValue: 'Price,₹',
-  //   expandedValue: ['75', '100'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  //  ItemModel(
-  //   headerValue: 'Lifestage',
-  //   expandedValue: ['Adult', 'All','Puppy','Senior'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // ItemModel(
-  //   headerValue: 'Breed Type',
-  //   expandedValue: ['Boxer', 'Beagle','All','Large','Medium','Small'],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
+//   //  ItemModel(
+//   //   headerValue: 'Product type',
+//   //   expandedValue: ['Cat Toys', 'Cat Grooming', 'Dog Clothing','Dog Toys','Health Care'],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
+//   // ItemModel(
+//   //   headerValue: 'Price,₹',
+//   //   expandedValue: ['75', '100'],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
+//   //  ItemModel(
+//   //   headerValue: 'Lifestage',
+//   //   expandedValue: ['Adult', 'All','Puppy','Senior'],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
+//   // ItemModel(
+//   //   headerValue: 'Breed Type',
+//   //   expandedValue: ['Boxer', 'Beagle','All','Large','Medium','Small'],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
 
-  //  ItemModel(
-  //   headerValue: 'Health Condition',
-  //   expandedValue: ['Anemia', 'Eye Care','Live Care','Weaning',],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
+//   //  ItemModel(
+//   //   headerValue: 'Health Condition',
+//   //   expandedValue: ['Anemia', 'Eye Care','Live Care','Weaning',],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
 
-  //   ItemModel(
-  //   headerValue: 'Special Diet',
-  //   expandedValue: ['Low Grain', 'Vegan',],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
+//   //   ItemModel(
+//   //   headerValue: 'Special Diet',
+//   //   expandedValue: ['Low Grain', 'Vegan',],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
 
-  //   ItemModel(
-  //   headerValue: 'Veg/Non-Veg',
-  //   expandedValue: ['Non-Veg', 'Veg',],
-  //   isExpanded: false,
-  //   isChecked: false,
-  // ),
-  // // Add more categories as needed
-  // ];
-  void addcategoryId(int id) {
-    categoryId = id;
-    update();
-    print("cat${categoryId}");
-  }
+//   //   ItemModel(
+//   //   headerValue: 'Veg/Non-Veg',
+//   //   expandedValue: ['Non-Veg', 'Veg',],
+//   //   isExpanded: false,
+//   //   isChecked: false,
+//   // ),
+//   // // Add more categories as needed
+//   // ];
+//   void addcategoryId(int id) {
+//     categoryId = id;
+//     update();
+//     print("cat${categoryId}");
+//   }
 
-// filterbrand
-  void addSelectedOptionBrandList(String item) {
-    selectBrandFilterList.add(item);
-    update();
-  }
+// // filterbrand
+//   void addSelectedOptionBrandList(String item) {
+//     selectBrandFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionBrandList(String item) {
-    selectBrandFilterList.remove(item);
-    update();
-  }
+//   void removeSelectedOptionBrandList(String item) {
+//     selectBrandFilterList.remove(item);
+//     update();
+//   }
 
-// filtercategory
+// // filtercategory
 
-  void addSelectedOptionCategoryList(String item) {
-    selectCategoryFilterList.add(item);
-    update();
-  }
+//   void addSelectedOptionCategoryList(String item) {
+//     selectCategoryFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionCategoryList(String item) {
-    selectCategoryFilterList.remove(item);
-    update();
-  }
+//   void removeSelectedOptionCategoryList(String item) {
+//     selectCategoryFilterList.remove(item);
+//     update();
+//   }
 
-//filterProductType
+// //filterProductType
 
-  void addSelectedOptionProducttypeList(String item) {
-    selectProductTypeFilterList.add(item);
-    update();
-  }
+//   void addSelectedOptionProducttypeList(String item) {
+//     selectProductTypeFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionProducttypeList(String item) {
-    selectProductTypeFilterList.remove(item);
-    update();
-  }
-  //filterbreed
-  void addSelectedOptionBreedList(String item) {
-    selectBreedFilterList.add(item);
-    update();
-  }
+//   void removeSelectedOptionProducttypeList(String item) {
+//     selectProductTypeFilterList.remove(item);
+//     update();
+//   }
+//   //filterbreed
+//   void addSelectedOptionBreedList(String item) {
+//     selectBreedFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionBreedList(String item) {
-    selectBreedFilterList.remove(item);
-    update();
-  }
+//   void removeSelectedOptionBreedList(String item) {
+//     selectBreedFilterList.remove(item);
+//     update();
+//   }
 
-//filterLifeStage
-  void addSelectedOptionLifeStageList(String item) {
-    selectLifeStageFilterList.add(item);
-    update();
-  }
+// //filterLifeStage
+//   void addSelectedOptionLifeStageList(String item) {
+//     selectLifeStageFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionLifeStageList(String item) {
-    selectLifeStageFilterList.remove(item);
-    update();
-  }
+//   void removeSelectedOptionLifeStageList(String item) {
+//     selectLifeStageFilterList.remove(item);
+//     update();
+//   }
 
-  //HealthCondition
-  void addSelectedOptionHealthList(String item) {
-    selectHealthConditionFilterList.add(item);
-    update();
-  }
+//   //HealthCondition
+//   void addSelectedOptionHealthList(String item) {
+//     selectHealthConditionFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionHealthList(String item) {
-    selectHealthConditionFilterList.remove(item);
-    update();
-  }
+//   void removeSelectedOptionHealthList(String item) {
+//     selectHealthConditionFilterList.remove(item);
+//     update();
+//   }
 
-  //vegnonveg
+//   //vegnonveg
 
-  void addSelectedOptionVegList(String item) {
-    selectVegFilterList.add(item);
-    update();
-  }
+//   void addSelectedOptionVegList(String item) {
+//     selectVegFilterList.add(item);
+//     update();
+//   }
 
-  void removeSelectedOptionVegList(String item) {
-    selectVegFilterList.remove(item);
-    update();
-  }
+//   void removeSelectedOptionVegList(String item) {
+//     selectVegFilterList.remove(item);
+//     update();
+//   }
 
-  String getUserPropertiesUrl =
-      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
-  SalesPropertiesModel? userPropertiesModel;
-  bool propertyLoaded = false;
+//   String getUserPropertiesUrl =
+//       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
+//   UserPropertiesModel? userPropertiesModel;
+//   bool propertyLoaded = false;
 
-  String getBrandUrl = '${Constants.GET_OUR_BRAND}';
-  UserOurBrandModel? userBrandModel;
-  UserOurBrandModel? userOurBrandModel = UserOurBrandModel();
-  bool brandLoaded = false;
+//   String getBrandUrl = '${Constants.GET_OUR_BRAND}';
+//   UserOurBrandModel? userBrandModel;
+//   UserOurBrandModel? userOurBrandModel = UserOurBrandModel();
+//   bool brandLoaded = false;
 
-  String getUserCategoriesUrl =
-      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
-  UserCategoriesModel? userCategoriesModel;
-  bool categoryLoaded = false;
+//   String getUserCategoriesUrl =
+//       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_CATEGORIES}';
+//   UserCategoriesModel? userCategoriesModel;
+//   bool categoryLoaded = false;
 
-  String getlifestageUrl = '${Constants.GET_LIFESTAGE}';
-  LifeStageModel? userlifestageModel;
-  // LifeStageModel? userlifestageModel = UserOurBrandModel();
-  bool lifestageLoaded = false;
+//   String getlifestageUrl = '${Constants.GET_LIFESTAGE}';
+//   LifeStageModel? userlifestageModel;
+//   // LifeStageModel? userlifestageModel = UserOurBrandModel();
+//   bool lifestageLoaded = false;
 
-  String gethealthUrl = '${Constants.GET_HEALTH_CONDITION}';
-  HealthConditionModel? userhealthconditionModel;
-  // LifeStageModel? userlifestageModel = UserOurBrandModel();
-  bool healthLoaded = false;
+//   String gethealthUrl = '${Constants.GET_HEALTH_CONDITION}';
+//   HealthConditionModel? userhealthconditionModel;
+//   // LifeStageModel? userlifestageModel = UserOurBrandModel();
+//   bool healthLoaded = false;
 
-  String getUserSubCategoryUrl =
-      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_SUBCATEGORY}';
-  SubModel? usersubmodel;
-    // UserPropertiesModel? userPropertiesModelorignal;
-  bool propertysubloaded = false;
+//   String getUserSubCategoryUrl =
+//       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_SUBCATEGORY}';
+//   SubModel? usersubmodel;
+//     // UserPropertiesModel? userPropertiesModelorignal;
+//   bool propertysubloaded = false;
 
-  String getCategoryBreedUrl = Constants.GET_CATEGORY_BREED;
-  PetCategoryBreedModel? petCategoryBreedModel;
-  TextEditingController minPriceController = TextEditingController();
+//   String getCategoryBreedUrl = Constants.GET_CATEGORY_BREED;
+//   PetCategoryBreedModel? petCategoryBreedModel;
+//   TextEditingController minPriceController = TextEditingController();
 
-  TextEditingController maxPriceController = TextEditingController();
-  void clearFields() {
-    
-      selectCategoryFilterList = [];
-  selectBrandFilterList = [];
-  selectBreedFilterList = [];
-  selectLifeStageFilterList = [];
-  selectVegFilterList = [];
-  selectHealthConditionFilterList = [];
-  update();
-  }
+//   TextEditingController maxPriceController = TextEditingController();
+//   void clearFields() {
+//        minPriceController.clear();
+//     maxPriceController.clear();
+//       selectCategoryFilterList = [];
+//   selectBrandFilterList = [];
+//   selectBreedFilterList = [];
+//   selectLifeStageFilterList = [];
+//   selectVegFilterList = [];
+//   selectHealthConditionFilterList = [];
+//   update();
+//   }
   
-  void init() async {
-  update();
-    Map<bool, String> foodTypeMap = {
-      true: "veg",
-      false: "non-veg",
-    };
-    List<bool> foodTypes = [true, false];
-    List<String> foodTypeNames = foodTypes
-        .map((isChecked) => foodTypeMap[isChecked] ?? "unknown")
-        .toList();
-    vegitem = foodTypeNames;
-    try {
-      // pets
-      userPropertiesModel = SalesPropertiesModel.fromJson(
-          await ApiHelper.getApi(getUserPropertiesUrl));
-      userPropertiesModel!.data = userPropertiesModel!.data!
-          .where((element) => element.moduleId == 1)
-          .toList();
-      print(userPropertiesModel);
-      List<String> productlist =
-          userPropertiesModel!.data!.map((e) => e.name.toString()).toList();
-      productitem = productlist;
-      propertyLoaded = true;
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-    try {
-      // our brands
-      userBrandModel =
-          UserOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
+//   void init() async {
+//   update();
+//     Map<bool, String> foodTypeMap = {
+//       true: "veg",
+//       false: "non-veg",
+//     };
+//     List<bool> foodTypes = [true, false];
+//     List<String> foodTypeNames = foodTypes
+//         .map((isChecked) => foodTypeMap[isChecked] ?? "unknown")
+//         .toList();
+//     vegitem = foodTypeNames;
+//     try {
+//       // pets
+//       userPropertiesModel = UserPropertiesModel.fromJson(
+//           await ApiHelper.getApi(getUserPropertiesUrl));
+//       userPropertiesModel!.data = userPropertiesModel!.data!
+//           .where((element) => element.moduleId == 1)
+//           .toList();
+//       print(userPropertiesModel);
+//       List<String> productlist =
+//           userPropertiesModel!.data!.map((e) => e.name.toString()).toList();
+//       productitem = productlist;
+//       propertyLoaded = true;
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
+//     try {
+//       // our brands
+//       userBrandModel =
+//           UserOurBrandModel.fromJson(await ApiHelper.getApi(getBrandUrl));
+// userBrandModel!.data!.where((element) => element.canine == 1).toList();
+//       print(
+//           "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
+//       brandLoaded = true;
+//       // List demo = userBrandModel!.data!
+//       //     .where((element) => element.canine == 1)
+//       //     .toList();
+//       List<String> fina = userBrandModel!.data!.map((e) => e.title.toString()).toList();
+//       List<bool> isCheckList = userBrandModel!.data!.map((e) => false).toList();
 
-      print(
-          "CAnine products ===>>>> ${userBrandModel!.data!.where((element) => element.canine == 1).toList()}");
-      brandLoaded = true;
-      // List demo = userBrandModel!.data!
-      //     .where((element) => element.canine == 1)
-      //     .toList();
-      List<String> fina = userBrandModel!.data!.map((e) => e.title.toString()).toList();
-      List<bool> isCheckList = userBrandModel!.data!.map((e) => false).toList();
+//       print("=====>>>>>>>>> items : $fina");
+//       branditems = fina;
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
 
-      print("=====>>>>>>>>> items : $fina");
-      branditems = fina;
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+//     try {
+//       // categories
+//       userCategoriesModel = UserCategoriesModel.fromJson(
+//           await ApiHelper.getApi(getUserCategoriesUrl));
+//       print(userCategoriesModel);
+//       List<String> categorylist =
+//           userCategoriesModel!.data!.map((e) => e.name.toString()).toList();
 
-    try {
-      // categories
-      userCategoriesModel = UserCategoriesModel.fromJson(
-          await ApiHelper.getApi(getUserCategoriesUrl));
-      print(userCategoriesModel);
-      List<String> categorylist =
-          userCategoriesModel!.data!.map((e) => e.name.toString()).toList();
+//       //  categoryId = int.parse(categorylist.toString());
+//       //  List<bool> isCheckList = userCategoriesModel!.data!.map((e) => false).toList();
+//       categoryitems = categorylist;
+//       //      items.add(
+//       //      ItemModel(
+//       //   headerValue: 'Category',
+//       //   expandedValue: categorylist,
+//       //   isExpanded: false,
+//       //   isChecked: isCheckList,
+//       // ),
+//       //   );
+//       print("-------${categoryId}");
+//       categoryLoaded = true;
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
 
-      //  categoryId = int.parse(categorylist.toString());
-      //  List<bool> isCheckList = userCategoriesModel!.data!.map((e) => false).toList();
-      categoryitems = categorylist;
-      //      items.add(
-      //      ItemModel(
-      //   headerValue: 'Category',
-      //   expandedValue: categorylist,
-      //   isExpanded: false,
-      //   isChecked: isCheckList,
-      // ),
-      //   );
-      print("-------${categoryId}");
-      categoryLoaded = true;
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+//     try {
+//       //
+//       userlifestageModel = LifeStageModel.fromJson(
+//           await ApiHelper.getApi(getlifestageUrl));
 
-    try {
-      //
-      userlifestageModel = LifeStageModel.fromJson(
-          await ApiHelper.getApi(getlifestageUrl));
+//       print(getlifestageUrl + "${categoryId}");
+//       lifestageLoaded = true;
+//       // List demo = userlifestageModel!.data!.where((element) => element.name.toString()).toList();
+//       List<String> lifestage =
+//           userlifestageModel!.data!.map((e) => e.name.toString()).toList();
+//       //  List<bool> isCheckList = userlifestageModel!.data/!.map((e) => false).toList();
 
-      print(getlifestageUrl + "${categoryId}");
-      lifestageLoaded = true;
-      // List demo = userlifestageModel!.data!.where((element) => element.name.toString()).toList();
-      List<String> lifestage =
-          userlifestageModel!.data!.map((e) => e.name.toString()).toList();
-      //  List<bool> isCheckList = userlifestageModel!.data/!.map((e) => false).toList();
+//       print("=====>>>>>>>>> items : $lifestage");
+//       lifestageitem = lifestage;
+//       //   items.add(
+//       //      ItemModel(
+//       //   headerValue: 'Lifestage',
+//       //   expandedValue: lifestage,
+//       //   isExpanded: false,
+//       //   isChecked: isCheckList,
+//       // ),
+//       //   );
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
 
-      print("=====>>>>>>>>> items : $lifestage");
-      lifestageitem = lifestage;
-      //   items.add(
-      //      ItemModel(
-      //   headerValue: 'Lifestage',
-      //   expandedValue: lifestage,
-      //   isExpanded: false,
-      //   isChecked: isCheckList,
-      // ),
-      //   );
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
+//     try {
+//       // breed list
+//       print("getting");
+//       petCategoryBreedModel = PetCategoryBreedModel.fromJson(
+//           await ApiHelper.getApi(getCategoryBreedUrl));
+//       print(petCategoryBreedModel);
+//       // moduleLoaded = true;
+//       List<String> breedlist =
+//           petCategoryBreedModel!.data!.map((e) => e.name.toString()).toList();
 
-    try {
-      // breed list
-      print("getting");
-      petCategoryBreedModel = PetCategoryBreedModel.fromJson(
-          await ApiHelper.getApi(getCategoryBreedUrl));
-      print(petCategoryBreedModel);
-      // moduleLoaded = true;
-      List<String> breedlist =
-          petCategoryBreedModel!.data!.map((e) => e.name.toString()).toList();
+//       List<bool> isCheckList =
+//           petCategoryBreedModel!.data!.map((e) => false).toList();
+//       breeditem = breedlist;
 
-      List<bool> isCheckList =
-          petCategoryBreedModel!.data!.map((e) => false).toList();
-      breeditem = breedlist;
+//       //     items.add(
+//       //      ItemModel(
+//       //   headerValue: 'Breed',
+//       //   expandedValue: breedlist,
+//       //   isExpanded: false,
+//       //   isChecked: isCheckList,
+//       // ),
+//       //   );
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//       // Get.snackbar(
+//       //   'Error',
+//       //   'Unable to Load Category: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
+//     try {
 
-      //     items.add(
-      //      ItemModel(
-      //   headerValue: 'Breed',
-      //   expandedValue: breedlist,
-      //   isExpanded: false,
-      //   isChecked: isCheckList,
-      // ),
-      //   );
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to Load Category: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-    try {
+//          usersubmodel = SubModel.fromJson(
+//           await ApiHelper.getApi(getUserSubCategoryUrl));
+//             List<String> producttypelist =
+//           usersubmodel!.data!.map((e) => e.name.toString()).toList();
 
-         usersubmodel = SubModel.fromJson(
-          await ApiHelper.getApi(getUserSubCategoryUrl));
-            List<String> producttypelist =
-          usersubmodel!.data!.map((e) => e.name.toString()).toList();
+//           producttypeitems = producttypelist;
+//       print(usersubmodel);
+//       propertysubloaded = true;
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
 
-          producttypeitems = producttypelist;
-      print(usersubmodel);
-      propertysubloaded = true;
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-
-      }
-      //product
+//       }
+//       //product
 
      
 
 
-    try {
-      //
-      userhealthconditionModel =
-          HealthConditionModel.fromJson(await ApiHelper.getApi(gethealthUrl));
+//     try {
+//       //
+//       userhealthconditionModel =
+//           HealthConditionModel.fromJson(await ApiHelper.getApi(gethealthUrl));
 
-      print(gethealthUrl);
-      healthLoaded = true;
-      // List demo = userlifestageModel!.data!.where((element) => element.name.toString()).toList();
-      List<String> healthcondition = userhealthconditionModel!.data!
-          .map((e) => e.title.toString())
-          .toList();
-      List<bool> isCheckList =
-          userhealthconditionModel!.data!.map((e) => false).toList();
+//       print(gethealthUrl);
+//       healthLoaded = true;
+//       // List demo = userlifestageModel!.data!.where((element) => element.name.toString()).toList();
+//       List<String> healthcondition = userhealthconditionModel!.data!
+//           .map((e) => e.title.toString())
+//           .toList();
+//       List<bool> isCheckList =
+//           userhealthconditionModel!.data!.map((e) => false).toList();
 
-      print("=====>>>>>>>>> items : $healthcondition");
-      healthconditionitem = healthcondition;
-      //   items.add(
-      //      ItemModel(
-      //   headerValue: 'Health Condition',
-      //   expandedValue: healthcondition,
-      //   isExpanded: false,
-      //   isChecked: isCheckList,
-      // ),
-      //   );
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
-  Future<void> loadDefaultData() async {
-    showLoading = true;
-    update();
-    FilterListModel products = FilterListModel();
-    try {
-  String getUserPropertiesUrl =
-      '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
-      products = FilterListModel.fromJson(
-          await ApiHelper.getApi(getUserPropertiesUrl));
+//       print("=====>>>>>>>>> items : $healthcondition");
+//       healthconditionitem = healthcondition;
+//       //   items.add(
+//       //      ItemModel(
+//       //   headerValue: 'Health Condition',
+//       //   expandedValue: healthcondition,
+//       //   isExpanded: false,
+//       //   isChecked: isCheckList,
+//       // ),
+//       //   );
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
+//   }
+//   Future<void> loadDefaultData() async {
+//     showLoading = true;
+//     update();
+//     FilterListModel products = FilterListModel();
+//     try {
+//   String getUserPropertiesUrl =
+//       '${Constants.BASE_URL}${Constants.API_V1_PATH}${Constants.GET_USER_PROPERTIES}';
+//       products = FilterListModel.fromJson(
+//           await ApiHelper.getApi(getUserPropertiesUrl));
           
-      products.data = products.data!.where((element) => element.moduleId == 1).toList();
+//       products.data = products.data!.where((element) => element.moduleId == 1).toList();
       
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-    filteredProducts = products.data!;
-    update();
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
+//     filteredProducts = products.data!;
+//     update();
     
-    showLoading = false;
-    update();
-  }
+//     showLoading = false;
+//     update();
+//   }
 
-  // get getAfilterList => items;
+//   // get getAfilterList => items;
 
-  Future<void> filter() async {
-    showLoading = true;
-    update();
+//   Future<void> filter() async {
+//     showLoading = true;
+//     update();
 
-    FilterListModel products = FilterListModel();
-    try {
-      products = FilterListModel.fromJson(
-          await ApiHelper.getApi("https://canine.hirectjob.in/api/v1/items/latest"));
+//     FilterListModel products = FilterListModel();
+//     try {
+//       products = FilterListModel.fromJson(
+//           await ApiHelper.getApi("http://caninedemo.caninetest.xyz/api/v1/items/latest"));
      
-      products.data = products.data!.where((element) => element.moduleId == 1).toList();
+//       products.data = products.data!.where((element) => element.moduleId == 1).toList();
       
-      update();
-    } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-    double max = 9999999999;
-    double min = 0;
-    try{
-    max = double.parse(maxPriceController.text.trim());
-    min = double.parse(minPriceController.text.trim());
-    } catch (e) {
+//       update();
+//     } catch (e) {
+//       print('Error: $e');
+//      // Get.snackbar(
+//       //   'Error',
+//       //   'An error occurred: $e',
+//       //   snackPosition: SnackPosition.BOTTOM,
+//       //   backgroundColor: Colors.red,
+//       //   colorText: Colors.white,
+//       // );
+//     }
+//     double max = 9999999999;
+//     double min = 0;
+//     try{
+//     max = double.parse(maxPriceController.text.trim());
+//     min = double.parse(minPriceController.text.trim());
+//     } catch (e) {
 
-    }
+//     }
 
-     filteredProducts = applyFilters(
-      selectedBrands: selectBrandFilterList.isEmpty ? null : selectBrandFilterList,
-      selectedVegOptions: selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList().isEmpty ? null : selectVegFilterList.map((e) => e== "veg" ? 1 : 0).toList(),
-     productType: selectProductTypeFilterList.isEmpty? null: selectProductTypeFilterList,
-      lifeStage: selectLifeStageFilterList.isEmpty ? null : selectLifeStageFilterList,
-      products: products,
-      maxPrice: max,
-      minPrice: min,
-      selectedCategories: selectCategoryFilterList.isEmpty ? null : selectCategoryFilterList,
-      // productType: ["dry-dog-food", "greavy-dog-food"],
-      breed: selectBreedFilterList.isEmpty ? null : selectBreedFilterList,
-      healthCondition: selectHealthConditionFilterList.isEmpty ? null : selectHealthConditionFilterList,
-      // specialDiet: ["low-gain", "gain-free"],
-    );
-    update();
-    print("All Data: ${products.data!.map((e) => e.brandId).toList()}");
-    print("Filtered Products:");
-    print("Data: $filteredProducts");
-    print("seleced selectBrandFilterList: $selectBrandFilterList");
-    print("seleced selectProducttypeFilterList: $selectProductTypeFilterList");
-    print("seleced selectVegFilterList: ${selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList()}");
-    print("seleced selectLifeStageFilterList: $selectLifeStageFilterList");
-    print("seleced selectBreedFilterList: $selectBreedFilterList");
-    print("seleced selectHealthConditionFilterList: $selectHealthConditionFilterList");
-    filteredProducts.forEach((product) {
-      int index = filteredProducts.indexOf(product) + 1;
-      print("$index: Name: ${product.name}");
-      printAdditionalInfo(product);
-      print(""); // Add an empty line for separation
-    });
+//      filteredProducts = applyFilters(
+//       selectedBrands: selectBrandFilterList.isEmpty ? null : selectBrandFilterList,
+//       selectedVegOptions: selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList().isEmpty ? null : selectVegFilterList.map((e) => e== "veg" ? 1 : 0).toList(),
+//      productType: selectProductTypeFilterList.isEmpty? null: selectProductTypeFilterList,
+//       lifeStage: selectLifeStageFilterList.isEmpty ? null : selectLifeStageFilterList,
+//       products: products,
+//       maxPrice: max,
+//       minPrice: min,
+//       selectedCategories: selectCategoryFilterList.isEmpty ? null : selectCategoryFilterList,
+//       // productType: ["dry-dog-food", "greavy-dog-food"],
+//       breed: selectBreedFilterList.isEmpty ? null : selectBreedFilterList,
+//       healthCondition: selectHealthConditionFilterList.isEmpty ? null : selectHealthConditionFilterList,
+//       // specialDiet: ["low-gain", "gain-free"],
+//     );
+//     update();
+//     print("All Data: ${products.data!.map((e) => e.brandId).toList()}");
+//     print("Filtered Products:");
+  
+//     print("Data12: $filteredProducts");
+//     print("seleced selectBrandFilterList: $selectBrandFilterList");
+//     print("seleced selectProducttypeFilterList: $selectProductTypeFilterList");
+//     print("seleced selectVegFilterList: ${selectVegFilterList.map((e) => e== "veg" ? 0 : 1).toList()}");
+//     print("seleced selectLifeStageFilterList: $selectLifeStageFilterList");
+//     print("seleced selectBreedFilterList: $selectBreedFilterList");
+//     print("seleced selectHealthConditionFilterList: $selectHealthConditionFilterList");
+//     filteredProducts.forEach((product) {
+//       int index = filteredProducts.indexOf(product) + 1;
+//       print("$index: Name: ${product.name}");
+//       printAdditionalInfo(product);
+//       print(""); // Add an empty line for separation
+//     });
     
     
-    showLoading = false;
-    update();
-  }
+//     showLoading = false;
+//     update();
+//   }
 
-  void printAdditionalInfo(filterMod.Datum product) {
-    print("   Brand: ${product.brandId}");
-    print("   Veg: ${product.veg}");
-    print("   Price: ${product.price}");
-    print("   Life Stage: ${product.lifeStageId}");
-        print("  Category: ${product.categoryIds}");
-    print("   Product Type: ${product.subCategory}");
-    print("   Breed: ${product.petsbreedsId}");
-    print("   Health Condition: ${product.helthConditionId}");
-    // print("   Special Diet: ${product['special-diet']}");
-  }
+//   void printAdditionalInfo(filterMod.Datum product) {
+//     print("   Brand: ${product.brandId}");
+//     print("   Veg: ${product.veg}");
+//     print("   Price: ${product.price}");
+//     print("   Life Stage: ${product.lifeStageId}");
+//         print("  Category: ${product.categoryIds}");
+//     print("   Product Type: ${product.subCategory}");
+//     print("   Breed: ${product.petsbreedsId}");
+//     print("   Health Condition: ${product.helthConditionId}");
+//     // print("   Special Diet: ${product['special-diet']}");
+//   }
 
-  List<filterMod.Datum> applyFilters({
-    List<String>? selectedBrands,
-    List<String>? lifeStage,
-    List<String>? productType,
-    List<String>? breed,
-    List<String>? healthCondition,
-    List<String>? specialDiet,
-    List<int>? selectedVegOptions,
-    List<String>? selectedCategories,
-    double? minPrice,
-    double? maxPrice,
-    required FilterListModel products,
-  }) {
-    return products.data!.where((product) {
-      bool brandFilter = 
-          selectedBrands == null  || selectedBrands.contains(product.brandId);
-      bool vegFilter = selectedVegOptions == null  ||
-          selectedVegOptions.contains(product.veg);
-      bool maxPriceFilter = maxPrice == null || double.parse(product.price ?? "0") < maxPrice;
-      bool minPriceFilter = minPrice == null || double.parse(product.price ?? "0") > minPrice;
-      bool lifeStageFilter =
-          lifeStage == null  || lifeStage.contains(product.lifeStageId);
-      bool breedFilter = breed == null  || breed.contains(product.petsbreedsId);
-      bool healthConditionFilter = healthCondition == null  ||
-          healthCondition.contains(product.helthConditionId);
+//   List<filterMod.Datum> applyFilters({
+//     List<String>? selectedBrands,
+//     List<String>? lifeStage,
+//     List<String>? productType,
+//     List<String>? breed,
+//     List<String>? healthCondition,
+//     List<String>? specialDiet,
+//     List<int>? selectedVegOptions,
+//     List<String>? selectedCategories,
+//     double? minPrice,
+//     double? maxPrice,
+//     required FilterListModel products,
+//   }) {
+//     return products.data!.where((product) {
+//       bool brandFilter = 
+//           selectedBrands == null  || selectedBrands.contains(product.brandId);
+//       bool vegFilter = selectedVegOptions == null  ||
+//           selectedVegOptions.contains(product.veg);
+//       bool maxPriceFilter = maxPrice == null || double.parse(product.price ?? "0") < maxPrice;
+//       bool minPriceFilter = minPrice == null || double.parse(product.price ?? "0") > minPrice;
+//       print("MAxxxx${maxPriceFilter}");
+       
+//       bool lifeStageFilter =
+//           lifeStage == null  || lifeStage.contains(product.lifeStageId);
+//       bool breedFilter = breed == null  || breed.contains(product.petsbreedsId);
+//       bool healthConditionFilter = healthCondition == null  ||
+//           healthCondition.contains(product.helthConditionId);
           
-      bool selectedCategoriesFilter = selectedCategories == null  ||
-          selectedCategories.contains(product.categoryIds);
+//       bool selectedCategoriesFilter = selectedCategories == null  ||
+//           selectedCategories.contains(product.categoryIds);
 
-          bool selectedProductTypeFilter = productType == null || productType.contains(product.subCategory);
-      // bool specialDietFilter = 
-      //     specialDiet == null || specialDiet.contains(product["special-diet"]);
-      // print( "$brandFilter $vegFilter $maxPriceFilter $minPriceFilter $lifeStageFilter $breedFilter $selectedCategoriesFilter ");
-      return brandFilter &&
-          vegFilter &&
-          selectedProductTypeFilter &&
-          maxPriceFilter &&
-          minPriceFilter &&
-          lifeStageFilter &&
-          breedFilter &&
-          healthConditionFilter 
-          && selectedCategoriesFilter
-          && product.moduleId == 1
-          // &&
-          // specialDietFilter
-          ;
-    }).toList();
-  }
-}
+//           bool selectedProductTypeFilter = productType == null || productType.contains(product.subCategory);
+//       // bool specialDietFilter = 
+//       //     specialDiet == null || specialDiet.contains(product["special-diet"]);
+//       // print( "$brandFilter $vegFilter $maxPriceFilter $minPriceFilter $lifeStageFilter $breedFilter $selectedCategoriesFilter ");
+//       return brandFilter &&
+//           vegFilter &&
+//           selectedProductTypeFilter &&
+//           maxPriceFilter &&
+//           minPriceFilter &&
+//           lifeStageFilter &&
+//           breedFilter &&
+//           healthConditionFilter 
+//           && selectedCategoriesFilter
+//           && product.moduleId == 1
+//           // &&
+//           // specialDietFilter
+//           ;
+//     }).toList();
+//   }
+// }

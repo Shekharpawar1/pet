@@ -22,7 +22,7 @@ import 'package:pet/utils/fontstyle.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WholeOurBrandDetails extends StatelessWidget {
-  WholeOurBrandDetails({super.key});
+    WholeOurBrandDetails({super.key});
   final WholeHomeController wholehomecontroller =
       Get.put(WholeHomeController());
   final WholeProductDetailsController wholeproductdetailsController =
@@ -406,7 +406,7 @@ class WholeOurBrandDetails extends StatelessWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 280),
+                                      mainAxisExtent: 285),
                               itemCount: oubranddetailswholeController
                                   .userPropertiesModel!
                                   .data!
@@ -416,7 +416,7 @@ class WholeOurBrandDetails extends StatelessWidget {
                                 //     SliverGridDelegateWithMaxCrossAxisExtent(
                                 //         maxCrossAxisExtent: 150,
                                 //      childAspectRatio: 3 / 2,
-                                //         mainAxisExtent: 300,
+                                //         mainAxisExtent: 285,
                                 //         crossAxisSpacing: 15,
                                 //         mainAxisSpacing: 15),
                                 // itemCount: homeusercontroller
@@ -444,6 +444,7 @@ class WholeOurBrandDetails extends StatelessWidget {
                                     //                     ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                     InkWell(
                                   onTap: () async {
+                                     wholeproductdetailsController.dispose() ;
                                     wholeproductdetailsController.viewproduct(
                                       item.id ?? 0,
                                     );
@@ -567,7 +568,8 @@ class WholeOurBrandDetails extends StatelessWidget {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(item.name!,
+                                                Text(item.name!,                    maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                     style: CustomTextStyle
                                                         .popinsmedium),
                                                 Text(
@@ -591,39 +593,74 @@ class WholeOurBrandDetails extends StatelessWidget {
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                                "₹" +
-                                                                    item.price
-                                                                        .toString(),
-                                                                style: CustomTextStyle
-                                                                    .discounttext),
-                                                            const SizedBox(
-                                                                width: 2),
-                                                            // Container(
-                                                            // height:
-                                                            //     20,
-                                                            // width: 48,
-                                                            // decoration: BoxDecoration(
-                                                            //     color: MyColors
-                                                            //         .red,
-                                                            //     borderRadius: BorderRadius.circular(
-                                                            //         10),
-                                                            //     border:
-                                                            //         Border.all(color: MyColors.red)),
-                                                            // child:
-                                                            //     Center(
-                                                            //   child:
-                                                            Text(
-                                                                // item.discount.toString(),
-                                                                "Save${item.discount.toString()}%",
-                                                                style: CustomTextStyle
-                                                                    .popinstextsmal2222red),
-                                                            //   ),
-                                                            // ),
-                                                          ],
-                                                        ),
+                                                               (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                            "₹" +
+                                                                                item.wholePrice.toString(),
+                                                                            style: CustomTextStyle.discounttext),
+                                                                        SizedBox(
+                                                                            width:
+                                                                                2),
+                                                                        // Container(
+                                                                        // height:
+                                                                        //     20,
+                                                                        // width: 48,
+                                                                        // decoration: BoxDecoration(
+                                                                        //     color: MyColors
+                                                                        //         .red,
+                                                                        //     borderRadius: BorderRadius.circular(
+                                                                        //         10),
+                                                                        //     border:
+                                                                        //         Border.all(color: MyColors.red)),
+                                                                        // child:
+                                                                        //     Center(
+                                                                        //   child:
+                                                                        Text(
+                                                                            // item.discount.toString(),
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                            style:
+                                                                                CustomTextStyle.popinstextsmal2222red),
+                                                                        //   ),
+                                                                        // ),
+                                                                      ],
+                                                                    ): const  SizedBox(),
+                                                                   
+                                                        // Row(
+                                                        //   children: [
+                                                        //     Text(
+                                                        //         "₹" +
+                                                        //             item.price
+                                                        //                 .toString(),
+                                                        //         style: CustomTextStyle
+                                                        //             .discounttext),
+                                                        //     const SizedBox(
+                                                        //         width: 2),
+                                                        //     // Container(
+                                                        //     // height:
+                                                        //     //     20,
+                                                        //     // width: 48,
+                                                        //     // decoration: BoxDecoration(
+                                                        //     //     color: MyColors
+                                                        //     //         .red,
+                                                        //     //     borderRadius: BorderRadius.circular(
+                                                        //     //         10),
+                                                        //     //     border:
+                                                        //     //         Border.all(color: MyColors.red)),
+                                                        //     // child:
+                                                        //     //     Center(
+                                                        //     //   child:
+                                                        //     Text(
+                                                        //         // item.discount.toString(),
+                                                        //           "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                        //         style: CustomTextStyle
+                                                        //             .popinstextsmal2222red),
+                                                        //     //   ),
+                                                        //     // ),
+                                                        //   ],
+                                                        // ),
                                                         const SizedBox(
                                                             height: 5),
                                                         Row(

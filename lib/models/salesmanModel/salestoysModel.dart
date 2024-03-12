@@ -1,5 +1,7 @@
-class SalesToyModel {
-  String? status;
+
+
+  class SalesToyModel {
+      String? status;
   List<Data>? data;
   String? message;
 
@@ -28,6 +30,52 @@ class SalesToyModel {
 }
 
 class Data {
+  SubCategory? subCategory;
+  List<Items>? items;
+
+  Data({this.subCategory, this.items});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    subCategory = json['sub_category'] != null
+        ? new SubCategory.fromJson(json['sub_category'])
+        : null;
+    if (json['items'] != null) {
+      items = <Items>[];
+      json['items'].forEach((v) {
+        items!.add(new Items.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.subCategory != null) {
+      data['sub_category'] = this.subCategory!.toJson();
+    }
+    if (this.items != null) {
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class SubCategory {
+  int? id;
+
+  SubCategory({this.id});
+
+  SubCategory.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    return data;
+  }
+}
+
+class Items {
   int? id;
   String? name;
   String? description;
@@ -56,7 +104,7 @@ class Data {
   int? orderCount;
   int? avgRating;
   int? ratingCount;
-  String? rating;
+  Null? rating;
   int? moduleId;
   int? stock;
   int? unitId;
@@ -66,8 +114,9 @@ class Data {
   String? lifeStageId;
   String? helthConditionId;
   String? petsbreedsId;
+  String? returnable;
 
-  Data(
+  Items(
       {this.id,
       this.name,
       this.description,
@@ -105,9 +154,10 @@ class Data {
       this.brandId,
       this.lifeStageId,
       this.helthConditionId,
-      this.petsbreedsId});
+      this.petsbreedsId,
+      this.returnable});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
@@ -146,6 +196,7 @@ class Data {
     lifeStageId = json['lifeStage_id'];
     helthConditionId = json['helthCondition_id'];
     petsbreedsId = json['Petsbreeds_id'];
+    returnable = json['returnable'];
   }
 
   Map<String, dynamic> toJson() {
@@ -188,6 +239,8 @@ class Data {
     data['lifeStage_id'] = this.lifeStageId;
     data['helthCondition_id'] = this.helthConditionId;
     data['Petsbreeds_id'] = this.petsbreedsId;
+    data['returnable'] = this.returnable;
     return data;
   }
 }
+  

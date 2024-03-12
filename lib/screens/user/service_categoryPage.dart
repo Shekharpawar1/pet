@@ -77,16 +77,10 @@ class _ServicesCategoryPageState extends State<ServicesCategoryPage> {
                             print(imagePath);
                             return InkWell(
                               onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => ProductDetails(
-                                //               itemdetails: item,
-                                //             )));
+                                
                               },
                               child: Container(
                                 width: 140,
-                                // height: 700,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
                                   color: MyColors.white,
@@ -99,16 +93,12 @@ class _ServicesCategoryPageState extends State<ServicesCategoryPage> {
                                           Offset(0, 3), // Offset of the shadow
                                     ),
                                   ],
-                                  // color: MyColors.white
                                 ),
                                 child: Column(
                                   children: [
                                     Container(
                                       height: 125,
 
-                                      // decoration: BoxDecoration(
-                                      //     borderRadius: BorderRadius.circular(30),
-                                      //     color: MyColors.white),
                                       child: CachedNetworkImage(
                                         imageUrl: imagePath,
                                         width: 61,
@@ -175,10 +165,7 @@ class _ServicesCategoryPageState extends State<ServicesCategoryPage> {
                                                         ),
                                                       )),
                                                 )
-                                                // Image.asset(
-                                                //   "assets/image/yellowbag.png",
-                                                //   height: 80,
-                                                // )
+                                               
                                               ],
                                             )
                                           ],

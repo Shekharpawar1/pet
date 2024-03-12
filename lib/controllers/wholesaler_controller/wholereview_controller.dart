@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -24,7 +26,7 @@ final storage = GetStorage();
   String getReviewUrl = '${Constants.GET_USERREVIEW}';
  WholeReviewModel? wholeReviewModel;
   bool reviewLoaded = false;
-
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -40,6 +42,26 @@ final storage = GetStorage();
     update();
     print("orderID${orderId1}  itemid${itemid1}");
   }
+
+    Future<bool> validateForm(BuildContext context) {
+    final completer = Completer<bool>();
+
+    if (formKey.currentState!.validate()) {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is valid')),
+      // );
+      completer.complete(true);
+    } else {
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Form is invalid')),
+      // );
+      completer.complete(false);
+    }
+
+    return completer.future;
+
+  }
+
  
   @override
  Future<void> init() async {
@@ -55,13 +77,13 @@ final storage = GetStorage();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   showLoading = false;
     update();
@@ -103,13 +125,13 @@ Future<void> reviewinit() async {
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

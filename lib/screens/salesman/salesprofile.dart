@@ -53,31 +53,172 @@ class _salesProfileState extends State<salesProfile> {
                   children:[
                       Padding(
                     padding: EdgeInsets.only(bottom: 20),
-                 child:CircleAvatar(
-                  radius:60,
-                  backgroundColor: Colors.transparent,
-                    child:
-                  salesprofilecontroller.profileImage != null
-                                ? CachedNetworkImage(
-                                    imageUrl:
-                                         "${Constants.SALESMAN_IMAGEPATH_URL}" +
-                                            salesprofilecontroller.profileImage.toString(),
-                                    progressIndicatorBuilder: (context, url,
-                                            downloadProgress) =>
-                                        CircularProgressIndicator(
-                                            color: Colors.grey.shade700,
-                                            value: downloadProgress.progress),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  )
-                    //  Image.asset("assets/image/boyprofile3.png"),
-                  :
-                    salesprofilecontroller.selectedImage != null
-                                    ? Image.file(salesprofilecontroller.selectedImage!)
-                                    : Image.asset(
-                                        "assets/image/boyprofile3.png"),
+                 child:
+
+                   CircleAvatar(
+                                          radius: 60,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              
+                                          child: ClipOval(
+                                                                              child: (
+                                                salesprofilecontroller.selectedImage ==
+                                                    null)
+                                            ? CachedNetworkImage(
+                                                        imageUrl:
+                                                            "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                                                               salesprofilecontroller
+                                                                    .salesprofilemodel!
+                                                                    .data![0]
+                                                                    .image
+                                                                    .toString(),
+                                                                    height: Get.height*0.15,
+                                                                    width: Get.width*0.35,
+                                                                    fit: BoxFit.cover,
+                                                        // imageUrl:
+                                                        //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                        //         wholeprofilecontroller.profileImage.toString(),
+                                                        progressIndicatorBuilder: (context,
+                                                                url,
+                                                                downloadProgress) =>
+                                                            CircularProgressIndicator(
+                                                                color: Colors.grey
+                                                                    .shade700,
+                                                                value:
+                                                                    downloadProgress
+                                                                        .progress),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      )
+                                                             
+                                            : ( salesprofilecontroller
+                                                                    .salesprofilemodel!
+                                                            .data![0].image ==
+                                                        null) &&
+                                                    salesprofilecontroller
+                                                            .selectedImage ==
+                                                        null
+                                                ? Image.asset(
+                                                    "assets/image/boyprofile3.png")
+                                                : salesprofilecontroller
+                                                            .selectedImage !=
+                                                        null
+                                                    ? Image.file(salesprofilecontroller
+                                                        .selectedImage!)
+                                                    : CachedNetworkImage(
+                                                        imageUrl:
+                                                            "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                                                                salesprofilecontroller
+                                                                    .salesprofilemodel!
+                                                                    .data![0]
+                                                                    .image
+                                                                    .toString(),
+                                                                    height: Get.height*0.15,
+                                                                    width: Get.width*0.35,
+                                                                    fit: BoxFit.cover,
+                                                        // imageUrl:
+                                                        //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                                                        //         wholeprofilecontroller.profileImage.toString(),
+                                                        progressIndicatorBuilder: (context,
+                                                                url,
+                                                                downloadProgress) =>
+                                                            CircularProgressIndicator(
+                                                                color: Colors.grey
+                                                                    .shade700,
+                                                                value:
+                                                                    downloadProgress
+                                                                        .progress),
+                                                        errorWidget: (context,
+                                                                url, error) =>
+                                                            Icon(Icons.error),
+                                                      ),
+                                                                              //  Image.asset("assets/image/boyprofile3.png"),
+                                                                            ),
+                                        ),
+                    // CircleAvatar(
+                    //                       radius: 60,
+                    //                                                           backgroundColor: Colors.transparent,
+                                                                              
+                    //                       child: ClipOval(
+                    //                                                           child: (salesprofilecontroller
+                    //                                     .salesprofilemodel ==
+                    //                                 null &&
+                    //                             salesprofilecontroller.selectedImage ==
+                    //                                 null)
+                    //                         ? Image.asset(
+                    //                             "assets/image/boyprofile3.png")
+                    //                         : (salesprofilecontroller.salesprofilemodel!
+                    //                                         .data![0].image ==
+                    //                                     null) &&
+                    //                                 salesprofilecontroller
+                    //                                         .selectedImage ==
+                    //                                     null
+                    //                             ? Image.asset(
+                    //                                 "assets/image/boyprofile3.png")
+                    //                             : salesprofilecontroller
+                    //                                         .selectedImage !=
+                    //                                     null
+                    //                                 ? Image.file(salesprofilecontroller
+                    //                                     .selectedImage!)
+                    //                                 : CachedNetworkImage(
+                    //                                     imageUrl:
+                    //                                         "${Constants.USERPROFILE_IMAGEPATH_URL}" +
+                    //                                             salesprofilecontroller
+                    //                                                 .salesprofilemodel!
+                    //                                                 .data![0]
+                    //                                                 .image
+                    //                                                 .toString(),
+                    //                                                 height: Get.height*0.15,
+                    //                                                 width: Get.width*0.35,
+                    //                                                 fit: BoxFit.cover,
+                    //                                     // imageUrl:
+                    //                                     //      "${Constants.BASE_URL}${Constants.API_V1_PATH}" +
+                    //                                     //         salesprofilecontroller.profileImage.toString(),
+                    //                                     progressIndicatorBuilder: (context,
+                    //                                             url,
+                    //                                             downloadProgress) =>
+                    //                                         CircularProgressIndicator(
+                    //                                             color: Colors.grey
+                    //                                                 .shade700,
+                    //                                             value:
+                    //                                                 downloadProgress
+                    //                                                     .progress),
+                    //                                     errorWidget: (context,
+                    //                                             url, error) =>
+                    //                                         Icon(Icons.error),
+                    //                                   ),
+                    //                                                           //  Image.asset("assets/image/boyprofile3.png"),
+                    //                                                         ),
+                    //                     ),
+                                     
+                
+                //  CircleAvatar(
+                //   radius:60,
+                //   backgroundColor: Colors.transparent,
+                //     child:
+                //   salesprofilecontroller.profileImage != null
+                //                 ? CachedNetworkImage(
+                //                     imageUrl:
+                //                          "${Constants.SALESMAN_IMAGEPATH_URL}" +
+                //                             salesprofilecontroller.profileImage.toString(),
+                //                     progressIndicatorBuilder: (context, url,
+                //                             downloadProgress) =>
+                //                         CircularProgressIndicator(
+                //                             color: Colors.grey.shade700,
+                //                             value: downloadProgress.progress),
+                //                     errorWidget: (context, url, error) =>
+                //                         Icon(Icons.error),
+                //                   )
+                //     //  Image.asset("assets/image/boyprofile3.png"),
+                //   :
+                //     salesprofilecontroller.selectedImage != null
+                //                     ? Image.file(salesprofilecontroller.selectedImage!)
+                //                     : Image.asset(
+                //                         "assets/image/boyprofile3.png"),
                   
-                  ),
+                //   ),
+                      
+                      
                       ),
                         
                   Positioned(

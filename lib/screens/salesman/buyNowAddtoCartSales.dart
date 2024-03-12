@@ -16,6 +16,7 @@ import 'package:pet/controllers/salesman_controller/salesreview_controller.dart'
 import 'package:pet/models/salesmanModel/salesmycartListModel.dart'as MyOrder;
 import 'package:pet/screens/salesman/paymentsales.dart';
 import 'package:pet/screens/salesman/salesaddnewAddress.dart';
+import 'package:pet/screens/salesman/usercouponPage.dart';
 import 'package:pet/screens/salesman/widget/wholeAppBar.dart';
 
 
@@ -36,8 +37,8 @@ class BuyNowAddToCardSaleswhole extends StatefulWidget {
 }
 
 class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
- SalesMyCartController mycartController = Get.put(SalesMyCartController());
- final SalesProductDetailsController salesproductdetailscontroller =
+ SalesMyCartController addtocartController = Get.put(SalesMyCartController());
+  final SalesProductDetailsController salesproductdetailscontroller =
       Get.put(SalesProductDetailsController());
  SalesReviewController salesReviewController = Get.put(SalesReviewController());
   SalesAddressController addressController = Get.put(SalesAddressController());
@@ -51,7 +52,7 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
   @override
   Widget build(BuildContext context) {
     print(widget.data!.price??'');
-    mycartController.updateTotal();
+    addtocartController.updateTotal();
     return Stack(
       children: [
         Scaffold(
@@ -149,7 +150,7 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                                                                   .error), // Replace with your own error widget
                                                         ),
                                                       ),
-                                                      SizedBox(width: 15,),
+                                                      SizedBox(width: 10,),
                                                       Padding(
                                                         padding: const EdgeInsets.all(8.0),
                                                         child: Column(
@@ -160,12 +161,16 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                                                               MainAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            Text(
+                                                           SizedBox(width: Get.width*0.5,
+                                                              child: Text(
                                                               (widget.data!.itemName ??
-                                                                      '')
-                                                                  .toString(),
-                                                              style: CustomTextStyle
-                                                                  .popinsmedium,
+                                                                    '')
+                                                                    .toString(),
+                                                                    maxLines: 1,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                style: CustomTextStyle
+                                                                    .popinsmedium,
+                                                              ),
                                                             ),
                                                                Text(
                                                                 "Qty: "+(widget.data!.quantity ??
@@ -800,183 +805,191 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                 //         SizedBox(
                 //   height: 20,
                 // ),
-
-                GestureDetector(
-                  onTap: () async {
-                    await couponsController.init();
-                    Get.to(WholecouponPage(
-                      price:(mycartController.total) + (mycartController.total * 0.05),
-                    ));
-                  },
-                  child: Container(
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: MyColors.blue123,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  GestureDetector(
+              onTap: () async {
+                await couponsController.init();
+                Get.to(SalescouponPage(
+                price: (   widget.data!.price!) 
+                         ,
+                          
+                ));
+              },
+              child: Container(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      color: MyColors.blue123,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Image.asset("assets/image/applycodeimg.png"),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Apply coupon",
-                                  style: CustomTextStyle.popinslight,
-                                ),
+                            Image.asset("assets/image/applycodeimg.png"),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Apply coupon",
+                              style: CustomTextStyle.popinslight,
+                            ),
 
-                                  SizedBox(
-                                  width: 10,
-                                ),
-                                 Text(
+                              SizedBox(
+                              width: 10,
+                            ),
+                            GetBuilder<SalesCouponsController>(
+              init: couponsController,
+              // initState: (_) {},
+              builder: (_) {
+                                 return Text(
                                   couponsController.couponcode??"",
                                   style: CustomTextStyle.popinslight,
-                                ),
-                              ],
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 18,
-                            ),
+                            );
+                               }
+                             ),
                           ],
                         ),
-                      )),
-                ),
+                        Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          size: 18,
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
 
-                SizedBox(
-                  height: 20,
-                ),
-                GetBuilder<SalesMyCartController>(
-                  init: mycartController,
-                  // initState: (_) {},
-                  builder: (_) {
-                    return Container(
-                      // height: MediaQuery.of(context).size.height * 0.24,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: MyColors.white),
-                      child: DottedBorder(
-                        color: Colors.black26,
-                        borderType: BorderType.Rect,
-                        radius: Radius.circular(25),
-                        //  strokeWidth: 1,
-                        child: Container(
-                          // height:MediaQuery.of(context).size.height*0.28,
+            SizedBox(
+              height: 20,
+            ),
+            GetBuilder<SalesMyCartController>(
+              init: addtocartController,
+              // initState: (_) {},
+              builder: (_) {
+                return Container(
+                  // height: MediaQuery.of(context).size.height * 0.24,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: MyColors.white),
+                  child: DottedBorder(
+                    color: Colors.black26,
+                    borderType: BorderType.Rect,
+                    radius: Radius.circular(25),
+                    //  strokeWidth: 1,
+                    child: Container(
+                      // height:MediaQuery.of(context).size.height*0.28,
 
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Column(children: [
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Sub Total",
+                                style: CustomTextStyle.popinslight,
+                              ),
+                              Spacer(),
+                              Text(
+                              "₹" +  widget.data!.price.toString(),
+                                style: CustomTextStyle.popinstext,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          Divider(
+                            color: MyColors.lightdivider,
+                            thickness: 1,
+                            height: 1,
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          Row(
+                            children: [
+                              Text(
+                                "Tax(5%)",
+                                style: CustomTextStyle.popinslight,
+                              ),
+                              Spacer(),
+                              Text(
+                               "+ ₹"+ (widget.data!.price! * 0.05).toStringAsFixed(2),
+                                style: CustomTextStyle.popinstext,
+                              ),
+                            ],
+                          ),
+                            Divider(
+                            color: MyColors.lightdivider,
+                            thickness: 1,
+                            height: 1,
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+
                               Row(
-                                children: [
-                                  Text(
-                                    "Sub Total",
-                                    style: CustomTextStyle.popinslight,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
-                                  ),
-                                  Text(
-                                      widget.data!.price.toString(),
+                            children: [
+                              Text(
+                                "Max discount",
+                                style: CustomTextStyle.popinslight,
+                              ),
+                              Spacer(),
+            GetBuilder<SalesCouponsController>(
+              init: couponsController,
+              // initState: (_) {},
+              builder: (_) {
+                                  return Text(
+                                  "- ₹${(couponsController.maxAmount ?? 0.0).toString()}",
                                     style: CustomTextStyle.popinstext,
-                                  ),
-                                ],
+                                  );
+                                }
                               ),
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
-                              Divider(
-                                color: MyColors.lightdivider,
-                                thickness: 1,
-                                height: 1,
+                            ],
+                          ),
+                        
+                          Divider(
+                            color: MyColors.lightdivider,
+                            thickness: 1,
+                            height: 1,
+                          ),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.02),
+                          Row(
+                            children: [
+                              Text(
+                                "Rounding Adjust",
+                                style: CustomTextStyle.popinslight,
                               ),
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Tex(5%)",
-                                    style: CustomTextStyle.popinslight,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
-                                  ),
-                                  Text(
-                                    (widget.tax).toString(),
-                                    style: CustomTextStyle.popinstext,
-                                  ),
-                                ],
-                              ),
-                                Divider(
-                                color: MyColors.lightdivider,
-                                thickness: 1,
-                                height: 1,
-                              ),
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
-
-                                  Row(
-                                children: [
-                                  Text(
-                                    "Max discount",
-                                    style: CustomTextStyle.popinslight,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.1,
-                                  ),
-                GetBuilder<SalesCouponsController>(
-                  init: couponsController,
-                  // initState: (_) {},
-                  builder: (_) {
-                                      return Text(
-                                      "${(couponsController.maxAmount ?? 0.0).toString()}",
-                                        style: CustomTextStyle.popinstext,
-                                      );
-                                    }
-                                  ),
-                                ],
-                              ),
-                            
-                              Divider(
-                                color: MyColors.lightdivider,
-                                thickness: 1,
-                                height: 1,
-                              ),
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.02),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Rounding Adjust",
-                                    style: CustomTextStyle.popinslight,
-                                  ),
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.1,
-                                  ),
-                                  Text(
-                                    "₹${(((widget.data!.price!) + ((widget.tax??0))) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                             Spacer(),
+                              GetBuilder<SalesCouponsController>(
+              init: couponsController,
+              // initState: (_) {},
+              builder: (_) {
+                                  return Text(
+                                    "₹${(((widget.data!.price??0) + (widget.data!.price! * 0.05))-(double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
                                     // (((total) + (total * 0.05))-(num.parse(couponsController.maxAmount!) )).toString(),
                                     style: CustomTextStyle.popinstext,
-                                  ),
-                                ],
+                                  );
+                                }
                               ),
+                            ],
+                          ),
 
 ]),
-                          ),
-                        ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                );
+              },
+            ),
 
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
@@ -1009,24 +1022,24 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                               SizedBox(
                                   width: MediaQuery.of(context).size.width * 0.48,
                                   child: GetBuilder<SalesMyCartController>(
-                                      init: mycartController,
+                                      init: addtocartController,
                                       builder: (_) {
-                                        return mycartController
+                                        return addtocartController
                                                         .allAddresslistModel ==
                                                     null ||
-                                                mycartController
+                                                addtocartController
                                                         .allAddresslistModel!
                                                         .data ==
                                                     null ||
-                                                mycartController
+                                                addtocartController
                                                     .allAddresslistModel!
                                                     .data!
                                                     .isEmpty
                                             ? SizedBox()
                                             : Text(
-                                                (mycartController
+                                                (addtocartController
                                                             .allAddresslistModel!
-                                                            .data![mycartController
+                                                            .data![addtocartController
                                                                     .isselected ??
                                                                 0]
                                                             .area ??
@@ -1038,7 +1051,7 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await mycartController.alladdressinit();
+                              await addtocartController.alladdressinit();
 
                               showModalBottomSheet(
                                 isScrollControlled: true,
@@ -1074,28 +1087,28 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                                           ],
                                         ),
                                         GetBuilder<SalesMyCartController>(
-                                            init: mycartController,
+                                            init: addtocartController,
                                             builder: (_) {
                                               return ListView.builder(
                                                 primary: false,
                                                 shrinkWrap: true,
-                                                itemCount: mycartController
+                                                itemCount: addtocartController
                                                     .allAddresslistModel!
                                                     .data!
                                                     .length,
                                                 itemBuilder: (context, index) {
-                                                  var item = mycartController
+                                                  var item = addtocartController
                                                       .allAddresslistModel!
                                                       .data![index];
 
-                                                  return (mycartController
+                                                  return (addtocartController
                                                               .allAddresslistModel!
                                                               .data ==
                                                           null)
                                                       ? SizedBox()
                                                       : InkWell(
                                                           onTap: () {
-                                                            mycartController
+                                                            addtocartController
                                                                 .selectaddadress(
                                                                     item.id ?? 0);
                                                           },
@@ -1205,9 +1218,9 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                                                                             InkWell(
                                                                               onTap:
                                                                                   () async {
-                                                                                await mycartController.addressdeleteinit();
+                                                                                await addtocartController.addressdeleteinit();
                                                                                 //  addressController.removeaddress(index);
-                                                                                mycartController.alladdressinit();
+                                                                                addtocartController.alladdressinit();
                                                                               },
                                                                               child: Container(
                                                                                   height: 25,
@@ -1228,8 +1241,8 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                                                                             GestureDetector(
                                                                               onTap:
                                                                                   () {
-                                                                                mycartController.chooseaddressID(item.id??0);
-                                                                                mycartController.chooseaddress(index);
+                                                                                addtocartController.chooseaddressID(item.id??0);
+                                                                                addtocartController.chooseaddress(index);
                                                                                 Get.back();
                                                                               },
                                                                               child: Container(
@@ -1366,10 +1379,15 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                   // builder: (_) {
                   //        return  
                   // 
-                         Text( 
-                            "₹${(((widget.data!.price!) + ((widget.tax??0))) - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
-                                    
-                               style: CustomTextStyle.appbartext),
+                        GetBuilder<SalesCouponsController>(
+              init: couponsController,
+              builder: (_) {
+                             return Text( 
+                                "₹${((widget.data!.price!)  - (double.parse(couponsController.maxAmount ?? "0.0")).toDouble()).toString()}",
+                                        
+                                   style: CustomTextStyle.appbartext);
+                           }
+                         ),
                   // })
                             // Row(
                             //   children: [
@@ -1395,17 +1413,28 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
                         ),
                         InkWell(
                           onTap: () {
-                                mycartController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
-                            widget.tax??0,
-                         widget.data!.price!,2
+                        //         addtocartController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
+                        //     widget.tax??0,
+                        //  widget.data!.price!,2
+                        //     // widget.data!.discoun
+                            
+                        //     );
+
+                        
+addtocartController.totalbuyNowPrice(
+   (widget.data!.price??0).toDouble()
+);
+                            addtocartController.adddata(widget.data!.id??0,widget.data!.quantity??0, widget.data!.itemName??'',
+                              0,
+                       (widget.data!.price??0).toDouble(),2
                             // widget.data!.discoun
                             
                             );
                             // Navigator.push(context, MaterialPageRoute(builder: (context)=> OrderSummary()));
                             Get.to(PaymentSales(
                                price:
-                               ((widget.data!.price!) +
-   (widget.tax??0) -
+                               ((widget.data!.price!)
+                               -
     double.parse(couponsController.maxAmount ?? "0.0")).toString()));
                               //  (((mycartwholeController.total) + (mycartwholeController.total * 0.05)-(double.parse(couponsController.maxAmount??"0.0")))).toString()
                             // ));
@@ -1486,9 +1515,9 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
    
      
         GetBuilder<SalesMyCartController>(
-            init: mycartController,
+            init: addtocartController,
             builder: (_) {
-              return mycartController.showLoading
+              return addtocartController.showLoading
                   ? BackdropFilter(
                       filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
                       child: Container(
@@ -1500,9 +1529,9 @@ class _BuyNowAddToCardSaleswholeState extends State<BuyNowAddToCardSaleswhole> {
             }),
         // Progress bar
         GetBuilder<SalesMyCartController>(
-            init: mycartController,
+            init: addtocartController,
             builder: (_) {
-              return mycartController.showLoading
+              return addtocartController.showLoading
                   ? Center(
                       child: SpinKitCircle(
                         color: Colors.white, // Color of the progress bar

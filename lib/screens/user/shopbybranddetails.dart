@@ -14,7 +14,6 @@ import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/constants.dart';
 import 'package:pet/utils/fontstyle.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 class ShopBrandDetails extends StatelessWidget {
    ShopBrandDetails({super.key});
 
@@ -29,7 +28,7 @@ ourbranddeatilscontrroller.productinit();
     return Scaffold(
 
       
-        appBar:CustomAppBarback(),
+        appBar:CustomAppBarback(title:"Shop by Brand Details"),
          body:Padding(
      padding: const EdgeInsets.all(20.0),
      child: ListView(
@@ -108,269 +107,158 @@ child: Padding(
          SizedBox(height: MediaQuery.of(context).size.height*0.04,),
 
 
-
-Container(
-   height: MediaQuery.of(context).size.height * 0.08,
-  child:   GetBuilder<OurBrandDetailsController>(
-  
-                        init: ourbranddeatilscontrroller,
-  
-                        builder: (_) {
-  
-                          return
-  
-  
-  
-                       ListView.builder(
-  
-                                  primary: false,
-  
-                                  scrollDirection: Axis.horizontal,
-  
-                                  shrinkWrap: true,
-  
-                                  itemCount: ourbranddeatilscontrroller
-  
-                                      .usersubmodel!.data!.length,
-  
-                                  itemBuilder: (context, index) {
-                                    
-  //  final isSelected = subcategorycontroller.selectedIndex == index;
-
-                                    var item = ourbranddeatilscontrroller
-  
-                                        .usersubmodel!.data![index];
-  
-                                    // print(item.name!);
-  
-                                    var imagePath =
-  
-                                        "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
-  
-                                    print(imagePath);
-  
-  
-  
-                                    return
-                                    
-                                     !ourbranddeatilscontrroller.propertysubloaded
-                            ? SizedBox():
-                                     Padding(
-  
-                                      padding: const EdgeInsets.all(8.0),
-  
-                                      child: InkWell(
-  
-                                        onTap: () {
-    //  subcategorycontroller.addproduct(item.id??0);
-  ourbranddeatilscontrroller.updateSelectedIndex(item.id??0); 
-  print("===>${item.id}") ; 
-ourbranddeatilscontrroller.productinit();
-                                     
-                                        },
-  
-                                        child: Container(
-  
-                        height: 40,
-  
-                       width: 180,
-  
-                        decoration: BoxDecoration(
-  
-                            color: (ourbranddeatilscontrroller.selectedIndex == item.id
-                             ) 
-                                                      ? MyColors.yellow
-                                                      : Colors.white, 
-  
-                            borderRadius: BorderRadius.circular(10)),
-  
-                        child: Padding(
-  
-                          padding: const EdgeInsets.all(5.0),
-  
-                          child: Row(
-  
-                            mainAxisAlignment: MainAxisAlignment.start,
-  
-                            children: [
-  
-                              // Image.asset("assets/image/dog1.png"),
-  
-  
-  
-                               CachedNetworkImage(
-  
-                                              imageUrl: imagePath,
-  
-                                              // width: 61,
-  
-                                              // height: 75,
-  
-                                              placeholder: (context, url) =>
-  
-                                                  Center(
-  
-                                                child:
-  
-                                                    CircularProgressIndicator(),
-  
-                                              ), // Replace with your own placeholder widget
-  
-                                              errorWidget: (context, url,
-  
-                                                      error) =>
-  
-                                                  Icon(Icons
-  
-                                                      .error), // Replace with your own error widget
-  
-                                            ),
-  
-                              SizedBox(
-  
-                                width: 5,
-  
-                              ),
-  
-                              Text(item.name.toString(), style: CustomTextStyle.popinssmall)
-  
-                            ],
-  
-                          ),
-  
-                        ),
-  
-                      ),
-  
-                                      ),
-  
-  
-  
-                                      //  Stack(
-  
-                                      //   children: [
-  
-                                      //     Container(
-  
-                                      //       width: 69,
-  
-                                      //       height: 75,
-  
-                                      //       decoration: BoxDecoration(
-  
-                                      //         borderRadius: BorderRadius.circular(23),
-  
-                                      //         color: item,
-  
-                                      //         boxShadow: [
-  
-                                      //           BoxShadow(
-  
-                                      //             color: Colors.grey.withOpacity(0.3),
-  
-                                      //             spreadRadius: 2,
-  
-                                      //             blurRadius: 5,
-  
-                                      //             offset: Offset(
-  
-                                      //                 0, 3), // Offset of the shadow
-  
-                                      //           ),
-  
-                                      //         ],
-  
-                                      //       ),
-  
-                                      //     ),
-  
-                                      //   ],
-  
-                                      // )
-  
-                                    );
-  
-                                  },
-  
-                                );
-  
-                          
-  
-            
-  
-                        }),
-),
-          
-
-//      SingleChildScrollView(
-//   scrollDirection: Axis.horizontal,
-//    child: Row(mainAxisAlignment: MainAxisAlignment.start,
-//      children: [
-//   Container(
-//     height: 40,width: 90,
-// decoration: BoxDecoration(color:MyColors.yellow,borderRadius: BorderRadius.circular(10)),
-//     child: Padding(
-//       padding: const EdgeInsets.all(5.0),
-//       child: Row(mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//       Image.asset("assets/image/dog1.png"),
-//       SizedBox(width: 10,),
-//       Text("Dog",style:  CustomTextStyle.popinssmall)
-       
-//         ],
-//       ),
-//     ),
-//   ), 
-// SizedBox(width:15),
-//  Container(
-//     height: 40,width: 90,
-// decoration: BoxDecoration(color:MyColors.lightblue,borderRadius: BorderRadius.circular(10)),
-//     child: Padding(
-//       padding: const EdgeInsets.all(5.0),
-//       child: Row(mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//       Image.asset("assets/image/catimg.png"),
-//       SizedBox(width: 10,),
-//       Text("Cat",style:  CustomTextStyle.popinssmall)
-       
-//         ],
-//       ),
-//     ),
-//   ), 
-
-// SizedBox(width: 15,),
-
+//
 // Container(
-//     height: 40,width: 90,
-// decoration: BoxDecoration(color:MyColors.pinklight1
-// ,borderRadius: BorderRadius.circular(10)),
-//     child: Padding(
-//       padding: const EdgeInsets.all(5.0),
-//       child: Row(mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//       // Image.asset("assets/image/catimg.png"),
-//       SizedBox(width: 10,),
-//       Text("Rabbit",style:  CustomTextStyle.popinssmall)
-       
-//         ],
-//       ),
-//     ),
-//   ), 
+//    height: MediaQuery.of(context).size.height * 0.08,
+//   child:   GetBuilder<OurBrandDetailsController>(
+//
+//                         init: ourbranddeatilscontrroller,
+//
+//                         builder: (_) {
+//
+//                           return
+//
+//    ourbranddeatilscontrroller
+//
+//                                         .usersubmodel! == null
+//                             ? const SizedBox():
+//                        ListView.builder(
+//
+//                                   primary: false,
+//
+//                                   scrollDirection: Axis.horizontal,
+//
+//                                   shrinkWrap: true,
+//
+//                                   itemCount: ourbranddeatilscontrroller
+//
+//                                       .usersubmodel!.data!.length,
+//
+//                                   itemBuilder: (context, index) {
+//
+//   //  final isSelected = subcategorycontroller.selectedIndex == index;
+//
+//                                     var item = ourbranddeatilscontrroller
+//
+//                                         .usersubmodel!.data![index];
+//
+//                                     // print(item.name!);
+//
+//                                     var imagePath =
+//
+//                                         "${Constants.BASE_URL}${Constants.CATEGORIES_IMAGE_PATH}${item.image ?? ""}";
+//
+//                                     print(imagePath);
+//
+//
+//
+//                                     return
+//
+//                                      !ourbranddeatilscontrroller.propertysubloaded
+//                             ? SizedBox(): SizedBox();
+// //                                      Padding(
+// //
+// //                                       padding: const EdgeInsets.all(8.0),
+// //
+// //                                       child: InkWell(
+// //
+// //                                         onTap: () {
+// //     //  subcategorycontroller.addproduct(item.id??0);
+// //   ourbranddeatilscontrroller.updateSelectedIndex(item.id??0);
+// //   print("===>${item.id}") ;
+// // ourbranddeatilscontrroller.productinit();
+// //
+// //                                         },
+// //
+// //                                         child: Container(
+// //
+// //                       //   height: 40,
+// //
+// //                       //  width: 180,
+// //
+// //                         decoration: BoxDecoration(
+// //
+// //                             color: (ourbranddeatilscontrroller.selectedIndex == item.id
+// //                              )
+// //                                                       ? MyColors.yellow
+// //                                                       : Colors.white,
+// //
+// //                             borderRadius: BorderRadius.circular(10)),
+// //
+// //                         child: Padding(
+// //
+// //                           padding: const EdgeInsets.all(5.0),
+// //
+// //                           child: Row(
+// //
+// //                             mainAxisAlignment: MainAxisAlignment.start,
+// //
+// //                             children: [
+// //
+// //
+// //
+// //                                CachedNetworkImage(
+// //
+// //                                               imageUrl: imagePath,
+// //
+// //
+// //                                               placeholder: (context, url) =>
+// //
+// //                                                   Center(
+// //
+// //                                                 child:
+// //
+// //                                                     CircularProgressIndicator(),
+// //
+// //                                               ), // Replace with your own placeholder widget
+// //
+// //                                               errorWidget: (context, url,
+// //
+// //                                                       error) =>
+// //
+// //                                                   Icon(Icons
+// //
+// //                                                       .error), // Replace with your own error widget
+// //
+// //                                             ),
+// //
+// //                               SizedBox(
+// //
+// //                                 width: 5,
+// //
+// //                               ),
+// //
+// //                               Text(item.name.toString(), style: CustomTextStyle.popinssmall)
+// //
+// //                             ],
+// //
+// //                           ),
+// //
+// //                         ),
+// //
+// //                       ),
+// //
+// //                                       ),
+// //
+// //
+// //
+// //
+// //
+// //                                     );
+// //
+//
+//                                   },
+//
+//                                 );
+//
+//
+//
+//
+//
+//                         }),
+// ),
 
-   
-//        SizedBox(height: MediaQuery.of(context).size.height*0.03),
 
-
-
-
-
-
-
-
-    
-//    ],),
-//  ),
-   
    
    
     SizedBox(height: MediaQuery.of(context).size.height*0.03,),
@@ -395,48 +283,30 @@ ourbranddeatilscontrroller.productinit();
                                             mainAxisExtent: 280),
                                     itemCount: ourbranddeatilscontrroller
                                         .userourbrandProductModel!.data!.length
-                                      , // Set the number of cards you want to display.
+                                      , 
                                     itemBuilder: (context, index) {
-                                      // gridDelegate:
-                                      //     SliverGridDelegateWithMaxCrossAxisExtent(
-                                      //         maxCrossAxisExtent: 150,
-                                      //      childAspectRatio: 3 / 2,
-                                      //         mainAxisExtent: 300,
-                                      //         crossAxisSpacing: 15,
-                                      //         mainAxisSpacing: 15),
-                                      // itemCount: homeusercontroller
-                                      //     .userPropertiesModel!.data!.length
-                                      //     .clamp(0, 4),
-                                      // itemBuilder: (BuildContext ctx, index) {
+                                     
                                       var item = ourbranddeatilscontrroller
                                         .userourbrandProductModel!.data![index];
            print(item);
-                                  var imagePath =
-                                     "${Constants.BASE_URL}/storage/app/public/product/${item.image ?? ""}";
+                                   
+   String imagePath =  "${Constants.BASE_URL}${Constants.BRAND_PRODUCT_IMAGE_PATH}${item.image ?? ""}";
+  
+                                 
                                   print(imagePath);
                                   return
-                      //             ourbranddeatilscontrroller.ourbrandproductLoaded
-                      // ? Center(
-                      //     child: SpinKitCircle(
-                      //       color: Colors.black, // Color of the progress bar
-                      //       size: 30.0, // Size of the progress bar
-                      //     ),
-                      //   )
-                      // : 
+                      
            ourbranddeatilscontrroller.userourbrandProductModel!.data == null
                               ? SizedBox(child:Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))):
                                    InkWell(
                                     onTap: () async {
-                                   var url = '${ item.productUrl.toString()}';  // Replace with the URL you want to open
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+                                     final Uri url = Uri.parse('${ item.productUrl.toString()}');
+   if (!await launchUrl(url)) {
+        throw Exception('Could not launch $url');
     }
   },
                                     child: Container(
                                       width: 140,
-                                      // height: 700,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(25),
                                         color: MyColors.white,
@@ -449,7 +319,6 @@ ourbranddeatilscontrroller.productinit();
                                                 0, 3), // Offset of the shadow
                                           ),
                                         ],
-                                        // color: MyColors.white
                                       ),
                                       child: Column(
                                         children: [
@@ -498,9 +367,7 @@ ourbranddeatilscontrroller.productinit();
                                               Container(
                                                 height: 125,
            
-                                                // decoration: BoxDecoration(
-                                                //     borderRadius: BorderRadius.circular(30),
-                                                //     color: MyColors.white),
+                                                
                                                 child: CachedNetworkImage(
                                                   imageUrl: imagePath,
                                                   width: 61,
@@ -535,96 +402,9 @@ ourbranddeatilscontrroller.productinit();
                                                       Text(item.title!,
                                                           style: CustomTextStyle
                                                               .popinsmedium),
-                                                      // Text(
-                                                      //     item.productUrl
-                                                      //         .toString(),
-                                                      //     style: CustomTextStyle
-                                                      //         .popinssmall0),
+                                                     
                                                       SizedBox(height: 5),
-                                                      // Row(
-                                                      //   mainAxisAlignment:
-                                                      //       MainAxisAlignment
-                                                      //           .spaceBetween,
-                                                      //   children: [
-                                                      //     Column(
-                                                      //       crossAxisAlignment:
-                                                      //           CrossAxisAlignment
-                                                      //               .start,
-                                                      //       children: [
-                                                      //         Row(
-                                                      //           children: [
-                                                      //             Text(
-                                                      //                 "₹" +
-                                                      //                     item.price
-                                                      //                         .toString(),
-                                                      //                 style: CustomTextStyle
-                                                      //                     .discounttext),
-                                                      //             SizedBox(
-                                                      //                 width: 10),
-                                                      //             Container(
-                                                      //               height: 20,
-                                                      //               width: 40,
-                                                      //               decoration: BoxDecoration(
-                                                      //                   color: MyColors
-                                                      //                       .red,
-                                                      //                   borderRadius:
-                                                      //                       BorderRadius.circular(
-                                                      //                           10),
-                                                      //                   border: Border.all(
-                                                      //                       color:
-                                                      //                           MyColors.red)),
-                                                      //               child: Center(
-                                                      //                 child: Text(
-                                                      //                     // item.discount.toString(),
-                                                      //                     "Save${item.discount}%",
-                                                      //                     style: CustomTextStyle
-                                                      //                         .popinstextsmal2222),
-                                                      //               ),
-                                                      //             ),
-                                                      //           ],
-                                                      //         ),
-                                                      //         SizedBox(height: 5),
-                                                      //         Text(
-                                                      //           "₹" + item.price!,
-                                                      //           style: CustomTextStyle
-                                                      //               .popinsmedium,
-                                                      //         ),
-                                                      //       ],
-                                                      //     ),
-           
-                                                      //     Padding(
-                                                      //       padding:
-                                                      //           const EdgeInsets
-                                                      //                   .only(
-                                                      //               right: 5.0),
-                                                      //       child: Container(
-                                                      //           width: 35,
-                                                      //           height: 35,
-                                                      //           decoration: BoxDecoration(
-                                                      //               borderRadius:
-                                                      //                   BorderRadius
-                                                      //                       .circular(
-                                                      //                           10),
-                                                      //               color: Color(
-                                                      //                   0xffffcc00)),
-                                                      //           child: Padding(
-                                                      //             padding:
-                                                      //                 EdgeInsets
-                                                      //                     .all(
-                                                      //                         5.0),
-                                                      //             child:
-                                                      //                 Image.asset(
-                                                      //               "assets/image/bag2.png",
-                                                      //               height: 25,
-                                                      //             ),
-                                                      //           )),
-                                                      //     )
-                                                      //     // Image.asset(
-                                                      //     //   "assets/image/yellowbag.png",
-                                                      //     //   height: 80,
-                                                      //     // )
-                                                      //   ],
-                                                      // )
+                                                     
                                                    
                                                     ],
                                                   ),
@@ -640,309 +420,6 @@ ourbranddeatilscontrroller.productinit();
            ),   
              
 
-  //    GridView(
-  //                                                     physics:
-  //                                                     NeverScrollableScrollPhysics(),
-  //                                                     scrollDirection:
-  //                                                     Axis.vertical,
-  //                                                     gridDelegate:
-  //                                                     SliverGridDelegateWithFixedCrossAxisCount(
-  //                                                         crossAxisCount:
-  //                                                         2,
-  //                                                         crossAxisSpacing:
-  //                                                         15,
-  //                                                         mainAxisSpacing:
-  //                                                         15,
-  //                                                         mainAxisExtent:
-  //                                                         270),
-  //                                                     children: [
-                                                       
-  //               InkWell(onTap: (){
-  //                 // Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductDetails()));
-  //               },
-  //                 child: Container(
-                          
-  //                           height:MediaQuery.of(context).size.width*0.7,
-                          
-  //                           width: MediaQuery.of(context).size.width*0.46,
-                          
-  //                           decoration: BoxDecoration(
-                          
-  //                             borderRadius: BorderRadius.circular(25),
-  //                 color:MyColors.white
-  //                           ),
-                          
-  //                         child: Column(children: [
-                          
-  //                         Container(
-                         
-  //                           decoration: BoxDecoration(
-                          
-  //                             borderRadius: BorderRadius.circular(30),
-  //                   color:MyColors.white
-                          
-                          
-                          
-  //                           ),
-  //                           child:
-  //                           Image.asset("assets/image/food.png",fit: BoxFit.cover,height: 135),
-  //                         ),
-                          
-                          
-                          
-  //                         // SizedBox(height: 15,),
-                          
-                          
-  //                           Padding(
-  //                             padding: const EdgeInsets.all(5.0),
-  //                             child: Column( mainAxisAlignment: MainAxisAlignment.start,
-  //                             crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                              Text(
-  //                       'Mars Petcare Inc',
-  //                       style:  CustomTextStyle.  popinsmedium
-                      
-  //                     ),
-  //                         Text(
-  //                       'Lorem Ipsum is simply dummy',
-  //                       style:  CustomTextStyle.  popinssmall0
-                      
-  //                     ),
-  //                 // SizedBox(height: 3),
-                
-  //                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    
-  //                   children: [
-                
-  //                   Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-                
-  //                   Image.asset("assets/image/yellowbag.png",height: 55,)
-                
-                  
-  //                 ],)
-  //                 ],
-  //                             ),
-  //                           )
-                          
-  //                         ],),
-                          
-  //                         ),
-  //               ),
-  //       Container(
-          
-  //           height:MediaQuery.of(context).size.width*0.7,
-          
-  //           width: MediaQuery.of(context).size.width*0.46,
-          
-  //           decoration: BoxDecoration(
-          
-  //             borderRadius: BorderRadius.circular(30),
-  // color:MyColors.white
-  //           ),
-          
-  //         child: Column(children: [
-          
-  //                       Container(
-         
-  //           decoration: BoxDecoration(
-          
-  //             borderRadius: BorderRadius.circular(30),
-  //   color:MyColors.white
-          
-          
-          
-  //           ),
-  //                         child:
-  //                         Image.asset("assets/image/dog2.png",fit: BoxFit.cover,height: 135),
-  //                       ),
-                        
-          
-          
-  //         // SizedBox(height: 15,),
-          
-          
-  //           Padding(
-  //             padding: const EdgeInsets.all(5.0),
-  //             child: Column( mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //              Text(
-  //                     'Mars Petcare Inc',
-  //                     style:  CustomTextStyle.  popinsmedium
-                    
-  //                   ),
-  //                       Text(
-  //                     'Lorem Ipsum is simply dummy',
-  //                     style:  CustomTextStyle.  popinssmall0
-                    
-  //                   ),
-  //               // SizedBox(height: 3),
-
-  //               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  
-  //                 children: [
-
-  //                 Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-
-  //                 Image.asset("assets/image/yellowbag.png",height: 55,)
-
-                
-  //               ],)
-  //               ],
-  //             ),
-  //           )
-          
-  //         ],),
-          
-  //         ),
-      
-                    
-                                                              
-  //               Container(
-          
-  //           height:MediaQuery.of(context).size.width*0.7,
-          
-  //           width: MediaQuery.of(context).size.width*0.46,
-          
-  //           decoration: BoxDecoration(
-          
-  //             borderRadius: BorderRadius.circular(25),
-  // color:MyColors.white
-  //           ),
-          
-  //         child: Column(children: [
-          
-  //                       Container(
-         
-  //           decoration: BoxDecoration(
-          
-  //             borderRadius: BorderRadius.circular(30),
-  //   color:MyColors.white
-          
-          
-          
-  //           ),
-  //                         child:
-  //                         Image.asset("assets/image/food3.png",fit: BoxFit.cover,height: 135),
-  //                       ),
-                        
-          
-          
-  //         // SizedBox(height: 15,),
-          
-          
-  //           Padding(
-  //             padding: const EdgeInsets.all(5.0),
-  //             child: Column( mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //              Text(
-  //                     'Mars Petcare Inc',
-  //                     style:  CustomTextStyle.  popinsmedium
-                    
-  //                   ),
-  //                       Text(
-  //                     'Lorem Ipsum is simply dummy',
-  //                     style:  CustomTextStyle.  popinssmall0
-                    
-  //                   ),
-  //               // SizedBox(height: 3),
-
-  //               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  
-  //                 children: [
-
-  //                 Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-
-  //                 Image.asset("assets/image/yellowbag.png",height: 55,)
-
-                
-  //               ],)
-  //               ],
-  //             ),
-  //           )
-          
-  //         ],),
-          
-  //         ),
-  //       Container(
-          
-  //           height:MediaQuery.of(context).size.width*0.7,
-          
-  //           width: MediaQuery.of(context).size.width*0.46,
-          
-  //           decoration: BoxDecoration(
-          
-  //             borderRadius: BorderRadius.circular(30),
-  // color:MyColors.white
-  //           ),
-          
-  //         child: Column(children: [
-          
-  //                       Container(
-         
-  //           decoration: BoxDecoration(
-          
-  //             borderRadius: BorderRadius.circular(30),
-  //   color:MyColors.white
-          
-          
-          
-  //           ),
-  //                         child:
-  //                         Image.asset("assets/image/food5.png",fit: BoxFit.cover,height: 135),
-  //                       ),
-                        
-          
-          
-  //         // SizedBox(height: 15,),
-          
-          
-  //           Padding(
-  //             padding: const EdgeInsets.all(5.0),
-  //             child: Column( mainAxisAlignment: MainAxisAlignment.start,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //              Text(
-  //                     'Mars Petcare Inc',
-  //                     style:  CustomTextStyle.  popinsmedium
-                    
-  //                   ),
-  //                       Text(
-  //                     'Lorem Ipsum is simply dummy',
-  //                     style:  CustomTextStyle.  popinssmall0
-                    
-  //                   ),
-  //               // SizedBox(height: 3),
-
-  //               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  
-  //                 children: [
-
-  //                 Text("₹ 260.00",style: CustomTextStyle.popinsmedium,),
-
-  //                 Image.asset("assets/image/yellowbag.png",height: 55,)
-
-                
-  //               ],)
-  //               ],
-  //             ),
-  //           )
-          
-  //         ],),
-          
-  //         ),
-      
-                    
-                    
-             
-             
-  //                                                     ],
-  //                                                     padding:
-  //                                                     EdgeInsets.all(
-  //                                                         5),
-  //                                                     shrinkWrap: true,
-  //                                                   ),
         
      ],),
    )

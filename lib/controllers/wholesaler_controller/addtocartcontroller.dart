@@ -37,7 +37,7 @@ WholeProductDetailsController wholeProductDeailsCOntroller = Get.put(WholeProduc
   List sizes = [];
   bool showLoading = false;
   var wholesalerID;
-  int total = 1;
+  double total = 0.0;
   String? paymenttype;
   var tex;
   List<Map<String, dynamic>> cartList = [];
@@ -78,7 +78,7 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
         "variation": selectname.toString(),
         "tax_amount": selecttex.toString(),
         "discount_on_item": selectdis.toString(),
-        "price": selectprice.toString()
+        "price": selectprice.toString(),
       }
     ];
 
@@ -130,8 +130,17 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
   }
 
   incrementSize(int index) {
-    sizes[index]++;
+     if (sizes[index] <int.parse (wholemycartmodel!.data![index].totalQuantity!).toInt()) {
+     
+    print("SIzes++++${wholemycartmodel!.data![index].totalQuantity}");
+     sizes[index]++;
+       wholemycartmodel!.data![index].quantity = sizes[index];
+
+   
+print("Sizes after increment whole: ${wholemycartmodel!.data![index].quantity}");
+    //  item.price ++;
     update();
+   
 
     print("SIzes${sizes}");
     // total = 0;
@@ -142,15 +151,31 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
     //   print("total${total}");
     // });
 
-    updateTotal();
+    updateTotal();}
   }
  
   decrementSize(int index) {
-    if (sizes[index] >   wholemycartmodel!.data![index].minOrder) {
+    // print("SIzes--${wholemycartmodel!.data![index].minOrder??1}");
+     if (  sizes[index] >wholemycartmodel!.data![index].minOrder??0) {
       sizes[index]--;
+      wholemycartmodel!.data![index].quantity = sizes[index];
+      
+print("Sizes after decrement whole** : ${wholemycartmodel!.data![index].quantity}");
       update();
       print("SIzes--${sizes}");
     }
+//     if (sizes[index] > wholemycartmodel!.data![index].minOrder??0) {
+//       sizes[index]--;
+//       update();
+//       print("SIzes--${sizes}");
+//  print("SIzes--${wholemycartmodel!.data![index].minOrder??0}");
+//     }
+    // if(wholemycartmodel!.data![index].minOrder == null){
+    //   sizes[index]--;
+    //   // update();
+    //   print("----SIzes--${sizes}");
+    //   print("SIzesbbbb--${wholemycartmodel!.data![index].minOrder??0}");
+    // }
     updateTotal();
   }
   // void updateTotal() {
@@ -163,23 +188,62 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
   //     print("total${total}");
   //   });
   // }
-
+void clearFields() {
+    
+    couponsController.couponcode = null;
+    //  couponsController.maxAmount = null;
+update();
+  }
+  void totalbuyNowPrice( double totalprice) {
+    total = totalprice;
+    update();
+    print("TotalPriceBuy ====>>>>> $total");
+  }
   void updateTotal() {
-    total = 0;
+    total = 0.0;
 
     wholemycartmodel!.data!.forEach((element) {
       String priceString = element.price.toString();
+ String quty = element.quantity.toString();
+
+      double price = double.parse(priceString);
+int quantity = int.parse(quty);
+
+double priceqty = price * quantity;
 
       try {
         double price = double.parse(priceString);
+         int qtyyy = int.parse(quty);
         int sizeIndex = wholemycartmodel!.data!.indexOf(element) ?? 0;
         int size = sizes.elementAt(sizeIndex);
 
-        total +=
-            (price * size).toInt(); // Convert the final value to an integer
+
+ int qty = (price / qtyyy).toInt();
+print("Quantiy");
+print(qty);
+
+ total +=
+           (priceqty);
+        // total +=
+        //     (price * size).toInt(); // Convert the final value to an integer
       } catch (e) {
         print("Error parsing price: $e");
       }
+
+       List<Map<String, dynamic>> cartJsonList1 = wholemycartmodel!.data!
+          .map((item) => {
+                "product_id": item.itemId,
+                "quantity":item.quantity,
+                "variation": item.variant,
+                "tax_amount": "0",
+                "discount_on_item":storage.read('productItem'),
+                "price":( item.price! * item.quantity!.toInt()),
+                "return_order":item.returnOrder??"no",
+              })
+          .toList();
+print("carttt");
+          print(cartJsonList1);
+cartList = cartJsonList1;
     });
 
     print("Total: $total");
@@ -224,34 +288,24 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
                 "product_id": item.itemId,
                 "quantity": item.quantity,
                 "variation": item.variant,
-                "tax_amount": 13,
+                "tax_amount": "0",
                 "discount_on_item": 20,
-                "price": item.price
+                "price": ( item.price! *   item.quantity!.toInt()),
+                "return_order":item.returnOrder ,
               })
           .toList();
       cartList = cartJsonList;
 
-// mycartmodel!.data!.forEach((element) async {
-      //   total += (int.parse(element.price!) *
-      //       sizes.elementAt(mycartmodel!.data!.indexOf(element) ?? 0)) as int;
-      //   //  subtotal += total*sizes[0];
-      //   print("total${total}");
-      // });
 
       print("URL====${getUserMyCartUrl + "${storage.read('wholesalerid')}"}");
       print(wholemycartmodel);
       cartlistLoaded = true;
-      wholeProductDeailsCOntroller.inCartUpdate(false);
+       updateTotal();
+    
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+ 
     }
     showLoading = false;
     update();
@@ -265,26 +319,33 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
     showLoading = true;
     update();
     try {
-      // productdeatils
+      
       wholemycartdeletemodel = WholeMyCartListDeleteModel.fromJson(
           await ApiHelper.deleteApi(getUserMyCartDeleteUrl + "$additemid"));
       print(wholemycartdeletemodel);
       print("delete");
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
-      final WholeProductDetailsController wholeproductdetailsController =
-          Get.put(WholeProductDetailsController());
-      await wholeproductdetailsController.isProductInCart();
+
+           print("====>>>>> model: ${wholemycartmodel!.toJson()}");
+      wholemycartmodel!.data!.removeWhere((element) => element.id == additemid);
+      if (wholemycartmodel!.data!.isEmpty){
+        print("mycartmodelis Empty");
+        print(wholemycartmodel!.data!.length);
+          price = 0;
+        total =0; 
+       couponsController.couponcode = "null";
+        couponsController..maxAmount = "0";
+clearFields();
+
+      // await productdetailscontroller.isProductInCart();
+        print("ToTal====?");
+      }
+
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+    
     }
     showLoading = false;
     update();
@@ -296,23 +357,17 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
 
   Future<void> alladdressinit() async {
     try {
-      // productdeatils
+      
       wholeallAddresslistModel = WholeAllAddressListModel.fromJson(
-          await ApiHelper.getApi(getUserAllAddressUrl + "$wholesalerID"));
+          await ApiHelper.getApi(getUserAllAddressUrl + "${storage.read('wholesalerid')}"));
       print(wholeallAddresslistModel);
 
-      print(getUserAllAddressUrl + "$wholesalerID");
+      print(getUserAllAddressUrl + "${storage.read('wholesalerid')}");
       addresslistLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     
     }
   }
 
@@ -332,13 +387,7 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+    
     }
   }
 
@@ -362,63 +411,50 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
     Map<String, dynamic> body = {
       "user_id": storage.read('wholesalerid').toString(),
       "seller_id": null,
-      "coupon_discount_amount": (couponsController.maxAmount ?? "0").toString(),
-      "coupon_discount_title": couponsController.coupontitle ?? '',
+      "coupon_discount_amount": ("0.0").toString(),
+      "coupon_discount_title":'null',
       "payment_status": "paid",
       "order_status": "pending",
       "payment_mode": paymentmethod1.toString(),
       "gst_bill": gst1,
       "payment_day": paymentdays1.toString(),
-      "total_tax_amount": (total * 0.05).toString(),
+      "total_tax_amount": "0",
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
       "delivery_address_id": isselected1.toString(),
-      //  (allAddresslistModel!
-      //                               .data![isselected ?? 0]
-      //                               .id ??
-      //                           0).toString(),
-      "coupon_code": couponsController.couponcode ?? '',
+      "coupon_code":'null',
       "order_type": "delivery",
       "checked": 1.toString(),
       "store_id": 1.toString(),
       "zone_id": 2.toString(),
       "delivered_status": "undelivered",
+      "delivery_charge": "0" ,
+    "original_delivery_charge":"0" ,
       "delivery_address": sendingAddr,
-      // (allAddresslistModel!
-      //                               .data![isselected ?? 0]
-      //                               .area ??
-      //                           '').toString(),
       "item_campaign_id": "",
-      "order_amount": (((total) + (total * 0.05)) -
-              (double.parse(couponsController.maxAmount ?? "0")))
+      "order_amount": ((total) 
+            )
           .toString(),
       "cart": cartList,
     };
     String PlaceOrderUrl = Constants.PLACE_ORDER;
     print(body);
     try {
-      // var request = http.MultipartRequest('POST', Uri.parse(PlaceOrderUrl));
-      // request.fields.addAll(body);
+     
 
       await ApiHelper.postApi(body: body, url: PlaceOrderUrl);
       update();
       Get.back();
       Get.snackbar(
         'Success',
-        'Address Added',
+        'Order place successfully',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     
       throw "error";
     }
 

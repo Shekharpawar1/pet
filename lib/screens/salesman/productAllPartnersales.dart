@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:pet/controllers/salesman_controller/addtocartcontroller.dart';
 import 'package:pet/controllers/salesman_controller/homesales_controller.dart';
 import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salesmanFilterController.dart';
@@ -34,6 +35,8 @@ class SalesProductAllPartner extends StatelessWidget {
       final HomeSalesController homesalecontroller = Get.put(HomeSalesController());
          SalesProductDetailsController salesProductDetailsController =
       Get.put(SalesProductDetailsController());
+      
+         SalesMyCartController mycartController = Get.put(SalesMyCartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -220,7 +223,7 @@ class SalesProductAllPartner extends StatelessWidget {
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 15.0,
                                       mainAxisSpacing: 15.0,
-                                      mainAxisExtent: 290),
+                                      mainAxisExtent: 285),
                             itemCount: homesalecontroller
                                           .salesproductbypartneritemModel!.data!.length
                                           , // Set the number of cards you want to display.
@@ -373,13 +376,15 @@ class SalesProductAllPartner extends StatelessWidget {
                                                                   .start,
                                                           children: [
                                                             Text(item.name!,
+                                                                 maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinsmedium),
                                                             Text(
                                                                 item.description
                                                                             .toString()
                                                                             .length <
-                                                                        30
+                                                                        10
                                                                     ? item
                                                                         .description!
                                                                     : item
@@ -387,6 +392,8 @@ class SalesProductAllPartner extends StatelessWidget {
                                                                         .substring(
                                                                             0,
                                                                             19),
+                                                                               maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                                                 style: CustomTextStyle
                                                                     .popinssmall0),
                                                             SizedBox(height: 5),
@@ -400,38 +407,63 @@ class SalesProductAllPartner extends StatelessWidget {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
+                                                                    // Row(
+                                                                    //   children: [
+                                                                    //     Text(
+                                                                    //         "₹" +
+                                                                    //             item.wholePrice.toString(),
+                                                                    //         style: CustomTextStyle.discounttext),
+                                                                    //     SizedBox(
+                                                                    //         width:
+                                                                    //             2),
+                                                                    //     // Container(
+                                                                    //     // height:
+                                                                    //     //     20,
+                                                                    //     // width: 48,
+                                                                    //     // decoration: BoxDecoration(
+                                                                    //     //     color: MyColors
+                                                                    //     //         .red,
+                                                                    //     //     borderRadius: BorderRadius.circular(
+                                                                    //     //         10),
+                                                                    //     //     border:
+                                                                    //     //         Border.all(color: MyColors.red)),
+                                                                    //     // child:
+                                                                    //     //     Center(
+                                                                    //     //   child:
+                                                                    //      SizedBox(width:3),
+                                                                    //     Text(
+                                                                    //         // item.discount.toString(),
+                                                                    //           "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
+                                                                    //         style:
+                                                                    //             CustomTextStyle.popinstextsmal2222red),
+                                                                    //     //   ),
+                                                                    //     // ),
+                                                                    //   ],
+                                                                    // ),
+
+                                                                    (item.discount !="0.00"&& item.discount !="0"&&item.discount !="0.0")?
+                                                                  
                                                                     Row(
                                                                       children: [
                                                                         Text(
                                                                             "₹" +
-                                                                                item.price.toString(),
+                                                                                item.wholePrice.toString(),
                                                                             style: CustomTextStyle.discounttext),
                                                                         SizedBox(
                                                                             width:
                                                                                 2),
-                                                                        // Container(
-                                                                        // height:
-                                                                        //     20,
-                                                                        // width: 48,
-                                                                        // decoration: BoxDecoration(
-                                                                        //     color: MyColors
-                                                                        //         .red,
-                                                                        //     borderRadius: BorderRadius.circular(
-                                                                        //         10),
-                                                                        //     border:
-                                                                        //         Border.all(color: MyColors.red)),
-                                                                        // child:
-                                                                        //     Center(
-                                                                        //   child:
+                                                                        
                                                                         Text(
                                                                             // item.discount.toString(),
-                                                                            "Save${item.discount.toString()}%",
+                                                                              "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                                                                             style:
                                                                                 CustomTextStyle.popinstextsmal2222red),
                                                                         //   ),
                                                                         // ),
                                                                       ],
-                                                                    ),
+                                                                    ): const  SizedBox(),
+                                                               
+                              
                                                                     SizedBox(
                                                                         height:
                                                                             5),
@@ -445,10 +477,10 @@ class SalesProductAllPartner extends StatelessWidget {
                                                                               Get.width * 0.23,
                                                                           child:
                                                                               Text(
-                                                                            "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                                                                            "₹ ${((double.parse(item.wholePrice ?? '')) - ((double.parse(item.wholePrice ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
                                                                             // "₹" +
-                                                                            //     item.price!,
+                                                                            //     item.wholePrice!,
                                                                             style:
                                                                                 CustomTextStyle.popinsmedium,
                                                                           ),
@@ -456,20 +488,30 @@ class SalesProductAllPartner extends StatelessWidget {
                                                                         SizedBox(
                                                                             width:
                                                                                 Get.width * 0.054),
-                                                                        Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.only(right: 5.0),
-                                                                          child: Container(
-                                                                              width: 35,
-                                                                              height: 35,
-                                                                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsets.all(5.0),
-                                                                                child: Image.asset(
-                                                                                  "assets/image/bag2.png",
-                                                                                  height: 25,
-                                                                                ),
-                                                                              )),
+                                                                        InkWell(
+                                                                          onTap: () async{
+                                                                           
+                                                                             
+                                                                                  salesProductDetailsController.viewproductHome(item.id??0,item.name??'',"1kg",1,double.parse(item.wholePrice ?? ''),(item.image??'').toString(),"yes");
+                                                                              
+                                                                              await salesProductDetailsController.addProductHome();
+                                                            mycartController.init();
+                                                                          },
+                                                                          child: Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(right: 5.0),
+                                                                            child: Container(
+                                                                                width: 35,
+                                                                                height: 35,
+                                                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Color(0xffffcc00)),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsets.all(5.0),
+                                                                                  child: Image.asset(
+                                                                                    "assets/image/bag2.png",
+                                                                                    height: 25,
+                                                                                  ),
+                                                                                )),
+                                                                          ),
                                                                         )
                                                                       ],
                                                                     ),
@@ -612,7 +654,7 @@ class SalesProductAllPartner extends StatelessWidget {
                       //                                             children: [
                       //                                               Text(
                       //                                                   "₹" +
-                      //                                                       item.price
+                      //                                                       item.wholePrice
                       //                                                           .toString(),
                       //                                                   style: CustomTextStyle
                       //                                                       .discounttext),
@@ -634,7 +676,7 @@ class SalesProductAllPartner extends StatelessWidget {
                       //                                                     Center(
                       //                                                   child: Text(
                       //                                                       // item.discount.toString(),
-                      //                                                       "Save${item.discount.toString()}%",
+                      //                                                         "Save${double.parse(item.discount??'').toStringAsFixed(0)}%",
                       //                                                       style: CustomTextStyle.popinstextsmal2222),
                       //                                                 ),
                       //                                               ),
@@ -643,10 +685,10 @@ class SalesProductAllPartner extends StatelessWidget {
                       //                                           SizedBox(
                       //                                               height: 5),
                       //                                           Text(
-                      //                                             "₹ ${((double.parse(item.price ?? '')) - ((double.parse(item.price ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
+                      //                                             "₹ ${((double.parse(item.wholePrice ?? '')) - ((double.parse(item.wholePrice ?? "")) * (double.parse(item.discount ?? "0")) / 100)).toDouble()}",
 
                       //                                             // "₹" +
-                      //                                             //     item.price!,
+                      //                                             //     item.wholePrice!,
                       //                                             style: CustomTextStyle
                       //                                                 .popinsmedium,
                       //                                           ),

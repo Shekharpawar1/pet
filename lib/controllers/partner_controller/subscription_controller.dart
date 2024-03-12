@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pet/models/partnerModel/subscriptionModel.dart';
 import 'package:pet/utils/api_helper.dart';
@@ -10,7 +11,7 @@ import 'package:http/http.dart' as http;
 import '../../utils/constants.dart';
 
 class SubscriptionController extends GetxController{
-  // RxInt selectedIndex = 0.obs;
+ final storage = GetStorage();
  bool showLoading = false;
   //  toggle(int index) => selectedIndex.value = index;
   int? selectedIndex;
@@ -21,7 +22,7 @@ String? price1;
   String? productLimit;
   DateTime? expireyDate;
   String? image;
-
+   var partnerID;
 // void update(int id) {
 //     selectedIndex = id;
 //     update();
@@ -47,7 +48,7 @@ productLimit = productlmt;
   void onInit() {
     super.onInit();
     init();
-    // Dateinit();
+    partnerID = storage.read('partnerid');
   }
 
   //  void Dateinit() {
@@ -105,13 +106,13 @@ productLimit = productlmt;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     
@@ -126,7 +127,7 @@ Future<void> purchaseinit() async {
     update();
    
      Map<String, String> body = {
-        "vendor_id":selectedIndex.toString(),
+        "vendor_id":storage.read('partnerid').toString(),
       "plan_name": planname1.toString(),
       "plan_price":price1.toString(),
       "plan_type":plantype1.toString(),
@@ -144,8 +145,9 @@ Future<void> purchaseinit() async {
       var request = http.MultipartRequest('POST', Uri.parse(PurchasePlanURl));
       request.fields.addAll(body);
       
-      await ApiHelper.postFormData(request: request);
-      // print("PurchasePlanURL"+PurchasePlanURl);
+     var response = await ApiHelper.postFormData(request: request);
+      print("PurchasePlanURL"+PurchasePlanURl);
+      print(response);
       update();
       Get.back();
       Get.snackbar(
@@ -157,13 +159,13 @@ Future<void> purchaseinit() async {
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

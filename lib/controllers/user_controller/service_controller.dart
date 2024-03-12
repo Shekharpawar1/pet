@@ -7,11 +7,7 @@ import 'package:pet/utils/constants.dart';
 import 'package:pet/models/cityModel.dart' as cityFile;
 
 class ServiceController  extends GetxController {
-// bool isSelected = false;
 
-  // toogle() {
-  //   isSelected = !isSelected;
-  // }
 
   bool  isAdding = false;
 
@@ -28,17 +24,10 @@ class ServiceController  extends GetxController {
     update();
   }
 
-//  void toogle(int? index) {
-// if (selectedtime.contains(index)) {
-//       selectedtime.remove(index);
-//     } else {
-//       selectedtime.add(index);
-//     }
 
-//   }
 String getCityUrl = Constants.GET_CITY_LIST;
   CityListModel? cityListModel;
-  // cityListModel!.state = [];
+ 
   bool cityLoaded = false;
  List _serviceList = [
     {
@@ -117,13 +106,13 @@ String getCityUrl = Constants.GET_CITY_LIST;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 

@@ -20,30 +20,15 @@ final storage = GetStorage();
   TextEditingController areaaddressController = TextEditingController();
   TextEditingController landmarkController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
-  // TextEditingController stateController = TextEditingController();
-  // TextEditingController cityController = TextEditingController();
-  AllAddressListModel?  addaddressmodel ;
+ AllAddressListModel?  addaddressmodel ;
   var userID;
   int? addressid;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
  int? itemcount;
  int? isselected;
  List<AllAddressListModel?> addaddressall=[];
-    // String? dropdownstate;
-  // List<String> stateDropDownList = ["Andhra Pradesh", "Assam", "Bihar","Madhya Pradesh", "Maharashtra", ];
-  bool showLoading = false;
-  // String? dropdowncity;
-  // List<String> cityDropDownList = ["Bhopal", "Indore"];
-
-  //   void updateSate(String state) {
-  //   dropdownstate = state;
-  //   update();
-  // }
-
-  // void updatecity(String city) {
-  //   dropdowncity = city;
-  //   update();
-  // }
+ bool showLoading = false;
+  
 
 final box = GetStorage();
 
@@ -56,13 +41,9 @@ final box = GetStorage();
   
   void validateForm(BuildContext context) {
     if (formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is valid')),
-      );
+   
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Form is Invalid')),
-      );
+     
     }
   }
 void clearFields() {
@@ -77,6 +58,23 @@ void clearFields() {
     selectedCity= null;
     stateListModel= null;
     cityListModel =null;
+
+  }
+  void clearstate() {
+    
+    selectedState= null;
+   
+    stateListModel= null;
+  
+
+  }
+
+  void clearcity() {
+    
+    selectedCity= null;
+   
+    cityListModel= null;
+  
 
   }
 //   void chooseaddress(int index){
@@ -105,13 +103,13 @@ void clearFields() {
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to get State: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to get State: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -122,6 +120,8 @@ void clearFields() {
   bool stateLoaded = false;
   // bool showLoading = false;
   statesFile.State? selectedState;
+
+
   Future<void> updateState(statesFile.State state) async {
     selectedState = state;
     showLoading = true;
@@ -136,6 +136,8 @@ void addadressID(int id) {
     update();
      print("statecity==${addressid}");
   }
+
+  
   // city list
   String getCityUrl = Constants.GET_CITY_LIST;
   CityListModel? cityListModel;
@@ -143,31 +145,48 @@ void addadressID(int id) {
   bool cityLoaded = false;
 
   cityFile.State? selectedCity;
-  void updateCity(cityFile.State? city) {
+  Future<void> updateCity(cityFile.State? city) async {
     selectedCity = city;
     update();
      print("statecity==${selectedCity}");
+        
   }
 
   fetchCity(String stateId) async {
     showLoading = true;
     update();
-    try {
-      // city list
-      cityListModel =
-          CityListModel.fromJson(await ApiHelper.getApi(getCityUrl + stateId));
+    // try {
+    //   // city list
+    //   cityListModel =
+    //       CityListModel.fromJson(await ApiHelper.getApi(getCityUrl));
+    //   print(cityListModel);
+    //   cityLoaded = true;
+    //   update();
+    // } 
+    
+     try {
+     
+      var request = http.MultipartRequest('POST', Uri.parse(getCityUrl));
+      request.fields.addAll({
+        "state":stateId.toString()
+      });
+      
+   cityListModel  = CityListModel.fromJson(await ApiHelper.postFormData(request: request));
+   
+      // update();
       print(cityListModel);
       cityLoaded = true;
       update();
-    } catch (e) {
+    }
+    catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Unable to City: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Unable to City: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -246,13 +265,13 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -297,13 +316,13 @@ void updateaddress(int? id,String? firstname,String? lastname,String? number,Str
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

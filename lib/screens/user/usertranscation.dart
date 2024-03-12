@@ -4,8 +4,10 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pet/controllers/user_controller/transactionController.dart';
+import 'package:pet/controllers/user_controller/transaction_controller.dart';
 import 'package:pet/screens/user/notification.dart';
 import 'package:pet/screens/user/ordersummary.dart';
+import 'package:pet/screens/user/widgets/userAppBar.dart';
 import 'package:pet/screens/wholesaler/notification.dart';
 import 'package:pet/utils/colors.dart';
 import 'package:pet/utils/fontstyle.dart';
@@ -14,116 +16,17 @@ import 'package:pet/screens/wholesaler/payment.dart';
 class Usertranscation extends StatelessWidget {
    Usertranscation({super.key});
 
-  TransactionHistoryController transactionhistoryController = Get.put(TransactionHistoryController());
+  TransactionUserController transactionuserController = Get.put(TransactionUserController());
 
   @override
   Widget build(BuildContext context) {
+    transactionuserController.init();
     return Scaffold(
 
-           appBar: AppBar(
-            elevation: 0,
-          backgroundColor:Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(left:15.0,top: 15,bottom: 15),
-            child: GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },child:Icon(Icons.arrow_left,color:MyColors.black)
-            ),
-          ),
-          title: Center(
-//SvgPicture.asset("assets/image/menu1.svg",height: 25,),
-//
-            child:Text("Transactions",style: TextStyle(fontSize: 16,color:MyColors. black,
-fontWeight: FontWeight.w700,),)
-          ),
-          actions: [
-                   
-          Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                     Get.to(const NotificationUser());
-                  },
-                  child: Center(child:Icon(Icons.notifications,color:MyColors.black),)),
- 
- Positioned(
- top: 10.0,right: 0,
-                    child:  Stack(
-                      children: <Widget>[
-                         Icon(
-                            Icons.brightness_1,
-                            size: 15.0, color: MyColors.red),
-                         Positioned(
-                            top: 3.0,
-                            right: 4.0,
-                            child:  Center(
-                              child:  Text(('5').toString(),
-                                // list.length.toString(),
-                                style:  TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            )),
-
-                  
-                      ],
-                    )),
-
-
-            ],
-          ),
-    
-                 SizedBox(width: 20),
- Stack(
-            children: [
-              InkWell(
-                  onTap: () {
-                      Get.to(const AddToCardUser());
-                   
-                  },
-                  child: Center(child: SvgPicture.asset("assets/image/bag.svg"))),
- 
-// (getCardModel!.data!.isEmpty)?
-// SizedBox():
- Positioned(
- top: 10.0,right: 0,
-                    child:  Stack(
-                      children: <Widget>[
-                         Icon(
-                            Icons.brightness_1,
-                            size: 15.0, color: MyColors.red),
-                         Positioned(
-                            top: 3.0,
-                            right: 4.0,
-                            child:  Center(
-                              child:  Text(('5').toString(),
-                                // list.length.toString(),
-                                style:  TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 8.0,
-                                    fontWeight: FontWeight.w500
-                                ),
-                              ),
-                            )),
-
-                  
-                      ],
-                    )),
-
-
-            ],
-          ),
-    
-    SizedBox(width: 20,)
-           
-          ],
-         
-        ),
-
-
+           appBar: 
+            
+            CustomAppBarback(title:"Transactions"),
+        
     body:Padding(
       padding: const EdgeInsets.all(15.0),
       child: ListView(
@@ -136,66 +39,77 @@ fontWeight: FontWeight.w700,),)
     Text("Transactions",style:CustomTextStyle.popinsmedium),
  SizedBox(height: MediaQuery.of(context).size.height*0.02,),  
 
-  GetBuilder<TransactionHistoryController>(
-                      init: transactionhistoryController,
+  GetBuilder<TransactionUserController>(
+                      init: transactionuserController,
                       builder: (_) {
-return
- ListView.builder(
-                                primary: false,
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount:
-                                    transactionhistoryController.gettranscationList.length,
-                                itemBuilder: (context, index) {
-                                  var item =
-                                      transactionhistoryController.gettranscationList[index];
-   
-    return 
-    Container(
-      width: 335,
+return transactionuserController.usertransactionmodel == null?
+SizedBox():
+ListView.builder(
+                    primary: false,
+                    shrinkWrap: true,
+                    itemCount:  transactionuserController.usertransactionmodel!.data!.length,
+                    itemBuilder: (context, index) {
+                      var item =    transactionuserController.usertransactionmodel!.data![ transactionuserController.usertransactionmodel!.data!.length -
+                              1 -
+                              index];
+            return  transactionuserController.usertransactionmodel!.data!.isEmpty?
+            Center(child: Image.asset("assets/image/nodataimg.png",height:MediaQuery.of(context).size.height*0.4,width:MediaQuery.of(context).size.width))
+                          : 
+            
+            Container(
+              width: 335,
+              margin: EdgeInsets.all(10),
 height: 75,
-margin: EdgeInsets.all(10),
 decoration: BoxDecoration(color:MyColors.white, borderRadius: BorderRadius.circular(21)),
 child:Padding(
   padding: const EdgeInsets.all(8.0),
   child:   Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
   crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
+            children: [
   
-    Row(mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
   
-          Image.asset(item["image"],height: 58,)
+                  Image.asset("assets/image/rightimgg2.png",height: 58,)
   
-        ],)
+                ],)
    
 ,SizedBox(width: 15,),
-        Column(crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.center,
-        
-          children: [
- Text(item["name"],style: CustomTextStyle.popinsboldlight,),
- Text(item["datetime"],style: CustomTextStyle.popinsboldlightsmall,),
- Text(item["invoicenumber"],style: CustomTextStyle.popinsboldlightsmall,)
-        ],),
-      ],
-    ),
+                Column(crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+                
+                  children: [
+ Text("Paid to",style: CustomTextStyle.popinsboldlight,),
+ Text(item.date.toString(),style: CustomTextStyle.popinsboldlightsmall,)
+                ],),
+              ],
+            ),
 
-    Column(crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-Image.asset("assets/image/rightimg.png",height: 25,),
- Text("₹"+item["amount"],style: CustomTextStyle.popinsboldlight,)
-    ],)
+            Column(crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+//                 (item.type == "debit")?
+// Image.asset("assets/image/rightimg.png",height: 25,):Image.asset("assets/image/arrowgreen.png",color: MyColors.green,height: 25,),
+  (item.type == "credit")?
+ 
+ Text(
+  "+ ₹"+ item.amount.toString(),style: CustomTextStyle.popinsmediumgreen,)
+  :
+  Text(
+  
+  
+  "- ₹"+ item.amount.toString(),style: CustomTextStyle.popinsmediumred,)
+            ],)
   ],),
 )
-    );
-                                });
-
-                      })
+            );
+          }
+        );
+     
+        })
 // ,SizedBox(height: 10,),
 //     Container(
 //       width: 335,

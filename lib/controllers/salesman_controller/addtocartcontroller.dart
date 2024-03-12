@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pet/controllers/salesman_controller/addresscontroller.dart';
+import 'package:pet/controllers/salesman_controller/productdetails_controller.dart';
 import 'package:pet/controllers/salesman_controller/salescoupons_controller.dart';
 import 'package:pet/controllers/wholesaler_controller/addtocartcontroller.dart';
 import 'package:pet/models/salesmanModel/addAddressModel.dart';
@@ -29,7 +30,9 @@ var sellerId = GetStorage().read("sellerid");
   List sizes = [];
   bool showLoading = false;
 //  var wholesellerID;
-  int total = 1;
+  double total = 0.0;
+  
+  int totalprice = 0;
   String? paymenttype;
   String? paymentStatus;
   String? orderStatus;
@@ -97,8 +100,23 @@ void chooseaddressID(int id) {
     print("disCount${disCount}");
   }
 
-
-
+@override
+  void onClose() {
+    print("closing...");
+  clearFields();
+    super.onClose();
+  }
+void clearFields() {
+    
+    couponsController.couponcode = null;
+     couponsController.maxAmount = null;
+update();
+  }
+  void totalbuyNowPrice( double totalprice) {
+    total = totalprice;
+    update();
+    print("TotalPriceBuy ====>>>>> $total");
+  }
 void adddata(int id, int qty, String name, int tex, double price, int dis) {
     showLoading = false;
     selectID = id;
@@ -137,8 +155,18 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
   }
 
   incrementSize(int index) {
-    sizes[index]++;
+
+     if (sizes[index] <int.parse (mycartmodel!.data![index].totalQuantity!).toInt()) {
+     
+    print("SIzes++++${mycartmodel!.data![index].totalQuantity}");
+     sizes[index]++;
+       mycartmodel!.data![index].quantity = sizes[index];
+      
+print("Sizes after increment sales** : ${mycartmodel!.data![index].quantity}");
+    //  item.price ++;
     update();
+    // sizes[index]++;
+    // update();
 
     print("SIzes${sizes}");
     // total = 0;
@@ -150,15 +178,21 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
     // });
 
     updateTotal();
+
+    }
   }
 
   decrementSize(int index) {
-    if (sizes[index] > 1) {
+    if (sizes[index] > mycartmodel!.data![index]!.minOrder) {
       sizes[index]--;
+       mycartmodel!.data![index].quantity = sizes[index];
+      
+print("Sizes after decrement sales** : ${mycartmodel!.data![index].quantity}");
       update();
       print("SIzes--${sizes}");
     }
     updateTotal();
+  
   }
   // void updateTotal() {
 
@@ -172,21 +206,48 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
   // }
 
   void updateTotal() {
-    total = 0;
+    total = 0.0;
 
     mycartmodel!.data!.forEach((element) {
       String priceString = element.price.toString();
+ String quty = element.quantity.toString();
+   double price = double.parse(priceString);
+int quantity = int.parse(quty);
 
-      try {
+double priceqty = price * quantity;
+
+try {
         double price = double.parse(priceString);
+        int qtyyy = int.parse(quty);
         int sizeIndex = mycartmodel!.data!.indexOf(element) ?? 0;
         int size = sizes.elementAt(sizeIndex);
+// var variansprice = productdeatilscontroller.selectedvariants?.price; int 
+  int qty = (price / qtyyy).toInt();
+print("Quantiy");
+print(qty);
 
+totalprice =  price .toInt();
         total +=
-            (price * size).toInt(); // Convert the final value to an integer
+           (priceqty);
+
+            print("TotalPrice ${total}");
       } catch (e) {
         print("Error parsing price: $e");
       }
+    List<Map<String, dynamic>> cartJsonList1 = mycartmodel!.data!
+          .map((item) => {
+                "product_id": item.itemId,
+                "quantity":item.quantity,
+                "variation": item.variant,
+                "tax_amount": "0",
+                "discount_on_item":storage.read('productItemsales'),
+                "price":( item.price! * item.quantity!.toInt()),
+                "return_order":item.returnOrder??"no",
+              })
+          .toList();
+print("carttt");
+          print(cartJsonList1);
+cartList = cartJsonList1;
     });
 
     print("Total: $total");
@@ -210,16 +271,17 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
       // productdeatils
       mycartmodel = SalesMyCartListModel.fromJson(
           await ApiHelper.getApi(getUserMyCartUrl + "${storage.read('wholesalerId')}"));
-      print("====?//${mycartmodel}");
+      print("My====?//${getUserMyCartUrl + "${storage.read('wholesalerId')}"}");
       sizes = mycartmodel!.data!.map((e) => e.quantity).toList();
       List<Map<String, dynamic>> cartJsonList =
           mycartmodel!.data!.map((item) => {
             "product_id": item.itemId,
             "quantity":item.quantity,
             "variation":item.variant,
-            "tax_amount":13,
-            "discount_on_item":20,
-            "price":item.price
+             "tax_amount": "0",
+                "discount_on_item":storage.read('productItemsales'),
+            "price":( item.price! * item.quantity!.toInt()),
+            "return_order":item.returnOrder ,
           }).toList();
       cartList = cartJsonList;
       
@@ -234,16 +296,17 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
       print("URL====${getUserMyCartUrl + "${storage.read('wholesalerId')}"}");
       print(mycartmodel);
       cartlistLoaded = true;
+         updateTotal();
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -260,19 +323,37 @@ void adddata(int id, int qty, String name, int tex, double price, int dis) {
       print("delete");
       print(getUserMyCartDeleteUrl + "$additemid");
       cartlistLoaded = true;
+
+       final SalesProductDetailsController productdetailscontroller =
+          Get.put(SalesProductDetailsController());
+      // await productdetailscontroller.isProductInCart();
+      print("====>>>>> model: ${mycartmodel!.toJson()}");
+      mycartmodel!.data!.removeWhere((element) => element.id == additemid);
+      if (mycartmodel!.data!.isEmpty){
+        print("mycartmodelis Empty");
+        print(mycartmodel!.data!.length);
+          price = 0;
+        total =0; 
+       couponsController.couponcode = null;
+        couponsController..maxAmount = null;
+clearFields();
+   print("ToTal====?");
+      }
+      // await productdetailscontroller.isProductInCart();
+        print("ToTal====?");
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
-
+  RxString address=''.obs;
   String getUserAllAddressUrl = '${Constants.GET_USER_ALLADDRESSLIST}';
 SalesAllAddressListModel? allAddresslistModel;
   bool addresslistLoaded = false;
@@ -284,18 +365,19 @@ SalesAllAddressListModel? allAddresslistModel;
           await ApiHelper.getApi(getUserAllAddressUrl + "${storage.read('wholesalerId')}"));
       print(allAddresslistModel);
 
+
       print(getUserAllAddressUrl + "${storage.read('wholesalerId')}");
       addresslistLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -315,13 +397,13 @@ SalesAllAddressListModel? allAddresslistModel;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
   }
 
@@ -356,14 +438,12 @@ SalesAllAddressListModel? allAddresslistModel;
       "payment_mode": paymentmethod1.toString(),
       "gst_bill": gst1,
       "payment_day": paymentdays1.toString(),
-      "total_tax_amount": (total * 0.05).toString(),
+      "total_tax_amount":"0",
       "payment_method": paymenttype.toString(),
       "transaction_reference": "sadgash23asds",
       "delivery_address_id": 2.toString(),
-      //  (allAddresslistModel!
-      //                               .data![isselected ?? 0]
-      //                               .id ??
-      //                           0).toString(),
+      "delivery_charge": "0" ,
+    "original_delivery_charge":"0" ,
       "coupon_code": couponsController.couponcode ?? '',
       "order_type": "delivery",
       "checked": 1.toString(),
@@ -376,7 +456,7 @@ SalesAllAddressListModel? allAddresslistModel;
       //                               .area ??
       //                           '').toString(),
       "item_campaign_id": "",
-      "order_amount":  (((total) + (total * 0.05)) -
+      "order_amount":  ((total) -
               (double.parse(couponsController.maxAmount ?? "0")))
           .toString(),
       "cart": cartList,
@@ -392,20 +472,20 @@ SalesAllAddressListModel? allAddresslistModel;
       Get.back();
       Get.snackbar(
         'Success',
-        'Address Added',
+        'Order place successfully',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;

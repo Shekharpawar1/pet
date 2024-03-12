@@ -11,6 +11,7 @@ class SalesfavouriteController extends GetxController {
 final storage = GetStorage();
 // var wholesellerID = GetStorage().read("wholesalerid");
   var wholesellerID;
+      List<dynamic> Wishlistt =[];
 // List wishlist = [
 //       {
 //       "image": "assets/image/food3.png",
@@ -74,19 +75,22 @@ final storage = GetStorage();
           SalesWishListModel.fromJson(await ApiHelper.getApi(getWishListUrl + "/${wholesellerID}"));
       print(  "WhisListSalesURL"+getWishListUrl + "/${wholesellerID}");
       // wishList!.data!.map((e) => e.itemId).toList();
+          
+ wishList!.data = wishList!.data!.where((element) => element.storeId!.isNotEmpty).toList();
+     
       GetStorage().write('wishListItems',
           wishList!.data!.map((e) => e.itemId).toList().toSet().toList());
       // categoryLoaded = true;
       update();
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+     // Get.snackbar(
+      //   'Error',
+      //   'An error occurred: $e',
+      //   snackPosition: SnackPosition.BOTTOM,
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     }
 
     showLoading = false;
@@ -132,13 +136,15 @@ final storage = GetStorage();
           colorText: Colors.white,
         );
       } else {
-        Get.snackbar(
-          'Error',
-          'An error occurred: $e',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+
+        print('Error: $e');
+        // Get.snackbar(
+        //   'Error',
+        //   'An error occurred: $e',
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.red,
+        //   colorText: Colors.white,
+        // );
       }
     }
     showLoading = false;
